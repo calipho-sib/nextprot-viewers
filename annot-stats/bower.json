@@ -1,0 +1,11 @@
+{
+  "name": "annot-stats",
+  "dependencies": {
+    "highcharts": "x.x.x",
+    "jquery": "x.x.x",
+    "nextprot": "x.x.x"
+  },
+  "resolutions": {
+    "jquery": ">= 1.9.1"
+  }
+}

@@ -1,0 +1,843 @@
+{
+  "head": {
+    "link": [
+      
+    ],
+    "vars": [
+      "src",
+      "pred",
+      "cnt"
+    ]
+  },
+  "results": {
+    "distinct": false,
+    "ordered": true,
+    "bindings": [
+      {
+        "src": {
+          "type": "uri",
+          "value": "http://nextprot.org/rdf/source/Uniprot"
+        },
+        "pred": {
+          "type": "uri",
+          "value": "http://nextprot.org/rdf#cellularComponent"
+        },
+        "cnt": {
+          "type": "typed-literal",
+          "datatype": "http://www.w3.org/2001/XMLSchema#integer",
+          "value": "62299"
+        }
+      },
+      {
+        "src": {
+          "type": "uri",
+          "value": "http://nextprot.org/rdf/source/Human_protein_atlas_subcellular_localization"
+        },
+        "pred": {
+          "type": "uri",
+          "value": "http://nextprot.org/rdf#cellularComponent"
+        },
+        "cnt": {
+          "type": "typed-literal",
+          "datatype": "http://www.w3.org/2001/XMLSchema#integer",
+          "value": "12344"
+        }
+      },
+      {
+        "src": {
+          "type": "uri",
+          "value": "http://nextprot.org/rdf/source/Human_protein_atlas"
+        },
+        "pred": {
+          "type": "uri",
+          "value": "http://nextprot.org/rdf#cellularComponent"
+        },
+        "cnt": {
+          "type": "typed-literal",
+          "datatype": "http://www.w3.org/2001/XMLSchema#integer",
+          "value": "6657"
+        }
+      },
+      {
+        "src": {
+          "type": "uri",
+          "value": "http://nextprot.org/rdf/source/Ensembl"
+        },
+        "pred": {
+          "type": "uri",
+          "value": "http://nextprot.org/rdf#cellularComponent"
+        },
+        "cnt": {
+          "type": "typed-literal",
+          "datatype": "http://www.w3.org/2001/XMLSchema#integer",
+          "value": "5577"
+        }
+      },
+      {
+        "src": {
+          "type": "uri",
+          "value": "http://nextprot.org/rdf/source/BHF-UCL"
+        },
+        "pred": {
+          "type": "uri",
+          "value": "http://nextprot.org/rdf#cellularComponent"
+        },
+        "cnt": {
+          "type": "typed-literal",
+          "datatype": "http://www.w3.org/2001/XMLSchema#integer",
+          "value": "3165"
+        }
+      },
+      {
+        "src": {
+          "type": "uri",
+          "value": "http://nextprot.org/rdf/source/GO_central"
+        },
+        "pred": {
+          "type": "uri",
+          "value": "http://nextprot.org/rdf#cellularComponent"
+        },
+        "cnt": {
+          "type": "typed-literal",
+          "datatype": "http://www.w3.org/2001/XMLSchema#integer",
+          "value": "2208"
+        }
+      },
+      {
+        "src": {
+          "type": "uri",
+          "value": "http://nextprot.org/rdf/source/PINC"
+        },
+        "pred": {
+          "type": "uri",
+          "value": "http://nextprot.org/rdf#cellularComponent"
+        },
+        "cnt": {
+          "type": "typed-literal",
+          "datatype": "http://www.w3.org/2001/XMLSchema#integer",
+          "value": "1944"
+        }
+      },
+      {
+        "src": {
+          "type": "uri",
+          "value": "http://nextprot.org/rdf/source/MGI"
+        },
+        "pred": {
+          "type": "uri",
+          "value": "http://nextprot.org/rdf#cellularComponent"
+        },
+        "cnt": {
+          "type": "typed-literal",
+          "datatype": "http://www.w3.org/2001/XMLSchema#integer",
+          "value": "1403"
+        }
+      },
+      {
+        "src": {
+          "type": "uri",
+          "value": "http://nextprot.org/rdf/source/InterPro"
+        },
+        "pred": {
+          "type": "uri",
+          "value": "http://nextprot.org/rdf#cellularComponent"
+        },
+        "cnt": {
+          "type": "typed-literal",
+          "datatype": "http://www.w3.org/2001/XMLSchema#integer",
+          "value": "963"
+        }
+      },
+      {
+        "src": {
+          "type": "uri",
+          "value": "http://nextprot.org/rdf/source/Dyp"
+        },
+        "pred": {
+          "type": "uri",
+          "value": "http://nextprot.org/rdf#cellularComponent"
+        },
+        "cnt": {
+          "type": "typed-literal",
+          "datatype": "http://www.w3.org/2001/XMLSchema#integer",
+          "value": "962"
+        }
+      },
+      {
+        "src": {
+          "type": "uri",
+          "value": "http://nextprot.org/rdf/source/GFP-cDNAEMBL"
+        },
+        "pred": {
+          "type": "uri",
+          "value": "http://nextprot.org/rdf#cellularComponent"
+        },
+        "cnt": {
+          "type": "typed-literal",
+          "datatype": "http://www.w3.org/2001/XMLSchema#integer",
+          "value": "796"
+        }
+      },
+      {
+        "src": {
+          "type": "uri",
+          "value": "http://nextprot.org/rdf/source/HGNC"
+        },
+        "pred": {
+          "type": "uri",
+          "value": "http://nextprot.org/rdf#cellularComponent"
+        },
+        "cnt": {
+          "type": "typed-literal",
+          "datatype": "http://www.w3.org/2001/XMLSchema#integer",
+          "value": "644"
+        }
+      },
+      {
+        "src": {
+          "type": "uri",
+          "value": "http://nextprot.org/rdf/source/LIFEdb"
+        },
+        "pred": {
+          "type": "uri",
+          "value": "http://nextprot.org/rdf#cellularComponent"
+        },
+        "cnt": {
+          "type": "typed-literal",
+          "datatype": "http://www.w3.org/2001/XMLSchema#integer",
+          "value": "451"
+        }
+      },
+      {
+        "src": {
+          "type": "uri",
+          "value": "http://nextprot.org/rdf/source/ParkinsonsUK-UCL"
+        },
+        "pred": {
+          "type": "uri",
+          "value": "http://nextprot.org/rdf#cellularComponent"
+        },
+        "cnt": {
+          "type": "typed-literal",
+          "datatype": "http://www.w3.org/2001/XMLSchema#integer",
+          "value": "295"
+        }
+      },
+      {
+        "src": {
+          "type": "uri",
+          "value": "http://nextprot.org/rdf/source/FlyBase"
+        },
+        "pred": {
+          "type": "uri",
+          "value": "http://nextprot.org/rdf#cellularComponent"
+        },
+        "cnt": {
+          "type": "typed-literal",
+          "datatype": "http://www.w3.org/2001/XMLSchema#integer",
+          "value": "36"
+        }
+      },
+      {
+        "src": {
+          "type": "uri",
+          "value": "http://nextprot.org/rdf/source/Alzheimers_University_of_Toronto"
+        },
+        "pred": {
+          "type": "uri",
+          "value": "http://nextprot.org/rdf#cellularComponent"
+        },
+        "cnt": {
+          "type": "typed-literal",
+          "datatype": "http://www.w3.org/2001/XMLSchema#integer",
+          "value": "28"
+        }
+      },
+      {
+        "src": {
+          "type": "uri",
+          "value": "http://nextprot.org/rdf/source/DFLAT"
+        },
+        "pred": {
+          "type": "uri",
+          "value": "http://nextprot.org/rdf#cellularComponent"
+        },
+        "cnt": {
+          "type": "typed-literal",
+          "datatype": "http://www.w3.org/2001/XMLSchema#integer",
+          "value": "27"
+        }
+      },
+      {
+        "src": {
+          "type": "uri",
+          "value": "http://nextprot.org/rdf/source/GOC"
+        },
+        "pred": {
+          "type": "uri",
+          "value": "http://nextprot.org/rdf#cellularComponent"
+        },
+        "cnt": {
+          "type": "typed-literal",
+          "datatype": "http://www.w3.org/2001/XMLSchema#integer",
+          "value": "25"
+        }
+      },
+      {
+        "src": {
+          "type": "uri",
+          "value": "http://nextprot.org/rdf/source/AgBase"
+        },
+        "pred": {
+          "type": "uri",
+          "value": "http://nextprot.org/rdf#cellularComponent"
+        },
+        "cnt": {
+          "type": "typed-literal",
+          "datatype": "http://www.w3.org/2001/XMLSchema#integer",
+          "value": "23"
+        }
+      },
+      {
+        "src": {
+          "type": "uri",
+          "value": "http://nextprot.org/rdf/source/GDB"
+        },
+        "pred": {
+          "type": "uri",
+          "value": "http://nextprot.org/rdf#cellularComponent"
+        },
+        "cnt": {
+          "type": "typed-literal",
+          "datatype": "http://www.w3.org/2001/XMLSchema#integer",
+          "value": "7"
+        }
+      },
+      {
+        "src": {
+          "type": "uri",
+          "value": "http://nextprot.org/rdf/source/dictyBase"
+        },
+        "pred": {
+          "type": "uri",
+          "value": "http://nextprot.org/rdf#cellularComponent"
+        },
+        "cnt": {
+          "type": "typed-literal",
+          "datatype": "http://www.w3.org/2001/XMLSchema#integer",
+          "value": "1"
+        }
+      },
+      {
+        "src": {
+          "type": "uri",
+          "value": "http://nextprot.org/rdf/source/Bgee"
+        },
+        "pred": {
+          "type": "uri",
+          "value": "http://nextprot.org/rdf#expression"
+        },
+        "cnt": {
+          "type": "typed-literal",
+          "datatype": "http://www.w3.org/2001/XMLSchema#integer",
+          "value": "2164197"
+        }
+      },
+      {
+        "src": {
+          "type": "uri",
+          "value": "http://nextprot.org/rdf/source/Human_protein_atlas"
+        },
+        "pred": {
+          "type": "uri",
+          "value": "http://nextprot.org/rdf#expression"
+        },
+        "cnt": {
+          "type": "typed-literal",
+          "datatype": "http://www.w3.org/2001/XMLSchema#integer",
+          "value": "992283"
+        }
+      },
+      {
+        "src": {
+          "type": "uri",
+          "value": "http://nextprot.org/rdf/source/Uniprot"
+        },
+        "pred": {
+          "type": "uri",
+          "value": "http://nextprot.org/rdf#expression"
+        },
+        "cnt": {
+          "type": "typed-literal",
+          "datatype": "http://www.w3.org/2001/XMLSchema#integer",
+          "value": "10625"
+        }
+      },
+      {
+        "src": {
+          "type": "uri",
+          "value": "http://nextprot.org/rdf/source/Uniprot"
+        },
+        "pred": {
+          "type": "uri",
+          "value": "http://nextprot.org/rdf#function"
+        },
+        "cnt": {
+          "type": "typed-literal",
+          "datatype": "http://www.w3.org/2001/XMLSchema#integer",
+          "value": "111877"
+        }
+      },
+      {
+        "src": {
+          "type": "uri",
+          "value": "http://nextprot.org/rdf/source/Ensembl"
+        },
+        "pred": {
+          "type": "uri",
+          "value": "http://nextprot.org/rdf#function"
+        },
+        "cnt": {
+          "type": "typed-literal",
+          "datatype": "http://www.w3.org/2001/XMLSchema#integer",
+          "value": "30555"
+        }
+      },
+      {
+        "src": {
+          "type": "uri",
+          "value": "http://nextprot.org/rdf/source/NextProt"
+        },
+        "pred": {
+          "type": "uri",
+          "value": "http://nextprot.org/rdf#function"
+        },
+        "cnt": {
+          "type": "typed-literal",
+          "datatype": "http://www.w3.org/2001/XMLSchema#integer",
+          "value": "18011"
+        }
+      },
+      {
+        "src": {
+          "type": "uri",
+          "value": "http://nextprot.org/rdf/source/BHF-UCL"
+        },
+        "pred": {
+          "type": "uri",
+          "value": "http://nextprot.org/rdf#function"
+        },
+        "cnt": {
+          "type": "typed-literal",
+          "datatype": "http://www.w3.org/2001/XMLSchema#integer",
+          "value": "15607"
+        }
+      },
+      {
+        "src": {
+          "type": "uri",
+          "value": "http://nextprot.org/rdf/source/InterPro"
+        },
+        "pred": {
+          "type": "uri",
+          "value": "http://nextprot.org/rdf#function"
+        },
+        "cnt": {
+          "type": "typed-literal",
+          "datatype": "http://www.w3.org/2001/XMLSchema#integer",
+          "value": "9969"
+        }
+      },
+      {
+        "src": {
+          "type": "uri",
+          "value": "http://nextprot.org/rdf/source/PINC"
+        },
+        "pred": {
+          "type": "uri",
+          "value": "http://nextprot.org/rdf#function"
+        },
+        "cnt": {
+          "type": "typed-literal",
+          "datatype": "http://www.w3.org/2001/XMLSchema#integer",
+          "value": "8149"
+        }
+      },
+      {
+        "src": {
+          "type": "uri",
+          "value": "http://nextprot.org/rdf/source/GO_central"
+        },
+        "pred": {
+          "type": "uri",
+          "value": "http://nextprot.org/rdf#function"
+        },
+        "cnt": {
+          "type": "typed-literal",
+          "datatype": "http://www.w3.org/2001/XMLSchema#integer",
+          "value": "7156"
+        }
+      },
+      {
+        "src": {
+          "type": "uri",
+          "value": "http://nextprot.org/rdf/source/IntAct"
+        },
+        "pred": {
+          "type": "uri",
+          "value": "http://nextprot.org/rdf#function"
+        },
+        "cnt": {
+          "type": "typed-literal",
+          "datatype": "http://www.w3.org/2001/XMLSchema#integer",
+          "value": "4957"
+        }
+      },
+      {
+        "src": {
+          "type": "uri",
+          "value": "http://nextprot.org/rdf/source/GOC"
+        },
+        "pred": {
+          "type": "uri",
+          "value": "http://nextprot.org/rdf#function"
+        },
+        "cnt": {
+          "type": "typed-literal",
+          "datatype": "http://www.w3.org/2001/XMLSchema#integer",
+          "value": "4219"
+        }
+      },
+      {
+        "src": {
+          "type": "uri",
+          "value": "http://nextprot.org/rdf/source/MGI"
+        },
+        "pred": {
+          "type": "uri",
+          "value": "http://nextprot.org/rdf#function"
+        },
+        "cnt": {
+          "type": "typed-literal",
+          "datatype": "http://www.w3.org/2001/XMLSchema#integer",
+          "value": "2212"
+        }
+      },
+      {
+        "src": {
+          "type": "uri",
+          "value": "http://nextprot.org/rdf/source/HGNC"
+        },
+        "pred": {
+          "type": "uri",
+          "value": "http://nextprot.org/rdf#function"
+        },
+        "cnt": {
+          "type": "typed-literal",
+          "datatype": "http://www.w3.org/2001/XMLSchema#integer",
+          "value": "1886"
+        }
+      },
+      {
+        "src": {
+          "type": "uri",
+          "value": "http://nextprot.org/rdf/source/ParkinsonsUK-UCL"
+        },
+        "pred": {
+          "type": "uri",
+          "value": "http://nextprot.org/rdf#function"
+        },
+        "cnt": {
+          "type": "typed-literal",
+          "datatype": "http://www.w3.org/2001/XMLSchema#integer",
+          "value": "850"
+        }
+      },
+      {
+        "src": {
+          "type": "uri",
+          "value": "http://nextprot.org/rdf/source/NTNU_SB"
+        },
+        "pred": {
+          "type": "uri",
+          "value": "http://nextprot.org/rdf#function"
+        },
+        "cnt": {
+          "type": "typed-literal",
+          "datatype": "http://www.w3.org/2001/XMLSchema#integer",
+          "value": "494"
+        }
+      },
+      {
+        "src": {
+          "type": "uri",
+          "value": "http://nextprot.org/rdf/source/DFLAT"
+        },
+        "pred": {
+          "type": "uri",
+          "value": "http://nextprot.org/rdf#function"
+        },
+        "cnt": {
+          "type": "typed-literal",
+          "datatype": "http://www.w3.org/2001/XMLSchema#integer",
+          "value": "196"
+        }
+      },
+      {
+        "src": {
+          "type": "uri",
+          "value": "http://nextprot.org/rdf/source/FlyBase"
+        },
+        "pred": {
+          "type": "uri",
+          "value": "http://nextprot.org/rdf#function"
+        },
+        "cnt": {
+          "type": "typed-literal",
+          "datatype": "http://www.w3.org/2001/XMLSchema#integer",
+          "value": "124"
+        }
+      },
+      {
+        "src": {
+          "type": "uri",
+          "value": "http://nextprot.org/rdf/source/Alzheimers_University_of_Toronto"
+        },
+        "pred": {
+          "type": "uri",
+          "value": "http://nextprot.org/rdf#function"
+        },
+        "cnt": {
+          "type": "typed-literal",
+          "datatype": "http://www.w3.org/2001/XMLSchema#integer",
+          "value": "121"
+        }
+      },
+      {
+        "src": {
+          "type": "uri",
+          "value": "http://nextprot.org/rdf/source/AgBase"
+        },
+        "pred": {
+          "type": "uri",
+          "value": "http://nextprot.org/rdf#function"
+        },
+        "cnt": {
+          "type": "typed-literal",
+          "datatype": "http://www.w3.org/2001/XMLSchema#integer",
+          "value": "113"
+        }
+      },
+      {
+        "src": {
+          "type": "uri",
+          "value": "http://nextprot.org/rdf/source/GDB"
+        },
+        "pred": {
+          "type": "uri",
+          "value": "http://nextprot.org/rdf#function"
+        },
+        "cnt": {
+          "type": "typed-literal",
+          "datatype": "http://www.w3.org/2001/XMLSchema#integer",
+          "value": "45"
+        }
+      },
+      {
+        "src": {
+          "type": "uri",
+          "value": "http://nextprot.org/rdf/source/WormBase"
+        },
+        "pred": {
+          "type": "uri",
+          "value": "http://nextprot.org/rdf#function"
+        },
+        "cnt": {
+          "type": "typed-literal",
+          "datatype": "http://www.w3.org/2001/XMLSchema#integer",
+          "value": "16"
+        }
+      },
+      {
+        "src": {
+          "type": "uri",
+          "value": "http://nextprot.org/rdf/source/MTBbase"
+        },
+        "pred": {
+          "type": "uri",
+          "value": "http://nextprot.org/rdf#function"
+        },
+        "cnt": {
+          "type": "typed-literal",
+          "datatype": "http://www.w3.org/2001/XMLSchema#integer",
+          "value": "10"
+        }
+      },
+      {
+        "src": {
+          "type": "uri",
+          "value": "http://nextprot.org/rdf/source/dictyBase"
+        },
+        "pred": {
+          "type": "uri",
+          "value": "http://nextprot.org/rdf#function"
+        },
+        "cnt": {
+          "type": "typed-literal",
+          "datatype": "http://www.w3.org/2001/XMLSchema#integer",
+          "value": "3"
+        }
+      },
+      {
+        "src": {
+          "type": "uri",
+          "value": "http://nextprot.org/rdf/source/Roslin_Institute"
+        },
+        "pred": {
+          "type": "uri",
+          "value": "http://nextprot.org/rdf#function"
+        },
+        "cnt": {
+          "type": "typed-literal",
+          "datatype": "http://www.w3.org/2001/XMLSchema#integer",
+          "value": "1"
+        }
+      },
+      {
+        "src": {
+          "type": "uri",
+          "value": "http://nextprot.org/rdf/source/SGD"
+        },
+        "pred": {
+          "type": "uri",
+          "value": "http://nextprot.org/rdf#function"
+        },
+        "cnt": {
+          "type": "typed-literal",
+          "datatype": "http://www.w3.org/2001/XMLSchema#integer",
+          "value": "1"
+        }
+      },
+      {
+        "src": {
+          "type": "uri",
+          "value": "http://nextprot.org/rdf/source/IntAct"
+        },
+        "pred": {
+          "type": "uri",
+          "value": "http://nextprot.org/rdf#interaction"
+        },
+        "cnt": {
+          "type": "typed-literal",
+          "datatype": "http://www.w3.org/2001/XMLSchema#integer",
+          "value": "80447"
+        }
+      },
+      {
+        "src": {
+          "type": "uri",
+          "value": "http://nextprot.org/rdf/source/Uniprot"
+        },
+        "pred": {
+          "type": "uri",
+          "value": "http://nextprot.org/rdf#interaction"
+        },
+        "cnt": {
+          "type": "typed-literal",
+          "datatype": "http://www.w3.org/2001/XMLSchema#integer",
+          "value": "23606"
+        }
+      },
+      {
+        "src": {
+          "type": "uri",
+          "value": "http://nextprot.org/rdf/source/PeptideAtlas"
+        },
+        "pred": {
+          "type": "uri",
+          "value": "http://nextprot.org/rdf#mapping"
+        },
+        "cnt": {
+          "type": "typed-literal",
+          "datatype": "http://www.w3.org/2001/XMLSchema#integer",
+          "value": "997154"
+        }
+      },
+      {
+        "src": {
+          "type": "uri",
+          "value": "http://nextprot.org/rdf/source/SRMAtlas"
+        },
+        "pred": {
+          "type": "uri",
+          "value": "http://nextprot.org/rdf#mapping"
+        },
+        "cnt": {
+          "type": "typed-literal",
+          "datatype": "http://www.w3.org/2001/XMLSchema#integer",
+          "value": "144178"
+        }
+      },
+      {
+        "src": {
+          "type": "uri",
+          "value": "http://nextprot.org/rdf/source/NextProt"
+        },
+        "pred": {
+          "type": "uri",
+          "value": "http://nextprot.org/rdf#mapping"
+        },
+        "cnt": {
+          "type": "typed-literal",
+          "datatype": "http://www.w3.org/2001/XMLSchema#integer",
+          "value": "129245"
+        }
+      },
+      {
+        "src": {
+          "type": "uri",
+          "value": "http://nextprot.org/rdf/source/Cosmic"
+        },
+        "pred": {
+          "type": "uri",
+          "value": "http://nextprot.org/rdf#variant"
+        },
+        "cnt": {
+          "type": "typed-literal",
+          "datatype": "http://www.w3.org/2001/XMLSchema#integer",
+          "value": "1030061"
+        }
+      },
+      {
+        "src": {
+          "type": "uri",
+          "value": "http://nextprot.org/rdf/source/dbSNP"
+        },
+        "pred": {
+          "type": "uri",
+          "value": "http://nextprot.org/rdf#variant"
+        },
+        "cnt": {
+          "type": "typed-literal",
+          "datatype": "http://www.w3.org/2001/XMLSchema#integer",
+          "value": "454996"
+        }
+      },
+      {
+        "src": {
+          "type": "uri",
+          "value": "http://nextprot.org/rdf/source/Uniprot"
+        },
+        "pred": {
+          "type": "uri",
+          "value": "http://nextprot.org/rdf#variant"
+        },
+        "cnt": {
+          "type": "typed-literal",
+          "datatype": "http://www.w3.org/2001/XMLSchema#integer",
+          "value": "71041"
+        }
+      }
+    ]
+  }
+}
