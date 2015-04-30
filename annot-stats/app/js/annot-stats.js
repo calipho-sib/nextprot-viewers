@@ -159,7 +159,7 @@ function defineSourceColor(src) {
 // Load/parse json file and manage data
 var getMyJSON = function () {
 
-    $.getJSON( "app/assets/np-annot-typ-src.json", function( data ) {
+    $.getJSON( "np-annot-typ-src.json", function( data ) {
 
         var allData = {};
 
