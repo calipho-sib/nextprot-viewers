@@ -33,13 +33,13 @@ module.exports = function(grunt) {
         files: ['*.js']
       },
       handlebars: {
-        files: '*.tmpl',
+        files: 'templates/*.tmpl',
         tasks: ['handlebars:compile']
       }
     },
     handlebars: {
       compile: {
-        src: '*.tmpl',
+        src: 'templates/*.tmpl',
         dest: 'gist_templates.js',
         options: {
           namespace: "HBtemplates"

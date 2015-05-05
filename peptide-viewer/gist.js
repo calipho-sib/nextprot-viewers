@@ -207,7 +207,7 @@ function initNXDivs() {
                     return listIsoforms;
                 }())
             };
-            var template = HBtemplates['isoformChoice.tmpl'];
+            var template = HBtemplates['templates/isoformChoice.tmpl'];
             var results = template(datas);
             $("#nx-isoformChoice").append(results);
             /////////// EventListener to change isoform
@@ -271,7 +271,7 @@ function initNXDivs() {
             if (data.Peptides.length > 0) $("#nx-detailedPeptide").show("slow");
             else $("#nx-detailedPeptide").hide("slow");
 
-            var template = HBtemplates['detailedPeptide.tmpl'];
+            var template = HBtemplates['templates/detailedPeptide.tmpl'];
             $("#nx-detailedPeptide").html(template);
 
             var fillPeptideInfo = {
@@ -473,7 +473,7 @@ function initNXDivs() {
             };
             datas.PeptideLength = datas.Peptides.length;
 
-            var template = HBtemplates['peptideTable.tmpl'];
+            var template = HBtemplates['templates/peptideTable.tmpl'];
             var results = template(datas);
             $("#nx-overviewPeptide").html(results);
             var defaultSeq = $("#fastaSeq").html();
@@ -502,7 +502,7 @@ function initNXDivs() {
                     $(document).click(HL.stopHL);
                 },
                 findPeptide: function (event) {
-                    //var templateLoader = HBtemplates['preLoader.tmpl'];
+                    //var templateLoader = HBtemplates['templates/preLoader.tmpl'];
                     //$("#peptideTableTitle").append(templateLoader);
                     console.log("does it zorkk ???");
                     event.stopPropagation();
