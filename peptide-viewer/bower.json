@@ -1,0 +1,11 @@
+{
+  "name": "petide-viewer",
+  "dependencies": {
+    "sequence-viewer": "x.x.x",
+    "nextprot": "0.0.x"
+
+  },
+  "resolutions": {
+    "jquery": ">= 1.9.1"
+  }
+}

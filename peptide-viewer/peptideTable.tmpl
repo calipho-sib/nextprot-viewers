@@ -1,0 +1,36 @@
+<div id="peptideTableTitle" style="border-bottom: 1px solid #E7EAEC;padding-bottom:5px;;margin-bottom: 15px;">
+    <div style="display:inline-block;">
+            <span class="badge"
+                  style="background:#C50063;color:white;padding:8px;border-radius:70%;margin-right:10px;vertical-align:middle;">{{PeptideLength}}</span>
+    </div>
+    <h4 id="test" style="display:inline-block;vertical-align:middle;">Peptides</h4></div>
+<div style="height:200px;overflow:auto">
+    <table id= "pepTableSorted" class="table table-striped" style="font-size:12px;">
+        <thead>
+        <tr>
+            <th class="col-md-1"></th>
+            <th data-sort="string" class="col-md-1">Peptide Name <span class="caret"></span></th>
+            <th data-sort="positions" data-sort-default="asc" class="col-md-1" style="text-align:center;">Position <span class="caret"></span></th>
+            <th data-sort="int" class="col-md-1" style="text-align:center;">Length <span class="caret"></span></th>
+            <th data-sort="string" class="col-md-1">Natural <span class="caret"></span></th>
+            <th data-sort="string" class="col-md-1">Proteotypic <span class="caret"></span></th>
+            <th data-sort="string" class="col-md-1">Synthetic <span class="caret"></span></th>
+        </tr>
+        </thead>
+        <tbody>
+        {{#Peptides}}
+        <tr>
+            <td><input class="PepSelected" type="checkbox"></td>
+            <td>{{name}}</td>
+            <td style="text-align:center;"><a class="pepPos" style="cursor:pointer;">{{position.first}} - {{position.second}}</a></td>
+            <td style="text-align:center;">{{length}}</td>
+            {{#properties}}
+            {{#if natural}}<td>natural</td>
+            {{else}}<td>-</td>{{/if}}
+            {{#if proteotypic}}<td>proteotypic</td>
+            {{else}}<td>-</td>{{/if}}
+            {{#if synthetic}}<td>synthetic</td>
+            {{else}}<td>-</td>{{/if}}{{/properties}}
+        </tr>{{/Peptides}}</tbody>
+    </table>
+</div>
