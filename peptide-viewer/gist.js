@@ -5,7 +5,6 @@ function initNXDivs() {
     var nx = new Nextprot.Client("SequenceViewer", "nextprotTeam");
     var nxEntryName = nx.getEntryName();
     var cpt = 0;
-    var overview;
     var isoforms;
     var annotations;
     var peptideMappings;
@@ -348,27 +347,30 @@ function initNXDivs() {
                     }
                     if (peptide.properties.proteotypic === false) {
                         var entryMatchListHTML = "<dl><dt>Entry match list</dt><dd><ul style=\"padding-left:20px;\">";
-                        var query = "select distinct ?entry where { "+
-                        "?entry :isoform ?iso . "+
-                        "?iso :peptideMapping / :peptideName \"NX_PEPT00454933\"^^xsd:string . "+
-                        "}";
+                        var query = "select distinct ?entry ?gene where { "+
+                            "?entry :isoform ?iso . "+
+                            "?entry :gene / :name ?gene ."+
+                            "?iso :peptideMapping / :peptideName \"" + peptide.name + "\"^^xsd:string . "+
+                            "}";
 
                         nx.executeSparql(query).then(function (data) {
-                                var entryMatch = [];
-                                data.results.bindings.forEach(function (o) {
-                                    var infos = {
-                                        "entryID": o.entry.value.toString().match(/[^\/]*$/)[0],
-                                        "url": ""
-                                    };
-                                    infos.url = "/?nxentry=" + infos.entryID;
-                                    entryMatch.push(infos);
-                                });
-                                entryMatch.forEach(function (o) {
-                                    entryMatchListHTML += "<li><a href=\"" + o.url + "\">" + o.entryID + "</li>";
-                                });
-                                entryMatchListHTML += "</ul></dd></dl>";
-                                $('#proteomeProperties').html(entryMatchListHTML);
-                            }, function (error) {
+                            console.log(data);
+                            var entryMatch = [];
+                            data.results.bindings.forEach(function (o) {
+                                var infos = {
+                                    "entryID": o.entry.value.toString().match(/[^\/]*$/)[0],
+                                    "url": "",
+                                    "geneName": o.gene.value
+                                };
+                                infos.url = "/?nxentry=" + infos.entryID;
+                                entryMatch.push(infos);
+                            });
+                            entryMatch.forEach(function (o) {
+                                entryMatchListHTML += "<li><a href=\"" + o.url + "\">" + o.entryID + "</a>" + "<span style=\"font-style: italic; margin-left:5px;\"> ( Gene Name : " + o.geneName + " )</span></li>";
+                            });
+                            entryMatchListHTML += "</ul></dd></dl>";
+                            $('#proteomeProperties').html(entryMatchListHTML);
+                        }, function (error) {
                             console.log(error.responseText);
                         });
                     }
@@ -401,28 +403,28 @@ function initNXDivs() {
                     });
                     if (pmidFound === true) {
                         var query = "SELECT ?iso ?ptmref ?ptmpub ?ptmpubid ?mappubid ?ptmtype ?ptmstart ?ptmend ?ptmterm ?ptmlabel ?ptmcomment WHERE {" +
-                        "values (?pepName ?iso) {(\"" + peptide.name + "\"^^xsd:string isoform:" + isoName + ") }" +
-                        "?iso :ptm ?ptm ." +
-                        "?ptm rdf:type ?ptmtype ." +
-                        "optional { ?ptm :start ?ptmstart } ." +
-                        "optional { ?ptm :end ?ptmend } ." +
-                        "optional { ?ptm :term ?ptmterm ." +
-                        "?ptmterm rdfs:label ?ptmlabel } ." +
-                        "optional { ?ptm rdfs:comment ?ptmcomment } ." +
-                        "?ptm :evidence ?ptmevi ." +
-                        "?ptmevi :reference ?ptmref ." +
-                        "?ptmref :from ?ptmpub." +
-                        "bind (substr(str(?ptmpub),8) as ?ptmpubid)" +
-                        "filter (contains(?ptmpub, \"PubMed\"))" +
-                        "?iso :peptideMapping ?map ." +
-                        "?map :peptideName ?pepName ." +
-                        "?map :evidence ?mapevi ." +
-                        "?mapevi :assignedBy ?mapsrc ." +
-                        "bind (substr(str(?mapsrc),37,8) as ?mappubid)" +
-                        "filter (contains(str(?mapsrc), \"PMID\"))" +
-                        "filter (?ptmtype  in (:CrossLink , :ModifiedResidue , :GlycosylationSite)) ." +
-                        "filter (?ptmpubid = ?mappubid)" +
-                        "}";
+                            "values (?pepName ?iso) {(\"" + peptide.name + "\"^^xsd:string isoform:" + isoName + ") }" +
+                            "?iso :ptm ?ptm ." +
+                            "?ptm rdf:type ?ptmtype ." +
+                            "optional { ?ptm :start ?ptmstart } ." +
+                            "optional { ?ptm :end ?ptmend } ." +
+                            "optional { ?ptm :term ?ptmterm ." +
+                            "?ptmterm rdfs:label ?ptmlabel } ." +
+                            "optional { ?ptm rdfs:comment ?ptmcomment } ." +
+                            "?ptm :evidence ?ptmevi ." +
+                            "?ptmevi :reference ?ptmref ." +
+                            "?ptmref :from ?ptmpub." +
+                            "bind (substr(str(?ptmpub),8) as ?ptmpubid)" +
+                            "filter (contains(?ptmpub, \"PubMed\"))" +
+                            "?iso :peptideMapping ?map ." +
+                            "?map :peptideName ?pepName ." +
+                            "?map :evidence ?mapevi ." +
+                            "?mapevi :assignedBy ?mapsrc ." +
+                            "bind (substr(str(?mapsrc),37,8) as ?mappubid)" +
+                            "filter (contains(str(?mapsrc), \"PMID\"))" +
+                            "filter (?ptmtype  in (:CrossLink , :ModifiedResidue , :GlycosylationSite)) ." +
+                            "filter (?ptmpubid = ?mappubid)" +
+                            "}";
 
                         nx.executeSparql(query).then(function (data) {
                             if (data.results.bindings.length > 0) {
@@ -592,17 +594,17 @@ function initNXDivs() {
                             HashAA.push({"start": begin-1, "end": i, "color": subseqColor, "underscore": subseq_});
                         }
 
-                }
-                var intermediate = new Date().getTime();
+                    }
+                    var intermediate = new Date().getTime();
 
-                console.log('Time to execute AAproperties part (1600 before): ', (intermediate - datestart));
-                proteoCoverage = ((proteoCoverage/seqLength)*100).toFixed(2);
-                pepCoverage = ((pepCoverage/seqLength)*100).toFixed(2);
-                $("#proteoCover").text(proteoCoverage + "%");
-                $("#pepCover").text(pepCoverage + "%");
+                    console.log('Time to execute AAproperties part (1600 before): ', (intermediate - datestart));
+                    proteoCoverage = ((proteoCoverage/seqLength)*100).toFixed(2);
+                    pepCoverage = ((pepCoverage/seqLength)*100).toFixed(2);
+                    $("#proteoCover").text(proteoCoverage + "%");
+                    $("#pepCover").text(pepCoverage + "%");
 
-                return HashAA;
-            },
+                    return HashAA;
+                },
                 moreInfos: function (event) {
                     var selection = [];
                     $(".PepSelected").each(function (o) {
@@ -656,7 +658,7 @@ function initNXDivs() {
                             if (alreadySaved === false) {
                                 peptideMappings.push(o);
                             }
-                            });
+                        });
                         break;
                     case 4:
                         matureProtein = oneData;
