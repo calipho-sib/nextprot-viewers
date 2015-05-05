@@ -1,0 +1,28 @@
+{
+  "name": "nextprot-js",
+  "version": "0.0.19",
+  "main": "dist/nextprot.min.js",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "vendor",
+    "demo"
+  ],
+  "dependencies": {
+    "jquery": "x.x.x",
+    "handlebars": "x.x.x",
+    "bootstrap": "3.x.x"
+  },
+  "homepage": "https://github.com/calipho-sib/nextprot-js",
+  "_release": "0.0.19",
+  "_resolution": {
+    "type": "version",
+    "tag": "v0.0.19",
+    "commit": "7beb2aa85d5de35eb221dbe9832b6c43ec408955"
+  },
+  "_source": "git://github.com/calipho-sib/nextprot-js.git",
+  "_target": "0.0.x",
+  "_originalSource": "nextprot"
+}
