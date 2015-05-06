@@ -1,8 +1,10 @@
-# Annotation statistics (nextprot-viewers/annot-stats)
+# Annotation statistic viewer (nextprot-viewers/annot-stats)
 
 This viewer shows sources of the annotations integrated into neXtProt. It is written in javascript.  
-You can see a live demo here : 
+You can see a live demo here:
 * https://cdn.rawgit.com/calipho-sib/nextprot-viewers/develop/annot-stats/app/assets/index.html
+
+![Annotation statistic viewer](./app/img/annot-stats-screenshot.png)
 
 This viewer is based on a provided JSON file `./app/assets/np-annot-typ-src.json`
 
@@ -29,5 +31,5 @@ npm install
 ```
 ./node_modules/.bin/grunt serve
 ```
-* Access to the viewer in the browser 
+* Access to the viewer in the browser
 http://localhost:9000/app/assets/index.html
