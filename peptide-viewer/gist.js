@@ -13,7 +13,7 @@ function initNXDivs() {
     var seq1 = null;
 
 
-    (function ($) {
+    (function ($) {e
         $.fn.hasVerticalScrollBar = function () {
             return this.get(0) ? this.get(0).scrollHeight > this.innerHeight() : false;
         }
@@ -423,7 +423,7 @@ function initNXDivs() {
                             "bind (substr(str(?mapsrc),37,8) as ?mappubid)" +
                             "filter (contains(str(?mapsrc), \"PMID\"))" +
                             "filter (?ptmtype  in (:CrossLink , :ModifiedResidue , :GlycosylationSite)) ." +
-                            "filter (?ptmpubid = ?mappubid)" +
+                            "filter (str(?ptmpubid) = str(?mappubid))" +
                             "}";
 
                         nx.executeSparql(query).then(function (data) {
