@@ -1,7 +1,7 @@
 # Peptide-viewer
 This peptide viewer show detailed informations of the peptide covering of a specific human protein given in the url.
 You can see a live demo here :
-* http://calipho-sib.github.io/sequence-viewer/demo/
+* https://rawgit.com/calipho-sib/nextprot-viewers/develop/peptide-viewer/index.html?nxentry=NX_P46976
 
 This viewer, as those on the neXtProt-viewer repository, is based on the neXtProt API (https://api.nextprot.org), which can be access through the javascript library nextprot-js (see https://github.com/calipho-sib/nextprot-js). 
 Take a look to create your own application with the human protein data from neXtProt !
