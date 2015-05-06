@@ -15,7 +15,7 @@ npm install
 ```
 ./node_modules/.bin/bower install
 ```
-* Later on when a dependeny has changed, update Bower dependencies
+* Later on when a dependency has changed, update Bower dependencies
 ```
 ./node_modules/.bin/bower update
 ```
