@@ -3,7 +3,7 @@ This peptide viewer shows detailed information of the peptide covering of a spec
 To access to a specific protein, simply add "?nxentry=NX_" followed by an Uniprot ID.
 
 You can see a live demo here :
-* https://rawgit.com/calipho-sib/nextprot-viewers/develop/peptide-viewer/app/assets/index.html?nxentry=NX_P46976
+* https://cdn.rawgit.com/calipho-sib/nextprot-viewers/master/peptide-viewer/app/assets/index.html?nxentry=NX_P46976
 
 This viewer is based on the neXtProt API (https://api.nextprot.org), which can be access through the javascript library nextprot-js (see https://github.com/calipho-sib/nextprot-js).
 (Take a look to create your own application with the human protein data from neXtProt !)
