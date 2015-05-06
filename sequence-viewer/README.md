@@ -1,6 +1,6 @@
 #Sequence viewer
 The sequence viewer is a super easy javascript library to use in order to draw a protein sequence in a readable way.
-![Sequence viewer](/assets/sequence-viewer.png)
+![Sequence viewer](./assets/sequence-viewer.png)
 
 #How to run
 
@@ -19,7 +19,7 @@ seq.render('sequence-viewer')
 ```
 4) Et voila!
 
-![Sequence viewer](/assets/sequence-viewer.png)
+![Sequence viewer](./assets/sequence-viewer.png)
 
 
 Note: that if you choose the later approach you should also include the dependencies, jquery,handlebars and bootstrap.min.css
