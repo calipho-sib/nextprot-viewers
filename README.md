@@ -15,7 +15,7 @@ A demo page of this viewer is visible here:
 The sequence viewer is a super easy javascript library to use in order to draw a protein sequence in a readable way.
 A demo page of this viewer is visible here:
 * http://calipho-sib.github.io/sequence-viewer/demo/
-![Sequence viewer](./sequence-viewer/app/assets/sequence-viewer.png)
+![Sequence viewer](./sequence-viewer/assets/sequence-viewer.png)
 
 ## Peptide viewer (nextprot-viewers/peptide-viewer)
 
