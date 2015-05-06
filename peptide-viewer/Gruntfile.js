@@ -9,13 +9,13 @@ module.exports = function(grunt) {
       },
       dist: {
         src: ['bower_components/jquery/dist/jquery.js',
-          'highcharts.js',
+          'app/js/highcharts.js',
         'bower_components/handlebars/handlebars.js',
         'bower_components/sequence-viewer/src/sequence-viewer.js',
         'bower_components/nextprot/dist/nextprot.min.js'
         //'gist_templates.js'
         ],
-        dest: 'dependencies.js'
+        dest: 'app/js/dependencies.js'
       }
     },
     connect: {
@@ -30,17 +30,17 @@ module.exports = function(grunt) {
     watch: {
       all: {
         options: {livereload: true},
-        files: ['*.js']
+        files: ['app/js/*.js']
       },
       handlebars: {
-        files: 'templates/*.tmpl',
+        files: 'app/assets/templates/*.tmpl',
         tasks: ['handlebars:compile']
       }
     },
     handlebars: {
       compile: {
-        src: 'templates/*.tmpl',
-        dest: 'gist_templates.js',
+        src: 'app/assets/templates/*.tmpl',
+        dest: 'app/js/gist_templates.js',
         options: {
           namespace: "HBtemplates"
         }
