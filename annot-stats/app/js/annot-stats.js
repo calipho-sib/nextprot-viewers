@@ -29,10 +29,10 @@ function buildCharts(allData, maxElement) {
 
         Highcharts.getOptions().lang.thousandsSep = ",";
 
-        $("#charts").append($("<div id=chart-" + index + " class='chart' ></div>"));
+        $("#annot-stats").append($("<div id=annot-stats-" + index + " class='annot-stats' ></div>"));
 
         // Build the chart
-        $( '#chart-'+index ).highcharts({
+        $( '#annot-stats-'+index ).highcharts({
             chart: {
                 plotBackgroundColor: null,
                 plotBorderWidth: null,
