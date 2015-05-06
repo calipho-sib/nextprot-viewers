@@ -11,7 +11,7 @@ module.exports = function(grunt) {
         src: ['bower_components/jquery/dist/jquery.js',
           'highcharts.js',
         'bower_components/handlebars/handlebars.js',
-        '../sequence-viewer/src/sequence-viewer.js',
+        'bower_components/sequence-viewer/src/sequence-viewer.js',
         'bower_components/nextprot/dist/nextprot.min.js'
         //'gist_templates.js'
         ],
