@@ -1,5 +1,5 @@
 # neXtProt viewers (nextprot-viewers)
-This repository groups viewers developed for [neXtProt Search](search.nextprot.org).
+This repository groups viewers developed for [neXtProt Search](https://search.nextprot.org).
 All this viewers could be reused
 
 
