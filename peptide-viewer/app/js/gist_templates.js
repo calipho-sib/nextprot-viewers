@@ -52,22 +52,26 @@ this["HBtemplates"]["app/assets/templates/peptideTable.tmpl"] = Handlebars.templ
   return "            "
     + ((stack1 = helpers['if'].call(depth0,(depth0 != null ? depth0.natural : depth0),{"name":"if","hash":{},"fn":this.program(3, data, 0),"inverse":this.program(5, data, 0),"data":data})) != null ? stack1 : "")
     + "\n            "
-    + ((stack1 = helpers['if'].call(depth0,(depth0 != null ? depth0.proteotypic : depth0),{"name":"if","hash":{},"fn":this.program(7, data, 0),"inverse":this.program(5, data, 0),"data":data})) != null ? stack1 : "")
+    + ((stack1 = helpers['if'].call(depth0,(depth0 != null ? depth0.proteotypic : depth0),{"name":"if","hash":{},"fn":this.program(7, data, 0),"inverse":this.program(9, data, 0),"data":data})) != null ? stack1 : "")
     + "\n            "
-    + ((stack1 = helpers['if'].call(depth0,(depth0 != null ? depth0.synthetic : depth0),{"name":"if","hash":{},"fn":this.program(9, data, 0),"inverse":this.program(5, data, 0),"data":data})) != null ? stack1 : "");
+    + ((stack1 = helpers['if'].call(depth0,(depth0 != null ? depth0.synthetic : depth0),{"name":"if","hash":{},"fn":this.program(11, data, 0),"inverse":this.program(13, data, 0),"data":data})) != null ? stack1 : "");
 },"3":function(depth0,helpers,partials,data) {
     return "<td>natural</td>\n            ";
 },"5":function(depth0,helpers,partials,data) {
-    return "<td>-</td>";
+    return "<td>non-natural</td>";
 },"7":function(depth0,helpers,partials,data) {
     return "<td>proteotypic</td>\n            ";
 },"9":function(depth0,helpers,partials,data) {
+    return "<td>non-proteotypic</td>";
+},"11":function(depth0,helpers,partials,data) {
     return "<td>synthetic</td>\n            ";
+},"13":function(depth0,helpers,partials,data) {
+    return "<td>non-synthetic</td>";
 },"compiler":[6,">= 2.0.0-beta.1"],"main":function(depth0,helpers,partials,data) {
     var stack1, helper, options, alias1=helpers.helperMissing, alias2="function", buffer = 
   "<div id=\"peptideTableTitle\" style=\"border-bottom: 1px solid #E7EAEC;padding-bottom:5px;;margin-bottom: 15px;\">\n    <div style=\"display:inline-block;\">\n            <span class=\"badge\"\n                  style=\"background:#C50063;color:white;padding:8px;border-radius:70%;margin-right:10px;vertical-align:middle;\">"
     + this.escapeExpression(((helper = (helper = helpers.PeptideLength || (depth0 != null ? depth0.PeptideLength : depth0)) != null ? helper : alias1),(typeof helper === alias2 ? helper.call(depth0,{"name":"PeptideLength","hash":{},"data":data}) : helper)))
-    + "</span>\n    </div>\n    <h4 id=\"test\" style=\"display:inline-block;vertical-align:middle;\">Peptides</h4></div>\n<div style=\"height:200px;overflow:auto\">\n    <table id= \"pepTableSorted\" class=\"table table-striped\" style=\"font-size:12px;\">\n        <thead>\n        <tr>\n            <th class=\"col-md-1\"></th>\n            <th data-sort=\"string\" class=\"col-md-1\">Peptide Name <span class=\"caret\"></span></th>\n            <th data-sort=\"positions\" data-sort-default=\"asc\" class=\"col-md-1\" style=\"text-align:center;\">Position <span class=\"caret\"></span></th>\n            <th data-sort=\"int\" class=\"col-md-1\" style=\"text-align:center;\">Length <span class=\"caret\"></span></th>\n            <th data-sort=\"string\" class=\"col-md-1\">Natural <span class=\"caret\"></span></th>\n            <th data-sort=\"string\" class=\"col-md-1\">Proteotypic <span class=\"caret\"></span></th>\n            <th data-sort=\"string\" class=\"col-md-1\">Synthetic <span class=\"caret\"></span></th>\n        </tr>\n        </thead>\n        <tbody>\n";
+    + "</span>\n    </div>\n    <h4 id=\"test\" style=\"display:inline-block;vertical-align:middle;\">Peptides</h4></div>\n<div style=\"height:200px;overflow: auto\">\n    <table id= \"pepTableSorted\" class=\"table table-striped table-fixed\" style=\"font-size:12px;\">\n        <thead>\n        <tr>\n            <th class=\"col-md-1\">Select</th>\n            <th data-sort=\"string\" class=\"col-md-1\">Peptide Name <span class=\"caret\"></span></th>\n            <th data-sort=\"positions\" data-sort-default=\"asc\" class=\"col-md-1\" style=\"text-align:center;\">Position <span class=\"caret\"></span></th>\n            <th data-sort=\"int\" class=\"col-md-1\" style=\"text-align:center;\">Length <span class=\"caret\"></span></th>\n            <th data-sort=\"string\" class=\"col-md-1\">Natural <span class=\"caret\"></span></th>\n            <th data-sort=\"string\" class=\"col-md-1\">Proteotypic <span class=\"caret\"></span></th>\n            <th data-sort=\"string\" class=\"col-md-1\">Synthetic <span class=\"caret\"></span></th>\n        </tr>\n        </thead>\n        <tbody>\n";
   stack1 = ((helper = (helper = helpers.Peptides || (depth0 != null ? depth0.Peptides : depth0)) != null ? helper : alias1),(options={"name":"Peptides","hash":{},"fn":this.program(1, data, 0),"inverse":this.noop,"data":data}),(typeof helper === alias2 ? helper.call(depth0,options) : helper));
   if (!helpers.Peptides) { stack1 = helpers.blockHelperMissing.call(depth0,stack1,options)}
   if (stack1 != null) { buffer += stack1; }
