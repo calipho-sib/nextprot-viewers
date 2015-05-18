@@ -31,5 +31,5 @@ npm install
 ```
 ./node_modules/.bin/grunt serve
 ```
-* Access to the viewer in the browser
+* Access to the viewer in the browser  
 http://localhost:9000/app/assets/index.html
