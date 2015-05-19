@@ -98,7 +98,7 @@ function initNXDivs() {
                                 "synthetic": o.synthetic,
                                 "proteotypic": o.proteotypic
                             },
-                            "isoformProteotypicity": "-",
+                            "isoformProteotypicity": "No",
                             "tissueSpecificity": o.evidences.map(function (p) {
                                 return p.assignedBy
                             }),
