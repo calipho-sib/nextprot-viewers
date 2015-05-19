@@ -81,6 +81,14 @@ function initNXDivs() {
             peptideMappings.forEach(function (o) {
                 if (o.isoformSpecificity[isoName]) {
                     for (var i = 0; i < o.isoformSpecificity[isoName].positions.length; i++) {
+
+                        var dict = {};
+
+                        o.evidences.map(function (q) {
+                            dict[q.databaseName] = q.accession;
+                        });
+
+
                         var peptide = {
                             "name": o.peptideUniqueName,
                             "position": o.isoformSpecificity[isoName].positions[i],
@@ -99,11 +107,7 @@ function initNXDivs() {
                             "postPeptide": "",
                             "include": [],
                             "includedIn": [],
-                            "sources": o.evidences.map(function (q) {
-                                return q.databaseName
-                            }).filter(function (elem, index, self) {
-                                return index == self.indexOf(elem);
-                            })
+                            "sources": dict
                         };
                         //if (o.natural === true) peptide.properties.push("natural");
                         //else peptide.properties.push("-");
@@ -122,6 +126,8 @@ function initNXDivs() {
                         peptide.prePeptide = getInfoForIsoform.Sequence(isoforms, isoName)[peptide.position.first - 2];
                         peptide.postPeptide = getInfoForIsoform.Sequence(isoforms, isoName)[peptide.position.second + 1];
                         peptideMap.push(peptide);
+
+                        console.log(peptide.sources)
                     }
                 }
             });
@@ -346,7 +352,8 @@ function initNXDivs() {
                         $('#nature').append("<li>synthetic</li>")
                     }
                     if (peptide.properties.proteotypic === false) {
-                        var entryMatchListHTML = "<dl><dt>Entry match list</dt><dd><ul style=\"padding-left:20px;\">";
+                        $('#nature').append("<li>Non-proteotypic</li>");
+                        var entryMatchListHTML = "<dl><dt>Entries containing the peptide</dt><dd><ul style=\"padding-left:20px;\">";
                         var query = "select distinct ?entry ?gene where { "+
                             "?entry :isoform ?iso . "+
                             "?entry :gene / :name ?gene ."+
@@ -392,8 +399,8 @@ function initNXDivs() {
                         });
                     }
                     var pmidFound = false;
-                    peptide.sources.forEach( function (o) {
-                        $("#pepSources").append("<li>" + o + "</li>");
+                    Object.keys(peptide.sources).forEach( function (o) {
+                        $("#pepSources").append("<li>" + o + " (" + peptide.sources[o] + ")" + "</li>");
                     });
                     peptide.tissueSpecificity.forEach(function (o) {
                         if (o.match("PMID")) {
