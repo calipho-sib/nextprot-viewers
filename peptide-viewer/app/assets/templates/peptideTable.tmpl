@@ -10,11 +10,10 @@
         <tr>
             <th class="col-md-1">Select</th>
             <th data-sort="string" class="col-md-1">Peptide Name <span class="caret"></span></th>
-            <th data-sort="positions" data-sort-default="asc" class="col-md-1" style="text-align:center;">Position <span class="caret"></span></th>
-            <th data-sort="int" class="col-md-1" style="text-align:center;">Length <span class="caret"></span></th>
-            <th data-sort="string" class="col-md-1">Natural <span class="caret"></span></th>
-            <th data-sort="string" class="col-md-1">Proteotypicity <span class="caret"></span></th>
-            <th data-sort="string" class="col-md-1">Synthetic <span class="caret"></span></th>
+            <th data-sort="positions" data-sort-default="asc" class="col-md-1" style="text-align:center;white-space: nowrap;">Position <span class="caret"></span></th>
+            <th data-sort="int" class="col-md-1" style="text-align:center;white-space: nowrap;">Length <span class="caret"></span></th>
+            <th data-sort="string" class="col-md-1">Category <span class="caret"></span></th>
+            <th data-sort="string" class="col-md-1" style="white-space: nowrap;">Proteotypicity <span class="caret"></span></th>
         </tr>
         </thead>
         <tbody>
@@ -25,12 +24,10 @@
             <td style="text-align:center;"><a class="pepPos" style="cursor:pointer;">{{position.first}} - {{position.second}}</a></td>
             <td style="text-align:center;">{{length}}</td>
             {{#properties}}
-            {{#if natural}}<td>natural</td>
-            {{else}}<td>non-natural</td>{{/if}}
+            {{#if natural}}{{#if synthetic}}<td>natural+synthetic</td>
+            {{else}}<td>natural</td>{{/if}}{{else}}<td>synthetic</td>{{/if}}
             {{#if proteotypic}}<td>proteotypic</td>
-            {{else}}<td>non-proteotypic</td>{{/if}}
-            {{#if synthetic}}<td>synthetic</td>
-            {{else}}<td>non-synthetic</td>{{/if}}{{/properties}}
+            {{else}}<td>non-proteotypic</td>{{/if}}{{/properties}}
         </tr>{{/Peptides}}</tbody>
     </table>
 </div>
