@@ -57,7 +57,7 @@ if ($("#nx-histogram").length > 0) {
                 margin: 40,
                 marginRight: 40,
                 marginLeft: 65,
-                marginBottom: 45
+                marginBottom: 50
             },
             tooltip: {
                 useHTML: true,
