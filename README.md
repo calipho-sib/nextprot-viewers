@@ -10,12 +10,6 @@ A demo page of this viewer is visible here:
 * https://cdn.rawgit.com/calipho-sib/nextprot-viewers/master/annot-stats/app/assets/index.html
 ![Annotation statistic viewer](./annot-stats/app/assets/img/annot-stats-screenshot.png)
 
-## Sequence viewer (nextprot-viewers/sequence-viewer)
-
-The sequence viewer is a super easy javascript library to use in order to draw a protein sequence in a readable way.
-A demo page of this viewer is visible here:
-* http://calipho-sib.github.io/sequence-viewer/demo/
-![Sequence viewer](./sequence-viewer/assets/sequence-viewer.png)
 
 ## Peptide viewer (nextprot-viewers/peptide-viewer)
 
