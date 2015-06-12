@@ -91,6 +91,7 @@ function initNXDivs() {
 
                         var peptide = {
                             "name": o.peptideUniqueName,
+                            "identifier": "",
                             "position": o.isoformSpecificity[isoName].positions[i],
                             "length": 0,
                             "properties": {
@@ -122,6 +123,7 @@ function initNXDivs() {
                         peptide.length = peptide.position.second - peptide.position.first + 1;
 
                         peptide.sequence = getInfoForIsoform.Sequence(isoforms, isoName).slice(peptide.position.first - 1, peptide.position.second);
+                        peptide.identifier = (peptide.sequence.length > 22) ? peptide.sequence.substring(0,10) + ".." + peptide.sequence.substring(peptide.sequence.length - 10) : peptide.sequence;
 
                         peptide.prePeptide = getInfoForIsoform.Sequence(isoforms, isoName)[peptide.position.first - 2];
                         peptide.postPeptide = getInfoForIsoform.Sequence(isoforms, isoName)[peptide.position.second + 1];
@@ -159,11 +161,11 @@ function initNXDivs() {
                     if (pepB.position.first > pepA.position.second) break;
 
                     if(isIncludedIn(pepA, pepB)){
-                        pepA.include.push(pepB.name);
-                        pepB.includedIn.push(pepA.name);
+                        pepA.include.push(pepB.identifier);
+                        pepB.includedIn.push(pepA.identifier);
                     }else  if(isIncludedIn(pepB, pepA)){
-                        pepB.include.push(pepA.name);
-                        pepA.includedIn.push(pepB.name);
+                        pepB.include.push(pepA.identifier);
+                        pepA.includedIn.push(pepB.identifier);
                     }
 
                 }
@@ -285,13 +287,14 @@ function initNXDivs() {
                     $("#nbPeptides").text(data.Peptides.length);
                     var listOfNames = "";
                     for (i = 0; i < data.Peptides.length; i++) {
-                        listOfNames += "<li><a class=\"name\" style=\"color:lightsteelblue;cursor:pointer;\">" + data.Peptides[i].name + "</a></li>";
+                        listOfNames += "<li><a class=\"name\" id=\"" + data.Peptides[i].name + "\" style=\"color:lightsteelblue;cursor:pointer;\">" + data.Peptides[i].identifier + "</a></li>";
                     }
                     $('#listNames').html(listOfNames);
                 },
                 peptideSelected: function () {
                     $(".name").click(function () {
-                        var name = $(this).text();
+                        var name = $(this).attr("id");
+                        console.log(name);
                         $(".nameActive").removeClass("nameActive");
                         $(this).addClass("nameActive");
                         fillPeptideInfo.fillDescription(name);
@@ -313,7 +316,7 @@ function initNXDivs() {
                             break;
                         }
                     }
-                    $('#titlePepName').text(peptide.name);
+                    $('#titlePepName').text(peptide.identifier);
                     peptide.position.forEach(function (o, i) {
                         var semiTrypticEnd = "-";
                         if (peptide.sequence[peptide.sequence.length - 1] === "K" || peptide.sequence[peptide.sequence.length - 1] === "R") semiTrypticEnd = "Tryp";
@@ -465,8 +468,9 @@ function initNXDivs() {
             };
             fillPeptideInfo.fillNames();
             $(".name:first").addClass("nameActive");
-            fillPeptideInfo.fillDescription($(".name:first").text());
+            fillPeptideInfo.fillDescription($(".name:first").attr("id"));
             fillPeptideInfo.peptideSelected();
+            //adjustHeight("#info-left","#info-right");
         }
     };
     var RenderPeptidesForIsoform = function (peptideMappings, isoName)  {
@@ -616,7 +620,8 @@ function initNXDivs() {
                     var selection = [];
                     $(".PepSelected").each(function (o) {
                         if ($(this).prop("checked")) {
-                            selection.push($(this).parent().next().text());
+                            console.log($(this).parent().parent().attr("id"));
+                            selection.push($(this).parent().parent().attr("id"));
                         }
                     });
                     addPeptidesInfos(selection, datas.Peptides, isoName);
