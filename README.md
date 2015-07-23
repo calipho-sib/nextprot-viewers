@@ -7,7 +7,7 @@ All this viewers could be reused
 
 This annotation statistic viewer shows sources of the annotations integrated into neXtProt.
 A demo page of this viewer is visible here:
-* https://cdn.rawgit.com/calipho-sib/nextprot-viewers/master/statistics/annotations/app/assets/index.html
+* https://cdn.rawgit.com/calipho-sib/nextprot-viewers/master/statistics/annotations/app/index.html
 ![Annotation statistic viewer](./statistics/annotations/app/assets/img/annot-stats-screenshot.png)
 
 
