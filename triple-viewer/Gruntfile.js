@@ -7,13 +7,24 @@ module.exports = function(grunt) {
       options: {
         separator: ';'
       },
-      dist: {
+      basic: {
         src: ['bower_components/jquery/dist/jquery.js',
+          'bower_components/bootstrap/dist/js/bootstrap.min.js',
           'bower_components/handlebars/handlebars.js',
-          'dist/sequence-viewer.min.js'
+          'vendor/js/nextprot2.js',
+          'bower_components/sequence-viewer/dist/sequence-viewer.js',
+          'bower_components/d3/d3.js',
+          'bower_components/feature-viewer/dist/feature-viewer.js',
+          'templates/compiled-templates.js',
+          'dist/triple-viewer.js'
         ],
-        dest: 'dist/sequence-viewer.bundle.js'
+        dest: 'dist/triple-viewer.bundle.js'
+      },
+      extras: {
+        src: ['css/style.css', 'bower_components/bootstrap/dist/css/bootstrap.min.css'],
+        dest: 'dist/triple-viewer.css'
       }
+
     },
     bump: {
       options: {
@@ -64,7 +75,7 @@ module.exports = function(grunt) {
     handlebars: {
       compile: {
         src: 'templates/*.tmpl',
-        dest: 'dist/compiled-templates.js',
+        dest: 'templates/compiled-templates.js',
         options: {
           namespace: "HBtemplates"
         }
