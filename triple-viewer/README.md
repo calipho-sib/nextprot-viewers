@@ -2,7 +2,9 @@
 
 ## Development
 
-`git clone https://github.com/calipho-sib/feature-viewer.git` 
+`git clone https://github.com/calipho-sib/nextprot-viewers.git` 
+
+`cd nextprot-viewers/triple-viewer`  (get to the specific folder)
 
 `npm install`  (will install the development dependencies)
 
