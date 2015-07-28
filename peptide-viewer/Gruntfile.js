@@ -7,16 +7,28 @@ module.exports = function(grunt) {
       options: {
         separator: ';'
       },
-      dist: {
+      basic: {
         src: ['bower_components/jquery/dist/jquery.js',
           'app/js/highcharts.js',
-        'bower_components/handlebars/handlebars.js',
-        'bower_components/sequence-viewer/src/sequence-viewer.js',
-        'bower_components/nextprot/dist/nextprot.min.js'
-        //'gist_templates.js'
+          'bower_components/handlebars/handlebars.js',
+          'bower_components/sequence-viewer/src/sequence-viewer.js',
+          'bower_components/nextprot/dist/nextprot.min.js',
+          'app/js/dependencies.js">',
+          'app/js/bootstrap.min.js">',
+          'app/js/gist_templates.js',
+          'app/js/stupidtable.js',
+          'app/js/nextprot-histogram.js',
+          'app/js/overview.js',
+          'app/js/gist.js'
+
         ],
-        dest: 'app/js/dependencies.js'
+        dest: 'dist/peptide-viewer.bundle.js'
+      },
+      extras: {
+        src: ['app/css/gist.css', 'bower_components/bootstrap/dist/css/bootstrap.min.css'],
+        dest: 'dist/peptide-viewer.css'
       }
+
     },
     connect: {
       server: {
