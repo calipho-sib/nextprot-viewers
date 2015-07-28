@@ -8,7 +8,7 @@
 
 <body>
 <div class="row" style="margin: 0px 20px;">
-    <div id="nx-overview" class="col-md-12" style="background:#fff;margin-top:10px;margin-bottom:10px;border-top:4px solid #E7EAEC;border-bottom: 1px solid #e7eaec;"></div>
+    <div id="nx-overview" class="col-md-12"></div>
 </div>
 <div class="row" style="margin: 0px 20px;">
     <div id="nx-isoformChoice" class="col-md-12" style="margin-bottom: -5px;"></div>
@@ -24,13 +24,14 @@
     <div class="col-md-6" style="padding-right:0px;">
         <div id="seqViewer" style="background:#fff;padding:5px 15px;;height:600px;border-top:4px solid #E7EAEC;border-bottom: 1px solid #e7eaec;"></div>
     </div>
+</div>
 </body>
 <script>
 
     ($(function () {
 
         var Nextprot = window.Nextprot;
-        var nx = new Nextprot.Client("test new nextprot feature viewer", "MatSchaeff-SIB");
+        var nx = new Nextprot.Client("neXtProt proteomics view", "Calipho-Team");
         var entry = nx.getEntryName();
         
         $(function () {
