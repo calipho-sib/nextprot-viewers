@@ -23831,8 +23831,1041 @@ function Sequence(sequence,isoformName) {
   });
   if (typeof define === "function" && define.amd) define(d3); else if (typeof module === "object" && module.exports) module.exports = d3;
   this.d3 = d3;
-}();;/*! feature-viewer 2015-07-27 */
-function FeatureViewer(a,b,c){function d(a){var b=[];return a.forEach(function(a){if(b===[])b.push(a.y),a.level=0;else{for(var c=!1,d=0;d<b.length;d++)if(a.x>b[d]){c=!0,a.level=d,b[d]=a.y;break}c===!1&&(b.push(a.y),a.level=b.length-1)}}),b.length}function e(a){u.append("g").attr("class","x axis Xaxis").attr("transform","translate(0,"+(a+20)+")").call(Q)}function f(a){u.selectAll(".Xaxis").attr("transform","translate(0,"+(a+20)+")")}function g(a){console.log("blblblbblbl"),t.attr("height",a+60+"px")}function h(){v=t.append("g").attr("class","pro axis").attr("transform","translate(0,"+G.top+")"),i()}function i(){w=v.selectAll(".yaxis").data(A).enter().append("g"),w.append("polygon").style("stroke","none").style("fill","rgba(95,46,38,0.2)").attr("points",function(a){return G.left-15+","+(a.y-3)+", "+(G.left-15)+","+(a.y+12)+", "+(G.left-7)+","+(a.y+4.5)}),w.append("rect").style("fill","rgba(95,46,38,0.2)").attr("x",function(){return G.left-95}).attr("y",function(a){return a.y-3}).attr("width","80").attr("height","15"),w.append("text").attr("class","yaxis").attr("text-anchor","end").attr("x",function(){return G.left-20}).attr("y",function(a){return a.y+8}).text(function(a){return a.title})}function j(a){a.on("mousedown",function(){brush_elm=t.select(".brush").node(),new_click_event=new Event("mousedown"),new_click_event.pageX=d3.event.pageX,new_click_event.clientX=d3.event.clientX,new_click_event.pageY=d3.event.pageY,new_click_event.clientY=d3.event.clientY,brush_elm.dispatchEvent(new_click_event)})}function k(){u.append("g").attr("class","brush").call(V).selectAll("rect").attr("height",B+50)}function l(){d3.select(b).selectAll("div.selectedRect").remove();var c=V.extent(),d=Math.abs(c[0]-c[1]);if(c[0]<c[1])var e=parseInt(c[0]-1),f=parseInt(c[1]+1);else var e=parseInt(c[1]+1),f=parseInt(c[0]-1);var g=M(d);if(!V.empty()&&d>F){var h=(a.length/d).toFixed(1);$(b+" .zoomUnit").text(h.toString()),y.showSequence&&g&&u.selectAll(".AA").empty()&&(D=e,T.sequence(a.substring(e,f),20,D)),J.domain(c),K.range(c),n(x,D),o(),d3.select(b).selectAll(".brush").call(V.clear())}else d3.select(b).selectAll(".brush").call(V.clear())}function m(){$(".zoomUnit").text("1"),J.domain([0,a.length-1]),K.range([0,a.length-1]);var b=M(a.length);b!==!1||u.selectAll(".AA").empty()||u.selectAll(".seqGroup").remove(),n(x,0),o()}function n(a,b){a.forEach(function(a){"rect"===a.type?U.rectangle(a):"multipleRect"===a.type?U.multiRec(a):"unique"===a.type?U.unique(a):"path"===a.type?U.path(a):"text"===a.type&&U.text(a,b)})}function o(){u.transition().duration(500).select(".x.axis").call(Q)}function p(){var a=d3.select(".chart").append("div").attr("class","Vline").style("position","absolute").style("z-index","19").style("width","1px").style("height",B+50+"px").style("top","30px").style("background","#000");d3.select(".chart").on("mousemove.Vline",function(){mousex=d3.mouse(this)[0]-2,a.style("left",mousex+"px")})}function q(a){var b,c,d,e,f=d3.select(a).data(),g=d3.select(".background").attr("width");d3.select("body").selectAll("div.selectedRect").remove();var h=d3.select(".chart").append("div").attr("class","selectedRect");3===f[0].length?(b=f[0][0].x,c=f[0][1].x,console.log("aaaaaaaa")):f[0].x===f[0].y?(b=f[0].x-.5,c=f[0].y+.5,console.log("bbbbbbbb")):(b=f[0].x,c=f[0].y,console.log("ccccccc")),J(b)<0?(d=G.left,e=J(c)):J(c)>g?(d=J(b)+G.left,e=g-J(b)):(d=J(b)+G.left,e=J(c)-J(b)),h.style({left:d+"px",top:"60px","background-color":"rgba(0, 0, 0, 0.2)",width:e+"px",height:B+50+"px",position:"absolute","z-index":-1,"box-shadow":"0 1px 2px 0 #656565"})}function r(b,c){if("undefined"==typeof c)var c={showAxis:!1,showSequence:!1,brushActive:!1,verticalLine:!1,toolbar:!1,zoommax:50};if(d3.select(b).style("position","relative").style("padding","0px").style("z-index","2"),c.toolbar===!0){console.log($(b+" .svgHeader").length);var d=$(b+" .svgHeader").length?d3.select(b+" .svgHeader"):d3.select(b).append("div").attr("class","svgHeader");if(console.log(d),!$(b+" .header-zoom").length){var f=d.append("div").attr("class","panel panel-default header-zoom").style("display","inline-block").style("width","150px").style("margin","0px").style("padding","0px");f.append("div").attr("class","panel-heading").style("padding","0px 15px").style("border-right","1px solid #DDD").style("display","inline-block").style("width","80px").append("h5").style("padding","0px").style("height","10px").style("color","#777").text("ZOOM"),f.append("div").attr("class","panel-body").style("display","inline-block").style("padding","0px").append("h5").style("padding-left","15px").style("height","10px").text("x ").append("span").attr("class","zoomUnit").text("1")}if(!$(b+" .header-position").length){var i=d.append("div").attr("class","panel panel-default header-position").style("display","inline-block").style("width","175px").style("margin","0px 20px").style("padding","0px");i.append("div").attr("class","panel-heading").style("padding","0px 15px").style("border-right","1px solid #DDD").style("display","inline-block").append("h5").style("padding","0px").style("height","10px").style("color","#777").text("POSITION"),i.append("div").attr("class","panel-body").style("display","inline-block").style("padding","0px").append("h5").style("padding-left","15px").style("height","10px").append("span").attr("id","zoomPosition").text("0")}}t=d3.select(b).append("svg").attr("width",H+G.left+G.right).attr("height",I+G.top+G.bottom).style("z-index","2").on("contextmenu",function(a,b){d3.event.preventDefault(),m()}),u=t.append("g").attr("transform","translate("+G.left+","+G.top+")"),u.append("defs").append("clipPath").attr("id","clip").append("rect").attr("width",H).attr("height",I),u.on("mousemove",function(){var a=d3.mouse(d3.select(".background").node());$(b+" #zoomPosition").text(Math.round(K(a[0])))}),c.showSequence&&(y.showSequence=!0,M(a.length)&&T.sequence(a,B),x.push({data:a,name:"Sequence",className:"AA",color:"black",type:"text"}),A.push({title:"sequence",y:B-8})),c.showAxis&&e(B),h(),c.brushActive&&(y.brushActive=!0,E=!0,k()),c.verticalLine&&(y.verticalLine=!0,p()),c.zoomMax&&(F=c.zoomMax),g(B)}function s(a){B+=20,x.push(a),T.typeIdentifier(a),i(),f(B),g(B),y.brushActive&&u.selectAll(".brush rect").attr("height",B+50),y.verticalLine&&d3.selectAll(".Vline").style("height",B+50+"px")}var t,u,v,w,b=b,a=a,x=[],y={showSequence:!1,brushActive:!1,verticalLine:!1},z=0,A=[],B=20,C=0,D=0,E=!1,F=50,G={top:10,right:20,bottom:20,left:100},H=$(b).width()-G.left-G.right-17,I=600-G.top-G.bottom,J=d3.scale.linear().domain([0,a.length-1]).range([0,H]),K=d3.scale.linear().domain([0,H]).range([0,a.length-1]);d3.helper={},console.log(H),d3.helper.tooltip=function(a){function c(c){c.on("mouseover.tooltip",function(c,e){d3.select("body").selectAll("div.tooltip").remove();var g=d3.mouse(f),h=g[0]>H;if(h?d=d3.select(b).append("div").attr("class","tooltip3"):(d=d3.select(b).append("div").attr("class","tooltip2"),d.style({left:g[0]-15+"px"})),d.style({top:g[1]-55+"px","background-color":"rgba(0, 0, 0, 0.8)",width:"auto","max-width":"170px",height:"auto","max-height":"43px",padding:"5px",font:"10px sans-serif","text-align":"center",position:"absolute","z-index":45,"box-shadow":"0 1px 2px 0 #656565"}),"path"===a.type)var i='<p style="margin:2px;color:white">start : <span style="color:orangered">'+c[0].x+"</span></p>",j='<p style="margin:2px;color:white">end : <span style="color:orangered">'+c[1].x+"</span></p>";else if("unique"===a.type){var i='<p style="margin:2px;color:orangered">'+c.x+"</p>";if(c.description)var j='<p style="margin:2px;color:white;font-size:9px">'+c.description+"</p>";else var j=""}else{var i='<p style="margin:2px;color:orangered">'+c.x+" - "+c.y+"</p>";if(c.description)var j='<p style="margin:2px;color:white;font-size:9px">'+c.description+"</p>";else var j=""}d.html(i+j),h&&d.style({left:g[0]+10-d.node().getBoundingClientRect().width+"px"})}).on("mousemove.tooltip",function(a,b){var c=d3.mouse(f),e=c[0]>H;e?(d.attr("class","tooltip3"),d.style({left:c[0]+10-d.node().getBoundingClientRect().width+"px",top:c[1]-55+"px"})):(d.attr("class","tooltip2"),d.style({left:c[0]-15+"px",top:c[1]-55+"px"}))}).on("mouseout.tooltip",function(a,b){d.remove()}).on("click",function(c,d){var f,g,h,i,j=d3.select(".background").attr("width");d3.select("body").selectAll("div.selectedRect").remove(),e=d3.select(b).append("div").attr("class","selectedRect"),"path"===a.type?(f=c[0].x,g=c[1].x):"unique"===a.type?(f=c.x-.5,g=c.y+.5):(f=c.x,g=c.y),J(f)<0&&J(g)>j?(h=G.left,i=j):J(f)<0?(h=G.left,i=J(g)):J(g)>j?(h=J(f)+G.left,i=j-J(f)):(h=J(f)+G.left,i=J(g)-J(f)),e.style({left:h+"px",top:$(b+" .svgHeader").length?"60px":"10px","background-color":"rgba(0, 0, 0, 0.2)",width:i+"px",height:B+50+"px",position:"absolute","z-index":-1,"box-shadow":"0 1px 2px 0 #656565"})})}var d,e,f=d3.select(b).node();return c.attr=function(a){return arguments.length?(attrs=a,this):attrs},c.style=function(a){return arguments.length?(styles=a,this):styles},c};var L=function(a){return J(a.x)},M=function(a){return H/a>5},N=function(a){return J(a.y)-J(a.x)},O=d3.svg.line().interpolate("step-before").x(function(a){return J(a.x)}).y(function(a){return 10*-a.y+z}),P=d3.svg.line().interpolate("linear").x(function(a){return J(a.x)}).y(function(a){return a.y+6}),Q=d3.svg.axis().scale(J).tickFormat(d3.format("d")).orient("bottom"),R=d3.scale.ordinal().domain([0,A.length]).rangeRoundBands([0,500],.1),S=(d3.svg.axis().scale(R).tickValues(A).tickFormat(function(a){return a}).orient("left"),{path:function(a){a.data.sort(function(a,b){return a.x-b.x});var b=d(a.data);a.data=a.data.map(function(a){return[{x:a.x,y:0,id:a.id},{x:a.y,y:a.level+1,id:a.id},{x:a.y,y:0,id:a.id}]}),z=10*b+5,a.height=10*b+5},multipleRect:function(a){a.data.sort(function(a,b){return a.x-b.x}),C=d(a.data),z=10*C+5}}),T={typeIdentifier:function(b){"rect"===b.type?(S.multipleRect(b),T.rectangle(b,a,B,C),A.push({title:b.name,y:B}),B+=20*(C-1)):"text"===b.type?(T.sequence(b.data,B),A.push({title:b.name,y:B})):"unique"===b.type?(T.unique(b,a,B),A.push({title:b.name,y:B})):"multipleRect"===b.type?(S.multipleRect(b),T.multipleRect(b,a,B,C),A.push({title:b.name,y:B}),B+=10*(C-1)):"path"===b.type&&(S.path(b),T.path(b,a,B),B+=z,A.push({title:b.name,y:B-10}))},sequence:function(a,b,c){if(!c)var c=0;u.append("g").attr("class","seqGroup").selectAll(".AA").data(a).enter().append("text").attr("clip-path","url(#clip)").attr("class","AA").attr("text-anchor","left").attr("x",function(a,b){return J.range([0,H-5])(b+c)}).attr("y",b).attr("font-size","10px").attr("font-family","monospace").text(function(a,b){return a})},rectangle:function(a,b,c){for(var d=20,e=u.append("g").attr("class","rectangle").attr("clip-path","url(#clip)").attr("transform","translate(0,"+c+")"),f=0;C>f;f++)e.append("path").attr("d",P([{x:0,y:f*d},{x:b.length-1,y:f*d}])).attr("class",function(){return"line"+a.className}).style("z-index","0").style("stroke",a.color).style("stroke-width","1px");var g=e.selectAll("."+a.className+"Group").data(a.data).enter().append("g").attr("class",a.className+"Group").attr("transform",function(a){return"translate("+J(a.x)+",0)"});g.append("rect").attr("class","element "+a.className).attr("id",function(a){return"f"+a.id}).attr("y",function(a){return a.level*d}).attr("width",N).attr("height",12).style("fill",a.color).style("z-index","13").call(d3.helper.tooltip(a)),g.append("text").attr("class","element "+a.className+"Text").attr("y",function(a){return a.level*d+6}).attr("dy","0.35em").style("font-size","10px").text(function(a){return a.description}).style("fill","black").style("z-index","15").style("visibility",function(a){return a.description&&J(a.y)-J(a.x)>8*a.description.length?"visible":"hidden"}).call(d3.helper.tooltip(a)),j(g)},unique:function(a,b,c){var d=u.append("g").attr("class","uniquePosition").attr("transform","translate(0,"+c+")");d.append("path").attr("d",P([{x:0,y:0},{x:b.length-1,y:0}])).attr("class",function(){return"line"+a.className}).style("z-index","0").style("stroke",a.color).style("stroke-width","1px"),d.selectAll("."+a.className).data(a.data).enter().append("rect").attr("clip-path","url(#clip)").attr("class","element "+a.className).attr("id",function(a){return"f"+a.id}).attr("x",function(a){return J(a.x-.5)}).attr("width",function(a){return J(1)<2?2:J(1)}).attr("height",12).style("fill",a.color).style("z-index","3").call(d3.helper.tooltip(a)),j(d)},path:function(a,b,c){var d=u.append("g").attr("class","pathing").attr("transform","translate(0,"+c+")");d.append("path").attr("d",O([{x:0,y:0},{x:b.length-1,y:0}])).style("z-index","0").style("stroke",a.color).style("stroke-width","1px"),d.selectAll("."+a.className).data(a.data).enter().append("path").attr("clip-path","url(#clip)").attr("class","element "+a.className).attr("id",function(a){return"f"+a[0].id}).attr("d",O).style("fill","none").style("stroke",a.color).style("z-index","3").style("stroke-width","2px").call(d3.helper.tooltip(a)),j(d)},multipleRect:function(a,b,c,d){for(var e=8,f=10,g=u.append("g").attr("class","multipleRects").attr("transform","translate(0,"+c+")"),h=0;d>h;h++)g.append("path").attr("d",P([{x:0,y:h*f-2},{x:b.length-1,y:h*f-2}])).attr("class",function(){return"line"+a.className}).style("z-index","0").style("stroke",a.color).style("stroke-width","1px");g.selectAll("."+a.className).data(a.data).enter().append("rect").attr("clip-path","url(#clip)").attr("class","element "+a.className).attr("id",function(a){return"f"+a.id}).attr("x",L).attr("y",function(a){return a.level*f}).attr("width",N).attr("height",e).style("fill",a.color).style("z-index","13").call(d3.helper.tooltip(a)),j(g)}},U={rectangle:function(a){u.selectAll("."+a.className+"Group").data(a.data).attr("transform",function(a){return"translate("+J(a.x)+",0)"}),u.selectAll("."+a.className).attr("width",function(a){return J(a.y)-J(a.x)}),u.selectAll("."+a.className+"Text").style("visibility",function(a){return a.description&&J(a.y)-J(a.x)>8*a.description.length?"visible":"hidden"})},multiRec:function(a){u.selectAll("."+a.className).data(a.data).attr("x",function(a){return J(a.x)}).attr("width",function(a){return J(a.y)-J(a.x)})},unique:function(a){u.selectAll("."+a.className).data(a.data).attr("x",function(a){return J(a.x-.5)}).attr("width",function(a){return J(a.x+.5)-J(a.x-.5)<2?2:J(a.x+.5)-J(a.x-.5)})},path:function(a){u.selectAll("."+a.className).data(a.data).attr("d",O.y(function(b){return 10*-b.y+a.height}))},text:function(a,b){u.selectAll("."+a.className).data(a.data).attr("x",function(a,c){return J(c+b)})}},V=d3.svg.brush().x(J).on("brushend",l);return r(b,c),{create:r,addFeature:s,selection:q}};this["HBtemplates"] = this["HBtemplates"] || {};
+}();;function FeatureViewer(sequence, div, options) {
+    // if (!div) var div = window;
+    var div = div;
+    var sequence = sequence;
+    var features = [];
+    var SVGOptions = {
+        showSequence: false,
+        brushActive: false,
+        verticalLine: false
+    };
+    var pathLevel = 0;
+    var svg;
+    var svgContainer;
+    var yData = [];
+    var yAxisSVG;
+    var yAxisSVGgroup;
+    var Yposition = 20;
+    var level = 0;
+    var seqShift = 0;
+    var zoom = false;
+    var zoomMax = 50;
+
+    //Init box & scaling
+    var margin = {top: 10, right: 20, bottom: 20, left: 100},
+        width = $(div).width() - margin.left - margin.right - 17,
+        height = 600 - margin.top - margin.bottom;
+    var scaling = d3.scale.linear()
+        .domain([0, sequence.length - 1])
+        .range([0, width]);
+    var scalingPosition = d3.scale.linear()
+        .domain([0, width])
+        .range([0, sequence.length - 1]);
+
+    d3.helper = {};
+    console.log(width);
+
+    d3.helper.tooltip = function (object) {
+        var tooltipDiv;
+        var selectedRect;
+        var bodyNode = d3.select(div).node();
+
+        function tooltip(selection) {
+
+            selection.on('mouseover.tooltip', function (pD, pI) {
+                // Clean up lost tooltips
+                d3.select('body').selectAll('div.tooltip').remove();
+                // Append tooltip
+                var absoluteMousePos = d3.mouse(bodyNode);
+                var rightside = (absoluteMousePos[0] > width );
+                if (rightside) {
+                    tooltipDiv = d3.select(div)
+                        .append('div')
+                        .attr('class', 'tooltip3');
+                }
+                else {
+                    tooltipDiv = d3.select(div)
+                        .append('div')
+                        .attr('class', 'tooltip2');
+                    tooltipDiv.style({
+                        left: (absoluteMousePos[0] - 15) + 'px'
+                    });
+                }
+                tooltipDiv.style({
+                    top: (absoluteMousePos[1] - 55) + 'px',
+                    'background-color': 'rgba(0, 0, 0, 0.8)',
+                    width: 'auto',
+                    'max-width': '170px',
+                    height: 'auto',
+                    'max-height': '43px',
+                    padding: '5px',
+                    "font": '10px sans-serif',
+                    'text-align': 'center',
+                    position: 'absolute',
+                    'z-index': 45,
+                    'box-shadow': '0 1px 2px 0 #656565'
+                });
+                if (object.type === "path") {
+                    var first_line = '<p style="margin:2px;color:white">start : <span style="color:orangered">' + pD[0].x + '</span></p>';
+                    var second_line = '<p style="margin:2px;color:white">end : <span style="color:orangered">' + pD[1].x + '</span></p>';
+                }
+                else if (object.type === "unique") {
+                    var first_line = '<p style="margin:2px;color:orangered">' + pD.x + '</p>';
+                    if (pD.description) var second_line = '<p style="margin:2px;color:white;font-size:9px">' + pD.description + '</p>';
+                    else var second_line = '';
+                }
+                else {
+                    var first_line = '<p style="margin:2px;color:orangered">' + pD.x + ' - ' + pD.y + '</p>';
+                    if (pD.description) var second_line = '<p style="margin:2px;color:white;font-size:9px">' + pD.description + '</p>';
+                    else var second_line = '';
+                }
+
+                tooltipDiv.html(first_line + second_line);
+                if (rightside) {
+                    tooltipDiv.style({
+                        left: (absoluteMousePos[0] + 10 - (tooltipDiv.node().getBoundingClientRect().width)) + 'px'
+                    })
+                }
+            })
+                .on('mousemove.tooltip', function (pD, pI) {
+                    // Move tooltip
+                    var absoluteMousePos = d3.mouse(bodyNode);
+                    var rightside = (absoluteMousePos[0] > width );
+                    if (rightside) {
+                        tooltipDiv.attr("class", "tooltip3");
+                        tooltipDiv.style({
+                            left: (absoluteMousePos[0] + 10 - (tooltipDiv.node().getBoundingClientRect().width)) + 'px',
+                            top: (absoluteMousePos[1] - 55) + 'px'
+                        });
+                    }
+                    else {
+                        tooltipDiv.attr("class", "tooltip2");
+                        tooltipDiv.style({
+                            left: (absoluteMousePos[0] - 15) + 'px',
+                            top: (absoluteMousePos[1] - 55) + 'px'
+                        })
+                    }
+                })
+                .on('mouseout.tooltip', function (pD, pI) {
+                    // Remove tooltip
+                    tooltipDiv.remove();
+                })
+                .on('click', function (pD, pI) {
+                    var xTemp;
+                    var yTemp;
+                    var xRect;
+                    var widthRect;
+                    var svgWidth = d3.select(".background").attr("width");
+                    d3.select('body').selectAll('div.selectedRect').remove();
+                    // Append tooltip
+                    selectedRect = d3.select(div)
+                        .append('div')
+                        .attr('class', 'selectedRect');
+                    if (object.type === "path") {
+                        xTemp = pD[0].x;
+                        yTemp = pD[1].x;
+                    }
+                    else if (object.type === "unique") {
+                        xTemp = pD.x - 0.5;
+                        yTemp = pD.y + 0.5;
+                    }
+                    else {
+                        xTemp = pD.x;
+                        yTemp = pD.y;
+                    }
+
+                    if (scaling(xTemp) < 0 && scaling(yTemp) > svgWidth) {
+                        xRect = margin.left;
+                        widthRect = svgWidth;
+                    }
+                    else if (scaling(xTemp) < 0) {
+                        xRect = margin.left;
+                        widthRect = (scaling(yTemp));
+                    }
+                    else if (scaling(yTemp) > svgWidth) {
+                        xRect = scaling(xTemp) + margin.left;
+                        widthRect = svgWidth - scaling(xTemp);
+                    }
+                    else {
+                        xRect = scaling(xTemp) + margin.left;
+                        widthRect = (scaling(yTemp) - scaling(xTemp));
+                    }
+                    selectedRect.style({
+                        left: xRect + 'px',
+                        top: ($(div +" .svgHeader").length) ? 60 + 'px' : 10 + 'px',
+                        'background-color': 'rgba(0, 0, 0, 0.2)',
+                        width: widthRect + 'px',
+                        height: (Yposition + 50) + 'px',
+                        position: 'absolute',
+                        'z-index': -1,
+                        'box-shadow': '0 1px 2px 0 #656565'
+                    });
+                })
+            ;
+
+        }
+
+        tooltip.attr = function (_x) {
+            if (!arguments.length) return attrs;
+            attrs = _x;
+            return this;
+        };
+
+        tooltip.style = function (_x) {
+            if (!arguments.length) return styles;
+            styles = _x;
+            return this;
+        };
+
+        return tooltip;
+    };
+
+    //COMPUTING FUNCTION
+    var X = function (d) {
+        return scaling(d.x);
+    };
+    var displaySequence = function (seq) {
+        return width / seq > 5;
+    };
+    var rectWidth = function (d) {
+        return (scaling(d.y) - scaling(d.x));
+    };
+    var uniqueWidth = function (d) {
+        return (scaling(1));
+    };
+
+    function addLevel(array) {
+        var leveling = [];
+        array.forEach(function (d) {
+            if (leveling === []) {
+                leveling.push(d.y);
+                d.level = 0;
+            }
+            else {
+                var placed = false;
+                for (var k = 0; k < leveling.length; k++) {
+                    if (d.x > leveling[k]) {
+                        placed = true;
+                        d.level = k;
+                        leveling[k] = d.y;
+                        break;
+                    }
+                }
+                if (placed === false) {
+                    leveling.push(d.y);
+                    d.level = leveling.length - 1;
+                }
+            }
+        });
+        return leveling.length;
+    }
+
+    function addLevelToBond(array) {
+        var leveling = [];
+        var newArray = [];
+        array.forEach(function (d) {
+            if (leveling === []) {
+                leveling.push(d[2].x);
+                d[1].y = 1;
+            }
+            else {
+                var placed = false;
+                for (var k = 0; k < leveling.length; k++) {
+                    if (d[0].x > leveling[k]) {
+                        placed = true;
+                        d[1].y = k + 1;
+                        leveling[k] = d[2].x;
+                        break;
+                    }
+                }
+                if (placed === false) {
+                    leveling.push(d[2].x);
+                    d[1].y = leveling.length;
+                }
+            }
+        });
+        return leveling.length;
+    }
+
+    var lineBond = d3.svg.line()
+        .interpolate("step-before")
+        .x(function (d) {
+            return scaling(d.x);
+        })
+        .y(function (d) {
+            return -d.y * 10 + pathLevel;
+        });
+    var line = d3.svg.line()
+        .interpolate("linear")
+        .x(function (d) {
+            return scaling(d.x);
+        })
+        .y(function (d) {
+            return d.y + 6;
+        });
+
+    //Create Axis
+    var xAxis = d3.svg.axis()
+        .scale(scaling)
+        .tickFormat(d3.format("d"))
+        .orient("bottom");
+
+    function addXAxis(position) {
+        svgContainer.append("g")
+            .attr("class", "x axis Xaxis")
+            .attr("transform", "translate(0," + (position + 20) + ")")
+            .call(xAxis);
+    }
+
+    function updateXaxis(position) {
+        svgContainer.selectAll(".Xaxis")
+            .attr("transform", "translate(0," + (position + 20) + ")")
+    }
+
+    function updateSVGHeight(position) {
+        console.log("blblblbblbl");
+        svg.attr("height", position + 60 + "px")
+    }
+
+    var yAxisScale = d3.scale.ordinal()
+        .domain([0, yData.length])
+        .rangeRoundBands([0, 500], .1);
+    var yAxis = d3.svg.axis()
+        .scale(yAxisScale)
+        .tickValues(yData) //specify an array here for values
+        .tickFormat(function (d) {
+            return d
+        })
+        .orient("left");
+
+    function addYAxis() {
+        yAxisSVG = svg.append("g")
+            .attr("class", "pro axis")
+            .attr("transform", "translate(0," + margin.top + ")");
+        updateYaxis();
+    }
+
+    function updateYaxis() {
+
+        yAxisSVGgroup = yAxisSVG
+            .selectAll(".yaxis")
+            .data(yData)
+            .enter()
+            .append("g");
+        yAxisSVGgroup
+            .append("polygon")       // attach a polygon
+            .style("stroke", "none")  // colour the line
+            .style("fill", "rgba(95,46,38,0.2)")     // remove any fill colour
+            .attr("points", function (d) {
+                return (margin.left - 15) + "," + (d.y - 3) + ", " + (margin.left - 15) + "," + (d.y + 12) + ", " + (margin.left - 7) + "," + (d.y + 4.5);  // x,y points
+            });
+        yAxisSVGgroup
+            .append("rect")
+            .style("fill", "rgba(95,46,38,0.2)")
+            .attr("x", function () {
+                return margin.left - 95
+            })
+            .attr("y", function (d) {
+                return d.y - 3
+            })
+            .attr("width", "80")
+            .attr("height", "15");
+        yAxisSVGgroup
+            .append("text")
+            .attr("class", "yaxis")
+            .attr("text-anchor", "end")
+            .attr("x", function () {
+                return margin.left - 20
+            })
+            .attr("y", function (d) {
+                return d.y + 8
+            })
+            .text(function (d) {
+                return d.title
+            });
+    }
+
+    function forcePropagation(item) {
+        item.on('mousedown', function () {
+            brush_elm = svg.select(".brush").node();
+            new_click_event = new Event('mousedown');
+            new_click_event.pageX = d3.event.pageX;
+            new_click_event.clientX = d3.event.clientX;
+            new_click_event.pageY = d3.event.pageY;
+            new_click_event.clientY = d3.event.clientY;
+            brush_elm.dispatchEvent(new_click_event);
+        });
+    }
+
+    var preComputing = {
+        path: function (object) {
+            object.data.sort(function (a, b) {
+                return a.x - b.x;
+            });
+            var level = addLevel(object.data);
+            object.data = object.data.map(function (d) {
+                return [{x: d.x, y: 0, id: d.id}, {x: d.y, y: d.level + 1, id: d.id}, {x: d.y, y: 0, id: d.id}]
+            })
+            pathLevel = level * 10 + 5;
+            object.height = level * 10 + 5;
+        },
+        multipleRect: function (object) {
+            object.data.sort(function (a, b) {
+                return a.x - b.x;
+            });
+            level = addLevel(object.data);
+            pathLevel = level * 10 + 5;
+        }
+    };
+
+    var fillSVG = {
+        typeIdentifier: function (object) {
+            if (object.type === "rect") {
+                preComputing.multipleRect(object);
+                fillSVG.rectangle(object, sequence, Yposition, level);
+                yData.push({title: object.name, y: Yposition});
+                Yposition += (level - 1) * 20;
+            }
+            else if (object.type === "text") {
+                fillSVG.sequence(object.data, Yposition);
+                yData.push({title: object.name, y: Yposition});
+            }
+            else if (object.type === "unique") {
+                fillSVG.unique(object, sequence, Yposition);
+                yData.push({title: object.name, y: Yposition});
+            }
+            else if (object.type === "multipleRect") {
+                preComputing.multipleRect(object);
+                fillSVG.multipleRect(object, sequence, Yposition, level);
+                yData.push({title: object.name, y: Yposition});
+                Yposition += (level - 1) * 10;
+            }
+            else if (object.type === "path") {
+                preComputing.path(object);
+                fillSVG.path(object, sequence, Yposition);
+                Yposition += pathLevel;
+                yData.push({title: object.name, y: Yposition - 10});
+            }
+        },
+        sequence: function (seq, position, start) {
+            //Create group of sequence
+            if (!start) var start = 0;
+            svgContainer.append("g")
+                .attr("class", "seqGroup")
+                .selectAll(".AA")
+                .data(seq)
+                .enter()
+                .append("text")
+                .attr("clip-path", "url(#clip)")
+                .attr("class", "AA")
+                .attr("text-anchor", "left")
+                .attr("x", function (d, i) {
+                    return scaling.range([0, width - 5])(i + start)
+                })
+                .attr("y", position)
+                .attr("font-size", "10px")
+                .attr("font-family", "monospace")
+                .text(function (d, i) {
+                    return d
+                });
+        },
+        rectangle: function (object, sequence, position) {
+            var rectHeight = 12;
+            var rectShift = 20;
+
+            var rectsPro = svgContainer.append("g")
+                .attr("class", "rectangle")
+                .attr("clip-path", "url(#clip)")
+                .attr("transform", "translate(0," + position + ")");
+
+            for (var i = 0; i < level; i++) {
+                rectsPro.append("path")
+                    .attr("d", line([{x: 0, y: (i * rectShift)}, {x: sequence.length - 1, y: (i * rectShift)}]))
+                    .attr("class", function () {
+                        return "line" + object.className
+                    })
+                    .style("z-index", "0")
+                    .style("stroke", object.color)
+                    .style("stroke-width", "1px");
+            }
+
+            var rectsProGroup = rectsPro.selectAll("." + object.className + "Group")
+                .data(object.data)
+                .enter()
+                .append("g")
+                .attr("class", object.className + "Group")
+                .attr("transform", function (d) {
+                    return "translate(" + scaling(d.x) + ",0)"
+                });
+
+            rectsProGroup
+                .append("rect")
+                .attr("class", "element " + object.className)
+                .attr("id", function (d) {
+                    return "f" + d.id
+                })
+                .attr("y", function (d) {
+                    return d.level * rectShift
+                })
+                .attr("width", rectWidth)
+                .attr("height", 12)
+                .style("fill", object.color)
+                .style("z-index", "13")
+                .call(d3.helper.tooltip(object));
+
+            rectsProGroup
+                .append("text")
+                .attr("class", "element " + object.className + "Text")
+                .attr("y", function (d) {
+                    return d.level * rectShift + 6
+                })
+                .attr("dy", "0.35em")
+                .style("font-size", "10px")
+                .text(function (d) {
+                    return d.description
+                })
+                .style("fill", "black")
+                .style("z-index", "15")
+                .style("visibility", function (d) {
+                    if (d.description) {
+                        return (scaling(d.y) - scaling(d.x)) > d.description.length * 8 ? "visible" : "hidden";
+                    }
+                    else return "hidden";
+                })
+                .call(d3.helper.tooltip(object));
+
+
+            //rectsPro.selectAll("." + object.className)
+            //    .data(object.data)
+            //    .enter()
+            //    .append("rect")
+            //    .attr("clip-path", "url(#clip)")
+            //    .attr("class", "element "+object.className)
+            //    .attr("id", function(d) { return "f"+d.id })
+            //    .attr("x", X)
+            //    .attr("width", rectWidth)
+            //    .attr("height", 12)
+            //    .style("fill", object.color)
+            //    .style("z-index", "13")
+            //    .call(d3.helper.tooltip(object));
+
+            forcePropagation(rectsProGroup);
+        },
+        unique: function (object, sequence, position) {
+            var rectsPro = svgContainer.append("g")
+                .attr("class", "uniquePosition")
+                .attr("transform", "translate(0," + position + ")");
+
+            rectsPro.append("path")
+                .attr("d", line([{x: 0, y: 0}, {x: sequence.length - 1, y: 0}]))
+                .attr("class", function () {
+                    return "line" + object.className
+                })
+                .style("z-index", "0")
+                .style("stroke", object.color)
+                .style("stroke-width", "1px");
+
+            rectsPro.selectAll("." + object.className)
+                .data(object.data)
+                .enter()
+                .append("rect")
+                .attr("clip-path", "url(#clip)")
+                .attr("class", "element " + object.className)
+                .attr("id", function (d) {
+                    return "f" + d.id
+                })
+                .attr("x", function (d) {
+                    return scaling(d.x - 0.5)
+                })
+                .attr("width", function (d) {
+                    if (scaling(1) < 2) return 2;
+                    else return scaling(1);
+                })
+                .attr("height", 12)
+                .style("fill", object.color)
+                .style("z-index", "3")
+                .call(d3.helper.tooltip(object));
+
+            forcePropagation(rectsPro);
+        },
+        path: function (object, sequence, position) {
+            var pathsDB = svgContainer.append("g")
+                .attr("class", "pathing")
+                .attr("transform", "translate(0," + position + ")");
+
+            pathsDB.append("path")
+                .attr("d", lineBond([{x: 0, y: 0}, {x: sequence.length - 1, y: 0}]))
+                .style("z-index", "0")
+                .style("stroke", object.color)
+                .style("stroke-width", "1px");
+
+            pathsDB.selectAll("." + object.className)
+                .data(object.data)
+                .enter()
+                .append("path")
+                .attr("clip-path", "url(#clip)")
+                .attr("class", "element " + object.className)
+                .attr("id", function (d) {
+                    return "f" + d[0].id
+                })
+                .attr("d", lineBond)
+                .style("fill", "none")
+                .style("stroke", object.color)
+                .style("z-index", "3")
+                .style("stroke-width", "2px")
+                .call(d3.helper.tooltip(object));
+
+            forcePropagation(pathsDB);
+        },
+        multipleRect: function (object, sequence, position, level) {
+            var rectHeight = 8;
+            var rectShift = 10;
+            var rects = svgContainer.append("g")
+                .attr("class", "multipleRects")
+                .attr("transform", "translate(0," + position + ")");
+
+            for (var i = 0; i < level; i++) {
+                rects.append("path")
+                    .attr("d", line([{x: 0, y: (i * rectShift - 2)}, {x: sequence.length - 1, y: (i * rectShift - 2)}]))
+                    .attr("class", function () {
+                        return "line" + object.className
+                    })
+                    .style("z-index", "0")
+                    .style("stroke", object.color)
+                    .style("stroke-width", "1px");
+            }
+
+            rects.selectAll("." + object.className)
+                .data(object.data)
+                .enter()
+                .append("rect")
+                .attr("clip-path", "url(#clip)")
+                .attr("class", "element " + object.className)
+                .attr("id", function (d) {
+                    return "f" + d.id
+                })
+                .attr("x", X)
+                .attr("y", function (d) {
+                    return d.level * rectShift
+                })
+                .attr("width", rectWidth)
+                .attr("height", rectHeight)
+                .style("fill", object.color)
+                .style("z-index", "13")
+                .call(d3.helper.tooltip(object));
+
+            forcePropagation(rects);
+        }
+    };
+
+    var transition = {
+        rectangle: function (object) {
+            svgContainer.selectAll("." + object.className + "Group")
+                .data(object.data)
+                .attr("transform", function (d) {
+                    return "translate(" + scaling(d.x) + ",0)"
+                });
+
+            svgContainer.selectAll("." + object.className)
+                .attr("width", function (d) {
+                    return scaling(d.y) - scaling(d.x)
+                });
+            svgContainer.selectAll("." + object.className + "Text")
+                .style("visibility", function (d) {
+                    if (d.description) {
+                        return (scaling(d.y) - scaling(d.x)) > d.description.length * 8 ? "visible" : "hidden";
+                    }
+                    else return "hidden";
+                });
+        },
+        multiRec: function (object) {
+            svgContainer.selectAll("." + object.className)
+                .data(object.data)
+                //.transition()
+                //.duration(500)
+                .attr("x", function (d) {
+                    return scaling(d.x)
+                })
+                .attr("width", function (d) {
+                    return scaling(d.y) - scaling(d.x)
+                });
+        },
+        unique: function (object) {
+            svgContainer.selectAll("." + object.className)
+                .data(object.data)
+                //.transition()
+                //.duration(500)
+                .attr("x", function (d) {
+                    return scaling(d.x - 0.5)
+                })
+                .attr("width", function (d) {
+                    if (scaling(d.x + 0.5) - scaling(d.x - 0.5) < 2) return 2;
+                    else return scaling(d.x + 0.5) - scaling(d.x - 0.5);
+                });
+        },
+        path: function (object) {
+            svgContainer.selectAll("." + object.className)
+                .data(object.data)
+                //.transition()
+                //.duration(500)
+                .attr("d", lineBond.y(function (d) {
+                    return -d.y * 10 + object.height;
+                }));
+        },
+        text: function (object, start) {
+            svgContainer.selectAll("." + object.className)
+                .data(object.data)
+                //.transition()
+                //.duration(500)
+                .attr("x", function (d, i) {
+                    return scaling(i + start)
+                });
+        }
+    };
+
+    var brush = d3.svg.brush()
+        .x(scaling)
+        //.on("brush", brushmove)
+        .on("brushend", brushend);
+
+    function addBrush() {
+        svgContainer.append("g")
+            .attr("class", "brush")
+            .call(brush)
+            .selectAll("rect")
+            .attr('height', Yposition + 50);
+    }
+
+// Show peptide selected in brush
+//function brushmove() {
+//    var extent = brush.extent();
+//    rectsPep2.classed("selected", function (d) {
+//        is_brushed = extent[0] <= d.x && d.x <= extent[1] && extent[0] <= d.y && d.y <= extent[1];
+//        return is_brushed;
+//    });
+//}
+
+    function brushend() {
+        d3.select(div).selectAll('div.selectedRect').remove();
+        // Check if brush is big enough before zooming
+        var extent = brush.extent();
+        var extentLength = Math.abs(extent[0] - extent[1]);
+
+        if (extent[0] < extent[1]) var start = parseInt(extent[0] - 1), end = parseInt(extent[1] + 1);
+        else var start = parseInt(extent[1] + 1), end = parseInt(extent[0] - 1);
+
+        var seq = displaySequence(extentLength);
+        if (!brush.empty() && extentLength > zoomMax) {
+            var zoomScale = (sequence.length / extentLength).toFixed(1);
+            $(div + " .zoomUnit").text(zoomScale.toString());
+
+            if (SVGOptions.showSequence && seq && svgContainer.selectAll(".AA").empty()) {
+                seqShift = start;
+                fillSVG.sequence(sequence.substring(start, end), 20, seqShift);
+            }
+
+            //modify scale
+            scaling.domain(extent);
+            scalingPosition.range(extent);
+
+
+            transition_data(features, seqShift);
+            reset_axis();
+
+            //rectsPep2.classed("selected", false);
+            d3.select(div).selectAll(".brush").call(brush.clear());
+        }
+        else {
+            d3.select(div).selectAll(".brush").call(brush.clear());
+            //resetAll();
+        }
+    }
+
+// If brush is too small, reset view as origin
+    function resetAll() {
+
+        //reset scale
+
+        $(".zoomUnit").text("1");
+        scaling.domain([0, sequence.length - 1]);
+        scalingPosition.range([0, sequence.length - 1]);
+        var seq = displaySequence(sequence.length);
+
+        if (seq === false && !svgContainer.selectAll(".AA").empty()) svgContainer.selectAll(".seqGroup").remove();
+
+        transition_data(features, 0);
+        reset_axis();
+    }
+
+    function transition_data(features, start) {
+        features.forEach(function (o) {
+            if (o.type === "rect") {
+                transition.rectangle(o);
+            }
+            else if (o.type === "multipleRect") {
+                transition.multiRec(o);
+            }
+            else if (o.type === "unique") {
+                transition.unique(o);
+            }
+            else if (o.type === "path") {
+                transition.path(o);
+            }
+            else if (o.type === "text") {
+                transition.text(o, start);
+            }
+        });
+    }
+
+    function reset_axis() {
+        svgContainer
+            .transition().duration(500)
+            .select(".x.axis")
+            .call(xAxis);
+    }
+
+    function addVerticalLine() {
+        var vertical = d3.select(".chart")
+            .append("div")
+            .attr("class", "Vline")
+            .style("position", "absolute")
+            .style("z-index", "19")
+            .style("width", "1px")
+            .style("height", (Yposition + 50) + "px")
+            .style("top", "30px")
+            // .style("left", "0px")
+            .style("background", "#000");
+
+        d3.select(".chart")
+            .on("mousemove.Vline", function () {
+                mousex = d3.mouse(this)[0] - 2;
+                vertical.style("left", mousex + "px")
+            });
+        //.on("click", function(){
+        //    mousex = d3.mouse(this);
+        //    mousex = mousex[0] + 5;
+        //    vertical.style("left", mousex + "px")});
+    }
+
+    function addRectSelection(svgId) {
+        var elemSelected = d3.select(svgId).data();
+        var xTemp;
+        var yTemp;
+        var xRect;
+        var widthRect;
+        var svgWidth = d3.select(".background").attr("width");
+        d3.select('body').selectAll('div.selectedRect').remove();
+        // Append tooltip
+        var selectedRect = d3.select('.chart')
+            .append('div')
+            .attr('class', 'selectedRect');
+
+        if (elemSelected[0].length === 3) {
+            xTemp = elemSelected[0][0].x;
+            yTemp = elemSelected[0][1].x;
+            console.log("aaaaaaaa");
+        }
+        else if (elemSelected[0].x === elemSelected[0].y) {
+            xTemp = elemSelected[0].x - 0.5;
+            yTemp = elemSelected[0].y + 0.5;
+            console.log("bbbbbbbb");
+        }
+        else {
+            xTemp = elemSelected[0].x;
+            yTemp = elemSelected[0].y;
+            console.log("ccccccc");
+        }
+        if (scaling(xTemp) < 0) {
+            xRect = margin.left;
+            widthRect = (scaling(yTemp));
+        }
+        else if (scaling(yTemp) > svgWidth) {
+            xRect = scaling(xTemp) + margin.left;
+            widthRect = svgWidth - scaling(xTemp);
+        }
+        else {
+            xRect = scaling(xTemp) + margin.left;
+            widthRect = (scaling(yTemp) - scaling(xTemp));
+        }
+        selectedRect.style({
+            left: xRect + 'px',
+            top: 60 + 'px',
+            'background-color': 'rgba(0, 0, 0, 0.2)',
+            width: widthRect + 'px',
+            height: (Yposition + 50) + 'px',
+            position: 'absolute',
+            'z-index': -1,
+            'box-shadow': '0 1px 2px 0 #656565'
+        });
+    }
+
+    function initSVG(div, options) {
+        if (typeof options === 'undefined') {
+            var options = {
+                'showAxis': false,
+                'showSequence': false,
+                'brushActive': false,
+                'verticalLine': false,
+                'toolbar': false,
+                'zoommax':50
+            }
+        }
+        d3.select(div)
+            .style("position", "relative")
+            .style("padding", "0px")
+            .style("z-index", "2");
+        // Create SVG
+
+        if (options.toolbar === true) {
+            console.log($(div + " .svgHeader").length);
+            var headerOptions = $(div + " .svgHeader").length ? d3.select(div + " .svgHeader") : d3.select(div).append("div").attr("class", "svgHeader");
+            console.log(headerOptions);
+
+            if (!$(div + ' .header-zoom').length) {
+                var headerZoom = headerOptions
+                    .append("div")
+                    .attr("class", "panel panel-default header-zoom")
+                    .style("display", "inline-block")
+                    .style("width", "150px")
+                    .style("margin", "0px")
+                    .style("padding", "0px");
+                headerZoom
+                    .append("div")
+                    .attr("class", "panel-heading")
+                    .style("padding", "0px 15px")
+                    .style("border-right", "1px solid #DDD")
+                    .style("display", "inline-block")
+                    .style("width", "80px")
+                    .append("h5")
+                    .style("padding", "0px")
+                    .style("height", "10px")
+                    .style("color", "#777")
+                    .text("ZOOM");
+                headerZoom
+                    .append("div")
+                    .attr("class", "panel-body")
+                    .style("display", "inline-block")
+                    .style("padding", "0px")
+                    .append("h5")
+                    .style("padding-left", "15px")
+                    .style("height", "10px")
+                    .text("x ")
+                    .append("span")
+                    .attr("class", "zoomUnit")
+                    .text("1");
+            }
+            if (!$(div + ' .header-position').length) {
+                var headerPosition = headerOptions
+                    .append("div")
+                    .attr("class", "panel panel-default header-position")
+                    .style("display", "inline-block")
+                    .style("width", "175px")
+                    .style("margin", "0px 20px")
+                    .style("padding", "0px");
+                headerPosition
+                    .append("div")
+                    .attr("class", "panel-heading")
+                    .style("padding", "0px 15px")
+                    .style("border-right", "1px solid #DDD")
+                    .style("display", "inline-block")
+                    .append("h5")
+                    .style("padding", "0px")
+                    .style("height", "10px")
+                    .style("color", "#777")
+                    .text("POSITION");
+                headerPosition
+                    .append("div")
+                    .attr("class", "panel-body")
+                    .style("display", "inline-block")
+                    .style("padding", "0px")
+                    .append("h5")
+                    .style("padding-left", "15px")
+                    .style("height", "10px")
+                    .append("span")
+                    .attr("id", "zoomPosition")
+                    .text("0");
+            }
+        }
+        svg = d3.select(div).append("svg")
+            .attr("width", width + margin.left + margin.right)
+            .attr("height", height + margin.top + margin.bottom)
+            .style("z-index", "2")
+            .on("contextmenu", function (d, i) {
+                d3.event.preventDefault();
+                resetAll();
+                // react on right-clicking
+            });
+
+        svgContainer = svg
+            .append("g")
+            .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+
+        //Create Clip-Path
+        svgContainer.append("defs").append("clipPath")
+            .attr("id", "clip")
+            .append("rect")
+            .attr("width", width)
+            .attr("height", height);
+
+        svgContainer.on('mousemove', function () {
+            var absoluteMousePos = d3.mouse(d3.select(".background").node());
+            $(div + " #zoomPosition").text(Math.round(scalingPosition(absoluteMousePos[0])));
+        });
+
+        if (options.showSequence) {
+            SVGOptions.showSequence = true;
+            if (displaySequence(sequence.length)) {
+                fillSVG.sequence(sequence, Yposition);
+            }
+            features.push({data: sequence, name: "Sequence", className: "AA", color: "black", type: "text"});
+            yData.push({title: "sequence", y: Yposition - 8});
+        }
+        if (options.showAxis) addXAxis(Yposition);
+        addYAxis();
+        if (options.brushActive) {
+            SVGOptions.brushActive = true;
+            zoom = true;
+            addBrush();
+        }
+        if (options.verticalLine) {
+            SVGOptions.verticalLine = true;
+            addVerticalLine();
+        }
+        if (options.zoomMax) {
+            zoomMax = options.zoomMax;
+        }
+
+        updateSVGHeight(Yposition);
+
+    }
+
+    initSVG(div, options);
+    function addFeature(object) {
+        Yposition += 20;
+        features.push(object);
+        fillSVG.typeIdentifier(object);
+        updateYaxis();
+        updateXaxis(Yposition);
+        updateSVGHeight(Yposition);
+        if (SVGOptions.brushActive) {
+            svgContainer.selectAll(".brush rect")
+                .attr('height', Yposition + 50);
+        }
+        if (SVGOptions.verticalLine) d3.selectAll(".Vline").style("height", (Yposition + 50) + "px");
+
+
+    }
+
+
+    return {
+        create: initSVG,
+        addFeature: addFeature,
+        selection: addRectSelection
+    }
+}
+;this["HBtemplates"] = this["HBtemplates"] || {};
 
 this["HBtemplates"]["templates/featureTable2.tmpl"] = Handlebars.template({"1":function(depth0,helpers,partials,data,blockParams,depths) {
     var stack1;
