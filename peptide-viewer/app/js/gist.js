@@ -647,6 +647,7 @@ function initNXDivs() {
             return sequence.then(function () {
                 return dataPromise;
             }).then(function (oneData) {
+                console.log(oneData);
                 cpt += 1;
                 switch (cpt) {
                     case 1:
@@ -673,7 +674,7 @@ function initNXDivs() {
                         });
                         break;
                     case 4:
-                        matureProtein = oneData;
+                        matureProtein = oneData.annot;
 
                         RenderPeptidesForIsoform(peptideMappings, nxEntryName + "-1");
                     case 5:
