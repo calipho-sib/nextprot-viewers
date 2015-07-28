@@ -23,6 +23,7 @@
     <!--<script src="../templates/compiled-templates.js"></script>-->
     <!--<script src="../dist/triple-viewer.js"></script>-->
 
+    <script src="../vendor/js/nextprot2.js"></script>
     <script src="../dist/triple-viewer.bundle.js"></script>
 </head>
 
@@ -793,7 +794,7 @@
                     {name: "Non standart AA",className: "seleno",color: "#859DE7",type: "unique",filter:"Modified Residue"},      {name: "Peptide",className: "pep",color: "#B3E1D1",type: "multipleRect",filter:"Peptide"},
                     {name: "Srm Peptide",className: "srmPep",color: "#B3E1F0",type: "multipleRect",filter:"none"}
                 ];
-
+                console.log(oneData[14]);
                 var tv = new TripleViewer(entry);
                 tv.init(oneData,metaData);
 

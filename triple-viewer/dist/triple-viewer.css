@@ -1,4 +1,9 @@
 
+/* Overview */
+#nx-overview {
+    background:#fff;margin-top:10px;margin-bottom:10px;border-top:4px solid #E7EAEC;border-bottom: 1px solid #e7eaec;
+}
+
 /*
 .pep{fill:#B3E1D1;}
 .linepep{stroke:#B3E1D1;stroke-width:1px;z-index:0}

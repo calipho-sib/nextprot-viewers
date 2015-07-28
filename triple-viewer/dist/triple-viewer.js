@@ -34,7 +34,6 @@ function TripleViewer(entry) {
                     return listIsoforms;
                 }())
             };
-            console.log(datas);
             isoName = datas.isoforms.visible[0].uniqueName;
             var template = HBtemplates['templates/isoformChoice.tmpl'];
             var results = template(datas);
@@ -66,13 +65,11 @@ function TripleViewer(entry) {
             });
             $("#moreIsoforms a").click(function () {
                 var parentThis = $(this).text();
-                console.log(parentThis);
                 $("#extendIsoformChoice").text(parentThis);
             });
         },
         init: function (oneData,metaData) {
             isoforms=oneData[0];
-            console.log(oneData[0]);
             nxIsoformChoice(oneData[0]);
 
             iFrameWidth =$("#visuContainer").width();
@@ -83,7 +80,6 @@ function TripleViewer(entry) {
                 if (!(oneData[i] instanceof Array)) {
                     console.log("BANANA !");
                     NXUtils.convertPublications(oneData[i].publi, publications);
-                    console.log(publications);
                 }
                 var featForViewer = NXViewerUtils.convertNXAnnotations(feat,metaData[i]);
                 featuresForViewer.push(featForViewer);
@@ -110,14 +106,18 @@ function TripleViewer(entry) {
             featureSelection();
             inverseSelection();
             displayIsoform(isoformMapping,"#isoformDisplayed",isoID);
+            if ($(".zoomUnit").length) $(".zoomUnit").text("1");
+            d3.selectAll('div.selectedRect').remove();
             //toggleIsoformMap();
         },
         reloadSVG: function(isoID) {
             $(".chart svg").remove();
             createSVG(isoforms,isoID);
             addFeatures(isoID);
+            if ($(".zoomUnit").length) $(".zoomUnit").text("1");
+            d3.selectAll('div.selectedRect').remove();
             //featureSelection();
-            //inverseSelection();
+            inverseSelection();
         }
     };
 
@@ -159,7 +159,6 @@ function TripleViewer(entry) {
         //        return p.second;
         //    })
         //})));
-        console.log(max);
         //console.log($(divIsoform).width());
         var position = 20;
 
@@ -348,7 +347,6 @@ function TripleViewer(entry) {
 
     function addFeatures(isoName) {
         console.log("REGENESIS OF THE DATAAAAA");
-        console.log(featuresForViewer[3]);
         for (var i=0;i<featuresForViewer.length;i++) {
             if (Object.keys(featuresForViewer[i]).length !== 0 && featuresForViewer[i].hasOwnProperty(isoName) && filterOptions[featuresForViewer[i][isoName].filter.split(" ").join("_").toLowerCase()] === true) {
                 var feature = jQuery.extend({}, featuresForViewer[i][isoName]);
@@ -378,7 +376,6 @@ function TripleViewer(entry) {
                 }
             }
         }
-        console.log(activeFiltering);
         var template = HBtemplates['templates/filter.tmpl'];
         var results = template(activeFiltering);
         $(".svgHeader").html(results);
@@ -483,9 +480,6 @@ function TripleViewer(entry) {
                 }
             }
         }
-        console.log(positions);
-        console.log(decalage);
-        console.log(isoforms);
     }
     function testAlgoObject(isoformsMapping) {
         //Algorithm to concat exons of each isoform
@@ -526,7 +520,6 @@ function TripleViewer(entry) {
         // sort positions
         positions.sort(function(a,b) {return a-b});
 
-        console.log(positions);
         //for each interval between position, check if there is something in isoforms
         //if not, add the empty interval to array decalage
         for (var i=0;i<positions.length-1;i++) {
@@ -543,7 +536,6 @@ function TripleViewer(entry) {
             }
             if (presence === false) decalage.push({x:positions[i],length:positions[i+1]-positions[i]});
         }
-        console.log(decalage);
         ////For each "hole", apply a shift by adding the length of the hole to the values after the hole
         ////In the same time, if i[y] == i+1[x] merge those two
         for (var i=decalage.length-1;i>=0;i--) {
@@ -567,8 +559,6 @@ function TripleViewer(entry) {
                 }
             }
         }
-        //console.log(positions);
-        //console.log(decalage);
         return isoformsMapping;
     }
 
@@ -639,7 +629,6 @@ function TripleViewer(entry) {
 
         for (var filter in activeFiltering.filters) {
             if ($("#"+filter).prop("checked")) {
-                console.log("."+filter+".general-info");
                 $("."+filter+".general-info").show();
                 filterOptions[filter] = true;
             }

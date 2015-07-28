@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <!--<link rel="stylesheet" href="../css/style.css">-->
+    <!--<link rel="stylesheet" href="../bower_components/bootstrap/dist/css/bootstrap.min.css">-->
+    <link rel="stylesheet" href="../dist/triple-viewer.css">
+
+    <!--<script src="../bower_components/feature-viewer/dist/feature-viewer.js"></script>-->
+    <!--<script src="../bower_components/jquery/dist/jquery.js"></script>-->
+    <!--<script src="../bower_components/bootstrap/dist/js/bootstrap.min.js"></script>-->
+    <!--<script src="../bower_components/handlebars/handlebars.js"></script>-->
+    <!--<script src="../vendor/js/nextprot2.js"></script>-->
+    <!--<script src="../bower_components/sequence-viewer/dist/sequence-viewer.js"></script>-->
+    <!--<script src="../bower_components/d3/d3.js"></script>-->
+    <!-- -->
+    <!--<script src="script.js"></script>-->
+
+    <!--<script src="../js/gist_templates.js"></script>-->
+    <!--<script src="../js/nextprot-templates.js"></script>-->
+
+    <!--<script src="../bower_components/feature-viewer/dist/feature-viewer.js"></script>-->
+    <!--<script src="../templates/compiled-templates.js"></script>-->
+    <!--<script src="../dist/triple-viewer.js"></script>-->
+
+    <script src="../vendor/js/nextprot2.js"></script>
+    <script src="../dist/triple-viewer.bundle.js"></script>
+</head>
+
+<body>
+<div class="row" style="margin: 0px 20px;">
+    <div id="nx-overview" class="col-md-12"></div>
+</div>
+<div class="row" style="margin: 0px 20px;">
+    <div id="nx-isoformChoice" class="col-md-12" style="margin-bottom: -5px;"></div>
+</div>
+<div class="row" style="margin: 0px 20px;">
+    <div id="visuContainer" class="col-md-12" style="background:#fff;padding:0px;border-top:4px solid #E7EAEC;border-bottom: 1px solid #e7eaec;">
+        <div id="isoformDisplayed"></div>
+        <div class="chart"></div>
+    </div>
+</div>
+<div class="row" style="margin: 10px 20px;">
+    <div id="featuresTable" class="col-md-6" style="background:#fff;padding:5px 15px;height:600px;border-top:4px solid #E7EAEC;border-bottom: 1px solid #e7eaec;"></div>
+    <div class="col-md-6" style="padding-right:0px;">
+        <div id="seqViewer" style="background:#fff;padding:5px 15px;;height:600px;border-top:4px solid #E7EAEC;border-bottom: 1px solid #e7eaec;"></div>
+    </div>
+</div>
+</body>
+<script>
+    ($(function () {
+
+        var Nextprot = window.Nextprot;
+        var nx = new Nextprot.Client("nextprot structure view", "CALIPHO-Team");
+        var entry = nx.getEntryName();
+
+        $(function () {
+            var startTime = new Date().getTime();
+            Promise.all([nx.getProteinSequence(entry), nx.getInteractingRegion(entry), nx.getMiscellaneousRegion(entry), nx.getDomain(entry), nx.getRepeat(entry), nx.getCalciumBinding(entry), nx.getZincFinger(entry), nx.getDnaBinding(entry),
+                nx.getNucleotideBinding(entry), nx.getCoiledCoilRegion(entry), nx.getMotif(entry), nx.getBiasedRegion(entry), nx.getTopologicalDomain(entry), nx.getTransmembraneRegion(entry),
+                nx.getMiscellaneousSite(entry), nx.getActiveSite(entry), nx.getBindingSite(entry), nx.getCleavageSite(entry), nx.getMetalBindingSite(entry),
+                nx.getVariant(entry), nx.getMutagenesis(entry), nx.getSequenceConflict(entry), nx.getBetaStrand(entry), nx.getHelix(entry), nx.getTurn(entry), nx.getIsoformMapping(entry)]).then(function (oneData) {
+                var endTime2 = new Date().getTime();
+                var time2 = endTime2 - startTime;
+//                console.log('Execution time: ' + time2);
+//
+//                var featuresName = ["Sequence","Propeptide", "Mature protein", "Signal peptide", "Disulfide bonds", "Initiator meth", "Interacting region",
+//                    "Modified residue","Cross-link", "Glycosylation", "Site", "Active site", "Metal binding","Variant"];
+
+                var metaData = [
+                    {name: "Sequence"},                                                                                              {name: "Interacting region",className: "intregion",color: "#B3C2F0",type: "rect",filter:"Region"},
+                    {name: "Region",className: "miscregion",color: "#B3C2B3",type: "rect",filter:"Region"},                          {name: "Domain",className: "domain",color: "#B3C2C2",type: "rect",filter:"Region"},
+                    {name: "Repeat",className: "repeat",color: "#98B7D5",type: "rect",filter:"Region"},                              {name: "Calcium binding",className: "calcium",color: "#B3C2E1",type: "rect",filter:"Region"},
+                    {name: "Zinc finger",className: "calcium",color: "#B3C2E1",type: "rect",filter:"Region"},                        {name: "DNA binding",className: "dnabind",color: "#B3C2FF",type: "rect",filter:"Region"},
+                    {name: "Nucleotide binding",className: "nucleobind",color: "#B3D1B3",type: "rect",filter:"Region"},              {name: "Coiled-coil",className: "coiledcoil",color: "#B3D1C2",type: "rect",filter:"Region"},
+                    {name: "Sequence motif",className: "motif",color: "#B3D1D1",type: "rect",filter:"Region"},                       {name: "Composition bias",className: "biased",color: "#B3D1E1",type: "rect",filter:"Region"},
+                    {name: "Top domain",className: "topodomain",color: "#A5DBA5",type: "rect",filter:"Topology"},                    {name: "Membrane",className: "membrane",color: "#A5DBB7",type: "rect",filter:"Topology"},
+                    {name: "Site",className: "site",color: "#B3F0E1",type: "unique",filter:"Site"},                                  {name: "Active site",className: "actSite",color: "#B3F0F0",type: "unique",filter:"Site"},
+                    {name: "Binding site",className: "bindsite",color: "#82E6FF",type: "unique",filter:"Site"},                      {name: "Cleavage site",className: "cleavsite",color: "#B3FFB3",type: "unique",filter:"Site"},
+                    {name: "Metal binding",className: "metal",color: "#B3FFC2",type: "unique",filter:"Site"},                        {name: "Variant",className: "variant",color: "rgba(0,255,154,0.3)",type: "unique",filter:"Variant"},
+                    {name: "Mutagenesis",className: "mutagenesis",color: "#73FFE3",type: "unique",filter:"Variant"},                 {name: "Conflict",className: "seqconflict",color: "#6FFFFF",type: "unique",filter:"Conflict"},
+                    {name: "Beta strand",className: "betastrand",color: "#B3F0C2",type: "rect",filter:"Secondary structure"},        {name: "Helix",className: "helix",color: "#B3F0D1",type: "rect",filter:"Secondary structure"},
+                    {name: "Turn",className: "turn",color: "#B3F0E1",type: "rect",filter:"Secondary structure"}
+
+                ];
+
+                var tv = new TripleViewer(entry);
+                tv.init(oneData,metaData);
+
+                var endTime = new Date().getTime();
+                var time = endTime - startTime;
+                console.log('Execution time: ' + time);
+            }).catch(function (err) {
+                // catch any error that happened so far
+                console.log("Argh, broken: " + err.message);
+                console.log("Error at line : " + err.stack);
+            });
+        });
+    }));
+</script>
+</html>

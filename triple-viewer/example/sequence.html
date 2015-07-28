@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <!--<link rel="stylesheet" href="../css/style.css">-->
+    <!--<link rel="stylesheet" href="../bower_components/bootstrap/dist/css/bootstrap.min.css">-->
+    <link rel="stylesheet" href="../dist/triple-viewer.css">
+
+    <!--<script src="../bower_components/feature-viewer/dist/feature-viewer.js"></script>-->
+    <!--<script src="../bower_components/jquery/dist/jquery.js"></script>-->
+    <!--<script src="../bower_components/bootstrap/dist/js/bootstrap.min.js"></script>-->
+    <!--<script src="../bower_components/handlebars/handlebars.js"></script>-->
+    <!--<script src="../vendor/js/nextprot2.js"></script>-->
+    <!--<script src="../bower_components/sequence-viewer/dist/sequence-viewer.js"></script>-->
+    <!--<script src="../bower_components/d3/d3.js"></script>-->
+    <!-- -->
+    <!--<script src="script.js"></script>-->
+
+    <!--<script src="../js/gist_templates.js"></script>-->
+    <!--<script src="../js/nextprot-templates.js"></script>-->
+
+    <!--<script src="../bower_components/feature-viewer/dist/feature-viewer.js"></script>-->
+    <!--<script src="../templates/compiled-templates.js"></script>-->
+    <!--<script src="../dist/triple-viewer.js"></script>-->
+
+    <script src="../vendor/js/nextprot2.js"></script>
+    <script src="../dist/triple-viewer.bundle.js"></script>
+
+<body>
+<div class="row" style="margin: 0px 20px;">
+    <div id="nx-overview" class="col-md-12"></div>
+</div>
+<div class="row" style="margin: 0px 20px;">
+    <div id="nx-isoformChoice" class="col-md-12" style="margin-bottom: -5px;"></div>
+</div>
+<div class="row" style="margin: 0px 20px;">
+    <div id="visuContainer" class="col-md-12" style="background:#fff;padding:0px;border-top:4px solid #E7EAEC;border-bottom: 1px solid #e7eaec;">
+        <div id="isoformDisplayed"></div>
+        <div class="chart"></div>
+    </div>
+</div>
+<div class="row" style="margin: 10px 20px;">
+    <div id="featuresTable" class="col-md-6" style="background:#fff;padding:5px 15px;height:600px;border-top:4px solid #E7EAEC;border-bottom: 1px solid #e7eaec;"></div>
+    <div class="col-md-6" style="padding-right:0px;">
+        <div id="seqViewer" style="background:#fff;padding:5px 15px;;height:600px;border-top:4px solid #E7EAEC;border-bottom: 1px solid #e7eaec;"></div>
+    </div>
+</div>
+</body>
+<script>
+    ($(function () {
+
+        var Nextprot = window.Nextprot;
+        var nx = new Nextprot.Client("neXtProt sequence view", "Calipho-Team");
+        var entry = nx.getEntryName();
+
+        $(function () {
+            var startTime = new Date().getTime();
+            Promise.all([nx.getProteinSequence(entry), nx.getProPeptide(entry), nx.getMatureProtein(entry), nx.getSignalPeptide(entry), nx.getPeroxisomeTransitPeptide(entry),
+                nx.getMitochondrialTransitPeptide(entry), nx.getMiscellaneousRegion(entry), nx.getDomain(entry), nx.getRepeat(entry), nx.getCalciumBinding(entry), nx.getZincFinger(entry), nx.getDnaBinding(entry),
+                nx.getNucleotideBinding(entry), nx.getCoiledCoilRegion(entry), nx.getMotif(entry), nx.getBiasedRegion(entry), nx.getTopologicalDomain(entry), nx.getTransmembraneRegion(entry),
+                nx.getDisulfideBond(entry), nx.getInitMeth(entry), nx.getInteractingRegion(entry), nx.getModifResidue(entry), nx.getCrossLink(entry), nx.getGlycoSite(entry),
+                nx.getMiscellaneousSite(entry), nx.getActiveSite(entry), nx.getBindingSite(entry), nx.getCleavageSite(entry), nx.getMetalBindingSite(entry), nx.getLipidationSite(entry), nx.getSelenocysteine(entry),
+                nx.getVariant(entry), nx.getMutagenesis(entry), nx.getSequenceConflict(entry), nx.getIsoformMapping(entry)]).then(function (oneData) {
+                var endTime2 = new Date().getTime();
+                var time2 = endTime2 - startTime;
+                console.log('Execution time: ' + time2);
+//
+//                var featuresName = ["Sequence","Propeptide", "Mature protein", "Signal peptide", "Disulfide bonds", "Initiator meth", "Interacting region",
+//                    "Modified residue","Cross-link", "Glycosylation", "Site", "Active site", "Metal binding","Variant"];
+
+                var metaData = [
+                    {name: "Sequence"},
+                    {name: "Propeptide",className: "pro",color: "#B3B3B3",type: "rect",filter:"Processing"},                         {name: "Mature protein",className: "mat",color: "#B3B3C2",type: "rect",filter:"Processing"},
+                    {name: "Signal peptide",className: "sign",color: "#B3B3E1",type: "rect",filter:"Processing"},                    {name: "Transit peptide",className: "pero",color: "#B3B3F0",type: "rect",filter:"Processing"},
+                    {name: "Transit peptide",className: "mito",color: "#B3B3F0",type: "rect",filter:"Processing"},                   {name: "Region",className: "miscregion",color: "#B3C2B3",type: "rect",filter:"Region"},
+                    {name: "Domain",className: "domain",color: "#B3C2C2",type: "rect",filter:"Region"},
+                    {name: "Repeat",className: "repeat",color: "#98B7D5",type: "rect",filter:"Region"},                              {name: "Calcium binding",className: "calcium",color: "#B3C2E1",type: "rect",filter:"Region"},
+                    {name: "Zinc finger",className: "calcium",color: "#B3C2E1",type: "rect",filter:"Region"},                        {name: "DNA binding",className: "dnabind",color: "#B3C2FF",type: "rect",filter:"Region"},
+                    {name: "Nucleotide binding",className: "nucleobind",color: "#B3D1B3",type: "rect",filter:"Region"},              {name: "Coiled-coil",className: "coiledcoil",color: "#B3D1C2",type: "rect",filter:"Region"},
+                    {name: "Sequence motif",className: "motif",color: "#B3D1D1",type: "rect",filter:"Region"},                       {name: "Composition bias",className: "biased",color: "#B3D1E1",type: "rect",filter:"Region"},
+                    {name: "Top domain",className: "topodomain",color: "#A5DBA5",type: "rect",filter:"Topology"},
+                    {name: "Membrane",className: "membrane",color: "#A5DBB7",type: "rect",filter:"Topology"},                        {name: "Disulfide bond",className: "dsB",color: "#B3B3E1",type: "path",filter:"Modified Residue"},
+                    {name: "Initiator meth",className: "initMeth",color: "#B3B3D1",type: "unique",filter:"Processing"},              {name: "Interacting region",className: "intReg",color: "#B3D1F0",type: "rect",filter:"Region"},
+                    {name: "Modified residue",className: "modifRes",color: "#B3C2B3",type: "unique",filter:"Modified Residue"},      {name: "Cross-link",className: "crossLink",color: "#B3C2C2",type: "unique",filter:"Modified Residue"},
+                    {name: "Glycosylation",className: "glycoSite",color: "#74E374",type: "unique",filter:"Modified Residue"},        {name: "Site",className: "site",color: "#B3F0E1",type: "unique",filter:"Site"},
+                    {name: "Active site",className: "actSite",color: "#B3F0F0",type: "unique",filter:"Site"},                        {name: "Binding site",className: "bindsite",color: "#82E6FF",type: "unique",filter:"Site"},
+                    {name: "Cleavage site",className: "cleavsite",color: "#B3FFB3",type: "unique",filter:"Site"},                      {name: "Metal binding",className: "metal",color: "#B3FFC2",type: "unique",filter:"Site"},
+                    {name: "Lipidation",className: "lipidation",color: "#A3B5DB",type: "unique",filter:"Modified Residue"},          {name: "Non standart AA",className: "seleno",color: "#859DE7",type: "unique",filter:"Modified Residue"},
+                    {name: "Variant",className: "variant",color: "rgba(0,255,154,0.3)",type: "unique",filter:"Variant"},
+                    {name: "Mutagenesis",className: "mutagenesis",color: "#73FFE3",type: "unique",filter:"Variant"},                 {name: "Conflict",className: "seqconflict",color: "#6FFFFF",type: "unique",filter:"Conflict"}
+
+                ];
+
+                var tv = new TripleViewer(entry);
+                tv.init(oneData,metaData);
+
+                var endTime = new Date().getTime();
+                var time = endTime - startTime;
+                console.log('Execution time: ' + time);
+            }).catch(function (err) {
+                // catch any error that happened so far
+                console.log("Argh, broken: " + err.message);
+                console.log("Error at line : " + err.stack);
+            });
+        });
+    }));
+</script>
+</html>
