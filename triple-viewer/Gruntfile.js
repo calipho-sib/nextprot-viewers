@@ -17,6 +17,7 @@ module.exports = function(grunt) {
           'bower_components/d3/d3.js',
           'bower_components/feature-viewer/dist/feature-viewer.js',
           'templates/compiled-templates.js',
+          'vendor/js/nextprot2.js',
           'dist/triple-viewer.js'
         ],
         dest: 'dist/triple-viewer.bundle.js'
