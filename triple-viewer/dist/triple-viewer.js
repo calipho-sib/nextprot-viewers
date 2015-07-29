@@ -10,7 +10,6 @@ function TripleViewer(entry) {
     var isoformMapping;
     var featuresForViewer= [];
     var featuresByIsoform = [];
-    var publications = {};
     var iFrameWidth=0;
     var activeFiltering;
     var filterOptions = {
@@ -79,7 +78,6 @@ function TripleViewer(entry) {
                 featuresByIsoform.push(feat);
                 if (!(oneData[i] instanceof Array)) {
                     console.log("BANANA !");
-                    NXUtils.convertPublications(oneData[i].publi, publications);
                 }
                 var featForViewer = NXViewerUtils.convertNXAnnotations(feat,metaData[i]);
                 featuresForViewer.push(featForViewer);
@@ -414,8 +412,7 @@ function TripleViewer(entry) {
             });
             var datas = {
                 features: features,
-                featuresLength: number,
-                publications:publications
+                featuresLength: number
             };
 
             var template = HBtemplates['templates/featureTable2.tmpl'];

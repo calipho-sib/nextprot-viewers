@@ -24206,24 +24206,60 @@ this["HBtemplates"]["templates/featureTable2.tmpl"] = Handlebars.template({"1":f
     + ((stack1 = (helpers.position || (depth0 && depth0.position) || alias1).call(depth0,(depth0 != null ? depth0.length : depth0),{"name":"position","hash":{},"data":data})) != null ? stack1 : "")
     + "</a></td>\n            <td>"
     + ((stack1 = ((helper = (helper = helpers.link || (depth0 != null ? depth0.link : depth0)) != null ? helper : alias1),(typeof helper === alias2 ? helper.call(depth0,{"name":"link","hash":{},"data":data}) : helper))) != null ? stack1 : "")
+    + ((stack1 = helpers['if'].call(depth0,(depth0 != null ? depth0.variant : depth0),{"name":"if","hash":{},"fn":this.program(3, data, 0, blockParams, depths),"inverse":this.noop,"data":data})) != null ? stack1 : "")
+    + "\n                "
+    + ((stack1 = helpers['if'].call(depth0,(depth0 != null ? depth0.quality : depth0),{"name":"if","hash":{},"fn":this.program(9, data, 0, blockParams, depths),"inverse":this.noop,"data":data})) != null ? stack1 : "")
     + "</td>\n"
-    + ((stack1 = helpers['if'].call(depth0,(depth0 != null ? depth0.source : depth0),{"name":"if","hash":{},"fn":this.program(3, data, 0, blockParams, depths),"inverse":this.program(5, data, 0, blockParams, depths),"data":data})) != null ? stack1 : "")
+    + ((stack1 = helpers['if'].call(depth0,(depth0 != null ? depth0.source : depth0),{"name":"if","hash":{},"fn":this.program(11, data, 0, blockParams, depths),"inverse":this.program(13, data, 0, blockParams, depths),"data":data})) != null ? stack1 : "")
     + "        </tr>\n        <tr class=\""
     + ((stack1 = (helpers.className || (depth0 && depth0.className) || alias1).call(depth0,(depth0 != null ? depth0.category : depth0),{"name":"className","hash":{},"data":data})) != null ? stack1 : "")
     + " detailed-info\">\n            <td colspan=\"6\" style=\"word-break: break-all\">"
-    + ((stack1 = helpers.each.call(depth0,(depth0 != null ? depth0.source : depth0),{"name":"each","hash":{},"fn":this.program(7, data, 0, blockParams, depths),"inverse":this.noop,"data":data})) != null ? stack1 : "")
+    + ((stack1 = helpers.each.call(depth0,(depth0 != null ? depth0.source : depth0),{"name":"each","hash":{},"fn":this.program(15, data, 0, blockParams, depths),"inverse":this.noop,"data":data})) != null ? stack1 : "")
     + "</td>\n\n            <!--<td>-->\n             <!--"
-    + ((stack1 = helpers.each.call(depth0,(depth0 != null ? depth0.evidence : depth0),{"name":"each","hash":{},"fn":this.program(30, data, 0, blockParams, depths),"inverse":this.noop,"data":data})) != null ? stack1 : "")
-    + "-->\n            <!--</td>-->\n        </tr>";
+    + ((stack1 = helpers.each.call(depth0,(depth0 != null ? depth0.evidence : depth0),{"name":"each","hash":{},"fn":this.program(38, data, 0, blockParams, depths),"inverse":this.noop,"data":data})) != null ? stack1 : "")
+    + "-->\n            <!--</td>-->\n        </tr>\n        ";
 },"3":function(depth0,helpers,partials,data) {
+    var stack1;
+
+  return ((stack1 = helpers.each.call(depth0,(depth0 != null ? depth0.source : depth0),{"name":"each","hash":{},"fn":this.program(4, data, 0),"inverse":this.noop,"data":data})) != null ? stack1 : "");
+},"4":function(depth0,helpers,partials,data) {
+    var stack1;
+
+  return ((stack1 = helpers['if'].call(depth0,(depth0 != null ? depth0.externalDb : depth0),{"name":"if","hash":{},"fn":this.program(5, data, 0),"inverse":this.noop,"data":data})) != null ? stack1 : "");
+},"5":function(depth0,helpers,partials,data) {
+    var stack1;
+
+  return ((stack1 = helpers['if'].call(depth0,(depth0 != null ? depth0.crossRef : depth0),{"name":"if","hash":{},"fn":this.program(6, data, 0),"inverse":this.noop,"data":data})) != null ? stack1 : "");
+},"6":function(depth0,helpers,partials,data) {
+    var stack1, helper, options;
+
+  stack1 = ((helper = (helper = helpers.crossRef || (depth0 != null ? depth0.crossRef : depth0)) != null ? helper : helpers.helperMissing),(options={"name":"crossRef","hash":{},"fn":this.program(7, data, 0),"inverse":this.noop,"data":data}),(typeof helper === "function" ? helper.call(depth0,options) : helper));
+  if (!helpers.crossRef) { stack1 = helpers.blockHelperMissing.call(depth0,stack1,options)}
+  if (stack1 != null) { return stack1; }
+  else { return ''; }
+},"7":function(depth0,helpers,partials,data) {
+    var stack1, helper, alias1=helpers.helperMissing;
+
+  return " ; "
+    + this.escapeExpression(((helper = (helper = helpers.dbName || (depth0 != null ? depth0.dbName : depth0)) != null ? helper : alias1),(typeof helper === "function" ? helper.call(depth0,{"name":"dbName","hash":{},"data":data}) : helper)))
+    + " : "
+    + ((stack1 = (helpers.linkTo || (depth0 && depth0.linkTo) || alias1).call(depth0,(depth0 != null ? depth0.name : depth0),(depth0 != null ? depth0.url : depth0),{"name":"linkTo","hash":{},"data":data})) != null ? stack1 : "")
+    + " ";
+},"9":function(depth0,helpers,partials,data) {
+    var helper;
+
+  return "<span style=\"background:#B6BCC5;color:#fff;padding: 0px 5px;\">•</span><span style=\"background:#DEDEDE;color:#999;padding: 0px 5px;\">"
+    + this.escapeExpression(((helper = (helper = helpers.quality || (depth0 != null ? depth0.quality : depth0)) != null ? helper : helpers.helperMissing),(typeof helper === "function" ? helper.call(depth0,{"name":"quality","hash":{},"data":data}) : helper)))
+    + "</span>";
+},"11":function(depth0,helpers,partials,data) {
     var helper;
 
   return "            <td style=\"text-align:right\"><span class=\"evidenceNumber\">"
     + this.escapeExpression(((helper = (helper = helpers.evidenceLength || (depth0 != null ? depth0.evidenceLength : depth0)) != null ? helper : helpers.helperMissing),(typeof helper === "function" ? helper.call(depth0,{"name":"evidenceLength","hash":{},"data":data}) : helper)))
     + "</span></td>\n            <td><span style=\"color:black;\">Evidences</span></td>\n";
-},"5":function(depth0,helpers,partials,data) {
+},"13":function(depth0,helpers,partials,data) {
     return "            <td></td>\n            <td></td>\n";
-},"7":function(depth0,helpers,partials,data,blockParams,depths) {
+},"15":function(depth0,helpers,partials,data,blockParams,depths) {
     var stack1, helper, alias1=helpers.helperMissing, alias2=this.escapeExpression;
 
   return "<div class=\"evidenceLine\"><div class=\"evidenceArrow\">&#10549;</div>  Evidence "
@@ -24231,25 +24267,25 @@ this["HBtemplates"]["templates/featureTable2.tmpl"] = Handlebars.template({"1":f
     + "<span class=\"evidenceCodeName\">"
     + alias2(((helper = (helper = helpers.evidenceCodeName || (depth0 != null ? depth0.evidenceCodeName : depth0)) != null ? helper : alias1),(typeof helper === "function" ? helper.call(depth0,{"name":"evidenceCodeName","hash":{},"data":data}) : helper)))
     + "</span>\n            <span class=\"evidenceSource\">"
-    + ((stack1 = helpers['if'].call(depth0,(depth0 != null ? depth0.resourceDb : depth0),{"name":"if","hash":{},"fn":this.program(8, data, 0, blockParams, depths),"inverse":this.program(10, data, 0, blockParams, depths),"data":data})) != null ? stack1 : "")
+    + ((stack1 = helpers['if'].call(depth0,(depth0 != null ? depth0.resourceDb : depth0),{"name":"if","hash":{},"fn":this.program(16, data, 0, blockParams, depths),"inverse":this.program(18, data, 0, blockParams, depths),"data":data})) != null ? stack1 : "")
     + "</span>"
-    + ((stack1 = helpers['if'].call(depth0,(depth0 != null ? depth0.publicationMD5 : depth0),{"name":"if","hash":{},"fn":this.program(12, data, 0, blockParams, depths),"inverse":this.noop,"data":data})) != null ? stack1 : "")
+    + ((stack1 = helpers['if'].call(depth0,(depth0 != null ? depth0.publicationMD5 : depth0),{"name":"if","hash":{},"fn":this.program(20, data, 0, blockParams, depths),"inverse":this.noop,"data":data})) != null ? stack1 : "")
     + "</div>\n                <div style=\"padding-left:10px;border-left:1px solid darkgray;margin-right:10px;\">\n"
-    + ((stack1 = helpers['if'].call(depth0,(depth0 != null ? depth0.publicationMD5 : depth0),{"name":"if","hash":{},"fn":this.program(15, data, 0, blockParams, depths),"inverse":this.program(26, data, 0, blockParams, depths),"data":data})) != null ? stack1 : "")
+    + ((stack1 = helpers['if'].call(depth0,(depth0 != null ? depth0.publicationMD5 : depth0),{"name":"if","hash":{},"fn":this.program(23, data, 0, blockParams, depths),"inverse":this.program(34, data, 0, blockParams, depths),"data":data})) != null ? stack1 : "")
     + "\n                </div>";
-},"8":function(depth0,helpers,partials,data) {
+},"16":function(depth0,helpers,partials,data) {
     var helper;
 
   return this.escapeExpression(((helper = (helper = helpers.resourceDb || (depth0 != null ? depth0.resourceDb : depth0)) != null ? helper : helpers.helperMissing),(typeof helper === "function" ? helper.call(depth0,{"name":"resourceDb","hash":{},"data":data}) : helper)));
-},"10":function(depth0,helpers,partials,data) {
+},"18":function(depth0,helpers,partials,data) {
     var helper;
 
   return this.escapeExpression(((helper = (helper = helpers.assignedBy || (depth0 != null ? depth0.assignedBy : depth0)) != null ? helper : helpers.helperMissing),(typeof helper === "function" ? helper.call(depth0,{"name":"assignedBy","hash":{},"data":data}) : helper)));
-},"12":function(depth0,helpers,partials,data,blockParams,depths) {
+},"20":function(depth0,helpers,partials,data,blockParams,depths) {
     var stack1;
 
-  return ((stack1 = helpers['if'].call(depth0,(depth0 != null ? depth0['abstract'] : depth0),{"name":"if","hash":{},"fn":this.program(13, data, 0, blockParams, depths),"inverse":this.noop,"data":data})) != null ? stack1 : "");
-},"13":function(depth0,helpers,partials,data,blockParams,depths) {
+  return ((stack1 = helpers['if'].call(depth0,(depth0 != null ? depth0['abstract'] : depth0),{"name":"if","hash":{},"fn":this.program(21, data, 0, blockParams, depths),"inverse":this.noop,"data":data})) != null ? stack1 : "");
+},"21":function(depth0,helpers,partials,data,blockParams,depths) {
     var helper, alias1=helpers.helperMissing, alias2="function", alias3=this.escapeExpression, alias4=this.lambda;
 
   return "<button class=\"btn btn-primary btn-xs\" type=\"button\" style=\"margin-left:5px\" data-toggle=\"collapse\" data-target=\"#collapse"
@@ -24259,13 +24295,13 @@ this["HBtemplates"]["templates/featureTable2.tmpl"] = Handlebars.template({"1":f
     + alias3(((helper = (helper = helpers.pubId || (depth0 != null ? depth0.pubId : depth0)) != null ? helper : alias1),(typeof helper === alias2 ? helper.call(depth0,{"name":"pubId","hash":{},"data":data}) : helper)))
     + alias3(alias4((depths[3] != null ? depths[3].id : depths[3]), depth0))
     + "\">\n                    abstract\n                </button>";
-},"15":function(depth0,helpers,partials,data,blockParams,depths) {
+},"23":function(depth0,helpers,partials,data,blockParams,depths) {
     var stack1, helper, alias1=helpers.helperMissing, alias2="function", alias3=this.escapeExpression;
 
   return "                    "
-    + ((stack1 = helpers['if'].call(depth0,(depth0 != null ? depth0.title : depth0),{"name":"if","hash":{},"fn":this.program(16, data, 0, blockParams, depths),"inverse":this.noop,"data":data})) != null ? stack1 : "")
+    + ((stack1 = helpers['if'].call(depth0,(depth0 != null ? depth0.title : depth0),{"name":"if","hash":{},"fn":this.program(24, data, 0, blockParams, depths),"inverse":this.noop,"data":data})) != null ? stack1 : "")
     + "\n                    <p style=\"color:#6a90d9;\">"
-    + ((stack1 = helpers.each.call(depth0,(depth0 != null ? depth0.authors : depth0),{"name":"each","hash":{},"fn":this.program(18, data, 0, blockParams, depths),"inverse":this.noop,"data":data})) != null ? stack1 : "")
+    + ((stack1 = helpers.each.call(depth0,(depth0 != null ? depth0.authors : depth0),{"name":"each","hash":{},"fn":this.program(26, data, 0, blockParams, depths),"inverse":this.noop,"data":data})) != null ? stack1 : "")
     + "</p>\n                    <p>"
     + alias3(((helper = (helper = helpers.journal || (depth0 != null ? depth0.journal : depth0)) != null ? helper : alias1),(typeof helper === alias2 ? helper.call(depth0,{"name":"journal","hash":{},"data":data}) : helper)))
     + " <strong>"
@@ -24277,24 +24313,24 @@ this["HBtemplates"]["templates/featureTable2.tmpl"] = Handlebars.template({"1":f
     + " ("
     + alias3(((helper = (helper = helpers.year || (depth0 != null ? depth0.year : depth0)) != null ? helper : alias1),(typeof helper === alias2 ? helper.call(depth0,{"name":"year","hash":{},"data":data}) : helper)))
     + ") "
-    + ((stack1 = helpers.each.call(depth0,(depth0 != null ? depth0.dbXrefs : depth0),{"name":"each","hash":{},"fn":this.program(20, data, 0, blockParams, depths),"inverse":this.noop,"data":data})) != null ? stack1 : "")
+    + ((stack1 = helpers.each.call(depth0,(depth0 != null ? depth0.dbXrefs : depth0),{"name":"each","hash":{},"fn":this.program(28, data, 0, blockParams, depths),"inverse":this.noop,"data":data})) != null ? stack1 : "")
     + "</p>\n                    "
-    + ((stack1 = helpers['if'].call(depth0,(depth0 != null ? depth0['abstract'] : depth0),{"name":"if","hash":{},"fn":this.program(22, data, 0, blockParams, depths),"inverse":this.program(24, data, 0, blockParams, depths),"data":data})) != null ? stack1 : "")
+    + ((stack1 = helpers['if'].call(depth0,(depth0 != null ? depth0['abstract'] : depth0),{"name":"if","hash":{},"fn":this.program(30, data, 0, blockParams, depths),"inverse":this.program(32, data, 0, blockParams, depths),"data":data})) != null ? stack1 : "")
     + "\n";
-},"16":function(depth0,helpers,partials,data) {
+},"24":function(depth0,helpers,partials,data) {
     var stack1, helper;
 
   return "<p>"
     + ((stack1 = ((helper = (helper = helpers.title || (depth0 != null ? depth0.title : depth0)) != null ? helper : helpers.helperMissing),(typeof helper === "function" ? helper.call(depth0,{"name":"title","hash":{},"data":data}) : helper))) != null ? stack1 : "")
     + "</p>";
-},"18":function(depth0,helpers,partials,data) {
+},"26":function(depth0,helpers,partials,data) {
     var helper, alias1=helpers.helperMissing, alias2="function", alias3=this.escapeExpression;
 
   return alias3(((helper = (helper = helpers.lastName || (depth0 != null ? depth0.lastName : depth0)) != null ? helper : alias1),(typeof helper === alias2 ? helper.call(depth0,{"name":"lastName","hash":{},"data":data}) : helper)))
     + " "
     + alias3(((helper = (helper = helpers.initials || (depth0 != null ? depth0.initials : depth0)) != null ? helper : alias1),(typeof helper === alias2 ? helper.call(depth0,{"name":"initials","hash":{},"data":data}) : helper)))
     + ". , ";
-},"20":function(depth0,helpers,partials,data) {
+},"28":function(depth0,helpers,partials,data) {
     var stack1, helper, alias1=helpers.helperMissing;
 
   return "["
@@ -24302,7 +24338,7 @@ this["HBtemplates"]["templates/featureTable2.tmpl"] = Handlebars.template({"1":f
     + " : "
     + ((stack1 = (helpers.linkTo || (depth0 && depth0.linkTo) || alias1).call(depth0,(depth0 != null ? depth0.accession : depth0),(depth0 != null ? depth0.url : depth0),{"name":"linkTo","hash":{},"data":data})) != null ? stack1 : "")
     + "] ";
-},"22":function(depth0,helpers,partials,data,blockParams,depths) {
+},"30":function(depth0,helpers,partials,data,blockParams,depths) {
     var helper, alias1=helpers.helperMissing, alias2="function", alias3=this.escapeExpression;
 
   return "<div class=\"collapse\" id=\"collapse"
@@ -24311,28 +24347,28 @@ this["HBtemplates"]["templates/featureTable2.tmpl"] = Handlebars.template({"1":f
     + "\" style=\"margin-top:5px;\">\n                        <div class=\"panel panel-info\"><div class=\"panel-heading\">\n                            <h3 class=\"panel-title\">Abstract</h3>\n                        </div><div class=\"panel-body\">"
     + alias3(((helper = (helper = helpers['abstract'] || (depth0 != null ? depth0['abstract'] : depth0)) != null ? helper : alias1),(typeof helper === alias2 ? helper.call(depth0,{"name":"abstract","hash":{},"data":data}) : helper)))
     + "</div></div>\n                    </div>";
-},"24":function(depth0,helpers,partials,data) {
+},"32":function(depth0,helpers,partials,data) {
     return "No Abstract available";
-},"26":function(depth0,helpers,partials,data) {
+},"34":function(depth0,helpers,partials,data) {
     var stack1;
 
   return "                    "
-    + ((stack1 = helpers['if'].call(depth0,(depth0 != null ? depth0.crossRef : depth0),{"name":"if","hash":{},"fn":this.program(27, data, 0),"inverse":this.noop,"data":data})) != null ? stack1 : "")
+    + ((stack1 = helpers['if'].call(depth0,(depth0 != null ? depth0.crossRef : depth0),{"name":"if","hash":{},"fn":this.program(35, data, 0),"inverse":this.noop,"data":data})) != null ? stack1 : "")
     + "\n";
-},"27":function(depth0,helpers,partials,data) {
+},"35":function(depth0,helpers,partials,data) {
     var stack1, helper, options;
 
-  stack1 = ((helper = (helper = helpers.crossRef || (depth0 != null ? depth0.crossRef : depth0)) != null ? helper : helpers.helperMissing),(options={"name":"crossRef","hash":{},"fn":this.program(28, data, 0),"inverse":this.noop,"data":data}),(typeof helper === "function" ? helper.call(depth0,options) : helper));
+  stack1 = ((helper = (helper = helpers.crossRef || (depth0 != null ? depth0.crossRef : depth0)) != null ? helper : helpers.helperMissing),(options={"name":"crossRef","hash":{},"fn":this.program(36, data, 0),"inverse":this.noop,"data":data}),(typeof helper === "function" ? helper.call(depth0,options) : helper));
   if (!helpers.crossRef) { stack1 = helpers.blockHelperMissing.call(depth0,stack1,options)}
   if (stack1 != null) { return stack1; }
   else { return ''; }
-},"28":function(depth0,helpers,partials,data) {
+},"36":function(depth0,helpers,partials,data) {
     var stack1;
 
   return "<p>"
     + ((stack1 = (helpers.linkTo || (depth0 && depth0.linkTo) || helpers.helperMissing).call(depth0,(depth0 != null ? depth0.name : depth0),(depth0 != null ? depth0.url : depth0),{"name":"linkTo","hash":{},"data":data})) != null ? stack1 : "")
     + "</p>";
-},"30":function(depth0,helpers,partials,data) {
+},"38":function(depth0,helpers,partials,data) {
     return "-->\n                <!--<div>"
     + this.escapeExpression(this.lambda(depth0, depth0))
     + "</div>-->\n                <!--";
@@ -24521,7 +24557,6 @@ function TripleViewer(entry) {
     var isoformMapping;
     var featuresForViewer= [];
     var featuresByIsoform = [];
-    var publications = {};
     var iFrameWidth=0;
     var activeFiltering;
     var filterOptions = {
@@ -24590,7 +24625,6 @@ function TripleViewer(entry) {
                 featuresByIsoform.push(feat);
                 if (!(oneData[i] instanceof Array)) {
                     console.log("BANANA !");
-                    NXUtils.convertPublications(oneData[i].publi, publications);
                 }
                 var featForViewer = NXViewerUtils.convertNXAnnotations(feat,metaData[i]);
                 featuresForViewer.push(featForViewer);
@@ -24925,8 +24959,7 @@ function TripleViewer(entry) {
             });
             var datas = {
                 features: features,
-                featuresLength: number,
-                publications:publications
+                featuresLength: number
             };
 
             var template = HBtemplates['templates/featureTable2.tmpl'];

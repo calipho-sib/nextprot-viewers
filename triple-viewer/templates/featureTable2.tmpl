@@ -22,7 +22,8 @@
             <td>{{category}}</td>
             <td style="text-align:right">{{length}}</td>
             <td style="text-align:center"><a class="featPosition" href="javascript:;">{{{position length}}}</a></td>
-            <td>{{{link}}}</td>
+            <td>{{{link}}}{{#if variant}}{{#each source}}{{#if externalDb}}{{#if crossRef}}{{#crossRef}} ; {{dbName}} : {{{linkTo name url}}} {{/crossRef}}{{/if}}{{/if}}{{/each}}{{/if}}
+                {{#if quality}}<span style="background:#B6BCC5;color:#fff;padding: 0px 5px;">•</span><span style="background:#DEDEDE;color:#999;padding: 0px 5px;">{{quality}}</span>{{/if}}</td>
             {{#if source}}
             <td style="text-align:right"><span class="evidenceNumber">{{evidenceLength}}</span></td>
             <td><span style="color:black;">Evidences</span></td>
@@ -57,6 +58,7 @@
                 <!--<div>{{this}}</div>-->
                 <!--{{/each}}-->
             <!--</td>-->
-        </tr>{{/each}}{{/each}}</tbody>
+        </tr>
+        {{/each}}{{/each}}</tbody>
     </table>
 </div>
