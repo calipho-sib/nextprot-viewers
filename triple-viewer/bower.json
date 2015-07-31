@@ -30,6 +30,7 @@
     "handlebars": "x.x.x",
     "feature-viewer": "x.x.x",
     "sequence-viewer": "x.x.x",
-    "nextprot": "x.x.x"
+    "nextprot": "x.x.x",
+    "iframe-resizer":"x.x.x"
   }
 }
