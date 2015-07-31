@@ -12,13 +12,14 @@ module.exports = function(grunt) {
           'bower_components/bootstrap/dist/js/bootstrap.min.js',
           'bower_components/handlebars/handlebars.js',
 
-          'bower_components/nextprot/src/nextprot-templates.js',
+          'vendor/js/nextprot-templates.js',
           'bower_components/sequence-viewer/dist/sequence-viewer.js',
           'bower_components/d3/d3.js',
           'bower_components/feature-viewer/dist/feature-viewer.js',
-          'bower_components/iframe-resizer/js/iframeResizer.contentWindow.min.js',
           'templates/compiled-templates.js',
           'vendor/js/nextprot2.js',
+
+          'bower_components/iframe-resizer/js/iframeResizer.contentWindow.min.js',
           'dist/triple-viewer.js'
         ],
         dest: 'dist/triple-viewer.bundle.js'
