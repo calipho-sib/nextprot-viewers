@@ -2,7 +2,8 @@
   "name": "petide-viewer",
   "dependencies": {
     "sequence-viewer": "x.x.x",
-    "nextprot": "0.0.x"
+    "nextprot": "0.0.x",
+    "iframe-resizer":"x.x.x"
 
   },
   "resolutions": {
