@@ -16,9 +16,59 @@
 html {
     overflow-y: scroll;
 }
+#nx-overview {
+    height:auto;
+    background:#fff;
+    border-top: 4px solid #E7EAEC;
+    margin-top:10px;
+    border-bottom: 1px solid #E7EAEC;
+}
+#nx-isoformChoice {
+    margin-top:10px;
+    margin-bottom: -5px;
+}
+#nx-overviewSeq {
+    background:#fff;
+    vertical-align:top;
+    border-top:4px solid #E7EAEC;
+    border-bottom:1px solid #eee;
+    padding:10px 0px 0px 20px;
+    height:inherit;
+}
+#nx-histogram {
+    vertical-align:top;
+    height:inherit;
+    padding-right:0px;
+}
 #nx-overview dd {
     padding-left: 15px;
     font-size: 12px;
+}
+#container {
+    height:300px;
+    width:auto;
+    vertical-align: middle;
+    background:#fff;
+    border-top:4px solid #E7EAEC;
+    border-bottom:1px solid #eee;
+    border-left:1px solid #eee;
+}
+#nx-overviewPeptide {
+    height:300px;
+    background:#fff;
+    padding:5px 20px 20px;
+    margin-top:10px;
+    border-top:4px solid #E7EAEC;
+    border-bottom:1px solid #eee;
+}
+#nx-detailedPeptide {
+    display:none;
+    height:auto;
+    background:#fff;
+    padding:0px 20px;
+    margin-top:10px;
+    border-top:4px solid #E7EAEC;
+    border-bottom:1px solid #eee;
 }
 .name:hover {
     color: white !important;

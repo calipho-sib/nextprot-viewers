@@ -26,7 +26,20 @@
     <!--<script src="../vendor/js/nextprot2.js"></script>-->
     <script src="../dist/triple-viewer.bundle.js"></script>
 </head>
-
+<script>
+//    function respondToSizingMessage(e) {
+//        //if(e.origin == 'http://origin-domain.com') {
+//        // e.data is the string sent by the origin with postMessage.
+//        console.log("iframe received message and should respond ffs");
+//        console.log(e);
+//        if(e.data == 'sizing?') {
+//            e.source.postMessage('sizing:'+document.body.scrollHeight+','+document.body.scrollWidth, e.origin);
+//        }
+//        //}
+//    }
+//
+//    window.addEventListener('message', respondToSizingMessage, false);
+</script>
 <body>
 <div class="row" style="margin: 0px 20px;">
     <div id="nx-overview" class="col-md-12" style="background:#fff;margin-top:10px;margin-bottom:10px;border-top:4px solid #E7EAEC;border-bottom: 1px solid #e7eaec;"></div>
@@ -47,6 +60,8 @@
     </div>
 </body>
 <script>
+
+
 
     ($(function () {
 
@@ -770,6 +785,7 @@
         //    // }
         //
         //}
+
 
         $(function () {
             var startTime = new Date().getTime();
