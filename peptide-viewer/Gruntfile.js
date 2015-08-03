@@ -5,7 +5,7 @@ module.exports = function(grunt) {
     pkg: grunt.file.readJSON('package.json'),
     concat: {
       options: {
-        separator: ';'
+        separator: ';\n'
       },
       basic: {
         src: ['bower_components/jquery/dist/jquery.js',
@@ -13,9 +13,8 @@ module.exports = function(grunt) {
           'bower_components/handlebars/handlebars.js',
           'bower_components/sequence-viewer/src/sequence-viewer.js',
           'bower_components/nextprot/dist/nextprot.min.js',
-          'bower_components/iframe-resizer/js/iframeResizer.contentWindow.min.js',
-          'app/js/dependencies.js">',
           'app/js/bootstrap.min.js">',
+          'bower_components/iframe-resizer/js/iframeResizer.contentWindow.min.js',
           'app/js/gist_templates.js',
           'app/js/stupidtable.js',
           'app/js/nextprot-histogram.js',
