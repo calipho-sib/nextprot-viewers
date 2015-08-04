@@ -16264,8 +16264,879 @@ function Sequence(sequence,isoformName) {
         addLegend: addLegend
     }
 };
-/*! nextprot 2015-07-27 */
-!function(a){"use strict";void 0===a.Nextprot&&(a.Nextprot={}),function(){var b="https://api.nextprot.org//entry/",c="https://api.nextprot.org/sparql",d="?output=json",e="PREFIX :<http://nextprot.org/rdf#> PREFIX annotation:<http://nextprot.org/rdf/annotation/> PREFIX context:<http://nextprot.org/rdf/context/> PREFIX cv:<http://nextprot.org/rdf/terminology/> PREFIX db:<http://nextprot.org/rdf/db/> PREFIX dc:<http://purl.org/dc/elements/1.1/> PREFIX dcterms:<http://purl.org/dc/terms/> PREFIX entry:<http://nextprot.org/rdf/entry/> PREFIX evidence:<http://nextprot.org/rdf/evidence/> PREFIX foaf:<http://xmlns.com/foaf/0.1/> PREFIX gene:<http://nextprot.org/rdf/gene/> PREFIX identifier:<http://nextprot.org/rdf/identifier/> PREFIX isoform:<http://nextprot.org/rdf/isoform/> PREFIX mo:<http://purl.org/ontology/mo/> PREFIX ov:<http://open.vocab.org/terms/> PREFIX owl:<http://www.w3.org/2002/07/owl#> PREFIX publication:<http://nextprot.org/rdf/publication/> PREFIX rdf:<http://www.w3.org/1999/02/22-rdf-syntax-ns#> PREFIX rdfs:<http://www.w3.org/2000/01/rdf-schema#> PREFIX sim:<http://purl.org/ontology/similarity/> PREFIX source:<http://nextprot.org/rdf/source/> PREFIX xref:<http://nextprot.org/rdf/xref/> PREFIX xsd:<http://www.w3.org/2001/XMLSchema#> ",f=null,g=null,h=function(a,b){if(f=a,g=b,!a)throw"Please provide some application name  ex:  new Nextprot.Client('demo application for visualizing peptides', clientInformation);";if(!b)throw"Please provide some client information ex:  new Nextprot.Client(applicationName, 'Calipho SIB at Geneva');"},i=function(a){a=a.replace(/[\[]/,"\\[").replace(/[\]]/,"\\]");var b=new RegExp("[\\?&]"+a+"=([^&#]*)"),c=b.exec(location.search);return null===c?"":decodeURIComponent(c[1].replace(/\+/g," "))};h.prototype.getEntryName=function(){return i("nxentry")||"NX_P01308"};var j=function(a){return"NX_"!==a.substring(0,3)&&(a="NX_"+a),a},k=function(a,c){return new Promise(function(d,e){var h=new XMLHttpRequest,i=b+a+"/"+c+".json?clientInfo="+g+"&applicationName="+f;h.open("GET",i),h.onload=function(){200==h.status?d(JSON.parse(h.responseText)):e(Error(h.status))},h.onerror=function(){e(Error("Network Error"))},h.send()})};h.prototype.executeSparql=function(a){var b=e+a,h=c+d+"&query="+encodeURIComponent(b)+"&clientInfo="+g+"&applicationName="+f;return Promise.resolve($.getJSON(h)).then(function(a){return a})},h.prototype.getProteinOverview=function(a){return k(j(a||this.getEntryName()),"overview").then(function(a){return a.entry.overview})},h.prototype.getProteinSequence=function(a){return k(j(a||this.getEntryName()),"isoform").then(function(a){return a.entry.isoforms})},h.prototype.getSecondaryStructure=function(a){return k(j(a||this.getEntryName()),"secondary-structure").then(function(a){return a.entry.annotations})},h.prototype.getMatureProtein=function(a){return k(j(a||this.getEntryName()),"mature-protein").then(function(a){return{annot:a.entry.annotations,publi:a.entry.publications,xrefs:a.entry.xrefs}})},h.prototype.getPeptide=function(a){return k(j(a||this.getEntryName()),"peptide-mapping").then(function(a){return a.entry.peptideMappings})},h.prototype.getSrmPeptide=function(a){return k(j(a||this.getEntryName()),"srm-peptide-mapping").then(function(a){return a.entry.srmPeptideMappings})},h.prototype.getSignalPeptide=function(a){return k(j(a||this.getEntryName()),"signal-peptide").then(function(a){return a.entry.annotations})},h.prototype.getProPeptide=function(a){return k(j(a||this.getEntryName()),"propeptide").then(function(a){return a.entry.annotations})},h.prototype.getDisulfideBond=function(a){return k(j(a||this.getEntryName()),"disulfide-bond").then(function(a){return a.entry.annotations})},h.prototype.getAntibody=function(a){return k(j(a||this.getEntryName()),"antibody").then(function(a){return a.entry.antibodyMappings})},h.prototype.getInitMeth=function(a){return k(j(a||this.getEntryName()),"initiator-methionine").then(function(a){return{annot:a.entry.annotations,publi:a.entry.publications,xrefs:a.entry.xrefs}})},h.prototype.getModifResidue=function(a){return k(j(a||this.getEntryName()),"modified-residue").then(function(a){return{annot:a.entry.annotations,publi:a.entry.publications,xrefs:a.entry.xrefs}})},h.prototype.getCrossLink=function(a){return k(j(a||this.getEntryName()),"cross-link").then(function(a){return{annot:a.entry.annotations,publi:a.entry.publications,xrefs:a.entry.xrefs}})},h.prototype.getGlycoSite=function(a){return k(j(a||this.getEntryName()),"glycosylation-site").then(function(a){return a.entry.annotations})},h.prototype.getInteractingRegion=function(a){return k(j(a||this.getEntryName()),"interacting-region").then(function(a){return a.entry.annotations})},h.prototype.getMiscellaneousSite=function(a){return k(j(a||this.getEntryName()),"miscellaneous-site").then(function(a){return a.entry.annotations})},h.prototype.getActiveSite=function(a){return k(j(a||this.getEntryName()),"active-site").then(function(a){return a.entry.annotations})},h.prototype.getMetalBindingSite=function(a){return k(j(a||this.getEntryName()),"metal-binding-site").then(function(a){return a.entry.annotations})},h.prototype.getVariant=function(a){return k(j(a||this.getEntryName()),"variant").then(function(a){return a.entry.annotations})},h.prototype.getExons=function(a){return k(j(a||this.getEntryName()),"genomic-mapping").then(function(a){return a.entry.genomicMappings[0].isoformMappings})},h.prototype.getIsoformMapping=function(a){return k(j(a||this.getEntryName()),"isoform/mapping").then(function(a){return a})},h.prototype.getLipidationSite=function(a){return k(j(a||this.getEntryName()),"lipidation-site").then(function(a){return a.entry.annotations})},h.prototype.getTopologicalDomain=function(a){return k(j(a||this.getEntryName()),"topological-domain").then(function(a){return a.entry.annotations})},h.prototype.getTransmembraneRegion=function(a){return k(j(a||this.getEntryName()),"transmembrane-region").then(function(a){return a.entry.annotations})},h.prototype.getMutagenesis=function(a){return k(j(a||this.getEntryName()),"mutagenesis").then(function(a){return a.entry.annotations})},h.prototype.getSequenceConflict=function(a){return k(j(a||this.getEntryName()),"sequence-conflict").then(function(a){return a.entry.annotations})},h.prototype.getPeroxisomeTransitPeptide=function(a){return k(j(a||this.getEntryName()),"peroxisome-transit-peptide").then(function(a){return a.entry.annotations})},h.prototype.getMitochondrialTransitPeptide=function(a){return k(j(a||this.getEntryName()),"mitochondrial-transit-peptide").then(function(a){return a.entry.annotations})},h.prototype.getSelenocysteine=function(a){return k(j(a||this.getEntryName()),"selenocysteine").then(function(a){return a.entry.annotations})},h.prototype.getMiscellaneousRegion=function(a){return k(j(a||this.getEntryName()),"miscellaneous-region").then(function(a){return a.entry.annotations})},h.prototype.getDomain=function(a){return k(j(a||this.getEntryName()),"domain").then(function(a){return a.entry.annotations})},h.prototype.getRepeat=function(a){return k(j(a||this.getEntryName()),"repeat").then(function(a){return a.entry.annotations})},h.prototype.getCalciumBinding=function(a){return k(j(a||this.getEntryName()),"calcium-binding-region").then(function(a){return a.entry.annotations})},h.prototype.getZincFinger=function(a){return k(j(a||this.getEntryName()),"zinc-finger-region").then(function(a){return a.entry.annotations})},h.prototype.getDnaBinding=function(a){return k(j(a||this.getEntryName()),"dna-binding-region").then(function(a){return a.entry.annotations})},h.prototype.getMotif=function(a){return k(j(a||this.getEntryName()),"short-sequence-motif").then(function(a){return a.entry.annotations})},h.prototype.getBiasedRegion=function(a){return k(j(a||this.getEntryName()),"compositionally-biased-region").then(function(a){return a.entry.annotations})},h.prototype.getNucleotideBinding=function(a){return k(j(a||this.getEntryName()),"nucleotide-phosphate-binding-region").then(function(a){return a.entry.annotations})},h.prototype.getCoiledCoilRegion=function(a){return k(j(a||this.getEntryName()),"coiled-coil-region").then(function(a){return a.entry.annotations})},h.prototype.getBindingSite=function(a){return k(j(a||this.getEntryName()),"binding-site").then(function(a){return a.entry.annotations})},h.prototype.getCleavageSite=function(a){return k(j(a||this.getEntryName()),"cleavage-site").then(function(a){return a.entry.annotations})},h.prototype.getBetaStrand=function(a){return k(j(a||this.getEntryName()),"beta-strand").then(function(a){return a.entry.annotations})},h.prototype.getHelix=function(a){return k(j(a||this.getEntryName()),"helix").then(function(a){return a.entry.annotations})},h.prototype.getTurn=function(a){return k(j(a||this.getEntryName()),"turn").then(function(a){return[a.entry.annotations,a.entry.publications]})},"undefined"!=typeof exports&&(exports.Client=h),a.Nextprot.Client=h}()}(this);var numero=0,NXUtils={checkIsoformMatch:function(a,b){return a.endsWith("-"+b)},getSequenceForIsoform:function(a,b){var c=null;return a.forEach("number"==typeof b?function(a){a.uniqueName.endsWith("-"+b)&&(console.log("returning"+a.sequence),c=a.sequence)}:function(a){return a.uniqueName===b?a.sequence:void 0}),c},getLinkForFeature:function(a,b,c){if("peptide"===c){var d="https://db.systemsbiology.net/sbeams/cgi/PeptideAtlas/GetPeptide?searchWithinThis=Peptide+Name&searchForThis="+b+";organism_name=Human";return"<a href='"+d+"'>"+b+"</a>"}if("antibody"===c){var d=a;return"<a href='"+d+"'>"+b+"</a>"}if(a){var d="http://www.nextprot.org/db/term/"+a;return"<a href='"+d+"'>"+b+"</a>"}if("publication"===c){var d="http://www.nextprot.org/db/publication/"+a;return"<a href='"+d+"'>"+b+"</a>"}return b?b:""},convertMappingsToIsoformMap:function(a,b,c){var d=jQuery.extend([],a),e=!1;a instanceof Array||(e=!0,d=jQuery.extend([],a.annot),console.log("GOOOOOOOOOOOT OOOOONE !!!!!!!!!!!!!!!!!!!!!!!!!!"));var f={};d.forEach(function(d){if(d.hasOwnProperty("targetingIsoformsMap")){for(var g in d.targetingIsoformsMap)if(d.targetingIsoformsMap.hasOwnProperty(g)){var h=d.targetingIsoformsMap[g].firstPosition,i=d.targetingIsoformsMap[g].lastPosition,j=NXUtils.getLinkForFeature(d.cvTermAccessionCode,d.description),k=d.description,l=d.evidences.map(function(a){return a.assignedBy}).filter(function(a,b,c){return c.indexOf(a)==b}),m=d.evidences.map(function(b){var c=null,d=null;if(e){for(var f in a.publi)if(a.publi[f].md5===b.publicationMD5){c=f;break}for(var g in a.xrefs)if(a.xrefs[g].dbXrefId===b.resourceId){d=a.xrefs[g],console.log("xreff"),console.log(d);break}return{evidenceCodeName:b.evidenceCodeName,assignedBy:b.assignedBy,publicationMD5:b.publicationMD5,title:c?NXUtils.getLinkForFeature(a.publi[c].publicationId,a.publi[c].title,"publication"):"",authors:c?a.publi[c].authors.map(function(a){return{lastName:a.lastName,initials:a.initials}}):[],journal:c?a.publi[c].cvJournal.name:"",volume:c?a.publi[c].volume:"",year:c?a.publi[c].publicationYear:"",firstPage:c?a.publi[c].firstPage:"",lastPage:c?""===a.publi[c].lastPage?a.publi[c].firstPage:a.publi[c].lastPage:"",pubId:c?a.publi[c].publicationId:"","abstract":c?a.publi[c].abstractText:"",dbXrefs:c?a.publi[c].dbXrefs.map(function(a){return{name:"DOI"===a.databaseName?"Full Text":a.databaseName,url:a.resolvedUrl,accession:a.accession}}):[],crossRef:d?{name:d.accession,url:d.resolvedUrl}:{}}}return{evidenceCodeName:b.evidenceCodeName,assignedBy:b.assignedBy,publicationMD5:b.publicationMD5,title:"",authors:[],journal:"",volume:"","abstract":""}});d.hasOwnProperty("variant")&&!jQuery.isEmptyObject(d.variant)&&(j="<span style='color:#00C500'>"+d.variant.original+" → "+d.variant.variant+"</span>",k='<span style="color:#00C500">'+d.variant.original+" → "+d.variant.variant+"</span>  ",d.variant.description&&(k+=d.variant.description)),f[g]||(f[g]=[]),f[g].push({start:h,end:i,length:i-h+1,id:b.replace(/\s/g,"")+"_"+h.toString()+"_"+i.toString(),description:k,category:b,group:c,link:j,evidence:l,evidenceLength:m.length,source:m})}}else if(d.hasOwnProperty("isoformSpecificity"))for(var g in d.isoformSpecificity)if(d.isoformSpecificity.hasOwnProperty(g))for(var n=0;n<d.isoformSpecificity[g].positions.length;n++){var h=d.isoformSpecificity[g].positions[n].first,i=d.isoformSpecificity[g].positions[n].second,l="",k="",j="",m=[];if(d.hasOwnProperty("evidences")?(m=d.evidences.map(function(a){return{evidenceCodeName:a.evidenceCodeName,assignedBy:a.assignedBy,publicationMD5:a.publicationMD5}}),l=d.evidences.map(function(a){return a.assignedBy}).filter(function(a,b,c){return c.indexOf(a)==b})):l=[d.assignedBy],d.hasOwnProperty("xrefs"))k=d.xrefs[0].accession,j=NXUtils.getLinkForFeature(d.xrefs[0].resolvedUrl,k,"antibody");else{k=d.evidences[0].accession;for(ev in d.evidences)if("PeptideAtlas"===d.evidences[ev].databaseName||"SRMAtlas"===d.evidences[ev].databaseName){k=d.evidences[ev].accession,j=NXUtils.getLinkForFeature(k,k,"peptide");break}}f[g]||(f[g]=[]),f[g].push({start:h,end:i,length:i-h,id:b.replace(/\s/g,"")+"_"+h.toString()+"_"+i.toString(),description:k,category:b,group:c,link:j,evidence:l,evidenceLength:m.length,source:m})}}),numero+=1;for(var g in f)f[g].sort(function(a,b){return a.start-b.start});return console.log(f),f},convertPublications:function(a,b){console.log(a);for(var c in a)b[a[c].md5]={title:a[c].title,author:a[c].authors.map(function(a){return{lastName:a.lastName,initials:a.initials}}),journal:a[c].cvJournal.name,volume:a[c].volume,"abstract":a[c].abstractText};console.log(b)},convertExonsMappingsToIsoformMap:function(a){return a.map(function(a){return{uniqueName:a.uniqueName,isoMainName:a.isoMainName,mapping:a.positionsOfIsoformOnReferencedGene.map(function(a){return{start:a.key,end:a.value}})}})}},NXViewerUtils={convertNXAnnotations:function(a,b){if(!a)return"Cannot load this";var c={};for(name in a){var d=jQuery.extend({},b);d.data=a[name].map(function(a){return{x:a.start,y:a.end,id:a.id,category:a.category,description:a.description}}),c[name]=d}return c}};;
+/**
+ * A neXtProt js client
+ */
+( function (root) {
+    //
+    'use strict';
+    if (root.Nextprot === undefined) {
+        root.Nextprot = {};
+    }
+
+
+    (function () {
+
+        //?default-graph-uri=&named-graph-uri=&output=json
+
+        var tempApiUrl = "http://dev-api.nextprot.org/entries/";
+        var nextprotApiUrl = "https://api.nextprot.org//entry/";
+        var sparqlEndpoint = "https://api.nextprot.org/sparql";
+        var sparqlFormat = "?output=json";
+        var sparqlPrefixes = "PREFIX :<http://nextprot.org/rdf#> "+
+            "PREFIX annotation:<http://nextprot.org/rdf/annotation/> "+
+            "PREFIX context:<http://nextprot.org/rdf/context/> "+
+            "PREFIX cv:<http://nextprot.org/rdf/terminology/> "+
+            "PREFIX db:<http://nextprot.org/rdf/db/> "+
+            "PREFIX dc:<http://purl.org/dc/elements/1.1/> "+
+            "PREFIX dcterms:<http://purl.org/dc/terms/> "+
+            "PREFIX entry:<http://nextprot.org/rdf/entry/> "+
+            "PREFIX evidence:<http://nextprot.org/rdf/evidence/> "+
+            "PREFIX foaf:<http://xmlns.com/foaf/0.1/> "+
+            "PREFIX gene:<http://nextprot.org/rdf/gene/> "+
+            "PREFIX identifier:<http://nextprot.org/rdf/identifier/> "+
+            "PREFIX isoform:<http://nextprot.org/rdf/isoform/> "+
+            "PREFIX mo:<http://purl.org/ontology/mo/> "+
+            "PREFIX ov:<http://open.vocab.org/terms/> "+
+            "PREFIX owl:<http://www.w3.org/2002/07/owl#> "+
+            "PREFIX publication:<http://nextprot.org/rdf/publication/> "+
+            "PREFIX rdf:<http://www.w3.org/1999/02/22-rdf-syntax-ns#> "+
+            "PREFIX rdfs:<http://www.w3.org/2000/01/rdf-schema#> "+
+            "PREFIX sim:<http://purl.org/ontology/similarity/> "+
+            "PREFIX source:<http://nextprot.org/rdf/source/> "+
+            "PREFIX xref:<http://nextprot.org/rdf/xref/> "+
+            "PREFIX xsd:<http://www.w3.org/2001/XMLSchema#> ";
+
+
+        var applicationName = null;
+        var clientInfo = null;
+
+
+        var NextprotClient = function (appName, clientInformation) {
+            applicationName = appName;
+            clientInfo = clientInformation;
+            if(!appName){
+                throw "Please provide some application name  ex:  new Nextprot.Client('demo application for visualizing peptides', clientInformation);";
+            }
+            
+            if(!clientInformation){
+                throw "Please provide some client information ex:  new Nextprot.Client(applicationName, 'Calipho SIB at Geneva');";
+            }
+
+        };
+
+        //Util methods
+        var _getURLParameter = function (name){
+            name = name.replace(/[\[]/, "\\[").replace(/[\]]/, "\\]");
+            var regex = new RegExp("[\\?&]" + name + "=([^&#]*)"),
+                results = regex.exec(location.search);
+            return results === null ? "" : decodeURIComponent(results[1].replace(/\+/g, " "));
+        };
+
+        //Gets the entry set in the parameter
+        NextprotClient.prototype.getEntryName = function(){
+            return _getURLParameter("nxentry") || 'NX_P01308'; //By default returns the insulin
+        };
+
+        var normalizeEntry = function (entry) {
+            if (entry.substring(0,3) !== "NX_") {
+                entry = "NX_"+ entry;
+            }
+            return entry;
+        };
+
+        //private method, convention use an underscore
+        var _callURL = function (entryName, context){
+
+            var me = this;
+
+            return new Promise(function(resolve, reject) {
+
+                var req = new XMLHttpRequest();
+                var url = nextprotApiUrl + entryName + "/" + context + ".json" + "?clientInfo=" + clientInfo + "&applicationName=" + applicationName;
+                req.open("GET", url);
+
+                req.onload = function() {
+                    // This is called even on errors so check the status
+                    if (req.status == 200) {
+                        resolve(JSON.parse(req.responseText));
+                    }else {
+                        //reject(Error(req.status + " - " + JSON.parse(req.response).message));
+                        reject(Error(req.status));
+                    }
+                };
+
+                // Handle network errors
+                req.onerror = function() {
+                    reject(Error("Network Error"));
+                };
+
+                // Make the request
+                req.send();
+            });
+        };
+        var _callURLTemp = function (seq, mode){
+
+            var me = this;
+
+            return new Promise(function(resolve, reject) {
+
+                var req = new XMLHttpRequest();
+                var url = tempApiUrl + "search/peptide.json?peptide=" + seq + "&modeIL=" + mode;
+                req.open("GET", url);
+
+                req.onload = function() {
+                    // This is called even on errors so check the status
+                    if (req.status == 200) {
+                        resolve(JSON.parse(req.responseText));
+                    }else {
+                        //reject(Error(req.status + " - " + JSON.parse(req.response).message));
+                        reject(Error(req.status));
+                    }
+                };
+
+                // Handle network errors
+                req.onerror = function() {
+                    reject(Error("Network Error"));
+                };
+
+                // Make the request
+                req.send();
+            });
+        };
+
+        //NextprotClient.prototype.getProteinOverview = function() {
+        //    return _callURL(this.getEntryName(), "overview").then(function (data){
+        //        return data.entry.overview;
+        //    });
+        //};
+
+        NextprotClient.prototype.getEntryforPeptide = function(seq) {
+            return _callURLTemp(seq, "false").then(function (data){
+                return data;
+            });
+        };
+
+        NextprotClient.prototype.executeSparql = function(sparql) {
+            var sparqlQuery = sparqlPrefixes+sparql;
+            var url = sparqlEndpoint+sparqlFormat+"&query="+encodeURIComponent(sparqlQuery) + "&clientInfo=" + clientInfo + "&applicationName=" + applicationName;
+            return Promise.resolve($.getJSON(url)).then(function (data){
+                return data;
+            });
+        };
+
+        NextprotClient.prototype.getProteinOverview = function(entry) {
+            return _callURL(normalizeEntry(entry || this.getEntryName()), "overview").then(function (data){
+                return data.entry.overview;
+            });
+        };
+
+        NextprotClient.prototype.getProteinSequence = function(entry) {
+            return _callURL(normalizeEntry(entry || this.getEntryName()), "isoform").then(function (data){
+                return data.entry.isoforms;
+            });
+        };
+
+        NextprotClient.prototype.getSecondaryStructure = function(entry) {
+            return _callURL(normalizeEntry(entry || this.getEntryName()), "secondary-structure").then(function (data){
+                var publiMap = {};
+                var xrefMap = {};
+                data.entry.publications.forEach(function (p){ publiMap[p.md5] = p});
+                data.entry.xrefs.forEach(function (p){ xrefMap[p.dbXrefId] = p});
+                //return data.entry.annotations;
+                return {annot:data.entry.annotations,publi:publiMap,xrefs:xrefMap};
+            });
+        };
+
+        //NextprotClient.prototype.getPublicationById = function(pubId) {
+        //    return publicationsMap[p.md5];
+        //
+        //    //TODO if does not exist on map go and get it by the rest api
+        //
+        //};
+
+
+        NextprotClient.prototype.getMatureProtein = function(entry) {
+            return _callURL(normalizeEntry(entry || this.getEntryName()), "mature-protein").then(function (data){
+                var publiMap = {};
+                var xrefMap = {};
+                data.entry.publications.forEach(function (p){ publiMap[p.md5] = p});
+                data.entry.xrefs.forEach(function (p){ xrefMap[p.dbXrefId] = p});
+                //return data.entry.annotations;
+                return {annot:data.entry.annotations,publi:publiMap,xrefs:xrefMap};
+            });
+        };
+
+        NextprotClient.prototype.getPeptide = function(entry) {
+            return _callURL(normalizeEntry(entry || this.getEntryName()), "peptide-mapping").then(function (data){
+                return data.entry.peptideMappings;
+            });
+        };
+
+        NextprotClient.prototype.getSrmPeptide = function(entry) {
+            return _callURL(normalizeEntry(entry || this.getEntryName()), "srm-peptide-mapping").then(function (data){
+                return data.entry.srmPeptideMappings;
+            });
+        };
+
+        NextprotClient.prototype.getSignalPeptide = function(entry) {
+            return _callURL(normalizeEntry(entry || this.getEntryName()), "signal-peptide").then(function (data){
+                var publiMap = {};
+                var xrefMap = {};
+                data.entry.publications.forEach(function (p){ publiMap[p.md5] = p});
+                data.entry.xrefs.forEach(function (p){ xrefMap[p.dbXrefId] = p});
+                //return data.entry.annotations;
+                return {annot:data.entry.annotations,publi:publiMap,xrefs:xrefMap};
+            });
+        };
+
+        NextprotClient.prototype.getProPeptide = function(entry) {
+            return _callURL(normalizeEntry(entry || this.getEntryName()), "propeptide").then(function (data){
+                var publiMap = {};
+                var xrefMap = {};
+                data.entry.publications.forEach(function (p){ publiMap[p.md5] = p});
+                data.entry.xrefs.forEach(function (p){ xrefMap[p.dbXrefId] = p});
+                //return data.entry.annotations;
+                return {annot:data.entry.annotations,publi:publiMap,xrefs:xrefMap};
+            });
+        };
+
+        NextprotClient.prototype.getDisulfideBond = function(entry) {
+            return _callURL(normalizeEntry(entry || this.getEntryName()), "disulfide-bond").then(function (data){
+                var publiMap = {};
+                var xrefMap = {};
+                data.entry.publications.forEach(function (p){ publiMap[p.md5] = p});
+                data.entry.xrefs.forEach(function (p){ xrefMap[p.dbXrefId] = p});
+                //return data.entry.annotations;
+                return {annot:data.entry.annotations,publi:publiMap,xrefs:xrefMap};
+            });
+        };
+
+        NextprotClient.prototype.getAntibody = function(entry) {
+            return _callURL(normalizeEntry(entry || this.getEntryName()), "antibody").then(function (data){
+                return data.entry.antibodyMappings;
+            });
+        };
+        NextprotClient.prototype.getInitMeth= function(entry) {
+            return _callURL(normalizeEntry(entry || this.getEntryName()), "initiator-methionine").then(function (data){
+                var publiMap = {};
+                var xrefMap = {};
+                data.entry.publications.forEach(function (p){ publiMap[p.md5] = p});
+                data.entry.xrefs.forEach(function (p){ xrefMap[p.dbXrefId] = p});
+                //return data.entry.annotations;
+                return {annot:data.entry.annotations,publi:publiMap,xrefs:xrefMap};
+                //return data.entry.annotations;
+            });
+        };
+        NextprotClient.prototype.getModifResidue = function(entry) {
+            return _callURL(normalizeEntry(entry || this.getEntryName()), "modified-residue").then(function (data){
+                var publiMap = {};
+                var xrefMap = {};
+                data.entry.publications.forEach(function (p){ publiMap[p.md5] = p});
+                data.entry.xrefs.forEach(function (p){ xrefMap[p.dbXrefId] = p});
+                //return data.entry.annotations;
+                return {annot:data.entry.annotations,publi:publiMap,xrefs:xrefMap};
+                //return data.entry.annotations;
+            });
+        };
+        NextprotClient.prototype.getCrossLink = function(entry) {
+            return _callURL(normalizeEntry(entry || this.getEntryName()), "cross-link").then(function (data){
+                var publiMap = {};
+                var xrefMap = {};
+                data.entry.publications.forEach(function (p){ publiMap[p.md5] = p});
+                data.entry.xrefs.forEach(function (p){ xrefMap[p.dbXrefId] = p});
+                //return data.entry.annotations;
+                return {annot:data.entry.annotations,publi:publiMap,xrefs:xrefMap};
+            });
+        };
+        NextprotClient.prototype.getGlycoSite = function(entry) {
+            return _callURL(normalizeEntry(entry || this.getEntryName()), "glycosylation-site").then(function (data){
+                var publiMap = {};
+                var xrefMap = {};
+                data.entry.publications.forEach(function (p){ publiMap[p.md5] = p});
+                data.entry.xrefs.forEach(function (p){ xrefMap[p.dbXrefId] = p});
+                //return data.entry.annotations;
+                return {annot:data.entry.annotations,publi:publiMap,xrefs:xrefMap};
+            });
+        };
+
+        NextprotClient.prototype.getInteractingRegion = function(entry) {
+            return _callURL(normalizeEntry(entry || this.getEntryName()), "interacting-region").then(function (data){
+                var publiMap = {};
+                var xrefMap = {};
+                data.entry.publications.forEach(function (p){ publiMap[p.md5] = p});
+                data.entry.xrefs.forEach(function (p){ xrefMap[p.dbXrefId] = p});
+                //return data.entry.annotations;
+                return {annot:data.entry.annotations,publi:publiMap,xrefs:xrefMap};
+            });
+        };
+
+        NextprotClient.prototype.getMiscellaneousSite = function(entry) {
+            return _callURL(normalizeEntry(entry || this.getEntryName()), "miscellaneous-site").then(function (data){
+                var publiMap = {};
+                var xrefMap = {};
+                data.entry.publications.forEach(function (p){ publiMap[p.md5] = p});
+                data.entry.xrefs.forEach(function (p){ xrefMap[p.dbXrefId] = p});
+                //return data.entry.annotations;
+                return {annot:data.entry.annotations,publi:publiMap,xrefs:xrefMap};
+            });
+        };
+
+        NextprotClient.prototype.getActiveSite = function(entry) {
+            return _callURL(normalizeEntry(entry || this.getEntryName()), "active-site").then(function (data){
+                var publiMap = {};
+                var xrefMap = {};
+                data.entry.publications.forEach(function (p){ publiMap[p.md5] = p});
+                data.entry.xrefs.forEach(function (p){ xrefMap[p.dbXrefId] = p});
+                //return data.entry.annotations;
+                return {annot:data.entry.annotations,publi:publiMap,xrefs:xrefMap};
+            });
+        };
+
+        NextprotClient.prototype.getMetalBindingSite = function(entry) {
+            return _callURL(normalizeEntry(entry || this.getEntryName()), "metal-binding-site").then(function (data){
+                var publiMap = {};
+                var xrefMap = {};
+                data.entry.publications.forEach(function (p){ publiMap[p.md5] = p});
+                data.entry.xrefs.forEach(function (p){ xrefMap[p.dbXrefId] = p});
+                //return data.entry.annotations;
+                return {annot:data.entry.annotations,publi:publiMap,xrefs:xrefMap};
+            });
+        };
+
+        NextprotClient.prototype.getVariant = function(entry) {
+            return _callURL(normalizeEntry(entry || this.getEntryName()), "variant").then(function (data){
+                var publiMap = {};
+                var xrefMap = {};
+                data.entry.publications.forEach(function (p){ publiMap[p.md5] = p});
+                data.entry.xrefs.forEach(function (p){ xrefMap[p.dbXrefId] = p});
+                //return data.entry.annotations;
+                return {annot:data.entry.annotations,publi:publiMap,xrefs:xrefMap};
+            });
+        };
+
+        NextprotClient.prototype.getExons = function(entry) {
+            return _callURL(normalizeEntry(entry || this.getEntryName()), "genomic-mapping").then(function (data){
+                return data.entry.genomicMappings[0].isoformMappings;
+            });
+        };
+
+        NextprotClient.prototype.getIsoformMapping = function(entry) {
+            return _callURL(normalizeEntry(entry || this.getEntryName()), "isoform/mapping").then(function (data){
+                return data;
+            });
+        };
+
+        NextprotClient.prototype.getLipidationSite = function(entry) {
+            return _callURL(normalizeEntry(entry || this.getEntryName()), "lipidation-site").then(function (data){
+                var publiMap = {};
+                var xrefMap = {};
+                data.entry.publications.forEach(function (p){ publiMap[p.md5] = p});
+                data.entry.xrefs.forEach(function (p){ xrefMap[p.dbXrefId] = p});
+                //return data.entry.annotations;
+                return {annot:data.entry.annotations,publi:publiMap,xrefs:xrefMap};
+            });
+        };
+
+        NextprotClient.prototype.getTopologicalDomain = function(entry) {
+            return _callURL(normalizeEntry(entry || this.getEntryName()), "topological-domain").then(function (data){
+                var publiMap = {};
+                var xrefMap = {};
+                data.entry.publications.forEach(function (p){ publiMap[p.md5] = p});
+                data.entry.xrefs.forEach(function (p){ xrefMap[p.dbXrefId] = p});
+                //return data.entry.annotations;
+                return {annot:data.entry.annotations,publi:publiMap,xrefs:xrefMap};
+            });
+        };
+
+        NextprotClient.prototype.getTransmembraneRegion = function(entry) {
+            return _callURL(normalizeEntry(entry || this.getEntryName()), "transmembrane-region").then(function (data){
+                var publiMap = {};
+                var xrefMap = {};
+                data.entry.publications.forEach(function (p){ publiMap[p.md5] = p});
+                data.entry.xrefs.forEach(function (p){ xrefMap[p.dbXrefId] = p});
+                //return data.entry.annotations;
+                return {annot:data.entry.annotations,publi:publiMap,xrefs:xrefMap};
+            });
+        };
+
+        NextprotClient.prototype.getMutagenesis = function(entry) {
+            return _callURL(normalizeEntry(entry || this.getEntryName()), "mutagenesis").then(function (data){
+                var publiMap = {};
+                var xrefMap = {};
+                data.entry.publications.forEach(function (p){ publiMap[p.md5] = p});
+                data.entry.xrefs.forEach(function (p){ xrefMap[p.dbXrefId] = p});
+                //return data.entry.annotations;
+                return {annot:data.entry.annotations,publi:publiMap,xrefs:xrefMap};
+            });
+        };
+
+        NextprotClient.prototype.getSequenceConflict = function(entry) {
+            return _callURL(normalizeEntry(entry || this.getEntryName()), "sequence-conflict").then(function (data){
+                var publiMap = {};
+                var xrefMap = {};
+                data.entry.publications.forEach(function (p){ publiMap[p.md5] = p});
+                data.entry.xrefs.forEach(function (p){ xrefMap[p.dbXrefId] = p});
+                //return data.entry.annotations;
+                return {annot:data.entry.annotations,publi:publiMap,xrefs:xrefMap};
+            });
+        };
+
+        NextprotClient.prototype.getPeroxisomeTransitPeptide = function(entry) {
+            return _callURL(normalizeEntry(entry || this.getEntryName()), "peroxisome-transit-peptide").then(function (data){
+                var publiMap = {};
+                var xrefMap = {};
+                data.entry.publications.forEach(function (p){ publiMap[p.md5] = p});
+                data.entry.xrefs.forEach(function (p){ xrefMap[p.dbXrefId] = p});
+                //return data.entry.annotations;
+                return {annot:data.entry.annotations,publi:publiMap,xrefs:xrefMap};
+            });
+        };
+
+        NextprotClient.prototype.getMitochondrialTransitPeptide = function(entry) {
+            return _callURL(normalizeEntry(entry || this.getEntryName()), "mitochondrial-transit-peptide").then(function (data){
+                var publiMap = {};
+                var xrefMap = {};
+                data.entry.publications.forEach(function (p){ publiMap[p.md5] = p});
+                data.entry.xrefs.forEach(function (p){ xrefMap[p.dbXrefId] = p});
+                //return data.entry.annotations;
+                return {annot:data.entry.annotations,publi:publiMap,xrefs:xrefMap};
+            });
+        };
+
+        NextprotClient.prototype.getSelenocysteine = function(entry) {
+            return _callURL(normalizeEntry(entry || this.getEntryName()), "selenocysteine").then(function (data){
+                var publiMap = {};
+                var xrefMap = {};
+                data.entry.publications.forEach(function (p){ publiMap[p.md5] = p});
+                data.entry.xrefs.forEach(function (p){ xrefMap[p.dbXrefId] = p});
+                //return data.entry.annotations;
+                return {annot:data.entry.annotations,publi:publiMap,xrefs:xrefMap};
+            });
+        };
+
+
+        NextprotClient.prototype.getMiscellaneousRegion = function(entry) {
+            return _callURL(normalizeEntry(entry || this.getEntryName()), "miscellaneous-region").then(function (data){
+                var publiMap = {};
+                var xrefMap = {};
+                data.entry.publications.forEach(function (p){ publiMap[p.md5] = p});
+                data.entry.xrefs.forEach(function (p){ xrefMap[p.dbXrefId] = p});
+                //return data.entry.annotations;
+                return {annot:data.entry.annotations,publi:publiMap,xrefs:xrefMap};
+            });
+        };
+
+        NextprotClient.prototype.getDomain = function(entry) {
+            return _callURL(normalizeEntry(entry || this.getEntryName()), "domain").then(function (data){
+                var publiMap = {};
+                var xrefMap = {};
+                data.entry.publications.forEach(function (p){ publiMap[p.md5] = p});
+                data.entry.xrefs.forEach(function (p){ xrefMap[p.dbXrefId] = p});
+                //return data.entry.annotations;
+                return {annot:data.entry.annotations,publi:publiMap,xrefs:xrefMap};
+            });
+        };
+
+        NextprotClient.prototype.getRepeat = function(entry) {
+            return _callURL(normalizeEntry(entry || this.getEntryName()), "repeat").then(function (data){
+                var publiMap = {};
+                var xrefMap = {};
+                data.entry.publications.forEach(function (p){ publiMap[p.md5] = p});
+                data.entry.xrefs.forEach(function (p){ xrefMap[p.dbXrefId] = p});
+                //return data.entry.annotations;
+                return {annot:data.entry.annotations,publi:publiMap,xrefs:xrefMap};
+            });
+        };
+
+        NextprotClient.prototype.getCalciumBinding = function(entry) {
+            return _callURL(normalizeEntry(entry || this.getEntryName()), "calcium-binding-region").then(function (data){
+                var publiMap = {};
+                var xrefMap = {};
+                data.entry.publications.forEach(function (p){ publiMap[p.md5] = p});
+                data.entry.xrefs.forEach(function (p){ xrefMap[p.dbXrefId] = p});
+                //return data.entry.annotations;
+                return {annot:data.entry.annotations,publi:publiMap,xrefs:xrefMap};
+            });
+        };
+
+        NextprotClient.prototype.getZincFinger = function(entry) {
+            return _callURL(normalizeEntry(entry || this.getEntryName()), "zinc-finger-region").then(function (data){
+                var publiMap = {};
+                var xrefMap = {};
+                data.entry.publications.forEach(function (p){ publiMap[p.md5] = p});
+                data.entry.xrefs.forEach(function (p){ xrefMap[p.dbXrefId] = p});
+                //return data.entry.annotations;
+                return {annot:data.entry.annotations,publi:publiMap,xrefs:xrefMap};
+            });
+        };
+
+        NextprotClient.prototype.getDnaBinding = function(entry) {
+            return _callURL(normalizeEntry(entry || this.getEntryName()), "dna-binding-region").then(function (data){
+                var publiMap = {};
+                var xrefMap = {};
+                data.entry.publications.forEach(function (p){ publiMap[p.md5] = p});
+                data.entry.xrefs.forEach(function (p){ xrefMap[p.dbXrefId] = p});
+                //return data.entry.annotations;
+                return {annot:data.entry.annotations,publi:publiMap,xrefs:xrefMap};
+            });
+        };
+
+        NextprotClient.prototype.getMotif = function(entry) {
+            return _callURL(normalizeEntry(entry || this.getEntryName()), "short-sequence-motif").then(function (data){
+                var publiMap = {};
+                var xrefMap = {};
+                data.entry.publications.forEach(function (p){ publiMap[p.md5] = p});
+                data.entry.xrefs.forEach(function (p){ xrefMap[p.dbXrefId] = p});
+                //return data.entry.annotations;
+                return {annot:data.entry.annotations,publi:publiMap,xrefs:xrefMap};
+            });
+        };
+
+        NextprotClient.prototype.getBiasedRegion = function(entry) {
+            return _callURL(normalizeEntry(entry || this.getEntryName()), "compositionally-biased-region").then(function (data){
+                var publiMap = {};
+                var xrefMap = {};
+                data.entry.publications.forEach(function (p){ publiMap[p.md5] = p});
+                data.entry.xrefs.forEach(function (p){ xrefMap[p.dbXrefId] = p});
+                //return data.entry.annotations;
+                return {annot:data.entry.annotations,publi:publiMap,xrefs:xrefMap};
+            });
+        };
+
+        NextprotClient.prototype.getNucleotideBinding = function(entry) {
+            return _callURL(normalizeEntry(entry || this.getEntryName()), "nucleotide-phosphate-binding-region").then(function (data){
+                var publiMap = {};
+                var xrefMap = {};
+                data.entry.publications.forEach(function (p){ publiMap[p.md5] = p});
+                data.entry.xrefs.forEach(function (p){ xrefMap[p.dbXrefId] = p});
+                //return data.entry.annotations;
+                return {annot:data.entry.annotations,publi:publiMap,xrefs:xrefMap};
+            });
+        };
+
+        NextprotClient.prototype.getCoiledCoilRegion = function(entry) {
+            return _callURL(normalizeEntry(entry || this.getEntryName()), "coiled-coil-region").then(function (data){
+                var publiMap = {};
+                var xrefMap = {};
+                data.entry.publications.forEach(function (p){ publiMap[p.md5] = p});
+                data.entry.xrefs.forEach(function (p){ xrefMap[p.dbXrefId] = p});
+                //return data.entry.annotations;
+                return {annot:data.entry.annotations,publi:publiMap,xrefs:xrefMap};
+            });
+        };
+
+        NextprotClient.prototype.getBindingSite = function(entry) {
+            return _callURL(normalizeEntry(entry || this.getEntryName()), "binding-site").then(function (data){
+                var publiMap = {};
+                var xrefMap = {};
+                data.entry.publications.forEach(function (p){ publiMap[p.md5] = p});
+                data.entry.xrefs.forEach(function (p){ xrefMap[p.dbXrefId] = p});
+                //return data.entry.annotations;
+                return {annot:data.entry.annotations,publi:publiMap,xrefs:xrefMap};
+            });
+        };
+
+        NextprotClient.prototype.getCleavageSite = function(entry) {
+            return _callURL(normalizeEntry(entry || this.getEntryName()), "cleavage-site").then(function (data){
+                var publiMap = {};
+                var xrefMap = {};
+                data.entry.publications.forEach(function (p){ publiMap[p.md5] = p});
+                data.entry.xrefs.forEach(function (p){ xrefMap[p.dbXrefId] = p});
+                //return data.entry.annotations;
+                return {annot:data.entry.annotations,publi:publiMap,xrefs:xrefMap};
+            });
+        };
+
+        NextprotClient.prototype.getBetaStrand = function(entry) {
+            return _callURL(normalizeEntry(entry || this.getEntryName()), "beta-strand").then(function (data){
+                var publiMap = {};
+                var xrefMap = {};
+                data.entry.publications.forEach(function (p){ publiMap[p.md5] = p});
+                data.entry.xrefs.forEach(function (p){ xrefMap[p.dbXrefId] = p});
+                //return data.entry.annotations;
+                return {annot:data.entry.annotations,publi:publiMap,xrefs:xrefMap};
+            });
+        };
+
+        NextprotClient.prototype.getHelix = function(entry) {
+            return _callURL(normalizeEntry(entry || this.getEntryName()), "helix").then(function (data){
+                var publiMap = {};
+                var xrefMap = {};
+                data.entry.publications.forEach(function (p){ publiMap[p.md5] = p});
+                data.entry.xrefs.forEach(function (p){ xrefMap[p.dbXrefId] = p});
+                //return data.entry.annotations;
+                return {annot:data.entry.annotations,publi:publiMap,xrefs:xrefMap};
+            });
+        };
+
+        NextprotClient.prototype.getTurn = function(entry) {
+            return _callURL(normalizeEntry(entry || this.getEntryName()), "turn").then(function (data){
+                var publiMap = {};
+                var xrefMap = {};
+                data.entry.publications.forEach(function (p){ publiMap[p.md5] = p});
+                data.entry.xrefs.forEach(function (p){ xrefMap[p.dbXrefId] = p});
+                //return data.entry.annotations;
+                return {annot:data.entry.annotations,publi:publiMap,xrefs:xrefMap};
+            });
+        };
+
+        //node.js compatibility
+        if (typeof exports !== 'undefined') {
+            exports.Client = NextprotClient;
+        }
+
+
+        root.Nextprot.Client = NextprotClient;
+
+    }());
+
+
+}(this));
+var numero = 0;
+//Utility methods
+var NXUtils = {
+    
+    checkIsoformMatch:function(isoname, isonumber) {
+        return isoname.endsWith("-"+isonumber)
+    },
+
+    getSequenceForIsoform:function (isoSequences, isoformName){
+        var result = null;
+        //TODO allow users to specify isoform name without NX_
+        //TODO the API should return the results in a sorted array
+        
+        if(typeof isoformName === "number"){
+            isoSequences.forEach(function (d) {
+                
+                if (d.uniqueName.endsWith("-"+isoformName)) {
+                    console.log("returning" + d.sequence);
+                    result = d.sequence;
+                }
+            });
+        }else {
+            isoSequences.forEach(function (d) {
+            if (d.uniqueName === isoformName) 
+                return d.sequence;
+            })
+        }
+        return result;
+    },
+    getLinkForFeature: function(accession, description, type) {
+        if (type === "peptide"){
+            var url = "https://db.systemsbiology.net/sbeams/cgi/PeptideAtlas/GetPeptide?searchWithinThis=Peptide+Name&searchForThis=" + description + ";organism_name=Human";
+            return "<a href='" + url + "'>" + description + "</a>";
+        }
+        else if (type === "antibody") {
+            var url = accession;
+            return "<a href='" + url + "'>" + description + "</a>";
+        }
+        else if (accession) {
+            var url = "http://www.nextprot.org/db/term/" + accession;
+            return "<a href='" + url + "'>" + description + "</a>";
+        }
+        else if (type==="publication") {
+            var url = "http://www.nextprot.org/db/publication/" + accession;
+            return "<a href='" + url + "'>" + description + "</a>";
+        }
+        else if (description) return description;
+        else return "";
+    },
+    convertMappingsToIsoformMap:function (featMappings, category,group){
+        var mappings = jQuery.extend([], featMappings);
+        var publiActive = false;
+        if (!(featMappings instanceof Array)) {
+            publiActive = true;
+            mappings = jQuery.extend([], featMappings.annot);
+        }
+        //console.log(mmappings);
+        var result = {};
+        mappings.forEach(function (mapping) {
+            if (mapping.hasOwnProperty("targetingIsoformsMap")) {
+                for (var name in mapping.targetingIsoformsMap) {
+                    if (mapping.targetingIsoformsMap.hasOwnProperty(name)) {
+                        var start = mapping.targetingIsoformsMap[name].firstPosition,
+                            end = mapping.targetingIsoformsMap[name].lastPosition,
+                            link = NXUtils.getLinkForFeature(mapping.cvTermAccessionCode, mapping.description),
+                            description = mapping.description,
+                            quality = mapping.qualityQualifier !== "GOLD" ? mapping.qualityQualifier.toLowerCase() : "",
+                            source = mapping.evidences.map(function (d) {
+                                var pub = null;
+                                var xref = null;
+                                if (publiActive) {
+                                    if (featMappings.publi[d.publicationMD5]) {
+                                        pub = d.publicationMD5;
+                                    }
+                                    if (featMappings.xrefs[d.resourceId]) {
+                                        xref = featMappings.xrefs[d.resourceId];
+                                    }
+                                    return {
+                                        evidenceCodeName: d.evidenceCodeName,
+                                        assignedBy: d.assignedBy,
+                                        resourceDb: d.resourceDb,
+                                        externalDb: d.resourceDb !== "UniProt",
+                                        publicationMD5: d.publicationMD5,
+                                        title: pub ? NXUtils.getLinkForFeature(featMappings.publi[pub].publicationId, featMappings.publi[pub].title, "publication") : "",
+                                        authors: pub ? featMappings.publi[pub].authors.map(function (d) { return {lastName: d.lastName, initials: d.initials}}) : [],
+                                        journal: pub ? featMappings.publi[pub].cvJournal ? featMappings.publi[pub].cvJournal.name : "" : "",
+                                        volume: pub ? featMappings.publi[pub].volume : "",
+                                        year: pub ? featMappings.publi[pub].publicationYear : "",
+                                        firstPage: pub ? featMappings.publi[pub].firstPage  : "",
+                                        lastPage: pub ? (featMappings.publi[pub].lastPage === "" ? featMappings.publi[pub].firstPage : featMappings.publi[pub].lastPage) : "",
+                                        pubId: pub ? featMappings.publi[pub].publicationId : "",
+                                        abstract: pub ? featMappings.publi[pub].abstractText : "",
+                                        dbXrefs: pub ? featMappings.publi[pub].dbXrefs.map( function (o) {return {name: o.databaseName==="DOI" ? "Full Text" : o.databaseName, url:o.resolvedUrl, accession: o.accession}}) : [],
+                                        crossRef: xref ? {dbName: xref.databaseName, name: xref.accession, url: xref.resolvedUrl} : null
+                                    }
+                                }
+                                else return {
+                                evidenceCodeName: d.evidenceCodeName,
+                                assignedBy: d.assignedBy,
+                                publicationMD5: d.publicationMD5,
+                                title:"",
+                                authors:[],
+                                journal:"",
+                                volume:"",
+                                abstract:""
+                                }
+                            }),
+                            variant = false;
+                        if (mapping.hasOwnProperty("variant") && !jQuery.isEmptyObject(mapping.variant)) {
+                            link = "<span style='color:#00C500'>" + mapping.variant.original + " → " +  mapping.variant.variant + "</span>";
+                            description = "<span style=\"color:#00C500\">" + mapping.variant.original + " → " +  mapping.variant.variant + "</span>  ";
+                            variant = true;
+                            if (mapping.description) {
+                                var reg = /\[(.*?)\]/g;
+                                var match = reg.exec(mapping.description);
+                                var desc = mapping.description;
+                                if (match) {
+                                    var parseMatch = match[1].split(":");
+                                    var desc = mapping.description.replace(/(\[.*?\])/g,NXUtils.getLinkForFeature(parseMatch[2],parseMatch[0]));
+
+                                }
+                                link += " ; "+ desc;
+                            }
+                        }
+                        if (!result[name]) result[name] = [];
+                        result[name].push({
+                            start: start,
+                            end: end,
+                            length: end-start+1,
+                            id: category.replace(/\s/g,'')+"_"+start.toString()+"_"+end.toString(),
+                            description: description,
+                            quality: quality,
+                            category: category,
+                            group:group,
+                            link: link,
+                            evidenceLength: source.length,
+                            source:source,
+                            variant: variant
+                        });
+                    }
+                }
+            }
+            //TODO This is the old format, the API should evolve
+            else if (mapping.hasOwnProperty("isoformSpecificity")) {
+                        for (var name in mapping.isoformSpecificity) {
+                            if (mapping.isoformSpecificity.hasOwnProperty(name)) {
+                                for (var i = 0; i < mapping.isoformSpecificity[name].positions.length; i++) {
+                                    var start = mapping.isoformSpecificity[name].positions[i].first,
+                                        end = mapping.isoformSpecificity[name].positions[i].second,
+                                        description = "",
+                                        link = "",
+                                        source = [];
+                                    if (mapping.hasOwnProperty("evidences")) {
+                                        source = mapping.evidences.map(function (d) {return {
+                                            evidenceCodeName: d.evidenceCodeName,
+                                            assignedBy: d.assignedBy,
+                                            publicationMD5: d.publicationMD5
+                                        }});
+                                    }
+                                    if (mapping.hasOwnProperty("xrefs")) {
+                                        description = mapping.xrefs[0].accession;
+                                        link = NXUtils.getLinkForFeature(mapping.xrefs[0].resolvedUrl, description, "antibody")
+                                    }
+                                    else {
+                                        description = mapping.evidences[0].accession;
+                                        for (ev in mapping.evidences) if (mapping.evidences[ev].databaseName === "PeptideAtlas" || mapping.evidences[ev].databaseName === "SRMAtlas") {
+                                            description = mapping.evidences[ev].accession;
+                                            link = NXUtils.getLinkForFeature(description, description, "peptide");
+
+                                            break;
+                                        }
+                                    }
+
+                                    if (!result[name]) result[name] = [];
+                                    result[name].push({
+                                        start: start,
+                                        end: end,
+                                        length: end - start,
+                                        id: category.replace(/\s/g, '') + "_" + start.toString() + "_" + end.toString(),
+                                        description: description,
+                                        category: category,
+                                        group:group,
+                                        link: link,
+                                        evidenceLength: source.length,
+                                        source:source
+                                    });
+                                }
+                            }
+                        }
+            }
+        });
+        numero+=1;
+        for (var iso in result) {
+            result[iso].sort(function (a, b) {
+                return a.start - b.start;
+            })
+        }
+        return result;
+    },
+    convertPublications: function (publi, HashMD5) {
+        for (var pub in publi) {
+            HashMD5[publi[pub].md5]= {
+                title:publi[pub].title,
+                author:publi[pub].authors.map(function (d) { return {lastName: d.lastName, initials: d.initials}}),
+                journal:publi[pub].cvJournal.name,
+                volume:publi[pub].volume,
+                abstract:publi[pub].abstractText
+            }
+        }
+
+    },
+    convertExonsMappingsToIsoformMap:function (mappings) {
+        return mappings.map( function (d) {
+            return {
+                uniqueName: d.uniqueName,
+                isoMainName: d.isoMainName,
+                mapping: d.positionsOfIsoformOnReferencedGene.map(function (o) {
+                    return {start:o.key,end:o.value};
+                })
+            }
+        })
+    }
+};
+
+var NXViewerUtils = {
+    convertNXAnnotations:function (annotations, metadata){
+        if (!annotations) return "Cannot load this";
+        var result={};
+        for (name in annotations) {
+            var meta = jQuery.extend({}, metadata);
+            meta.data = annotations[name].map(function (annotation) {
+                return {
+                        x: annotation.start,
+                        y: annotation.end,
+                        id: annotation.id,
+                        category: annotation.category,
+                        description: annotation.description
+                }
+            });
+            result[name] = meta;
+        }
+        return result;
+    }
+};;
 /*! iFrame Resizer (iframeSizer.contentWindow.min.js) - v2.8.10 - 2015-06-21
  *  Desc: Include this file in any page being loaded into an iframe
  *        to force the iframe to resize to the content size.
@@ -16279,7 +17150,7 @@ function Sequence(sequence,isoformName) {
 this["HBtemplates"] = this["HBtemplates"] || {};
 
 this["HBtemplates"]["app/assets/templates/detailedPeptide.tmpl"] = Handlebars.template({"compiler":[6,">= 2.0.0-beta.1"],"main":function(depth0,helpers,partials,data) {
-    return "<div style=\"border-bottom: 1px solid #E7EAEC;padding-bottom:5px;margin: 5px 0px 15px;\">\n    <div style=\"display:inline-block;\">\n        <span id=\"nbPeptides\" class=\"badge\"\n              style=\"background:#C50063;color:white;padding:8px 10px;border-radius:50%;margin-right:10px;vertical-align:middle;\"></span>\n    </div>\n    <h4 style=\"display:inline-block;vertical-align:middle;\">Peptide detailed information</h4></div>\n<div class=\"row\" style=\"height:auto;margin-left:0px;\">\n    <div class=\"row-same-height\">\n        <div class=\"navbar col-md-3 col-md-height\"\n             id=\"info-left\"\n             style=\"background:#0F8292;padding:0;border-bottom-right-radius:0px;border-top-right-radius:0px;z-index: 1;vertical-align:top\">\n            <h4 style=\"color:white;font-size:24px;height:30px;font-weight:lighter;padding:5px 15px 25px;\">Peptides</h4>\n            <ul class=\"nav nav-stacked\" id=\"listNames\"\n                style=\"color:lightslategrey;height:auto;max-height:450px;overflow:auto;border-top: 1px solid #066B78;box-shadow: 0px -3px 6px -6px #5ACEDE, inset 0px 3px 6px -6px #066B78;\">\n            </ul>\n        </div>\n        <div class=\"col-md-9 col-md-height\" id=\"info-right\">\n            <div class=\"row\">\n                <div class=\"col-md-9\">\n                    <div class=\"panel panel-default\">\n                        <div class=\"panel-heading\">\n                            <h4 class=\"text-center\" id=\"titlePepName\"></h4>\n                        </div>\n                        <div id=\"peptideSpecificity\" class=\"center-block\"\n                             style=\"height:150px;margin-top:10px;\">\n                            <table id=\"pepPosTable\" class=\"table table-condensed\" style=\"font-size:12px;\">\n                                <thead>\n                                <tr>\n                                    <th class=\"col-md-2\" colspan=\"2\" style=\"font-size:14px;font-weight:700;\">Positions\n                                    </th>\n                                    <th class=\"col-md-4\" colspan=\"4\" style=\"font-size:14px;font-weight:700;\">\n                                        Trypticity\n                                    </th>\n                                    <th class=\"col-md-4\" colspan=\"4\" style=\"font-size:14px;font-weight:700;\">\n                                        C/N-Terminality\n                                    </th>\n                                </tr>\n                                <tr>\n                                    <th class=\"col-md-1\" data-sort=\"int\" data-sort-default=\"asc\" id=\"sortStart\">Start\n                                    </th>\n                                    <th class=\"col-md-1\">End</th>\n                                    <th class=\"col-md-1\">N-side</th>\n                                    <th class=\"col-md-1\">C-side</th>\n                                    <th class=\"col-md-1\">Miscleavages</th>\n                                    <th class=\"col-md-1\">Global</th>\n                                    <th class=\"col-md-1\">N-term</th>\n                                    <th class=\"col-md-1\">C-term</th>\n                                </tr>\n                                </thead>\n                                <tbody id=\"peptidePositions\"></tbody>\n                            </table>\n                        </div>\n                    </div>\n                </div>\n                <div class=\"col-md-3 detailedInfosFields\">\n                    <div class=\"panel panel-default\">\n                        <div class=\"panel-heading\">\n                            <h5 class=\"text-center\" style=\"margin:0px;\">Peptide Sequence</h5>\n                        </div>\n                        <div class=\"panel-body\" style=\"height:70px;border-bottom:1px solid #E7EAEC;\">\n                            <dl>\n                                <dt>Length</dt>\n                                <dd id=\"length\"></dd>\n                            </dl>\n                        </div>\n                        <div class=\"panel-body\" style=\"height:115px;overflow:auto;\">\n                            <dl>\n                                <dt>Sequence</dt>\n                                <dd id=\"pepSeq\" style=\"width:150px;word-break: break-all;\"></dd>\n                            </dl>\n                        </div>\n                    </div>\n                </div>\n            </div>\n            <div class=\"row detailedInfosFields\">\n                <div class=\"col-lg-3 col-md-6 col-sm-6 col-xs-6\">\n                    <div class=\"panel panel-default\">\n                        <div class=\"panel-heading\">\n                            <h5 class=\"text-center\" style=\"margin:0px;\">PTM</h5>\n                        </div>\n                        <div class=\"panel-body\" id=\"ptmInfos\" style=\"height:220px;overflow: auto\">\n                        </div>\n                    </div>\n                </div>\n                <div class=\"col-lg-3 col-md-6 col-sm-6 col-xs-6\">\n                    <div class=\"panel panel-default\">\n                        <div class=\"panel-heading\">\n                            <h5 class=\"text-center\" style=\"margin:0px;\">Properties</h5>\n                        </div>\n                        <div class=\"panel-body\" style=\"height:100px;border-bottom:1px solid #E7EAEC;\">\n                            <dl>\n                                <dt>Nature</dt>\n                                <dd>\n                                    <ul id=\"nature\" style=\"padding-left:20px;\"></ul>\n                                </dd>\n                            </dl>\n                        </div>\n                        <div class=\"panel-body\" id=\"proteomeProperties\" style=\"height:120px;overflow:auto;\">\n\n                        </div>\n                    </div>\n                </div>\n                <div class=\"col-lg-3 col-md-6 col-sm-6 col-xs-6\">\n                    <div class=\"panel panel-default\">\n                        <div class=\"panel-heading\">\n                            <h5 class=\"text-center\" style=\"margin:0px;\">Inclusion</h5>\n                        </div>\n                        <div class=\"panel-body\" style=\"height:100px;overflow:auto;border-bottom:1px solid #E7EAEC;\">\n                            <dl>\n                                <dt>Included in</dt>\n                                <dd>\n                                    <ul id=\"pepIncludedIn\" style=\"padding-left:20px;\"></ul>\n                                </dd>\n                            </dl>\n                        </div>\n                        <div class=\"panel-body\" style=\"height:120px;overflow:auto;\">\n                            <dl>\n                                <dt>Include</dt>\n                                <dd>\n                                    <ul id=\"pepIncluded\" style=\"padding-left:20px;\"></ul>\n                                </dd>\n                            </dl>\n                        </div>\n                    </div>\n                </div>\n                <div class=\"col-lg-3 col-md-6 col-sm-6 col-xs-6\">\n                    <div class=\"panel panel-default\">\n                        <div class=\"panel-heading\">\n                            <h5 class=\"text-center\" style=\"margin:0px;\">Sources</h5>\n                        </div>\n                        <div class=\"panel-body\" style=\"height:100px;overflow:auto;border-bottom:1px solid #E7EAEC;\">\n                            <dl>\n                                <dt>Database</dt>\n                                <dd>\n                                    <ul id=\"pepSources\" style=\"padding-left:20px;\"></ul>\n                                </dd>\n                            </dl>\n                        </div>\n                        <div class=\"panel-body\" style=\"height:120px;overflow:auto;\">\n                            <dl>\n                                <dt>Subsets</dt>\n                                <dd>\n                                    <ul id=\"tissueSpec\" style=\"padding-left:20px;\"></ul>\n                                </dd>\n                            </dl>\n                        </div>\n                    </div>\n                </div>\n            </div>\n        </div>\n    </div>\n</div>";
+    return "<div style=\"border-bottom: 1px solid #E7EAEC;padding-bottom:5px;margin: 5px 0px 15px;\">\n    <div style=\"display:inline-block;\">\n        <span id=\"nbPeptides\" class=\"badge\"\n              style=\"background:#C50063;color:white;padding:8px 10px;border-radius:50%;margin-right:10px;vertical-align:middle;\"></span>\n    </div>\n    <h4 style=\"display:inline-block;vertical-align:middle;\">Peptide detailed information</h4></div>\n<div class=\"row\" style=\"height:auto;margin-left:0px;\">\n    <div class=\"row-same-height\">\n        <div class=\"navbar col-md-3 col-md-height\"\n             id=\"info-left\"\n             style=\"background:#0F8292;padding:0;border-bottom-right-radius:0px;border-top-right-radius:0px;z-index: 1;vertical-align:top\">\n            <h4 style=\"color:white;font-size:24px;height:30px;font-weight:lighter;padding:5px 15px 25px;\">Peptides</h4>\n            <ul class=\"nav nav-stacked\" id=\"listNames\"\n                style=\"color:lightslategrey;height:auto;max-height:450px;overflow:auto;border-top: 1px solid #066B78;box-shadow: 0px -3px 6px -6px #5ACEDE, inset 0px 3px 6px -6px #066B78;\">\n            </ul>\n        </div>\n        <div class=\"col-md-9 col-md-height\" id=\"info-right\">\n            <div class=\"row\">\n                <div class=\"col-md-9\">\n                    <div class=\"panel panel-default\">\n                        <div class=\"panel-heading\">\n                            <h4 class=\"text-center\" id=\"titlePepName\"></h4>\n                        </div>\n                        <div id=\"peptideSpecificity\" class=\"center-block\"\n                             style=\"height:150px;margin-top:10px;\">\n                            <table id=\"pepPosTable\" class=\"table table-condensed\" style=\"font-size:12px;\">\n                                <thead>\n                                <tr>\n                                    <th class=\"col-md-2\" colspan=\"2\" style=\"font-size:14px;font-weight:700;\">Positions\n                                    </th>\n                                    <th class=\"col-md-4\" colspan=\"4\" style=\"font-size:14px;font-weight:700;\">\n                                        Trypticity\n                                    </th>\n                                    <th class=\"col-md-4\" colspan=\"4\" style=\"font-size:14px;font-weight:700;\">\n                                        C/N-Terminality\n                                    </th>\n                                </tr>\n                                <tr>\n                                    <th class=\"col-md-1\" data-sort=\"int\" data-sort-default=\"asc\" id=\"sortStart\">Start\n                                    </th>\n                                    <th class=\"col-md-1\">End</th>\n                                    <th class=\"col-md-1\">N-side</th>\n                                    <th class=\"col-md-1\">C-side</th>\n                                    <th class=\"col-md-1\">Miscleavages</th>\n                                    <th class=\"col-md-1\">Global</th>\n                                    <th class=\"col-md-1\">N-term</th>\n                                    <th class=\"col-md-1\">C-term</th>\n                                </tr>\n                                </thead>\n                                <tbody id=\"peptidePositions\"></tbody>\n                            </table>\n                        </div>\n                    </div>\n                </div>\n                <div class=\"col-md-3 detailedInfosFields\">\n                    <div class=\"panel panel-default\">\n                        <div class=\"panel-heading\">\n                            <h5 class=\"text-center\" style=\"margin:0px;\">Peptide Sequence</h5>\n                        </div>\n                        <div class=\"panel-body\" style=\"height:60px;border-bottom:1px solid #E7EAEC;\">\n                            <dl>\n                                <dt>Length</dt>\n                                <dd id=\"length\"></dd>\n                            </dl>\n                        </div>\n                        <div class=\"panel-body\" style=\"height:80px;overflow:auto;\">\n                            <dl>\n                                <dt>Sequence</dt>\n                                <dd id=\"pepSeq\" style=\"width:150px;word-break: break-all;\"></dd>\n                            </dl>\n                        </div>\n                        <div class=\"panel-body\" style=\"height:80px;border-top:1px solid #E7EAEC;\">\n                            <dl>\n                                <dt>Nature</dt>\n                                <dd>\n                                    <ul id=\"nature\" style=\"padding-left:20px;\"></ul>\n                                </dd>\n                            </dl>\n                        </div>\n                    </div>\n                </div>\n            </div>\n            <div class=\"row detailedInfosFields\">\n                <div class=\"col-lg-3 col-md-6 col-sm-6 col-xs-6\">\n                    <div class=\"panel panel-default\">\n                        <div class=\"panel-heading\">\n                            <h5 class=\"text-center\" style=\"margin:0px;\">PTM</h5>\n                        </div>\n                        <div class=\"panel-body\" id=\"ptmInfos\" style=\"height:220px;overflow: auto\">\n                        </div>\n                    </div>\n                </div>\n                <div class=\"col-lg-3 col-md-6 col-sm-6 col-xs-6\">\n                    <div class=\"panel panel-default\">\n                        <div class=\"panel-heading\">\n                            <h5 class=\"text-center\" style=\"margin:0px;\">Peptide to protein mapping</h5>\n                        </div>\n                        <div class=\"panel-heading\" style=\"height:35px;\">\n                            <div class=\"checkbox text-center\" style=\"margin-top:0px\">\n                                <label>\n                                    <input type=\"checkbox\" id=\"withVariant\" value=\"option1\">\n                                    Taking variants into account\n                                </label>\n                            </div>\n                        </div>\n                        <div class=\"panel-body\" style=\"height:190px;overflow:auto;\">\n                            <div class=\"pull-right\" style=\"margin-top:-5px;margin-right: -5px;\"><button id=\"showIsoforms\" type=\"button\" class=\"btn btn-default btn-xs\">Show isoforms</button></div>\n                            <div id=\"proteomeProperties\"></div>\n                        </div>\n                    </div>\n                </div>\n                <div class=\"col-lg-3 col-md-6 col-sm-6 col-xs-6\">\n                    <div class=\"panel panel-default\">\n                        <div class=\"panel-heading\">\n                            <h5 class=\"text-center\" style=\"margin:0px;\">Inclusion</h5>\n                        </div>\n                        <div class=\"panel-body\" style=\"height:100px;overflow:auto;border-bottom:1px solid #E7EAEC;\">\n                            <dl>\n                                <dt>Included in</dt>\n                                <dd>\n                                    <ul id=\"pepIncludedIn\" style=\"padding-left:20px;\"></ul>\n                                </dd>\n                            </dl>\n                        </div>\n                        <div class=\"panel-body\" style=\"height:120px;overflow:auto;\">\n                            <dl>\n                                <dt>Include</dt>\n                                <dd>\n                                    <ul id=\"pepIncluded\" style=\"padding-left:20px;\"></ul>\n                                </dd>\n                            </dl>\n                        </div>\n                    </div>\n                </div>\n                <div class=\"col-lg-3 col-md-6 col-sm-6 col-xs-6\">\n                    <div class=\"panel panel-default\">\n                        <div class=\"panel-heading\">\n                            <h5 class=\"text-center\" style=\"margin:0px;\">Sources</h5>\n                        </div>\n                        <div class=\"panel-body\" style=\"height:100px;overflow:auto;border-bottom:1px solid #E7EAEC;\">\n                            <dl>\n                                <dt>Database</dt>\n                                <dd>\n                                    <ul id=\"pepSources\" style=\"padding-left:20px;\"></ul>\n                                </dd>\n                            </dl>\n                        </div>\n                        <div class=\"panel-body\" style=\"height:120px;overflow:auto;\">\n                            <dl>\n                                <dt>Subsets</dt>\n                                <dd>\n                                    <ul id=\"tissueSpec\" style=\"padding-left:20px;\"></ul>\n                                </dd>\n                            </dl>\n                        </div>\n                    </div>\n                </div>\n            </div>\n        </div>\n    </div>\n</div>";
 },"useData":true});
 
 this["HBtemplates"]["app/assets/templates/isoformChoice.tmpl"] = Handlebars.template({"1":function(depth0,helpers,partials,data) {
@@ -16307,6 +17178,41 @@ this["HBtemplates"]["app/assets/templates/isoformChoice.tmpl"] = Handlebars.temp
     + ((stack1 = helpers.blockHelperMissing.call(depth0,this.lambda(((stack1 = (depth0 != null ? depth0.isoforms : depth0)) != null ? stack1.visible : stack1), depth0),{"name":"isoforms.visible","hash":{},"fn":this.program(1, data, 0),"inverse":this.noop,"data":data})) != null ? stack1 : "")
     + ((stack1 = helpers['if'].call(depth0,((stack1 = (depth0 != null ? depth0.isoforms : depth0)) != null ? stack1.more : stack1),{"name":"if","hash":{},"fn":this.program(3, data, 0),"inverse":this.noop,"data":data})) != null ? stack1 : "")
     + "    </ul>\n</div>";
+},"useData":true});
+
+this["HBtemplates"]["app/assets/templates/matchingEntries.tmpl"] = Handlebars.template({"1":function(depth0,helpers,partials,data) {
+    return "        <li>"
+    + this.escapeExpression(this.lambda(depth0, depth0))
+    + "</li>\n";
+},"3":function(depth0,helpers,partials,data) {
+    var stack1;
+
+  return ((stack1 = helpers.each.call(depth0,depth0,{"name":"each","hash":{},"fn":this.program(4, data, 0),"inverse":this.noop,"data":data})) != null ? stack1 : "");
+},"4":function(depth0,helpers,partials,data) {
+    var helper;
+
+  return "\n    <li>"
+    + this.escapeExpression(((helper = (helper = helpers.isoform || (depth0 != null ? depth0.isoform : depth0)) != null ? helper : helpers.helperMissing),(typeof helper === "function" ? helper.call(depth0,{"name":"isoform","hash":{},"data":data}) : helper)))
+    + "</li>\n";
+},"compiler":[6,">= 2.0.0-beta.1"],"main":function(depth0,helpers,partials,data) {
+    var stack1, helper, options, alias1=helpers.helperMissing, alias2="function", alias3=this.escapeExpression, alias4=this.lambda, alias5=helpers.blockHelperMissing, buffer = 
+  "<div style=\"border-bottom:1px solid #E7EAEC;margin-top: -10px;margin-bottom:5px;\">\n    <h5>Maps "
+    + alias3(((helper = (helper = helpers.isoformsLength || (depth0 != null ? depth0.isoformsLength : depth0)) != null ? helper : alias1),(typeof helper === alias2 ? helper.call(depth0,{"name":"isoformsLength","hash":{},"data":data}) : helper)))
+    + " "
+    + alias3(alias4(((stack1 = (depth0 != null ? depth0.plurality : depth0)) != null ? stack1.isoform : stack1), depth0))
+    + " from "
+    + alias3(((helper = (helper = helpers.entriesLength || (depth0 != null ? depth0.entriesLength : depth0)) != null ? helper : alias1),(typeof helper === alias2 ? helper.call(depth0,{"name":"entriesLength","hash":{},"data":data}) : helper)))
+    + " "
+    + alias3(alias4(((stack1 = (depth0 != null ? depth0.plurality : depth0)) != null ? stack1.entry : stack1), depth0))
+    + " :</h5>\n</div>\n<div id=\"showEntry\">\n    <ul>\n";
+  stack1 = ((helper = (helper = helpers.entries || (depth0 != null ? depth0.entries : depth0)) != null ? helper : alias1),(options={"name":"entries","hash":{},"fn":this.program(1, data, 0),"inverse":this.noop,"data":data}),(typeof helper === alias2 ? helper.call(depth0,options) : helper));
+  if (!helpers.entries) { stack1 = alias5.call(depth0,stack1,options)}
+  if (stack1 != null) { buffer += stack1; }
+  buffer += "    </ul>\n</div>\n<div id=\"showIsoform\" style=\"display:none\">\n    <ul>\n    ";
+  stack1 = ((helper = (helper = helpers.isoforms || (depth0 != null ? depth0.isoforms : depth0)) != null ? helper : alias1),(options={"name":"isoforms","hash":{},"fn":this.program(3, data, 0),"inverse":this.noop,"data":data}),(typeof helper === alias2 ? helper.call(depth0,options) : helper));
+  if (!helpers.isoforms) { stack1 = alias5.call(depth0,stack1,options)}
+  if (stack1 != null) { buffer += stack1; }
+  return buffer + "    </ul>\n</div>";
 },"useData":true});
 
 this["HBtemplates"]["app/assets/templates/overviewProtein.tmpl"] = Handlebars.template({"1":function(depth0,helpers,partials,data) {
@@ -16940,8 +17846,6 @@ function initNXDivs() {
                         peptide.prePeptide = getInfoForIsoform.Sequence(isoforms, isoName)[peptide.position.first - 2];
                         peptide.postPeptide = getInfoForIsoform.Sequence(isoforms, isoName)[peptide.position.second + 1];
                         peptideMap.push(peptide);
-
-                        console.log(peptide.sources)
                     }
                 }
             });
@@ -17036,6 +17940,7 @@ function initNXDivs() {
             $("#nx-isoformChoice li:first-child").addClass("active");
         }
     }
+    var dico = {};
     var RenderSequenceForIsoform = function (isoforms, isoName) {
 
 
@@ -17054,6 +17959,38 @@ function initNXDivs() {
             $("#sequenceHeader .badge").append(" aa");
         }
     };
+    function getProteotypicityInfos(sequence) {
+        console.log("start API call for entry matching");
+        function toggleIsoforms() {
+            $('#showIsoforms').click(function(){
+                $(this).text(function(i, text){
+                    return text === "Show isoforms" ? "Hide isoforms" : "Show isoforms";
+                });
+                $('#showEntry').toggle();
+                $('#showIsoform').toggle();
+            });
+        }
+        nx.getEntryforPeptide(sequence).then(function (data) {
+            dico = data;
+            console.log("Entries matching the peptide :");
+            console.log(data);
+            var entriesLength = data.length;
+            var isoformsLength = 0;
+            data.forEach(function(o) {isoformsLength += o.annotations.length});
+            var entryMatching = {
+                entriesLength: entriesLength,
+                isoformsLength: isoformsLength,
+                plurality: {isoform : entriesLength > 1 ? "isoforms" : "isoform", entry: isoformsLength > 1 ? "entries" : "entry"},
+                entries: data.map(function (o) { return o.uniqueName}),
+                isoforms: data.map(function (o) {return o.annotations.map(function (p) { return {variant: p.variant, isoform: Object.keys(p.targetIsoformsMap)[0], positions:p.targetIsoformsMap[Object.keys(p.targetIsoformsMap)[0]].positions}})})
+            };
+            var template = HBtemplates['app/assets/templates/matchingEntries.tmpl'];
+            var results = template(entryMatching);
+            $("#proteomeProperties").html(results);
+            toggleIsoforms();
+        });
+    };
+
     var addPeptidesInfos = function (selection, listPeptides, isoName) {
         if ($("#nx-detailedPeptide").length > 0) {
             var data = {
@@ -17166,40 +18103,41 @@ function initNXDivs() {
                     if (peptide.properties.synthetic === true) {
                         $('#nature').append("<li>synthetic</li>")
                     }
-                    if (peptide.properties.proteotypic === false) {
-                        $('#nature').append("<li>Non-proteotypic</li>");
-                        var entryMatchListHTML = "<dl><dt>Entries containing the peptide</dt><dd><ul style=\"padding-left:20px;\">";
-                        var query = "select distinct ?entry ?gene where { "+
-                            "?entry :isoform ?iso . "+
-                            "?entry :gene / :name ?gene ."+
-                            "?iso :peptideMapping / :peptideName \"" + peptide.name + "\"^^xsd:string . "+
-                            "}";
-
-                        nx.executeSparql(query).then(function (data) {
-                            console.log(data);
-                            var entryMatch = [];
-                            data.results.bindings.forEach(function (o) {
-                                var infos = {
-                                    "entryID": o.entry.value.toString().match(/[^\/]*$/)[0],
-                                    "url": "",
-                                    "geneName": o.gene.value
-                                };
-                                infos.url = "/?nxentry=" + infos.entryID;
-                                entryMatch.push(infos);
-                            });
-                            entryMatch.forEach(function (o) {
-                                entryMatchListHTML += "<li><a href=\"" + o.url + "\">" + o.entryID + "</a>" + "<span style=\"font-style: italic; margin-left:5px;\"> ( Gene Name : " + o.geneName + " )</span></li>";
-                            });
-                            entryMatchListHTML += "</ul></dd></dl>";
-                            $('#proteomeProperties').html(entryMatchListHTML);
-                        }, function (error) {
-                            console.log(error.responseText);
-                        });
-                    }
-                    else {
-                        $('#proteomeProperties').html("<dl> <dt>Proteotypicity</dt> <dd> <ul style=\"padding-left:20px;\"><li>Yes</li></ul> </dd> </dl>" +
-                        "<dl> <dt>Isoform Proteotypicity</dt><dd><ul style=\"padding-left:20px;\"><li>" + peptide.isoformProteotypicity + "</li></ul></dd></dl>");
-                    }
+                    getProteotypicityInfos(peptide.sequence);
+                    //if (peptide.properties.proteotypic === false) {
+                    //    $('#nature').append("<li>Non-proteotypic</li>");
+                    //    var entryMatchListHTML = "<dl><dt>Entries containing the peptide</dt><dd><ul style=\"padding-left:20px;\">";
+                    //    var query = "select distinct ?entry ?gene where { "+
+                    //        "?entry :isoform ?iso . "+
+                    //        "?entry :gene / :name ?gene ."+
+                    //        "?iso :peptideMapping / :peptideName \"" + peptide.name + "\"^^xsd:string . "+
+                    //        "}";
+                    //
+                    //    nx.executeSparql(query).then(function (data) {
+                    //        console.log(data);
+                    //        var entryMatch = [];
+                    //        data.results.bindings.forEach(function (o) {
+                    //            var infos = {
+                    //                "entryID": o.entry.value.toString().match(/[^\/]*$/)[0],
+                    //                "url": "",
+                    //                "geneName": o.gene.value
+                    //            };
+                    //            infos.url = "/?nxentry=" + infos.entryID;
+                    //            entryMatch.push(infos);
+                    //        });
+                    //        entryMatch.forEach(function (o) {
+                    //            entryMatchListHTML += "<li><a href=\"" + o.url + "\">" + o.entryID + "</a>" + "<span style=\"font-style: italic; margin-left:5px;\"> ( Gene Name : " + o.geneName + " )</span></li>";
+                    //        });
+                    //        entryMatchListHTML += "</ul></dd></dl>";
+                    //        $('#proteomeProperties').html(entryMatchListHTML);
+                    //    }, function (error) {
+                    //        console.log(error.responseText);
+                    //    });
+                    //}
+                    //else {
+                    //    $('#proteomeProperties').html("<dl> <dt>Proteotypicity</dt> <dd> <ul style=\"padding-left:20px;\"><li>Yes</li></ul> </dd> </dl>" +
+                    //    "<dl> <dt>Isoform Proteotypicity</dt><dd><ul style=\"padding-left:20px;\"><li>" + peptide.isoformProteotypicity + "</li></ul></dd></dl>");
+                    //}
                     $('#pepSeq').text(peptide.sequence);
                     if (peptide.include.length === 0) $('#pepIncluded').append("<p><em>None</em></p>");
                     else {
@@ -17502,6 +18440,7 @@ function initNXDivs() {
             .catch(function (err) {
                 // catch any error that happened along the way
                 console.log("Argh, broken: " + err.message);
+                console.log("Error at line : " + err.stack);
             })
     });
 

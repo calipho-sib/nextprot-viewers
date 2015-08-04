@@ -57,16 +57,24 @@
                         <div class="panel-heading">
                             <h5 class="text-center" style="margin:0px;">Peptide Sequence</h5>
                         </div>
-                        <div class="panel-body" style="height:70px;border-bottom:1px solid #E7EAEC;">
+                        <div class="panel-body" style="height:60px;border-bottom:1px solid #E7EAEC;">
                             <dl>
                                 <dt>Length</dt>
                                 <dd id="length"></dd>
                             </dl>
                         </div>
-                        <div class="panel-body" style="height:115px;overflow:auto;">
+                        <div class="panel-body" style="height:80px;overflow:auto;">
                             <dl>
                                 <dt>Sequence</dt>
                                 <dd id="pepSeq" style="width:150px;word-break: break-all;"></dd>
+                            </dl>
+                        </div>
+                        <div class="panel-body" style="height:80px;border-top:1px solid #E7EAEC;">
+                            <dl>
+                                <dt>Nature</dt>
+                                <dd>
+                                    <ul id="nature" style="padding-left:20px;"></ul>
+                                </dd>
                             </dl>
                         </div>
                     </div>
@@ -85,18 +93,19 @@
                 <div class="col-lg-3 col-md-6 col-sm-6 col-xs-6">
                     <div class="panel panel-default">
                         <div class="panel-heading">
-                            <h5 class="text-center" style="margin:0px;">Properties</h5>
+                            <h5 class="text-center" style="margin:0px;">Peptide to protein mapping</h5>
                         </div>
-                        <div class="panel-body" style="height:100px;border-bottom:1px solid #E7EAEC;">
-                            <dl>
-                                <dt>Nature</dt>
-                                <dd>
-                                    <ul id="nature" style="padding-left:20px;"></ul>
-                                </dd>
-                            </dl>
+                        <div class="panel-heading" style="height:35px;">
+                            <div class="checkbox text-center" style="margin-top:0px">
+                                <label>
+                                    <input type="checkbox" id="withVariant" value="option1">
+                                    Taking variants into account
+                                </label>
+                            </div>
                         </div>
-                        <div class="panel-body" id="proteomeProperties" style="height:120px;overflow:auto;">
-
+                        <div class="panel-body" style="height:190px;overflow:auto;">
+                            <div class="pull-right" style="margin-top:-5px;margin-right: -5px;"><button id="showIsoforms" type="button" class="btn btn-default btn-xs">Show isoforms</button></div>
+                            <div id="proteomeProperties"></div>
                         </div>
                     </div>
                 </div>

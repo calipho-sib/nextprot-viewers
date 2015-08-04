@@ -1,0 +1,18 @@
+<div style="border-bottom:1px solid #E7EAEC;margin-top: -10px;margin-bottom:5px;">
+    <h5>Maps {{isoformsLength}} {{plurality.isoform}} from {{entriesLength}} {{plurality.entry}} :</h5>
+</div>
+<div id="showEntry">
+    <ul>
+        {{#entries}}
+        <li>{{this}}</li>
+        {{/entries}}
+    </ul>
+</div>
+<div id="showIsoform" style="display:none">
+    <ul>
+    {{#isoforms}}{{#each this}}
+    <li>{{isoform}}</li>
+    {{/each}}
+    {{/isoforms}}
+    </ul>
+</div>
