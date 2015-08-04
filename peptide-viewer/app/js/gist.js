@@ -128,8 +128,6 @@ function initNXDivs() {
                         peptide.prePeptide = getInfoForIsoform.Sequence(isoforms, isoName)[peptide.position.first - 2];
                         peptide.postPeptide = getInfoForIsoform.Sequence(isoforms, isoName)[peptide.position.second + 1];
                         peptideMap.push(peptide);
-
-                        console.log(peptide.sources)
                     }
                 }
             });
@@ -224,6 +222,7 @@ function initNXDivs() {
             $("#nx-isoformChoice li:first-child").addClass("active");
         }
     }
+    var dico = {};
     var RenderSequenceForIsoform = function (isoforms, isoName) {
 
 
@@ -242,6 +241,38 @@ function initNXDivs() {
             $("#sequenceHeader .badge").append(" aa");
         }
     };
+    function getProteotypicityInfos(sequence) {
+        console.log("start API call for entry matching");
+        function toggleIsoforms() {
+            $('#showIsoforms').click(function(){
+                $(this).text(function(i, text){
+                    return text === "Show isoforms" ? "Hide isoforms" : "Show isoforms";
+                });
+                $('#showEntry').toggle();
+                $('#showIsoform').toggle();
+            });
+        }
+        nx.getEntryforPeptide(sequence).then(function (data) {
+            dico = data;
+            console.log("Entries matching the peptide :");
+            console.log(data);
+            var entriesLength = data.length;
+            var isoformsLength = 0;
+            data.forEach(function(o) {isoformsLength += o.annotations.length});
+            var entryMatching = {
+                entriesLength: entriesLength,
+                isoformsLength: isoformsLength,
+                plurality: {isoform : entriesLength > 1 ? "isoforms" : "isoform", entry: isoformsLength > 1 ? "entries" : "entry"},
+                entries: data.map(function (o) { return o.uniqueName}),
+                isoforms: data.map(function (o) {return o.annotations.map(function (p) { return {variant: p.variant, isoform: Object.keys(p.targetIsoformsMap)[0], positions:p.targetIsoformsMap[Object.keys(p.targetIsoformsMap)[0]].positions}})})
+            };
+            var template = HBtemplates['app/assets/templates/matchingEntries.tmpl'];
+            var results = template(entryMatching);
+            $("#proteomeProperties").html(results);
+            toggleIsoforms();
+        });
+    };
+
     var addPeptidesInfos = function (selection, listPeptides, isoName) {
         if ($("#nx-detailedPeptide").length > 0) {
             var data = {
@@ -354,40 +385,41 @@ function initNXDivs() {
                     if (peptide.properties.synthetic === true) {
                         $('#nature').append("<li>synthetic</li>")
                     }
-                    if (peptide.properties.proteotypic === false) {
-                        $('#nature').append("<li>Non-proteotypic</li>");
-                        var entryMatchListHTML = "<dl><dt>Entries containing the peptide</dt><dd><ul style=\"padding-left:20px;\">";
-                        var query = "select distinct ?entry ?gene where { "+
-                            "?entry :isoform ?iso . "+
-                            "?entry :gene / :name ?gene ."+
-                            "?iso :peptideMapping / :peptideName \"" + peptide.name + "\"^^xsd:string . "+
-                            "}";
-
-                        nx.executeSparql(query).then(function (data) {
-                            console.log(data);
-                            var entryMatch = [];
-                            data.results.bindings.forEach(function (o) {
-                                var infos = {
-                                    "entryID": o.entry.value.toString().match(/[^\/]*$/)[0],
-                                    "url": "",
-                                    "geneName": o.gene.value
-                                };
-                                infos.url = "/?nxentry=" + infos.entryID;
-                                entryMatch.push(infos);
-                            });
-                            entryMatch.forEach(function (o) {
-                                entryMatchListHTML += "<li><a href=\"" + o.url + "\">" + o.entryID + "</a>" + "<span style=\"font-style: italic; margin-left:5px;\"> ( Gene Name : " + o.geneName + " )</span></li>";
-                            });
-                            entryMatchListHTML += "</ul></dd></dl>";
-                            $('#proteomeProperties').html(entryMatchListHTML);
-                        }, function (error) {
-                            console.log(error.responseText);
-                        });
-                    }
-                    else {
-                        $('#proteomeProperties').html("<dl> <dt>Proteotypicity</dt> <dd> <ul style=\"padding-left:20px;\"><li>Yes</li></ul> </dd> </dl>" +
-                        "<dl> <dt>Isoform Proteotypicity</dt><dd><ul style=\"padding-left:20px;\"><li>" + peptide.isoformProteotypicity + "</li></ul></dd></dl>");
-                    }
+                    getProteotypicityInfos(peptide.sequence);
+                    //if (peptide.properties.proteotypic === false) {
+                    //    $('#nature').append("<li>Non-proteotypic</li>");
+                    //    var entryMatchListHTML = "<dl><dt>Entries containing the peptide</dt><dd><ul style=\"padding-left:20px;\">";
+                    //    var query = "select distinct ?entry ?gene where { "+
+                    //        "?entry :isoform ?iso . "+
+                    //        "?entry :gene / :name ?gene ."+
+                    //        "?iso :peptideMapping / :peptideName \"" + peptide.name + "\"^^xsd:string . "+
+                    //        "}";
+                    //
+                    //    nx.executeSparql(query).then(function (data) {
+                    //        console.log(data);
+                    //        var entryMatch = [];
+                    //        data.results.bindings.forEach(function (o) {
+                    //            var infos = {
+                    //                "entryID": o.entry.value.toString().match(/[^\/]*$/)[0],
+                    //                "url": "",
+                    //                "geneName": o.gene.value
+                    //            };
+                    //            infos.url = "/?nxentry=" + infos.entryID;
+                    //            entryMatch.push(infos);
+                    //        });
+                    //        entryMatch.forEach(function (o) {
+                    //            entryMatchListHTML += "<li><a href=\"" + o.url + "\">" + o.entryID + "</a>" + "<span style=\"font-style: italic; margin-left:5px;\"> ( Gene Name : " + o.geneName + " )</span></li>";
+                    //        });
+                    //        entryMatchListHTML += "</ul></dd></dl>";
+                    //        $('#proteomeProperties').html(entryMatchListHTML);
+                    //    }, function (error) {
+                    //        console.log(error.responseText);
+                    //    });
+                    //}
+                    //else {
+                    //    $('#proteomeProperties').html("<dl> <dt>Proteotypicity</dt> <dd> <ul style=\"padding-left:20px;\"><li>Yes</li></ul> </dd> </dl>" +
+                    //    "<dl> <dt>Isoform Proteotypicity</dt><dd><ul style=\"padding-left:20px;\"><li>" + peptide.isoformProteotypicity + "</li></ul></dd></dl>");
+                    //}
                     $('#pepSeq').text(peptide.sequence);
                     if (peptide.include.length === 0) $('#pepIncluded').append("<p><em>None</em></p>");
                     else {
@@ -690,6 +722,7 @@ function initNXDivs() {
             .catch(function (err) {
                 // catch any error that happened along the way
                 console.log("Argh, broken: " + err.message);
+                console.log("Error at line : " + err.stack);
             })
     });
 

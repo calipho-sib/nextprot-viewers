@@ -14,7 +14,7 @@ module.exports = function(grunt) {
           'app/js/highcharts.js',
           'bower_components/handlebars/handlebars.js',
           'bower_components/sequence-viewer/src/sequence-viewer.js',
-          'bower_components/nextprot/dist/nextprot.min.js',
+          'app/js/nextprot2.js',
           'bower_components/iframe-resizer/js/iframeResizer.contentWindow.min.js',
           'app/js/gist_templates.js',
           'app/js/stupidtable.js',
