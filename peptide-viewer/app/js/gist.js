@@ -222,7 +222,6 @@ function initNXDivs() {
             $("#nx-isoformChoice li:first-child").addClass("active");
         }
     }
-    var dico = {};
     var RenderSequenceForIsoform = function (isoforms, isoName) {
 
 
@@ -242,36 +241,66 @@ function initNXDivs() {
         }
     };
     function getProteotypicityInfos(sequence) {
-        console.log("start API call for entry matching");
-        function toggleIsoforms() {
-            $('#showIsoforms').click(function(){
-                $(this).text(function(i, text){
-                    return text === "Show isoforms" ? "Hide isoforms" : "Show isoforms";
-                });
-                $('#showEntry').toggle();
-                $('#showIsoform').toggle();
-            });
-        }
+
         nx.getEntryforPeptide(sequence).then(function (data) {
-            dico = data;
-            console.log("Entries matching the peptide :");
-            console.log(data);
+
+            function entryWithVariant(entry) {
+                var withVariant = false;
+                entry.annotations.forEach(function(o) {
+                    if (o.variant) withVariant = true;
+                });
+                return withVariant;
+            }
+
             var entriesLength = data.length;
             var isoformsLength = 0;
             data.forEach(function(o) {isoformsLength += o.annotations.length});
+            var entries = data.map(function (o) { return {name:o.uniqueName, withVariant:entryWithVariant(o)} });
             var entryMatching = {
                 entriesLength: entriesLength,
                 isoformsLength: isoformsLength,
                 plurality: {isoform : entriesLength > 1 ? "isoforms" : "isoform", entry: isoformsLength > 1 ? "entries" : "entry"},
-                entries: data.map(function (o) { return o.uniqueName}),
-                isoforms: data.map(function (o) {return o.annotations.map(function (p) { return {variant: p.variant, isoform: Object.keys(p.targetIsoformsMap)[0], positions:p.targetIsoformsMap[Object.keys(p.targetIsoformsMap)[0]].positions}})})
+                entries: entries,
+                isoforms: data.map(function (o) {return o.annotations.map(function (p) { return {entryName: o.uniqueName, variant: p.variant, isoform: Object.keys(p.targetIsoformsMap)[0], positions:p.targetIsoformsMap[Object.keys(p.targetIsoformsMap)[0]].positions}})})
             };
             var template = HBtemplates['app/assets/templates/matchingEntries.tmpl'];
             var results = template(entryMatching);
             $("#proteomeProperties").html(results);
+
+            function toggleIsoforms() {
+                $('#showIsoforms').text("Show isoforms");
+                $('#showIsoforms').click(function(){
+                    $(this).text(function(i, text){
+                        return text === "Show isoforms" ? "Hide isoforms" : "Show isoforms";
+                    });
+                    $('#showEntry').is(':visible') ? $("#showEntry").hide() : $("#showEntry").show();
+                    $('#showIsoform').is(':visible') ? $("#showIsoform").hide() : $("#showIsoform").show();
+                });
+            }
+            function toggleSentence(entries,isoforms) {
+                var entriesWithoutVariant = $("#showEntry li").not(".variantIntoAccount").length;
+                var isoformsWithoutVariant = $("#showIsoform li").not(".variantIntoAccount").length;
+
+                if ($("#withVariant").prop('checked')) {
+                    var plurality = {isoform : isoforms > 1 ? "isoforms" : "isoform", entry: entries> 1 ? "entries" : "entry"};
+                    $("#proteotypicitySentence").text("Maps "+ isoforms + " " + plurality.isoform + " from " + entries + " " + plurality.entry + " :");
+                }
+                else {
+                    var plurality = {isoform : isoformsWithoutVariant > 1 ? "isoforms" : "isoform", entry: entriesWithoutVariant> 1 ? "entries" : "entry"};
+                    $("#proteotypicitySentence").text("Maps "+ isoformsWithoutVariant + " " + plurality.isoform + " from " + entriesWithoutVariant + " " + plurality.entry + " :");
+                }
+            }
+            function toggleVariants() {
+                $('#withVariant').click(function(){
+                    $('.variantIntoAccount').toggle();
+                    toggleSentence(entriesLength, isoformsLength);
+                });
+            }
             toggleIsoforms();
+            toggleVariants();
+            toggleSentence(entriesLength, isoformsLength);
         });
-    };
+    }
 
     var addPeptidesInfos = function (selection, listPeptides, isoName) {
         if ($("#nx-detailedPeptide").length > 0) {

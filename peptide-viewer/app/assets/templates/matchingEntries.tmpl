@@ -1,17 +1,18 @@
 <div style="border-bottom:1px solid #E7EAEC;margin-top: -10px;margin-bottom:5px;">
-    <h5>Maps {{isoformsLength}} {{plurality.isoform}} from {{entriesLength}} {{plurality.entry}} :</h5>
+    <h5 id="proteotypicitySentence"></h5>
 </div>
-<div id="showEntry">
+<div id="showEntry"  style="display:block">
     <ul>
         {{#entries}}
-        <li>{{this}}</li>
+        {{#if withVariant}}<li class="variantIntoAccount" style="display: none">{{else}}<li>{{/if}}{{name}}</li>
         {{/entries}}
     </ul>
 </div>
 <div id="showIsoform" style="display:none">
     <ul>
     {{#isoforms}}{{#each this}}
-    <li>{{isoform}}</li>
+
+    {{#if variant}}<li class="variantIntoAccount" style="display: none">{{else}}<li>{{/if}}{{isoform}} {{#if variant}}({{positions.0.first}} : {{variant.original}}  → {{variant.variant}}){{/if}}</li>
     {{/each}}
     {{/isoforms}}
     </ul>

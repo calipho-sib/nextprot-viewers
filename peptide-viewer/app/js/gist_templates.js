@@ -32,36 +32,48 @@ this["HBtemplates"]["app/assets/templates/isoformChoice.tmpl"] = Handlebars.temp
 },"useData":true});
 
 this["HBtemplates"]["app/assets/templates/matchingEntries.tmpl"] = Handlebars.template({"1":function(depth0,helpers,partials,data) {
-    return "        <li>"
-    + this.escapeExpression(this.lambda(depth0, depth0))
+    var stack1, helper;
+
+  return "        "
+    + ((stack1 = helpers['if'].call(depth0,(depth0 != null ? depth0.withVariant : depth0),{"name":"if","hash":{},"fn":this.program(2, data, 0),"inverse":this.program(4, data, 0),"data":data})) != null ? stack1 : "")
+    + this.escapeExpression(((helper = (helper = helpers.name || (depth0 != null ? depth0.name : depth0)) != null ? helper : helpers.helperMissing),(typeof helper === "function" ? helper.call(depth0,{"name":"name","hash":{},"data":data}) : helper)))
     + "</li>\n";
-},"3":function(depth0,helpers,partials,data) {
+},"2":function(depth0,helpers,partials,data) {
+    return "<li class=\"variantIntoAccount\" style=\"display: none\">";
+},"4":function(depth0,helpers,partials,data) {
+    return "<li>";
+},"6":function(depth0,helpers,partials,data) {
     var stack1;
 
-  return ((stack1 = helpers.each.call(depth0,depth0,{"name":"each","hash":{},"fn":this.program(4, data, 0),"inverse":this.noop,"data":data})) != null ? stack1 : "");
-},"4":function(depth0,helpers,partials,data) {
-    var helper;
+  return ((stack1 = helpers.each.call(depth0,depth0,{"name":"each","hash":{},"fn":this.program(7, data, 0),"inverse":this.noop,"data":data})) != null ? stack1 : "");
+},"7":function(depth0,helpers,partials,data) {
+    var stack1, helper;
 
-  return "\n    <li>"
+  return "\n\n    "
+    + ((stack1 = helpers['if'].call(depth0,(depth0 != null ? depth0.variant : depth0),{"name":"if","hash":{},"fn":this.program(2, data, 0),"inverse":this.program(4, data, 0),"data":data})) != null ? stack1 : "")
     + this.escapeExpression(((helper = (helper = helpers.isoform || (depth0 != null ? depth0.isoform : depth0)) != null ? helper : helpers.helperMissing),(typeof helper === "function" ? helper.call(depth0,{"name":"isoform","hash":{},"data":data}) : helper)))
+    + " "
+    + ((stack1 = helpers['if'].call(depth0,(depth0 != null ? depth0.variant : depth0),{"name":"if","hash":{},"fn":this.program(8, data, 0),"inverse":this.noop,"data":data})) != null ? stack1 : "")
     + "</li>\n";
+},"8":function(depth0,helpers,partials,data) {
+    var stack1, alias1=this.lambda, alias2=this.escapeExpression;
+
+  return "("
+    + alias2(alias1(((stack1 = ((stack1 = (depth0 != null ? depth0.positions : depth0)) != null ? stack1['0'] : stack1)) != null ? stack1.first : stack1), depth0))
+    + " : "
+    + alias2(alias1(((stack1 = (depth0 != null ? depth0.variant : depth0)) != null ? stack1.original : stack1), depth0))
+    + "  → "
+    + alias2(alias1(((stack1 = (depth0 != null ? depth0.variant : depth0)) != null ? stack1.variant : stack1), depth0))
+    + ")";
 },"compiler":[6,">= 2.0.0-beta.1"],"main":function(depth0,helpers,partials,data) {
-    var stack1, helper, options, alias1=helpers.helperMissing, alias2="function", alias3=this.escapeExpression, alias4=this.lambda, alias5=helpers.blockHelperMissing, buffer = 
-  "<div style=\"border-bottom:1px solid #E7EAEC;margin-top: -10px;margin-bottom:5px;\">\n    <h5>Maps "
-    + alias3(((helper = (helper = helpers.isoformsLength || (depth0 != null ? depth0.isoformsLength : depth0)) != null ? helper : alias1),(typeof helper === alias2 ? helper.call(depth0,{"name":"isoformsLength","hash":{},"data":data}) : helper)))
-    + " "
-    + alias3(alias4(((stack1 = (depth0 != null ? depth0.plurality : depth0)) != null ? stack1.isoform : stack1), depth0))
-    + " from "
-    + alias3(((helper = (helper = helpers.entriesLength || (depth0 != null ? depth0.entriesLength : depth0)) != null ? helper : alias1),(typeof helper === alias2 ? helper.call(depth0,{"name":"entriesLength","hash":{},"data":data}) : helper)))
-    + " "
-    + alias3(alias4(((stack1 = (depth0 != null ? depth0.plurality : depth0)) != null ? stack1.entry : stack1), depth0))
-    + " :</h5>\n</div>\n<div id=\"showEntry\">\n    <ul>\n";
+    var stack1, helper, options, alias1=helpers.helperMissing, alias2="function", alias3=helpers.blockHelperMissing, buffer = 
+  "<div style=\"border-bottom:1px solid #E7EAEC;margin-top: -10px;margin-bottom:5px;\">\n    <h5 id=\"proteotypicitySentence\"></h5>\n</div>\n<div id=\"showEntry\"  style=\"display:block\">\n    <ul>\n";
   stack1 = ((helper = (helper = helpers.entries || (depth0 != null ? depth0.entries : depth0)) != null ? helper : alias1),(options={"name":"entries","hash":{},"fn":this.program(1, data, 0),"inverse":this.noop,"data":data}),(typeof helper === alias2 ? helper.call(depth0,options) : helper));
-  if (!helpers.entries) { stack1 = alias5.call(depth0,stack1,options)}
+  if (!helpers.entries) { stack1 = alias3.call(depth0,stack1,options)}
   if (stack1 != null) { buffer += stack1; }
   buffer += "    </ul>\n</div>\n<div id=\"showIsoform\" style=\"display:none\">\n    <ul>\n    ";
-  stack1 = ((helper = (helper = helpers.isoforms || (depth0 != null ? depth0.isoforms : depth0)) != null ? helper : alias1),(options={"name":"isoforms","hash":{},"fn":this.program(3, data, 0),"inverse":this.noop,"data":data}),(typeof helper === alias2 ? helper.call(depth0,options) : helper));
-  if (!helpers.isoforms) { stack1 = alias5.call(depth0,stack1,options)}
+  stack1 = ((helper = (helper = helpers.isoforms || (depth0 != null ? depth0.isoforms : depth0)) != null ? helper : alias1),(options={"name":"isoforms","hash":{},"fn":this.program(6, data, 0),"inverse":this.noop,"data":data}),(typeof helper === alias2 ? helper.call(depth0,options) : helper));
+  if (!helpers.isoforms) { stack1 = alias3.call(depth0,stack1,options)}
   if (stack1 != null) { buffer += stack1; }
   return buffer + "    </ul>\n</div>";
 },"useData":true});

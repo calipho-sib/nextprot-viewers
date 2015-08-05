@@ -8,7 +8,8 @@ module.exports = function(grunt) {
         separator: ';'
       },
       basic: {
-        src: ['bower_components/jquery/dist/jquery.js',
+        src: [
+          'bower_components/jquery/dist/jquery.js',
           'bower_components/bootstrap/dist/js/bootstrap.min.js',
           'bower_components/handlebars/handlebars.js',
 

@@ -35,7 +35,8 @@
     "handlebars": "x.x.x",
     "jquery": "x.x.x",
     "sequence-viewer": "x.x.x",
-    "feature-viewer": "x.x.x"
+    "feature-viewer": "x.x.x",
+
   },
   "devDependencies": {
     "mkdirp": "^0.5.0",
