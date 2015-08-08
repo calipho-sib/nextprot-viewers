@@ -265,7 +265,7 @@ function initNXDivs() {
             };
             var template = HBtemplates['app/assets/templates/matchingEntries.tmpl'];
             var results = template(entryMatching);
-            $("#proteomeProperties").html(results);
+            $("#proteoBlock").html(results);
 
             function toggleIsoforms() {
                 $('#showIsoforms').text("Show isoforms");
@@ -376,6 +376,7 @@ function initNXDivs() {
                             break;
                         }
                     }
+                    getProteotypicityInfos(peptide.sequence);
                     $('#titlePepName').text(peptide.identifier);
                     peptide.position.forEach(function (o, i) {
                         var semiTrypticEnd = "-";
@@ -414,7 +415,6 @@ function initNXDivs() {
                     if (peptide.properties.synthetic === true) {
                         $('#nature').append("<li>synthetic</li>")
                     }
-                    getProteotypicityInfos(peptide.sequence);
                     //if (peptide.properties.proteotypic === false) {
                     //    $('#nature').append("<li>Non-proteotypic</li>");
                     //    var entryMatchListHTML = "<dl><dt>Entries containing the peptide</dt><dd><ul style=\"padding-left:20px;\">";

@@ -1,19 +1,35 @@
-<div style="border-bottom:1px solid #E7EAEC;margin-top: -10px;margin-bottom:5px;">
-    <h5 id="proteotypicitySentence"></h5>
-</div>
-<div id="showEntry"  style="display:block">
-    <ul>
-        {{#entries}}
-        {{#if withVariant}}<li class="variantIntoAccount" style="display: none">{{else}}<li>{{/if}}{{name}}</li>
-        {{/entries}}
-    </ul>
-</div>
-<div id="showIsoform" style="display:none">
-    <ul>
-    {{#isoforms}}{{#each this}}
+<div class="panel-heading">
+                            <h5 class="text-center" style="margin:0px;">Peptide to protein mapping</h5>
+                        </div>
+                        <div class="panel-heading" style="height:35px;">
+                            <div class="checkbox text-center" style="margin-top:0px">
+                                <label>
+                                    <input type="checkbox" id="withVariant" value="option1">
+                                    Taking variants into account
+                                </label>
+                            </div>
+                        </div>
+                        <div class="panel-body" style="height:190px;overflow:auto;">
+                            <div class="pull-right" style="margin-top:-5px;margin-right: -5px;"><button id="showIsoforms" type="button" class="btn btn-default btn-xs">Show isoforms</button></div>
+                            <div id="proteomeProperties">
+                                <div style="border-bottom:1px solid #E7EAEC;margin-top: -10px;margin-bottom:5px;">
+                                    <h5 id="proteotypicitySentence"></h5>
+                                </div>
+                                <div id="showEntry"  style="display:block">
+                                    <ul>
+                                        {{#entries}}
+                                        {{#if withVariant}}<li class="variantIntoAccount" style="display: none">{{else}}<li>{{/if}}{{name}}</li>
+                                        {{/entries}}
+                                    </ul>
+                                </div>
+                                <div id="showIsoform" style="display:none">
+                                    <ul>
+                                    {{#isoforms}}{{#each this}}
 
-    {{#if variant}}<li class="variantIntoAccount" style="display: none">{{else}}<li>{{/if}}{{isoform}} {{#if variant}}({{positions.0.first}} : {{variant.original}}  → {{variant.variant}}){{/if}}</li>
-    {{/each}}
-    {{/isoforms}}
-    </ul>
-</div>
+                                    {{#if variant}}<li class="variantIntoAccount" style="display: none">{{else}}<li>{{/if}}{{isoform}} {{#if variant}}({{positions.0.first}} : {{variant.original}}  → {{variant.variant}}){{/if}}</li>
+                                    {{/each}}
+                                    {{/isoforms}}
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
