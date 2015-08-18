@@ -16033,8 +16033,8 @@ function Sequence(sequence,isoformName) {
             "<span class=\"badge\" style=\"border-radius:70%;border: 2px solid black;color:#C50063;padding:8px 5px;background-color:white;margin-right:10px;vertical-align:middle;\">{{sequenceLength}}</span>" +
             "</div><h4 style=\"display:inline-block;vertical-align:middle;\">Protein Sequence</h4>" +
             "</div>" +
-            "<div id=\"sequenceBody\" style=\"margin-top: 5px;\">" +
-            "<div id=\"scroller\" style=\"max-height:400px;overflow:auto;white-space: nowrap;padding-right:20px;margin-right:10px;s\">" +
+            "<div id=\"sequenceBody\" style=\"margin-top: 5px;height:80%;\">" +
+            "<div id=\"scroller\" style=\"height:inherit;overflow:auto;white-space: nowrap;padding-right:20px;margin-right:10px;s\">" +
             "<div id=\"charNumbers\" style=\"font-family: monospace;font-size: 13px;display:inline-block;text-align:right; padding-right:5px; border-right:1px solid LightGray;\"></div>" +
             "<div id=\"fastaSeq\" display-option=\"" + lineJump + "\" style=\"font-family: monospace;font-size: 13px;display:inline-block;padding:5px;\">{{{sequence}}}</div></div>" +
             "<div id=\"coverageLegend\" style=\"margin-top: 10px;margin-left:15px;\"></div>" +
