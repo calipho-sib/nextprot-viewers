@@ -645,8 +645,10 @@ function initNXDivs() {
                         var clr = "black";
                         var underscore = false;
                         if (syntheticPep > 0) underscore = true;
-                        else if (naturalPep > 0 || proteotypicPep > 0) pepCoverage += 1;
-                        if (naturalPep > 0) clr = "#4A57D4";
+                        if (naturalPep > 0) {
+                            clr = "#4A57D4";
+                            pepCoverage += 1;
+                        }
                         if (proteotypicPep > 0) {
                             if (syntheticPep === 0) proteoCoverage += 1;
                             if (proteotypicPep === 1) clr = "#007800";
