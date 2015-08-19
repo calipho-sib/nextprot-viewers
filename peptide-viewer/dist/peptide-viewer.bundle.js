@@ -16322,7 +16322,6 @@ function Sequence(sequence,isoformName) {
             if(!clientInformation){
                 throw "Please provide some client information ex:  new Nextprot.Client(applicationName, 'Calipho SIB at Geneva');";
             }
-
         };
 
         //Util methods
@@ -16333,16 +16332,33 @@ function Sequence(sequence,isoformName) {
             return results === null ? "" : decodeURIComponent(results[1].replace(/\+/g, " "));
         };
 
-        //Gets the entry set in the parameter
-        NextprotClient.prototype.getEntryName = function(){
-            return _getURLParameter("nxentry") || 'NX_P01308'; //By default returns the insulin
-        };
-
         var normalizeEntry = function (entry) {
             if (entry.substring(0,3) !== "NX_") {
                 entry = "NX_"+ entry;
             }
             return entry;
+        };
+
+        function _changeParamOrAddParamByName(href, paramName, newVal) {
+            var tmpRegex = new RegExp("(" + paramName + "=)[a-zA-Z0-9_]+", 'ig');
+            if (href.match(tmpRegex) != null) {
+                return href.replace(tmpRegex, '$1'+newVal);
+            }
+            return href += (((href.indexOf("?") != -1) ? "&" : "?") + paramName + "=" + newVal);
+        }
+
+        //Gets the entry set in the parameter
+        NextprotClient.prototype.getEntryName = function(){
+            return normalizeEntry(_getURLParameter("nxentry") || 'NX_P01308'); //By default returns the insulin
+        };
+
+        NextprotClient.prototype.getInputOption = function(){
+            return _getURLParameter("inputOption") || ''; //By default returns the insulin
+        };
+
+        NextprotClient.prototype.changeEntry = function(elem){
+            var new_url = _changeParamOrAddParamByName(window.location.href, "nxentry", elem.value);
+            window.location.href = new_url;
         };
 
         //private method, convention use an underscore
@@ -16422,6 +16438,12 @@ function Sequence(sequence,isoformName) {
             var url = sparqlEndpoint+sparqlFormat+"&query="+encodeURIComponent(sparqlQuery) + "&clientInfo=" + clientInfo + "&applicationName=" + applicationName;
             return Promise.resolve($.getJSON(url)).then(function (data){
                 return data;
+            });
+        };
+
+        NextprotClient.prototype.getAccession = function(entry) {
+            return _callURL(normalizeEntry(entry || this.getEntryName()), "accession").then(function (data){
+                return data.entry.properties;
             });
         };
 
@@ -17181,12 +17203,14 @@ this["HBtemplates"]["app/assets/templates/isoformChoice.tmpl"] = Handlebars.temp
 },"useData":true});
 
 this["HBtemplates"]["app/assets/templates/matchingEntries.tmpl"] = Handlebars.template({"1":function(depth0,helpers,partials,data) {
-    var stack1, helper;
+    var stack1, helper, alias1=helpers.helperMissing, alias2="function", alias3=this.escapeExpression;
 
   return "                                        "
     + ((stack1 = helpers['if'].call(depth0,(depth0 != null ? depth0.withVariant : depth0),{"name":"if","hash":{},"fn":this.program(2, data, 0),"inverse":this.program(4, data, 0),"data":data})) != null ? stack1 : "")
-    + this.escapeExpression(((helper = (helper = helpers.name || (depth0 != null ? depth0.name : depth0)) != null ? helper : helpers.helperMissing),(typeof helper === "function" ? helper.call(depth0,{"name":"name","hash":{},"data":data}) : helper)))
-    + "</li>\n";
+    + alias3(((helper = (helper = helpers.name || (depth0 != null ? depth0.name : depth0)) != null ? helper : alias1),(typeof helper === alias2 ? helper.call(depth0,{"name":"name","hash":{},"data":data}) : helper)))
+    + " <em> ( Gene Name : "
+    + alias3(((helper = (helper = helpers.geneName || (depth0 != null ? depth0.geneName : depth0)) != null ? helper : alias1),(typeof helper === alias2 ? helper.call(depth0,{"name":"geneName","hash":{},"data":data}) : helper)))
+    + " )</em></li>\n";
 },"2":function(depth0,helpers,partials,data) {
     return "<li class=\"variantIntoAccount\" style=\"display: none\">";
 },"4":function(depth0,helpers,partials,data) {
@@ -17734,6 +17758,7 @@ function initNXDivs() {
     var Nextprot = window.Nextprot;
     var nx = new Nextprot.Client("SequenceViewer", "nextprotTeam");
     var nxEntryName = nx.getEntryName();
+    var nxInputOption = nx.getInputOption();
     var cpt = 0;
     var isoforms;
     var annotations;
@@ -17741,6 +17766,33 @@ function initNXDivs() {
     var srmPeptideMappings;
     var matureProtein;
     var seq1 = null;
+
+
+    function addEntrySelection() {
+            $("body").prepend("<div id=\"inputOptionDiv\" class=\"col-md-2 col-md-offset-5 centered\" style=\"position:absolute;padding:10px;padding-top:0px;z-index:12\">" +
+            "<div class=\"panel panel-default\"><div class=\"panel-body\">" +
+        "<input id=\"entrySelector\" type=\"text\" class=\"form-control\" placeholder=\"Entry search..\"></div>" +
+            "</div></div>");
+        $('#entrySelector').keyup(function (e) {
+            if (e.keyCode == 13) nx.changeEntry(this);
+            })
+    }
+
+    if (nxInputOption) {
+        addEntrySelection();
+        nx.getAccession().then(function (data) {
+            $(function() {
+                $("#inputOptionDiv").append("<div class=\"alert alert-success entry-alert\" role=\"alert\" style=\"display:none\">You successfully load the entry !</div>");
+                $(".entry-alert").fadeIn("slow");
+                $(".entry-alert").delay(2000).fadeOut("slow");
+            });
+        }, function(error) {
+            $(function() {
+                $("#inputOptionDiv").append("<div class=\"alert alert-danger entry-alert\" role=\"alert\">This accession is not available !</div>");
+            });
+            console.error("Failed!", error);
+        });
+    }
 
 
     (function ($) {
@@ -17793,7 +17845,6 @@ function initNXDivs() {
             $(".isoformNames").click(getInfoForIsoform.reload);
             $("#moreIsoforms a").click(function () {
                 var parentThis = $(this).text();
-                console.log(parentThis);
                 $("#extendIsoformChoice").text(parentThis);
             });
         },
@@ -17869,7 +17920,6 @@ function initNXDivs() {
             });
             var intermediate = new Date().getTime();
 
-            console.log('Time to execute first part: ', (intermediate - dateStart));
 
 
             // A ---****---
@@ -17900,7 +17950,6 @@ function initNXDivs() {
             }
             var dateEnd = new Date().getTime();
 
-            console.log('Time to execute all (before 300) : ', (dateEnd - dateStart));
 
             return peptideMap;
         },
@@ -17956,7 +18005,6 @@ function initNXDivs() {
 
 
         ////////////////////////// TEMPLATE SEQUENCE
-        console.log("I m zorking fyn");
         if ($("#nx-overviewSeq").length > 0) {
             seq1 = new Sequence(getInfoForIsoform.Sequence(isoforms, isoName));
             seq1.render('#nx-overviewSeq', {
@@ -17985,7 +18033,7 @@ function initNXDivs() {
             var entriesLength = data.length;
             var isoformsLength = 0;
             data.forEach(function(o) {isoformsLength += o.annotations.length});
-            var entries = data.map(function (o) { return {name:o.uniqueName, withVariant:entryWithVariant(o)} });
+            var entries = data.map(function (o) { return {name:o.uniqueName, withVariant:entryWithVariant(o), geneName: o.overview.mainGeneName} });
             var entryMatching = {
                 entriesLength: entriesLength,
                 isoformsLength: isoformsLength,
@@ -18306,7 +18354,6 @@ function initNXDivs() {
                 findPeptide: function (event) {
                     //var templateLoader = HBtemplates['app/assets/templates/preLoader.tmpl'];
                     //$("#peptideTableTitle").append(templateLoader);
-                    console.log("does it zorkk ???");
                     event.stopPropagation();
                     var positions = $(this).text();
                     HL.highlighting(positions);
@@ -18326,7 +18373,6 @@ function initNXDivs() {
                     });
                     var dateHLend = new Date().getTime();
 
-                    console.log('Time to execute highlighting part (60 before): ', (dateHLend - dateHL));
                 },
                 //if clicking anywhere in the document
                 stopHL: function () {
@@ -18343,7 +18389,6 @@ function initNXDivs() {
 
                     var dateFCend = new Date().getTime();
 
-                    console.log('Time to execute first coverage part (30 before): ', (dateFCend - dateFC));
                 },
                 applyAAFormating: function(list) {
                     var datestart = new Date().getTime();
@@ -18401,7 +18446,6 @@ function initNXDivs() {
                     }
                     var intermediate = new Date().getTime();
 
-                    console.log('Time to execute AAproperties part (1600 before): ', (intermediate - datestart));
                     proteoCoverage = ((proteoCoverage/seqLength)*100).toFixed(2);
                     pepCoverage = ((pepCoverage/seqLength)*100).toFixed(2);
                     $("#proteoCover").text(proteoCoverage + "%");
@@ -18413,7 +18457,6 @@ function initNXDivs() {
                     var selection = [];
                     $(".PepSelected").each(function (o) {
                         if ($(this).prop("checked")) {
-                            console.log($(this).parent().parent().attr("id"));
                             selection.push($(this).parent().parent().attr("id"));
                         }
                     });
@@ -18425,7 +18468,6 @@ function initNXDivs() {
             pepHistogram(datas.Peptides);
             var intermediate = new Date().getTime();
 
-            console.log('Time to execute histogram part (1600 before): ', (intermediate - datestart));
 
 
             $(function () {
@@ -18436,11 +18478,10 @@ function initNXDivs() {
     };
 
     $(function () {
-        [nx.getProteinSequence(), nx.getPeptide(), nx.getSrmPeptide(), nx.getMatureProtein(), nx.getSecondaryStructure()].reduce(function (sequence, dataPromise) {
+        [nx.getProteinSequence(nxEntryName), nx.getPeptide(nxEntryName), nx.getSrmPeptide(nxEntryName), nx.getMatureProtein(nxEntryName), nx.getSecondaryStructure(nxEntryName)].reduce(function (sequence, dataPromise) {
             return sequence.then(function () {
                 return dataPromise;
             }).then(function (oneData) {
-                console.log(oneData);
                 cpt += 1;
                 switch (cpt) {
                     case 1:

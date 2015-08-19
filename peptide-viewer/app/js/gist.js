@@ -4,6 +4,7 @@ function initNXDivs() {
     var Nextprot = window.Nextprot;
     var nx = new Nextprot.Client("SequenceViewer", "nextprotTeam");
     var nxEntryName = nx.getEntryName();
+    var nxInputOption = nx.getInputOption();
     var cpt = 0;
     var isoforms;
     var annotations;
@@ -11,6 +12,33 @@ function initNXDivs() {
     var srmPeptideMappings;
     var matureProtein;
     var seq1 = null;
+
+
+    function addEntrySelection() {
+            $("body").prepend("<div id=\"inputOptionDiv\" class=\"col-md-2 col-md-offset-5 centered\" style=\"position:absolute;padding:10px;padding-top:0px;z-index:12\">" +
+            "<div class=\"panel panel-default\"><div class=\"panel-body\">" +
+        "<input id=\"entrySelector\" type=\"text\" class=\"form-control\" placeholder=\"Entry search..\"></div>" +
+            "</div></div>");
+        $('#entrySelector').keyup(function (e) {
+            if (e.keyCode == 13) nx.changeEntry(this);
+            })
+    }
+
+    if (nxInputOption) {
+        addEntrySelection();
+        nx.getAccession().then(function (data) {
+            $(function() {
+                $("#inputOptionDiv").append("<div class=\"alert alert-success entry-alert\" role=\"alert\" style=\"display:none\">You successfully load the entry !</div>");
+                $(".entry-alert").fadeIn("slow");
+                $(".entry-alert").delay(2000).fadeOut("slow");
+            });
+        }, function(error) {
+            $(function() {
+                $("#inputOptionDiv").append("<div class=\"alert alert-danger entry-alert\" role=\"alert\">This accession is not available !</div>");
+            });
+            console.error("Failed!", error);
+        });
+    }
 
 
     (function ($) {
@@ -63,7 +91,6 @@ function initNXDivs() {
             $(".isoformNames").click(getInfoForIsoform.reload);
             $("#moreIsoforms a").click(function () {
                 var parentThis = $(this).text();
-                console.log(parentThis);
                 $("#extendIsoformChoice").text(parentThis);
             });
         },
@@ -139,7 +166,6 @@ function initNXDivs() {
             });
             var intermediate = new Date().getTime();
 
-            console.log('Time to execute first part: ', (intermediate - dateStart));
 
 
             // A ---****---
@@ -170,7 +196,6 @@ function initNXDivs() {
             }
             var dateEnd = new Date().getTime();
 
-            console.log('Time to execute all (before 300) : ', (dateEnd - dateStart));
 
             return peptideMap;
         },
@@ -226,7 +251,6 @@ function initNXDivs() {
 
 
         ////////////////////////// TEMPLATE SEQUENCE
-        console.log("I m zorking fyn");
         if ($("#nx-overviewSeq").length > 0) {
             seq1 = new Sequence(getInfoForIsoform.Sequence(isoforms, isoName));
             seq1.render('#nx-overviewSeq', {
@@ -255,7 +279,7 @@ function initNXDivs() {
             var entriesLength = data.length;
             var isoformsLength = 0;
             data.forEach(function(o) {isoformsLength += o.annotations.length});
-            var entries = data.map(function (o) { return {name:o.uniqueName, withVariant:entryWithVariant(o)} });
+            var entries = data.map(function (o) { return {name:o.uniqueName, withVariant:entryWithVariant(o), geneName: o.overview.mainGeneName} });
             var entryMatching = {
                 entriesLength: entriesLength,
                 isoformsLength: isoformsLength,
@@ -576,7 +600,6 @@ function initNXDivs() {
                 findPeptide: function (event) {
                     //var templateLoader = HBtemplates['app/assets/templates/preLoader.tmpl'];
                     //$("#peptideTableTitle").append(templateLoader);
-                    console.log("does it zorkk ???");
                     event.stopPropagation();
                     var positions = $(this).text();
                     HL.highlighting(positions);
@@ -596,7 +619,6 @@ function initNXDivs() {
                     });
                     var dateHLend = new Date().getTime();
 
-                    console.log('Time to execute highlighting part (60 before): ', (dateHLend - dateHL));
                 },
                 //if clicking anywhere in the document
                 stopHL: function () {
@@ -613,7 +635,6 @@ function initNXDivs() {
 
                     var dateFCend = new Date().getTime();
 
-                    console.log('Time to execute first coverage part (30 before): ', (dateFCend - dateFC));
                 },
                 applyAAFormating: function(list) {
                     var datestart = new Date().getTime();
@@ -671,7 +692,6 @@ function initNXDivs() {
                     }
                     var intermediate = new Date().getTime();
 
-                    console.log('Time to execute AAproperties part (1600 before): ', (intermediate - datestart));
                     proteoCoverage = ((proteoCoverage/seqLength)*100).toFixed(2);
                     pepCoverage = ((pepCoverage/seqLength)*100).toFixed(2);
                     $("#proteoCover").text(proteoCoverage + "%");
@@ -683,7 +703,6 @@ function initNXDivs() {
                     var selection = [];
                     $(".PepSelected").each(function (o) {
                         if ($(this).prop("checked")) {
-                            console.log($(this).parent().parent().attr("id"));
                             selection.push($(this).parent().parent().attr("id"));
                         }
                     });
@@ -695,7 +714,6 @@ function initNXDivs() {
             pepHistogram(datas.Peptides);
             var intermediate = new Date().getTime();
 
-            console.log('Time to execute histogram part (1600 before): ', (intermediate - datestart));
 
 
             $(function () {
@@ -706,11 +724,10 @@ function initNXDivs() {
     };
 
     $(function () {
-        [nx.getProteinSequence(), nx.getPeptide(), nx.getSrmPeptide(), nx.getMatureProtein(), nx.getSecondaryStructure()].reduce(function (sequence, dataPromise) {
+        [nx.getProteinSequence(nxEntryName), nx.getPeptide(nxEntryName), nx.getSrmPeptide(nxEntryName), nx.getMatureProtein(nxEntryName), nx.getSecondaryStructure(nxEntryName)].reduce(function (sequence, dataPromise) {
             return sequence.then(function () {
                 return dataPromise;
             }).then(function (oneData) {
-                console.log(oneData);
                 cpt += 1;
                 switch (cpt) {
                     case 1:

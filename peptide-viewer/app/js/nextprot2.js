@@ -56,7 +56,6 @@
             if(!clientInformation){
                 throw "Please provide some client information ex:  new Nextprot.Client(applicationName, 'Calipho SIB at Geneva');";
             }
-
         };
 
         //Util methods
@@ -67,16 +66,33 @@
             return results === null ? "" : decodeURIComponent(results[1].replace(/\+/g, " "));
         };
 
-        //Gets the entry set in the parameter
-        NextprotClient.prototype.getEntryName = function(){
-            return _getURLParameter("nxentry") || 'NX_P01308'; //By default returns the insulin
-        };
-
         var normalizeEntry = function (entry) {
             if (entry.substring(0,3) !== "NX_") {
                 entry = "NX_"+ entry;
             }
             return entry;
+        };
+
+        function _changeParamOrAddParamByName(href, paramName, newVal) {
+            var tmpRegex = new RegExp("(" + paramName + "=)[a-zA-Z0-9_]+", 'ig');
+            if (href.match(tmpRegex) != null) {
+                return href.replace(tmpRegex, '$1'+newVal);
+            }
+            return href += (((href.indexOf("?") != -1) ? "&" : "?") + paramName + "=" + newVal);
+        }
+
+        //Gets the entry set in the parameter
+        NextprotClient.prototype.getEntryName = function(){
+            return normalizeEntry(_getURLParameter("nxentry") || 'NX_P01308'); //By default returns the insulin
+        };
+
+        NextprotClient.prototype.getInputOption = function(){
+            return _getURLParameter("inputOption") || ''; //By default returns the insulin
+        };
+
+        NextprotClient.prototype.changeEntry = function(elem){
+            var new_url = _changeParamOrAddParamByName(window.location.href, "nxentry", elem.value);
+            window.location.href = new_url;
         };
 
         //private method, convention use an underscore
@@ -156,6 +172,12 @@
             var url = sparqlEndpoint+sparqlFormat+"&query="+encodeURIComponent(sparqlQuery) + "&clientInfo=" + clientInfo + "&applicationName=" + applicationName;
             return Promise.resolve($.getJSON(url)).then(function (data){
                 return data;
+            });
+        };
+
+        NextprotClient.prototype.getAccession = function(entry) {
+            return _callURL(normalizeEntry(entry || this.getEntryName()), "accession").then(function (data){
+                return data.entry.properties;
             });
         };
 

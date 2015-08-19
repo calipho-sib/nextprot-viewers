@@ -117,6 +117,13 @@ html {
 #ptmInfos dl {
     display:inline-block;
 }
+
+.entry-alert{
+    transition: height 1s;
+    -moz-transition: height 1s; /* Firefox 4 */
+    -webkit-transition: height 1s; /* Safari and Chrome */
+    -o-transition: height 1s; /* Opera */
+}
 /*body {*/
     /*margin-right: 0px !important;*/
 /*}*/
