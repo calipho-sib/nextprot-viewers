@@ -17771,7 +17771,7 @@ function initNXDivs() {
     function addEntrySelection() {
             $("body").prepend("<div id=\"inputOptionDiv\" class=\"col-md-2 col-md-offset-5 centered\" style=\"position:absolute;padding:10px;padding-top:0px;z-index:12\">" +
             "<div class=\"panel panel-default\"><div class=\"panel-body\">" +
-        "<input id=\"entrySelector\" type=\"text\" class=\"form-control\" placeholder=\"Entry search..\"></div>" +
+        "<input id=\"entrySelector\" type=\"text\" class=\"form-control\" placeholder=\"neXtProt or UniProt accession...\"></div>" +
             "</div></div>");
         $('#entrySelector').keyup(function (e) {
             if (e.keyCode == 13) nx.changeEntry(this);
