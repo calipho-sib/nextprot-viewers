@@ -162,7 +162,7 @@
         //};
 
         NextprotClient.prototype.getEntryforPeptide = function(seq) {
-            return _callURLTemp(seq, "false").then(function (data){
+            return _callURLTemp(seq, "true").then(function (data){
                 return data;
             });
         };

@@ -9,17 +9,14 @@ module.exports = function(grunt) {
       },
       basic: {
         src: [
-          'bower_components/jquery/dist/jquery.js',
-          'bower_components/bootstrap/dist/js/bootstrap.js',
+          'bower_components/nextprot/dist/nextprot.bundle.js',
+          'bower_components/bootstrap/dist/js/bootstrap.min.js',
           'app/js/highcharts.js',
-          'bower_components/handlebars/handlebars.js',
           'bower_components/sequence-viewer/src/sequence-viewer.js',
-          'app/js/nextprot2.js',
           'bower_components/iframe-resizer/js/iframeResizer.contentWindow.min.js',
           'app/js/gist_templates.js',
           'app/js/stupidtable.js',
           'app/js/nextprot-histogram.js',
-          'app/js/overview.js',
           'app/js/gist.js'
 
         ],
