@@ -4,7 +4,6 @@ function initNXDivs() {
     var Nextprot = window.Nextprot;
     var nx = new Nextprot.Client("SequenceViewer", "nextprotTeam");
     var nxEntryName = nx.getEntryName();
-    var nxInputOption = nx.getInputOption();
     var cpt = 0;
     var isoforms;
     var annotations;
@@ -12,34 +11,6 @@ function initNXDivs() {
     var srmPeptideMappings;
     var matureProtein;
     var seq1 = null;
-
-
-    function addEntrySelection() {
-            $("body").prepend("<div id=\"inputOptionDiv\" class=\"col-md-2 col-md-offset-5 centered\" style=\"position:absolute;padding:10px;padding-top:0px;z-index:12\">" +
-            "<div class=\"panel panel-default\"><div class=\"panel-body\">" +
-        "<input id=\"entrySelector\" type=\"text\" class=\"form-control\" placeholder=\"neXtProt or UniProt accession...\"></div>" +
-            "</div></div>");
-        $('#entrySelector').keyup(function (e) {
-            if (e.keyCode == 13) nx.changeEntry(this);
-            })
-    }
-
-    if (nxInputOption) {
-        addEntrySelection();
-        nx.getAccession().then(function (data) {
-            $(function() {
-                $("#inputOptionDiv").append("<div class=\"alert alert-success entry-alert\" role=\"alert\" style=\"display:none\">You successfully load the entry !</div>");
-                $(".entry-alert").fadeIn("slow");
-                $(".entry-alert").delay(2000).fadeOut("slow");
-            });
-        }, function(error) {
-            $(function() {
-                $("#inputOptionDiv").append("<div class=\"alert alert-danger entry-alert\" role=\"alert\">This accession is not available !</div>");
-            });
-            console.error("Failed!", error);
-        });
-    }
-
 
     (function ($) {
         $.fn.hasVerticalScrollBar = function () {

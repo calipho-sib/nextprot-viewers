@@ -1,5 +1,388 @@
 /*!
- * jQuery JavaScript Library v2.1.4
+ * https://github.com/es-shims/es5-shim
+ * @license es5-shim Copyright 2009-2014 by contributors, MIT License
+ * see https://github.com/es-shims/es5-shim/blob/master/LICENSE
+ */
+(function(t,r){if(typeof define==="function"&&define.amd){define(r)}else if(typeof exports==="object"){module.exports=r()}else{t.returnExports=r()}})(this,function(){var t=Function.prototype.call;var r=Array.prototype;var e=Object.prototype;var n=r.slice;var i=Array.prototype.splice;var o=Array.prototype.push;var a=Array.prototype.unshift;var l=e.toString;var u=function(t){return e.toString.call(t)==="[object Function]"};var p=function(t){return e.toString.call(t)==="[object RegExp]"};var s=function W(t){return l.call(t)==="[object Array]"};var f=function tr(t){var r=l.call(t);var e=r==="[object Arguments]";if(!e){e=!s(r)&&t!==null&&typeof t==="object"&&typeof t.length==="number"&&t.length>=0&&u(t.callee)}return e};function c(){}if(!Function.prototype.bind){Function.prototype.bind=function rr(t){var r=this;if(!u(r)){throw new TypeError("Function.prototype.bind called on incompatible "+r)}var e=n.call(arguments,1);var i=function(){if(this instanceof p){var i=r.apply(this,e.concat(n.call(arguments)));if(Object(i)===i){return i}return this}else{return r.apply(t,e.concat(n.call(arguments)))}};var o=Math.max(0,r.length-e.length);var a=[];for(var l=0;l<o;l++){a.push("$"+l)}var p=Function("binder","return function ("+a.join(",")+"){return binder.apply(this,arguments)}")(i);if(r.prototype){c.prototype=r.prototype;p.prototype=new c;c.prototype=null}return p}}var h=t.bind(e.hasOwnProperty);var y;var g;var v;var d;var b;if(b=h(e,"__defineGetter__")){y=t.bind(e.__defineGetter__);g=t.bind(e.__defineSetter__);v=t.bind(e.__lookupGetter__);d=t.bind(e.__lookupSetter__)}var m=function(){var t={};Array.prototype.splice.call(t,0,0,1);return t.length===1}();var w=[1].splice(0).length===0;var S=function(){var t=[1,2];var r=t.splice();return t.length===2&&s(r)&&r.length===0}();if(S){Array.prototype.splice=function er(t,r){if(arguments.length===0){return[]}else{return i.apply(this,arguments)}}}if(!w||!m){Array.prototype.splice=function nr(t,r){if(arguments.length===0){return[]}var e=arguments;this.length=Math.max(q(this.length),0);if(arguments.length>0&&typeof r!=="number"){e=n.call(arguments);if(e.length<2){e.push(q(r))}else{e[1]=q(r)}}return i.apply(this,e)}}if([].unshift(0)!==1){Array.prototype.unshift=function(){a.apply(this,arguments);return this.length}}if(!Array.isArray){Array.isArray=s}var x=Object("a");var A=x[0]!=="a"||!(0 in x);var j=function ir(t){var r=true;var e=true;if(t){t.call("foo",function(t,e,n){if(typeof n!=="object"){r=false}});t.call([1],function(){"use strict";e=typeof this==="string"},"x")}return!!t&&r&&e};if(!Array.prototype.forEach||!j(Array.prototype.forEach)){Array.prototype.forEach=function or(t){var r=Q(this),e=A&&l.call(this)==="[object String]"?this.split(""):r,n=arguments[1],i=-1,o=e.length>>>0;if(!u(t)){throw new TypeError}while(++i<o){if(i in e){t.call(n,e[i],i,r)}}}}if(!Array.prototype.map||!j(Array.prototype.map)){Array.prototype.map=function ar(t){var r=Q(this),e=A&&l.call(this)==="[object String]"?this.split(""):r,n=e.length>>>0,i=Array(n),o=arguments[1];if(!u(t)){throw new TypeError(t+" is not a function")}for(var a=0;a<n;a++){if(a in e){i[a]=t.call(o,e[a],a,r)}}return i}}if(!Array.prototype.filter||!j(Array.prototype.filter)){Array.prototype.filter=function lr(t){var r=Q(this),e=A&&l.call(this)==="[object String]"?this.split(""):r,n=e.length>>>0,i=[],o,a=arguments[1];if(!u(t)){throw new TypeError(t+" is not a function")}for(var p=0;p<n;p++){if(p in e){o=e[p];if(t.call(a,o,p,r)){i.push(o)}}}return i}}if(!Array.prototype.every||!j(Array.prototype.every)){Array.prototype.every=function ur(t){var r=Q(this),e=A&&l.call(this)==="[object String]"?this.split(""):r,n=e.length>>>0,i=arguments[1];if(!u(t)){throw new TypeError(t+" is not a function")}for(var o=0;o<n;o++){if(o in e&&!t.call(i,e[o],o,r)){return false}}return true}}if(!Array.prototype.some||!j(Array.prototype.some)){Array.prototype.some=function pr(t){var r=Q(this),e=A&&l.call(this)==="[object String]"?this.split(""):r,n=e.length>>>0,i=arguments[1];if(!u(t)){throw new TypeError(t+" is not a function")}for(var o=0;o<n;o++){if(o in e&&t.call(i,e[o],o,r)){return true}}return false}}var O=false;if(Array.prototype.reduce){O=typeof Array.prototype.reduce.call("es5",function(t,r,e,n){return n})==="object"}if(!Array.prototype.reduce||!O){Array.prototype.reduce=function sr(t){var r=Q(this),e=A&&l.call(this)==="[object String]"?this.split(""):r,n=e.length>>>0;if(!u(t)){throw new TypeError(t+" is not a function")}if(!n&&arguments.length===1){throw new TypeError("reduce of empty array with no initial value")}var i=0;var o;if(arguments.length>=2){o=arguments[1]}else{do{if(i in e){o=e[i++];break}if(++i>=n){throw new TypeError("reduce of empty array with no initial value")}}while(true)}for(;i<n;i++){if(i in e){o=t.call(void 0,o,e[i],i,r)}}return o}}var E=false;if(Array.prototype.reduceRight){E=typeof Array.prototype.reduceRight.call("es5",function(t,r,e,n){return n})==="object"}if(!Array.prototype.reduceRight||!E){Array.prototype.reduceRight=function fr(t){var r=Q(this),e=A&&l.call(this)==="[object String]"?this.split(""):r,n=e.length>>>0;if(!u(t)){throw new TypeError(t+" is not a function")}if(!n&&arguments.length===1){throw new TypeError("reduceRight of empty array with no initial value")}var i,o=n-1;if(arguments.length>=2){i=arguments[1]}else{do{if(o in e){i=e[o--];break}if(--o<0){throw new TypeError("reduceRight of empty array with no initial value")}}while(true)}if(o<0){return i}do{if(o in e){i=t.call(void 0,i,e[o],o,r)}}while(o--);return i}}if(!Array.prototype.indexOf||[0,1].indexOf(1,2)!==-1){Array.prototype.indexOf=function cr(t){var r=A&&l.call(this)==="[object String]"?this.split(""):Q(this),e=r.length>>>0;if(!e){return-1}var n=0;if(arguments.length>1){n=q(arguments[1])}n=n>=0?n:Math.max(0,e+n);for(;n<e;n++){if(n in r&&r[n]===t){return n}}return-1}}if(!Array.prototype.lastIndexOf||[0,1].lastIndexOf(0,-3)!==-1){Array.prototype.lastIndexOf=function hr(t){var r=A&&l.call(this)==="[object String]"?this.split(""):Q(this),e=r.length>>>0;if(!e){return-1}var n=e-1;if(arguments.length>1){n=Math.min(n,q(arguments[1]))}n=n>=0?n:e-Math.abs(n);for(;n>=0;n--){if(n in r&&t===r[n]){return n}}return-1}}var N=Object.keys&&function(){return Object.keys(arguments).length===2}(1,2);if(!Object.keys){var T=!{toString:null}.propertyIsEnumerable("toString"),I=function(){}.propertyIsEnumerable("prototype"),D=["toString","toLocaleString","valueOf","hasOwnProperty","isPrototypeOf","propertyIsEnumerable","constructor"],_=D.length;Object.keys=function yr(t){var r=u(t),e=f(t),n=t!==null&&typeof t==="object",i=n&&l.call(t)==="[object String]";if(!n&&!r&&!e){throw new TypeError("Object.keys called on a non-object")}var o=[];var a=I&&r;if(i||e){for(var p=0;p<t.length;++p){o.push(String(p))}}else{for(var s in t){if(!(a&&s==="prototype")&&h(t,s)){o.push(String(s))}}}if(T){var c=t.constructor,y=c&&c.prototype===t;for(var g=0;g<_;g++){var v=D[g];if(!(y&&v==="constructor")&&h(t,v)){o.push(v)}}}return o}}else if(!N){var M=Object.keys;Object.keys=function gr(t){if(f(t)){return M(Array.prototype.slice.call(t))}else{return M(t)}}}var F=-621987552e5,R="-000001";if(!Date.prototype.toISOString||new Date(F).toISOString().indexOf(R)===-1){Date.prototype.toISOString=function vr(){var t,r,e,n,i;if(!isFinite(this)){throw new RangeError("Date.prototype.toISOString called on non-finite value.")}n=this.getUTCFullYear();i=this.getUTCMonth();n+=Math.floor(i/12);i=(i%12+12)%12;t=[i+1,this.getUTCDate(),this.getUTCHours(),this.getUTCMinutes(),this.getUTCSeconds()];n=(n<0?"-":n>9999?"+":"")+("00000"+Math.abs(n)).slice(0<=n&&n<=9999?-4:-6);r=t.length;while(r--){e=t[r];if(e<10){t[r]="0"+e}}return n+"-"+t.slice(0,2).join("-")+"T"+t.slice(2).join(":")+"."+("000"+this.getUTCMilliseconds()).slice(-3)+"Z"}}var k=false;try{k=Date.prototype.toJSON&&new Date(NaN).toJSON()===null&&new Date(F).toJSON().indexOf(R)!==-1&&Date.prototype.toJSON.call({toISOString:function(){return true}})}catch(C){}if(!k){Date.prototype.toJSON=function dr(t){var r=Object(this),e=K(r),n;if(typeof e==="number"&&!isFinite(e)){return null}n=r.toISOString;if(typeof n!=="function"){throw new TypeError("toISOString property is not callable")}return n.call(r)}}var U=Date.parse("+033658-09-27T01:46:40.000Z")===1e15;var Z=!isNaN(Date.parse("2012-04-04T24:00:00.500Z"))||!isNaN(Date.parse("2012-11-31T23:59:59.000Z"));var J=isNaN(Date.parse("2000-01-01T00:00:00.000Z"));if(!Date.parse||J||Z||!U){Date=function(t){function r(e,n,i,o,a,l,u){var p=arguments.length;if(this instanceof t){var s=p===1&&String(e)===e?new t(r.parse(e)):p>=7?new t(e,n,i,o,a,l,u):p>=6?new t(e,n,i,o,a,l):p>=5?new t(e,n,i,o,a):p>=4?new t(e,n,i,o):p>=3?new t(e,n,i):p>=2?new t(e,n):p>=1?new t(e):new t;s.constructor=r;return s}return t.apply(this,arguments)}var e=new RegExp("^"+"(\\d{4}|[+-]\\d{6})"+"(?:-(\\d{2})"+"(?:-(\\d{2})"+"(?:"+"T(\\d{2})"+":(\\d{2})"+"(?:"+":(\\d{2})"+"(?:(\\.\\d{1,}))?"+")?"+"("+"Z|"+"(?:"+"([-+])"+"(\\d{2})"+":(\\d{2})"+")"+")?)?)?)?"+"$");var n=[0,31,59,90,120,151,181,212,243,273,304,334,365];function i(t,r){var e=r>1?1:0;return n[r]+Math.floor((t-1969+e)/4)-Math.floor((t-1901+e)/100)+Math.floor((t-1601+e)/400)+365*(t-1970)}function o(r){return Number(new t(1970,0,1,0,0,0,r))}for(var a in t){r[a]=t[a]}r.now=t.now;r.UTC=t.UTC;r.prototype=t.prototype;r.prototype.constructor=r;r.parse=function l(r){var n=e.exec(r);if(n){var a=Number(n[1]),l=Number(n[2]||1)-1,u=Number(n[3]||1)-1,p=Number(n[4]||0),s=Number(n[5]||0),f=Number(n[6]||0),c=Math.floor(Number(n[7]||0)*1e3),h=Boolean(n[4]&&!n[8]),y=n[9]==="-"?1:-1,g=Number(n[10]||0),v=Number(n[11]||0),d;if(p<(s>0||f>0||c>0?24:25)&&s<60&&f<60&&c<1e3&&l>-1&&l<12&&g<24&&v<60&&u>-1&&u<i(a,l+1)-i(a,l)){d=((i(a,l)+u)*24+p+g*y)*60;d=((d+s+v*y)*60+f)*1e3+c;if(h){d=o(d)}if(-864e13<=d&&d<=864e13){return d}}return NaN}return t.parse.apply(this,arguments)};return r}(Date)}if(!Date.now){Date.now=function br(){return(new Date).getTime()}}if(!Number.prototype.toFixed||8e-5.toFixed(3)!=="0.000"||.9.toFixed(0)==="0"||1.255.toFixed(2)!=="1.25"||0xde0b6b3a7640080.toFixed(0)!=="1000000000000000128"){(function(){var t,r,e,n;t=1e7;r=6;e=[0,0,0,0,0,0];function i(n,i){var o=-1;while(++o<r){i+=n*e[o];e[o]=i%t;i=Math.floor(i/t)}}function o(n){var i=r,o=0;while(--i>=0){o+=e[i];e[i]=Math.floor(o/n);o=o%n*t}}function a(){var t=r;var n="";while(--t>=0){if(n!==""||t===0||e[t]!==0){var i=String(e[t]);if(n===""){n=i}else{n+="0000000".slice(0,7-i.length)+i}}}return n}function l(t,r,e){return r===0?e:r%2===1?l(t,r-1,e*t):l(t*t,r/2,e)}function u(t){var r=0;while(t>=4096){r+=12;t/=4096}while(t>=2){r+=1;t/=2}return r}Number.prototype.toFixed=function p(t){var r,e,n,p,s,f,c,h;r=Number(t);r=r!==r?0:Math.floor(r);if(r<0||r>20){throw new RangeError("Number.toFixed called with invalid number of decimals")}e=Number(this);if(e!==e){return"NaN"}if(e<=-1e21||e>=1e21){return String(e)}n="";if(e<0){n="-";e=-e}p="0";if(e>1e-21){s=u(e*l(2,69,1))-69;f=s<0?e*l(2,-s,1):e/l(2,s,1);f*=4503599627370496;s=52-s;if(s>0){i(0,f);c=r;while(c>=7){i(1e7,0);c-=7}i(l(10,c,1),0);c=s-1;while(c>=23){o(1<<23);c-=23}o(1<<c);i(1,1);o(2);p=a()}else{i(0,f);i(1<<-s,0);p=a()+"0.00000000000000000000".slice(2,2+r)}}if(r>0){h=p.length;if(h<=r){p=n+"0.0000000000000000000".slice(0,r-h+2)+p}else{p=n+p.slice(0,h-r)+"."+p.slice(h-r)}}else{p=n+p}return p}})()}var $=String.prototype.split;if("ab".split(/(?:ab)*/).length!==2||".".split(/(.?)(.?)/).length!==4||"tesst".split(/(s)*/)[1]==="t"||"test".split(/(?:)/,-1).length!==4||"".split(/.?/).length||".".split(/()()/).length>1){(function(){var t=/()??/.exec("")[1]===void 0;String.prototype.split=function(r,e){var n=this;if(r===void 0&&e===0){return[]}if(l.call(r)!=="[object RegExp]"){return $.call(this,r,e)}var i=[],o=(r.ignoreCase?"i":"")+(r.multiline?"m":"")+(r.extended?"x":"")+(r.sticky?"y":""),a=0,u,p,s,f;r=new RegExp(r.source,o+"g");n+="";if(!t){u=new RegExp("^"+r.source+"$(?!\\s)",o)}e=e===void 0?-1>>>0:V(e);while(p=r.exec(n)){s=p.index+p[0].length;if(s>a){i.push(n.slice(a,p.index));if(!t&&p.length>1){p[0].replace(u,function(){for(var t=1;t<arguments.length-2;t++){if(arguments[t]===void 0){p[t]=void 0}}})}if(p.length>1&&p.index<n.length){Array.prototype.push.apply(i,p.slice(1))}f=p[0].length;a=s;if(i.length>=e){break}}if(r.lastIndex===p.index){r.lastIndex++}}if(a===n.length){if(f||!r.test("")){i.push("")}}else{i.push(n.slice(a))}return i.length>e?i.slice(0,e):i}})()}else if("0".split(void 0,0).length){String.prototype.split=function mr(t,r){if(t===void 0&&r===0){return[]}return $.call(this,t,r)}}var G=String.prototype.replace;var P=function(){var t=[];"x".replace(/x(.)?/g,function(r,e){t.push(e)});return t.length===1&&typeof t[0]==="undefined"}();if(!P){String.prototype.replace=function wr(t,r){var e=u(r);var n=p(t)&&/\)[*?]/.test(t.source);if(!e||!n){return G.call(this,t,r)}else{var i=function(e){var n=arguments.length;var i=t.lastIndex;t.lastIndex=0;var o=t.exec(e);t.lastIndex=i;o.push(arguments[n-2],arguments[n-1]);return r.apply(this,o)};return G.call(this,t,i)}}}if("".substr&&"0b".substr(-1)!=="b"){var B=String.prototype.substr;String.prototype.substr=function Sr(t,r){return B.call(this,t<0?(t=this.length+t)<0?0:t:t,r)}}var H="	\n\f\r \xa0\u1680\u180e\u2000\u2001\u2002\u2003"+"\u2004\u2005\u2006\u2007\u2008\u2009\u200a\u202f\u205f\u3000\u2028"+"\u2029\ufeff";var L="\u200b";if(!String.prototype.trim||H.trim()||!L.trim()){H="["+H+"]";var X=new RegExp("^"+H+H+"*"),Y=new RegExp(H+H+"*$");String.prototype.trim=function xr(){if(this===void 0||this===null){throw new TypeError("can't convert "+this+" to object")}return String(this).replace(X,"").replace(Y,"")}}if(parseInt(H+"08")!==8||parseInt(H+"0x16")!==22){parseInt=function(t){var r=/^0[xX]/;return function e(n,i){n=String(n).trim();if(!Number(i)){i=r.test(n)?16:10}return t(n,i)}}(parseInt)}function q(t){t=+t;if(t!==t){t=0}else if(t!==0&&t!==1/0&&t!==-(1/0)){t=(t>0||-1)*Math.floor(Math.abs(t))}return t}function z(t){var r=typeof t;return t===null||r==="undefined"||r==="boolean"||r==="number"||r==="string"}function K(t){var r,e,n;if(z(t)){return t}e=t.valueOf;if(u(e)){r=e.call(t);if(z(r)){return r}}n=t.toString;if(u(n)){r=n.call(t);if(z(r)){return r}}throw new TypeError}var Q=function(t){if(t==null){throw new TypeError("can't convert "+t+" to object")}return Object(t)};var V=function Ar(t){return t>>>0}});
+//# sourceMappingURL=es5-shim.map;
+(function e(t, n, r) {
+  function s(o, u) {
+    if (!n[o]) {
+      if (!t[o]) {
+        var a = typeof require == "function" && require;
+        if (!u && a) return a(o, !0);
+        if (i) return i(o, !0);
+        var f = new Error("Cannot find module '" + o + "'");
+        throw f.code = "MODULE_NOT_FOUND", f;
+      }
+      var l = n[o] = {
+        exports: {}
+      };
+      t[o][0].call(l.exports, function(e) {
+        var n = t[o][1][e];
+        return s(n ? n : e);
+      }, l, l.exports, e, t, n, r);
+    }
+    return n[o].exports;
+  }
+  var i = typeof require == "function" && require;
+  for (var o = 0; o < r.length; o++) s(r[o]);
+  return s;
+})({
+  1: [ function(require, module, exports) {
+    var process = module.exports = {};
+    process.nextTick = function() {
+      var canSetImmediate = typeof window !== "undefined" && window.setImmediate;
+      var canPost = typeof window !== "undefined" && window.postMessage && window.addEventListener;
+      if (canSetImmediate) {
+        return function(f) {
+          return window.setImmediate(f);
+        };
+      }
+      if (canPost) {
+        var queue = [];
+        window.addEventListener("message", function(ev) {
+          var source = ev.source;
+          if ((source === window || source === null) && ev.data === "process-tick") {
+            ev.stopPropagation();
+            if (queue.length > 0) {
+              var fn = queue.shift();
+              fn();
+            }
+          }
+        }, true);
+        return function nextTick(fn) {
+          queue.push(fn);
+          window.postMessage("process-tick", "*");
+        };
+      }
+      return function nextTick(fn) {
+        setTimeout(fn, 0);
+      };
+    }();
+    process.title = "browser";
+    process.browser = true;
+    process.env = {};
+    process.argv = [];
+    function noop() {}
+    process.on = noop;
+    process.addListener = noop;
+    process.once = noop;
+    process.off = noop;
+    process.removeListener = noop;
+    process.removeAllListeners = noop;
+    process.emit = noop;
+    process.binding = function(name) {
+      throw new Error("process.binding is not supported");
+    };
+    process.cwd = function() {
+      return "/";
+    };
+    process.chdir = function(dir) {
+      throw new Error("process.chdir is not supported");
+    };
+  }, {} ],
+  2: [ function(require, module, exports) {
+    "use strict";
+    var asap = require("asap");
+    module.exports = Promise;
+    function Promise(fn) {
+      if (typeof this !== "object") throw new TypeError("Promises must be constructed via new");
+      if (typeof fn !== "function") throw new TypeError("not a function");
+      var state = null;
+      var value = null;
+      var deferreds = [];
+      var self = this;
+      this.then = function(onFulfilled, onRejected) {
+        return new self.constructor(function(resolve, reject) {
+          handle(new Handler(onFulfilled, onRejected, resolve, reject));
+        });
+      };
+      function handle(deferred) {
+        if (state === null) {
+          deferreds.push(deferred);
+          return;
+        }
+        asap(function() {
+          var cb = state ? deferred.onFulfilled : deferred.onRejected;
+          if (cb === null) {
+            (state ? deferred.resolve : deferred.reject)(value);
+            return;
+          }
+          var ret;
+          try {
+            ret = cb(value);
+          } catch (e) {
+            deferred.reject(e);
+            return;
+          }
+          deferred.resolve(ret);
+        });
+      }
+      function resolve(newValue) {
+        try {
+          if (newValue === self) throw new TypeError("A promise cannot be resolved with itself.");
+          if (newValue && (typeof newValue === "object" || typeof newValue === "function")) {
+            var then = newValue.then;
+            if (typeof then === "function") {
+              doResolve(then.bind(newValue), resolve, reject);
+              return;
+            }
+          }
+          state = true;
+          value = newValue;
+          finale();
+        } catch (e) {
+          reject(e);
+        }
+      }
+      function reject(newValue) {
+        state = false;
+        value = newValue;
+        finale();
+      }
+      function finale() {
+        for (var i = 0, len = deferreds.length; i < len; i++) handle(deferreds[i]);
+        deferreds = null;
+      }
+      doResolve(fn, resolve, reject);
+    }
+    function Handler(onFulfilled, onRejected, resolve, reject) {
+      this.onFulfilled = typeof onFulfilled === "function" ? onFulfilled : null;
+      this.onRejected = typeof onRejected === "function" ? onRejected : null;
+      this.resolve = resolve;
+      this.reject = reject;
+    }
+    function doResolve(fn, onFulfilled, onRejected) {
+      var done = false;
+      try {
+        fn(function(value) {
+          if (done) return;
+          done = true;
+          onFulfilled(value);
+        }, function(reason) {
+          if (done) return;
+          done = true;
+          onRejected(reason);
+        });
+      } catch (ex) {
+        if (done) return;
+        done = true;
+        onRejected(ex);
+      }
+    }
+  }, {
+    asap: 4
+  } ],
+  3: [ function(require, module, exports) {
+    "use strict";
+    var Promise = require("./core.js");
+    var asap = require("asap");
+    module.exports = Promise;
+    function ValuePromise(value) {
+      this.then = function(onFulfilled) {
+        if (typeof onFulfilled !== "function") return this;
+        return new Promise(function(resolve, reject) {
+          asap(function() {
+            try {
+              resolve(onFulfilled(value));
+            } catch (ex) {
+              reject(ex);
+            }
+          });
+        });
+      };
+    }
+    ValuePromise.prototype = Promise.prototype;
+    var TRUE = new ValuePromise(true);
+    var FALSE = new ValuePromise(false);
+    var NULL = new ValuePromise(null);
+    var UNDEFINED = new ValuePromise(undefined);
+    var ZERO = new ValuePromise(0);
+    var EMPTYSTRING = new ValuePromise("");
+    Promise.resolve = function(value) {
+      if (value instanceof Promise) return value;
+      if (value === null) return NULL;
+      if (value === undefined) return UNDEFINED;
+      if (value === true) return TRUE;
+      if (value === false) return FALSE;
+      if (value === 0) return ZERO;
+      if (value === "") return EMPTYSTRING;
+      if (typeof value === "object" || typeof value === "function") {
+        try {
+          var then = value.then;
+          if (typeof then === "function") {
+            return new Promise(then.bind(value));
+          }
+        } catch (ex) {
+          return new Promise(function(resolve, reject) {
+            reject(ex);
+          });
+        }
+      }
+      return new ValuePromise(value);
+    };
+    Promise.all = function(arr) {
+      var args = Array.prototype.slice.call(arr);
+      return new Promise(function(resolve, reject) {
+        if (args.length === 0) return resolve([]);
+        var remaining = args.length;
+        function res(i, val) {
+          try {
+            if (val && (typeof val === "object" || typeof val === "function")) {
+              var then = val.then;
+              if (typeof then === "function") {
+                then.call(val, function(val) {
+                  res(i, val);
+                }, reject);
+                return;
+              }
+            }
+            args[i] = val;
+            if (--remaining === 0) {
+              resolve(args);
+            }
+          } catch (ex) {
+            reject(ex);
+          }
+        }
+        for (var i = 0; i < args.length; i++) {
+          res(i, args[i]);
+        }
+      });
+    };
+    Promise.reject = function(value) {
+      return new Promise(function(resolve, reject) {
+        reject(value);
+      });
+    };
+    Promise.race = function(values) {
+      return new Promise(function(resolve, reject) {
+        values.forEach(function(value) {
+          Promise.resolve(value).then(resolve, reject);
+        });
+      });
+    };
+    Promise.prototype["catch"] = function(onRejected) {
+      return this.then(null, onRejected);
+    };
+  }, {
+    "./core.js": 2,
+    asap: 4
+  } ],
+  4: [ function(require, module, exports) {
+    (function(process) {
+      var head = {
+        task: void 0,
+        next: null
+      };
+      var tail = head;
+      var flushing = false;
+      var requestFlush = void 0;
+      var isNodeJS = false;
+      function flush() {
+        while (head.next) {
+          head = head.next;
+          var task = head.task;
+          head.task = void 0;
+          var domain = head.domain;
+          if (domain) {
+            head.domain = void 0;
+            domain.enter();
+          }
+          try {
+            task();
+          } catch (e) {
+            if (isNodeJS) {
+              if (domain) {
+                domain.exit();
+              }
+              setTimeout(flush, 0);
+              if (domain) {
+                domain.enter();
+              }
+              throw e;
+            } else {
+              setTimeout(function() {
+                throw e;
+              }, 0);
+            }
+          }
+          if (domain) {
+            domain.exit();
+          }
+        }
+        flushing = false;
+      }
+      if (typeof process !== "undefined" && process.nextTick) {
+        isNodeJS = true;
+        requestFlush = function() {
+          process.nextTick(flush);
+        };
+      } else if (typeof setImmediate === "function") {
+        if (typeof window !== "undefined") {
+          requestFlush = setImmediate.bind(window, flush);
+        } else {
+          requestFlush = function() {
+            setImmediate(flush);
+          };
+        }
+      } else if (typeof MessageChannel !== "undefined") {
+        var channel = new MessageChannel();
+        channel.port1.onmessage = flush;
+        requestFlush = function() {
+          channel.port2.postMessage(0);
+        };
+      } else {
+        requestFlush = function() {
+          setTimeout(flush, 0);
+        };
+      }
+      function asap(task) {
+        tail = tail.next = {
+          task: task,
+          domain: isNodeJS && process.domain,
+          next: null
+        };
+        if (!flushing) {
+          flushing = true;
+          requestFlush();
+        }
+      }
+      module.exports = asap;
+    }).call(this, require("_process"));
+  }, {
+    _process: 1
+  } ],
+  5: [ function(require, module, exports) {
+    if (typeof Promise.prototype.done !== "function") {
+      Promise.prototype.done = function(onFulfilled, onRejected) {
+        var self = arguments.length ? this.then.apply(this, arguments) : this;
+        self.then(null, function(err) {
+          setTimeout(function() {
+            throw err;
+          }, 0);
+        });
+      };
+    }
+  }, {} ],
+  6: [ function(require, module, exports) {
+    var asap = require("asap");
+    if (typeof Promise === "undefined") {
+      Promise = require("./lib/core.js");
+      require("./lib/es6-extensions.js");
+    }
+    require("./polyfill-done.js");
+  }, {
+    "./lib/core.js": 2,
+    "./lib/es6-extensions.js": 3,
+    "./polyfill-done.js": 5,
+    asap: 4
+  } ]
+}, {}, [ 6 ]);
+//# sourceMappingURL=/polyfills/promise-6.1.0.js.map;
+/*!
+ * jQuery JavaScript Library v2.1.3
  * http://jquery.com/
  *
  * Includes Sizzle.js
@@ -9,7 +392,7 @@
  * Released under the MIT license
  * http://jquery.org/license
  *
- * Date: 2015-04-28T16:01Z
+ * Date: 2014-12-18T15:11Z
  */
 
 (function( global, factory ) {
@@ -67,7 +450,7 @@ var
 	// Use the correct document accordingly with window argument (sandbox)
 	document = window.document,
 
-	version = "2.1.4",
+	version = "2.1.3",
 
 	// Define a local copy of jQuery
 	jQuery = function( selector, context ) {
@@ -531,12 +914,7 @@ jQuery.each("Boolean Number String Function Array Date RegExp Object Error".spli
 });
 
 function isArraylike( obj ) {
-
-	// Support: iOS 8.2 (not reproducible in simulator)
-	// `in` check used to prevent JIT error (gh-2145)
-	// hasOwn isn't used here due to false negatives
-	// regarding Nodelist length in IE
-	var length = "length" in obj && obj.length,
+	var length = obj.length,
 		type = jQuery.type( obj );
 
 	if ( type === "function" || jQuery.isWindow( obj ) ) {
@@ -9208,15 +9586,10 @@ if ( typeof noGlobal === strundefined ) {
 return jQuery;
 
 }));
-;/*!
- * Bootstrap v3.3.5 (http://getbootstrap.com)
- * Copyright 2011-2015 Twitter, Inc.
- * Licensed under the MIT license
- */
-if("undefined"==typeof jQuery)throw new Error("Bootstrap's JavaScript requires jQuery");+function(a){"use strict";var b=a.fn.jquery.split(" ")[0].split(".");if(b[0]<2&&b[1]<9||1==b[0]&&9==b[1]&&b[2]<1)throw new Error("Bootstrap's JavaScript requires jQuery version 1.9.1 or higher")}(jQuery),+function(a){"use strict";function b(){var a=document.createElement("bootstrap"),b={WebkitTransition:"webkitTransitionEnd",MozTransition:"transitionend",OTransition:"oTransitionEnd otransitionend",transition:"transitionend"};for(var c in b)if(void 0!==a.style[c])return{end:b[c]};return!1}a.fn.emulateTransitionEnd=function(b){var c=!1,d=this;a(this).one("bsTransitionEnd",function(){c=!0});var e=function(){c||a(d).trigger(a.support.transition.end)};return setTimeout(e,b),this},a(function(){a.support.transition=b(),a.support.transition&&(a.event.special.bsTransitionEnd={bindType:a.support.transition.end,delegateType:a.support.transition.end,handle:function(b){return a(b.target).is(this)?b.handleObj.handler.apply(this,arguments):void 0}})})}(jQuery),+function(a){"use strict";function b(b){return this.each(function(){var c=a(this),e=c.data("bs.alert");e||c.data("bs.alert",e=new d(this)),"string"==typeof b&&e[b].call(c)})}var c='[data-dismiss="alert"]',d=function(b){a(b).on("click",c,this.close)};d.VERSION="3.3.5",d.TRANSITION_DURATION=150,d.prototype.close=function(b){function c(){g.detach().trigger("closed.bs.alert").remove()}var e=a(this),f=e.attr("data-target");f||(f=e.attr("href"),f=f&&f.replace(/.*(?=#[^\s]*$)/,""));var g=a(f);b&&b.preventDefault(),g.length||(g=e.closest(".alert")),g.trigger(b=a.Event("close.bs.alert")),b.isDefaultPrevented()||(g.removeClass("in"),a.support.transition&&g.hasClass("fade")?g.one("bsTransitionEnd",c).emulateTransitionEnd(d.TRANSITION_DURATION):c())};var e=a.fn.alert;a.fn.alert=b,a.fn.alert.Constructor=d,a.fn.alert.noConflict=function(){return a.fn.alert=e,this},a(document).on("click.bs.alert.data-api",c,d.prototype.close)}(jQuery),+function(a){"use strict";function b(b){return this.each(function(){var d=a(this),e=d.data("bs.button"),f="object"==typeof b&&b;e||d.data("bs.button",e=new c(this,f)),"toggle"==b?e.toggle():b&&e.setState(b)})}var c=function(b,d){this.$element=a(b),this.options=a.extend({},c.DEFAULTS,d),this.isLoading=!1};c.VERSION="3.3.5",c.DEFAULTS={loadingText:"loading..."},c.prototype.setState=function(b){var c="disabled",d=this.$element,e=d.is("input")?"val":"html",f=d.data();b+="Text",null==f.resetText&&d.data("resetText",d[e]()),setTimeout(a.proxy(function(){d[e](null==f[b]?this.options[b]:f[b]),"loadingText"==b?(this.isLoading=!0,d.addClass(c).attr(c,c)):this.isLoading&&(this.isLoading=!1,d.removeClass(c).removeAttr(c))},this),0)},c.prototype.toggle=function(){var a=!0,b=this.$element.closest('[data-toggle="buttons"]');if(b.length){var c=this.$element.find("input");"radio"==c.prop("type")?(c.prop("checked")&&(a=!1),b.find(".active").removeClass("active"),this.$element.addClass("active")):"checkbox"==c.prop("type")&&(c.prop("checked")!==this.$element.hasClass("active")&&(a=!1),this.$element.toggleClass("active")),c.prop("checked",this.$element.hasClass("active")),a&&c.trigger("change")}else this.$element.attr("aria-pressed",!this.$element.hasClass("active")),this.$element.toggleClass("active")};var d=a.fn.button;a.fn.button=b,a.fn.button.Constructor=c,a.fn.button.noConflict=function(){return a.fn.button=d,this},a(document).on("click.bs.button.data-api",'[data-toggle^="button"]',function(c){var d=a(c.target);d.hasClass("btn")||(d=d.closest(".btn")),b.call(d,"toggle"),a(c.target).is('input[type="radio"]')||a(c.target).is('input[type="checkbox"]')||c.preventDefault()}).on("focus.bs.button.data-api blur.bs.button.data-api",'[data-toggle^="button"]',function(b){a(b.target).closest(".btn").toggleClass("focus",/^focus(in)?$/.test(b.type))})}(jQuery),+function(a){"use strict";function b(b){return this.each(function(){var d=a(this),e=d.data("bs.carousel"),f=a.extend({},c.DEFAULTS,d.data(),"object"==typeof b&&b),g="string"==typeof b?b:f.slide;e||d.data("bs.carousel",e=new c(this,f)),"number"==typeof b?e.to(b):g?e[g]():f.interval&&e.pause().cycle()})}var c=function(b,c){this.$element=a(b),this.$indicators=this.$element.find(".carousel-indicators"),this.options=c,this.paused=null,this.sliding=null,this.interval=null,this.$active=null,this.$items=null,this.options.keyboard&&this.$element.on("keydown.bs.carousel",a.proxy(this.keydown,this)),"hover"==this.options.pause&&!("ontouchstart"in document.documentElement)&&this.$element.on("mouseenter.bs.carousel",a.proxy(this.pause,this)).on("mouseleave.bs.carousel",a.proxy(this.cycle,this))};c.VERSION="3.3.5",c.TRANSITION_DURATION=600,c.DEFAULTS={interval:5e3,pause:"hover",wrap:!0,keyboard:!0},c.prototype.keydown=function(a){if(!/input|textarea/i.test(a.target.tagName)){switch(a.which){case 37:this.prev();break;case 39:this.next();break;default:return}a.preventDefault()}},c.prototype.cycle=function(b){return b||(this.paused=!1),this.interval&&clearInterval(this.interval),this.options.interval&&!this.paused&&(this.interval=setInterval(a.proxy(this.next,this),this.options.interval)),this},c.prototype.getItemIndex=function(a){return this.$items=a.parent().children(".item"),this.$items.index(a||this.$active)},c.prototype.getItemForDirection=function(a,b){var c=this.getItemIndex(b),d="prev"==a&&0===c||"next"==a&&c==this.$items.length-1;if(d&&!this.options.wrap)return b;var e="prev"==a?-1:1,f=(c+e)%this.$items.length;return this.$items.eq(f)},c.prototype.to=function(a){var b=this,c=this.getItemIndex(this.$active=this.$element.find(".item.active"));return a>this.$items.length-1||0>a?void 0:this.sliding?this.$element.one("slid.bs.carousel",function(){b.to(a)}):c==a?this.pause().cycle():this.slide(a>c?"next":"prev",this.$items.eq(a))},c.prototype.pause=function(b){return b||(this.paused=!0),this.$element.find(".next, .prev").length&&a.support.transition&&(this.$element.trigger(a.support.transition.end),this.cycle(!0)),this.interval=clearInterval(this.interval),this},c.prototype.next=function(){return this.sliding?void 0:this.slide("next")},c.prototype.prev=function(){return this.sliding?void 0:this.slide("prev")},c.prototype.slide=function(b,d){var e=this.$element.find(".item.active"),f=d||this.getItemForDirection(b,e),g=this.interval,h="next"==b?"left":"right",i=this;if(f.hasClass("active"))return this.sliding=!1;var j=f[0],k=a.Event("slide.bs.carousel",{relatedTarget:j,direction:h});if(this.$element.trigger(k),!k.isDefaultPrevented()){if(this.sliding=!0,g&&this.pause(),this.$indicators.length){this.$indicators.find(".active").removeClass("active");var l=a(this.$indicators.children()[this.getItemIndex(f)]);l&&l.addClass("active")}var m=a.Event("slid.bs.carousel",{relatedTarget:j,direction:h});return a.support.transition&&this.$element.hasClass("slide")?(f.addClass(b),f[0].offsetWidth,e.addClass(h),f.addClass(h),e.one("bsTransitionEnd",function(){f.removeClass([b,h].join(" ")).addClass("active"),e.removeClass(["active",h].join(" ")),i.sliding=!1,setTimeout(function(){i.$element.trigger(m)},0)}).emulateTransitionEnd(c.TRANSITION_DURATION)):(e.removeClass("active"),f.addClass("active"),this.sliding=!1,this.$element.trigger(m)),g&&this.cycle(),this}};var d=a.fn.carousel;a.fn.carousel=b,a.fn.carousel.Constructor=c,a.fn.carousel.noConflict=function(){return a.fn.carousel=d,this};var e=function(c){var d,e=a(this),f=a(e.attr("data-target")||(d=e.attr("href"))&&d.replace(/.*(?=#[^\s]+$)/,""));if(f.hasClass("carousel")){var g=a.extend({},f.data(),e.data()),h=e.attr("data-slide-to");h&&(g.interval=!1),b.call(f,g),h&&f.data("bs.carousel").to(h),c.preventDefault()}};a(document).on("click.bs.carousel.data-api","[data-slide]",e).on("click.bs.carousel.data-api","[data-slide-to]",e),a(window).on("load",function(){a('[data-ride="carousel"]').each(function(){var c=a(this);b.call(c,c.data())})})}(jQuery),+function(a){"use strict";function b(b){var c,d=b.attr("data-target")||(c=b.attr("href"))&&c.replace(/.*(?=#[^\s]+$)/,"");return a(d)}function c(b){return this.each(function(){var c=a(this),e=c.data("bs.collapse"),f=a.extend({},d.DEFAULTS,c.data(),"object"==typeof b&&b);!e&&f.toggle&&/show|hide/.test(b)&&(f.toggle=!1),e||c.data("bs.collapse",e=new d(this,f)),"string"==typeof b&&e[b]()})}var d=function(b,c){this.$element=a(b),this.options=a.extend({},d.DEFAULTS,c),this.$trigger=a('[data-toggle="collapse"][href="#'+b.id+'"],[data-toggle="collapse"][data-target="#'+b.id+'"]'),this.transitioning=null,this.options.parent?this.$parent=this.getParent():this.addAriaAndCollapsedClass(this.$element,this.$trigger),this.options.toggle&&this.toggle()};d.VERSION="3.3.5",d.TRANSITION_DURATION=350,d.DEFAULTS={toggle:!0},d.prototype.dimension=function(){var a=this.$element.hasClass("width");return a?"width":"height"},d.prototype.show=function(){if(!this.transitioning&&!this.$element.hasClass("in")){var b,e=this.$parent&&this.$parent.children(".panel").children(".in, .collapsing");if(!(e&&e.length&&(b=e.data("bs.collapse"),b&&b.transitioning))){var f=a.Event("show.bs.collapse");if(this.$element.trigger(f),!f.isDefaultPrevented()){e&&e.length&&(c.call(e,"hide"),b||e.data("bs.collapse",null));var g=this.dimension();this.$element.removeClass("collapse").addClass("collapsing")[g](0).attr("aria-expanded",!0),this.$trigger.removeClass("collapsed").attr("aria-expanded",!0),this.transitioning=1;var h=function(){this.$element.removeClass("collapsing").addClass("collapse in")[g](""),this.transitioning=0,this.$element.trigger("shown.bs.collapse")};if(!a.support.transition)return h.call(this);var i=a.camelCase(["scroll",g].join("-"));this.$element.one("bsTransitionEnd",a.proxy(h,this)).emulateTransitionEnd(d.TRANSITION_DURATION)[g](this.$element[0][i])}}}},d.prototype.hide=function(){if(!this.transitioning&&this.$element.hasClass("in")){var b=a.Event("hide.bs.collapse");if(this.$element.trigger(b),!b.isDefaultPrevented()){var c=this.dimension();this.$element[c](this.$element[c]())[0].offsetHeight,this.$element.addClass("collapsing").removeClass("collapse in").attr("aria-expanded",!1),this.$trigger.addClass("collapsed").attr("aria-expanded",!1),this.transitioning=1;var e=function(){this.transitioning=0,this.$element.removeClass("collapsing").addClass("collapse").trigger("hidden.bs.collapse")};return a.support.transition?void this.$element[c](0).one("bsTransitionEnd",a.proxy(e,this)).emulateTransitionEnd(d.TRANSITION_DURATION):e.call(this)}}},d.prototype.toggle=function(){this[this.$element.hasClass("in")?"hide":"show"]()},d.prototype.getParent=function(){return a(this.options.parent).find('[data-toggle="collapse"][data-parent="'+this.options.parent+'"]').each(a.proxy(function(c,d){var e=a(d);this.addAriaAndCollapsedClass(b(e),e)},this)).end()},d.prototype.addAriaAndCollapsedClass=function(a,b){var c=a.hasClass("in");a.attr("aria-expanded",c),b.toggleClass("collapsed",!c).attr("aria-expanded",c)};var e=a.fn.collapse;a.fn.collapse=c,a.fn.collapse.Constructor=d,a.fn.collapse.noConflict=function(){return a.fn.collapse=e,this},a(document).on("click.bs.collapse.data-api",'[data-toggle="collapse"]',function(d){var e=a(this);e.attr("data-target")||d.preventDefault();var f=b(e),g=f.data("bs.collapse"),h=g?"toggle":e.data();c.call(f,h)})}(jQuery),+function(a){"use strict";function b(b){var c=b.attr("data-target");c||(c=b.attr("href"),c=c&&/#[A-Za-z]/.test(c)&&c.replace(/.*(?=#[^\s]*$)/,""));var d=c&&a(c);return d&&d.length?d:b.parent()}function c(c){c&&3===c.which||(a(e).remove(),a(f).each(function(){var d=a(this),e=b(d),f={relatedTarget:this};e.hasClass("open")&&(c&&"click"==c.type&&/input|textarea/i.test(c.target.tagName)&&a.contains(e[0],c.target)||(e.trigger(c=a.Event("hide.bs.dropdown",f)),c.isDefaultPrevented()||(d.attr("aria-expanded","false"),e.removeClass("open").trigger("hidden.bs.dropdown",f))))}))}function d(b){return this.each(function(){var c=a(this),d=c.data("bs.dropdown");d||c.data("bs.dropdown",d=new g(this)),"string"==typeof b&&d[b].call(c)})}var e=".dropdown-backdrop",f='[data-toggle="dropdown"]',g=function(b){a(b).on("click.bs.dropdown",this.toggle)};g.VERSION="3.3.5",g.prototype.toggle=function(d){var e=a(this);if(!e.is(".disabled, :disabled")){var f=b(e),g=f.hasClass("open");if(c(),!g){"ontouchstart"in document.documentElement&&!f.closest(".navbar-nav").length&&a(document.createElement("div")).addClass("dropdown-backdrop").insertAfter(a(this)).on("click",c);var h={relatedTarget:this};if(f.trigger(d=a.Event("show.bs.dropdown",h)),d.isDefaultPrevented())return;e.trigger("focus").attr("aria-expanded","true"),f.toggleClass("open").trigger("shown.bs.dropdown",h)}return!1}},g.prototype.keydown=function(c){if(/(38|40|27|32)/.test(c.which)&&!/input|textarea/i.test(c.target.tagName)){var d=a(this);if(c.preventDefault(),c.stopPropagation(),!d.is(".disabled, :disabled")){var e=b(d),g=e.hasClass("open");if(!g&&27!=c.which||g&&27==c.which)return 27==c.which&&e.find(f).trigger("focus"),d.trigger("click");var h=" li:not(.disabled):visible a",i=e.find(".dropdown-menu"+h);if(i.length){var j=i.index(c.target);38==c.which&&j>0&&j--,40==c.which&&j<i.length-1&&j++,~j||(j=0),i.eq(j).trigger("focus")}}}};var h=a.fn.dropdown;a.fn.dropdown=d,a.fn.dropdown.Constructor=g,a.fn.dropdown.noConflict=function(){return a.fn.dropdown=h,this},a(document).on("click.bs.dropdown.data-api",c).on("click.bs.dropdown.data-api",".dropdown form",function(a){a.stopPropagation()}).on("click.bs.dropdown.data-api",f,g.prototype.toggle).on("keydown.bs.dropdown.data-api",f,g.prototype.keydown).on("keydown.bs.dropdown.data-api",".dropdown-menu",g.prototype.keydown)}(jQuery),+function(a){"use strict";function b(b,d){return this.each(function(){var e=a(this),f=e.data("bs.modal"),g=a.extend({},c.DEFAULTS,e.data(),"object"==typeof b&&b);f||e.data("bs.modal",f=new c(this,g)),"string"==typeof b?f[b](d):g.show&&f.show(d)})}var c=function(b,c){this.options=c,this.$body=a(document.body),this.$element=a(b),this.$dialog=this.$element.find(".modal-dialog"),this.$backdrop=null,this.isShown=null,this.originalBodyPad=null,this.scrollbarWidth=0,this.ignoreBackdropClick=!1,this.options.remote&&this.$element.find(".modal-content").load(this.options.remote,a.proxy(function(){this.$element.trigger("loaded.bs.modal")},this))};c.VERSION="3.3.5",c.TRANSITION_DURATION=300,c.BACKDROP_TRANSITION_DURATION=150,c.DEFAULTS={backdrop:!0,keyboard:!0,show:!0},c.prototype.toggle=function(a){return this.isShown?this.hide():this.show(a)},c.prototype.show=function(b){var d=this,e=a.Event("show.bs.modal",{relatedTarget:b});this.$element.trigger(e),this.isShown||e.isDefaultPrevented()||(this.isShown=!0,this.checkScrollbar(),this.setScrollbar(),this.$body.addClass("modal-open"),this.escape(),this.resize(),this.$element.on("click.dismiss.bs.modal",'[data-dismiss="modal"]',a.proxy(this.hide,this)),this.$dialog.on("mousedown.dismiss.bs.modal",function(){d.$element.one("mouseup.dismiss.bs.modal",function(b){a(b.target).is(d.$element)&&(d.ignoreBackdropClick=!0)})}),this.backdrop(function(){var e=a.support.transition&&d.$element.hasClass("fade");d.$element.parent().length||d.$element.appendTo(d.$body),d.$element.show().scrollTop(0),d.adjustDialog(),e&&d.$element[0].offsetWidth,d.$element.addClass("in"),d.enforceFocus();var f=a.Event("shown.bs.modal",{relatedTarget:b});e?d.$dialog.one("bsTransitionEnd",function(){d.$element.trigger("focus").trigger(f)}).emulateTransitionEnd(c.TRANSITION_DURATION):d.$element.trigger("focus").trigger(f)}))},c.prototype.hide=function(b){b&&b.preventDefault(),b=a.Event("hide.bs.modal"),this.$element.trigger(b),this.isShown&&!b.isDefaultPrevented()&&(this.isShown=!1,this.escape(),this.resize(),a(document).off("focusin.bs.modal"),this.$element.removeClass("in").off("click.dismiss.bs.modal").off("mouseup.dismiss.bs.modal"),this.$dialog.off("mousedown.dismiss.bs.modal"),a.support.transition&&this.$element.hasClass("fade")?this.$element.one("bsTransitionEnd",a.proxy(this.hideModal,this)).emulateTransitionEnd(c.TRANSITION_DURATION):this.hideModal())},c.prototype.enforceFocus=function(){a(document).off("focusin.bs.modal").on("focusin.bs.modal",a.proxy(function(a){this.$element[0]===a.target||this.$element.has(a.target).length||this.$element.trigger("focus")},this))},c.prototype.escape=function(){this.isShown&&this.options.keyboard?this.$element.on("keydown.dismiss.bs.modal",a.proxy(function(a){27==a.which&&this.hide()},this)):this.isShown||this.$element.off("keydown.dismiss.bs.modal")},c.prototype.resize=function(){this.isShown?a(window).on("resize.bs.modal",a.proxy(this.handleUpdate,this)):a(window).off("resize.bs.modal")},c.prototype.hideModal=function(){var a=this;this.$element.hide(),this.backdrop(function(){a.$body.removeClass("modal-open"),a.resetAdjustments(),a.resetScrollbar(),a.$element.trigger("hidden.bs.modal")})},c.prototype.removeBackdrop=function(){this.$backdrop&&this.$backdrop.remove(),this.$backdrop=null},c.prototype.backdrop=function(b){var d=this,e=this.$element.hasClass("fade")?"fade":"";if(this.isShown&&this.options.backdrop){var f=a.support.transition&&e;if(this.$backdrop=a(document.createElement("div")).addClass("modal-backdrop "+e).appendTo(this.$body),this.$element.on("click.dismiss.bs.modal",a.proxy(function(a){return this.ignoreBackdropClick?void(this.ignoreBackdropClick=!1):void(a.target===a.currentTarget&&("static"==this.options.backdrop?this.$element[0].focus():this.hide()))},this)),f&&this.$backdrop[0].offsetWidth,this.$backdrop.addClass("in"),!b)return;f?this.$backdrop.one("bsTransitionEnd",b).emulateTransitionEnd(c.BACKDROP_TRANSITION_DURATION):b()}else if(!this.isShown&&this.$backdrop){this.$backdrop.removeClass("in");var g=function(){d.removeBackdrop(),b&&b()};a.support.transition&&this.$element.hasClass("fade")?this.$backdrop.one("bsTransitionEnd",g).emulateTransitionEnd(c.BACKDROP_TRANSITION_DURATION):g()}else b&&b()},c.prototype.handleUpdate=function(){this.adjustDialog()},c.prototype.adjustDialog=function(){var a=this.$element[0].scrollHeight>document.documentElement.clientHeight;this.$element.css({paddingLeft:!this.bodyIsOverflowing&&a?this.scrollbarWidth:"",paddingRight:this.bodyIsOverflowing&&!a?this.scrollbarWidth:""})},c.prototype.resetAdjustments=function(){this.$element.css({paddingLeft:"",paddingRight:""})},c.prototype.checkScrollbar=function(){var a=window.innerWidth;if(!a){var b=document.documentElement.getBoundingClientRect();a=b.right-Math.abs(b.left)}this.bodyIsOverflowing=document.body.clientWidth<a,this.scrollbarWidth=this.measureScrollbar()},c.prototype.setScrollbar=function(){var a=parseInt(this.$body.css("padding-right")||0,10);this.originalBodyPad=document.body.style.paddingRight||"",this.bodyIsOverflowing&&this.$body.css("padding-right",a+this.scrollbarWidth)},c.prototype.resetScrollbar=function(){this.$body.css("padding-right",this.originalBodyPad)},c.prototype.measureScrollbar=function(){var a=document.createElement("div");a.className="modal-scrollbar-measure",this.$body.append(a);var b=a.offsetWidth-a.clientWidth;return this.$body[0].removeChild(a),b};var d=a.fn.modal;a.fn.modal=b,a.fn.modal.Constructor=c,a.fn.modal.noConflict=function(){return a.fn.modal=d,this},a(document).on("click.bs.modal.data-api",'[data-toggle="modal"]',function(c){var d=a(this),e=d.attr("href"),f=a(d.attr("data-target")||e&&e.replace(/.*(?=#[^\s]+$)/,"")),g=f.data("bs.modal")?"toggle":a.extend({remote:!/#/.test(e)&&e},f.data(),d.data());d.is("a")&&c.preventDefault(),f.one("show.bs.modal",function(a){a.isDefaultPrevented()||f.one("hidden.bs.modal",function(){d.is(":visible")&&d.trigger("focus")})}),b.call(f,g,this)})}(jQuery),+function(a){"use strict";function b(b){return this.each(function(){var d=a(this),e=d.data("bs.tooltip"),f="object"==typeof b&&b;(e||!/destroy|hide/.test(b))&&(e||d.data("bs.tooltip",e=new c(this,f)),"string"==typeof b&&e[b]())})}var c=function(a,b){this.type=null,this.options=null,this.enabled=null,this.timeout=null,this.hoverState=null,this.$element=null,this.inState=null,this.init("tooltip",a,b)};c.VERSION="3.3.5",c.TRANSITION_DURATION=150,c.DEFAULTS={animation:!0,placement:"top",selector:!1,template:'<div class="tooltip" role="tooltip"><div class="tooltip-arrow"></div><div class="tooltip-inner"></div></div>',trigger:"hover focus",title:"",delay:0,html:!1,container:!1,viewport:{selector:"body",padding:0}},c.prototype.init=function(b,c,d){if(this.enabled=!0,this.type=b,this.$element=a(c),this.options=this.getOptions(d),this.$viewport=this.options.viewport&&a(a.isFunction(this.options.viewport)?this.options.viewport.call(this,this.$element):this.options.viewport.selector||this.options.viewport),this.inState={click:!1,hover:!1,focus:!1},this.$element[0]instanceof document.constructor&&!this.options.selector)throw new Error("`selector` option must be specified when initializing "+this.type+" on the window.document object!");for(var e=this.options.trigger.split(" "),f=e.length;f--;){var g=e[f];if("click"==g)this.$element.on("click."+this.type,this.options.selector,a.proxy(this.toggle,this));else if("manual"!=g){var h="hover"==g?"mouseenter":"focusin",i="hover"==g?"mouseleave":"focusout";this.$element.on(h+"."+this.type,this.options.selector,a.proxy(this.enter,this)),this.$element.on(i+"."+this.type,this.options.selector,a.proxy(this.leave,this))}}this.options.selector?this._options=a.extend({},this.options,{trigger:"manual",selector:""}):this.fixTitle()},c.prototype.getDefaults=function(){return c.DEFAULTS},c.prototype.getOptions=function(b){return b=a.extend({},this.getDefaults(),this.$element.data(),b),b.delay&&"number"==typeof b.delay&&(b.delay={show:b.delay,hide:b.delay}),b},c.prototype.getDelegateOptions=function(){var b={},c=this.getDefaults();return this._options&&a.each(this._options,function(a,d){c[a]!=d&&(b[a]=d)}),b},c.prototype.enter=function(b){var c=b instanceof this.constructor?b:a(b.currentTarget).data("bs."+this.type);return c||(c=new this.constructor(b.currentTarget,this.getDelegateOptions()),a(b.currentTarget).data("bs."+this.type,c)),b instanceof a.Event&&(c.inState["focusin"==b.type?"focus":"hover"]=!0),c.tip().hasClass("in")||"in"==c.hoverState?void(c.hoverState="in"):(clearTimeout(c.timeout),c.hoverState="in",c.options.delay&&c.options.delay.show?void(c.timeout=setTimeout(function(){"in"==c.hoverState&&c.show()},c.options.delay.show)):c.show())},c.prototype.isInStateTrue=function(){for(var a in this.inState)if(this.inState[a])return!0;return!1},c.prototype.leave=function(b){var c=b instanceof this.constructor?b:a(b.currentTarget).data("bs."+this.type);return c||(c=new this.constructor(b.currentTarget,this.getDelegateOptions()),a(b.currentTarget).data("bs."+this.type,c)),b instanceof a.Event&&(c.inState["focusout"==b.type?"focus":"hover"]=!1),c.isInStateTrue()?void 0:(clearTimeout(c.timeout),c.hoverState="out",c.options.delay&&c.options.delay.hide?void(c.timeout=setTimeout(function(){"out"==c.hoverState&&c.hide()},c.options.delay.hide)):c.hide())},c.prototype.show=function(){var b=a.Event("show.bs."+this.type);if(this.hasContent()&&this.enabled){this.$element.trigger(b);var d=a.contains(this.$element[0].ownerDocument.documentElement,this.$element[0]);if(b.isDefaultPrevented()||!d)return;var e=this,f=this.tip(),g=this.getUID(this.type);this.setContent(),f.attr("id",g),this.$element.attr("aria-describedby",g),this.options.animation&&f.addClass("fade");var h="function"==typeof this.options.placement?this.options.placement.call(this,f[0],this.$element[0]):this.options.placement,i=/\s?auto?\s?/i,j=i.test(h);j&&(h=h.replace(i,"")||"top"),f.detach().css({top:0,left:0,display:"block"}).addClass(h).data("bs."+this.type,this),this.options.container?f.appendTo(this.options.container):f.insertAfter(this.$element),this.$element.trigger("inserted.bs."+this.type);var k=this.getPosition(),l=f[0].offsetWidth,m=f[0].offsetHeight;if(j){var n=h,o=this.getPosition(this.$viewport);h="bottom"==h&&k.bottom+m>o.bottom?"top":"top"==h&&k.top-m<o.top?"bottom":"right"==h&&k.right+l>o.width?"left":"left"==h&&k.left-l<o.left?"right":h,f.removeClass(n).addClass(h)}var p=this.getCalculatedOffset(h,k,l,m);this.applyPlacement(p,h);var q=function(){var a=e.hoverState;e.$element.trigger("shown.bs."+e.type),e.hoverState=null,"out"==a&&e.leave(e)};a.support.transition&&this.$tip.hasClass("fade")?f.one("bsTransitionEnd",q).emulateTransitionEnd(c.TRANSITION_DURATION):q()}},c.prototype.applyPlacement=function(b,c){var d=this.tip(),e=d[0].offsetWidth,f=d[0].offsetHeight,g=parseInt(d.css("margin-top"),10),h=parseInt(d.css("margin-left"),10);isNaN(g)&&(g=0),isNaN(h)&&(h=0),b.top+=g,b.left+=h,a.offset.setOffset(d[0],a.extend({using:function(a){d.css({top:Math.round(a.top),left:Math.round(a.left)})}},b),0),d.addClass("in");var i=d[0].offsetWidth,j=d[0].offsetHeight;"top"==c&&j!=f&&(b.top=b.top+f-j);var k=this.getViewportAdjustedDelta(c,b,i,j);k.left?b.left+=k.left:b.top+=k.top;var l=/top|bottom/.test(c),m=l?2*k.left-e+i:2*k.top-f+j,n=l?"offsetWidth":"offsetHeight";d.offset(b),this.replaceArrow(m,d[0][n],l)},c.prototype.replaceArrow=function(a,b,c){this.arrow().css(c?"left":"top",50*(1-a/b)+"%").css(c?"top":"left","")},c.prototype.setContent=function(){var a=this.tip(),b=this.getTitle();a.find(".tooltip-inner")[this.options.html?"html":"text"](b),a.removeClass("fade in top bottom left right")},c.prototype.hide=function(b){function d(){"in"!=e.hoverState&&f.detach(),e.$element.removeAttr("aria-describedby").trigger("hidden.bs."+e.type),b&&b()}var e=this,f=a(this.$tip),g=a.Event("hide.bs."+this.type);return this.$element.trigger(g),g.isDefaultPrevented()?void 0:(f.removeClass("in"),a.support.transition&&f.hasClass("fade")?f.one("bsTransitionEnd",d).emulateTransitionEnd(c.TRANSITION_DURATION):d(),this.hoverState=null,this)},c.prototype.fixTitle=function(){var a=this.$element;(a.attr("title")||"string"!=typeof a.attr("data-original-title"))&&a.attr("data-original-title",a.attr("title")||"").attr("title","")},c.prototype.hasContent=function(){return this.getTitle()},c.prototype.getPosition=function(b){b=b||this.$element;var c=b[0],d="BODY"==c.tagName,e=c.getBoundingClientRect();null==e.width&&(e=a.extend({},e,{width:e.right-e.left,height:e.bottom-e.top}));var f=d?{top:0,left:0}:b.offset(),g={scroll:d?document.documentElement.scrollTop||document.body.scrollTop:b.scrollTop()},h=d?{width:a(window).width(),height:a(window).height()}:null;return a.extend({},e,g,h,f)},c.prototype.getCalculatedOffset=function(a,b,c,d){return"bottom"==a?{top:b.top+b.height,left:b.left+b.width/2-c/2}:"top"==a?{top:b.top-d,left:b.left+b.width/2-c/2}:"left"==a?{top:b.top+b.height/2-d/2,left:b.left-c}:{top:b.top+b.height/2-d/2,left:b.left+b.width}},c.prototype.getViewportAdjustedDelta=function(a,b,c,d){var e={top:0,left:0};if(!this.$viewport)return e;var f=this.options.viewport&&this.options.viewport.padding||0,g=this.getPosition(this.$viewport);if(/right|left/.test(a)){var h=b.top-f-g.scroll,i=b.top+f-g.scroll+d;h<g.top?e.top=g.top-h:i>g.top+g.height&&(e.top=g.top+g.height-i)}else{var j=b.left-f,k=b.left+f+c;j<g.left?e.left=g.left-j:k>g.right&&(e.left=g.left+g.width-k)}return e},c.prototype.getTitle=function(){var a,b=this.$element,c=this.options;return a=b.attr("data-original-title")||("function"==typeof c.title?c.title.call(b[0]):c.title)},c.prototype.getUID=function(a){do a+=~~(1e6*Math.random());while(document.getElementById(a));return a},c.prototype.tip=function(){if(!this.$tip&&(this.$tip=a(this.options.template),1!=this.$tip.length))throw new Error(this.type+" `template` option must consist of exactly 1 top-level element!");return this.$tip},c.prototype.arrow=function(){return this.$arrow=this.$arrow||this.tip().find(".tooltip-arrow")},c.prototype.enable=function(){this.enabled=!0},c.prototype.disable=function(){this.enabled=!1},c.prototype.toggleEnabled=function(){this.enabled=!this.enabled},c.prototype.toggle=function(b){var c=this;b&&(c=a(b.currentTarget).data("bs."+this.type),c||(c=new this.constructor(b.currentTarget,this.getDelegateOptions()),a(b.currentTarget).data("bs."+this.type,c))),b?(c.inState.click=!c.inState.click,c.isInStateTrue()?c.enter(c):c.leave(c)):c.tip().hasClass("in")?c.leave(c):c.enter(c)},c.prototype.destroy=function(){var a=this;clearTimeout(this.timeout),this.hide(function(){a.$element.off("."+a.type).removeData("bs."+a.type),a.$tip&&a.$tip.detach(),a.$tip=null,a.$arrow=null,a.$viewport=null})};var d=a.fn.tooltip;a.fn.tooltip=b,a.fn.tooltip.Constructor=c,a.fn.tooltip.noConflict=function(){return a.fn.tooltip=d,this}}(jQuery),+function(a){"use strict";function b(b){return this.each(function(){var d=a(this),e=d.data("bs.popover"),f="object"==typeof b&&b;(e||!/destroy|hide/.test(b))&&(e||d.data("bs.popover",e=new c(this,f)),"string"==typeof b&&e[b]())})}var c=function(a,b){this.init("popover",a,b)};if(!a.fn.tooltip)throw new Error("Popover requires tooltip.js");c.VERSION="3.3.5",c.DEFAULTS=a.extend({},a.fn.tooltip.Constructor.DEFAULTS,{placement:"right",trigger:"click",content:"",template:'<div class="popover" role="tooltip"><div class="arrow"></div><h3 class="popover-title"></h3><div class="popover-content"></div></div>'}),c.prototype=a.extend({},a.fn.tooltip.Constructor.prototype),c.prototype.constructor=c,c.prototype.getDefaults=function(){return c.DEFAULTS},c.prototype.setContent=function(){var a=this.tip(),b=this.getTitle(),c=this.getContent();a.find(".popover-title")[this.options.html?"html":"text"](b),a.find(".popover-content").children().detach().end()[this.options.html?"string"==typeof c?"html":"append":"text"](c),a.removeClass("fade top bottom left right in"),a.find(".popover-title").html()||a.find(".popover-title").hide()},c.prototype.hasContent=function(){return this.getTitle()||this.getContent()},c.prototype.getContent=function(){var a=this.$element,b=this.options;return a.attr("data-content")||("function"==typeof b.content?b.content.call(a[0]):b.content)},c.prototype.arrow=function(){return this.$arrow=this.$arrow||this.tip().find(".arrow")};var d=a.fn.popover;a.fn.popover=b,a.fn.popover.Constructor=c,a.fn.popover.noConflict=function(){return a.fn.popover=d,this}}(jQuery),+function(a){"use strict";function b(c,d){this.$body=a(document.body),this.$scrollElement=a(a(c).is(document.body)?window:c),this.options=a.extend({},b.DEFAULTS,d),this.selector=(this.options.target||"")+" .nav li > a",this.offsets=[],this.targets=[],this.activeTarget=null,this.scrollHeight=0,this.$scrollElement.on("scroll.bs.scrollspy",a.proxy(this.process,this)),this.refresh(),this.process()}function c(c){return this.each(function(){var d=a(this),e=d.data("bs.scrollspy"),f="object"==typeof c&&c;e||d.data("bs.scrollspy",e=new b(this,f)),"string"==typeof c&&e[c]()})}b.VERSION="3.3.5",b.DEFAULTS={offset:10},b.prototype.getScrollHeight=function(){return this.$scrollElement[0].scrollHeight||Math.max(this.$body[0].scrollHeight,document.documentElement.scrollHeight)},b.prototype.refresh=function(){var b=this,c="offset",d=0;this.offsets=[],this.targets=[],this.scrollHeight=this.getScrollHeight(),a.isWindow(this.$scrollElement[0])||(c="position",d=this.$scrollElement.scrollTop()),this.$body.find(this.selector).map(function(){var b=a(this),e=b.data("target")||b.attr("href"),f=/^#./.test(e)&&a(e);return f&&f.length&&f.is(":visible")&&[[f[c]().top+d,e]]||null}).sort(function(a,b){return a[0]-b[0]}).each(function(){b.offsets.push(this[0]),b.targets.push(this[1])})},b.prototype.process=function(){var a,b=this.$scrollElement.scrollTop()+this.options.offset,c=this.getScrollHeight(),d=this.options.offset+c-this.$scrollElement.height(),e=this.offsets,f=this.targets,g=this.activeTarget;if(this.scrollHeight!=c&&this.refresh(),b>=d)return g!=(a=f[f.length-1])&&this.activate(a);if(g&&b<e[0])return this.activeTarget=null,this.clear();for(a=e.length;a--;)g!=f[a]&&b>=e[a]&&(void 0===e[a+1]||b<e[a+1])&&this.activate(f[a])},b.prototype.activate=function(b){this.activeTarget=b,this.clear();var c=this.selector+'[data-target="'+b+'"],'+this.selector+'[href="'+b+'"]',d=a(c).parents("li").addClass("active");d.parent(".dropdown-menu").length&&(d=d.closest("li.dropdown").addClass("active")),
-d.trigger("activate.bs.scrollspy")},b.prototype.clear=function(){a(this.selector).parentsUntil(this.options.target,".active").removeClass("active")};var d=a.fn.scrollspy;a.fn.scrollspy=c,a.fn.scrollspy.Constructor=b,a.fn.scrollspy.noConflict=function(){return a.fn.scrollspy=d,this},a(window).on("load.bs.scrollspy.data-api",function(){a('[data-spy="scroll"]').each(function(){var b=a(this);c.call(b,b.data())})})}(jQuery),+function(a){"use strict";function b(b){return this.each(function(){var d=a(this),e=d.data("bs.tab");e||d.data("bs.tab",e=new c(this)),"string"==typeof b&&e[b]()})}var c=function(b){this.element=a(b)};c.VERSION="3.3.5",c.TRANSITION_DURATION=150,c.prototype.show=function(){var b=this.element,c=b.closest("ul:not(.dropdown-menu)"),d=b.data("target");if(d||(d=b.attr("href"),d=d&&d.replace(/.*(?=#[^\s]*$)/,"")),!b.parent("li").hasClass("active")){var e=c.find(".active:last a"),f=a.Event("hide.bs.tab",{relatedTarget:b[0]}),g=a.Event("show.bs.tab",{relatedTarget:e[0]});if(e.trigger(f),b.trigger(g),!g.isDefaultPrevented()&&!f.isDefaultPrevented()){var h=a(d);this.activate(b.closest("li"),c),this.activate(h,h.parent(),function(){e.trigger({type:"hidden.bs.tab",relatedTarget:b[0]}),b.trigger({type:"shown.bs.tab",relatedTarget:e[0]})})}}},c.prototype.activate=function(b,d,e){function f(){g.removeClass("active").find("> .dropdown-menu > .active").removeClass("active").end().find('[data-toggle="tab"]').attr("aria-expanded",!1),b.addClass("active").find('[data-toggle="tab"]').attr("aria-expanded",!0),h?(b[0].offsetWidth,b.addClass("in")):b.removeClass("fade"),b.parent(".dropdown-menu").length&&b.closest("li.dropdown").addClass("active").end().find('[data-toggle="tab"]').attr("aria-expanded",!0),e&&e()}var g=d.find("> .active"),h=e&&a.support.transition&&(g.length&&g.hasClass("fade")||!!d.find("> .fade").length);g.length&&h?g.one("bsTransitionEnd",f).emulateTransitionEnd(c.TRANSITION_DURATION):f(),g.removeClass("in")};var d=a.fn.tab;a.fn.tab=b,a.fn.tab.Constructor=c,a.fn.tab.noConflict=function(){return a.fn.tab=d,this};var e=function(c){c.preventDefault(),b.call(a(this),"show")};a(document).on("click.bs.tab.data-api",'[data-toggle="tab"]',e).on("click.bs.tab.data-api",'[data-toggle="pill"]',e)}(jQuery),+function(a){"use strict";function b(b){return this.each(function(){var d=a(this),e=d.data("bs.affix"),f="object"==typeof b&&b;e||d.data("bs.affix",e=new c(this,f)),"string"==typeof b&&e[b]()})}var c=function(b,d){this.options=a.extend({},c.DEFAULTS,d),this.$target=a(this.options.target).on("scroll.bs.affix.data-api",a.proxy(this.checkPosition,this)).on("click.bs.affix.data-api",a.proxy(this.checkPositionWithEventLoop,this)),this.$element=a(b),this.affixed=null,this.unpin=null,this.pinnedOffset=null,this.checkPosition()};c.VERSION="3.3.5",c.RESET="affix affix-top affix-bottom",c.DEFAULTS={offset:0,target:window},c.prototype.getState=function(a,b,c,d){var e=this.$target.scrollTop(),f=this.$element.offset(),g=this.$target.height();if(null!=c&&"top"==this.affixed)return c>e?"top":!1;if("bottom"==this.affixed)return null!=c?e+this.unpin<=f.top?!1:"bottom":a-d>=e+g?!1:"bottom";var h=null==this.affixed,i=h?e:f.top,j=h?g:b;return null!=c&&c>=e?"top":null!=d&&i+j>=a-d?"bottom":!1},c.prototype.getPinnedOffset=function(){if(this.pinnedOffset)return this.pinnedOffset;this.$element.removeClass(c.RESET).addClass("affix");var a=this.$target.scrollTop(),b=this.$element.offset();return this.pinnedOffset=b.top-a},c.prototype.checkPositionWithEventLoop=function(){setTimeout(a.proxy(this.checkPosition,this),1)},c.prototype.checkPosition=function(){if(this.$element.is(":visible")){var b=this.$element.height(),d=this.options.offset,e=d.top,f=d.bottom,g=Math.max(a(document).height(),a(document.body).height());"object"!=typeof d&&(f=e=d),"function"==typeof e&&(e=d.top(this.$element)),"function"==typeof f&&(f=d.bottom(this.$element));var h=this.getState(g,b,e,f);if(this.affixed!=h){null!=this.unpin&&this.$element.css("top","");var i="affix"+(h?"-"+h:""),j=a.Event(i+".bs.affix");if(this.$element.trigger(j),j.isDefaultPrevented())return;this.affixed=h,this.unpin="bottom"==h?this.getPinnedOffset():null,this.$element.removeClass(c.RESET).addClass(i).trigger(i.replace("affix","affixed")+".bs.affix")}"bottom"==h&&this.$element.offset({top:g-b-f})}};var d=a.fn.affix;a.fn.affix=b,a.fn.affix.Constructor=c,a.fn.affix.noConflict=function(){return a.fn.affix=d,this},a(window).on("load",function(){a('[data-spy="affix"]').each(function(){var c=a(this),d=c.data();d.offset=d.offset||{},null!=d.offsetBottom&&(d.offset.bottom=d.offsetBottom),null!=d.offsetTop&&(d.offset.top=d.offsetTop),b.call(c,d)})})}(jQuery);;/*!
+;
+/*!
 
- handlebars v3.0.3
+ handlebars v3.0.0
 
 Copyright (C) 2011-2014 by Yehuda Katz
 
@@ -9240,4147 +9613,4666 @@ THE SOFTWARE.
 
 @license
 */
-(function webpackUniversalModuleDefinition(root, factory) {
-	if(typeof exports === 'object' && typeof module === 'object')
-		module.exports = factory();
-	else if(typeof define === 'function' && define.amd)
-		define(factory);
-	else if(typeof exports === 'object')
-		exports["Handlebars"] = factory();
-	else
-		root["Handlebars"] = factory();
-})(this, function() {
-return /******/ (function(modules) { // webpackBootstrap
-/******/ 	// The module cache
-/******/ 	var installedModules = {};
-
-/******/ 	// The require function
-/******/ 	function __webpack_require__(moduleId) {
-
-/******/ 		// Check if module is in cache
-/******/ 		if(installedModules[moduleId])
-/******/ 			return installedModules[moduleId].exports;
-
-/******/ 		// Create a new module (and put it into the cache)
-/******/ 		var module = installedModules[moduleId] = {
-/******/ 			exports: {},
-/******/ 			id: moduleId,
-/******/ 			loaded: false
-/******/ 		};
-
-/******/ 		// Execute the module function
-/******/ 		modules[moduleId].call(module.exports, module, module.exports, __webpack_require__);
-
-/******/ 		// Flag the module as loaded
-/******/ 		module.loaded = true;
-
-/******/ 		// Return the exports of the module
-/******/ 		return module.exports;
-/******/ 	}
-
-
-/******/ 	// expose the modules object (__webpack_modules__)
-/******/ 	__webpack_require__.m = modules;
-
-/******/ 	// expose the module cache
-/******/ 	__webpack_require__.c = installedModules;
-
-/******/ 	// __webpack_public_path__
-/******/ 	__webpack_require__.p = "";
-
-/******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(0);
-/******/ })
-/************************************************************************/
-/******/ ([
-/* 0 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-
-	var _interopRequireWildcard = __webpack_require__(8)['default'];
-
-	exports.__esModule = true;
-
-	var _runtime = __webpack_require__(1);
-
-	var _runtime2 = _interopRequireWildcard(_runtime);
-
-	// Compiler imports
-
-	var _AST = __webpack_require__(2);
-
-	var _AST2 = _interopRequireWildcard(_AST);
-
-	var _Parser$parse = __webpack_require__(3);
-
-	var _Compiler$compile$precompile = __webpack_require__(4);
-
-	var _JavaScriptCompiler = __webpack_require__(5);
-
-	var _JavaScriptCompiler2 = _interopRequireWildcard(_JavaScriptCompiler);
-
-	var _Visitor = __webpack_require__(6);
-
-	var _Visitor2 = _interopRequireWildcard(_Visitor);
-
-	var _noConflict = __webpack_require__(7);
-
-	var _noConflict2 = _interopRequireWildcard(_noConflict);
-
-	var _create = _runtime2['default'].create;
-	function create() {
-	  var hb = _create();
-
-	  hb.compile = function (input, options) {
-	    return _Compiler$compile$precompile.compile(input, options, hb);
-	  };
-	  hb.precompile = function (input, options) {
-	    return _Compiler$compile$precompile.precompile(input, options, hb);
-	  };
-
-	  hb.AST = _AST2['default'];
-	  hb.Compiler = _Compiler$compile$precompile.Compiler;
-	  hb.JavaScriptCompiler = _JavaScriptCompiler2['default'];
-	  hb.Parser = _Parser$parse.parser;
-	  hb.parse = _Parser$parse.parse;
-
-	  return hb;
-	}
-
-	var inst = create();
-	inst.create = create;
-
-	_noConflict2['default'](inst);
-
-	inst.Visitor = _Visitor2['default'];
-
-	inst['default'] = inst;
-
-	exports['default'] = inst;
-	module.exports = exports['default'];
-
-/***/ },
-/* 1 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-
-	var _interopRequireWildcard = __webpack_require__(8)['default'];
-
-	exports.__esModule = true;
-
-	var _import = __webpack_require__(9);
-
-	var base = _interopRequireWildcard(_import);
-
-	// Each of these augment the Handlebars object. No need to setup here.
-	// (This is done to easily share code between commonjs and browse envs)
-
-	var _SafeString = __webpack_require__(10);
-
-	var _SafeString2 = _interopRequireWildcard(_SafeString);
-
-	var _Exception = __webpack_require__(11);
-
-	var _Exception2 = _interopRequireWildcard(_Exception);
-
-	var _import2 = __webpack_require__(12);
-
-	var Utils = _interopRequireWildcard(_import2);
-
-	var _import3 = __webpack_require__(13);
-
-	var runtime = _interopRequireWildcard(_import3);
-
-	var _noConflict = __webpack_require__(7);
-
-	var _noConflict2 = _interopRequireWildcard(_noConflict);
-
-	// For compatibility and usage outside of module systems, make the Handlebars object a namespace
-	function create() {
-	  var hb = new base.HandlebarsEnvironment();
-
-	  Utils.extend(hb, base);
-	  hb.SafeString = _SafeString2['default'];
-	  hb.Exception = _Exception2['default'];
-	  hb.Utils = Utils;
-	  hb.escapeExpression = Utils.escapeExpression;
-
-	  hb.VM = runtime;
-	  hb.template = function (spec) {
-	    return runtime.template(spec, hb);
-	  };
-
-	  return hb;
-	}
-
-	var inst = create();
-	inst.create = create;
-
-	_noConflict2['default'](inst);
-
-	inst['default'] = inst;
-
-	exports['default'] = inst;
-	module.exports = exports['default'];
-
-/***/ },
-/* 2 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-
-	exports.__esModule = true;
-	var AST = {
-	  Program: function Program(statements, blockParams, strip, locInfo) {
-	    this.loc = locInfo;
-	    this.type = 'Program';
-	    this.body = statements;
-
-	    this.blockParams = blockParams;
-	    this.strip = strip;
-	  },
-
-	  MustacheStatement: function MustacheStatement(path, params, hash, escaped, strip, locInfo) {
-	    this.loc = locInfo;
-	    this.type = 'MustacheStatement';
-
-	    this.path = path;
-	    this.params = params || [];
-	    this.hash = hash;
-	    this.escaped = escaped;
-
-	    this.strip = strip;
-	  },
-
-	  BlockStatement: function BlockStatement(path, params, hash, program, inverse, openStrip, inverseStrip, closeStrip, locInfo) {
-	    this.loc = locInfo;
-	    this.type = 'BlockStatement';
-
-	    this.path = path;
-	    this.params = params || [];
-	    this.hash = hash;
-	    this.program = program;
-	    this.inverse = inverse;
-
-	    this.openStrip = openStrip;
-	    this.inverseStrip = inverseStrip;
-	    this.closeStrip = closeStrip;
-	  },
-
-	  PartialStatement: function PartialStatement(name, params, hash, strip, locInfo) {
-	    this.loc = locInfo;
-	    this.type = 'PartialStatement';
-
-	    this.name = name;
-	    this.params = params || [];
-	    this.hash = hash;
-
-	    this.indent = '';
-	    this.strip = strip;
-	  },
-
-	  ContentStatement: function ContentStatement(string, locInfo) {
-	    this.loc = locInfo;
-	    this.type = 'ContentStatement';
-	    this.original = this.value = string;
-	  },
-
-	  CommentStatement: function CommentStatement(comment, strip, locInfo) {
-	    this.loc = locInfo;
-	    this.type = 'CommentStatement';
-	    this.value = comment;
-
-	    this.strip = strip;
-	  },
-
-	  SubExpression: function SubExpression(path, params, hash, locInfo) {
-	    this.loc = locInfo;
-
-	    this.type = 'SubExpression';
-	    this.path = path;
-	    this.params = params || [];
-	    this.hash = hash;
-	  },
-
-	  PathExpression: function PathExpression(data, depth, parts, original, locInfo) {
-	    this.loc = locInfo;
-	    this.type = 'PathExpression';
-
-	    this.data = data;
-	    this.original = original;
-	    this.parts = parts;
-	    this.depth = depth;
-	  },
-
-	  StringLiteral: function StringLiteral(string, locInfo) {
-	    this.loc = locInfo;
-	    this.type = 'StringLiteral';
-	    this.original = this.value = string;
-	  },
-
-	  NumberLiteral: function NumberLiteral(number, locInfo) {
-	    this.loc = locInfo;
-	    this.type = 'NumberLiteral';
-	    this.original = this.value = Number(number);
-	  },
-
-	  BooleanLiteral: function BooleanLiteral(bool, locInfo) {
-	    this.loc = locInfo;
-	    this.type = 'BooleanLiteral';
-	    this.original = this.value = bool === 'true';
-	  },
-
-	  UndefinedLiteral: function UndefinedLiteral(locInfo) {
-	    this.loc = locInfo;
-	    this.type = 'UndefinedLiteral';
-	    this.original = this.value = undefined;
-	  },
-
-	  NullLiteral: function NullLiteral(locInfo) {
-	    this.loc = locInfo;
-	    this.type = 'NullLiteral';
-	    this.original = this.value = null;
-	  },
-
-	  Hash: function Hash(pairs, locInfo) {
-	    this.loc = locInfo;
-	    this.type = 'Hash';
-	    this.pairs = pairs;
-	  },
-	  HashPair: function HashPair(key, value, locInfo) {
-	    this.loc = locInfo;
-	    this.type = 'HashPair';
-	    this.key = key;
-	    this.value = value;
-	  },
-
-	  // Public API used to evaluate derived attributes regarding AST nodes
-	  helpers: {
-	    // a mustache is definitely a helper if:
-	    // * it is an eligible helper, and
-	    // * it has at least one parameter or hash segment
-	    helperExpression: function helperExpression(node) {
-	      return !!(node.type === 'SubExpression' || node.params.length || node.hash);
-	    },
-
-	    scopedId: function scopedId(path) {
-	      return /^\.|this\b/.test(path.original);
-	    },
-
-	    // an ID is simple if it only has one part, and that part is not
-	    // `..` or `this`.
-	    simpleId: function simpleId(path) {
-	      return path.parts.length === 1 && !AST.helpers.scopedId(path) && !path.depth;
-	    }
-	  }
-	};
-
-	// Must be exported as an object rather than the root of the module as the jison lexer
-	// must modify the object to operate properly.
-	exports['default'] = AST;
-	module.exports = exports['default'];
-
-/***/ },
-/* 3 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-
-	var _interopRequireWildcard = __webpack_require__(8)['default'];
-
-	exports.__esModule = true;
-	exports.parse = parse;
-
-	var _parser = __webpack_require__(14);
-
-	var _parser2 = _interopRequireWildcard(_parser);
-
-	var _AST = __webpack_require__(2);
-
-	var _AST2 = _interopRequireWildcard(_AST);
-
-	var _WhitespaceControl = __webpack_require__(15);
-
-	var _WhitespaceControl2 = _interopRequireWildcard(_WhitespaceControl);
-
-	var _import = __webpack_require__(16);
-
-	var Helpers = _interopRequireWildcard(_import);
-
-	var _extend = __webpack_require__(12);
-
-	exports.parser = _parser2['default'];
-
-	var yy = {};
-	_extend.extend(yy, Helpers, _AST2['default']);
-
-	function parse(input, options) {
-	  // Just return if an already-compiled AST was passed in.
-	  if (input.type === 'Program') {
-	    return input;
-	  }
-
-	  _parser2['default'].yy = yy;
-
-	  // Altering the shared object here, but this is ok as parser is a sync operation
-	  yy.locInfo = function (locInfo) {
-	    return new yy.SourceLocation(options && options.srcName, locInfo);
-	  };
-
-	  var strip = new _WhitespaceControl2['default']();
-	  return strip.accept(_parser2['default'].parse(input));
-	}
-
-/***/ },
-/* 4 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-
-	var _interopRequireWildcard = __webpack_require__(8)['default'];
-
-	exports.__esModule = true;
-	exports.Compiler = Compiler;
-	exports.precompile = precompile;
-	exports.compile = compile;
-
-	var _Exception = __webpack_require__(11);
-
-	var _Exception2 = _interopRequireWildcard(_Exception);
-
-	var _isArray$indexOf = __webpack_require__(12);
-
-	var _AST = __webpack_require__(2);
-
-	var _AST2 = _interopRequireWildcard(_AST);
-
-	var slice = [].slice;
-
-	function Compiler() {}
-
-	// the foundHelper register will disambiguate helper lookup from finding a
-	// function in a context. This is necessary for mustache compatibility, which
-	// requires that context functions in blocks are evaluated by blockHelperMissing,
-	// and then proceed as if the resulting value was provided to blockHelperMissing.
-
-	Compiler.prototype = {
-	  compiler: Compiler,
-
-	  equals: function equals(other) {
-	    var len = this.opcodes.length;
-	    if (other.opcodes.length !== len) {
-	      return false;
-	    }
-
-	    for (var i = 0; i < len; i++) {
-	      var opcode = this.opcodes[i],
-	          otherOpcode = other.opcodes[i];
-	      if (opcode.opcode !== otherOpcode.opcode || !argEquals(opcode.args, otherOpcode.args)) {
-	        return false;
-	      }
-	    }
-
-	    // We know that length is the same between the two arrays because they are directly tied
-	    // to the opcode behavior above.
-	    len = this.children.length;
-	    for (var i = 0; i < len; i++) {
-	      if (!this.children[i].equals(other.children[i])) {
-	        return false;
-	      }
-	    }
-
-	    return true;
-	  },
-
-	  guid: 0,
-
-	  compile: function compile(program, options) {
-	    this.sourceNode = [];
-	    this.opcodes = [];
-	    this.children = [];
-	    this.options = options;
-	    this.stringParams = options.stringParams;
-	    this.trackIds = options.trackIds;
-
-	    options.blockParams = options.blockParams || [];
-
-	    // These changes will propagate to the other compiler components
-	    var knownHelpers = options.knownHelpers;
-	    options.knownHelpers = {
-	      helperMissing: true,
-	      blockHelperMissing: true,
-	      each: true,
-	      'if': true,
-	      unless: true,
-	      'with': true,
-	      log: true,
-	      lookup: true
-	    };
-	    if (knownHelpers) {
-	      for (var _name in knownHelpers) {
-	        if (_name in knownHelpers) {
-	          options.knownHelpers[_name] = knownHelpers[_name];
-	        }
-	      }
-	    }
-
-	    return this.accept(program);
-	  },
-
-	  compileProgram: function compileProgram(program) {
-	    var childCompiler = new this.compiler(),
-	        // eslint-disable-line new-cap
-	    result = childCompiler.compile(program, this.options),
-	        guid = this.guid++;
-
-	    this.usePartial = this.usePartial || result.usePartial;
-
-	    this.children[guid] = result;
-	    this.useDepths = this.useDepths || result.useDepths;
-
-	    return guid;
-	  },
-
-	  accept: function accept(node) {
-	    this.sourceNode.unshift(node);
-	    var ret = this[node.type](node);
-	    this.sourceNode.shift();
-	    return ret;
-	  },
-
-	  Program: function Program(program) {
-	    this.options.blockParams.unshift(program.blockParams);
-
-	    var body = program.body,
-	        bodyLength = body.length;
-	    for (var i = 0; i < bodyLength; i++) {
-	      this.accept(body[i]);
-	    }
-
-	    this.options.blockParams.shift();
-
-	    this.isSimple = bodyLength === 1;
-	    this.blockParams = program.blockParams ? program.blockParams.length : 0;
-
-	    return this;
-	  },
-
-	  BlockStatement: function BlockStatement(block) {
-	    transformLiteralToPath(block);
-
-	    var program = block.program,
-	        inverse = block.inverse;
-
-	    program = program && this.compileProgram(program);
-	    inverse = inverse && this.compileProgram(inverse);
-
-	    var type = this.classifySexpr(block);
-
-	    if (type === 'helper') {
-	      this.helperSexpr(block, program, inverse);
-	    } else if (type === 'simple') {
-	      this.simpleSexpr(block);
-
-	      // now that the simple mustache is resolved, we need to
-	      // evaluate it by executing `blockHelperMissing`
-	      this.opcode('pushProgram', program);
-	      this.opcode('pushProgram', inverse);
-	      this.opcode('emptyHash');
-	      this.opcode('blockValue', block.path.original);
-	    } else {
-	      this.ambiguousSexpr(block, program, inverse);
-
-	      // now that the simple mustache is resolved, we need to
-	      // evaluate it by executing `blockHelperMissing`
-	      this.opcode('pushProgram', program);
-	      this.opcode('pushProgram', inverse);
-	      this.opcode('emptyHash');
-	      this.opcode('ambiguousBlockValue');
-	    }
-
-	    this.opcode('append');
-	  },
-
-	  PartialStatement: function PartialStatement(partial) {
-	    this.usePartial = true;
-
-	    var params = partial.params;
-	    if (params.length > 1) {
-	      throw new _Exception2['default']('Unsupported number of partial arguments: ' + params.length, partial);
-	    } else if (!params.length) {
-	      params.push({ type: 'PathExpression', parts: [], depth: 0 });
-	    }
-
-	    var partialName = partial.name.original,
-	        isDynamic = partial.name.type === 'SubExpression';
-	    if (isDynamic) {
-	      this.accept(partial.name);
-	    }
-
-	    this.setupFullMustacheParams(partial, undefined, undefined, true);
-
-	    var indent = partial.indent || '';
-	    if (this.options.preventIndent && indent) {
-	      this.opcode('appendContent', indent);
-	      indent = '';
-	    }
-
-	    this.opcode('invokePartial', isDynamic, partialName, indent);
-	    this.opcode('append');
-	  },
-
-	  MustacheStatement: function MustacheStatement(mustache) {
-	    this.SubExpression(mustache); // eslint-disable-line new-cap
-
-	    if (mustache.escaped && !this.options.noEscape) {
-	      this.opcode('appendEscaped');
-	    } else {
-	      this.opcode('append');
-	    }
-	  },
-
-	  ContentStatement: function ContentStatement(content) {
-	    if (content.value) {
-	      this.opcode('appendContent', content.value);
-	    }
-	  },
-
-	  CommentStatement: function CommentStatement() {},
-
-	  SubExpression: function SubExpression(sexpr) {
-	    transformLiteralToPath(sexpr);
-	    var type = this.classifySexpr(sexpr);
-
-	    if (type === 'simple') {
-	      this.simpleSexpr(sexpr);
-	    } else if (type === 'helper') {
-	      this.helperSexpr(sexpr);
-	    } else {
-	      this.ambiguousSexpr(sexpr);
-	    }
-	  },
-	  ambiguousSexpr: function ambiguousSexpr(sexpr, program, inverse) {
-	    var path = sexpr.path,
-	        name = path.parts[0],
-	        isBlock = program != null || inverse != null;
-
-	    this.opcode('getContext', path.depth);
-
-	    this.opcode('pushProgram', program);
-	    this.opcode('pushProgram', inverse);
-
-	    this.accept(path);
-
-	    this.opcode('invokeAmbiguous', name, isBlock);
-	  },
-
-	  simpleSexpr: function simpleSexpr(sexpr) {
-	    this.accept(sexpr.path);
-	    this.opcode('resolvePossibleLambda');
-	  },
-
-	  helperSexpr: function helperSexpr(sexpr, program, inverse) {
-	    var params = this.setupFullMustacheParams(sexpr, program, inverse),
-	        path = sexpr.path,
-	        name = path.parts[0];
-
-	    if (this.options.knownHelpers[name]) {
-	      this.opcode('invokeKnownHelper', params.length, name);
-	    } else if (this.options.knownHelpersOnly) {
-	      throw new _Exception2['default']('You specified knownHelpersOnly, but used the unknown helper ' + name, sexpr);
-	    } else {
-	      path.falsy = true;
-
-	      this.accept(path);
-	      this.opcode('invokeHelper', params.length, path.original, _AST2['default'].helpers.simpleId(path));
-	    }
-	  },
-
-	  PathExpression: function PathExpression(path) {
-	    this.addDepth(path.depth);
-	    this.opcode('getContext', path.depth);
-
-	    var name = path.parts[0],
-	        scoped = _AST2['default'].helpers.scopedId(path),
-	        blockParamId = !path.depth && !scoped && this.blockParamIndex(name);
-
-	    if (blockParamId) {
-	      this.opcode('lookupBlockParam', blockParamId, path.parts);
-	    } else if (!name) {
-	      // Context reference, i.e. `{{foo .}}` or `{{foo ..}}`
-	      this.opcode('pushContext');
-	    } else if (path.data) {
-	      this.options.data = true;
-	      this.opcode('lookupData', path.depth, path.parts);
-	    } else {
-	      this.opcode('lookupOnContext', path.parts, path.falsy, scoped);
-	    }
-	  },
-
-	  StringLiteral: function StringLiteral(string) {
-	    this.opcode('pushString', string.value);
-	  },
-
-	  NumberLiteral: function NumberLiteral(number) {
-	    this.opcode('pushLiteral', number.value);
-	  },
-
-	  BooleanLiteral: function BooleanLiteral(bool) {
-	    this.opcode('pushLiteral', bool.value);
-	  },
-
-	  UndefinedLiteral: function UndefinedLiteral() {
-	    this.opcode('pushLiteral', 'undefined');
-	  },
-
-	  NullLiteral: function NullLiteral() {
-	    this.opcode('pushLiteral', 'null');
-	  },
-
-	  Hash: function Hash(hash) {
-	    var pairs = hash.pairs,
-	        i = 0,
-	        l = pairs.length;
-
-	    this.opcode('pushHash');
-
-	    for (; i < l; i++) {
-	      this.pushParam(pairs[i].value);
-	    }
-	    while (i--) {
-	      this.opcode('assignToHash', pairs[i].key);
-	    }
-	    this.opcode('popHash');
-	  },
-
-	  // HELPERS
-	  opcode: function opcode(name) {
-	    this.opcodes.push({ opcode: name, args: slice.call(arguments, 1), loc: this.sourceNode[0].loc });
-	  },
-
-	  addDepth: function addDepth(depth) {
-	    if (!depth) {
-	      return;
-	    }
-
-	    this.useDepths = true;
-	  },
-
-	  classifySexpr: function classifySexpr(sexpr) {
-	    var isSimple = _AST2['default'].helpers.simpleId(sexpr.path);
-
-	    var isBlockParam = isSimple && !!this.blockParamIndex(sexpr.path.parts[0]);
-
-	    // a mustache is an eligible helper if:
-	    // * its id is simple (a single part, not `this` or `..`)
-	    var isHelper = !isBlockParam && _AST2['default'].helpers.helperExpression(sexpr);
-
-	    // if a mustache is an eligible helper but not a definite
-	    // helper, it is ambiguous, and will be resolved in a later
-	    // pass or at runtime.
-	    var isEligible = !isBlockParam && (isHelper || isSimple);
-
-	    // if ambiguous, we can possibly resolve the ambiguity now
-	    // An eligible helper is one that does not have a complex path, i.e. `this.foo`, `../foo` etc.
-	    if (isEligible && !isHelper) {
-	      var _name2 = sexpr.path.parts[0],
-	          options = this.options;
-
-	      if (options.knownHelpers[_name2]) {
-	        isHelper = true;
-	      } else if (options.knownHelpersOnly) {
-	        isEligible = false;
-	      }
-	    }
-
-	    if (isHelper) {
-	      return 'helper';
-	    } else if (isEligible) {
-	      return 'ambiguous';
-	    } else {
-	      return 'simple';
-	    }
-	  },
-
-	  pushParams: function pushParams(params) {
-	    for (var i = 0, l = params.length; i < l; i++) {
-	      this.pushParam(params[i]);
-	    }
-	  },
-
-	  pushParam: function pushParam(val) {
-	    var value = val.value != null ? val.value : val.original || '';
-
-	    if (this.stringParams) {
-	      if (value.replace) {
-	        value = value.replace(/^(\.?\.\/)*/g, '').replace(/\//g, '.');
-	      }
-
-	      if (val.depth) {
-	        this.addDepth(val.depth);
-	      }
-	      this.opcode('getContext', val.depth || 0);
-	      this.opcode('pushStringParam', value, val.type);
-
-	      if (val.type === 'SubExpression') {
-	        // SubExpressions get evaluated and passed in
-	        // in string params mode.
-	        this.accept(val);
-	      }
-	    } else {
-	      if (this.trackIds) {
-	        var blockParamIndex = undefined;
-	        if (val.parts && !_AST2['default'].helpers.scopedId(val) && !val.depth) {
-	          blockParamIndex = this.blockParamIndex(val.parts[0]);
-	        }
-	        if (blockParamIndex) {
-	          var blockParamChild = val.parts.slice(1).join('.');
-	          this.opcode('pushId', 'BlockParam', blockParamIndex, blockParamChild);
-	        } else {
-	          value = val.original || value;
-	          if (value.replace) {
-	            value = value.replace(/^\.\//g, '').replace(/^\.$/g, '');
-	          }
-
-	          this.opcode('pushId', val.type, value);
-	        }
-	      }
-	      this.accept(val);
-	    }
-	  },
-
-	  setupFullMustacheParams: function setupFullMustacheParams(sexpr, program, inverse, omitEmpty) {
-	    var params = sexpr.params;
-	    this.pushParams(params);
-
-	    this.opcode('pushProgram', program);
-	    this.opcode('pushProgram', inverse);
-
-	    if (sexpr.hash) {
-	      this.accept(sexpr.hash);
-	    } else {
-	      this.opcode('emptyHash', omitEmpty);
-	    }
-
-	    return params;
-	  },
-
-	  blockParamIndex: function blockParamIndex(name) {
-	    for (var depth = 0, len = this.options.blockParams.length; depth < len; depth++) {
-	      var blockParams = this.options.blockParams[depth],
-	          param = blockParams && _isArray$indexOf.indexOf(blockParams, name);
-	      if (blockParams && param >= 0) {
-	        return [depth, param];
-	      }
-	    }
-	  }
-	};
-
-	function precompile(input, options, env) {
-	  if (input == null || typeof input !== 'string' && input.type !== 'Program') {
-	    throw new _Exception2['default']('You must pass a string or Handlebars AST to Handlebars.precompile. You passed ' + input);
-	  }
-
-	  options = options || {};
-	  if (!('data' in options)) {
-	    options.data = true;
-	  }
-	  if (options.compat) {
-	    options.useDepths = true;
-	  }
-
-	  var ast = env.parse(input, options),
-	      environment = new env.Compiler().compile(ast, options);
-	  return new env.JavaScriptCompiler().compile(environment, options);
-	}
-
-	function compile(input, _x, env) {
-	  var options = arguments[1] === undefined ? {} : arguments[1];
-
-	  if (input == null || typeof input !== 'string' && input.type !== 'Program') {
-	    throw new _Exception2['default']('You must pass a string or Handlebars AST to Handlebars.compile. You passed ' + input);
-	  }
-
-	  if (!('data' in options)) {
-	    options.data = true;
-	  }
-	  if (options.compat) {
-	    options.useDepths = true;
-	  }
-
-	  var compiled = undefined;
-
-	  function compileInput() {
-	    var ast = env.parse(input, options),
-	        environment = new env.Compiler().compile(ast, options),
-	        templateSpec = new env.JavaScriptCompiler().compile(environment, options, undefined, true);
-	    return env.template(templateSpec);
-	  }
-
-	  // Template is only compiled on first use and cached after that point.
-	  function ret(context, execOptions) {
-	    if (!compiled) {
-	      compiled = compileInput();
-	    }
-	    return compiled.call(this, context, execOptions);
-	  }
-	  ret._setup = function (setupOptions) {
-	    if (!compiled) {
-	      compiled = compileInput();
-	    }
-	    return compiled._setup(setupOptions);
-	  };
-	  ret._child = function (i, data, blockParams, depths) {
-	    if (!compiled) {
-	      compiled = compileInput();
-	    }
-	    return compiled._child(i, data, blockParams, depths);
-	  };
-	  return ret;
-	}
-
-	function argEquals(a, b) {
-	  if (a === b) {
-	    return true;
-	  }
-
-	  if (_isArray$indexOf.isArray(a) && _isArray$indexOf.isArray(b) && a.length === b.length) {
-	    for (var i = 0; i < a.length; i++) {
-	      if (!argEquals(a[i], b[i])) {
-	        return false;
-	      }
-	    }
-	    return true;
-	  }
-	}
-
-	function transformLiteralToPath(sexpr) {
-	  if (!sexpr.path.parts) {
-	    var literal = sexpr.path;
-	    // Casting to string here to make false and 0 literal values play nicely with the rest
-	    // of the system.
-	    sexpr.path = new _AST2['default'].PathExpression(false, 0, [literal.original + ''], literal.original + '', literal.loc);
-	  }
-	}
-
-/***/ },
-/* 5 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-
-	var _interopRequireWildcard = __webpack_require__(8)['default'];
-
-	exports.__esModule = true;
-
-	var _COMPILER_REVISION$REVISION_CHANGES = __webpack_require__(9);
-
-	var _Exception = __webpack_require__(11);
-
-	var _Exception2 = _interopRequireWildcard(_Exception);
-
-	var _isArray = __webpack_require__(12);
-
-	var _CodeGen = __webpack_require__(17);
-
-	var _CodeGen2 = _interopRequireWildcard(_CodeGen);
-
-	function Literal(value) {
-	  this.value = value;
-	}
-
-	function JavaScriptCompiler() {}
-
-	JavaScriptCompiler.prototype = {
-	  // PUBLIC API: You can override these methods in a subclass to provide
-	  // alternative compiled forms for name lookup and buffering semantics
-	  nameLookup: function nameLookup(parent, name /* , type*/) {
-	    if (JavaScriptCompiler.isValidJavaScriptVariableName(name)) {
-	      return [parent, '.', name];
-	    } else {
-	      return [parent, '[\'', name, '\']'];
-	    }
-	  },
-	  depthedLookup: function depthedLookup(name) {
-	    return [this.aliasable('this.lookup'), '(depths, "', name, '")'];
-	  },
-
-	  compilerInfo: function compilerInfo() {
-	    var revision = _COMPILER_REVISION$REVISION_CHANGES.COMPILER_REVISION,
-	        versions = _COMPILER_REVISION$REVISION_CHANGES.REVISION_CHANGES[revision];
-	    return [revision, versions];
-	  },
-
-	  appendToBuffer: function appendToBuffer(source, location, explicit) {
-	    // Force a source as this simplifies the merge logic.
-	    if (!_isArray.isArray(source)) {
-	      source = [source];
-	    }
-	    source = this.source.wrap(source, location);
-
-	    if (this.environment.isSimple) {
-	      return ['return ', source, ';'];
-	    } else if (explicit) {
-	      // This is a case where the buffer operation occurs as a child of another
-	      // construct, generally braces. We have to explicitly output these buffer
-	      // operations to ensure that the emitted code goes in the correct location.
-	      return ['buffer += ', source, ';'];
-	    } else {
-	      source.appendToBuffer = true;
-	      return source;
-	    }
-	  },
-
-	  initializeBuffer: function initializeBuffer() {
-	    return this.quotedString('');
-	  },
-	  // END PUBLIC API
-
-	  compile: function compile(environment, options, context, asObject) {
-	    this.environment = environment;
-	    this.options = options;
-	    this.stringParams = this.options.stringParams;
-	    this.trackIds = this.options.trackIds;
-	    this.precompile = !asObject;
-
-	    this.name = this.environment.name;
-	    this.isChild = !!context;
-	    this.context = context || {
-	      programs: [],
-	      environments: []
-	    };
-
-	    this.preamble();
-
-	    this.stackSlot = 0;
-	    this.stackVars = [];
-	    this.aliases = {};
-	    this.registers = { list: [] };
-	    this.hashes = [];
-	    this.compileStack = [];
-	    this.inlineStack = [];
-	    this.blockParams = [];
-
-	    this.compileChildren(environment, options);
-
-	    this.useDepths = this.useDepths || environment.useDepths || this.options.compat;
-	    this.useBlockParams = this.useBlockParams || environment.useBlockParams;
-
-	    var opcodes = environment.opcodes,
-	        opcode = undefined,
-	        firstLoc = undefined,
-	        i = undefined,
-	        l = undefined;
-
-	    for (i = 0, l = opcodes.length; i < l; i++) {
-	      opcode = opcodes[i];
-
-	      this.source.currentLocation = opcode.loc;
-	      firstLoc = firstLoc || opcode.loc;
-	      this[opcode.opcode].apply(this, opcode.args);
-	    }
-
-	    // Flush any trailing content that might be pending.
-	    this.source.currentLocation = firstLoc;
-	    this.pushSource('');
-
-	    /* istanbul ignore next */
-	    if (this.stackSlot || this.inlineStack.length || this.compileStack.length) {
-	      throw new _Exception2['default']('Compile completed with content left on stack');
-	    }
-
-	    var fn = this.createFunctionContext(asObject);
-	    if (!this.isChild) {
-	      var ret = {
-	        compiler: this.compilerInfo(),
-	        main: fn
-	      };
-	      var programs = this.context.programs;
-	      for (i = 0, l = programs.length; i < l; i++) {
-	        if (programs[i]) {
-	          ret[i] = programs[i];
-	        }
-	      }
-
-	      if (this.environment.usePartial) {
-	        ret.usePartial = true;
-	      }
-	      if (this.options.data) {
-	        ret.useData = true;
-	      }
-	      if (this.useDepths) {
-	        ret.useDepths = true;
-	      }
-	      if (this.useBlockParams) {
-	        ret.useBlockParams = true;
-	      }
-	      if (this.options.compat) {
-	        ret.compat = true;
-	      }
-
-	      if (!asObject) {
-	        ret.compiler = JSON.stringify(ret.compiler);
-
-	        this.source.currentLocation = { start: { line: 1, column: 0 } };
-	        ret = this.objectLiteral(ret);
-
-	        if (options.srcName) {
-	          ret = ret.toStringWithSourceMap({ file: options.destName });
-	          ret.map = ret.map && ret.map.toString();
-	        } else {
-	          ret = ret.toString();
-	        }
-	      } else {
-	        ret.compilerOptions = this.options;
-	      }
-
-	      return ret;
-	    } else {
-	      return fn;
-	    }
-	  },
-
-	  preamble: function preamble() {
-	    // track the last context pushed into place to allow skipping the
-	    // getContext opcode when it would be a noop
-	    this.lastContext = 0;
-	    this.source = new _CodeGen2['default'](this.options.srcName);
-	  },
-
-	  createFunctionContext: function createFunctionContext(asObject) {
-	    var varDeclarations = '';
-
-	    var locals = this.stackVars.concat(this.registers.list);
-	    if (locals.length > 0) {
-	      varDeclarations += ', ' + locals.join(', ');
-	    }
-
-	    // Generate minimizer alias mappings
-	    //
-	    // When using true SourceNodes, this will update all references to the given alias
-	    // as the source nodes are reused in situ. For the non-source node compilation mode,
-	    // aliases will not be used, but this case is already being run on the client and
-	    // we aren't concern about minimizing the template size.
-	    var aliasCount = 0;
-	    for (var alias in this.aliases) {
-	      // eslint-disable-line guard-for-in
-	      var node = this.aliases[alias];
-
-	      if (this.aliases.hasOwnProperty(alias) && node.children && node.referenceCount > 1) {
-	        varDeclarations += ', alias' + ++aliasCount + '=' + alias;
-	        node.children[0] = 'alias' + aliasCount;
-	      }
-	    }
-
-	    var params = ['depth0', 'helpers', 'partials', 'data'];
-
-	    if (this.useBlockParams || this.useDepths) {
-	      params.push('blockParams');
-	    }
-	    if (this.useDepths) {
-	      params.push('depths');
-	    }
-
-	    // Perform a second pass over the output to merge content when possible
-	    var source = this.mergeSource(varDeclarations);
-
-	    if (asObject) {
-	      params.push(source);
-
-	      return Function.apply(this, params);
-	    } else {
-	      return this.source.wrap(['function(', params.join(','), ') {\n  ', source, '}']);
-	    }
-	  },
-	  mergeSource: function mergeSource(varDeclarations) {
-	    var isSimple = this.environment.isSimple,
-	        appendOnly = !this.forceBuffer,
-	        appendFirst = undefined,
-	        sourceSeen = undefined,
-	        bufferStart = undefined,
-	        bufferEnd = undefined;
-	    this.source.each(function (line) {
-	      if (line.appendToBuffer) {
-	        if (bufferStart) {
-	          line.prepend('  + ');
-	        } else {
-	          bufferStart = line;
-	        }
-	        bufferEnd = line;
-	      } else {
-	        if (bufferStart) {
-	          if (!sourceSeen) {
-	            appendFirst = true;
-	          } else {
-	            bufferStart.prepend('buffer += ');
-	          }
-	          bufferEnd.add(';');
-	          bufferStart = bufferEnd = undefined;
-	        }
-
-	        sourceSeen = true;
-	        if (!isSimple) {
-	          appendOnly = false;
-	        }
-	      }
-	    });
-
-	    if (appendOnly) {
-	      if (bufferStart) {
-	        bufferStart.prepend('return ');
-	        bufferEnd.add(';');
-	      } else if (!sourceSeen) {
-	        this.source.push('return "";');
-	      }
-	    } else {
-	      varDeclarations += ', buffer = ' + (appendFirst ? '' : this.initializeBuffer());
-
-	      if (bufferStart) {
-	        bufferStart.prepend('return buffer + ');
-	        bufferEnd.add(';');
-	      } else {
-	        this.source.push('return buffer;');
-	      }
-	    }
-
-	    if (varDeclarations) {
-	      this.source.prepend('var ' + varDeclarations.substring(2) + (appendFirst ? '' : ';\n'));
-	    }
-
-	    return this.source.merge();
-	  },
-
-	  // [blockValue]
-	  //
-	  // On stack, before: hash, inverse, program, value
-	  // On stack, after: return value of blockHelperMissing
-	  //
-	  // The purpose of this opcode is to take a block of the form
-	  // `{{#this.foo}}...{{/this.foo}}`, resolve the value of `foo`, and
-	  // replace it on the stack with the result of properly
-	  // invoking blockHelperMissing.
-	  blockValue: function blockValue(name) {
-	    var blockHelperMissing = this.aliasable('helpers.blockHelperMissing'),
-	        params = [this.contextName(0)];
-	    this.setupHelperArgs(name, 0, params);
-
-	    var blockName = this.popStack();
-	    params.splice(1, 0, blockName);
-
-	    this.push(this.source.functionCall(blockHelperMissing, 'call', params));
-	  },
-
-	  // [ambiguousBlockValue]
-	  //
-	  // On stack, before: hash, inverse, program, value
-	  // Compiler value, before: lastHelper=value of last found helper, if any
-	  // On stack, after, if no lastHelper: same as [blockValue]
-	  // On stack, after, if lastHelper: value
-	  ambiguousBlockValue: function ambiguousBlockValue() {
-	    // We're being a bit cheeky and reusing the options value from the prior exec
-	    var blockHelperMissing = this.aliasable('helpers.blockHelperMissing'),
-	        params = [this.contextName(0)];
-	    this.setupHelperArgs('', 0, params, true);
-
-	    this.flushInline();
-
-	    var current = this.topStack();
-	    params.splice(1, 0, current);
-
-	    this.pushSource(['if (!', this.lastHelper, ') { ', current, ' = ', this.source.functionCall(blockHelperMissing, 'call', params), '}']);
-	  },
-
-	  // [appendContent]
-	  //
-	  // On stack, before: ...
-	  // On stack, after: ...
-	  //
-	  // Appends the string value of `content` to the current buffer
-	  appendContent: function appendContent(content) {
-	    if (this.pendingContent) {
-	      content = this.pendingContent + content;
-	    } else {
-	      this.pendingLocation = this.source.currentLocation;
-	    }
-
-	    this.pendingContent = content;
-	  },
-
-	  // [append]
-	  //
-	  // On stack, before: value, ...
-	  // On stack, after: ...
-	  //
-	  // Coerces `value` to a String and appends it to the current buffer.
-	  //
-	  // If `value` is truthy, or 0, it is coerced into a string and appended
-	  // Otherwise, the empty string is appended
-	  append: function append() {
-	    if (this.isInline()) {
-	      this.replaceStack(function (current) {
-	        return [' != null ? ', current, ' : ""'];
-	      });
-
-	      this.pushSource(this.appendToBuffer(this.popStack()));
-	    } else {
-	      var local = this.popStack();
-	      this.pushSource(['if (', local, ' != null) { ', this.appendToBuffer(local, undefined, true), ' }']);
-	      if (this.environment.isSimple) {
-	        this.pushSource(['else { ', this.appendToBuffer('\'\'', undefined, true), ' }']);
-	      }
-	    }
-	  },
-
-	  // [appendEscaped]
-	  //
-	  // On stack, before: value, ...
-	  // On stack, after: ...
-	  //
-	  // Escape `value` and append it to the buffer
-	  appendEscaped: function appendEscaped() {
-	    this.pushSource(this.appendToBuffer([this.aliasable('this.escapeExpression'), '(', this.popStack(), ')']));
-	  },
-
-	  // [getContext]
-	  //
-	  // On stack, before: ...
-	  // On stack, after: ...
-	  // Compiler value, after: lastContext=depth
-	  //
-	  // Set the value of the `lastContext` compiler value to the depth
-	  getContext: function getContext(depth) {
-	    this.lastContext = depth;
-	  },
-
-	  // [pushContext]
-	  //
-	  // On stack, before: ...
-	  // On stack, after: currentContext, ...
-	  //
-	  // Pushes the value of the current context onto the stack.
-	  pushContext: function pushContext() {
-	    this.pushStackLiteral(this.contextName(this.lastContext));
-	  },
-
-	  // [lookupOnContext]
-	  //
-	  // On stack, before: ...
-	  // On stack, after: currentContext[name], ...
-	  //
-	  // Looks up the value of `name` on the current context and pushes
-	  // it onto the stack.
-	  lookupOnContext: function lookupOnContext(parts, falsy, scoped) {
-	    var i = 0;
-
-	    if (!scoped && this.options.compat && !this.lastContext) {
-	      // The depthed query is expected to handle the undefined logic for the root level that
-	      // is implemented below, so we evaluate that directly in compat mode
-	      this.push(this.depthedLookup(parts[i++]));
-	    } else {
-	      this.pushContext();
-	    }
-
-	    this.resolvePath('context', parts, i, falsy);
-	  },
-
-	  // [lookupBlockParam]
-	  //
-	  // On stack, before: ...
-	  // On stack, after: blockParam[name], ...
-	  //
-	  // Looks up the value of `parts` on the given block param and pushes
-	  // it onto the stack.
-	  lookupBlockParam: function lookupBlockParam(blockParamId, parts) {
-	    this.useBlockParams = true;
-
-	    this.push(['blockParams[', blockParamId[0], '][', blockParamId[1], ']']);
-	    this.resolvePath('context', parts, 1);
-	  },
-
-	  // [lookupData]
-	  //
-	  // On stack, before: ...
-	  // On stack, after: data, ...
-	  //
-	  // Push the data lookup operator
-	  lookupData: function lookupData(depth, parts) {
-	    if (!depth) {
-	      this.pushStackLiteral('data');
-	    } else {
-	      this.pushStackLiteral('this.data(data, ' + depth + ')');
-	    }
-
-	    this.resolvePath('data', parts, 0, true);
-	  },
-
-	  resolvePath: function resolvePath(type, parts, i, falsy) {
-	    var _this = this;
-
-	    if (this.options.strict || this.options.assumeObjects) {
-	      this.push(strictLookup(this.options.strict, this, parts, type));
-	      return;
-	    }
-
-	    var len = parts.length;
-	    for (; i < len; i++) {
-	      /*eslint-disable no-loop-func */
-	      this.replaceStack(function (current) {
-	        var lookup = _this.nameLookup(current, parts[i], type);
-	        // We want to ensure that zero and false are handled properly if the context (falsy flag)
-	        // needs to have the special handling for these values.
-	        if (!falsy) {
-	          return [' != null ? ', lookup, ' : ', current];
-	        } else {
-	          // Otherwise we can use generic falsy handling
-	          return [' && ', lookup];
-	        }
-	      });
-	      /*eslint-enable no-loop-func */
-	    }
-	  },
-
-	  // [resolvePossibleLambda]
-	  //
-	  // On stack, before: value, ...
-	  // On stack, after: resolved value, ...
-	  //
-	  // If the `value` is a lambda, replace it on the stack by
-	  // the return value of the lambda
-	  resolvePossibleLambda: function resolvePossibleLambda() {
-	    this.push([this.aliasable('this.lambda'), '(', this.popStack(), ', ', this.contextName(0), ')']);
-	  },
-
-	  // [pushStringParam]
-	  //
-	  // On stack, before: ...
-	  // On stack, after: string, currentContext, ...
-	  //
-	  // This opcode is designed for use in string mode, which
-	  // provides the string value of a parameter along with its
-	  // depth rather than resolving it immediately.
-	  pushStringParam: function pushStringParam(string, type) {
-	    this.pushContext();
-	    this.pushString(type);
-
-	    // If it's a subexpression, the string result
-	    // will be pushed after this opcode.
-	    if (type !== 'SubExpression') {
-	      if (typeof string === 'string') {
-	        this.pushString(string);
-	      } else {
-	        this.pushStackLiteral(string);
-	      }
-	    }
-	  },
-
-	  emptyHash: function emptyHash(omitEmpty) {
-	    if (this.trackIds) {
-	      this.push('{}'); // hashIds
-	    }
-	    if (this.stringParams) {
-	      this.push('{}'); // hashContexts
-	      this.push('{}'); // hashTypes
-	    }
-	    this.pushStackLiteral(omitEmpty ? 'undefined' : '{}');
-	  },
-	  pushHash: function pushHash() {
-	    if (this.hash) {
-	      this.hashes.push(this.hash);
-	    }
-	    this.hash = { values: [], types: [], contexts: [], ids: [] };
-	  },
-	  popHash: function popHash() {
-	    var hash = this.hash;
-	    this.hash = this.hashes.pop();
-
-	    if (this.trackIds) {
-	      this.push(this.objectLiteral(hash.ids));
-	    }
-	    if (this.stringParams) {
-	      this.push(this.objectLiteral(hash.contexts));
-	      this.push(this.objectLiteral(hash.types));
-	    }
-
-	    this.push(this.objectLiteral(hash.values));
-	  },
-
-	  // [pushString]
-	  //
-	  // On stack, before: ...
-	  // On stack, after: quotedString(string), ...
-	  //
-	  // Push a quoted version of `string` onto the stack
-	  pushString: function pushString(string) {
-	    this.pushStackLiteral(this.quotedString(string));
-	  },
-
-	  // [pushLiteral]
-	  //
-	  // On stack, before: ...
-	  // On stack, after: value, ...
-	  //
-	  // Pushes a value onto the stack. This operation prevents
-	  // the compiler from creating a temporary variable to hold
-	  // it.
-	  pushLiteral: function pushLiteral(value) {
-	    this.pushStackLiteral(value);
-	  },
-
-	  // [pushProgram]
-	  //
-	  // On stack, before: ...
-	  // On stack, after: program(guid), ...
-	  //
-	  // Push a program expression onto the stack. This takes
-	  // a compile-time guid and converts it into a runtime-accessible
-	  // expression.
-	  pushProgram: function pushProgram(guid) {
-	    if (guid != null) {
-	      this.pushStackLiteral(this.programExpression(guid));
-	    } else {
-	      this.pushStackLiteral(null);
-	    }
-	  },
-
-	  // [invokeHelper]
-	  //
-	  // On stack, before: hash, inverse, program, params..., ...
-	  // On stack, after: result of helper invocation
-	  //
-	  // Pops off the helper's parameters, invokes the helper,
-	  // and pushes the helper's return value onto the stack.
-	  //
-	  // If the helper is not found, `helperMissing` is called.
-	  invokeHelper: function invokeHelper(paramSize, name, isSimple) {
-	    var nonHelper = this.popStack(),
-	        helper = this.setupHelper(paramSize, name),
-	        simple = isSimple ? [helper.name, ' || '] : '';
-
-	    var lookup = ['('].concat(simple, nonHelper);
-	    if (!this.options.strict) {
-	      lookup.push(' || ', this.aliasable('helpers.helperMissing'));
-	    }
-	    lookup.push(')');
-
-	    this.push(this.source.functionCall(lookup, 'call', helper.callParams));
-	  },
-
-	  // [invokeKnownHelper]
-	  //
-	  // On stack, before: hash, inverse, program, params..., ...
-	  // On stack, after: result of helper invocation
-	  //
-	  // This operation is used when the helper is known to exist,
-	  // so a `helperMissing` fallback is not required.
-	  invokeKnownHelper: function invokeKnownHelper(paramSize, name) {
-	    var helper = this.setupHelper(paramSize, name);
-	    this.push(this.source.functionCall(helper.name, 'call', helper.callParams));
-	  },
-
-	  // [invokeAmbiguous]
-	  //
-	  // On stack, before: hash, inverse, program, params..., ...
-	  // On stack, after: result of disambiguation
-	  //
-	  // This operation is used when an expression like `{{foo}}`
-	  // is provided, but we don't know at compile-time whether it
-	  // is a helper or a path.
-	  //
-	  // This operation emits more code than the other options,
-	  // and can be avoided by passing the `knownHelpers` and
-	  // `knownHelpersOnly` flags at compile-time.
-	  invokeAmbiguous: function invokeAmbiguous(name, helperCall) {
-	    this.useRegister('helper');
-
-	    var nonHelper = this.popStack();
-
-	    this.emptyHash();
-	    var helper = this.setupHelper(0, name, helperCall);
-
-	    var helperName = this.lastHelper = this.nameLookup('helpers', name, 'helper');
-
-	    var lookup = ['(', '(helper = ', helperName, ' || ', nonHelper, ')'];
-	    if (!this.options.strict) {
-	      lookup[0] = '(helper = ';
-	      lookup.push(' != null ? helper : ', this.aliasable('helpers.helperMissing'));
-	    }
-
-	    this.push(['(', lookup, helper.paramsInit ? ['),(', helper.paramsInit] : [], '),', '(typeof helper === ', this.aliasable('"function"'), ' ? ', this.source.functionCall('helper', 'call', helper.callParams), ' : helper))']);
-	  },
-
-	  // [invokePartial]
-	  //
-	  // On stack, before: context, ...
-	  // On stack after: result of partial invocation
-	  //
-	  // This operation pops off a context, invokes a partial with that context,
-	  // and pushes the result of the invocation back.
-	  invokePartial: function invokePartial(isDynamic, name, indent) {
-	    var params = [],
-	        options = this.setupParams(name, 1, params, false);
-
-	    if (isDynamic) {
-	      name = this.popStack();
-	      delete options.name;
-	    }
-
-	    if (indent) {
-	      options.indent = JSON.stringify(indent);
-	    }
-	    options.helpers = 'helpers';
-	    options.partials = 'partials';
-
-	    if (!isDynamic) {
-	      params.unshift(this.nameLookup('partials', name, 'partial'));
-	    } else {
-	      params.unshift(name);
-	    }
-
-	    if (this.options.compat) {
-	      options.depths = 'depths';
-	    }
-	    options = this.objectLiteral(options);
-	    params.push(options);
-
-	    this.push(this.source.functionCall('this.invokePartial', '', params));
-	  },
-
-	  // [assignToHash]
-	  //
-	  // On stack, before: value, ..., hash, ...
-	  // On stack, after: ..., hash, ...
-	  //
-	  // Pops a value off the stack and assigns it to the current hash
-	  assignToHash: function assignToHash(key) {
-	    var value = this.popStack(),
-	        context = undefined,
-	        type = undefined,
-	        id = undefined;
-
-	    if (this.trackIds) {
-	      id = this.popStack();
-	    }
-	    if (this.stringParams) {
-	      type = this.popStack();
-	      context = this.popStack();
-	    }
-
-	    var hash = this.hash;
-	    if (context) {
-	      hash.contexts[key] = context;
-	    }
-	    if (type) {
-	      hash.types[key] = type;
-	    }
-	    if (id) {
-	      hash.ids[key] = id;
-	    }
-	    hash.values[key] = value;
-	  },
-
-	  pushId: function pushId(type, name, child) {
-	    if (type === 'BlockParam') {
-	      this.pushStackLiteral('blockParams[' + name[0] + '].path[' + name[1] + ']' + (child ? ' + ' + JSON.stringify('.' + child) : ''));
-	    } else if (type === 'PathExpression') {
-	      this.pushString(name);
-	    } else if (type === 'SubExpression') {
-	      this.pushStackLiteral('true');
-	    } else {
-	      this.pushStackLiteral('null');
-	    }
-	  },
-
-	  // HELPERS
-
-	  compiler: JavaScriptCompiler,
-
-	  compileChildren: function compileChildren(environment, options) {
-	    var children = environment.children,
-	        child = undefined,
-	        compiler = undefined;
-
-	    for (var i = 0, l = children.length; i < l; i++) {
-	      child = children[i];
-	      compiler = new this.compiler(); // eslint-disable-line new-cap
-
-	      var index = this.matchExistingProgram(child);
-
-	      if (index == null) {
-	        this.context.programs.push(''); // Placeholder to prevent name conflicts for nested children
-	        index = this.context.programs.length;
-	        child.index = index;
-	        child.name = 'program' + index;
-	        this.context.programs[index] = compiler.compile(child, options, this.context, !this.precompile);
-	        this.context.environments[index] = child;
-
-	        this.useDepths = this.useDepths || compiler.useDepths;
-	        this.useBlockParams = this.useBlockParams || compiler.useBlockParams;
-	      } else {
-	        child.index = index;
-	        child.name = 'program' + index;
-
-	        this.useDepths = this.useDepths || child.useDepths;
-	        this.useBlockParams = this.useBlockParams || child.useBlockParams;
-	      }
-	    }
-	  },
-	  matchExistingProgram: function matchExistingProgram(child) {
-	    for (var i = 0, len = this.context.environments.length; i < len; i++) {
-	      var environment = this.context.environments[i];
-	      if (environment && environment.equals(child)) {
-	        return i;
-	      }
-	    }
-	  },
-
-	  programExpression: function programExpression(guid) {
-	    var child = this.environment.children[guid],
-	        programParams = [child.index, 'data', child.blockParams];
-
-	    if (this.useBlockParams || this.useDepths) {
-	      programParams.push('blockParams');
-	    }
-	    if (this.useDepths) {
-	      programParams.push('depths');
-	    }
-
-	    return 'this.program(' + programParams.join(', ') + ')';
-	  },
-
-	  useRegister: function useRegister(name) {
-	    if (!this.registers[name]) {
-	      this.registers[name] = true;
-	      this.registers.list.push(name);
-	    }
-	  },
-
-	  push: function push(expr) {
-	    if (!(expr instanceof Literal)) {
-	      expr = this.source.wrap(expr);
-	    }
-
-	    this.inlineStack.push(expr);
-	    return expr;
-	  },
-
-	  pushStackLiteral: function pushStackLiteral(item) {
-	    this.push(new Literal(item));
-	  },
-
-	  pushSource: function pushSource(source) {
-	    if (this.pendingContent) {
-	      this.source.push(this.appendToBuffer(this.source.quotedString(this.pendingContent), this.pendingLocation));
-	      this.pendingContent = undefined;
-	    }
-
-	    if (source) {
-	      this.source.push(source);
-	    }
-	  },
-
-	  replaceStack: function replaceStack(callback) {
-	    var prefix = ['('],
-	        stack = undefined,
-	        createdStack = undefined,
-	        usedLiteral = undefined;
-
-	    /* istanbul ignore next */
-	    if (!this.isInline()) {
-	      throw new _Exception2['default']('replaceStack on non-inline');
-	    }
-
-	    // We want to merge the inline statement into the replacement statement via ','
-	    var top = this.popStack(true);
-
-	    if (top instanceof Literal) {
-	      // Literals do not need to be inlined
-	      stack = [top.value];
-	      prefix = ['(', stack];
-	      usedLiteral = true;
-	    } else {
-	      // Get or create the current stack name for use by the inline
-	      createdStack = true;
-	      var _name = this.incrStack();
-
-	      prefix = ['((', this.push(_name), ' = ', top, ')'];
-	      stack = this.topStack();
-	    }
-
-	    var item = callback.call(this, stack);
-
-	    if (!usedLiteral) {
-	      this.popStack();
-	    }
-	    if (createdStack) {
-	      this.stackSlot--;
-	    }
-	    this.push(prefix.concat(item, ')'));
-	  },
-
-	  incrStack: function incrStack() {
-	    this.stackSlot++;
-	    if (this.stackSlot > this.stackVars.length) {
-	      this.stackVars.push('stack' + this.stackSlot);
-	    }
-	    return this.topStackName();
-	  },
-	  topStackName: function topStackName() {
-	    return 'stack' + this.stackSlot;
-	  },
-	  flushInline: function flushInline() {
-	    var inlineStack = this.inlineStack;
-	    this.inlineStack = [];
-	    for (var i = 0, len = inlineStack.length; i < len; i++) {
-	      var entry = inlineStack[i];
-	      /* istanbul ignore if */
-	      if (entry instanceof Literal) {
-	        this.compileStack.push(entry);
-	      } else {
-	        var stack = this.incrStack();
-	        this.pushSource([stack, ' = ', entry, ';']);
-	        this.compileStack.push(stack);
-	      }
-	    }
-	  },
-	  isInline: function isInline() {
-	    return this.inlineStack.length;
-	  },
-
-	  popStack: function popStack(wrapped) {
-	    var inline = this.isInline(),
-	        item = (inline ? this.inlineStack : this.compileStack).pop();
-
-	    if (!wrapped && item instanceof Literal) {
-	      return item.value;
-	    } else {
-	      if (!inline) {
-	        /* istanbul ignore next */
-	        if (!this.stackSlot) {
-	          throw new _Exception2['default']('Invalid stack pop');
-	        }
-	        this.stackSlot--;
-	      }
-	      return item;
-	    }
-	  },
-
-	  topStack: function topStack() {
-	    var stack = this.isInline() ? this.inlineStack : this.compileStack,
-	        item = stack[stack.length - 1];
-
-	    /* istanbul ignore if */
-	    if (item instanceof Literal) {
-	      return item.value;
-	    } else {
-	      return item;
-	    }
-	  },
-
-	  contextName: function contextName(context) {
-	    if (this.useDepths && context) {
-	      return 'depths[' + context + ']';
-	    } else {
-	      return 'depth' + context;
-	    }
-	  },
-
-	  quotedString: function quotedString(str) {
-	    return this.source.quotedString(str);
-	  },
-
-	  objectLiteral: function objectLiteral(obj) {
-	    return this.source.objectLiteral(obj);
-	  },
-
-	  aliasable: function aliasable(name) {
-	    var ret = this.aliases[name];
-	    if (ret) {
-	      ret.referenceCount++;
-	      return ret;
-	    }
-
-	    ret = this.aliases[name] = this.source.wrap(name);
-	    ret.aliasable = true;
-	    ret.referenceCount = 1;
-
-	    return ret;
-	  },
-
-	  setupHelper: function setupHelper(paramSize, name, blockHelper) {
-	    var params = [],
-	        paramsInit = this.setupHelperArgs(name, paramSize, params, blockHelper);
-	    var foundHelper = this.nameLookup('helpers', name, 'helper');
-
-	    return {
-	      params: params,
-	      paramsInit: paramsInit,
-	      name: foundHelper,
-	      callParams: [this.contextName(0)].concat(params)
-	    };
-	  },
-
-	  setupParams: function setupParams(helper, paramSize, params) {
-	    var options = {},
-	        contexts = [],
-	        types = [],
-	        ids = [],
-	        param = undefined;
-
-	    options.name = this.quotedString(helper);
-	    options.hash = this.popStack();
-
-	    if (this.trackIds) {
-	      options.hashIds = this.popStack();
-	    }
-	    if (this.stringParams) {
-	      options.hashTypes = this.popStack();
-	      options.hashContexts = this.popStack();
-	    }
-
-	    var inverse = this.popStack(),
-	        program = this.popStack();
-
-	    // Avoid setting fn and inverse if neither are set. This allows
-	    // helpers to do a check for `if (options.fn)`
-	    if (program || inverse) {
-	      options.fn = program || 'this.noop';
-	      options.inverse = inverse || 'this.noop';
-	    }
-
-	    // The parameters go on to the stack in order (making sure that they are evaluated in order)
-	    // so we need to pop them off the stack in reverse order
-	    var i = paramSize;
-	    while (i--) {
-	      param = this.popStack();
-	      params[i] = param;
-
-	      if (this.trackIds) {
-	        ids[i] = this.popStack();
-	      }
-	      if (this.stringParams) {
-	        types[i] = this.popStack();
-	        contexts[i] = this.popStack();
-	      }
-	    }
-
-	    if (this.trackIds) {
-	      options.ids = this.source.generateArray(ids);
-	    }
-	    if (this.stringParams) {
-	      options.types = this.source.generateArray(types);
-	      options.contexts = this.source.generateArray(contexts);
-	    }
-
-	    if (this.options.data) {
-	      options.data = 'data';
-	    }
-	    if (this.useBlockParams) {
-	      options.blockParams = 'blockParams';
-	    }
-	    return options;
-	  },
-
-	  setupHelperArgs: function setupHelperArgs(helper, paramSize, params, useRegister) {
-	    var options = this.setupParams(helper, paramSize, params, true);
-	    options = this.objectLiteral(options);
-	    if (useRegister) {
-	      this.useRegister('options');
-	      params.push('options');
-	      return ['options=', options];
-	    } else {
-	      params.push(options);
-	      return '';
-	    }
-	  }
-	};
-
-	(function () {
-	  var reservedWords = ('break else new var' + ' case finally return void' + ' catch for switch while' + ' continue function this with' + ' default if throw' + ' delete in try' + ' do instanceof typeof' + ' abstract enum int short' + ' boolean export interface static' + ' byte extends long super' + ' char final native synchronized' + ' class float package throws' + ' const goto private transient' + ' debugger implements protected volatile' + ' double import public let yield await' + ' null true false').split(' ');
-
-	  var compilerWords = JavaScriptCompiler.RESERVED_WORDS = {};
-
-	  for (var i = 0, l = reservedWords.length; i < l; i++) {
-	    compilerWords[reservedWords[i]] = true;
-	  }
-	})();
-
-	JavaScriptCompiler.isValidJavaScriptVariableName = function (name) {
-	  return !JavaScriptCompiler.RESERVED_WORDS[name] && /^[a-zA-Z_$][0-9a-zA-Z_$]*$/.test(name);
-	};
-
-	function strictLookup(requireTerminal, compiler, parts, type) {
-	  var stack = compiler.popStack(),
-	      i = 0,
-	      len = parts.length;
-	  if (requireTerminal) {
-	    len--;
-	  }
-
-	  for (; i < len; i++) {
-	    stack = compiler.nameLookup(stack, parts[i], type);
-	  }
-
-	  if (requireTerminal) {
-	    return [compiler.aliasable('this.strict'), '(', stack, ', ', compiler.quotedString(parts[i]), ')'];
-	  } else {
-	    return stack;
-	  }
-	}
-
-	exports['default'] = JavaScriptCompiler;
-	module.exports = exports['default'];
-
-/***/ },
-/* 6 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-
-	var _interopRequireWildcard = __webpack_require__(8)['default'];
-
-	exports.__esModule = true;
-
-	var _Exception = __webpack_require__(11);
-
-	var _Exception2 = _interopRequireWildcard(_Exception);
-
-	var _AST = __webpack_require__(2);
-
-	var _AST2 = _interopRequireWildcard(_AST);
-
-	function Visitor() {
-	  this.parents = [];
-	}
-
-	Visitor.prototype = {
-	  constructor: Visitor,
-	  mutating: false,
-
-	  // Visits a given value. If mutating, will replace the value if necessary.
-	  acceptKey: function acceptKey(node, name) {
-	    var value = this.accept(node[name]);
-	    if (this.mutating) {
-	      // Hacky sanity check:
-	      if (value && (!value.type || !_AST2['default'][value.type])) {
-	        throw new _Exception2['default']('Unexpected node type "' + value.type + '" found when accepting ' + name + ' on ' + node.type);
-	      }
-	      node[name] = value;
-	    }
-	  },
-
-	  // Performs an accept operation with added sanity check to ensure
-	  // required keys are not removed.
-	  acceptRequired: function acceptRequired(node, name) {
-	    this.acceptKey(node, name);
-
-	    if (!node[name]) {
-	      throw new _Exception2['default'](node.type + ' requires ' + name);
-	    }
-	  },
-
-	  // Traverses a given array. If mutating, empty respnses will be removed
-	  // for child elements.
-	  acceptArray: function acceptArray(array) {
-	    for (var i = 0, l = array.length; i < l; i++) {
-	      this.acceptKey(array, i);
-
-	      if (!array[i]) {
-	        array.splice(i, 1);
-	        i--;
-	        l--;
-	      }
-	    }
-	  },
-
-	  accept: function accept(object) {
-	    if (!object) {
-	      return;
-	    }
-
-	    if (this.current) {
-	      this.parents.unshift(this.current);
-	    }
-	    this.current = object;
-
-	    var ret = this[object.type](object);
-
-	    this.current = this.parents.shift();
-
-	    if (!this.mutating || ret) {
-	      return ret;
-	    } else if (ret !== false) {
-	      return object;
-	    }
-	  },
-
-	  Program: function Program(program) {
-	    this.acceptArray(program.body);
-	  },
-
-	  MustacheStatement: function MustacheStatement(mustache) {
-	    this.acceptRequired(mustache, 'path');
-	    this.acceptArray(mustache.params);
-	    this.acceptKey(mustache, 'hash');
-	  },
-
-	  BlockStatement: function BlockStatement(block) {
-	    this.acceptRequired(block, 'path');
-	    this.acceptArray(block.params);
-	    this.acceptKey(block, 'hash');
-
-	    this.acceptKey(block, 'program');
-	    this.acceptKey(block, 'inverse');
-	  },
-
-	  PartialStatement: function PartialStatement(partial) {
-	    this.acceptRequired(partial, 'name');
-	    this.acceptArray(partial.params);
-	    this.acceptKey(partial, 'hash');
-	  },
-
-	  ContentStatement: function ContentStatement() {},
-	  CommentStatement: function CommentStatement() {},
-
-	  SubExpression: function SubExpression(sexpr) {
-	    this.acceptRequired(sexpr, 'path');
-	    this.acceptArray(sexpr.params);
-	    this.acceptKey(sexpr, 'hash');
-	  },
-
-	  PathExpression: function PathExpression() {},
-
-	  StringLiteral: function StringLiteral() {},
-	  NumberLiteral: function NumberLiteral() {},
-	  BooleanLiteral: function BooleanLiteral() {},
-	  UndefinedLiteral: function UndefinedLiteral() {},
-	  NullLiteral: function NullLiteral() {},
-
-	  Hash: function Hash(hash) {
-	    this.acceptArray(hash.pairs);
-	  },
-	  HashPair: function HashPair(pair) {
-	    this.acceptRequired(pair, 'value');
-	  }
-	};
-
-	exports['default'] = Visitor;
-	module.exports = exports['default'];
-	/* content */ /* comment */ /* path */ /* string */ /* number */ /* bool */ /* literal */ /* literal */
-
-/***/ },
-/* 7 */
-/***/ function(module, exports, __webpack_require__) {
-
-	/* WEBPACK VAR INJECTION */(function(global) {'use strict';
-
-	exports.__esModule = true;
-	/*global window */
-
-	exports['default'] = function (Handlebars) {
-	  /* istanbul ignore next */
-	  var root = typeof global !== 'undefined' ? global : window,
-	      $Handlebars = root.Handlebars;
-	  /* istanbul ignore next */
-	  Handlebars.noConflict = function () {
-	    if (root.Handlebars === Handlebars) {
-	      root.Handlebars = $Handlebars;
-	    }
-	  };
-	};
-
-	module.exports = exports['default'];
-	/* WEBPACK VAR INJECTION */}.call(exports, (function() { return this; }())))
-
-/***/ },
-/* 8 */
-/***/ function(module, exports, __webpack_require__) {
-
-	"use strict";
-
-	exports["default"] = function (obj) {
-	  return obj && obj.__esModule ? obj : {
-	    "default": obj
-	  };
-	};
-
-	exports.__esModule = true;
-
-/***/ },
-/* 9 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-
-	var _interopRequireWildcard = __webpack_require__(8)['default'];
-
-	exports.__esModule = true;
-	exports.HandlebarsEnvironment = HandlebarsEnvironment;
-	exports.createFrame = createFrame;
-
-	var _import = __webpack_require__(12);
-
-	var Utils = _interopRequireWildcard(_import);
-
-	var _Exception = __webpack_require__(11);
-
-	var _Exception2 = _interopRequireWildcard(_Exception);
-
-	var VERSION = '3.0.1';
-	exports.VERSION = VERSION;
-	var COMPILER_REVISION = 6;
-
-	exports.COMPILER_REVISION = COMPILER_REVISION;
-	var REVISION_CHANGES = {
-	  1: '<= 1.0.rc.2', // 1.0.rc.2 is actually rev2 but doesn't report it
-	  2: '== 1.0.0-rc.3',
-	  3: '== 1.0.0-rc.4',
-	  4: '== 1.x.x',
-	  5: '== 2.0.0-alpha.x',
-	  6: '>= 2.0.0-beta.1'
-	};
-
-	exports.REVISION_CHANGES = REVISION_CHANGES;
-	var isArray = Utils.isArray,
-	    isFunction = Utils.isFunction,
-	    toString = Utils.toString,
-	    objectType = '[object Object]';
-
-	function HandlebarsEnvironment(helpers, partials) {
-	  this.helpers = helpers || {};
-	  this.partials = partials || {};
-
-	  registerDefaultHelpers(this);
-	}
-
-	HandlebarsEnvironment.prototype = {
-	  constructor: HandlebarsEnvironment,
-
-	  logger: logger,
-	  log: log,
-
-	  registerHelper: function registerHelper(name, fn) {
-	    if (toString.call(name) === objectType) {
-	      if (fn) {
-	        throw new _Exception2['default']('Arg not supported with multiple helpers');
-	      }
-	      Utils.extend(this.helpers, name);
-	    } else {
-	      this.helpers[name] = fn;
-	    }
-	  },
-	  unregisterHelper: function unregisterHelper(name) {
-	    delete this.helpers[name];
-	  },
-
-	  registerPartial: function registerPartial(name, partial) {
-	    if (toString.call(name) === objectType) {
-	      Utils.extend(this.partials, name);
-	    } else {
-	      if (typeof partial === 'undefined') {
-	        throw new _Exception2['default']('Attempting to register a partial as undefined');
-	      }
-	      this.partials[name] = partial;
-	    }
-	  },
-	  unregisterPartial: function unregisterPartial(name) {
-	    delete this.partials[name];
-	  }
-	};
-
-	function registerDefaultHelpers(instance) {
-	  instance.registerHelper('helperMissing', function () {
-	    if (arguments.length === 1) {
-	      // A missing field in a {{foo}} constuct.
-	      return undefined;
-	    } else {
-	      // Someone is actually trying to call something, blow up.
-	      throw new _Exception2['default']('Missing helper: "' + arguments[arguments.length - 1].name + '"');
-	    }
-	  });
-
-	  instance.registerHelper('blockHelperMissing', function (context, options) {
-	    var inverse = options.inverse,
-	        fn = options.fn;
-
-	    if (context === true) {
-	      return fn(this);
-	    } else if (context === false || context == null) {
-	      return inverse(this);
-	    } else if (isArray(context)) {
-	      if (context.length > 0) {
-	        if (options.ids) {
-	          options.ids = [options.name];
-	        }
-
-	        return instance.helpers.each(context, options);
-	      } else {
-	        return inverse(this);
-	      }
-	    } else {
-	      if (options.data && options.ids) {
-	        var data = createFrame(options.data);
-	        data.contextPath = Utils.appendContextPath(options.data.contextPath, options.name);
-	        options = { data: data };
-	      }
-
-	      return fn(context, options);
-	    }
-	  });
-
-	  instance.registerHelper('each', function (context, options) {
-	    if (!options) {
-	      throw new _Exception2['default']('Must pass iterator to #each');
-	    }
-
-	    var fn = options.fn,
-	        inverse = options.inverse,
-	        i = 0,
-	        ret = '',
-	        data = undefined,
-	        contextPath = undefined;
-
-	    if (options.data && options.ids) {
-	      contextPath = Utils.appendContextPath(options.data.contextPath, options.ids[0]) + '.';
-	    }
-
-	    if (isFunction(context)) {
-	      context = context.call(this);
-	    }
-
-	    if (options.data) {
-	      data = createFrame(options.data);
-	    }
-
-	    function execIteration(field, index, last) {
-	      if (data) {
-	        data.key = field;
-	        data.index = index;
-	        data.first = index === 0;
-	        data.last = !!last;
-
-	        if (contextPath) {
-	          data.contextPath = contextPath + field;
-	        }
-	      }
-
-	      ret = ret + fn(context[field], {
-	        data: data,
-	        blockParams: Utils.blockParams([context[field], field], [contextPath + field, null])
-	      });
-	    }
-
-	    if (context && typeof context === 'object') {
-	      if (isArray(context)) {
-	        for (var j = context.length; i < j; i++) {
-	          execIteration(i, i, i === context.length - 1);
-	        }
-	      } else {
-	        var priorKey = undefined;
-
-	        for (var key in context) {
-	          if (context.hasOwnProperty(key)) {
-	            // We're running the iterations one step out of sync so we can detect
-	            // the last iteration without have to scan the object twice and create
-	            // an itermediate keys array.
-	            if (priorKey) {
-	              execIteration(priorKey, i - 1);
-	            }
-	            priorKey = key;
-	            i++;
-	          }
-	        }
-	        if (priorKey) {
-	          execIteration(priorKey, i - 1, true);
-	        }
-	      }
-	    }
-
-	    if (i === 0) {
-	      ret = inverse(this);
-	    }
-
-	    return ret;
-	  });
-
-	  instance.registerHelper('if', function (conditional, options) {
-	    if (isFunction(conditional)) {
-	      conditional = conditional.call(this);
-	    }
-
-	    // Default behavior is to render the positive path if the value is truthy and not empty.
-	    // The `includeZero` option may be set to treat the condtional as purely not empty based on the
-	    // behavior of isEmpty. Effectively this determines if 0 is handled by the positive path or negative.
-	    if (!options.hash.includeZero && !conditional || Utils.isEmpty(conditional)) {
-	      return options.inverse(this);
-	    } else {
-	      return options.fn(this);
-	    }
-	  });
-
-	  instance.registerHelper('unless', function (conditional, options) {
-	    return instance.helpers['if'].call(this, conditional, { fn: options.inverse, inverse: options.fn, hash: options.hash });
-	  });
-
-	  instance.registerHelper('with', function (context, options) {
-	    if (isFunction(context)) {
-	      context = context.call(this);
-	    }
-
-	    var fn = options.fn;
-
-	    if (!Utils.isEmpty(context)) {
-	      if (options.data && options.ids) {
-	        var data = createFrame(options.data);
-	        data.contextPath = Utils.appendContextPath(options.data.contextPath, options.ids[0]);
-	        options = { data: data };
-	      }
-
-	      return fn(context, options);
-	    } else {
-	      return options.inverse(this);
-	    }
-	  });
-
-	  instance.registerHelper('log', function (message, options) {
-	    var level = options.data && options.data.level != null ? parseInt(options.data.level, 10) : 1;
-	    instance.log(level, message);
-	  });
-
-	  instance.registerHelper('lookup', function (obj, field) {
-	    return obj && obj[field];
-	  });
-	}
-
-	var logger = {
-	  methodMap: { 0: 'debug', 1: 'info', 2: 'warn', 3: 'error' },
-
-	  // State enum
-	  DEBUG: 0,
-	  INFO: 1,
-	  WARN: 2,
-	  ERROR: 3,
-	  level: 1,
-
-	  // Can be overridden in the host environment
-	  log: function log(level, message) {
-	    if (typeof console !== 'undefined' && logger.level <= level) {
-	      var method = logger.methodMap[level];
-	      (console[method] || console.log).call(console, message); // eslint-disable-line no-console
-	    }
-	  }
-	};
-
-	exports.logger = logger;
-	var log = logger.log;
-
-	exports.log = log;
-
-	function createFrame(object) {
-	  var frame = Utils.extend({}, object);
-	  frame._parent = object;
-	  return frame;
-	}
-
-	/* [args, ]options */
-
-/***/ },
-/* 10 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-
-	exports.__esModule = true;
-	// Build out our basic SafeString type
-	function SafeString(string) {
-	  this.string = string;
-	}
-
-	SafeString.prototype.toString = SafeString.prototype.toHTML = function () {
-	  return '' + this.string;
-	};
-
-	exports['default'] = SafeString;
-	module.exports = exports['default'];
-
-/***/ },
-/* 11 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-
-	exports.__esModule = true;
-
-	var errorProps = ['description', 'fileName', 'lineNumber', 'message', 'name', 'number', 'stack'];
-
-	function Exception(message, node) {
-	  var loc = node && node.loc,
-	      line = undefined,
-	      column = undefined;
-	  if (loc) {
-	    line = loc.start.line;
-	    column = loc.start.column;
-
-	    message += ' - ' + line + ':' + column;
-	  }
-
-	  var tmp = Error.prototype.constructor.call(this, message);
-
-	  // Unfortunately errors are not enumerable in Chrome (at least), so `for prop in tmp` doesn't work.
-	  for (var idx = 0; idx < errorProps.length; idx++) {
-	    this[errorProps[idx]] = tmp[errorProps[idx]];
-	  }
-
-	  if (Error.captureStackTrace) {
-	    Error.captureStackTrace(this, Exception);
-	  }
-
-	  if (loc) {
-	    this.lineNumber = line;
-	    this.column = column;
-	  }
-	}
-
-	Exception.prototype = new Error();
-
-	exports['default'] = Exception;
-	module.exports = exports['default'];
-
-/***/ },
-/* 12 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-
-	exports.__esModule = true;
-	exports.extend = extend;
-
-	// Older IE versions do not directly support indexOf so we must implement our own, sadly.
-	exports.indexOf = indexOf;
-	exports.escapeExpression = escapeExpression;
-	exports.isEmpty = isEmpty;
-	exports.blockParams = blockParams;
-	exports.appendContextPath = appendContextPath;
-	var escape = {
-	  '&': '&amp;',
-	  '<': '&lt;',
-	  '>': '&gt;',
-	  '"': '&quot;',
-	  '\'': '&#x27;',
-	  '`': '&#x60;'
-	};
-
-	var badChars = /[&<>"'`]/g,
-	    possible = /[&<>"'`]/;
-
-	function escapeChar(chr) {
-	  return escape[chr];
-	}
-
-	function extend(obj /* , ...source */) {
-	  for (var i = 1; i < arguments.length; i++) {
-	    for (var key in arguments[i]) {
-	      if (Object.prototype.hasOwnProperty.call(arguments[i], key)) {
-	        obj[key] = arguments[i][key];
-	      }
-	    }
-	  }
-
-	  return obj;
-	}
-
-	var toString = Object.prototype.toString;
-
-	exports.toString = toString;
-	// Sourced from lodash
-	// https://github.com/bestiejs/lodash/blob/master/LICENSE.txt
-	/*eslint-disable func-style, no-var */
-	var isFunction = function isFunction(value) {
-	  return typeof value === 'function';
-	};
-	// fallback for older versions of Chrome and Safari
-	/* istanbul ignore next */
-	if (isFunction(/x/)) {
-	  exports.isFunction = isFunction = function (value) {
-	    return typeof value === 'function' && toString.call(value) === '[object Function]';
-	  };
-	}
-	var isFunction;
-	exports.isFunction = isFunction;
-	/*eslint-enable func-style, no-var */
-
-	/* istanbul ignore next */
-	var isArray = Array.isArray || function (value) {
-	  return value && typeof value === 'object' ? toString.call(value) === '[object Array]' : false;
-	};exports.isArray = isArray;
-
-	function indexOf(array, value) {
-	  for (var i = 0, len = array.length; i < len; i++) {
-	    if (array[i] === value) {
-	      return i;
-	    }
-	  }
-	  return -1;
-	}
-
-	function escapeExpression(string) {
-	  if (typeof string !== 'string') {
-	    // don't escape SafeStrings, since they're already safe
-	    if (string && string.toHTML) {
-	      return string.toHTML();
-	    } else if (string == null) {
-	      return '';
-	    } else if (!string) {
-	      return string + '';
-	    }
-
-	    // Force a string conversion as this will be done by the append regardless and
-	    // the regex test will do this transparently behind the scenes, causing issues if
-	    // an object's to string has escaped characters in it.
-	    string = '' + string;
-	  }
-
-	  if (!possible.test(string)) {
-	    return string;
-	  }
-	  return string.replace(badChars, escapeChar);
-	}
-
-	function isEmpty(value) {
-	  if (!value && value !== 0) {
-	    return true;
-	  } else if (isArray(value) && value.length === 0) {
-	    return true;
-	  } else {
-	    return false;
-	  }
-	}
-
-	function blockParams(params, ids) {
-	  params.path = ids;
-	  return params;
-	}
-
-	function appendContextPath(contextPath, id) {
-	  return (contextPath ? contextPath + '.' : '') + id;
-	}
-
-/***/ },
-/* 13 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-
-	var _interopRequireWildcard = __webpack_require__(8)['default'];
-
-	exports.__esModule = true;
-	exports.checkRevision = checkRevision;
-
-	// TODO: Remove this line and break up compilePartial
-
-	exports.template = template;
-	exports.wrapProgram = wrapProgram;
-	exports.resolvePartial = resolvePartial;
-	exports.invokePartial = invokePartial;
-	exports.noop = noop;
-
-	var _import = __webpack_require__(12);
-
-	var Utils = _interopRequireWildcard(_import);
-
-	var _Exception = __webpack_require__(11);
-
-	var _Exception2 = _interopRequireWildcard(_Exception);
-
-	var _COMPILER_REVISION$REVISION_CHANGES$createFrame = __webpack_require__(9);
-
-	function checkRevision(compilerInfo) {
-	  var compilerRevision = compilerInfo && compilerInfo[0] || 1,
-	      currentRevision = _COMPILER_REVISION$REVISION_CHANGES$createFrame.COMPILER_REVISION;
-
-	  if (compilerRevision !== currentRevision) {
-	    if (compilerRevision < currentRevision) {
-	      var runtimeVersions = _COMPILER_REVISION$REVISION_CHANGES$createFrame.REVISION_CHANGES[currentRevision],
-	          compilerVersions = _COMPILER_REVISION$REVISION_CHANGES$createFrame.REVISION_CHANGES[compilerRevision];
-	      throw new _Exception2['default']('Template was precompiled with an older version of Handlebars than the current runtime. ' + 'Please update your precompiler to a newer version (' + runtimeVersions + ') or downgrade your runtime to an older version (' + compilerVersions + ').');
-	    } else {
-	      // Use the embedded version info since the runtime doesn't know about this revision yet
-	      throw new _Exception2['default']('Template was precompiled with a newer version of Handlebars than the current runtime. ' + 'Please update your runtime to a newer version (' + compilerInfo[1] + ').');
-	    }
-	  }
-	}
-
-	function template(templateSpec, env) {
-	  /* istanbul ignore next */
-	  if (!env) {
-	    throw new _Exception2['default']('No environment passed to template');
-	  }
-	  if (!templateSpec || !templateSpec.main) {
-	    throw new _Exception2['default']('Unknown template object: ' + typeof templateSpec);
-	  }
-
-	  // Note: Using env.VM references rather than local var references throughout this section to allow
-	  // for external users to override these as psuedo-supported APIs.
-	  env.VM.checkRevision(templateSpec.compiler);
-
-	  function invokePartialWrapper(partial, context, options) {
-	    if (options.hash) {
-	      context = Utils.extend({}, context, options.hash);
-	    }
-
-	    partial = env.VM.resolvePartial.call(this, partial, context, options);
-	    var result = env.VM.invokePartial.call(this, partial, context, options);
-
-	    if (result == null && env.compile) {
-	      options.partials[options.name] = env.compile(partial, templateSpec.compilerOptions, env);
-	      result = options.partials[options.name](context, options);
-	    }
-	    if (result != null) {
-	      if (options.indent) {
-	        var lines = result.split('\n');
-	        for (var i = 0, l = lines.length; i < l; i++) {
-	          if (!lines[i] && i + 1 === l) {
-	            break;
-	          }
-
-	          lines[i] = options.indent + lines[i];
-	        }
-	        result = lines.join('\n');
-	      }
-	      return result;
-	    } else {
-	      throw new _Exception2['default']('The partial ' + options.name + ' could not be compiled when running in runtime-only mode');
-	    }
-	  }
-
-	  // Just add water
-	  var container = {
-	    strict: function strict(obj, name) {
-	      if (!(name in obj)) {
-	        throw new _Exception2['default']('"' + name + '" not defined in ' + obj);
-	      }
-	      return obj[name];
-	    },
-	    lookup: function lookup(depths, name) {
-	      var len = depths.length;
-	      for (var i = 0; i < len; i++) {
-	        if (depths[i] && depths[i][name] != null) {
-	          return depths[i][name];
-	        }
-	      }
-	    },
-	    lambda: function lambda(current, context) {
-	      return typeof current === 'function' ? current.call(context) : current;
-	    },
-
-	    escapeExpression: Utils.escapeExpression,
-	    invokePartial: invokePartialWrapper,
-
-	    fn: function fn(i) {
-	      return templateSpec[i];
-	    },
-
-	    programs: [],
-	    program: function program(i, data, declaredBlockParams, blockParams, depths) {
-	      var programWrapper = this.programs[i],
-	          fn = this.fn(i);
-	      if (data || depths || blockParams || declaredBlockParams) {
-	        programWrapper = wrapProgram(this, i, fn, data, declaredBlockParams, blockParams, depths);
-	      } else if (!programWrapper) {
-	        programWrapper = this.programs[i] = wrapProgram(this, i, fn);
-	      }
-	      return programWrapper;
-	    },
-
-	    data: function data(value, depth) {
-	      while (value && depth--) {
-	        value = value._parent;
-	      }
-	      return value;
-	    },
-	    merge: function merge(param, common) {
-	      var obj = param || common;
-
-	      if (param && common && param !== common) {
-	        obj = Utils.extend({}, common, param);
-	      }
-
-	      return obj;
-	    },
-
-	    noop: env.VM.noop,
-	    compilerInfo: templateSpec.compiler
-	  };
-
-	  function ret(context) {
-	    var options = arguments[1] === undefined ? {} : arguments[1];
-
-	    var data = options.data;
-
-	    ret._setup(options);
-	    if (!options.partial && templateSpec.useData) {
-	      data = initData(context, data);
-	    }
-	    var depths = undefined,
-	        blockParams = templateSpec.useBlockParams ? [] : undefined;
-	    if (templateSpec.useDepths) {
-	      depths = options.depths ? [context].concat(options.depths) : [context];
-	    }
-
-	    return templateSpec.main.call(container, context, container.helpers, container.partials, data, blockParams, depths);
-	  }
-	  ret.isTop = true;
-
-	  ret._setup = function (options) {
-	    if (!options.partial) {
-	      container.helpers = container.merge(options.helpers, env.helpers);
-
-	      if (templateSpec.usePartial) {
-	        container.partials = container.merge(options.partials, env.partials);
-	      }
-	    } else {
-	      container.helpers = options.helpers;
-	      container.partials = options.partials;
-	    }
-	  };
-
-	  ret._child = function (i, data, blockParams, depths) {
-	    if (templateSpec.useBlockParams && !blockParams) {
-	      throw new _Exception2['default']('must pass block params');
-	    }
-	    if (templateSpec.useDepths && !depths) {
-	      throw new _Exception2['default']('must pass parent depths');
-	    }
-
-	    return wrapProgram(container, i, templateSpec[i], data, 0, blockParams, depths);
-	  };
-	  return ret;
-	}
-
-	function wrapProgram(container, i, fn, data, declaredBlockParams, blockParams, depths) {
-	  function prog(context) {
-	    var options = arguments[1] === undefined ? {} : arguments[1];
-
-	    return fn.call(container, context, container.helpers, container.partials, options.data || data, blockParams && [options.blockParams].concat(blockParams), depths && [context].concat(depths));
-	  }
-	  prog.program = i;
-	  prog.depth = depths ? depths.length : 0;
-	  prog.blockParams = declaredBlockParams || 0;
-	  return prog;
-	}
-
-	function resolvePartial(partial, context, options) {
-	  if (!partial) {
-	    partial = options.partials[options.name];
-	  } else if (!partial.call && !options.name) {
-	    // This is a dynamic partial that returned a string
-	    options.name = partial;
-	    partial = options.partials[partial];
-	  }
-	  return partial;
-	}
-
-	function invokePartial(partial, context, options) {
-	  options.partial = true;
-
-	  if (partial === undefined) {
-	    throw new _Exception2['default']('The partial ' + options.name + ' could not be found');
-	  } else if (partial instanceof Function) {
-	    return partial(context, options);
-	  }
-	}
-
-	function noop() {
-	  return '';
-	}
-
-	function initData(context, data) {
-	  if (!data || !('root' in data)) {
-	    data = data ? _COMPILER_REVISION$REVISION_CHANGES$createFrame.createFrame(data) : {};
-	    data.root = context;
-	  }
-	  return data;
-	}
-
-/***/ },
-/* 14 */
-/***/ function(module, exports, __webpack_require__) {
-
-	"use strict";
-
-	exports.__esModule = true;
-	/* istanbul ignore next */
-	/* Jison generated parser */
-	var handlebars = (function () {
-	    var parser = { trace: function trace() {},
-	        yy: {},
-	        symbols_: { error: 2, root: 3, program: 4, EOF: 5, program_repetition0: 6, statement: 7, mustache: 8, block: 9, rawBlock: 10, partial: 11, content: 12, COMMENT: 13, CONTENT: 14, openRawBlock: 15, END_RAW_BLOCK: 16, OPEN_RAW_BLOCK: 17, helperName: 18, openRawBlock_repetition0: 19, openRawBlock_option0: 20, CLOSE_RAW_BLOCK: 21, openBlock: 22, block_option0: 23, closeBlock: 24, openInverse: 25, block_option1: 26, OPEN_BLOCK: 27, openBlock_repetition0: 28, openBlock_option0: 29, openBlock_option1: 30, CLOSE: 31, OPEN_INVERSE: 32, openInverse_repetition0: 33, openInverse_option0: 34, openInverse_option1: 35, openInverseChain: 36, OPEN_INVERSE_CHAIN: 37, openInverseChain_repetition0: 38, openInverseChain_option0: 39, openInverseChain_option1: 40, inverseAndProgram: 41, INVERSE: 42, inverseChain: 43, inverseChain_option0: 44, OPEN_ENDBLOCK: 45, OPEN: 46, mustache_repetition0: 47, mustache_option0: 48, OPEN_UNESCAPED: 49, mustache_repetition1: 50, mustache_option1: 51, CLOSE_UNESCAPED: 52, OPEN_PARTIAL: 53, partialName: 54, partial_repetition0: 55, partial_option0: 56, param: 57, sexpr: 58, OPEN_SEXPR: 59, sexpr_repetition0: 60, sexpr_option0: 61, CLOSE_SEXPR: 62, hash: 63, hash_repetition_plus0: 64, hashSegment: 65, ID: 66, EQUALS: 67, blockParams: 68, OPEN_BLOCK_PARAMS: 69, blockParams_repetition_plus0: 70, CLOSE_BLOCK_PARAMS: 71, path: 72, dataName: 73, STRING: 74, NUMBER: 75, BOOLEAN: 76, UNDEFINED: 77, NULL: 78, DATA: 79, pathSegments: 80, SEP: 81, $accept: 0, $end: 1 },
-	        terminals_: { 2: "error", 5: "EOF", 13: "COMMENT", 14: "CONTENT", 16: "END_RAW_BLOCK", 17: "OPEN_RAW_BLOCK", 21: "CLOSE_RAW_BLOCK", 27: "OPEN_BLOCK", 31: "CLOSE", 32: "OPEN_INVERSE", 37: "OPEN_INVERSE_CHAIN", 42: "INVERSE", 45: "OPEN_ENDBLOCK", 46: "OPEN", 49: "OPEN_UNESCAPED", 52: "CLOSE_UNESCAPED", 53: "OPEN_PARTIAL", 59: "OPEN_SEXPR", 62: "CLOSE_SEXPR", 66: "ID", 67: "EQUALS", 69: "OPEN_BLOCK_PARAMS", 71: "CLOSE_BLOCK_PARAMS", 74: "STRING", 75: "NUMBER", 76: "BOOLEAN", 77: "UNDEFINED", 78: "NULL", 79: "DATA", 81: "SEP" },
-	        productions_: [0, [3, 2], [4, 1], [7, 1], [7, 1], [7, 1], [7, 1], [7, 1], [7, 1], [12, 1], [10, 3], [15, 5], [9, 4], [9, 4], [22, 6], [25, 6], [36, 6], [41, 2], [43, 3], [43, 1], [24, 3], [8, 5], [8, 5], [11, 5], [57, 1], [57, 1], [58, 5], [63, 1], [65, 3], [68, 3], [18, 1], [18, 1], [18, 1], [18, 1], [18, 1], [18, 1], [18, 1], [54, 1], [54, 1], [73, 2], [72, 1], [80, 3], [80, 1], [6, 0], [6, 2], [19, 0], [19, 2], [20, 0], [20, 1], [23, 0], [23, 1], [26, 0], [26, 1], [28, 0], [28, 2], [29, 0], [29, 1], [30, 0], [30, 1], [33, 0], [33, 2], [34, 0], [34, 1], [35, 0], [35, 1], [38, 0], [38, 2], [39, 0], [39, 1], [40, 0], [40, 1], [44, 0], [44, 1], [47, 0], [47, 2], [48, 0], [48, 1], [50, 0], [50, 2], [51, 0], [51, 1], [55, 0], [55, 2], [56, 0], [56, 1], [60, 0], [60, 2], [61, 0], [61, 1], [64, 1], [64, 2], [70, 1], [70, 2]],
-	        performAction: function anonymous(yytext, yyleng, yylineno, yy, yystate, $$, _$) {
-
-	            var $0 = $$.length - 1;
-	            switch (yystate) {
-	                case 1:
-	                    return $$[$0 - 1];
-	                    break;
-	                case 2:
-	                    this.$ = new yy.Program($$[$0], null, {}, yy.locInfo(this._$));
-	                    break;
-	                case 3:
-	                    this.$ = $$[$0];
-	                    break;
-	                case 4:
-	                    this.$ = $$[$0];
-	                    break;
-	                case 5:
-	                    this.$ = $$[$0];
-	                    break;
-	                case 6:
-	                    this.$ = $$[$0];
-	                    break;
-	                case 7:
-	                    this.$ = $$[$0];
-	                    break;
-	                case 8:
-	                    this.$ = new yy.CommentStatement(yy.stripComment($$[$0]), yy.stripFlags($$[$0], $$[$0]), yy.locInfo(this._$));
-	                    break;
-	                case 9:
-	                    this.$ = new yy.ContentStatement($$[$0], yy.locInfo(this._$));
-	                    break;
-	                case 10:
-	                    this.$ = yy.prepareRawBlock($$[$0 - 2], $$[$0 - 1], $$[$0], this._$);
-	                    break;
-	                case 11:
-	                    this.$ = { path: $$[$0 - 3], params: $$[$0 - 2], hash: $$[$0 - 1] };
-	                    break;
-	                case 12:
-	                    this.$ = yy.prepareBlock($$[$0 - 3], $$[$0 - 2], $$[$0 - 1], $$[$0], false, this._$);
-	                    break;
-	                case 13:
-	                    this.$ = yy.prepareBlock($$[$0 - 3], $$[$0 - 2], $$[$0 - 1], $$[$0], true, this._$);
-	                    break;
-	                case 14:
-	                    this.$ = { path: $$[$0 - 4], params: $$[$0 - 3], hash: $$[$0 - 2], blockParams: $$[$0 - 1], strip: yy.stripFlags($$[$0 - 5], $$[$0]) };
-	                    break;
-	                case 15:
-	                    this.$ = { path: $$[$0 - 4], params: $$[$0 - 3], hash: $$[$0 - 2], blockParams: $$[$0 - 1], strip: yy.stripFlags($$[$0 - 5], $$[$0]) };
-	                    break;
-	                case 16:
-	                    this.$ = { path: $$[$0 - 4], params: $$[$0 - 3], hash: $$[$0 - 2], blockParams: $$[$0 - 1], strip: yy.stripFlags($$[$0 - 5], $$[$0]) };
-	                    break;
-	                case 17:
-	                    this.$ = { strip: yy.stripFlags($$[$0 - 1], $$[$0 - 1]), program: $$[$0] };
-	                    break;
-	                case 18:
-	                    var inverse = yy.prepareBlock($$[$0 - 2], $$[$0 - 1], $$[$0], $$[$0], false, this._$),
-	                        program = new yy.Program([inverse], null, {}, yy.locInfo(this._$));
-	                    program.chained = true;
-
-	                    this.$ = { strip: $$[$0 - 2].strip, program: program, chain: true };
-
-	                    break;
-	                case 19:
-	                    this.$ = $$[$0];
-	                    break;
-	                case 20:
-	                    this.$ = { path: $$[$0 - 1], strip: yy.stripFlags($$[$0 - 2], $$[$0]) };
-	                    break;
-	                case 21:
-	                    this.$ = yy.prepareMustache($$[$0 - 3], $$[$0 - 2], $$[$0 - 1], $$[$0 - 4], yy.stripFlags($$[$0 - 4], $$[$0]), this._$);
-	                    break;
-	                case 22:
-	                    this.$ = yy.prepareMustache($$[$0 - 3], $$[$0 - 2], $$[$0 - 1], $$[$0 - 4], yy.stripFlags($$[$0 - 4], $$[$0]), this._$);
-	                    break;
-	                case 23:
-	                    this.$ = new yy.PartialStatement($$[$0 - 3], $$[$0 - 2], $$[$0 - 1], yy.stripFlags($$[$0 - 4], $$[$0]), yy.locInfo(this._$));
-	                    break;
-	                case 24:
-	                    this.$ = $$[$0];
-	                    break;
-	                case 25:
-	                    this.$ = $$[$0];
-	                    break;
-	                case 26:
-	                    this.$ = new yy.SubExpression($$[$0 - 3], $$[$0 - 2], $$[$0 - 1], yy.locInfo(this._$));
-	                    break;
-	                case 27:
-	                    this.$ = new yy.Hash($$[$0], yy.locInfo(this._$));
-	                    break;
-	                case 28:
-	                    this.$ = new yy.HashPair(yy.id($$[$0 - 2]), $$[$0], yy.locInfo(this._$));
-	                    break;
-	                case 29:
-	                    this.$ = yy.id($$[$0 - 1]);
-	                    break;
-	                case 30:
-	                    this.$ = $$[$0];
-	                    break;
-	                case 31:
-	                    this.$ = $$[$0];
-	                    break;
-	                case 32:
-	                    this.$ = new yy.StringLiteral($$[$0], yy.locInfo(this._$));
-	                    break;
-	                case 33:
-	                    this.$ = new yy.NumberLiteral($$[$0], yy.locInfo(this._$));
-	                    break;
-	                case 34:
-	                    this.$ = new yy.BooleanLiteral($$[$0], yy.locInfo(this._$));
-	                    break;
-	                case 35:
-	                    this.$ = new yy.UndefinedLiteral(yy.locInfo(this._$));
-	                    break;
-	                case 36:
-	                    this.$ = new yy.NullLiteral(yy.locInfo(this._$));
-	                    break;
-	                case 37:
-	                    this.$ = $$[$0];
-	                    break;
-	                case 38:
-	                    this.$ = $$[$0];
-	                    break;
-	                case 39:
-	                    this.$ = yy.preparePath(true, $$[$0], this._$);
-	                    break;
-	                case 40:
-	                    this.$ = yy.preparePath(false, $$[$0], this._$);
-	                    break;
-	                case 41:
-	                    $$[$0 - 2].push({ part: yy.id($$[$0]), original: $$[$0], separator: $$[$0 - 1] });this.$ = $$[$0 - 2];
-	                    break;
-	                case 42:
-	                    this.$ = [{ part: yy.id($$[$0]), original: $$[$0] }];
-	                    break;
-	                case 43:
-	                    this.$ = [];
-	                    break;
-	                case 44:
-	                    $$[$0 - 1].push($$[$0]);
-	                    break;
-	                case 45:
-	                    this.$ = [];
-	                    break;
-	                case 46:
-	                    $$[$0 - 1].push($$[$0]);
-	                    break;
-	                case 53:
-	                    this.$ = [];
-	                    break;
-	                case 54:
-	                    $$[$0 - 1].push($$[$0]);
-	                    break;
-	                case 59:
-	                    this.$ = [];
-	                    break;
-	                case 60:
-	                    $$[$0 - 1].push($$[$0]);
-	                    break;
-	                case 65:
-	                    this.$ = [];
-	                    break;
-	                case 66:
-	                    $$[$0 - 1].push($$[$0]);
-	                    break;
-	                case 73:
-	                    this.$ = [];
-	                    break;
-	                case 74:
-	                    $$[$0 - 1].push($$[$0]);
-	                    break;
-	                case 77:
-	                    this.$ = [];
-	                    break;
-	                case 78:
-	                    $$[$0 - 1].push($$[$0]);
-	                    break;
-	                case 81:
-	                    this.$ = [];
-	                    break;
-	                case 82:
-	                    $$[$0 - 1].push($$[$0]);
-	                    break;
-	                case 85:
-	                    this.$ = [];
-	                    break;
-	                case 86:
-	                    $$[$0 - 1].push($$[$0]);
-	                    break;
-	                case 89:
-	                    this.$ = [$$[$0]];
-	                    break;
-	                case 90:
-	                    $$[$0 - 1].push($$[$0]);
-	                    break;
-	                case 91:
-	                    this.$ = [$$[$0]];
-	                    break;
-	                case 92:
-	                    $$[$0 - 1].push($$[$0]);
-	                    break;
-	            }
-	        },
-	        table: [{ 3: 1, 4: 2, 5: [2, 43], 6: 3, 13: [2, 43], 14: [2, 43], 17: [2, 43], 27: [2, 43], 32: [2, 43], 46: [2, 43], 49: [2, 43], 53: [2, 43] }, { 1: [3] }, { 5: [1, 4] }, { 5: [2, 2], 7: 5, 8: 6, 9: 7, 10: 8, 11: 9, 12: 10, 13: [1, 11], 14: [1, 18], 15: 16, 17: [1, 21], 22: 14, 25: 15, 27: [1, 19], 32: [1, 20], 37: [2, 2], 42: [2, 2], 45: [2, 2], 46: [1, 12], 49: [1, 13], 53: [1, 17] }, { 1: [2, 1] }, { 5: [2, 44], 13: [2, 44], 14: [2, 44], 17: [2, 44], 27: [2, 44], 32: [2, 44], 37: [2, 44], 42: [2, 44], 45: [2, 44], 46: [2, 44], 49: [2, 44], 53: [2, 44] }, { 5: [2, 3], 13: [2, 3], 14: [2, 3], 17: [2, 3], 27: [2, 3], 32: [2, 3], 37: [2, 3], 42: [2, 3], 45: [2, 3], 46: [2, 3], 49: [2, 3], 53: [2, 3] }, { 5: [2, 4], 13: [2, 4], 14: [2, 4], 17: [2, 4], 27: [2, 4], 32: [2, 4], 37: [2, 4], 42: [2, 4], 45: [2, 4], 46: [2, 4], 49: [2, 4], 53: [2, 4] }, { 5: [2, 5], 13: [2, 5], 14: [2, 5], 17: [2, 5], 27: [2, 5], 32: [2, 5], 37: [2, 5], 42: [2, 5], 45: [2, 5], 46: [2, 5], 49: [2, 5], 53: [2, 5] }, { 5: [2, 6], 13: [2, 6], 14: [2, 6], 17: [2, 6], 27: [2, 6], 32: [2, 6], 37: [2, 6], 42: [2, 6], 45: [2, 6], 46: [2, 6], 49: [2, 6], 53: [2, 6] }, { 5: [2, 7], 13: [2, 7], 14: [2, 7], 17: [2, 7], 27: [2, 7], 32: [2, 7], 37: [2, 7], 42: [2, 7], 45: [2, 7], 46: [2, 7], 49: [2, 7], 53: [2, 7] }, { 5: [2, 8], 13: [2, 8], 14: [2, 8], 17: [2, 8], 27: [2, 8], 32: [2, 8], 37: [2, 8], 42: [2, 8], 45: [2, 8], 46: [2, 8], 49: [2, 8], 53: [2, 8] }, { 18: 22, 66: [1, 32], 72: 23, 73: 24, 74: [1, 25], 75: [1, 26], 76: [1, 27], 77: [1, 28], 78: [1, 29], 79: [1, 31], 80: 30 }, { 18: 33, 66: [1, 32], 72: 23, 73: 24, 74: [1, 25], 75: [1, 26], 76: [1, 27], 77: [1, 28], 78: [1, 29], 79: [1, 31], 80: 30 }, { 4: 34, 6: 3, 13: [2, 43], 14: [2, 43], 17: [2, 43], 27: [2, 43], 32: [2, 43], 37: [2, 43], 42: [2, 43], 45: [2, 43], 46: [2, 43], 49: [2, 43], 53: [2, 43] }, { 4: 35, 6: 3, 13: [2, 43], 14: [2, 43], 17: [2, 43], 27: [2, 43], 32: [2, 43], 42: [2, 43], 45: [2, 43], 46: [2, 43], 49: [2, 43], 53: [2, 43] }, { 12: 36, 14: [1, 18] }, { 18: 38, 54: 37, 58: 39, 59: [1, 40], 66: [1, 32], 72: 23, 73: 24, 74: [1, 25], 75: [1, 26], 76: [1, 27], 77: [1, 28], 78: [1, 29], 79: [1, 31], 80: 30 }, { 5: [2, 9], 13: [2, 9], 14: [2, 9], 16: [2, 9], 17: [2, 9], 27: [2, 9], 32: [2, 9], 37: [2, 9], 42: [2, 9], 45: [2, 9], 46: [2, 9], 49: [2, 9], 53: [2, 9] }, { 18: 41, 66: [1, 32], 72: 23, 73: 24, 74: [1, 25], 75: [1, 26], 76: [1, 27], 77: [1, 28], 78: [1, 29], 79: [1, 31], 80: 30 }, { 18: 42, 66: [1, 32], 72: 23, 73: 24, 74: [1, 25], 75: [1, 26], 76: [1, 27], 77: [1, 28], 78: [1, 29], 79: [1, 31], 80: 30 }, { 18: 43, 66: [1, 32], 72: 23, 73: 24, 74: [1, 25], 75: [1, 26], 76: [1, 27], 77: [1, 28], 78: [1, 29], 79: [1, 31], 80: 30 }, { 31: [2, 73], 47: 44, 59: [2, 73], 66: [2, 73], 74: [2, 73], 75: [2, 73], 76: [2, 73], 77: [2, 73], 78: [2, 73], 79: [2, 73] }, { 21: [2, 30], 31: [2, 30], 52: [2, 30], 59: [2, 30], 62: [2, 30], 66: [2, 30], 69: [2, 30], 74: [2, 30], 75: [2, 30], 76: [2, 30], 77: [2, 30], 78: [2, 30], 79: [2, 30] }, { 21: [2, 31], 31: [2, 31], 52: [2, 31], 59: [2, 31], 62: [2, 31], 66: [2, 31], 69: [2, 31], 74: [2, 31], 75: [2, 31], 76: [2, 31], 77: [2, 31], 78: [2, 31], 79: [2, 31] }, { 21: [2, 32], 31: [2, 32], 52: [2, 32], 59: [2, 32], 62: [2, 32], 66: [2, 32], 69: [2, 32], 74: [2, 32], 75: [2, 32], 76: [2, 32], 77: [2, 32], 78: [2, 32], 79: [2, 32] }, { 21: [2, 33], 31: [2, 33], 52: [2, 33], 59: [2, 33], 62: [2, 33], 66: [2, 33], 69: [2, 33], 74: [2, 33], 75: [2, 33], 76: [2, 33], 77: [2, 33], 78: [2, 33], 79: [2, 33] }, { 21: [2, 34], 31: [2, 34], 52: [2, 34], 59: [2, 34], 62: [2, 34], 66: [2, 34], 69: [2, 34], 74: [2, 34], 75: [2, 34], 76: [2, 34], 77: [2, 34], 78: [2, 34], 79: [2, 34] }, { 21: [2, 35], 31: [2, 35], 52: [2, 35], 59: [2, 35], 62: [2, 35], 66: [2, 35], 69: [2, 35], 74: [2, 35], 75: [2, 35], 76: [2, 35], 77: [2, 35], 78: [2, 35], 79: [2, 35] }, { 21: [2, 36], 31: [2, 36], 52: [2, 36], 59: [2, 36], 62: [2, 36], 66: [2, 36], 69: [2, 36], 74: [2, 36], 75: [2, 36], 76: [2, 36], 77: [2, 36], 78: [2, 36], 79: [2, 36] }, { 21: [2, 40], 31: [2, 40], 52: [2, 40], 59: [2, 40], 62: [2, 40], 66: [2, 40], 69: [2, 40], 74: [2, 40], 75: [2, 40], 76: [2, 40], 77: [2, 40], 78: [2, 40], 79: [2, 40], 81: [1, 45] }, { 66: [1, 32], 80: 46 }, { 21: [2, 42], 31: [2, 42], 52: [2, 42], 59: [2, 42], 62: [2, 42], 66: [2, 42], 69: [2, 42], 74: [2, 42], 75: [2, 42], 76: [2, 42], 77: [2, 42], 78: [2, 42], 79: [2, 42], 81: [2, 42] }, { 50: 47, 52: [2, 77], 59: [2, 77], 66: [2, 77], 74: [2, 77], 75: [2, 77], 76: [2, 77], 77: [2, 77], 78: [2, 77], 79: [2, 77] }, { 23: 48, 36: 50, 37: [1, 52], 41: 51, 42: [1, 53], 43: 49, 45: [2, 49] }, { 26: 54, 41: 55, 42: [1, 53], 45: [2, 51] }, { 16: [1, 56] }, { 31: [2, 81], 55: 57, 59: [2, 81], 66: [2, 81], 74: [2, 81], 75: [2, 81], 76: [2, 81], 77: [2, 81], 78: [2, 81], 79: [2, 81] }, { 31: [2, 37], 59: [2, 37], 66: [2, 37], 74: [2, 37], 75: [2, 37], 76: [2, 37], 77: [2, 37], 78: [2, 37], 79: [2, 37] }, { 31: [2, 38], 59: [2, 38], 66: [2, 38], 74: [2, 38], 75: [2, 38], 76: [2, 38], 77: [2, 38], 78: [2, 38], 79: [2, 38] }, { 18: 58, 66: [1, 32], 72: 23, 73: 24, 74: [1, 25], 75: [1, 26], 76: [1, 27], 77: [1, 28], 78: [1, 29], 79: [1, 31], 80: 30 }, { 28: 59, 31: [2, 53], 59: [2, 53], 66: [2, 53], 69: [2, 53], 74: [2, 53], 75: [2, 53], 76: [2, 53], 77: [2, 53], 78: [2, 53], 79: [2, 53] }, { 31: [2, 59], 33: 60, 59: [2, 59], 66: [2, 59], 69: [2, 59], 74: [2, 59], 75: [2, 59], 76: [2, 59], 77: [2, 59], 78: [2, 59], 79: [2, 59] }, { 19: 61, 21: [2, 45], 59: [2, 45], 66: [2, 45], 74: [2, 45], 75: [2, 45], 76: [2, 45], 77: [2, 45], 78: [2, 45], 79: [2, 45] }, { 18: 65, 31: [2, 75], 48: 62, 57: 63, 58: 66, 59: [1, 40], 63: 64, 64: 67, 65: 68, 66: [1, 69], 72: 23, 73: 24, 74: [1, 25], 75: [1, 26], 76: [1, 27], 77: [1, 28], 78: [1, 29], 79: [1, 31], 80: 30 }, { 66: [1, 70] }, { 21: [2, 39], 31: [2, 39], 52: [2, 39], 59: [2, 39], 62: [2, 39], 66: [2, 39], 69: [2, 39], 74: [2, 39], 75: [2, 39], 76: [2, 39], 77: [2, 39], 78: [2, 39], 79: [2, 39], 81: [1, 45] }, { 18: 65, 51: 71, 52: [2, 79], 57: 72, 58: 66, 59: [1, 40], 63: 73, 64: 67, 65: 68, 66: [1, 69], 72: 23, 73: 24, 74: [1, 25], 75: [1, 26], 76: [1, 27], 77: [1, 28], 78: [1, 29], 79: [1, 31], 80: 30 }, { 24: 74, 45: [1, 75] }, { 45: [2, 50] }, { 4: 76, 6: 3, 13: [2, 43], 14: [2, 43], 17: [2, 43], 27: [2, 43], 32: [2, 43], 37: [2, 43], 42: [2, 43], 45: [2, 43], 46: [2, 43], 49: [2, 43], 53: [2, 43] }, { 45: [2, 19] }, { 18: 77, 66: [1, 32], 72: 23, 73: 24, 74: [1, 25], 75: [1, 26], 76: [1, 27], 77: [1, 28], 78: [1, 29], 79: [1, 31], 80: 30 }, { 4: 78, 6: 3, 13: [2, 43], 14: [2, 43], 17: [2, 43], 27: [2, 43], 32: [2, 43], 45: [2, 43], 46: [2, 43], 49: [2, 43], 53: [2, 43] }, { 24: 79, 45: [1, 75] }, { 45: [2, 52] }, { 5: [2, 10], 13: [2, 10], 14: [2, 10], 17: [2, 10], 27: [2, 10], 32: [2, 10], 37: [2, 10], 42: [2, 10], 45: [2, 10], 46: [2, 10], 49: [2, 10], 53: [2, 10] }, { 18: 65, 31: [2, 83], 56: 80, 57: 81, 58: 66, 59: [1, 40], 63: 82, 64: 67, 65: 68, 66: [1, 69], 72: 23, 73: 24, 74: [1, 25], 75: [1, 26], 76: [1, 27], 77: [1, 28], 78: [1, 29], 79: [1, 31], 80: 30 }, { 59: [2, 85], 60: 83, 62: [2, 85], 66: [2, 85], 74: [2, 85], 75: [2, 85], 76: [2, 85], 77: [2, 85], 78: [2, 85], 79: [2, 85] }, { 18: 65, 29: 84, 31: [2, 55], 57: 85, 58: 66, 59: [1, 40], 63: 86, 64: 67, 65: 68, 66: [1, 69], 69: [2, 55], 72: 23, 73: 24, 74: [1, 25], 75: [1, 26], 76: [1, 27], 77: [1, 28], 78: [1, 29], 79: [1, 31], 80: 30 }, { 18: 65, 31: [2, 61], 34: 87, 57: 88, 58: 66, 59: [1, 40], 63: 89, 64: 67, 65: 68, 66: [1, 69], 69: [2, 61], 72: 23, 73: 24, 74: [1, 25], 75: [1, 26], 76: [1, 27], 77: [1, 28], 78: [1, 29], 79: [1, 31], 80: 30 }, { 18: 65, 20: 90, 21: [2, 47], 57: 91, 58: 66, 59: [1, 40], 63: 92, 64: 67, 65: 68, 66: [1, 69], 72: 23, 73: 24, 74: [1, 25], 75: [1, 26], 76: [1, 27], 77: [1, 28], 78: [1, 29], 79: [1, 31], 80: 30 }, { 31: [1, 93] }, { 31: [2, 74], 59: [2, 74], 66: [2, 74], 74: [2, 74], 75: [2, 74], 76: [2, 74], 77: [2, 74], 78: [2, 74], 79: [2, 74] }, { 31: [2, 76] }, { 21: [2, 24], 31: [2, 24], 52: [2, 24], 59: [2, 24], 62: [2, 24], 66: [2, 24], 69: [2, 24], 74: [2, 24], 75: [2, 24], 76: [2, 24], 77: [2, 24], 78: [2, 24], 79: [2, 24] }, { 21: [2, 25], 31: [2, 25], 52: [2, 25], 59: [2, 25], 62: [2, 25], 66: [2, 25], 69: [2, 25], 74: [2, 25], 75: [2, 25], 76: [2, 25], 77: [2, 25], 78: [2, 25], 79: [2, 25] }, { 21: [2, 27], 31: [2, 27], 52: [2, 27], 62: [2, 27], 65: 94, 66: [1, 95], 69: [2, 27] }, { 21: [2, 89], 31: [2, 89], 52: [2, 89], 62: [2, 89], 66: [2, 89], 69: [2, 89] }, { 21: [2, 42], 31: [2, 42], 52: [2, 42], 59: [2, 42], 62: [2, 42], 66: [2, 42], 67: [1, 96], 69: [2, 42], 74: [2, 42], 75: [2, 42], 76: [2, 42], 77: [2, 42], 78: [2, 42], 79: [2, 42], 81: [2, 42] }, { 21: [2, 41], 31: [2, 41], 52: [2, 41], 59: [2, 41], 62: [2, 41], 66: [2, 41], 69: [2, 41], 74: [2, 41], 75: [2, 41], 76: [2, 41], 77: [2, 41], 78: [2, 41], 79: [2, 41], 81: [2, 41] }, { 52: [1, 97] }, { 52: [2, 78], 59: [2, 78], 66: [2, 78], 74: [2, 78], 75: [2, 78], 76: [2, 78], 77: [2, 78], 78: [2, 78], 79: [2, 78] }, { 52: [2, 80] }, { 5: [2, 12], 13: [2, 12], 14: [2, 12], 17: [2, 12], 27: [2, 12], 32: [2, 12], 37: [2, 12], 42: [2, 12], 45: [2, 12], 46: [2, 12], 49: [2, 12], 53: [2, 12] }, { 18: 98, 66: [1, 32], 72: 23, 73: 24, 74: [1, 25], 75: [1, 26], 76: [1, 27], 77: [1, 28], 78: [1, 29], 79: [1, 31], 80: 30 }, { 36: 50, 37: [1, 52], 41: 51, 42: [1, 53], 43: 100, 44: 99, 45: [2, 71] }, { 31: [2, 65], 38: 101, 59: [2, 65], 66: [2, 65], 69: [2, 65], 74: [2, 65], 75: [2, 65], 76: [2, 65], 77: [2, 65], 78: [2, 65], 79: [2, 65] }, { 45: [2, 17] }, { 5: [2, 13], 13: [2, 13], 14: [2, 13], 17: [2, 13], 27: [2, 13], 32: [2, 13], 37: [2, 13], 42: [2, 13], 45: [2, 13], 46: [2, 13], 49: [2, 13], 53: [2, 13] }, { 31: [1, 102] }, { 31: [2, 82], 59: [2, 82], 66: [2, 82], 74: [2, 82], 75: [2, 82], 76: [2, 82], 77: [2, 82], 78: [2, 82], 79: [2, 82] }, { 31: [2, 84] }, { 18: 65, 57: 104, 58: 66, 59: [1, 40], 61: 103, 62: [2, 87], 63: 105, 64: 67, 65: 68, 66: [1, 69], 72: 23, 73: 24, 74: [1, 25], 75: [1, 26], 76: [1, 27], 77: [1, 28], 78: [1, 29], 79: [1, 31], 80: 30 }, { 30: 106, 31: [2, 57], 68: 107, 69: [1, 108] }, { 31: [2, 54], 59: [2, 54], 66: [2, 54], 69: [2, 54], 74: [2, 54], 75: [2, 54], 76: [2, 54], 77: [2, 54], 78: [2, 54], 79: [2, 54] }, { 31: [2, 56], 69: [2, 56] }, { 31: [2, 63], 35: 109, 68: 110, 69: [1, 108] }, { 31: [2, 60], 59: [2, 60], 66: [2, 60], 69: [2, 60], 74: [2, 60], 75: [2, 60], 76: [2, 60], 77: [2, 60], 78: [2, 60], 79: [2, 60] }, { 31: [2, 62], 69: [2, 62] }, { 21: [1, 111] }, { 21: [2, 46], 59: [2, 46], 66: [2, 46], 74: [2, 46], 75: [2, 46], 76: [2, 46], 77: [2, 46], 78: [2, 46], 79: [2, 46] }, { 21: [2, 48] }, { 5: [2, 21], 13: [2, 21], 14: [2, 21], 17: [2, 21], 27: [2, 21], 32: [2, 21], 37: [2, 21], 42: [2, 21], 45: [2, 21], 46: [2, 21], 49: [2, 21], 53: [2, 21] }, { 21: [2, 90], 31: [2, 90], 52: [2, 90], 62: [2, 90], 66: [2, 90], 69: [2, 90] }, { 67: [1, 96] }, { 18: 65, 57: 112, 58: 66, 59: [1, 40], 66: [1, 32], 72: 23, 73: 24, 74: [1, 25], 75: [1, 26], 76: [1, 27], 77: [1, 28], 78: [1, 29], 79: [1, 31], 80: 30 }, { 5: [2, 22], 13: [2, 22], 14: [2, 22], 17: [2, 22], 27: [2, 22], 32: [2, 22], 37: [2, 22], 42: [2, 22], 45: [2, 22], 46: [2, 22], 49: [2, 22], 53: [2, 22] }, { 31: [1, 113] }, { 45: [2, 18] }, { 45: [2, 72] }, { 18: 65, 31: [2, 67], 39: 114, 57: 115, 58: 66, 59: [1, 40], 63: 116, 64: 67, 65: 68, 66: [1, 69], 69: [2, 67], 72: 23, 73: 24, 74: [1, 25], 75: [1, 26], 76: [1, 27], 77: [1, 28], 78: [1, 29], 79: [1, 31], 80: 30 }, { 5: [2, 23], 13: [2, 23], 14: [2, 23], 17: [2, 23], 27: [2, 23], 32: [2, 23], 37: [2, 23], 42: [2, 23], 45: [2, 23], 46: [2, 23], 49: [2, 23], 53: [2, 23] }, { 62: [1, 117] }, { 59: [2, 86], 62: [2, 86], 66: [2, 86], 74: [2, 86], 75: [2, 86], 76: [2, 86], 77: [2, 86], 78: [2, 86], 79: [2, 86] }, { 62: [2, 88] }, { 31: [1, 118] }, { 31: [2, 58] }, { 66: [1, 120], 70: 119 }, { 31: [1, 121] }, { 31: [2, 64] }, { 14: [2, 11] }, { 21: [2, 28], 31: [2, 28], 52: [2, 28], 62: [2, 28], 66: [2, 28], 69: [2, 28] }, { 5: [2, 20], 13: [2, 20], 14: [2, 20], 17: [2, 20], 27: [2, 20], 32: [2, 20], 37: [2, 20], 42: [2, 20], 45: [2, 20], 46: [2, 20], 49: [2, 20], 53: [2, 20] }, { 31: [2, 69], 40: 122, 68: 123, 69: [1, 108] }, { 31: [2, 66], 59: [2, 66], 66: [2, 66], 69: [2, 66], 74: [2, 66], 75: [2, 66], 76: [2, 66], 77: [2, 66], 78: [2, 66], 79: [2, 66] }, { 31: [2, 68], 69: [2, 68] }, { 21: [2, 26], 31: [2, 26], 52: [2, 26], 59: [2, 26], 62: [2, 26], 66: [2, 26], 69: [2, 26], 74: [2, 26], 75: [2, 26], 76: [2, 26], 77: [2, 26], 78: [2, 26], 79: [2, 26] }, { 13: [2, 14], 14: [2, 14], 17: [2, 14], 27: [2, 14], 32: [2, 14], 37: [2, 14], 42: [2, 14], 45: [2, 14], 46: [2, 14], 49: [2, 14], 53: [2, 14] }, { 66: [1, 125], 71: [1, 124] }, { 66: [2, 91], 71: [2, 91] }, { 13: [2, 15], 14: [2, 15], 17: [2, 15], 27: [2, 15], 32: [2, 15], 42: [2, 15], 45: [2, 15], 46: [2, 15], 49: [2, 15], 53: [2, 15] }, { 31: [1, 126] }, { 31: [2, 70] }, { 31: [2, 29] }, { 66: [2, 92], 71: [2, 92] }, { 13: [2, 16], 14: [2, 16], 17: [2, 16], 27: [2, 16], 32: [2, 16], 37: [2, 16], 42: [2, 16], 45: [2, 16], 46: [2, 16], 49: [2, 16], 53: [2, 16] }],
-	        defaultActions: { 4: [2, 1], 49: [2, 50], 51: [2, 19], 55: [2, 52], 64: [2, 76], 73: [2, 80], 78: [2, 17], 82: [2, 84], 92: [2, 48], 99: [2, 18], 100: [2, 72], 105: [2, 88], 107: [2, 58], 110: [2, 64], 111: [2, 11], 123: [2, 70], 124: [2, 29] },
-	        parseError: function parseError(str, hash) {
-	            throw new Error(str);
-	        },
-	        parse: function parse(input) {
-	            var self = this,
-	                stack = [0],
-	                vstack = [null],
-	                lstack = [],
-	                table = this.table,
-	                yytext = "",
-	                yylineno = 0,
-	                yyleng = 0,
-	                recovering = 0,
-	                TERROR = 2,
-	                EOF = 1;
-	            this.lexer.setInput(input);
-	            this.lexer.yy = this.yy;
-	            this.yy.lexer = this.lexer;
-	            this.yy.parser = this;
-	            if (typeof this.lexer.yylloc == "undefined") this.lexer.yylloc = {};
-	            var yyloc = this.lexer.yylloc;
-	            lstack.push(yyloc);
-	            var ranges = this.lexer.options && this.lexer.options.ranges;
-	            if (typeof this.yy.parseError === "function") this.parseError = this.yy.parseError;
-	            function popStack(n) {
-	                stack.length = stack.length - 2 * n;
-	                vstack.length = vstack.length - n;
-	                lstack.length = lstack.length - n;
-	            }
-	            function lex() {
-	                var token;
-	                token = self.lexer.lex() || 1;
-	                if (typeof token !== "number") {
-	                    token = self.symbols_[token] || token;
-	                }
-	                return token;
-	            }
-	            var symbol,
-	                preErrorSymbol,
-	                state,
-	                action,
-	                a,
-	                r,
-	                yyval = {},
-	                p,
-	                len,
-	                newState,
-	                expected;
-	            while (true) {
-	                state = stack[stack.length - 1];
-	                if (this.defaultActions[state]) {
-	                    action = this.defaultActions[state];
-	                } else {
-	                    if (symbol === null || typeof symbol == "undefined") {
-	                        symbol = lex();
-	                    }
-	                    action = table[state] && table[state][symbol];
-	                }
-	                if (typeof action === "undefined" || !action.length || !action[0]) {
-	                    var errStr = "";
-	                    if (!recovering) {
-	                        expected = [];
-	                        for (p in table[state]) if (this.terminals_[p] && p > 2) {
-	                            expected.push("'" + this.terminals_[p] + "'");
-	                        }
-	                        if (this.lexer.showPosition) {
-	                            errStr = "Parse error on line " + (yylineno + 1) + ":\n" + this.lexer.showPosition() + "\nExpecting " + expected.join(", ") + ", got '" + (this.terminals_[symbol] || symbol) + "'";
-	                        } else {
-	                            errStr = "Parse error on line " + (yylineno + 1) + ": Unexpected " + (symbol == 1 ? "end of input" : "'" + (this.terminals_[symbol] || symbol) + "'");
-	                        }
-	                        this.parseError(errStr, { text: this.lexer.match, token: this.terminals_[symbol] || symbol, line: this.lexer.yylineno, loc: yyloc, expected: expected });
-	                    }
-	                }
-	                if (action[0] instanceof Array && action.length > 1) {
-	                    throw new Error("Parse Error: multiple actions possible at state: " + state + ", token: " + symbol);
-	                }
-	                switch (action[0]) {
-	                    case 1:
-	                        stack.push(symbol);
-	                        vstack.push(this.lexer.yytext);
-	                        lstack.push(this.lexer.yylloc);
-	                        stack.push(action[1]);
-	                        symbol = null;
-	                        if (!preErrorSymbol) {
-	                            yyleng = this.lexer.yyleng;
-	                            yytext = this.lexer.yytext;
-	                            yylineno = this.lexer.yylineno;
-	                            yyloc = this.lexer.yylloc;
-	                            if (recovering > 0) recovering--;
-	                        } else {
-	                            symbol = preErrorSymbol;
-	                            preErrorSymbol = null;
-	                        }
-	                        break;
-	                    case 2:
-	                        len = this.productions_[action[1]][1];
-	                        yyval.$ = vstack[vstack.length - len];
-	                        yyval._$ = { first_line: lstack[lstack.length - (len || 1)].first_line, last_line: lstack[lstack.length - 1].last_line, first_column: lstack[lstack.length - (len || 1)].first_column, last_column: lstack[lstack.length - 1].last_column };
-	                        if (ranges) {
-	                            yyval._$.range = [lstack[lstack.length - (len || 1)].range[0], lstack[lstack.length - 1].range[1]];
-	                        }
-	                        r = this.performAction.call(yyval, yytext, yyleng, yylineno, this.yy, action[1], vstack, lstack);
-	                        if (typeof r !== "undefined") {
-	                            return r;
-	                        }
-	                        if (len) {
-	                            stack = stack.slice(0, -1 * len * 2);
-	                            vstack = vstack.slice(0, -1 * len);
-	                            lstack = lstack.slice(0, -1 * len);
-	                        }
-	                        stack.push(this.productions_[action[1]][0]);
-	                        vstack.push(yyval.$);
-	                        lstack.push(yyval._$);
-	                        newState = table[stack[stack.length - 2]][stack[stack.length - 1]];
-	                        stack.push(newState);
-	                        break;
-	                    case 3:
-	                        return true;
-	                }
-	            }
-	            return true;
-	        }
-	    };
-	    /* Jison generated lexer */
-	    var lexer = (function () {
-	        var lexer = { EOF: 1,
-	            parseError: function parseError(str, hash) {
-	                if (this.yy.parser) {
-	                    this.yy.parser.parseError(str, hash);
-	                } else {
-	                    throw new Error(str);
-	                }
-	            },
-	            setInput: function setInput(input) {
-	                this._input = input;
-	                this._more = this._less = this.done = false;
-	                this.yylineno = this.yyleng = 0;
-	                this.yytext = this.matched = this.match = "";
-	                this.conditionStack = ["INITIAL"];
-	                this.yylloc = { first_line: 1, first_column: 0, last_line: 1, last_column: 0 };
-	                if (this.options.ranges) this.yylloc.range = [0, 0];
-	                this.offset = 0;
-	                return this;
-	            },
-	            input: function input() {
-	                var ch = this._input[0];
-	                this.yytext += ch;
-	                this.yyleng++;
-	                this.offset++;
-	                this.match += ch;
-	                this.matched += ch;
-	                var lines = ch.match(/(?:\r\n?|\n).*/g);
-	                if (lines) {
-	                    this.yylineno++;
-	                    this.yylloc.last_line++;
-	                } else {
-	                    this.yylloc.last_column++;
-	                }
-	                if (this.options.ranges) this.yylloc.range[1]++;
-
-	                this._input = this._input.slice(1);
-	                return ch;
-	            },
-	            unput: function unput(ch) {
-	                var len = ch.length;
-	                var lines = ch.split(/(?:\r\n?|\n)/g);
-
-	                this._input = ch + this._input;
-	                this.yytext = this.yytext.substr(0, this.yytext.length - len - 1);
-	                //this.yyleng -= len;
-	                this.offset -= len;
-	                var oldLines = this.match.split(/(?:\r\n?|\n)/g);
-	                this.match = this.match.substr(0, this.match.length - 1);
-	                this.matched = this.matched.substr(0, this.matched.length - 1);
-
-	                if (lines.length - 1) this.yylineno -= lines.length - 1;
-	                var r = this.yylloc.range;
-
-	                this.yylloc = { first_line: this.yylloc.first_line,
-	                    last_line: this.yylineno + 1,
-	                    first_column: this.yylloc.first_column,
-	                    last_column: lines ? (lines.length === oldLines.length ? this.yylloc.first_column : 0) + oldLines[oldLines.length - lines.length].length - lines[0].length : this.yylloc.first_column - len
-	                };
-
-	                if (this.options.ranges) {
-	                    this.yylloc.range = [r[0], r[0] + this.yyleng - len];
-	                }
-	                return this;
-	            },
-	            more: function more() {
-	                this._more = true;
-	                return this;
-	            },
-	            less: function less(n) {
-	                this.unput(this.match.slice(n));
-	            },
-	            pastInput: function pastInput() {
-	                var past = this.matched.substr(0, this.matched.length - this.match.length);
-	                return (past.length > 20 ? "..." : "") + past.substr(-20).replace(/\n/g, "");
-	            },
-	            upcomingInput: function upcomingInput() {
-	                var next = this.match;
-	                if (next.length < 20) {
-	                    next += this._input.substr(0, 20 - next.length);
-	                }
-	                return (next.substr(0, 20) + (next.length > 20 ? "..." : "")).replace(/\n/g, "");
-	            },
-	            showPosition: function showPosition() {
-	                var pre = this.pastInput();
-	                var c = new Array(pre.length + 1).join("-");
-	                return pre + this.upcomingInput() + "\n" + c + "^";
-	            },
-	            next: function next() {
-	                if (this.done) {
-	                    return this.EOF;
-	                }
-	                if (!this._input) this.done = true;
-
-	                var token, match, tempMatch, index, col, lines;
-	                if (!this._more) {
-	                    this.yytext = "";
-	                    this.match = "";
-	                }
-	                var rules = this._currentRules();
-	                for (var i = 0; i < rules.length; i++) {
-	                    tempMatch = this._input.match(this.rules[rules[i]]);
-	                    if (tempMatch && (!match || tempMatch[0].length > match[0].length)) {
-	                        match = tempMatch;
-	                        index = i;
-	                        if (!this.options.flex) break;
-	                    }
-	                }
-	                if (match) {
-	                    lines = match[0].match(/(?:\r\n?|\n).*/g);
-	                    if (lines) this.yylineno += lines.length;
-	                    this.yylloc = { first_line: this.yylloc.last_line,
-	                        last_line: this.yylineno + 1,
-	                        first_column: this.yylloc.last_column,
-	                        last_column: lines ? lines[lines.length - 1].length - lines[lines.length - 1].match(/\r?\n?/)[0].length : this.yylloc.last_column + match[0].length };
-	                    this.yytext += match[0];
-	                    this.match += match[0];
-	                    this.matches = match;
-	                    this.yyleng = this.yytext.length;
-	                    if (this.options.ranges) {
-	                        this.yylloc.range = [this.offset, this.offset += this.yyleng];
-	                    }
-	                    this._more = false;
-	                    this._input = this._input.slice(match[0].length);
-	                    this.matched += match[0];
-	                    token = this.performAction.call(this, this.yy, this, rules[index], this.conditionStack[this.conditionStack.length - 1]);
-	                    if (this.done && this._input) this.done = false;
-	                    if (token) {
-	                        return token;
-	                    } else {
-	                        return;
-	                    }
-	                }
-	                if (this._input === "") {
-	                    return this.EOF;
-	                } else {
-	                    return this.parseError("Lexical error on line " + (this.yylineno + 1) + ". Unrecognized text.\n" + this.showPosition(), { text: "", token: null, line: this.yylineno });
-	                }
-	            },
-	            lex: function lex() {
-	                var r = this.next();
-	                if (typeof r !== "undefined") {
-	                    return r;
-	                } else {
-	                    return this.lex();
-	                }
-	            },
-	            begin: function begin(condition) {
-	                this.conditionStack.push(condition);
-	            },
-	            popState: function popState() {
-	                return this.conditionStack.pop();
-	            },
-	            _currentRules: function _currentRules() {
-	                return this.conditions[this.conditionStack[this.conditionStack.length - 1]].rules;
-	            },
-	            topState: function topState() {
-	                return this.conditionStack[this.conditionStack.length - 2];
-	            },
-	            pushState: function begin(condition) {
-	                this.begin(condition);
-	            } };
-	        lexer.options = {};
-	        lexer.performAction = function anonymous(yy, yy_, $avoiding_name_collisions, YY_START) {
-
-	            function strip(start, end) {
-	                return yy_.yytext = yy_.yytext.substr(start, yy_.yyleng - end);
-	            }
-
-	            var YYSTATE = YY_START;
-	            switch ($avoiding_name_collisions) {
-	                case 0:
-	                    if (yy_.yytext.slice(-2) === "\\\\") {
-	                        strip(0, 1);
-	                        this.begin("mu");
-	                    } else if (yy_.yytext.slice(-1) === "\\") {
-	                        strip(0, 1);
-	                        this.begin("emu");
-	                    } else {
-	                        this.begin("mu");
-	                    }
-	                    if (yy_.yytext) {
-	                        return 14;
-	                    }break;
-	                case 1:
-	                    return 14;
-	                    break;
-	                case 2:
-	                    this.popState();
-	                    return 14;
-
-	                    break;
-	                case 3:
-	                    yy_.yytext = yy_.yytext.substr(5, yy_.yyleng - 9);
-	                    this.popState();
-	                    return 16;
-
-	                    break;
-	                case 4:
-	                    return 14;
-	                    break;
-	                case 5:
-	                    this.popState();
-	                    return 13;
-
-	                    break;
-	                case 6:
-	                    return 59;
-	                    break;
-	                case 7:
-	                    return 62;
-	                    break;
-	                case 8:
-	                    return 17;
-	                    break;
-	                case 9:
-	                    this.popState();
-	                    this.begin("raw");
-	                    return 21;
-
-	                    break;
-	                case 10:
-	                    return 53;
-	                    break;
-	                case 11:
-	                    return 27;
-	                    break;
-	                case 12:
-	                    return 45;
-	                    break;
-	                case 13:
-	                    this.popState();return 42;
-	                    break;
-	                case 14:
-	                    this.popState();return 42;
-	                    break;
-	                case 15:
-	                    return 32;
-	                    break;
-	                case 16:
-	                    return 37;
-	                    break;
-	                case 17:
-	                    return 49;
-	                    break;
-	                case 18:
-	                    return 46;
-	                    break;
-	                case 19:
-	                    this.unput(yy_.yytext);
-	                    this.popState();
-	                    this.begin("com");
-
-	                    break;
-	                case 20:
-	                    this.popState();
-	                    return 13;
-
-	                    break;
-	                case 21:
-	                    return 46;
-	                    break;
-	                case 22:
-	                    return 67;
-	                    break;
-	                case 23:
-	                    return 66;
-	                    break;
-	                case 24:
-	                    return 66;
-	                    break;
-	                case 25:
-	                    return 81;
-	                    break;
-	                case 26:
-	                    // ignore whitespace
-	                    break;
-	                case 27:
-	                    this.popState();return 52;
-	                    break;
-	                case 28:
-	                    this.popState();return 31;
-	                    break;
-	                case 29:
-	                    yy_.yytext = strip(1, 2).replace(/\\"/g, "\"");return 74;
-	                    break;
-	                case 30:
-	                    yy_.yytext = strip(1, 2).replace(/\\'/g, "'");return 74;
-	                    break;
-	                case 31:
-	                    return 79;
-	                    break;
-	                case 32:
-	                    return 76;
-	                    break;
-	                case 33:
-	                    return 76;
-	                    break;
-	                case 34:
-	                    return 77;
-	                    break;
-	                case 35:
-	                    return 78;
-	                    break;
-	                case 36:
-	                    return 75;
-	                    break;
-	                case 37:
-	                    return 69;
-	                    break;
-	                case 38:
-	                    return 71;
-	                    break;
-	                case 39:
-	                    return 66;
-	                    break;
-	                case 40:
-	                    return 66;
-	                    break;
-	                case 41:
-	                    return "INVALID";
-	                    break;
-	                case 42:
-	                    return 5;
-	                    break;
-	            }
-	        };
-	        lexer.rules = [/^(?:[^\x00]*?(?=(\{\{)))/, /^(?:[^\x00]+)/, /^(?:[^\x00]{2,}?(?=(\{\{|\\\{\{|\\\\\{\{|$)))/, /^(?:\{\{\{\{\/[^\s!"#%-,\.\/;->@\[-\^`\{-~]+(?=[=}\s\/.])\}\}\}\})/, /^(?:[^\x00]*?(?=(\{\{\{\{\/)))/, /^(?:[\s\S]*?--(~)?\}\})/, /^(?:\()/, /^(?:\))/, /^(?:\{\{\{\{)/, /^(?:\}\}\}\})/, /^(?:\{\{(~)?>)/, /^(?:\{\{(~)?#)/, /^(?:\{\{(~)?\/)/, /^(?:\{\{(~)?\^\s*(~)?\}\})/, /^(?:\{\{(~)?\s*else\s*(~)?\}\})/, /^(?:\{\{(~)?\^)/, /^(?:\{\{(~)?\s*else\b)/, /^(?:\{\{(~)?\{)/, /^(?:\{\{(~)?&)/, /^(?:\{\{(~)?!--)/, /^(?:\{\{(~)?![\s\S]*?\}\})/, /^(?:\{\{(~)?)/, /^(?:=)/, /^(?:\.\.)/, /^(?:\.(?=([=~}\s\/.)|])))/, /^(?:[\/.])/, /^(?:\s+)/, /^(?:\}(~)?\}\})/, /^(?:(~)?\}\})/, /^(?:"(\\["]|[^"])*")/, /^(?:'(\\[']|[^'])*')/, /^(?:@)/, /^(?:true(?=([~}\s)])))/, /^(?:false(?=([~}\s)])))/, /^(?:undefined(?=([~}\s)])))/, /^(?:null(?=([~}\s)])))/, /^(?:-?[0-9]+(?:\.[0-9]+)?(?=([~}\s)])))/, /^(?:as\s+\|)/, /^(?:\|)/, /^(?:([^\s!"#%-,\.\/;->@\[-\^`\{-~]+(?=([=~}\s\/.)|]))))/, /^(?:\[[^\]]*\])/, /^(?:.)/, /^(?:$)/];
-	        lexer.conditions = { mu: { rules: [6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40, 41, 42], inclusive: false }, emu: { rules: [2], inclusive: false }, com: { rules: [5], inclusive: false }, raw: { rules: [3, 4], inclusive: false }, INITIAL: { rules: [0, 1, 42], inclusive: true } };
-	        return lexer;
-	    })();
-	    parser.lexer = lexer;
-	    function Parser() {
-	        this.yy = {};
-	    }Parser.prototype = parser;parser.Parser = Parser;
-	    return new Parser();
-	})();exports["default"] = handlebars;
-	module.exports = exports["default"];
-
-/***/ },
-/* 15 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-
-	var _interopRequireWildcard = __webpack_require__(8)['default'];
-
-	exports.__esModule = true;
-
-	var _Visitor = __webpack_require__(6);
-
-	var _Visitor2 = _interopRequireWildcard(_Visitor);
-
-	function WhitespaceControl() {}
-	WhitespaceControl.prototype = new _Visitor2['default']();
-
-	WhitespaceControl.prototype.Program = function (program) {
-	  var isRoot = !this.isRootSeen;
-	  this.isRootSeen = true;
-
-	  var body = program.body;
-	  for (var i = 0, l = body.length; i < l; i++) {
-	    var current = body[i],
-	        strip = this.accept(current);
-
-	    if (!strip) {
-	      continue;
-	    }
-
-	    var _isPrevWhitespace = isPrevWhitespace(body, i, isRoot),
-	        _isNextWhitespace = isNextWhitespace(body, i, isRoot),
-	        openStandalone = strip.openStandalone && _isPrevWhitespace,
-	        closeStandalone = strip.closeStandalone && _isNextWhitespace,
-	        inlineStandalone = strip.inlineStandalone && _isPrevWhitespace && _isNextWhitespace;
-
-	    if (strip.close) {
-	      omitRight(body, i, true);
-	    }
-	    if (strip.open) {
-	      omitLeft(body, i, true);
-	    }
-
-	    if (inlineStandalone) {
-	      omitRight(body, i);
-
-	      if (omitLeft(body, i)) {
-	        // If we are on a standalone node, save the indent info for partials
-	        if (current.type === 'PartialStatement') {
-	          // Pull out the whitespace from the final line
-	          current.indent = /([ \t]+$)/.exec(body[i - 1].original)[1];
-	        }
-	      }
-	    }
-	    if (openStandalone) {
-	      omitRight((current.program || current.inverse).body);
-
-	      // Strip out the previous content node if it's whitespace only
-	      omitLeft(body, i);
-	    }
-	    if (closeStandalone) {
-	      // Always strip the next node
-	      omitRight(body, i);
-
-	      omitLeft((current.inverse || current.program).body);
-	    }
-	  }
-
-	  return program;
-	};
-	WhitespaceControl.prototype.BlockStatement = function (block) {
-	  this.accept(block.program);
-	  this.accept(block.inverse);
-
-	  // Find the inverse program that is involed with whitespace stripping.
-	  var program = block.program || block.inverse,
-	      inverse = block.program && block.inverse,
-	      firstInverse = inverse,
-	      lastInverse = inverse;
-
-	  if (inverse && inverse.chained) {
-	    firstInverse = inverse.body[0].program;
-
-	    // Walk the inverse chain to find the last inverse that is actually in the chain.
-	    while (lastInverse.chained) {
-	      lastInverse = lastInverse.body[lastInverse.body.length - 1].program;
-	    }
-	  }
-
-	  var strip = {
-	    open: block.openStrip.open,
-	    close: block.closeStrip.close,
-
-	    // Determine the standalone candiacy. Basically flag our content as being possibly standalone
-	    // so our parent can determine if we actually are standalone
-	    openStandalone: isNextWhitespace(program.body),
-	    closeStandalone: isPrevWhitespace((firstInverse || program).body)
-	  };
-
-	  if (block.openStrip.close) {
-	    omitRight(program.body, null, true);
-	  }
-
-	  if (inverse) {
-	    var inverseStrip = block.inverseStrip;
-
-	    if (inverseStrip.open) {
-	      omitLeft(program.body, null, true);
-	    }
-
-	    if (inverseStrip.close) {
-	      omitRight(firstInverse.body, null, true);
-	    }
-	    if (block.closeStrip.open) {
-	      omitLeft(lastInverse.body, null, true);
-	    }
-
-	    // Find standalone else statments
-	    if (isPrevWhitespace(program.body) && isNextWhitespace(firstInverse.body)) {
-	      omitLeft(program.body);
-	      omitRight(firstInverse.body);
-	    }
-	  } else if (block.closeStrip.open) {
-	    omitLeft(program.body, null, true);
-	  }
-
-	  return strip;
-	};
-
-	WhitespaceControl.prototype.MustacheStatement = function (mustache) {
-	  return mustache.strip;
-	};
-
-	WhitespaceControl.prototype.PartialStatement = WhitespaceControl.prototype.CommentStatement = function (node) {
-	  /* istanbul ignore next */
-	  var strip = node.strip || {};
-	  return {
-	    inlineStandalone: true,
-	    open: strip.open,
-	    close: strip.close
-	  };
-	};
-
-	function isPrevWhitespace(body, i, isRoot) {
-	  if (i === undefined) {
-	    i = body.length;
-	  }
-
-	  // Nodes that end with newlines are considered whitespace (but are special
-	  // cased for strip operations)
-	  var prev = body[i - 1],
-	      sibling = body[i - 2];
-	  if (!prev) {
-	    return isRoot;
-	  }
-
-	  if (prev.type === 'ContentStatement') {
-	    return (sibling || !isRoot ? /\r?\n\s*?$/ : /(^|\r?\n)\s*?$/).test(prev.original);
-	  }
-	}
-	function isNextWhitespace(body, i, isRoot) {
-	  if (i === undefined) {
-	    i = -1;
-	  }
-
-	  var next = body[i + 1],
-	      sibling = body[i + 2];
-	  if (!next) {
-	    return isRoot;
-	  }
-
-	  if (next.type === 'ContentStatement') {
-	    return (sibling || !isRoot ? /^\s*?\r?\n/ : /^\s*?(\r?\n|$)/).test(next.original);
-	  }
-	}
-
-	// Marks the node to the right of the position as omitted.
-	// I.e. {{foo}}' ' will mark the ' ' node as omitted.
-	//
-	// If i is undefined, then the first child will be marked as such.
-	//
-	// If mulitple is truthy then all whitespace will be stripped out until non-whitespace
-	// content is met.
-	function omitRight(body, i, multiple) {
-	  var current = body[i == null ? 0 : i + 1];
-	  if (!current || current.type !== 'ContentStatement' || !multiple && current.rightStripped) {
-	    return;
-	  }
-
-	  var original = current.value;
-	  current.value = current.value.replace(multiple ? /^\s+/ : /^[ \t]*\r?\n?/, '');
-	  current.rightStripped = current.value !== original;
-	}
-
-	// Marks the node to the left of the position as omitted.
-	// I.e. ' '{{foo}} will mark the ' ' node as omitted.
-	//
-	// If i is undefined then the last child will be marked as such.
-	//
-	// If mulitple is truthy then all whitespace will be stripped out until non-whitespace
-	// content is met.
-	function omitLeft(body, i, multiple) {
-	  var current = body[i == null ? body.length - 1 : i - 1];
-	  if (!current || current.type !== 'ContentStatement' || !multiple && current.leftStripped) {
-	    return;
-	  }
-
-	  // We omit the last node if it's whitespace only and not preceeded by a non-content node.
-	  var original = current.value;
-	  current.value = current.value.replace(multiple ? /\s+$/ : /[ \t]+$/, '');
-	  current.leftStripped = current.value !== original;
-	  return current.leftStripped;
-	}
-
-	exports['default'] = WhitespaceControl;
-	module.exports = exports['default'];
-
-/***/ },
-/* 16 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-
-	var _interopRequireWildcard = __webpack_require__(8)['default'];
-
-	exports.__esModule = true;
-	exports.SourceLocation = SourceLocation;
-	exports.id = id;
-	exports.stripFlags = stripFlags;
-	exports.stripComment = stripComment;
-	exports.preparePath = preparePath;
-	exports.prepareMustache = prepareMustache;
-	exports.prepareRawBlock = prepareRawBlock;
-	exports.prepareBlock = prepareBlock;
-
-	var _Exception = __webpack_require__(11);
-
-	var _Exception2 = _interopRequireWildcard(_Exception);
-
-	function SourceLocation(source, locInfo) {
-	  this.source = source;
-	  this.start = {
-	    line: locInfo.first_line,
-	    column: locInfo.first_column
-	  };
-	  this.end = {
-	    line: locInfo.last_line,
-	    column: locInfo.last_column
-	  };
-	}
-
-	function id(token) {
-	  if (/^\[.*\]$/.test(token)) {
-	    return token.substr(1, token.length - 2);
-	  } else {
-	    return token;
-	  }
-	}
-
-	function stripFlags(open, close) {
-	  return {
-	    open: open.charAt(2) === '~',
-	    close: close.charAt(close.length - 3) === '~'
-	  };
-	}
-
-	function stripComment(comment) {
-	  return comment.replace(/^\{\{~?\!-?-?/, '').replace(/-?-?~?\}\}$/, '');
-	}
-
-	function preparePath(data, parts, locInfo) {
-	  locInfo = this.locInfo(locInfo);
-
-	  var original = data ? '@' : '',
-	      dig = [],
-	      depth = 0,
-	      depthString = '';
-
-	  for (var i = 0, l = parts.length; i < l; i++) {
-	    var part = parts[i].part,
-
-	    // If we have [] syntax then we do not treat path references as operators,
-	    // i.e. foo.[this] resolves to approximately context.foo['this']
-	    isLiteral = parts[i].original !== part;
-	    original += (parts[i].separator || '') + part;
-
-	    if (!isLiteral && (part === '..' || part === '.' || part === 'this')) {
-	      if (dig.length > 0) {
-	        throw new _Exception2['default']('Invalid path: ' + original, { loc: locInfo });
-	      } else if (part === '..') {
-	        depth++;
-	        depthString += '../';
-	      }
-	    } else {
-	      dig.push(part);
-	    }
-	  }
-
-	  return new this.PathExpression(data, depth, dig, original, locInfo);
-	}
-
-	function prepareMustache(path, params, hash, open, strip, locInfo) {
-	  // Must use charAt to support IE pre-10
-	  var escapeFlag = open.charAt(3) || open.charAt(2),
-	      escaped = escapeFlag !== '{' && escapeFlag !== '&';
-
-	  return new this.MustacheStatement(path, params, hash, escaped, strip, this.locInfo(locInfo));
-	}
-
-	function prepareRawBlock(openRawBlock, content, close, locInfo) {
-	  if (openRawBlock.path.original !== close) {
-	    var errorNode = { loc: openRawBlock.path.loc };
-
-	    throw new _Exception2['default'](openRawBlock.path.original + ' doesn\'t match ' + close, errorNode);
-	  }
-
-	  locInfo = this.locInfo(locInfo);
-	  var program = new this.Program([content], null, {}, locInfo);
-
-	  return new this.BlockStatement(openRawBlock.path, openRawBlock.params, openRawBlock.hash, program, undefined, {}, {}, {}, locInfo);
-	}
-
-	function prepareBlock(openBlock, program, inverseAndProgram, close, inverted, locInfo) {
-	  // When we are chaining inverse calls, we will not have a close path
-	  if (close && close.path && openBlock.path.original !== close.path.original) {
-	    var errorNode = { loc: openBlock.path.loc };
-
-	    throw new _Exception2['default'](openBlock.path.original + ' doesn\'t match ' + close.path.original, errorNode);
-	  }
-
-	  program.blockParams = openBlock.blockParams;
-
-	  var inverse = undefined,
-	      inverseStrip = undefined;
-
-	  if (inverseAndProgram) {
-	    if (inverseAndProgram.chain) {
-	      inverseAndProgram.program.body[0].closeStrip = close.strip;
-	    }
-
-	    inverseStrip = inverseAndProgram.strip;
-	    inverse = inverseAndProgram.program;
-	  }
-
-	  if (inverted) {
-	    inverted = inverse;
-	    inverse = program;
-	    program = inverted;
-	  }
-
-	  return new this.BlockStatement(openBlock.path, openBlock.params, openBlock.hash, program, inverse, openBlock.strip, inverseStrip, close && close.strip, this.locInfo(locInfo));
-	}
-
-/***/ },
-/* 17 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-
-	exports.__esModule = true;
-	/*global define */
-
-	var _isArray = __webpack_require__(12);
-
-	var SourceNode = undefined;
-
-	try {
-	  /* istanbul ignore next */
-	  if (false) {
-	    // We don't support this in AMD environments. For these environments, we asusme that
-	    // they are running on the browser and thus have no need for the source-map library.
-	    var SourceMap = require('source-map');
-	    SourceNode = SourceMap.SourceNode;
-	  }
-	} catch (err) {}
-
-	/* istanbul ignore if: tested but not covered in istanbul due to dist build  */
-	if (!SourceNode) {
-	  SourceNode = function (line, column, srcFile, chunks) {
-	    this.src = '';
-	    if (chunks) {
-	      this.add(chunks);
-	    }
-	  };
-	  /* istanbul ignore next */
-	  SourceNode.prototype = {
-	    add: function add(chunks) {
-	      if (_isArray.isArray(chunks)) {
-	        chunks = chunks.join('');
-	      }
-	      this.src += chunks;
-	    },
-	    prepend: function prepend(chunks) {
-	      if (_isArray.isArray(chunks)) {
-	        chunks = chunks.join('');
-	      }
-	      this.src = chunks + this.src;
-	    },
-	    toStringWithSourceMap: function toStringWithSourceMap() {
-	      return { code: this.toString() };
-	    },
-	    toString: function toString() {
-	      return this.src;
-	    }
-	  };
-	}
-
-	function castChunk(chunk, codeGen, loc) {
-	  if (_isArray.isArray(chunk)) {
-	    var ret = [];
-
-	    for (var i = 0, len = chunk.length; i < len; i++) {
-	      ret.push(codeGen.wrap(chunk[i], loc));
-	    }
-	    return ret;
-	  } else if (typeof chunk === 'boolean' || typeof chunk === 'number') {
-	    // Handle primitives that the SourceNode will throw up on
-	    return chunk + '';
-	  }
-	  return chunk;
-	}
-
-	function CodeGen(srcFile) {
-	  this.srcFile = srcFile;
-	  this.source = [];
-	}
-
-	CodeGen.prototype = {
-	  prepend: function prepend(source, loc) {
-	    this.source.unshift(this.wrap(source, loc));
-	  },
-	  push: function push(source, loc) {
-	    this.source.push(this.wrap(source, loc));
-	  },
-
-	  merge: function merge() {
-	    var source = this.empty();
-	    this.each(function (line) {
-	      source.add(['  ', line, '\n']);
-	    });
-	    return source;
-	  },
-
-	  each: function each(iter) {
-	    for (var i = 0, len = this.source.length; i < len; i++) {
-	      iter(this.source[i]);
-	    }
-	  },
-
-	  empty: function empty() {
-	    var loc = arguments[0] === undefined ? this.currentLocation || { start: {} } : arguments[0];
-
-	    return new SourceNode(loc.start.line, loc.start.column, this.srcFile);
-	  },
-	  wrap: function wrap(chunk) {
-	    var loc = arguments[1] === undefined ? this.currentLocation || { start: {} } : arguments[1];
-
-	    if (chunk instanceof SourceNode) {
-	      return chunk;
-	    }
-
-	    chunk = castChunk(chunk, this, loc);
-
-	    return new SourceNode(loc.start.line, loc.start.column, this.srcFile, chunk);
-	  },
-
-	  functionCall: function functionCall(fn, type, params) {
-	    params = this.generateList(params);
-	    return this.wrap([fn, type ? '.' + type + '(' : '(', params, ')']);
-	  },
-
-	  quotedString: function quotedString(str) {
-	    return '"' + (str + '').replace(/\\/g, '\\\\').replace(/"/g, '\\"').replace(/\n/g, '\\n').replace(/\r/g, '\\r').replace(/\u2028/g, '\\u2028') // Per Ecma-262 7.3 + 7.8.4
-	    .replace(/\u2029/g, '\\u2029') + '"';
-	  },
-
-	  objectLiteral: function objectLiteral(obj) {
-	    var pairs = [];
-
-	    for (var key in obj) {
-	      if (obj.hasOwnProperty(key)) {
-	        var value = castChunk(obj[key], this);
-	        if (value !== 'undefined') {
-	          pairs.push([this.quotedString(key), ':', value]);
-	        }
-	      }
-	    }
-
-	    var ret = this.generateList(pairs);
-	    ret.prepend('{');
-	    ret.add('}');
-	    return ret;
-	  },
-
-	  generateList: function generateList(entries, loc) {
-	    var ret = this.empty(loc);
-
-	    for (var i = 0, len = entries.length; i < len; i++) {
-	      if (i) {
-	        ret.add(',');
-	      }
-
-	      ret.add(castChunk(entries[i], this, loc));
-	    }
-
-	    return ret;
-	  },
-
-	  generateArray: function generateArray(entries, loc) {
-	    var ret = this.generateList(entries, loc);
-	    ret.prepend('[');
-	    ret.add(']');
-
-	    return ret;
-	  }
-	};
-
-	exports['default'] = CodeGen;
-	module.exports = exports['default'];
-
-	/* NOP */
-
-/***/ }
-/******/ ])
-});
-;;var loadOverview = function(overview,nxEntryName){
-
-    if ($("#nx-overview").length > 0) {
-        Handlebars.registerHelper('link_to', function (type, options) {
-            switch (type) {
-                case "family":
-                    var url = "http://www.nextprot.org/db/term/" + this.accession;
-                    return "<a href='" + url + "'>" + this.name + "</a>";
-                case "history":
-                    console.log(type);
-                    console.log(this);
-                    var url = "http://www.uniprot.org/uniprot/" + this.slice(3) + "?version=*";
-                    return "<a href='" + url + "'>Complete UniProtKB history</a>";
-            }
-        });
-
-        console.log(nxEntryName);
-
-        var data = {
-            "entryName": overview.proteinNames[0].synonymName,
-            "alternativeName": overview.proteinNames[0].synonyms,
-            "geneName": overview.geneNames[0].synonymName,
-            "cleavage": overview.cleavedRegionNames,
-            "family": overview.families,
-            "proteineEvidence": overview.history.proteinExistence.split('_').join(' ').toLowerCase(),
-            "integDate": overview.history.formattedNextprotIntegrationDate,
-            "lastUpdate": overview.history.formattedNextprotUpdateDate,
-            "version": overview.history.uniprotVersion,
-            "UniprotIntegDate": overview.history.formattedUniprotIntegrationDate,
-            "UniprotLastUpdate": overview.history.formattedUniprotUpdateDate,
-            "seqVersion": overview.history.sequenceVersion,
-            "accessionNumber": nxEntryName
-        };
-
-        console.log(data);
-
-        var template = HBtemplates['templates/overviewProtein.tmpl'];
-        console.log(template);
-        var result = template(data);
-        $("#nx-overview").append(result);
-
-        $("#extender").click(function (event) {
-            event.stopPropagation();
-            //var isScrollbarActiveAtFirst= $(window).hasVerticalScrollBar();
-            $("#INFOS-FULL").toggle("slow");
-            $("#INFOS-LESS").toggle("slow");
-            //var isScrollbarActiveAtEnd= $(window).hasVerticalScrollBar();
-            //if ((isScrollbarActiveAtFirst) && isScrollbarActiveAtFirst !== isScrollbarActiveAtEnd) {
-            //    $(body).removeClass("ignoreShift");
-            //}
-            //else if ((isScrollbarActiveAtFirst === false) && isScrollbarActiveAtFirst !== isScrollbarActiveAtEnd) {
-            //    $(body).addClass("ignoreShift");
-            //}
-            $(this).text(function (i, text) {
-                return text === "Extend overview" ? "Collapse overview" : "Extend overview";
-            });
-        });
+/* exported Handlebars */
+(function (root, factory) {
+  if (typeof define === 'function' && define.amd) {
+    define([], factory);
+  } else if (typeof exports === 'object') {
+    module.exports = factory();
+  } else {
+    root.Handlebars = factory();
+  }
+}(this, function () {
+// handlebars/utils.js
+var __module3__ = (function() {
+  "use strict";
+  var __exports__ = {};
+  /*jshint -W004 */
+  var escape = {
+    "&": "&amp;",
+    "<": "&lt;",
+    ">": "&gt;",
+    '"': "&quot;",
+    "'": "&#x27;",
+    "`": "&#x60;"
+  };
+
+  var badChars = /[&<>"'`]/g;
+  var possible = /[&<>"'`]/;
+
+  function escapeChar(chr) {
+    return escape[chr];
+  }
+
+  function extend(obj /* , ...source */) {
+    for (var i = 1; i < arguments.length; i++) {
+      for (var key in arguments[i]) {
+        if (Object.prototype.hasOwnProperty.call(arguments[i], key)) {
+          obj[key] = arguments[i][key];
+        }
+      }
     }
 
+    return obj;
+  }
+
+  __exports__.extend = extend;var toString = Object.prototype.toString;
+  __exports__.toString = toString;
+  // Sourced from lodash
+  // https://github.com/bestiejs/lodash/blob/master/LICENSE.txt
+  var isFunction = function(value) {
+    return typeof value === 'function';
+  };
+  // fallback for older versions of Chrome and Safari
+  /* istanbul ignore next */
+  if (isFunction(/x/)) {
+    isFunction = function(value) {
+      return typeof value === 'function' && toString.call(value) === '[object Function]';
+    };
+  }
+  var isFunction;
+  __exports__.isFunction = isFunction;
+  /* istanbul ignore next */
+  var isArray = Array.isArray || function(value) {
+    return (value && typeof value === 'object') ? toString.call(value) === '[object Array]' : false;
+  };
+  __exports__.isArray = isArray;
+  // Older IE versions do not directly support indexOf so we must implement our own, sadly.
+  function indexOf(array, value) {
+    for (var i = 0, len = array.length; i < len; i++) {
+      if (array[i] === value) {
+        return i;
+      }
+    }
+    return -1;
+  }
+
+  __exports__.indexOf = indexOf;
+  function escapeExpression(string) {
+    // don't escape SafeStrings, since they're already safe
+    if (string && string.toHTML) {
+      return string.toHTML();
+    } else if (string == null) {
+      return "";
+    } else if (!string) {
+      return string + '';
+    }
+
+    // Force a string conversion as this will be done by the append regardless and
+    // the regex test will do this transparently behind the scenes, causing issues if
+    // an object's to string has escaped characters in it.
+    string = "" + string;
+
+    if(!possible.test(string)) { return string; }
+    return string.replace(badChars, escapeChar);
+  }
+
+  __exports__.escapeExpression = escapeExpression;function isEmpty(value) {
+    if (!value && value !== 0) {
+      return true;
+    } else if (isArray(value) && value.length === 0) {
+      return true;
+    } else {
+      return false;
+    }
+  }
+
+  __exports__.isEmpty = isEmpty;function blockParams(params, ids) {
+    params.path = ids;
+    return params;
+  }
+
+  __exports__.blockParams = blockParams;function appendContextPath(contextPath, id) {
+    return (contextPath ? contextPath + '.' : '') + id;
+  }
+
+  __exports__.appendContextPath = appendContextPath;
+  return __exports__;
+})();
+
+// handlebars/exception.js
+var __module4__ = (function() {
+  "use strict";
+  var __exports__;
+
+  var errorProps = ['description', 'fileName', 'lineNumber', 'message', 'name', 'number', 'stack'];
+
+  function Exception(message, node) {
+    var loc = node && node.loc,
+        line,
+        column;
+    if (loc) {
+      line = loc.start.line;
+      column = loc.start.column;
+
+      message += ' - ' + line + ':' + column;
+    }
+
+    var tmp = Error.prototype.constructor.call(this, message);
+
+    // Unfortunately errors are not enumerable in Chrome (at least), so `for prop in tmp` doesn't work.
+    for (var idx = 0; idx < errorProps.length; idx++) {
+      this[errorProps[idx]] = tmp[errorProps[idx]];
+    }
+
+    if (loc) {
+      this.lineNumber = line;
+      this.column = column;
+    }
+  }
+
+  Exception.prototype = new Error();
+
+  __exports__ = Exception;
+  return __exports__;
+})();
+
+// handlebars/base.js
+var __module2__ = (function(__dependency1__, __dependency2__) {
+  "use strict";
+  var __exports__ = {};
+  var Utils = __dependency1__;
+  var Exception = __dependency2__;
+
+  var VERSION = "3.0.0";
+  __exports__.VERSION = VERSION;var COMPILER_REVISION = 6;
+  __exports__.COMPILER_REVISION = COMPILER_REVISION;
+  var REVISION_CHANGES = {
+    1: '<= 1.0.rc.2', // 1.0.rc.2 is actually rev2 but doesn't report it
+    2: '== 1.0.0-rc.3',
+    3: '== 1.0.0-rc.4',
+    4: '== 1.x.x',
+    5: '== 2.0.0-alpha.x',
+    6: '>= 2.0.0-beta.1'
+  };
+  __exports__.REVISION_CHANGES = REVISION_CHANGES;
+  var isArray = Utils.isArray,
+      isFunction = Utils.isFunction,
+      toString = Utils.toString,
+      objectType = '[object Object]';
+
+  function HandlebarsEnvironment(helpers, partials) {
+    this.helpers = helpers || {};
+    this.partials = partials || {};
+
+    registerDefaultHelpers(this);
+  }
+
+  __exports__.HandlebarsEnvironment = HandlebarsEnvironment;HandlebarsEnvironment.prototype = {
+    constructor: HandlebarsEnvironment,
+
+    logger: logger,
+    log: log,
+
+    registerHelper: function(name, fn) {
+      if (toString.call(name) === objectType) {
+        if (fn) { throw new Exception('Arg not supported with multiple helpers'); }
+        Utils.extend(this.helpers, name);
+      } else {
+        this.helpers[name] = fn;
+      }
+    },
+    unregisterHelper: function(name) {
+      delete this.helpers[name];
+    },
+
+    registerPartial: function(name, partial) {
+      if (toString.call(name) === objectType) {
+        Utils.extend(this.partials,  name);
+      } else {
+        if (typeof partial === 'undefined') {
+          throw new Exception('Attempting to register a partial as undefined');
+        }
+        this.partials[name] = partial;
+      }
+    },
+    unregisterPartial: function(name) {
+      delete this.partials[name];
+    }
+  };
+
+  function registerDefaultHelpers(instance) {
+    instance.registerHelper('helperMissing', function(/* [args, ]options */) {
+      if(arguments.length === 1) {
+        // A missing field in a {{foo}} constuct.
+        return undefined;
+      } else {
+        // Someone is actually trying to call something, blow up.
+        throw new Exception("Missing helper: '" + arguments[arguments.length-1].name + "'");
+      }
+    });
+
+    instance.registerHelper('blockHelperMissing', function(context, options) {
+      var inverse = options.inverse,
+          fn = options.fn;
+
+      if(context === true) {
+        return fn(this);
+      } else if(context === false || context == null) {
+        return inverse(this);
+      } else if (isArray(context)) {
+        if(context.length > 0) {
+          if (options.ids) {
+            options.ids = [options.name];
+          }
+
+          return instance.helpers.each(context, options);
+        } else {
+          return inverse(this);
+        }
+      } else {
+        if (options.data && options.ids) {
+          var data = createFrame(options.data);
+          data.contextPath = Utils.appendContextPath(options.data.contextPath, options.name);
+          options = {data: data};
+        }
+
+        return fn(context, options);
+      }
+    });
+
+    instance.registerHelper('each', function(context, options) {
+      if (!options) {
+        throw new Exception('Must pass iterator to #each');
+      }
+
+      var fn = options.fn, inverse = options.inverse;
+      var i = 0, ret = "", data;
+
+      var contextPath;
+      if (options.data && options.ids) {
+        contextPath = Utils.appendContextPath(options.data.contextPath, options.ids[0]) + '.';
+      }
+
+      if (isFunction(context)) { context = context.call(this); }
+
+      if (options.data) {
+        data = createFrame(options.data);
+      }
+
+      function execIteration(key, i, last) {
+        if (data) {
+          data.key = key;
+          data.index = i;
+          data.first = i === 0;
+          data.last  = !!last;
+
+          if (contextPath) {
+            data.contextPath = contextPath + key;
+          }
+        }
+
+        ret = ret + fn(context[key], {
+          data: data,
+          blockParams: Utils.blockParams([context[key], key], [contextPath + key, null])
+        });
+      }
+
+      if(context && typeof context === 'object') {
+        if (isArray(context)) {
+          for(var j = context.length; i<j; i++) {
+            execIteration(i, i, i === context.length-1);
+          }
+        } else {
+          var priorKey;
+
+          for(var key in context) {
+            if(context.hasOwnProperty(key)) {
+              // We're running the iterations one step out of sync so we can detect
+              // the last iteration without have to scan the object twice and create
+              // an itermediate keys array. 
+              if (priorKey) {
+                execIteration(priorKey, i-1);
+              }
+              priorKey = key;
+              i++;
+            }
+          }
+          if (priorKey) {
+            execIteration(priorKey, i-1, true);
+          }
+        }
+      }
+
+      if(i === 0){
+        ret = inverse(this);
+      }
+
+      return ret;
+    });
+
+    instance.registerHelper('if', function(conditional, options) {
+      if (isFunction(conditional)) { conditional = conditional.call(this); }
+
+      // Default behavior is to render the positive path if the value is truthy and not empty.
+      // The `includeZero` option may be set to treat the condtional as purely not empty based on the
+      // behavior of isEmpty. Effectively this determines if 0 is handled by the positive path or negative.
+      if ((!options.hash.includeZero && !conditional) || Utils.isEmpty(conditional)) {
+        return options.inverse(this);
+      } else {
+        return options.fn(this);
+      }
+    });
+
+    instance.registerHelper('unless', function(conditional, options) {
+      return instance.helpers['if'].call(this, conditional, {fn: options.inverse, inverse: options.fn, hash: options.hash});
+    });
+
+    instance.registerHelper('with', function(context, options) {
+      if (isFunction(context)) { context = context.call(this); }
+
+      var fn = options.fn;
+
+      if (!Utils.isEmpty(context)) {
+        if (options.data && options.ids) {
+          var data = createFrame(options.data);
+          data.contextPath = Utils.appendContextPath(options.data.contextPath, options.ids[0]);
+          options = {data:data};
+        }
+
+        return fn(context, options);
+      } else {
+        return options.inverse(this);
+      }
+    });
+
+    instance.registerHelper('log', function(message, options) {
+      var level = options.data && options.data.level != null ? parseInt(options.data.level, 10) : 1;
+      instance.log(level, message);
+    });
+
+    instance.registerHelper('lookup', function(obj, field) {
+      return obj && obj[field];
+    });
+  }
+
+  var logger = {
+    methodMap: { 0: 'debug', 1: 'info', 2: 'warn', 3: 'error' },
+
+    // State enum
+    DEBUG: 0,
+    INFO: 1,
+    WARN: 2,
+    ERROR: 3,
+    level: 1,
+
+    // Can be overridden in the host environment
+    log: function(level, message) {
+      if (typeof console !== 'undefined' && logger.level <= level) {
+        var method = logger.methodMap[level];
+        (console[method] || console.log).call(console, message);
+      }
+    }
+  };
+  __exports__.logger = logger;
+  var log = logger.log;
+  __exports__.log = log;
+  var createFrame = function(object) {
+    var frame = Utils.extend({}, object);
+    frame._parent = object;
+    return frame;
+  };
+  __exports__.createFrame = createFrame;
+  return __exports__;
+})(__module3__, __module4__);
+
+// handlebars/safe-string.js
+var __module5__ = (function() {
+  "use strict";
+  var __exports__;
+  // Build out our basic SafeString type
+  function SafeString(string) {
+    this.string = string;
+  }
+
+  SafeString.prototype.toString = SafeString.prototype.toHTML = function() {
+    return "" + this.string;
+  };
+
+  __exports__ = SafeString;
+  return __exports__;
+})();
+
+// handlebars/runtime.js
+var __module6__ = (function(__dependency1__, __dependency2__, __dependency3__) {
+  "use strict";
+  var __exports__ = {};
+  var Utils = __dependency1__;
+  var Exception = __dependency2__;
+  var COMPILER_REVISION = __dependency3__.COMPILER_REVISION;
+  var REVISION_CHANGES = __dependency3__.REVISION_CHANGES;
+  var createFrame = __dependency3__.createFrame;
+
+  function checkRevision(compilerInfo) {
+    var compilerRevision = compilerInfo && compilerInfo[0] || 1,
+        currentRevision = COMPILER_REVISION;
+
+    if (compilerRevision !== currentRevision) {
+      if (compilerRevision < currentRevision) {
+        var runtimeVersions = REVISION_CHANGES[currentRevision],
+            compilerVersions = REVISION_CHANGES[compilerRevision];
+        throw new Exception("Template was precompiled with an older version of Handlebars than the current runtime. "+
+              "Please update your precompiler to a newer version ("+runtimeVersions+") or downgrade your runtime to an older version ("+compilerVersions+").");
+      } else {
+        // Use the embedded version info since the runtime doesn't know about this revision yet
+        throw new Exception("Template was precompiled with a newer version of Handlebars than the current runtime. "+
+              "Please update your runtime to a newer version ("+compilerInfo[1]+").");
+      }
+    }
+  }
+
+  __exports__.checkRevision = checkRevision;// TODO: Remove this line and break up compilePartial
+
+  function template(templateSpec, env) {
+    /* istanbul ignore next */
+    if (!env) {
+      throw new Exception("No environment passed to template");
+    }
+    if (!templateSpec || !templateSpec.main) {
+      throw new Exception('Unknown template object: ' + typeof templateSpec);
+    }
+
+    // Note: Using env.VM references rather than local var references throughout this section to allow
+    // for external users to override these as psuedo-supported APIs.
+    env.VM.checkRevision(templateSpec.compiler);
+
+    var invokePartialWrapper = function(partial, context, options) {
+      if (options.hash) {
+        context = Utils.extend({}, context, options.hash);
+      }
+
+      partial = env.VM.resolvePartial.call(this, partial, context, options);
+      var result = env.VM.invokePartial.call(this, partial, context, options);
+
+      if (result == null && env.compile) {
+        options.partials[options.name] = env.compile(partial, templateSpec.compilerOptions, env);
+        result = options.partials[options.name](context, options);
+      }
+      if (result != null) {
+        if (options.indent) {
+          var lines = result.split('\n');
+          for (var i = 0, l = lines.length; i < l; i++) {
+            if (!lines[i] && i + 1 === l) {
+              break;
+            }
+
+            lines[i] = options.indent + lines[i];
+          }
+          result = lines.join('\n');
+        }
+        return result;
+      } else {
+        throw new Exception("The partial " + options.name + " could not be compiled when running in runtime-only mode");
+      }
+    };
+
+    // Just add water
+    var container = {
+      strict: function(obj, name) {
+        if (!(name in obj)) {
+          throw new Exception('"' + name + '" not defined in ' + obj);
+        }
+        return obj[name];
+      },
+      lookup: function(depths, name) {
+        var len = depths.length;
+        for (var i = 0; i < len; i++) {
+          if (depths[i] && depths[i][name] != null) {
+            return depths[i][name];
+          }
+        }
+      },
+      lambda: function(current, context) {
+        return typeof current === 'function' ? current.call(context) : current;
+      },
+
+      escapeExpression: Utils.escapeExpression,
+      invokePartial: invokePartialWrapper,
+
+      fn: function(i) {
+        return templateSpec[i];
+      },
+
+      programs: [],
+      program: function(i, data, declaredBlockParams, blockParams, depths) {
+        var programWrapper = this.programs[i],
+            fn = this.fn(i);
+        if (data || depths || blockParams || declaredBlockParams) {
+          programWrapper = program(this, i, fn, data, declaredBlockParams, blockParams, depths);
+        } else if (!programWrapper) {
+          programWrapper = this.programs[i] = program(this, i, fn);
+        }
+        return programWrapper;
+      },
+
+      data: function(data, depth) {
+        while (data && depth--) {
+          data = data._parent;
+        }
+        return data;
+      },
+      merge: function(param, common) {
+        var ret = param || common;
+
+        if (param && common && (param !== common)) {
+          ret = Utils.extend({}, common, param);
+        }
+
+        return ret;
+      },
+
+      noop: env.VM.noop,
+      compilerInfo: templateSpec.compiler
+    };
+
+    var ret = function(context, options) {
+      options = options || {};
+      var data = options.data;
+
+      ret._setup(options);
+      if (!options.partial && templateSpec.useData) {
+        data = initData(context, data);
+      }
+      var depths,
+          blockParams = templateSpec.useBlockParams ? [] : undefined;
+      if (templateSpec.useDepths) {
+        depths = options.depths ? [context].concat(options.depths) : [context];
+      }
+
+      return templateSpec.main.call(container, context, container.helpers, container.partials, data, blockParams, depths);
+    };
+    ret.isTop = true;
+
+    ret._setup = function(options) {
+      if (!options.partial) {
+        container.helpers = container.merge(options.helpers, env.helpers);
+
+        if (templateSpec.usePartial) {
+          container.partials = container.merge(options.partials, env.partials);
+        }
+      } else {
+        container.helpers = options.helpers;
+        container.partials = options.partials;
+      }
+    };
+
+    ret._child = function(i, data, blockParams, depths) {
+      if (templateSpec.useBlockParams && !blockParams) {
+        throw new Exception('must pass block params');
+      }
+      if (templateSpec.useDepths && !depths) {
+        throw new Exception('must pass parent depths');
+      }
+
+      return program(container, i, templateSpec[i], data, 0, blockParams, depths);
+    };
+    return ret;
+  }
+
+  __exports__.template = template;function program(container, i, fn, data, declaredBlockParams, blockParams, depths) {
+    var prog = function(context, options) {
+      options = options || {};
+
+      return fn.call(container,
+          context,
+          container.helpers, container.partials,
+          options.data || data,
+          blockParams && [options.blockParams].concat(blockParams),
+          depths && [context].concat(depths));
+    };
+    prog.program = i;
+    prog.depth = depths ? depths.length : 0;
+    prog.blockParams = declaredBlockParams || 0;
+    return prog;
+  }
+
+  __exports__.program = program;function resolvePartial(partial, context, options) {
+    if (!partial) {
+      partial = options.partials[options.name];
+    } else if (!partial.call && !options.name) {
+      // This is a dynamic partial that returned a string
+      options.name = partial;
+      partial = options.partials[partial];
+    }
+    return partial;
+  }
+
+  __exports__.resolvePartial = resolvePartial;function invokePartial(partial, context, options) {
+    options.partial = true;
+
+    if(partial === undefined) {
+      throw new Exception("The partial " + options.name + " could not be found");
+    } else if(partial instanceof Function) {
+      return partial(context, options);
+    }
+  }
+
+  __exports__.invokePartial = invokePartial;function noop() { return ""; }
+
+  __exports__.noop = noop;function initData(context, data) {
+    if (!data || !('root' in data)) {
+      data = data ? createFrame(data) : {};
+      data.root = context;
+    }
+    return data;
+  }
+  return __exports__;
+})(__module3__, __module4__, __module2__);
+
+// handlebars.runtime.js
+var __module1__ = (function(__dependency1__, __dependency2__, __dependency3__, __dependency4__, __dependency5__) {
+  "use strict";
+  var __exports__;
+  /*globals Handlebars: true */
+  var base = __dependency1__;
+
+  // Each of these augment the Handlebars object. No need to setup here.
+  // (This is done to easily share code between commonjs and browse envs)
+  var SafeString = __dependency2__;
+  var Exception = __dependency3__;
+  var Utils = __dependency4__;
+  var runtime = __dependency5__;
+
+  // For compatibility and usage outside of module systems, make the Handlebars object a namespace
+  var create = function() {
+    var hb = new base.HandlebarsEnvironment();
+
+    Utils.extend(hb, base);
+    hb.SafeString = SafeString;
+    hb.Exception = Exception;
+    hb.Utils = Utils;
+    hb.escapeExpression = Utils.escapeExpression;
+
+    hb.VM = runtime;
+    hb.template = function(spec) {
+      return runtime.template(spec, hb);
+    };
+
+    return hb;
+  };
+
+  var Handlebars = create();
+  Handlebars.create = create;
+
+  /*jshint -W040 */
+  /* istanbul ignore next */
+  var root = typeof global !== 'undefined' ? global : window,
+      $Handlebars = root.Handlebars;
+  /* istanbul ignore next */
+  Handlebars.noConflict = function() {
+    if (root.Handlebars === Handlebars) {
+      root.Handlebars = $Handlebars;
+    }
+  };
+
+  Handlebars['default'] = Handlebars;
+
+  __exports__ = Handlebars;
+  return __exports__;
+})(__module2__, __module5__, __module4__, __module3__, __module6__);
+
+// handlebars/compiler/ast.js
+var __module7__ = (function() {
+  "use strict";
+  var __exports__;
+  var AST = {
+    Program: function(statements, blockParams, strip, locInfo) {
+      this.loc = locInfo;
+      this.type = 'Program';
+      this.body = statements;
+
+      this.blockParams = blockParams;
+      this.strip = strip;
+    },
+
+    MustacheStatement: function(path, params, hash, escaped, strip, locInfo) {
+      this.loc = locInfo;
+      this.type = 'MustacheStatement';
+
+      this.path = path;
+      this.params = params || [];
+      this.hash = hash;
+      this.escaped = escaped;
+
+      this.strip = strip;
+    },
+
+    BlockStatement: function(path, params, hash, program, inverse, openStrip, inverseStrip, closeStrip, locInfo) {
+      this.loc = locInfo;
+      this.type = 'BlockStatement';
+
+      this.path = path;
+      this.params = params || [];
+      this.hash = hash;
+      this.program  = program;
+      this.inverse  = inverse;
+
+      this.openStrip = openStrip;
+      this.inverseStrip = inverseStrip;
+      this.closeStrip = closeStrip;
+    },
+
+    PartialStatement: function(name, params, hash, strip, locInfo) {
+      this.loc = locInfo;
+      this.type = 'PartialStatement';
+
+      this.name = name;
+      this.params = params || [];
+      this.hash = hash;
+
+      this.indent = '';
+      this.strip = strip;
+    },
+
+    ContentStatement: function(string, locInfo) {
+      this.loc = locInfo;
+      this.type = 'ContentStatement';
+      this.original = this.value = string;
+    },
+
+    CommentStatement: function(comment, strip, locInfo) {
+      this.loc = locInfo;
+      this.type = 'CommentStatement';
+      this.value = comment;
+
+      this.strip = strip;
+    },
+
+    SubExpression: function(path, params, hash, locInfo) {
+      this.loc = locInfo;
+
+      this.type = 'SubExpression';
+      this.path = path;
+      this.params = params || [];
+      this.hash = hash;
+    },
+
+    PathExpression: function(data, depth, parts, original, locInfo) {
+      this.loc = locInfo;
+      this.type = 'PathExpression';
+
+      this.data = data;
+      this.original = original;
+      this.parts    = parts;
+      this.depth    = depth;
+    },
+
+    StringLiteral: function(string, locInfo) {
+      this.loc = locInfo;
+      this.type = 'StringLiteral';
+      this.original =
+        this.value = string;
+    },
+
+    NumberLiteral: function(number, locInfo) {
+      this.loc = locInfo;
+      this.type = 'NumberLiteral';
+      this.original =
+        this.value = Number(number);
+    },
+
+    BooleanLiteral: function(bool, locInfo) {
+      this.loc = locInfo;
+      this.type = 'BooleanLiteral';
+      this.original =
+        this.value = bool === 'true';
+    },
+
+    Hash: function(pairs, locInfo) {
+      this.loc = locInfo;
+      this.type = 'Hash';
+      this.pairs = pairs;
+    },
+    HashPair: function(key, value, locInfo) {
+      this.loc = locInfo;
+      this.type = 'HashPair';
+      this.key = key;
+      this.value = value;
+    },
+
+    // Public API used to evaluate derived attributes regarding AST nodes
+    helpers: {
+      // a mustache is definitely a helper if:
+      // * it is an eligible helper, and
+      // * it has at least one parameter or hash segment
+      // TODO: Make these public utility methods
+      helperExpression: function(node) {
+        return !!(node.type === 'SubExpression' || node.params.length || node.hash);
+      },
+
+      scopedId: function(path) {
+        return (/^\.|this\b/).test(path.original);
+      },
+
+      // an ID is simple if it only has one part, and that part is not
+      // `..` or `this`.
+      simpleId: function(path) {
+        return path.parts.length === 1 && !AST.helpers.scopedId(path) && !path.depth;
+      }
+    }
+  };
+
+
+  // Must be exported as an object rather than the root of the module as the jison lexer
+  // must modify the object to operate properly.
+  __exports__ = AST;
+  return __exports__;
+})();
+
+// handlebars/compiler/parser.js
+var __module9__ = (function() {
+  "use strict";
+  var __exports__;
+  /* jshint ignore:start */
+  /* istanbul ignore next */
+  /* Jison generated parser */
+  var handlebars = (function(){
+  var parser = {trace: function trace() { },
+  yy: {},
+  symbols_: {"error":2,"root":3,"program":4,"EOF":5,"program_repetition0":6,"statement":7,"mustache":8,"block":9,"rawBlock":10,"partial":11,"content":12,"COMMENT":13,"CONTENT":14,"openRawBlock":15,"END_RAW_BLOCK":16,"OPEN_RAW_BLOCK":17,"helperName":18,"openRawBlock_repetition0":19,"openRawBlock_option0":20,"CLOSE_RAW_BLOCK":21,"openBlock":22,"block_option0":23,"closeBlock":24,"openInverse":25,"block_option1":26,"OPEN_BLOCK":27,"openBlock_repetition0":28,"openBlock_option0":29,"openBlock_option1":30,"CLOSE":31,"OPEN_INVERSE":32,"openInverse_repetition0":33,"openInverse_option0":34,"openInverse_option1":35,"openInverseChain":36,"OPEN_INVERSE_CHAIN":37,"openInverseChain_repetition0":38,"openInverseChain_option0":39,"openInverseChain_option1":40,"inverseAndProgram":41,"INVERSE":42,"inverseChain":43,"inverseChain_option0":44,"OPEN_ENDBLOCK":45,"OPEN":46,"mustache_repetition0":47,"mustache_option0":48,"OPEN_UNESCAPED":49,"mustache_repetition1":50,"mustache_option1":51,"CLOSE_UNESCAPED":52,"OPEN_PARTIAL":53,"partialName":54,"partial_repetition0":55,"partial_option0":56,"param":57,"sexpr":58,"OPEN_SEXPR":59,"sexpr_repetition0":60,"sexpr_option0":61,"CLOSE_SEXPR":62,"hash":63,"hash_repetition_plus0":64,"hashSegment":65,"ID":66,"EQUALS":67,"blockParams":68,"OPEN_BLOCK_PARAMS":69,"blockParams_repetition_plus0":70,"CLOSE_BLOCK_PARAMS":71,"path":72,"dataName":73,"STRING":74,"NUMBER":75,"BOOLEAN":76,"DATA":77,"pathSegments":78,"SEP":79,"$accept":0,"$end":1},
+  terminals_: {2:"error",5:"EOF",13:"COMMENT",14:"CONTENT",16:"END_RAW_BLOCK",17:"OPEN_RAW_BLOCK",21:"CLOSE_RAW_BLOCK",27:"OPEN_BLOCK",31:"CLOSE",32:"OPEN_INVERSE",37:"OPEN_INVERSE_CHAIN",42:"INVERSE",45:"OPEN_ENDBLOCK",46:"OPEN",49:"OPEN_UNESCAPED",52:"CLOSE_UNESCAPED",53:"OPEN_PARTIAL",59:"OPEN_SEXPR",62:"CLOSE_SEXPR",66:"ID",67:"EQUALS",69:"OPEN_BLOCK_PARAMS",71:"CLOSE_BLOCK_PARAMS",74:"STRING",75:"NUMBER",76:"BOOLEAN",77:"DATA",79:"SEP"},
+  productions_: [0,[3,2],[4,1],[7,1],[7,1],[7,1],[7,1],[7,1],[7,1],[12,1],[10,3],[15,5],[9,4],[9,4],[22,6],[25,6],[36,6],[41,2],[43,3],[43,1],[24,3],[8,5],[8,5],[11,5],[57,1],[57,1],[58,5],[63,1],[65,3],[68,3],[18,1],[18,1],[18,1],[18,1],[18,1],[54,1],[54,1],[73,2],[72,1],[78,3],[78,1],[6,0],[6,2],[19,0],[19,2],[20,0],[20,1],[23,0],[23,1],[26,0],[26,1],[28,0],[28,2],[29,0],[29,1],[30,0],[30,1],[33,0],[33,2],[34,0],[34,1],[35,0],[35,1],[38,0],[38,2],[39,0],[39,1],[40,0],[40,1],[44,0],[44,1],[47,0],[47,2],[48,0],[48,1],[50,0],[50,2],[51,0],[51,1],[55,0],[55,2],[56,0],[56,1],[60,0],[60,2],[61,0],[61,1],[64,1],[64,2],[70,1],[70,2]],
+  performAction: function anonymous(yytext,yyleng,yylineno,yy,yystate,$$,_$) {
+
+  var $0 = $$.length - 1;
+  switch (yystate) {
+  case 1: return $$[$0-1]; 
+  break;
+  case 2:this.$ = new yy.Program($$[$0], null, {}, yy.locInfo(this._$));
+  break;
+  case 3:this.$ = $$[$0];
+  break;
+  case 4:this.$ = $$[$0];
+  break;
+  case 5:this.$ = $$[$0];
+  break;
+  case 6:this.$ = $$[$0];
+  break;
+  case 7:this.$ = $$[$0];
+  break;
+  case 8:this.$ = new yy.CommentStatement(yy.stripComment($$[$0]), yy.stripFlags($$[$0], $$[$0]), yy.locInfo(this._$));
+  break;
+  case 9:this.$ = new yy.ContentStatement($$[$0], yy.locInfo(this._$));
+  break;
+  case 10:this.$ = yy.prepareRawBlock($$[$0-2], $$[$0-1], $$[$0], this._$);
+  break;
+  case 11:this.$ = { path: $$[$0-3], params: $$[$0-2], hash: $$[$0-1] };
+  break;
+  case 12:this.$ = yy.prepareBlock($$[$0-3], $$[$0-2], $$[$0-1], $$[$0], false, this._$);
+  break;
+  case 13:this.$ = yy.prepareBlock($$[$0-3], $$[$0-2], $$[$0-1], $$[$0], true, this._$);
+  break;
+  case 14:this.$ = { path: $$[$0-4], params: $$[$0-3], hash: $$[$0-2], blockParams: $$[$0-1], strip: yy.stripFlags($$[$0-5], $$[$0]) };
+  break;
+  case 15:this.$ = { path: $$[$0-4], params: $$[$0-3], hash: $$[$0-2], blockParams: $$[$0-1], strip: yy.stripFlags($$[$0-5], $$[$0]) };
+  break;
+  case 16:this.$ = { path: $$[$0-4], params: $$[$0-3], hash: $$[$0-2], blockParams: $$[$0-1], strip: yy.stripFlags($$[$0-5], $$[$0]) };
+  break;
+  case 17:this.$ = { strip: yy.stripFlags($$[$0-1], $$[$0-1]), program: $$[$0] };
+  break;
+  case 18:
+      var inverse = yy.prepareBlock($$[$0-2], $$[$0-1], $$[$0], $$[$0], false, this._$),
+          program = new yy.Program([inverse], null, {}, yy.locInfo(this._$));
+      program.chained = true;
+
+      this.$ = { strip: $$[$0-2].strip, program: program, chain: true };
+    
+  break;
+  case 19:this.$ = $$[$0];
+  break;
+  case 20:this.$ = {path: $$[$0-1], strip: yy.stripFlags($$[$0-2], $$[$0])};
+  break;
+  case 21:this.$ = yy.prepareMustache($$[$0-3], $$[$0-2], $$[$0-1], $$[$0-4], yy.stripFlags($$[$0-4], $$[$0]), this._$);
+  break;
+  case 22:this.$ = yy.prepareMustache($$[$0-3], $$[$0-2], $$[$0-1], $$[$0-4], yy.stripFlags($$[$0-4], $$[$0]), this._$);
+  break;
+  case 23:this.$ = new yy.PartialStatement($$[$0-3], $$[$0-2], $$[$0-1], yy.stripFlags($$[$0-4], $$[$0]), yy.locInfo(this._$));
+  break;
+  case 24:this.$ = $$[$0];
+  break;
+  case 25:this.$ = $$[$0];
+  break;
+  case 26:this.$ = new yy.SubExpression($$[$0-3], $$[$0-2], $$[$0-1], yy.locInfo(this._$));
+  break;
+  case 27:this.$ = new yy.Hash($$[$0], yy.locInfo(this._$));
+  break;
+  case 28:this.$ = new yy.HashPair($$[$0-2], $$[$0], yy.locInfo(this._$));
+  break;
+  case 29:this.$ = $$[$0-1];
+  break;
+  case 30:this.$ = $$[$0];
+  break;
+  case 31:this.$ = $$[$0];
+  break;
+  case 32:this.$ = new yy.StringLiteral($$[$0], yy.locInfo(this._$));
+  break;
+  case 33:this.$ = new yy.NumberLiteral($$[$0], yy.locInfo(this._$));
+  break;
+  case 34:this.$ = new yy.BooleanLiteral($$[$0], yy.locInfo(this._$));
+  break;
+  case 35:this.$ = $$[$0];
+  break;
+  case 36:this.$ = $$[$0];
+  break;
+  case 37:this.$ = yy.preparePath(true, $$[$0], this._$);
+  break;
+  case 38:this.$ = yy.preparePath(false, $$[$0], this._$);
+  break;
+  case 39: $$[$0-2].push({part: $$[$0], separator: $$[$0-1]}); this.$ = $$[$0-2]; 
+  break;
+  case 40:this.$ = [{part: $$[$0]}];
+  break;
+  case 41:this.$ = [];
+  break;
+  case 42:$$[$0-1].push($$[$0]);
+  break;
+  case 43:this.$ = [];
+  break;
+  case 44:$$[$0-1].push($$[$0]);
+  break;
+  case 51:this.$ = [];
+  break;
+  case 52:$$[$0-1].push($$[$0]);
+  break;
+  case 57:this.$ = [];
+  break;
+  case 58:$$[$0-1].push($$[$0]);
+  break;
+  case 63:this.$ = [];
+  break;
+  case 64:$$[$0-1].push($$[$0]);
+  break;
+  case 71:this.$ = [];
+  break;
+  case 72:$$[$0-1].push($$[$0]);
+  break;
+  case 75:this.$ = [];
+  break;
+  case 76:$$[$0-1].push($$[$0]);
+  break;
+  case 79:this.$ = [];
+  break;
+  case 80:$$[$0-1].push($$[$0]);
+  break;
+  case 83:this.$ = [];
+  break;
+  case 84:$$[$0-1].push($$[$0]);
+  break;
+  case 87:this.$ = [$$[$0]];
+  break;
+  case 88:$$[$0-1].push($$[$0]);
+  break;
+  case 89:this.$ = [$$[$0]];
+  break;
+  case 90:$$[$0-1].push($$[$0]);
+  break;
+  }
+  },
+  table: [{3:1,4:2,5:[2,41],6:3,13:[2,41],14:[2,41],17:[2,41],27:[2,41],32:[2,41],46:[2,41],49:[2,41],53:[2,41]},{1:[3]},{5:[1,4]},{5:[2,2],7:5,8:6,9:7,10:8,11:9,12:10,13:[1,11],14:[1,18],15:16,17:[1,21],22:14,25:15,27:[1,19],32:[1,20],37:[2,2],42:[2,2],45:[2,2],46:[1,12],49:[1,13],53:[1,17]},{1:[2,1]},{5:[2,42],13:[2,42],14:[2,42],17:[2,42],27:[2,42],32:[2,42],37:[2,42],42:[2,42],45:[2,42],46:[2,42],49:[2,42],53:[2,42]},{5:[2,3],13:[2,3],14:[2,3],17:[2,3],27:[2,3],32:[2,3],37:[2,3],42:[2,3],45:[2,3],46:[2,3],49:[2,3],53:[2,3]},{5:[2,4],13:[2,4],14:[2,4],17:[2,4],27:[2,4],32:[2,4],37:[2,4],42:[2,4],45:[2,4],46:[2,4],49:[2,4],53:[2,4]},{5:[2,5],13:[2,5],14:[2,5],17:[2,5],27:[2,5],32:[2,5],37:[2,5],42:[2,5],45:[2,5],46:[2,5],49:[2,5],53:[2,5]},{5:[2,6],13:[2,6],14:[2,6],17:[2,6],27:[2,6],32:[2,6],37:[2,6],42:[2,6],45:[2,6],46:[2,6],49:[2,6],53:[2,6]},{5:[2,7],13:[2,7],14:[2,7],17:[2,7],27:[2,7],32:[2,7],37:[2,7],42:[2,7],45:[2,7],46:[2,7],49:[2,7],53:[2,7]},{5:[2,8],13:[2,8],14:[2,8],17:[2,8],27:[2,8],32:[2,8],37:[2,8],42:[2,8],45:[2,8],46:[2,8],49:[2,8],53:[2,8]},{18:22,66:[1,30],72:23,73:24,74:[1,25],75:[1,26],76:[1,27],77:[1,29],78:28},{18:31,66:[1,30],72:23,73:24,74:[1,25],75:[1,26],76:[1,27],77:[1,29],78:28},{4:32,6:3,13:[2,41],14:[2,41],17:[2,41],27:[2,41],32:[2,41],37:[2,41],42:[2,41],45:[2,41],46:[2,41],49:[2,41],53:[2,41]},{4:33,6:3,13:[2,41],14:[2,41],17:[2,41],27:[2,41],32:[2,41],42:[2,41],45:[2,41],46:[2,41],49:[2,41],53:[2,41]},{12:34,14:[1,18]},{18:36,54:35,58:37,59:[1,38],66:[1,30],72:23,73:24,74:[1,25],75:[1,26],76:[1,27],77:[1,29],78:28},{5:[2,9],13:[2,9],14:[2,9],16:[2,9],17:[2,9],27:[2,9],32:[2,9],37:[2,9],42:[2,9],45:[2,9],46:[2,9],49:[2,9],53:[2,9]},{18:39,66:[1,30],72:23,73:24,74:[1,25],75:[1,26],76:[1,27],77:[1,29],78:28},{18:40,66:[1,30],72:23,73:24,74:[1,25],75:[1,26],76:[1,27],77:[1,29],78:28},{18:41,66:[1,30],72:23,73:24,74:[1,25],75:[1,26],76:[1,27],77:[1,29],78:28},{31:[2,71],47:42,59:[2,71],66:[2,71],74:[2,71],75:[2,71],76:[2,71],77:[2,71]},{21:[2,30],31:[2,30],52:[2,30],59:[2,30],62:[2,30],66:[2,30],69:[2,30],74:[2,30],75:[2,30],76:[2,30],77:[2,30]},{21:[2,31],31:[2,31],52:[2,31],59:[2,31],62:[2,31],66:[2,31],69:[2,31],74:[2,31],75:[2,31],76:[2,31],77:[2,31]},{21:[2,32],31:[2,32],52:[2,32],59:[2,32],62:[2,32],66:[2,32],69:[2,32],74:[2,32],75:[2,32],76:[2,32],77:[2,32]},{21:[2,33],31:[2,33],52:[2,33],59:[2,33],62:[2,33],66:[2,33],69:[2,33],74:[2,33],75:[2,33],76:[2,33],77:[2,33]},{21:[2,34],31:[2,34],52:[2,34],59:[2,34],62:[2,34],66:[2,34],69:[2,34],74:[2,34],75:[2,34],76:[2,34],77:[2,34]},{21:[2,38],31:[2,38],52:[2,38],59:[2,38],62:[2,38],66:[2,38],69:[2,38],74:[2,38],75:[2,38],76:[2,38],77:[2,38],79:[1,43]},{66:[1,30],78:44},{21:[2,40],31:[2,40],52:[2,40],59:[2,40],62:[2,40],66:[2,40],69:[2,40],74:[2,40],75:[2,40],76:[2,40],77:[2,40],79:[2,40]},{50:45,52:[2,75],59:[2,75],66:[2,75],74:[2,75],75:[2,75],76:[2,75],77:[2,75]},{23:46,36:48,37:[1,50],41:49,42:[1,51],43:47,45:[2,47]},{26:52,41:53,42:[1,51],45:[2,49]},{16:[1,54]},{31:[2,79],55:55,59:[2,79],66:[2,79],74:[2,79],75:[2,79],76:[2,79],77:[2,79]},{31:[2,35],59:[2,35],66:[2,35],74:[2,35],75:[2,35],76:[2,35],77:[2,35]},{31:[2,36],59:[2,36],66:[2,36],74:[2,36],75:[2,36],76:[2,36],77:[2,36]},{18:56,66:[1,30],72:23,73:24,74:[1,25],75:[1,26],76:[1,27],77:[1,29],78:28},{28:57,31:[2,51],59:[2,51],66:[2,51],69:[2,51],74:[2,51],75:[2,51],76:[2,51],77:[2,51]},{31:[2,57],33:58,59:[2,57],66:[2,57],69:[2,57],74:[2,57],75:[2,57],76:[2,57],77:[2,57]},{19:59,21:[2,43],59:[2,43],66:[2,43],74:[2,43],75:[2,43],76:[2,43],77:[2,43]},{18:63,31:[2,73],48:60,57:61,58:64,59:[1,38],63:62,64:65,65:66,66:[1,67],72:23,73:24,74:[1,25],75:[1,26],76:[1,27],77:[1,29],78:28},{66:[1,68]},{21:[2,37],31:[2,37],52:[2,37],59:[2,37],62:[2,37],66:[2,37],69:[2,37],74:[2,37],75:[2,37],76:[2,37],77:[2,37],79:[1,43]},{18:63,51:69,52:[2,77],57:70,58:64,59:[1,38],63:71,64:65,65:66,66:[1,67],72:23,73:24,74:[1,25],75:[1,26],76:[1,27],77:[1,29],78:28},{24:72,45:[1,73]},{45:[2,48]},{4:74,6:3,13:[2,41],14:[2,41],17:[2,41],27:[2,41],32:[2,41],37:[2,41],42:[2,41],45:[2,41],46:[2,41],49:[2,41],53:[2,41]},{45:[2,19]},{18:75,66:[1,30],72:23,73:24,74:[1,25],75:[1,26],76:[1,27],77:[1,29],78:28},{4:76,6:3,13:[2,41],14:[2,41],17:[2,41],27:[2,41],32:[2,41],45:[2,41],46:[2,41],49:[2,41],53:[2,41]},{24:77,45:[1,73]},{45:[2,50]},{5:[2,10],13:[2,10],14:[2,10],17:[2,10],27:[2,10],32:[2,10],37:[2,10],42:[2,10],45:[2,10],46:[2,10],49:[2,10],53:[2,10]},{18:63,31:[2,81],56:78,57:79,58:64,59:[1,38],63:80,64:65,65:66,66:[1,67],72:23,73:24,74:[1,25],75:[1,26],76:[1,27],77:[1,29],78:28},{59:[2,83],60:81,62:[2,83],66:[2,83],74:[2,83],75:[2,83],76:[2,83],77:[2,83]},{18:63,29:82,31:[2,53],57:83,58:64,59:[1,38],63:84,64:65,65:66,66:[1,67],69:[2,53],72:23,73:24,74:[1,25],75:[1,26],76:[1,27],77:[1,29],78:28},{18:63,31:[2,59],34:85,57:86,58:64,59:[1,38],63:87,64:65,65:66,66:[1,67],69:[2,59],72:23,73:24,74:[1,25],75:[1,26],76:[1,27],77:[1,29],78:28},{18:63,20:88,21:[2,45],57:89,58:64,59:[1,38],63:90,64:65,65:66,66:[1,67],72:23,73:24,74:[1,25],75:[1,26],76:[1,27],77:[1,29],78:28},{31:[1,91]},{31:[2,72],59:[2,72],66:[2,72],74:[2,72],75:[2,72],76:[2,72],77:[2,72]},{31:[2,74]},{21:[2,24],31:[2,24],52:[2,24],59:[2,24],62:[2,24],66:[2,24],69:[2,24],74:[2,24],75:[2,24],76:[2,24],77:[2,24]},{21:[2,25],31:[2,25],52:[2,25],59:[2,25],62:[2,25],66:[2,25],69:[2,25],74:[2,25],75:[2,25],76:[2,25],77:[2,25]},{21:[2,27],31:[2,27],52:[2,27],62:[2,27],65:92,66:[1,93],69:[2,27]},{21:[2,87],31:[2,87],52:[2,87],62:[2,87],66:[2,87],69:[2,87]},{21:[2,40],31:[2,40],52:[2,40],59:[2,40],62:[2,40],66:[2,40],67:[1,94],69:[2,40],74:[2,40],75:[2,40],76:[2,40],77:[2,40],79:[2,40]},{21:[2,39],31:[2,39],52:[2,39],59:[2,39],62:[2,39],66:[2,39],69:[2,39],74:[2,39],75:[2,39],76:[2,39],77:[2,39],79:[2,39]},{52:[1,95]},{52:[2,76],59:[2,76],66:[2,76],74:[2,76],75:[2,76],76:[2,76],77:[2,76]},{52:[2,78]},{5:[2,12],13:[2,12],14:[2,12],17:[2,12],27:[2,12],32:[2,12],37:[2,12],42:[2,12],45:[2,12],46:[2,12],49:[2,12],53:[2,12]},{18:96,66:[1,30],72:23,73:24,74:[1,25],75:[1,26],76:[1,27],77:[1,29],78:28},{36:48,37:[1,50],41:49,42:[1,51],43:98,44:97,45:[2,69]},{31:[2,63],38:99,59:[2,63],66:[2,63],69:[2,63],74:[2,63],75:[2,63],76:[2,63],77:[2,63]},{45:[2,17]},{5:[2,13],13:[2,13],14:[2,13],17:[2,13],27:[2,13],32:[2,13],37:[2,13],42:[2,13],45:[2,13],46:[2,13],49:[2,13],53:[2,13]},{31:[1,100]},{31:[2,80],59:[2,80],66:[2,80],74:[2,80],75:[2,80],76:[2,80],77:[2,80]},{31:[2,82]},{18:63,57:102,58:64,59:[1,38],61:101,62:[2,85],63:103,64:65,65:66,66:[1,67],72:23,73:24,74:[1,25],75:[1,26],76:[1,27],77:[1,29],78:28},{30:104,31:[2,55],68:105,69:[1,106]},{31:[2,52],59:[2,52],66:[2,52],69:[2,52],74:[2,52],75:[2,52],76:[2,52],77:[2,52]},{31:[2,54],69:[2,54]},{31:[2,61],35:107,68:108,69:[1,106]},{31:[2,58],59:[2,58],66:[2,58],69:[2,58],74:[2,58],75:[2,58],76:[2,58],77:[2,58]},{31:[2,60],69:[2,60]},{21:[1,109]},{21:[2,44],59:[2,44],66:[2,44],74:[2,44],75:[2,44],76:[2,44],77:[2,44]},{21:[2,46]},{5:[2,21],13:[2,21],14:[2,21],17:[2,21],27:[2,21],32:[2,21],37:[2,21],42:[2,21],45:[2,21],46:[2,21],49:[2,21],53:[2,21]},{21:[2,88],31:[2,88],52:[2,88],62:[2,88],66:[2,88],69:[2,88]},{67:[1,94]},{18:63,57:110,58:64,59:[1,38],66:[1,30],72:23,73:24,74:[1,25],75:[1,26],76:[1,27],77:[1,29],78:28},{5:[2,22],13:[2,22],14:[2,22],17:[2,22],27:[2,22],32:[2,22],37:[2,22],42:[2,22],45:[2,22],46:[2,22],49:[2,22],53:[2,22]},{31:[1,111]},{45:[2,18]},{45:[2,70]},{18:63,31:[2,65],39:112,57:113,58:64,59:[1,38],63:114,64:65,65:66,66:[1,67],69:[2,65],72:23,73:24,74:[1,25],75:[1,26],76:[1,27],77:[1,29],78:28},{5:[2,23],13:[2,23],14:[2,23],17:[2,23],27:[2,23],32:[2,23],37:[2,23],42:[2,23],45:[2,23],46:[2,23],49:[2,23],53:[2,23]},{62:[1,115]},{59:[2,84],62:[2,84],66:[2,84],74:[2,84],75:[2,84],76:[2,84],77:[2,84]},{62:[2,86]},{31:[1,116]},{31:[2,56]},{66:[1,118],70:117},{31:[1,119]},{31:[2,62]},{14:[2,11]},{21:[2,28],31:[2,28],52:[2,28],62:[2,28],66:[2,28],69:[2,28]},{5:[2,20],13:[2,20],14:[2,20],17:[2,20],27:[2,20],32:[2,20],37:[2,20],42:[2,20],45:[2,20],46:[2,20],49:[2,20],53:[2,20]},{31:[2,67],40:120,68:121,69:[1,106]},{31:[2,64],59:[2,64],66:[2,64],69:[2,64],74:[2,64],75:[2,64],76:[2,64],77:[2,64]},{31:[2,66],69:[2,66]},{21:[2,26],31:[2,26],52:[2,26],59:[2,26],62:[2,26],66:[2,26],69:[2,26],74:[2,26],75:[2,26],76:[2,26],77:[2,26]},{13:[2,14],14:[2,14],17:[2,14],27:[2,14],32:[2,14],37:[2,14],42:[2,14],45:[2,14],46:[2,14],49:[2,14],53:[2,14]},{66:[1,123],71:[1,122]},{66:[2,89],71:[2,89]},{13:[2,15],14:[2,15],17:[2,15],27:[2,15],32:[2,15],42:[2,15],45:[2,15],46:[2,15],49:[2,15],53:[2,15]},{31:[1,124]},{31:[2,68]},{31:[2,29]},{66:[2,90],71:[2,90]},{13:[2,16],14:[2,16],17:[2,16],27:[2,16],32:[2,16],37:[2,16],42:[2,16],45:[2,16],46:[2,16],49:[2,16],53:[2,16]}],
+  defaultActions: {4:[2,1],47:[2,48],49:[2,19],53:[2,50],62:[2,74],71:[2,78],76:[2,17],80:[2,82],90:[2,46],97:[2,18],98:[2,70],103:[2,86],105:[2,56],108:[2,62],109:[2,11],121:[2,68],122:[2,29]},
+  parseError: function parseError(str, hash) {
+      throw new Error(str);
+  },
+  parse: function parse(input) {
+      var self = this, stack = [0], vstack = [null], lstack = [], table = this.table, yytext = "", yylineno = 0, yyleng = 0, recovering = 0, TERROR = 2, EOF = 1;
+      this.lexer.setInput(input);
+      this.lexer.yy = this.yy;
+      this.yy.lexer = this.lexer;
+      this.yy.parser = this;
+      if (typeof this.lexer.yylloc == "undefined")
+          this.lexer.yylloc = {};
+      var yyloc = this.lexer.yylloc;
+      lstack.push(yyloc);
+      var ranges = this.lexer.options && this.lexer.options.ranges;
+      if (typeof this.yy.parseError === "function")
+          this.parseError = this.yy.parseError;
+      function popStack(n) {
+          stack.length = stack.length - 2 * n;
+          vstack.length = vstack.length - n;
+          lstack.length = lstack.length - n;
+      }
+      function lex() {
+          var token;
+          token = self.lexer.lex() || 1;
+          if (typeof token !== "number") {
+              token = self.symbols_[token] || token;
+          }
+          return token;
+      }
+      var symbol, preErrorSymbol, state, action, a, r, yyval = {}, p, len, newState, expected;
+      while (true) {
+          state = stack[stack.length - 1];
+          if (this.defaultActions[state]) {
+              action = this.defaultActions[state];
+          } else {
+              if (symbol === null || typeof symbol == "undefined") {
+                  symbol = lex();
+              }
+              action = table[state] && table[state][symbol];
+          }
+          if (typeof action === "undefined" || !action.length || !action[0]) {
+              var errStr = "";
+              if (!recovering) {
+                  expected = [];
+                  for (p in table[state])
+                      if (this.terminals_[p] && p > 2) {
+                          expected.push("'" + this.terminals_[p] + "'");
+                      }
+                  if (this.lexer.showPosition) {
+                      errStr = "Parse error on line " + (yylineno + 1) + ":\n" + this.lexer.showPosition() + "\nExpecting " + expected.join(", ") + ", got '" + (this.terminals_[symbol] || symbol) + "'";
+                  } else {
+                      errStr = "Parse error on line " + (yylineno + 1) + ": Unexpected " + (symbol == 1?"end of input":"'" + (this.terminals_[symbol] || symbol) + "'");
+                  }
+                  this.parseError(errStr, {text: this.lexer.match, token: this.terminals_[symbol] || symbol, line: this.lexer.yylineno, loc: yyloc, expected: expected});
+              }
+          }
+          if (action[0] instanceof Array && action.length > 1) {
+              throw new Error("Parse Error: multiple actions possible at state: " + state + ", token: " + symbol);
+          }
+          switch (action[0]) {
+          case 1:
+              stack.push(symbol);
+              vstack.push(this.lexer.yytext);
+              lstack.push(this.lexer.yylloc);
+              stack.push(action[1]);
+              symbol = null;
+              if (!preErrorSymbol) {
+                  yyleng = this.lexer.yyleng;
+                  yytext = this.lexer.yytext;
+                  yylineno = this.lexer.yylineno;
+                  yyloc = this.lexer.yylloc;
+                  if (recovering > 0)
+                      recovering--;
+              } else {
+                  symbol = preErrorSymbol;
+                  preErrorSymbol = null;
+              }
+              break;
+          case 2:
+              len = this.productions_[action[1]][1];
+              yyval.$ = vstack[vstack.length - len];
+              yyval._$ = {first_line: lstack[lstack.length - (len || 1)].first_line, last_line: lstack[lstack.length - 1].last_line, first_column: lstack[lstack.length - (len || 1)].first_column, last_column: lstack[lstack.length - 1].last_column};
+              if (ranges) {
+                  yyval._$.range = [lstack[lstack.length - (len || 1)].range[0], lstack[lstack.length - 1].range[1]];
+              }
+              r = this.performAction.call(yyval, yytext, yyleng, yylineno, this.yy, action[1], vstack, lstack);
+              if (typeof r !== "undefined") {
+                  return r;
+              }
+              if (len) {
+                  stack = stack.slice(0, -1 * len * 2);
+                  vstack = vstack.slice(0, -1 * len);
+                  lstack = lstack.slice(0, -1 * len);
+              }
+              stack.push(this.productions_[action[1]][0]);
+              vstack.push(yyval.$);
+              lstack.push(yyval._$);
+              newState = table[stack[stack.length - 2]][stack[stack.length - 1]];
+              stack.push(newState);
+              break;
+          case 3:
+              return true;
+          }
+      }
+      return true;
+  }
+  };
+  /* Jison generated lexer */
+  var lexer = (function(){
+  var lexer = ({EOF:1,
+  parseError:function parseError(str, hash) {
+          if (this.yy.parser) {
+              this.yy.parser.parseError(str, hash);
+          } else {
+              throw new Error(str);
+          }
+      },
+  setInput:function (input) {
+          this._input = input;
+          this._more = this._less = this.done = false;
+          this.yylineno = this.yyleng = 0;
+          this.yytext = this.matched = this.match = '';
+          this.conditionStack = ['INITIAL'];
+          this.yylloc = {first_line:1,first_column:0,last_line:1,last_column:0};
+          if (this.options.ranges) this.yylloc.range = [0,0];
+          this.offset = 0;
+          return this;
+      },
+  input:function () {
+          var ch = this._input[0];
+          this.yytext += ch;
+          this.yyleng++;
+          this.offset++;
+          this.match += ch;
+          this.matched += ch;
+          var lines = ch.match(/(?:\r\n?|\n).*/g);
+          if (lines) {
+              this.yylineno++;
+              this.yylloc.last_line++;
+          } else {
+              this.yylloc.last_column++;
+          }
+          if (this.options.ranges) this.yylloc.range[1]++;
+
+          this._input = this._input.slice(1);
+          return ch;
+      },
+  unput:function (ch) {
+          var len = ch.length;
+          var lines = ch.split(/(?:\r\n?|\n)/g);
+
+          this._input = ch + this._input;
+          this.yytext = this.yytext.substr(0, this.yytext.length-len-1);
+          //this.yyleng -= len;
+          this.offset -= len;
+          var oldLines = this.match.split(/(?:\r\n?|\n)/g);
+          this.match = this.match.substr(0, this.match.length-1);
+          this.matched = this.matched.substr(0, this.matched.length-1);
+
+          if (lines.length-1) this.yylineno -= lines.length-1;
+          var r = this.yylloc.range;
+
+          this.yylloc = {first_line: this.yylloc.first_line,
+            last_line: this.yylineno+1,
+            first_column: this.yylloc.first_column,
+            last_column: lines ?
+                (lines.length === oldLines.length ? this.yylloc.first_column : 0) + oldLines[oldLines.length - lines.length].length - lines[0].length:
+                this.yylloc.first_column - len
+            };
+
+          if (this.options.ranges) {
+              this.yylloc.range = [r[0], r[0] + this.yyleng - len];
+          }
+          return this;
+      },
+  more:function () {
+          this._more = true;
+          return this;
+      },
+  less:function (n) {
+          this.unput(this.match.slice(n));
+      },
+  pastInput:function () {
+          var past = this.matched.substr(0, this.matched.length - this.match.length);
+          return (past.length > 20 ? '...':'') + past.substr(-20).replace(/\n/g, "");
+      },
+  upcomingInput:function () {
+          var next = this.match;
+          if (next.length < 20) {
+              next += this._input.substr(0, 20-next.length);
+          }
+          return (next.substr(0,20)+(next.length > 20 ? '...':'')).replace(/\n/g, "");
+      },
+  showPosition:function () {
+          var pre = this.pastInput();
+          var c = new Array(pre.length + 1).join("-");
+          return pre + this.upcomingInput() + "\n" + c+"^";
+      },
+  next:function () {
+          if (this.done) {
+              return this.EOF;
+          }
+          if (!this._input) this.done = true;
+
+          var token,
+              match,
+              tempMatch,
+              index,
+              col,
+              lines;
+          if (!this._more) {
+              this.yytext = '';
+              this.match = '';
+          }
+          var rules = this._currentRules();
+          for (var i=0;i < rules.length; i++) {
+              tempMatch = this._input.match(this.rules[rules[i]]);
+              if (tempMatch && (!match || tempMatch[0].length > match[0].length)) {
+                  match = tempMatch;
+                  index = i;
+                  if (!this.options.flex) break;
+              }
+          }
+          if (match) {
+              lines = match[0].match(/(?:\r\n?|\n).*/g);
+              if (lines) this.yylineno += lines.length;
+              this.yylloc = {first_line: this.yylloc.last_line,
+                             last_line: this.yylineno+1,
+                             first_column: this.yylloc.last_column,
+                             last_column: lines ? lines[lines.length-1].length-lines[lines.length-1].match(/\r?\n?/)[0].length : this.yylloc.last_column + match[0].length};
+              this.yytext += match[0];
+              this.match += match[0];
+              this.matches = match;
+              this.yyleng = this.yytext.length;
+              if (this.options.ranges) {
+                  this.yylloc.range = [this.offset, this.offset += this.yyleng];
+              }
+              this._more = false;
+              this._input = this._input.slice(match[0].length);
+              this.matched += match[0];
+              token = this.performAction.call(this, this.yy, this, rules[index],this.conditionStack[this.conditionStack.length-1]);
+              if (this.done && this._input) this.done = false;
+              if (token) return token;
+              else return;
+          }
+          if (this._input === "") {
+              return this.EOF;
+          } else {
+              return this.parseError('Lexical error on line '+(this.yylineno+1)+'. Unrecognized text.\n'+this.showPosition(),
+                      {text: "", token: null, line: this.yylineno});
+          }
+      },
+  lex:function lex() {
+          var r = this.next();
+          if (typeof r !== 'undefined') {
+              return r;
+          } else {
+              return this.lex();
+          }
+      },
+  begin:function begin(condition) {
+          this.conditionStack.push(condition);
+      },
+  popState:function popState() {
+          return this.conditionStack.pop();
+      },
+  _currentRules:function _currentRules() {
+          return this.conditions[this.conditionStack[this.conditionStack.length-1]].rules;
+      },
+  topState:function () {
+          return this.conditionStack[this.conditionStack.length-2];
+      },
+  pushState:function begin(condition) {
+          this.begin(condition);
+      }});
+  lexer.options = {};
+  lexer.performAction = function anonymous(yy,yy_,$avoiding_name_collisions,YY_START) {
+
+
+  function strip(start, end) {
+    return yy_.yytext = yy_.yytext.substr(start, yy_.yyleng-end);
+  }
+
+
+  var YYSTATE=YY_START
+  switch($avoiding_name_collisions) {
+  case 0:
+                                     if(yy_.yytext.slice(-2) === "\\\\") {
+                                       strip(0,1);
+                                       this.begin("mu");
+                                     } else if(yy_.yytext.slice(-1) === "\\") {
+                                       strip(0,1);
+                                       this.begin("emu");
+                                     } else {
+                                       this.begin("mu");
+                                     }
+                                     if(yy_.yytext) return 14;
+                                   
+  break;
+  case 1:return 14;
+  break;
+  case 2:
+                                     this.popState();
+                                     return 14;
+                                   
+  break;
+  case 3:
+                                    yy_.yytext = yy_.yytext.substr(5, yy_.yyleng-9);
+                                    this.popState();
+                                    return 16;
+                                   
+  break;
+  case 4: return 14; 
+  break;
+  case 5:
+    this.popState();
+    return 13;
+
+  break;
+  case 6:return 59;
+  break;
+  case 7:return 62;
+  break;
+  case 8: return 17; 
+  break;
+  case 9:
+                                    this.popState();
+                                    this.begin('raw');
+                                    return 21;
+                                   
+  break;
+  case 10:return 53;
+  break;
+  case 11:return 27;
+  break;
+  case 12:return 45;
+  break;
+  case 13:this.popState(); return 42;
+  break;
+  case 14:this.popState(); return 42;
+  break;
+  case 15:return 32;
+  break;
+  case 16:return 37;
+  break;
+  case 17:return 49;
+  break;
+  case 18:return 46;
+  break;
+  case 19:
+    this.unput(yy_.yytext);
+    this.popState();
+    this.begin('com');
+
+  break;
+  case 20:
+    this.popState();
+    return 13;
+
+  break;
+  case 21:return 46;
+  break;
+  case 22:return 67;
+  break;
+  case 23:return 66;
+  break;
+  case 24:return 66;
+  break;
+  case 25:return 79;
+  break;
+  case 26:// ignore whitespace
+  break;
+  case 27:this.popState(); return 52;
+  break;
+  case 28:this.popState(); return 31;
+  break;
+  case 29:yy_.yytext = strip(1,2).replace(/\\"/g,'"'); return 74;
+  break;
+  case 30:yy_.yytext = strip(1,2).replace(/\\'/g,"'"); return 74;
+  break;
+  case 31:return 77;
+  break;
+  case 32:return 76;
+  break;
+  case 33:return 76;
+  break;
+  case 34:return 75;
+  break;
+  case 35:return 69;
+  break;
+  case 36:return 71;
+  break;
+  case 37:return 66;
+  break;
+  case 38:yy_.yytext = strip(1,2); return 66;
+  break;
+  case 39:return 'INVALID';
+  break;
+  case 40:return 5;
+  break;
+  }
+  };
+  lexer.rules = [/^(?:[^\x00]*?(?=(\{\{)))/,/^(?:[^\x00]+)/,/^(?:[^\x00]{2,}?(?=(\{\{|\\\{\{|\\\\\{\{|$)))/,/^(?:\{\{\{\{\/[^\s!"#%-,\.\/;->@\[-\^`\{-~]+(?=[=}\s\/.])\}\}\}\})/,/^(?:[^\x00]*?(?=(\{\{\{\{\/)))/,/^(?:[\s\S]*?--(~)?\}\})/,/^(?:\()/,/^(?:\))/,/^(?:\{\{\{\{)/,/^(?:\}\}\}\})/,/^(?:\{\{(~)?>)/,/^(?:\{\{(~)?#)/,/^(?:\{\{(~)?\/)/,/^(?:\{\{(~)?\^\s*(~)?\}\})/,/^(?:\{\{(~)?\s*else\s*(~)?\}\})/,/^(?:\{\{(~)?\^)/,/^(?:\{\{(~)?\s*else\b)/,/^(?:\{\{(~)?\{)/,/^(?:\{\{(~)?&)/,/^(?:\{\{(~)?!--)/,/^(?:\{\{(~)?![\s\S]*?\}\})/,/^(?:\{\{(~)?)/,/^(?:=)/,/^(?:\.\.)/,/^(?:\.(?=([=~}\s\/.)|])))/,/^(?:[\/.])/,/^(?:\s+)/,/^(?:\}(~)?\}\})/,/^(?:(~)?\}\})/,/^(?:"(\\["]|[^"])*")/,/^(?:'(\\[']|[^'])*')/,/^(?:@)/,/^(?:true(?=([~}\s)])))/,/^(?:false(?=([~}\s)])))/,/^(?:-?[0-9]+(?:\.[0-9]+)?(?=([~}\s)])))/,/^(?:as\s+\|)/,/^(?:\|)/,/^(?:([^\s!"#%-,\.\/;->@\[-\^`\{-~]+(?=([=~}\s\/.)|]))))/,/^(?:\[[^\]]*\])/,/^(?:.)/,/^(?:$)/];
+  lexer.conditions = {"mu":{"rules":[6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37,38,39,40],"inclusive":false},"emu":{"rules":[2],"inclusive":false},"com":{"rules":[5],"inclusive":false},"raw":{"rules":[3,4],"inclusive":false},"INITIAL":{"rules":[0,1,40],"inclusive":true}};
+  return lexer;})()
+  parser.lexer = lexer;
+  function Parser () { this.yy = {}; }Parser.prototype = parser;parser.Parser = Parser;
+  return new Parser;
+  })();__exports__ = handlebars;
+  /* jshint ignore:end */
+  return __exports__;
+})();
+
+// handlebars/compiler/visitor.js
+var __module11__ = (function(__dependency1__, __dependency2__) {
+  "use strict";
+  var __exports__;
+  var Exception = __dependency1__;
+  var AST = __dependency2__;
+
+  function Visitor() {
+    this.parents = [];
+  }
+
+  Visitor.prototype = {
+    constructor: Visitor,
+    mutating: false,
+
+    // Visits a given value. If mutating, will replace the value if necessary.
+    acceptKey: function(node, name) {
+      var value = this.accept(node[name]);
+      if (this.mutating) {
+        // Hacky sanity check:
+        if (value && (!value.type || !AST[value.type])) {
+          throw new Exception('Unexpected node type "' + value.type + '" found when accepting ' + name + ' on ' + node.type);
+        }
+        node[name] = value;
+      }
+    },
+
+    // Performs an accept operation with added sanity check to ensure
+    // required keys are not removed.
+    acceptRequired: function(node, name) {
+      this.acceptKey(node, name);
+
+      if (!node[name]) {
+        throw new Exception(node.type + ' requires ' + name);
+      }
+    },
+
+    // Traverses a given array. If mutating, empty respnses will be removed
+    // for child elements.
+    acceptArray: function(array) {
+      for (var i = 0, l = array.length; i < l; i++) {
+        this.acceptKey(array, i);
+
+        if (!array[i]) {
+          array.splice(i, 1);
+          i--;
+          l--;
+        }
+      }
+    },
+
+    accept: function(object) {
+      if (!object) {
+        return;
+      }
+
+      if (this.current) {
+        this.parents.unshift(this.current);
+      }
+      this.current = object;
+
+      var ret = this[object.type](object);
+
+      this.current = this.parents.shift();
+
+      if (!this.mutating || ret) {
+        return ret;
+      } else if (ret !== false) {
+        return object;
+      }
+    },
+
+    Program: function(program) {
+      this.acceptArray(program.body);
+    },
+
+    MustacheStatement: function(mustache) {
+      this.acceptRequired(mustache, 'path');
+      this.acceptArray(mustache.params);
+      this.acceptKey(mustache, 'hash');
+    },
+
+    BlockStatement: function(block) {
+      this.acceptRequired(block, 'path');
+      this.acceptArray(block.params);
+      this.acceptKey(block, 'hash');
+
+      this.acceptKey(block, 'program');
+      this.acceptKey(block, 'inverse');
+    },
+
+    PartialStatement: function(partial) {
+      this.acceptRequired(partial, 'name');
+      this.acceptArray(partial.params);
+      this.acceptKey(partial, 'hash');
+    },
+
+    ContentStatement: function(/* content */) {},
+    CommentStatement: function(/* comment */) {},
+
+    SubExpression: function(sexpr) {
+      this.acceptRequired(sexpr, 'path');
+      this.acceptArray(sexpr.params);
+      this.acceptKey(sexpr, 'hash');
+    },
+    PartialExpression: function(partial) {
+      this.acceptRequired(partial, 'name');
+      this.acceptArray(partial.params);
+      this.acceptKey(partial, 'hash');
+    },
+
+    PathExpression: function(/* path */) {},
+
+    StringLiteral: function(/* string */) {},
+    NumberLiteral: function(/* number */) {},
+    BooleanLiteral: function(/* bool */) {},
+
+    Hash: function(hash) {
+      this.acceptArray(hash.pairs);
+    },
+    HashPair: function(pair) {
+      this.acceptRequired(pair, 'value');
+    }
+  };
+
+  __exports__ = Visitor;
+  return __exports__;
+})(__module4__, __module7__);
+
+// handlebars/compiler/whitespace-control.js
+var __module10__ = (function(__dependency1__) {
+  "use strict";
+  var __exports__;
+  var Visitor = __dependency1__;
+
+  function WhitespaceControl() {
+  }
+  WhitespaceControl.prototype = new Visitor();
+
+  WhitespaceControl.prototype.Program = function(program) {
+    var isRoot = !this.isRootSeen;
+    this.isRootSeen = true;
+
+    var body = program.body;
+    for (var i = 0, l = body.length; i < l; i++) {
+      var current = body[i],
+          strip = this.accept(current);
+
+      if (!strip) {
+        continue;
+      }
+
+      var _isPrevWhitespace = isPrevWhitespace(body, i, isRoot),
+          _isNextWhitespace = isNextWhitespace(body, i, isRoot),
+
+          openStandalone = strip.openStandalone && _isPrevWhitespace,
+          closeStandalone = strip.closeStandalone && _isNextWhitespace,
+          inlineStandalone = strip.inlineStandalone && _isPrevWhitespace && _isNextWhitespace;
+
+      if (strip.close) {
+        omitRight(body, i, true);
+      }
+      if (strip.open) {
+        omitLeft(body, i, true);
+      }
+
+      if (inlineStandalone) {
+        omitRight(body, i);
+
+        if (omitLeft(body, i)) {
+          // If we are on a standalone node, save the indent info for partials
+          if (current.type === 'PartialStatement') {
+            // Pull out the whitespace from the final line
+            current.indent = (/([ \t]+$)/).exec(body[i-1].original)[1];
+          }
+        }
+      }
+      if (openStandalone) {
+        omitRight((current.program || current.inverse).body);
+
+        // Strip out the previous content node if it's whitespace only
+        omitLeft(body, i);
+      }
+      if (closeStandalone) {
+        // Always strip the next node
+        omitRight(body, i);
+
+        omitLeft((current.inverse || current.program).body);
+      }
+    }
+
+    return program;
+  };
+  WhitespaceControl.prototype.BlockStatement = function(block) {
+    this.accept(block.program);
+    this.accept(block.inverse);
+
+    // Find the inverse program that is involed with whitespace stripping.
+    var program = block.program || block.inverse,
+        inverse = block.program && block.inverse,
+        firstInverse = inverse,
+        lastInverse = inverse;
+
+    if (inverse && inverse.chained) {
+      firstInverse = inverse.body[0].program;
+
+      // Walk the inverse chain to find the last inverse that is actually in the chain.
+      while (lastInverse.chained) {
+        lastInverse = lastInverse.body[lastInverse.body.length-1].program;
+      }
+    }
+
+    var strip = {
+      open: block.openStrip.open,
+      close: block.closeStrip.close,
+
+      // Determine the standalone candiacy. Basically flag our content as being possibly standalone
+      // so our parent can determine if we actually are standalone
+      openStandalone: isNextWhitespace(program.body),
+      closeStandalone: isPrevWhitespace((firstInverse || program).body)
+    };
+
+    if (block.openStrip.close) {
+      omitRight(program.body, null, true);
+    }
+
+    if (inverse) {
+      var inverseStrip = block.inverseStrip;
+
+      if (inverseStrip.open) {
+        omitLeft(program.body, null, true);
+      }
+
+      if (inverseStrip.close) {
+        omitRight(firstInverse.body, null, true);
+      }
+      if (block.closeStrip.open) {
+        omitLeft(lastInverse.body, null, true);
+      }
+
+      // Find standalone else statments
+      if (isPrevWhitespace(program.body)
+          && isNextWhitespace(firstInverse.body)) {
+
+        omitLeft(program.body);
+        omitRight(firstInverse.body);
+      }
+    } else {
+      if (block.closeStrip.open) {
+        omitLeft(program.body, null, true);
+      }
+    }
+
+    return strip;
+  };
+
+  WhitespaceControl.prototype.MustacheStatement = function(mustache) {
+    return mustache.strip;
+  };
+
+  WhitespaceControl.prototype.PartialStatement = 
+      WhitespaceControl.prototype.CommentStatement = function(node) {
+    /* istanbul ignore next */
+    var strip = node.strip || {};
+    return {
+      inlineStandalone: true,
+      open: strip.open,
+      close: strip.close
+    };
+  };
+
+
+  function isPrevWhitespace(body, i, isRoot) {
+    if (i === undefined) {
+      i = body.length;
+    }
+
+    // Nodes that end with newlines are considered whitespace (but are special
+    // cased for strip operations)
+    var prev = body[i-1],
+        sibling = body[i-2];
+    if (!prev) {
+      return isRoot;
+    }
+
+    if (prev.type === 'ContentStatement') {
+      return (sibling || !isRoot ? (/\r?\n\s*?$/) : (/(^|\r?\n)\s*?$/)).test(prev.original);
+    }
+  }
+  function isNextWhitespace(body, i, isRoot) {
+    if (i === undefined) {
+      i = -1;
+    }
+
+    var next = body[i+1],
+        sibling = body[i+2];
+    if (!next) {
+      return isRoot;
+    }
+
+    if (next.type === 'ContentStatement') {
+      return (sibling || !isRoot ? (/^\s*?\r?\n/) : (/^\s*?(\r?\n|$)/)).test(next.original);
+    }
+  }
+
+  // Marks the node to the right of the position as omitted.
+  // I.e. {{foo}}' ' will mark the ' ' node as omitted.
+  //
+  // If i is undefined, then the first child will be marked as such.
+  //
+  // If mulitple is truthy then all whitespace will be stripped out until non-whitespace
+  // content is met.
+  function omitRight(body, i, multiple) {
+    var current = body[i == null ? 0 : i + 1];
+    if (!current || current.type !== 'ContentStatement' || (!multiple && current.rightStripped)) {
+      return;
+    }
+
+    var original = current.value;
+    current.value = current.value.replace(multiple ? (/^\s+/) : (/^[ \t]*\r?\n?/), '');
+    current.rightStripped = current.value !== original;
+  }
+
+  // Marks the node to the left of the position as omitted.
+  // I.e. ' '{{foo}} will mark the ' ' node as omitted.
+  //
+  // If i is undefined then the last child will be marked as such.
+  //
+  // If mulitple is truthy then all whitespace will be stripped out until non-whitespace
+  // content is met.
+  function omitLeft(body, i, multiple) {
+    var current = body[i == null ? body.length - 1 : i - 1];
+    if (!current || current.type !== 'ContentStatement' || (!multiple && current.leftStripped)) {
+      return;
+    }
+
+    // We omit the last node if it's whitespace only and not preceeded by a non-content node.
+    var original = current.value;
+    current.value = current.value.replace(multiple ? (/\s+$/) : (/[ \t]+$/), '');
+    current.leftStripped = current.value !== original;
+    return current.leftStripped;
+  }
+
+  __exports__ = WhitespaceControl;
+  return __exports__;
+})(__module11__);
+
+// handlebars/compiler/helpers.js
+var __module12__ = (function(__dependency1__) {
+  "use strict";
+  var __exports__ = {};
+  var Exception = __dependency1__;
+
+  function SourceLocation(source, locInfo) {
+    this.source = source;
+    this.start = {
+      line: locInfo.first_line,
+      column: locInfo.first_column
+    };
+    this.end = {
+      line: locInfo.last_line,
+      column: locInfo.last_column
+    };
+  }
+
+  __exports__.SourceLocation = SourceLocation;function stripFlags(open, close) {
+    return {
+      open: open.charAt(2) === '~',
+      close: close.charAt(close.length-3) === '~'
+    };
+  }
+
+  __exports__.stripFlags = stripFlags;function stripComment(comment) {
+    return comment.replace(/^\{\{~?\!-?-?/, '')
+                  .replace(/-?-?~?\}\}$/, '');
+  }
+
+  __exports__.stripComment = stripComment;function preparePath(data, parts, locInfo) {
+    /*jshint -W040 */
+    locInfo = this.locInfo(locInfo);
+
+    var original = data ? '@' : '',
+        dig = [],
+        depth = 0,
+        depthString = '';
+
+    for(var i=0,l=parts.length; i<l; i++) {
+      var part = parts[i].part;
+      original += (parts[i].separator || '') + part;
+
+      if (part === '..' || part === '.' || part === 'this') {
+        if (dig.length > 0) {
+          throw new Exception('Invalid path: ' + original, {loc: locInfo});
+        } else if (part === '..') {
+          depth++;
+          depthString += '../';
+        }
+      } else {
+        dig.push(part);
+      }
+    }
+
+    return new this.PathExpression(data, depth, dig, original, locInfo);
+  }
+
+  __exports__.preparePath = preparePath;function prepareMustache(path, params, hash, open, strip, locInfo) {
+    /*jshint -W040 */
+    // Must use charAt to support IE pre-10
+    var escapeFlag = open.charAt(3) || open.charAt(2),
+        escaped = escapeFlag !== '{' && escapeFlag !== '&';
+
+    return new this.MustacheStatement(path, params, hash, escaped, strip, this.locInfo(locInfo));
+  }
+
+  __exports__.prepareMustache = prepareMustache;function prepareRawBlock(openRawBlock, content, close, locInfo) {
+    /*jshint -W040 */
+    if (openRawBlock.path.original !== close) {
+      var errorNode = {loc: openRawBlock.path.loc};
+
+      throw new Exception(openRawBlock.path.original + " doesn't match " + close, errorNode);
+    }
+
+    locInfo = this.locInfo(locInfo);
+    var program = new this.Program([content], null, {}, locInfo);
+
+    return new this.BlockStatement(
+        openRawBlock.path, openRawBlock.params, openRawBlock.hash,
+        program, undefined,
+        {}, {}, {},
+        locInfo);
+  }
+
+  __exports__.prepareRawBlock = prepareRawBlock;function prepareBlock(openBlock, program, inverseAndProgram, close, inverted, locInfo) {
+    /*jshint -W040 */
+    // When we are chaining inverse calls, we will not have a close path
+    if (close && close.path && openBlock.path.original !== close.path.original) {
+      var errorNode = {loc: openBlock.path.loc};
+
+      throw new Exception(openBlock.path.original + ' doesn\'t match ' + close.path.original, errorNode);
+    }
+
+    program.blockParams = openBlock.blockParams;
+
+    var inverse,
+        inverseStrip;
+
+    if (inverseAndProgram) {
+      if (inverseAndProgram.chain) {
+        inverseAndProgram.program.body[0].closeStrip = close.strip;
+      }
+
+      inverseStrip = inverseAndProgram.strip;
+      inverse = inverseAndProgram.program;
+    }
+
+    if (inverted) {
+      inverted = inverse;
+      inverse = program;
+      program = inverted;
+    }
+
+    return new this.BlockStatement(
+        openBlock.path, openBlock.params, openBlock.hash,
+        program, inverse,
+        openBlock.strip, inverseStrip, close && close.strip,
+        this.locInfo(locInfo));
+  }
+
+  __exports__.prepareBlock = prepareBlock;
+  return __exports__;
+})(__module4__);
+
+// handlebars/compiler/base.js
+var __module8__ = (function(__dependency1__, __dependency2__, __dependency3__, __dependency4__, __dependency5__) {
+  "use strict";
+  var __exports__ = {};
+  var parser = __dependency1__;
+  var AST = __dependency2__;
+  var WhitespaceControl = __dependency3__;
+  var Helpers = __dependency4__;
+  var extend = __dependency5__.extend;
+
+  __exports__.parser = parser;
+
+  var yy = {};
+  extend(yy, Helpers, AST);
+
+  function parse(input, options) {
+    // Just return if an already-compiled AST was passed in.
+    if (input.type === 'Program') { return input; }
+
+    parser.yy = yy;
+
+    // Altering the shared object here, but this is ok as parser is a sync operation
+    yy.locInfo = function(locInfo) {
+      return new yy.SourceLocation(options && options.srcName, locInfo);
+    };
+
+    var strip = new WhitespaceControl();
+    return strip.accept(parser.parse(input));
+  }
+
+  __exports__.parse = parse;
+  return __exports__;
+})(__module9__, __module7__, __module10__, __module12__, __module3__);
+
+// handlebars/compiler/compiler.js
+var __module13__ = (function(__dependency1__, __dependency2__, __dependency3__) {
+  "use strict";
+  var __exports__ = {};
+  var Exception = __dependency1__;
+  var isArray = __dependency2__.isArray;
+  var indexOf = __dependency2__.indexOf;
+  var AST = __dependency3__;
+
+  var slice = [].slice;
+
+
+  function Compiler() {}
+
+  __exports__.Compiler = Compiler;// the foundHelper register will disambiguate helper lookup from finding a
+  // function in a context. This is necessary for mustache compatibility, which
+  // requires that context functions in blocks are evaluated by blockHelperMissing,
+  // and then proceed as if the resulting value was provided to blockHelperMissing.
+
+  Compiler.prototype = {
+    compiler: Compiler,
+
+    equals: function(other) {
+      var len = this.opcodes.length;
+      if (other.opcodes.length !== len) {
+        return false;
+      }
+
+      for (var i = 0; i < len; i++) {
+        var opcode = this.opcodes[i],
+            otherOpcode = other.opcodes[i];
+        if (opcode.opcode !== otherOpcode.opcode || !argEquals(opcode.args, otherOpcode.args)) {
+          return false;
+        }
+      }
+
+      // We know that length is the same between the two arrays because they are directly tied
+      // to the opcode behavior above.
+      len = this.children.length;
+      for (i = 0; i < len; i++) {
+        if (!this.children[i].equals(other.children[i])) {
+          return false;
+        }
+      }
+
+      return true;
+    },
+
+    guid: 0,
+
+    compile: function(program, options) {
+      this.sourceNode = [];
+      this.opcodes = [];
+      this.children = [];
+      this.options = options;
+      this.stringParams = options.stringParams;
+      this.trackIds = options.trackIds;
+
+      options.blockParams = options.blockParams || [];
+
+      // These changes will propagate to the other compiler components
+      var knownHelpers = options.knownHelpers;
+      options.knownHelpers = {
+        'helperMissing': true,
+        'blockHelperMissing': true,
+        'each': true,
+        'if': true,
+        'unless': true,
+        'with': true,
+        'log': true,
+        'lookup': true
+      };
+      if (knownHelpers) {
+        for (var name in knownHelpers) {
+          options.knownHelpers[name] = knownHelpers[name];
+        }
+      }
+
+      return this.accept(program);
+    },
+
+    compileProgram: function(program) {
+      var result = new this.compiler().compile(program, this.options);
+      var guid = this.guid++;
+
+      this.usePartial = this.usePartial || result.usePartial;
+
+      this.children[guid] = result;
+      this.useDepths = this.useDepths || result.useDepths;
+
+      return guid;
+    },
+
+    accept: function(node) {
+      this.sourceNode.unshift(node);
+      var ret = this[node.type](node);
+      this.sourceNode.shift();
+      return ret;
+    },
+
+    Program: function(program) {
+      this.options.blockParams.unshift(program.blockParams);
+
+      var body = program.body;
+      for(var i=0, l=body.length; i<l; i++) {
+        this.accept(body[i]);
+      }
+
+      this.options.blockParams.shift();
+
+      this.isSimple = l === 1;
+      this.blockParams = program.blockParams ? program.blockParams.length : 0;
+
+      return this;
+    },
+
+    BlockStatement: function(block) {
+      transformLiteralToPath(block);
+
+      var program = block.program,
+          inverse = block.inverse;
+
+      program = program && this.compileProgram(program);
+      inverse = inverse && this.compileProgram(inverse);
+
+      var type = this.classifySexpr(block);
+
+      if (type === 'helper') {
+        this.helperSexpr(block, program, inverse);
+      } else if (type === 'simple') {
+        this.simpleSexpr(block);
+
+        // now that the simple mustache is resolved, we need to
+        // evaluate it by executing `blockHelperMissing`
+        this.opcode('pushProgram', program);
+        this.opcode('pushProgram', inverse);
+        this.opcode('emptyHash');
+        this.opcode('blockValue', block.path.original);
+      } else {
+        this.ambiguousSexpr(block, program, inverse);
+
+        // now that the simple mustache is resolved, we need to
+        // evaluate it by executing `blockHelperMissing`
+        this.opcode('pushProgram', program);
+        this.opcode('pushProgram', inverse);
+        this.opcode('emptyHash');
+        this.opcode('ambiguousBlockValue');
+      }
+
+      this.opcode('append');
+    },
+
+    PartialStatement: function(partial) {
+      this.usePartial = true;
+
+      var params = partial.params;
+      if (params.length > 1) {
+        throw new Exception('Unsupported number of partial arguments: ' + params.length, partial);
+      } else if (!params.length) {
+        params.push({type: 'PathExpression', parts: [], depth: 0});
+      }
+
+      var partialName = partial.name.original,
+          isDynamic = partial.name.type === 'SubExpression';
+      if (isDynamic) {
+        this.accept(partial.name);
+      }
+
+      this.setupFullMustacheParams(partial, undefined, undefined, true);
+
+      var indent = partial.indent || '';
+      if (this.options.preventIndent && indent) {
+        this.opcode('appendContent', indent);
+        indent = '';
+      }
+
+      this.opcode('invokePartial', isDynamic, partialName, indent);
+      this.opcode('append');
+    },
+
+    MustacheStatement: function(mustache) {
+      this.SubExpression(mustache);
+
+      if(mustache.escaped && !this.options.noEscape) {
+        this.opcode('appendEscaped');
+      } else {
+        this.opcode('append');
+      }
+    },
+
+    ContentStatement: function(content) {
+      if (content.value) {
+        this.opcode('appendContent', content.value);
+      }
+    },
+
+    CommentStatement: function() {},
+
+    SubExpression: function(sexpr) {
+      transformLiteralToPath(sexpr);
+      var type = this.classifySexpr(sexpr);
+
+      if (type === 'simple') {
+        this.simpleSexpr(sexpr);
+      } else if (type === 'helper') {
+        this.helperSexpr(sexpr);
+      } else {
+        this.ambiguousSexpr(sexpr);
+      }
+    },
+    ambiguousSexpr: function(sexpr, program, inverse) {
+      var path = sexpr.path,
+          name = path.parts[0],
+          isBlock = program != null || inverse != null;
+
+      this.opcode('getContext', path.depth);
+
+      this.opcode('pushProgram', program);
+      this.opcode('pushProgram', inverse);
+
+      this.accept(path);
+
+      this.opcode('invokeAmbiguous', name, isBlock);
+    },
+
+    simpleSexpr: function(sexpr) {
+      this.accept(sexpr.path);
+      this.opcode('resolvePossibleLambda');
+    },
+
+    helperSexpr: function(sexpr, program, inverse) {
+      var params = this.setupFullMustacheParams(sexpr, program, inverse),
+          path = sexpr.path,
+          name = path.parts[0];
+
+      if (this.options.knownHelpers[name]) {
+        this.opcode('invokeKnownHelper', params.length, name);
+      } else if (this.options.knownHelpersOnly) {
+        throw new Exception("You specified knownHelpersOnly, but used the unknown helper " + name, sexpr);
+      } else {
+        path.falsy = true;
+
+        this.accept(path);
+        this.opcode('invokeHelper', params.length, path.original, AST.helpers.simpleId(path));
+      }
+    },
+
+    PathExpression: function(path) {
+      this.addDepth(path.depth);
+      this.opcode('getContext', path.depth);
+
+      var name = path.parts[0],
+          scoped = AST.helpers.scopedId(path),
+          blockParamId = !path.depth && !scoped && this.blockParamIndex(name);
+
+      if (blockParamId) {
+        this.opcode('lookupBlockParam', blockParamId, path.parts);
+      } else  if (!name) {
+        // Context reference, i.e. `{{foo .}}` or `{{foo ..}}`
+        this.opcode('pushContext');
+      } else if (path.data) {
+        this.options.data = true;
+        this.opcode('lookupData', path.depth, path.parts);
+      } else {
+        this.opcode('lookupOnContext', path.parts, path.falsy, scoped);
+      }
+    },
+
+    StringLiteral: function(string) {
+      this.opcode('pushString', string.value);
+    },
+
+    NumberLiteral: function(number) {
+      this.opcode('pushLiteral', number.value);
+    },
+
+    BooleanLiteral: function(bool) {
+      this.opcode('pushLiteral', bool.value);
+    },
+
+    Hash: function(hash) {
+      var pairs = hash.pairs, i, l;
+
+      this.opcode('pushHash');
+
+      for (i=0, l=pairs.length; i<l; i++) {
+        this.pushParam(pairs[i].value);
+      }
+      while (i--) {
+        this.opcode('assignToHash', pairs[i].key);
+      }
+      this.opcode('popHash');
+    },
+
+    // HELPERS
+    opcode: function(name) {
+      this.opcodes.push({ opcode: name, args: slice.call(arguments, 1), loc: this.sourceNode[0].loc });
+    },
+
+    addDepth: function(depth) {
+      if (!depth) {
+        return;
+      }
+
+      this.useDepths = true;
+    },
+
+    classifySexpr: function(sexpr) {
+      var isSimple = AST.helpers.simpleId(sexpr.path);
+
+      var isBlockParam = isSimple && !!this.blockParamIndex(sexpr.path.parts[0]);
+
+      // a mustache is an eligible helper if:
+      // * its id is simple (a single part, not `this` or `..`)
+      var isHelper = !isBlockParam && AST.helpers.helperExpression(sexpr);
+
+      // if a mustache is an eligible helper but not a definite
+      // helper, it is ambiguous, and will be resolved in a later
+      // pass or at runtime.
+      var isEligible = !isBlockParam && (isHelper || isSimple);
+
+      var options = this.options;
+
+      // if ambiguous, we can possibly resolve the ambiguity now
+      // An eligible helper is one that does not have a complex path, i.e. `this.foo`, `../foo` etc.
+      if (isEligible && !isHelper) {
+        var name = sexpr.path.parts[0];
+
+        if (options.knownHelpers[name]) {
+          isHelper = true;
+        } else if (options.knownHelpersOnly) {
+          isEligible = false;
+        }
+      }
+
+      if (isHelper) { return 'helper'; }
+      else if (isEligible) { return 'ambiguous'; }
+      else { return 'simple'; }
+    },
+
+    pushParams: function(params) {
+      for(var i=0, l=params.length; i<l; i++) {
+        this.pushParam(params[i]);
+      }
+    },
+
+    pushParam: function(val) {
+      var value = val.value != null ? val.value : val.original || '';
+
+      if (this.stringParams) {
+        if (value.replace) {
+          value = value
+              .replace(/^(\.?\.\/)*/g, '')
+              .replace(/\//g, '.');
+        }
+
+        if(val.depth) {
+          this.addDepth(val.depth);
+        }
+        this.opcode('getContext', val.depth || 0);
+        this.opcode('pushStringParam', value, val.type);
+
+        if (val.type === 'SubExpression') {
+          // SubExpressions get evaluated and passed in
+          // in string params mode.
+          this.accept(val);
+        }
+      } else {
+        if (this.trackIds) {
+          var blockParamIndex;
+          if (val.parts && !AST.helpers.scopedId(val) && !val.depth) {
+             blockParamIndex = this.blockParamIndex(val.parts[0]);
+          }
+          if (blockParamIndex) {
+            var blockParamChild = val.parts.slice(1).join('.');
+            this.opcode('pushId', 'BlockParam', blockParamIndex, blockParamChild);
+          } else {
+            value = val.original || value;
+            if (value.replace) {
+              value = value
+                  .replace(/^\.\//g, '')
+                  .replace(/^\.$/g, '');
+            }
+
+            this.opcode('pushId', val.type, value);
+          }
+        }
+        this.accept(val);
+      }
+    },
+
+    setupFullMustacheParams: function(sexpr, program, inverse, omitEmpty) {
+      var params = sexpr.params;
+      this.pushParams(params);
+
+      this.opcode('pushProgram', program);
+      this.opcode('pushProgram', inverse);
+
+      if (sexpr.hash) {
+        this.accept(sexpr.hash);
+      } else {
+        this.opcode('emptyHash', omitEmpty);
+      }
+
+      return params;
+    },
+
+    blockParamIndex: function(name) {
+      for (var depth = 0, len = this.options.blockParams.length; depth < len; depth++) {
+        var blockParams = this.options.blockParams[depth],
+            param = blockParams && indexOf(blockParams, name);
+        if (blockParams && param >= 0) {
+          return [depth, param];
+        }
+      }
+    }
+  };
+
+  function precompile(input, options, env) {
+    if (input == null || (typeof input !== 'string' && input.type !== 'Program')) {
+      throw new Exception("You must pass a string or Handlebars AST to Handlebars.precompile. You passed " + input);
+    }
+
+    options = options || {};
+    if (!('data' in options)) {
+      options.data = true;
+    }
+    if (options.compat) {
+      options.useDepths = true;
+    }
+
+    var ast = env.parse(input, options);
+    var environment = new env.Compiler().compile(ast, options);
+    return new env.JavaScriptCompiler().compile(environment, options);
+  }
+
+  __exports__.precompile = precompile;function compile(input, options, env) {
+    if (input == null || (typeof input !== 'string' && input.type !== 'Program')) {
+      throw new Exception("You must pass a string or Handlebars AST to Handlebars.compile. You passed " + input);
+    }
+
+    options = options || {};
+
+    if (!('data' in options)) {
+      options.data = true;
+    }
+    if (options.compat) {
+      options.useDepths = true;
+    }
+
+    var compiled;
+
+    function compileInput() {
+      var ast = env.parse(input, options);
+      var environment = new env.Compiler().compile(ast, options);
+      var templateSpec = new env.JavaScriptCompiler().compile(environment, options, undefined, true);
+      return env.template(templateSpec);
+    }
+
+    // Template is only compiled on first use and cached after that point.
+    var ret = function(context, options) {
+      if (!compiled) {
+        compiled = compileInput();
+      }
+      return compiled.call(this, context, options);
+    };
+    ret._setup = function(options) {
+      if (!compiled) {
+        compiled = compileInput();
+      }
+      return compiled._setup(options);
+    };
+    ret._child = function(i, data, blockParams, depths) {
+      if (!compiled) {
+        compiled = compileInput();
+      }
+      return compiled._child(i, data, blockParams, depths);
+    };
+    return ret;
+  }
+
+  __exports__.compile = compile;function argEquals(a, b) {
+    if (a === b) {
+      return true;
+    }
+
+    if (isArray(a) && isArray(b) && a.length === b.length) {
+      for (var i = 0; i < a.length; i++) {
+        if (!argEquals(a[i], b[i])) {
+          return false;
+        }
+      }
+      return true;
+    }
+  }
+
+  function transformLiteralToPath(sexpr) {
+    if (!sexpr.path.parts) {
+      var literal = sexpr.path;
+      // Casting to string here to make false and 0 literal values play nicely with the rest
+      // of the system.
+      sexpr.path = new AST.PathExpression(false, 0, [literal.original+''], literal.original+'', literal.log);
+    }
+  }
+  return __exports__;
+})(__module4__, __module3__, __module7__);
+
+// handlebars/compiler/code-gen.js
+var __module15__ = (function(__dependency1__) {
+  "use strict";
+  var __exports__;
+  var isArray = __dependency1__.isArray;
+
+  try {
+    var SourceMap = require('source-map'),
+          SourceNode = SourceMap.SourceNode;
+  } catch (err) {
+    /* istanbul ignore next: tested but not covered in istanbul due to dist build  */
+    SourceNode = function(line, column, srcFile, chunks) {
+      this.src = '';
+      if (chunks) {
+        this.add(chunks);
+      }
+    };
+    /* istanbul ignore next */
+    SourceNode.prototype = {
+      add: function(chunks) {
+        if (isArray(chunks)) {
+          chunks = chunks.join('');
+        }
+        this.src += chunks;
+      },
+      prepend: function(chunks) {
+        if (isArray(chunks)) {
+          chunks = chunks.join('');
+        }
+        this.src = chunks + this.src;
+      },
+      toStringWithSourceMap: function() {
+        return {code: this.toString()};
+      },
+      toString: function() {
+        return this.src;
+      }
+    };
+  }
+
+
+  function castChunk(chunk, codeGen, loc) {
+    if (isArray(chunk)) {
+      var ret = [];
+
+      for (var i = 0, len = chunk.length; i < len; i++) {
+        ret.push(codeGen.wrap(chunk[i], loc));
+      }
+      return ret;
+    } else if (typeof chunk === 'boolean' || typeof chunk === 'number') {
+      // Handle primitives that the SourceNode will throw up on
+      return chunk+'';
+    }
+    return chunk;
+  }
+
+
+  function CodeGen(srcFile) {
+    this.srcFile = srcFile;
+    this.source = [];
+  }
+
+  CodeGen.prototype = {
+    prepend: function(source, loc) {
+      this.source.unshift(this.wrap(source, loc));
+    },
+    push: function(source, loc) {
+      this.source.push(this.wrap(source, loc));
+    },
+
+    merge: function() {
+      var source = this.empty();
+      this.each(function(line) {
+        source.add(['  ', line, '\n']);
+      });
+      return source;
+    },
+
+    each: function(iter) {
+      for (var i = 0, len = this.source.length; i < len; i++) {
+        iter(this.source[i]);
+      }
+    },
+
+    empty: function(loc) {
+      loc = loc || this.currentLocation || {start:{}};
+      return new SourceNode(loc.start.line, loc.start.column, this.srcFile);
+    },
+    wrap: function(chunk, loc) {
+      if (chunk instanceof SourceNode) {
+        return chunk;
+      }
+
+      loc = loc || this.currentLocation || {start:{}};
+      chunk = castChunk(chunk, this, loc);
+
+      return new SourceNode(loc.start.line, loc.start.column, this.srcFile, chunk);
+    },
+
+    functionCall: function(fn, type, params) {
+      params = this.generateList(params);
+      return this.wrap([fn, type ? '.' + type + '(' : '(', params, ')']);
+    },
+
+    quotedString: function(str) {
+      return '"' + (str + '')
+        .replace(/\\/g, '\\\\')
+        .replace(/"/g, '\\"')
+        .replace(/\n/g, '\\n')
+        .replace(/\r/g, '\\r')
+        .replace(/\u2028/g, '\\u2028')   // Per Ecma-262 7.3 + 7.8.4
+        .replace(/\u2029/g, '\\u2029') + '"';
+    },
+
+    objectLiteral: function(obj) {
+      var pairs = [];
+
+      for (var key in obj) {
+        if (obj.hasOwnProperty(key)) {
+          var value = castChunk(obj[key], this);
+          if (value !== 'undefined') {
+            pairs.push([this.quotedString(key), ':', value]);
+          }
+        }
+      }
+
+      var ret = this.generateList(pairs);
+      ret.prepend('{');
+      ret.add('}');
+      return ret;
+    },
+
+
+    generateList: function(entries, loc) {
+      var ret = this.empty(loc);
+
+      for (var i = 0, len = entries.length; i < len; i++) {
+        if (i) {
+          ret.add(',');
+        }
+
+        ret.add(castChunk(entries[i], this, loc));
+      }
+
+      return ret;
+    },
+
+    generateArray: function(entries, loc) {
+      var ret = this.generateList(entries, loc);
+      ret.prepend('[');
+      ret.add(']');
+
+      return ret;
+    }
+  };
+
+  __exports__ = CodeGen;
+  return __exports__;
+})(__module3__);
+
+// handlebars/compiler/javascript-compiler.js
+var __module14__ = (function(__dependency1__, __dependency2__, __dependency3__, __dependency4__) {
+  "use strict";
+  var __exports__;
+  var COMPILER_REVISION = __dependency1__.COMPILER_REVISION;
+  var REVISION_CHANGES = __dependency1__.REVISION_CHANGES;
+  var Exception = __dependency2__;
+  var isArray = __dependency3__.isArray;
+  var CodeGen = __dependency4__;
+
+  function Literal(value) {
+    this.value = value;
+  }
+
+  function JavaScriptCompiler() {}
+
+  JavaScriptCompiler.prototype = {
+    // PUBLIC API: You can override these methods in a subclass to provide
+    // alternative compiled forms for name lookup and buffering semantics
+    nameLookup: function(parent, name /* , type*/) {
+      if (JavaScriptCompiler.isValidJavaScriptVariableName(name)) {
+        return [parent, ".", name];
+      } else {
+        return [parent, "['", name, "']"];
+      }
+    },
+    depthedLookup: function(name) {
+      return [this.aliasable('this.lookup'), '(depths, "', name, '")'];
+    },
+
+    compilerInfo: function() {
+      var revision = COMPILER_REVISION,
+          versions = REVISION_CHANGES[revision];
+      return [revision, versions];
+    },
+
+    appendToBuffer: function(source, location, explicit) {
+      // Force a source as this simplifies the merge logic.
+      if (!isArray(source)) {
+        source = [source];
+      }
+      source = this.source.wrap(source, location);
+
+      if (this.environment.isSimple) {
+        return ['return ', source, ';'];
+      } else if (explicit) {
+        // This is a case where the buffer operation occurs as a child of another
+        // construct, generally braces. We have to explicitly output these buffer
+        // operations to ensure that the emitted code goes in the correct location.
+        return ['buffer += ', source, ';'];
+      } else {
+        source.appendToBuffer = true;
+        return source;
+      }
+    },
+
+    initializeBuffer: function() {
+      return this.quotedString("");
+    },
+    // END PUBLIC API
+
+    compile: function(environment, options, context, asObject) {
+      this.environment = environment;
+      this.options = options;
+      this.stringParams = this.options.stringParams;
+      this.trackIds = this.options.trackIds;
+      this.precompile = !asObject;
+
+      this.name = this.environment.name;
+      this.isChild = !!context;
+      this.context = context || {
+        programs: [],
+        environments: []
+      };
+
+      this.preamble();
+
+      this.stackSlot = 0;
+      this.stackVars = [];
+      this.aliases = {};
+      this.registers = { list: [] };
+      this.hashes = [];
+      this.compileStack = [];
+      this.inlineStack = [];
+      this.blockParams = [];
+
+      this.compileChildren(environment, options);
+
+      this.useDepths = this.useDepths || environment.useDepths || this.options.compat;
+      this.useBlockParams = this.useBlockParams || environment.useBlockParams;
+
+      var opcodes = environment.opcodes,
+          opcode,
+          firstLoc,
+          i,
+          l;
+
+      for (i = 0, l = opcodes.length; i < l; i++) {
+        opcode = opcodes[i];
+
+        this.source.currentLocation = opcode.loc;
+        firstLoc = firstLoc || opcode.loc;
+        this[opcode.opcode].apply(this, opcode.args);
+      }
+
+      // Flush any trailing content that might be pending.
+      this.source.currentLocation = firstLoc;
+      this.pushSource('');
+
+      /* istanbul ignore next */
+      if (this.stackSlot || this.inlineStack.length || this.compileStack.length) {
+        throw new Exception('Compile completed with content left on stack');
+      }
+
+      var fn = this.createFunctionContext(asObject);
+      if (!this.isChild) {
+        var ret = {
+          compiler: this.compilerInfo(),
+          main: fn
+        };
+        var programs = this.context.programs;
+        for (i = 0, l = programs.length; i < l; i++) {
+          if (programs[i]) {
+            ret[i] = programs[i];
+          }
+        }
+
+        if (this.environment.usePartial) {
+          ret.usePartial = true;
+        }
+        if (this.options.data) {
+          ret.useData = true;
+        }
+        if (this.useDepths) {
+          ret.useDepths = true;
+        }
+        if (this.useBlockParams) {
+          ret.useBlockParams = true;
+        }
+        if (this.options.compat) {
+          ret.compat = true;
+        }
+
+        if (!asObject) {
+          ret.compiler = JSON.stringify(ret.compiler);
+
+          this.source.currentLocation = {start: {line: 1, column: 0}};
+          ret = this.objectLiteral(ret);
+
+          if (options.srcName) {
+            ret = ret.toStringWithSourceMap({file: options.destName});
+            ret.map = ret.map && ret.map.toString();
+          } else {
+            ret = ret.toString();
+          }
+        } else {
+          ret.compilerOptions = this.options;
+        }
+
+        return ret;
+      } else {
+        return fn;
+      }
+    },
+
+    preamble: function() {
+      // track the last context pushed into place to allow skipping the
+      // getContext opcode when it would be a noop
+      this.lastContext = 0;
+      this.source = new CodeGen(this.options.srcName);
+    },
+
+    createFunctionContext: function(asObject) {
+      var varDeclarations = '';
+
+      var locals = this.stackVars.concat(this.registers.list);
+      if(locals.length > 0) {
+        varDeclarations += ", " + locals.join(", ");
+      }
+
+      // Generate minimizer alias mappings
+      //
+      // When using true SourceNodes, this will update all references to the given alias
+      // as the source nodes are reused in situ. For the non-source node compilation mode,
+      // aliases will not be used, but this case is already being run on the client and
+      // we aren't concern about minimizing the template size.
+      var aliasCount = 0;
+      for (var alias in this.aliases) {
+        var node = this.aliases[alias];
+
+        if (this.aliases.hasOwnProperty(alias) && node.children && node.referenceCount > 1) {
+          varDeclarations += ', alias' + (++aliasCount) + '=' + alias;
+          node.children[0] = 'alias' + aliasCount;
+        }
+      }
+
+      var params = ["depth0", "helpers", "partials", "data"];
+
+      if (this.useBlockParams || this.useDepths) {
+        params.push('blockParams');
+      }
+      if (this.useDepths) {
+        params.push('depths');
+      }
+
+      // Perform a second pass over the output to merge content when possible
+      var source = this.mergeSource(varDeclarations);
+
+      if (asObject) {
+        params.push(source);
+
+        return Function.apply(this, params);
+      } else {
+        return this.source.wrap(['function(', params.join(','), ') {\n  ', source, '}']);
+      }
+    },
+    mergeSource: function(varDeclarations) {
+      var isSimple = this.environment.isSimple,
+          appendOnly = !this.forceBuffer,
+          appendFirst,
+
+          sourceSeen,
+          bufferStart,
+          bufferEnd;
+      this.source.each(function(line) {
+        if (line.appendToBuffer) {
+          if (bufferStart) {
+            line.prepend('  + ');
+          } else {
+            bufferStart = line;
+          }
+          bufferEnd = line;
+        } else {
+          if (bufferStart) {
+            if (!sourceSeen) {
+              appendFirst = true;
+            } else {
+              bufferStart.prepend('buffer += ');
+            }
+            bufferEnd.add(';');
+            bufferStart = bufferEnd = undefined;
+          }
+
+          sourceSeen = true;
+          if (!isSimple) {
+            appendOnly = false;
+          }
+        }
+      });
+
+
+      if (appendOnly) {
+        if (bufferStart) {
+          bufferStart.prepend('return ');
+          bufferEnd.add(';');
+        } else if (!sourceSeen) {
+          this.source.push('return "";');
+        }
+      } else {
+        varDeclarations += ", buffer = " + (appendFirst ? '' : this.initializeBuffer());
+
+        if (bufferStart) {
+          bufferStart.prepend('return buffer + ');
+          bufferEnd.add(';');
+        } else {
+          this.source.push('return buffer;');
+        }
+      }
+
+      if (varDeclarations) {
+        this.source.prepend('var ' + varDeclarations.substring(2) + (appendFirst ? '' : ';\n'));
+      }
+
+      return this.source.merge();
+    },
+
+    // [blockValue]
+    //
+    // On stack, before: hash, inverse, program, value
+    // On stack, after: return value of blockHelperMissing
+    //
+    // The purpose of this opcode is to take a block of the form
+    // `{{#this.foo}}...{{/this.foo}}`, resolve the value of `foo`, and
+    // replace it on the stack with the result of properly
+    // invoking blockHelperMissing.
+    blockValue: function(name) {
+      var blockHelperMissing = this.aliasable('helpers.blockHelperMissing'),
+          params = [this.contextName(0)];
+      this.setupHelperArgs(name, 0, params);
+
+      var blockName = this.popStack();
+      params.splice(1, 0, blockName);
+
+      this.push(this.source.functionCall(blockHelperMissing, 'call', params));
+    },
+
+    // [ambiguousBlockValue]
+    //
+    // On stack, before: hash, inverse, program, value
+    // Compiler value, before: lastHelper=value of last found helper, if any
+    // On stack, after, if no lastHelper: same as [blockValue]
+    // On stack, after, if lastHelper: value
+    ambiguousBlockValue: function() {
+      // We're being a bit cheeky and reusing the options value from the prior exec
+      var blockHelperMissing = this.aliasable('helpers.blockHelperMissing'),
+          params = [this.contextName(0)];
+      this.setupHelperArgs('', 0, params, true);
+
+      this.flushInline();
+
+      var current = this.topStack();
+      params.splice(1, 0, current);
+
+      this.pushSource([
+          'if (!', this.lastHelper, ') { ',
+            current, ' = ', this.source.functionCall(blockHelperMissing, 'call', params),
+          '}']);
+    },
+
+    // [appendContent]
+    //
+    // On stack, before: ...
+    // On stack, after: ...
+    //
+    // Appends the string value of `content` to the current buffer
+    appendContent: function(content) {
+      if (this.pendingContent) {
+        content = this.pendingContent + content;
+      } else {
+        this.pendingLocation = this.source.currentLocation;
+      }
+
+      this.pendingContent = content;
+    },
+
+    // [append]
+    //
+    // On stack, before: value, ...
+    // On stack, after: ...
+    //
+    // Coerces `value` to a String and appends it to the current buffer.
+    //
+    // If `value` is truthy, or 0, it is coerced into a string and appended
+    // Otherwise, the empty string is appended
+    append: function() {
+      if (this.isInline()) {
+        this.replaceStack(function(current) {
+          return [' != null ? ', current, ' : ""'];
+        });
+
+        this.pushSource(this.appendToBuffer(this.popStack()));
+      } else {
+        var local = this.popStack();
+        this.pushSource(['if (', local, ' != null) { ', this.appendToBuffer(local, undefined, true), ' }']);
+        if (this.environment.isSimple) {
+          this.pushSource(['else { ', this.appendToBuffer("''", undefined, true), ' }']);
+        }
+      }
+    },
+
+    // [appendEscaped]
+    //
+    // On stack, before: value, ...
+    // On stack, after: ...
+    //
+    // Escape `value` and append it to the buffer
+    appendEscaped: function() {
+      this.pushSource(this.appendToBuffer(
+          [this.aliasable('this.escapeExpression'), '(', this.popStack(), ')']));
+    },
+
+    // [getContext]
+    //
+    // On stack, before: ...
+    // On stack, after: ...
+    // Compiler value, after: lastContext=depth
+    //
+    // Set the value of the `lastContext` compiler value to the depth
+    getContext: function(depth) {
+      this.lastContext = depth;
+    },
+
+    // [pushContext]
+    //
+    // On stack, before: ...
+    // On stack, after: currentContext, ...
+    //
+    // Pushes the value of the current context onto the stack.
+    pushContext: function() {
+      this.pushStackLiteral(this.contextName(this.lastContext));
+    },
+
+    // [lookupOnContext]
+    //
+    // On stack, before: ...
+    // On stack, after: currentContext[name], ...
+    //
+    // Looks up the value of `name` on the current context and pushes
+    // it onto the stack.
+    lookupOnContext: function(parts, falsy, scoped) {
+      var i = 0;
+
+      if (!scoped && this.options.compat && !this.lastContext) {
+        // The depthed query is expected to handle the undefined logic for the root level that
+        // is implemented below, so we evaluate that directly in compat mode
+        this.push(this.depthedLookup(parts[i++]));
+      } else {
+        this.pushContext();
+      }
+
+      this.resolvePath('context', parts, i, falsy);
+    },
+
+    // [lookupBlockParam]
+    //
+    // On stack, before: ...
+    // On stack, after: blockParam[name], ...
+    //
+    // Looks up the value of `parts` on the given block param and pushes
+    // it onto the stack.
+    lookupBlockParam: function(blockParamId, parts) {
+      this.useBlockParams = true;
+
+      this.push(['blockParams[', blockParamId[0], '][', blockParamId[1], ']']);
+      this.resolvePath('context', parts, 1);
+    },
+
+    // [lookupData]
+    //
+    // On stack, before: ...
+    // On stack, after: data, ...
+    //
+    // Push the data lookup operator
+    lookupData: function(depth, parts) {
+      /*jshint -W083 */
+      if (!depth) {
+        this.pushStackLiteral('data');
+      } else {
+        this.pushStackLiteral('this.data(data, ' + depth + ')');
+      }
+
+      this.resolvePath('data', parts, 0, true);
+    },
+
+    resolvePath: function(type, parts, i, falsy) {
+      /*jshint -W083 */
+      if (this.options.strict || this.options.assumeObjects) {
+        this.push(strictLookup(this.options.strict, this, parts, type));
+        return;
+      }
+
+      var len = parts.length;
+      for (; i < len; i++) {
+        this.replaceStack(function(current) {
+          var lookup = this.nameLookup(current, parts[i], type);
+          // We want to ensure that zero and false are handled properly if the context (falsy flag)
+          // needs to have the special handling for these values.
+          if (!falsy) {
+            return [' != null ? ', lookup, ' : ', current];
+          } else {
+            // Otherwise we can use generic falsy handling
+            return [' && ', lookup];
+          }
+        });
+      }
+    },
+
+    // [resolvePossibleLambda]
+    //
+    // On stack, before: value, ...
+    // On stack, after: resolved value, ...
+    //
+    // If the `value` is a lambda, replace it on the stack by
+    // the return value of the lambda
+    resolvePossibleLambda: function() {
+      this.push([this.aliasable('this.lambda'), '(', this.popStack(), ', ', this.contextName(0), ')']);
+    },
+
+    // [pushStringParam]
+    //
+    // On stack, before: ...
+    // On stack, after: string, currentContext, ...
+    //
+    // This opcode is designed for use in string mode, which
+    // provides the string value of a parameter along with its
+    // depth rather than resolving it immediately.
+    pushStringParam: function(string, type) {
+      this.pushContext();
+      this.pushString(type);
+
+      // If it's a subexpression, the string result
+      // will be pushed after this opcode.
+      if (type !== 'SubExpression') {
+        if (typeof string === 'string') {
+          this.pushString(string);
+        } else {
+          this.pushStackLiteral(string);
+        }
+      }
+    },
+
+    emptyHash: function(omitEmpty) {
+      if (this.trackIds) {
+        this.push('{}'); // hashIds
+      }
+      if (this.stringParams) {
+        this.push('{}'); // hashContexts
+        this.push('{}'); // hashTypes
+      }
+      this.pushStackLiteral(omitEmpty ? 'undefined' : '{}');
+    },
+    pushHash: function() {
+      if (this.hash) {
+        this.hashes.push(this.hash);
+      }
+      this.hash = {values: [], types: [], contexts: [], ids: []};
+    },
+    popHash: function() {
+      var hash = this.hash;
+      this.hash = this.hashes.pop();
+
+      if (this.trackIds) {
+        this.push(this.objectLiteral(hash.ids));
+      }
+      if (this.stringParams) {
+        this.push(this.objectLiteral(hash.contexts));
+        this.push(this.objectLiteral(hash.types));
+      }
+
+      this.push(this.objectLiteral(hash.values));
+    },
+
+    // [pushString]
+    //
+    // On stack, before: ...
+    // On stack, after: quotedString(string), ...
+    //
+    // Push a quoted version of `string` onto the stack
+    pushString: function(string) {
+      this.pushStackLiteral(this.quotedString(string));
+    },
+
+    // [pushLiteral]
+    //
+    // On stack, before: ...
+    // On stack, after: value, ...
+    //
+    // Pushes a value onto the stack. This operation prevents
+    // the compiler from creating a temporary variable to hold
+    // it.
+    pushLiteral: function(value) {
+      this.pushStackLiteral(value);
+    },
+
+    // [pushProgram]
+    //
+    // On stack, before: ...
+    // On stack, after: program(guid), ...
+    //
+    // Push a program expression onto the stack. This takes
+    // a compile-time guid and converts it into a runtime-accessible
+    // expression.
+    pushProgram: function(guid) {
+      if (guid != null) {
+        this.pushStackLiteral(this.programExpression(guid));
+      } else {
+        this.pushStackLiteral(null);
+      }
+    },
+
+    // [invokeHelper]
+    //
+    // On stack, before: hash, inverse, program, params..., ...
+    // On stack, after: result of helper invocation
+    //
+    // Pops off the helper's parameters, invokes the helper,
+    // and pushes the helper's return value onto the stack.
+    //
+    // If the helper is not found, `helperMissing` is called.
+    invokeHelper: function(paramSize, name, isSimple) {
+      var nonHelper = this.popStack();
+      var helper = this.setupHelper(paramSize, name);
+      var simple = isSimple ? [helper.name, ' || '] : '';
+
+      var lookup = ['('].concat(simple, nonHelper);
+      if (!this.options.strict) {
+        lookup.push(' || ', this.aliasable('helpers.helperMissing'));
+      }
+      lookup.push(')');
+
+      this.push(this.source.functionCall(lookup, 'call', helper.callParams));
+    },
+
+    // [invokeKnownHelper]
+    //
+    // On stack, before: hash, inverse, program, params..., ...
+    // On stack, after: result of helper invocation
+    //
+    // This operation is used when the helper is known to exist,
+    // so a `helperMissing` fallback is not required.
+    invokeKnownHelper: function(paramSize, name) {
+      var helper = this.setupHelper(paramSize, name);
+      this.push(this.source.functionCall(helper.name, 'call', helper.callParams));
+    },
+
+    // [invokeAmbiguous]
+    //
+    // On stack, before: hash, inverse, program, params..., ...
+    // On stack, after: result of disambiguation
+    //
+    // This operation is used when an expression like `{{foo}}`
+    // is provided, but we don't know at compile-time whether it
+    // is a helper or a path.
+    //
+    // This operation emits more code than the other options,
+    // and can be avoided by passing the `knownHelpers` and
+    // `knownHelpersOnly` flags at compile-time.
+    invokeAmbiguous: function(name, helperCall) {
+      this.useRegister('helper');
+
+      var nonHelper = this.popStack();
+
+      this.emptyHash();
+      var helper = this.setupHelper(0, name, helperCall);
+
+      var helperName = this.lastHelper = this.nameLookup('helpers', name, 'helper');
+
+      var lookup = ['(', '(helper = ', helperName, ' || ', nonHelper, ')'];
+      if (!this.options.strict) {
+        lookup[0] = '(helper = ';
+        lookup.push(
+          ' != null ? helper : ',
+          this.aliasable('helpers.helperMissing')
+        );
+      }
+
+      this.push([
+          '(', lookup,
+          (helper.paramsInit ? ['),(', helper.paramsInit] : []), '),',
+          '(typeof helper === ', this.aliasable('"function"'), ' ? ',
+          this.source.functionCall('helper','call', helper.callParams), ' : helper))'
+      ]);
+    },
+
+    // [invokePartial]
+    //
+    // On stack, before: context, ...
+    // On stack after: result of partial invocation
+    //
+    // This operation pops off a context, invokes a partial with that context,
+    // and pushes the result of the invocation back.
+    invokePartial: function(isDynamic, name, indent) {
+      var params = [],
+          options = this.setupParams(name, 1, params, false);
+
+      if (isDynamic) {
+        name = this.popStack();
+        delete options.name;
+      }
+
+      if (indent) {
+        options.indent = JSON.stringify(indent);
+      }
+      options.helpers = 'helpers';
+      options.partials = 'partials';
+
+      if (!isDynamic) {
+        params.unshift(this.nameLookup('partials', name, 'partial'));
+      } else {
+        params.unshift(name);
+      }
+
+      if (this.options.compat) {
+        options.depths = 'depths';
+      }
+      options = this.objectLiteral(options);
+      params.push(options);
+
+      this.push(this.source.functionCall('this.invokePartial', '', params));
+    },
+
+    // [assignToHash]
+    //
+    // On stack, before: value, ..., hash, ...
+    // On stack, after: ..., hash, ...
+    //
+    // Pops a value off the stack and assigns it to the current hash
+    assignToHash: function(key) {
+      var value = this.popStack(),
+          context,
+          type,
+          id;
+
+      if (this.trackIds) {
+        id = this.popStack();
+      }
+      if (this.stringParams) {
+        type = this.popStack();
+        context = this.popStack();
+      }
+
+      var hash = this.hash;
+      if (context) {
+        hash.contexts[key] = context;
+      }
+      if (type) {
+        hash.types[key] = type;
+      }
+      if (id) {
+        hash.ids[key] = id;
+      }
+      hash.values[key] = value;
+    },
+
+    pushId: function(type, name, child) {
+      if (type === 'BlockParam') {
+        this.pushStackLiteral(
+            'blockParams[' + name[0] + '].path[' + name[1] + ']'
+            + (child ? ' + ' + JSON.stringify('.' + child) : ''));
+      } else if (type === 'PathExpression') {
+        this.pushString(name);
+      } else if (type === 'SubExpression') {
+        this.pushStackLiteral('true');
+      } else {
+        this.pushStackLiteral('null');
+      }
+    },
+
+    // HELPERS
+
+    compiler: JavaScriptCompiler,
+
+    compileChildren: function(environment, options) {
+      var children = environment.children, child, compiler;
+
+      for(var i=0, l=children.length; i<l; i++) {
+        child = children[i];
+        compiler = new this.compiler();
+
+        var index = this.matchExistingProgram(child);
+
+        if (index == null) {
+          this.context.programs.push('');     // Placeholder to prevent name conflicts for nested children
+          index = this.context.programs.length;
+          child.index = index;
+          child.name = 'program' + index;
+          this.context.programs[index] = compiler.compile(child, options, this.context, !this.precompile);
+          this.context.environments[index] = child;
+
+          this.useDepths = this.useDepths || compiler.useDepths;
+          this.useBlockParams = this.useBlockParams || compiler.useBlockParams;
+        } else {
+          child.index = index;
+          child.name = 'program' + index;
+
+          this.useDepths = this.useDepths || child.useDepths;
+          this.useBlockParams = this.useBlockParams || child.useBlockParams;
+        }
+      }
+    },
+    matchExistingProgram: function(child) {
+      for (var i = 0, len = this.context.environments.length; i < len; i++) {
+        var environment = this.context.environments[i];
+        if (environment && environment.equals(child)) {
+          return i;
+        }
+      }
+    },
+
+    programExpression: function(guid) {
+      var child = this.environment.children[guid],
+          programParams = [child.index, 'data', child.blockParams];
+
+      if (this.useBlockParams || this.useDepths) {
+        programParams.push('blockParams');
+      }
+      if (this.useDepths) {
+        programParams.push('depths');
+      }
+
+      return 'this.program(' + programParams.join(', ') + ')';
+    },
+
+    useRegister: function(name) {
+      if(!this.registers[name]) {
+        this.registers[name] = true;
+        this.registers.list.push(name);
+      }
+    },
+
+    push: function(expr) {
+      if (!(expr instanceof Literal)) {
+        expr = this.source.wrap(expr);
+      }
+
+      this.inlineStack.push(expr);
+      return expr;
+    },
+
+    pushStackLiteral: function(item) {
+      this.push(new Literal(item));
+    },
+
+    pushSource: function(source) {
+      if (this.pendingContent) {
+        this.source.push(
+            this.appendToBuffer(this.source.quotedString(this.pendingContent), this.pendingLocation));
+        this.pendingContent = undefined;
+      }
+
+      if (source) {
+        this.source.push(source);
+      }
+    },
+
+    replaceStack: function(callback) {
+      var prefix = ['('],
+          stack,
+          createdStack,
+          usedLiteral;
+
+      /* istanbul ignore next */
+      if (!this.isInline()) {
+        throw new Exception('replaceStack on non-inline');
+      }
+
+      // We want to merge the inline statement into the replacement statement via ','
+      var top = this.popStack(true);
+
+      if (top instanceof Literal) {
+        // Literals do not need to be inlined
+        stack = [top.value];
+        prefix = ['(', stack];
+        usedLiteral = true;
+      } else {
+        // Get or create the current stack name for use by the inline
+        createdStack = true;
+        var name = this.incrStack();
+
+        prefix = ['((', this.push(name), ' = ', top, ')'];
+        stack = this.topStack();
+      }
+
+      var item = callback.call(this, stack);
+
+      if (!usedLiteral) {
+        this.popStack();
+      }
+      if (createdStack) {
+        this.stackSlot--;
+      }
+      this.push(prefix.concat(item, ')'));
+    },
+
+    incrStack: function() {
+      this.stackSlot++;
+      if(this.stackSlot > this.stackVars.length) { this.stackVars.push("stack" + this.stackSlot); }
+      return this.topStackName();
+    },
+    topStackName: function() {
+      return "stack" + this.stackSlot;
+    },
+    flushInline: function() {
+      var inlineStack = this.inlineStack;
+      this.inlineStack = [];
+      for (var i = 0, len = inlineStack.length; i < len; i++) {
+        var entry = inlineStack[i];
+        /* istanbul ignore if */
+        if (entry instanceof Literal) {
+          this.compileStack.push(entry);
+        } else {
+          var stack = this.incrStack();
+          this.pushSource([stack, ' = ', entry, ';']);
+          this.compileStack.push(stack);
+        }
+      }
+    },
+    isInline: function() {
+      return this.inlineStack.length;
+    },
+
+    popStack: function(wrapped) {
+      var inline = this.isInline(),
+          item = (inline ? this.inlineStack : this.compileStack).pop();
+
+      if (!wrapped && (item instanceof Literal)) {
+        return item.value;
+      } else {
+        if (!inline) {
+          /* istanbul ignore next */
+          if (!this.stackSlot) {
+            throw new Exception('Invalid stack pop');
+          }
+          this.stackSlot--;
+        }
+        return item;
+      }
+    },
+
+    topStack: function() {
+      var stack = (this.isInline() ? this.inlineStack : this.compileStack),
+          item = stack[stack.length - 1];
+
+      /* istanbul ignore if */
+      if (item instanceof Literal) {
+        return item.value;
+      } else {
+        return item;
+      }
+    },
+
+    contextName: function(context) {
+      if (this.useDepths && context) {
+        return 'depths[' + context + ']';
+      } else {
+        return 'depth' + context;
+      }
+    },
+
+    quotedString: function(str) {
+      return this.source.quotedString(str);
+    },
+
+    objectLiteral: function(obj) {
+      return this.source.objectLiteral(obj);
+    },
+
+    aliasable: function(name) {
+      var ret = this.aliases[name];
+      if (ret) {
+        ret.referenceCount++;
+        return ret;
+      }
+
+      ret = this.aliases[name] = this.source.wrap(name);
+      ret.aliasable = true;
+      ret.referenceCount = 1;
+
+      return ret;
+    },
+
+    setupHelper: function(paramSize, name, blockHelper) {
+      var params = [],
+          paramsInit = this.setupHelperArgs(name, paramSize, params, blockHelper);
+      var foundHelper = this.nameLookup('helpers', name, 'helper');
+
+      return {
+        params: params,
+        paramsInit: paramsInit,
+        name: foundHelper,
+        callParams: [this.contextName(0)].concat(params)
+      };
+    },
+
+    setupParams: function(helper, paramSize, params) {
+      var options = {}, contexts = [], types = [], ids = [], param;
+
+      options.name = this.quotedString(helper);
+      options.hash = this.popStack();
+
+      if (this.trackIds) {
+        options.hashIds = this.popStack();
+      }
+      if (this.stringParams) {
+        options.hashTypes = this.popStack();
+        options.hashContexts = this.popStack();
+      }
+
+      var inverse = this.popStack(),
+          program = this.popStack();
+
+      // Avoid setting fn and inverse if neither are set. This allows
+      // helpers to do a check for `if (options.fn)`
+      if (program || inverse) {
+        options.fn = program || 'this.noop';
+        options.inverse = inverse || 'this.noop';
+      }
+
+      // The parameters go on to the stack in order (making sure that they are evaluated in order)
+      // so we need to pop them off the stack in reverse order
+      var i = paramSize;
+      while (i--) {
+        param = this.popStack();
+        params[i] = param;
+
+        if (this.trackIds) {
+          ids[i] = this.popStack();
+        }
+        if (this.stringParams) {
+          types[i] = this.popStack();
+          contexts[i] = this.popStack();
+        }
+      }
+
+      if (this.trackIds) {
+        options.ids = this.source.generateArray(ids);
+      }
+      if (this.stringParams) {
+        options.types = this.source.generateArray(types);
+        options.contexts = this.source.generateArray(contexts);
+      }
+
+      if (this.options.data) {
+        options.data = 'data';
+      }
+      if (this.useBlockParams) {
+        options.blockParams = 'blockParams';
+      }
+      return options;
+    },
+
+    setupHelperArgs: function(helper, paramSize, params, useRegister) {
+      var options = this.setupParams(helper, paramSize, params, true);
+      options = this.objectLiteral(options);
+      if (useRegister) {
+        this.useRegister('options');
+        params.push('options');
+        return ['options=', options];
+      } else {
+        params.push(options);
+        return '';
+      }
+    }
+  };
+
+
+  var reservedWords = (
+    "break else new var" +
+    " case finally return void" +
+    " catch for switch while" +
+    " continue function this with" +
+    " default if throw" +
+    " delete in try" +
+    " do instanceof typeof" +
+    " abstract enum int short" +
+    " boolean export interface static" +
+    " byte extends long super" +
+    " char final native synchronized" +
+    " class float package throws" +
+    " const goto private transient" +
+    " debugger implements protected volatile" +
+    " double import public let yield await" +
+    " null true false"
+  ).split(" ");
+
+  var compilerWords = JavaScriptCompiler.RESERVED_WORDS = {};
+
+  for(var i=0, l=reservedWords.length; i<l; i++) {
+    compilerWords[reservedWords[i]] = true;
+  }
+
+  JavaScriptCompiler.isValidJavaScriptVariableName = function(name) {
+    return !JavaScriptCompiler.RESERVED_WORDS[name] && /^[a-zA-Z_$][0-9a-zA-Z_$]*$/.test(name);
+  };
+
+  function strictLookup(requireTerminal, compiler, parts, type) {
+    var stack = compiler.popStack();
+
+    var i = 0,
+        len = parts.length;
+    if (requireTerminal) {
+      len--;
+    }
+
+    for (; i < len; i++) {
+      stack = compiler.nameLookup(stack, parts[i], type);
+    }
+
+    if (requireTerminal) {
+      return [compiler.aliasable('this.strict'), '(', stack, ', ', compiler.quotedString(parts[i]), ')'];
+    } else {
+      return stack;
+    }
+  }
+
+  __exports__ = JavaScriptCompiler;
+  return __exports__;
+})(__module2__, __module4__, __module3__, __module15__);
+
+// handlebars.js
+var __module0__ = (function(__dependency1__, __dependency2__, __dependency3__, __dependency4__, __dependency5__) {
+  "use strict";
+  var __exports__;
+  /*globals Handlebars: true */
+  var Handlebars = __dependency1__;
+
+  // Compiler imports
+  var AST = __dependency2__;
+  var Parser = __dependency3__.parser;
+  var parse = __dependency3__.parse;
+  var Compiler = __dependency4__.Compiler;
+  var compile = __dependency4__.compile;
+  var precompile = __dependency4__.precompile;
+  var JavaScriptCompiler = __dependency5__;
+
+  var _create = Handlebars.create;
+  var create = function() {
+    var hb = _create();
+
+    hb.compile = function(input, options) {
+      return compile(input, options, hb);
+    };
+    hb.precompile = function (input, options) {
+      return precompile(input, options, hb);
+    };
+
+    hb.AST = AST;
+    hb.Compiler = Compiler;
+    hb.JavaScriptCompiler = JavaScriptCompiler;
+    hb.Parser = Parser;
+    hb.parse = parse;
+
+    return hb;
+  };
+
+  Handlebars = create();
+  Handlebars.create = create;
+
+  /*jshint -W040 */
+  /* istanbul ignore next */
+  var root = typeof global !== 'undefined' ? global : window,
+      $Handlebars = root.Handlebars;
+  /* istanbul ignore next */
+  Handlebars.noConflict = function() {
+    if (root.Handlebars === Handlebars) {
+      root.Handlebars = $Handlebars;
+    }
+  };
+
+  Handlebars['default'] = Handlebars;
+
+  __exports__ = Handlebars;
+  return __exports__;
+})(__module1__, __module7__, __module8__, __module13__, __module14__);
+
+  return __module0__;
+}));
+;
+/**
+ * A neXtProt js client
+ */
+( function (root) {
+    //
+    'use strict';
+    if (root.Nextprot === undefined) {
+        root.Nextprot = {};
+    }
+
+
+    (function () {
+
+        //?default-graph-uri=&named-graph-uri=&output=json
+
+        var tempApiUrl = "http://dev-api.nextprot.org/entries/";
+        var nextprotApiUrl = "https://api.nextprot.org//entry/";
+        var sparqlEndpoint = "https://api.nextprot.org/sparql";
+        var sparqlFormat = "?output=json";
+        var sparqlPrefixes = "PREFIX :<http://nextprot.org/rdf#> "+
+            "PREFIX annotation:<http://nextprot.org/rdf/annotation/> "+
+            "PREFIX context:<http://nextprot.org/rdf/context/> "+
+            "PREFIX cv:<http://nextprot.org/rdf/terminology/> "+
+            "PREFIX db:<http://nextprot.org/rdf/db/> "+
+            "PREFIX dc:<http://purl.org/dc/elements/1.1/> "+
+            "PREFIX dcterms:<http://purl.org/dc/terms/> "+
+            "PREFIX entry:<http://nextprot.org/rdf/entry/> "+
+            "PREFIX evidence:<http://nextprot.org/rdf/evidence/> "+
+            "PREFIX foaf:<http://xmlns.com/foaf/0.1/> "+
+            "PREFIX gene:<http://nextprot.org/rdf/gene/> "+
+            "PREFIX identifier:<http://nextprot.org/rdf/identifier/> "+
+            "PREFIX isoform:<http://nextprot.org/rdf/isoform/> "+
+            "PREFIX mo:<http://purl.org/ontology/mo/> "+
+            "PREFIX ov:<http://open.vocab.org/terms/> "+
+            "PREFIX owl:<http://www.w3.org/2002/07/owl#> "+
+            "PREFIX publication:<http://nextprot.org/rdf/publication/> "+
+            "PREFIX rdf:<http://www.w3.org/1999/02/22-rdf-syntax-ns#> "+
+            "PREFIX rdfs:<http://www.w3.org/2000/01/rdf-schema#> "+
+            "PREFIX sim:<http://purl.org/ontology/similarity/> "+
+            "PREFIX source:<http://nextprot.org/rdf/source/> "+
+            "PREFIX xref:<http://nextprot.org/rdf/xref/> "+
+            "PREFIX xsd:<http://www.w3.org/2001/XMLSchema#> ";
+
+
+        var applicationName = null;
+        var clientInfo = null;
+
+
+        var NextprotClient = function (appName, clientInformation) {
+            applicationName = appName;
+            clientInfo = clientInformation;
+            if(!appName){
+                throw "Please provide some application name  ex:  new Nextprot.Client('demo application for visualizing peptides', clientInformation);";
+            }
+
+            if(!clientInformation){
+                throw "Please provide some client information ex:  new Nextprot.Client(applicationName, 'Calipho SIB at Geneva');";
+            }
+        };
+
+        //Util methods
+        var _getURLParameter = function (name){
+            name = name.replace(/[\[]/, "\\[").replace(/[\]]/, "\\]");
+            var regex = new RegExp("[\\?&]" + name + "=([^&#]*)"),
+                results = regex.exec(location.search);
+            return results === null ? "" : decodeURIComponent(results[1].replace(/\+/g, " "));
+        };
+
+        var normalizeEntry = function (entry) {
+            if (entry.substring(0,3) !== "NX_") {
+                entry = "NX_"+ entry;
+            }
+            return entry;
+        };
+
+        function _changeParamOrAddParamByName(href, paramName, newVal) {
+            var tmpRegex = new RegExp("(" + paramName + "=)[a-zA-Z0-9_]+", 'ig');
+            if (href.match(tmpRegex) != null) {
+                return href.replace(tmpRegex, '$1'+newVal);
+            }
+            return href += (((href.indexOf("?") != -1) ? "&" : "?") + paramName + "=" + newVal);
+        }
+
+        //Gets the entry set in the parameter
+        NextprotClient.prototype.getEntryName = function(){
+            return normalizeEntry(_getURLParameter("nxentry") || 'NX_P01308'); //By default returns the insulin
+        };
+
+        NextprotClient.prototype.getInputOption = function(){
+            return _getURLParameter("inputOption") || ''; //By default returns the insulin
+        };
+
+        NextprotClient.prototype.changeEntry = function(elem){
+            var new_url = _changeParamOrAddParamByName(window.location.href, "nxentry", elem.value);
+            window.location.href = new_url;
+        };
+
+        //private method, convention use an underscore
+        var _callURL = function (entryName, context){
+
+            var me = this;
+
+            return new Promise(function(resolve, reject) {
+
+                var req = new XMLHttpRequest();
+                var url = nextprotApiUrl + entryName + "/" + context + ".json" + "?clientInfo=" + clientInfo + "&applicationName=" + applicationName;
+                req.open("GET", url);
+
+                req.onload = function() {
+                    // This is called even on errors so check the status
+                    if (req.status == 200) {
+                        resolve(JSON.parse(req.responseText));
+                    }else {
+                        //reject(Error(req.status + " - " + JSON.parse(req.response).message));
+                        reject(Error(req.status));
+                    }
+                };
+
+                // Handle network errors
+                req.onerror = function() {
+                    reject(Error("Network Error"));
+                };
+
+                // Make the request
+                req.send();
+            });
+        };
+        var _callPepX = function (seq, mode){
+
+            var me = this;
+
+            return new Promise(function(resolve, reject) {
+
+                var req = new XMLHttpRequest();
+                var url = tempApiUrl + "search/peptide.json?peptide=" + seq + "&modeIL=" + mode;
+                req.open("GET", url);
+
+                req.onload = function() {
+                    // This is called even on errors so check the status
+                    if (req.status == 200) {
+                        resolve(JSON.parse(req.responseText));
+                    }else {
+                        //reject(Error(req.status + " - " + JSON.parse(req.response).message));
+                        reject(Error(req.status));
+                    }
+                };
+
+                // Handle network errors
+                req.onerror = function() {
+                    reject(Error("Network Error"));
+                };
+
+                // Make the request
+                req.send();
+            });
+        };
+
+        var _convertToTupleMap = function (data){
+            var publiMap = {};
+            var xrefMap = {};
+            data.entry.publications.forEach(function (p){ publiMap[p.md5] = p});
+            data.entry.xrefs.forEach(function (p){ xrefMap[p.dbXrefId] = p});
+            //return data.entry.annotations;
+            return {annot:data.entry.annotations,publi:publiMap,xrefs:xrefMap};
+        };
+
+        //NextprotClient.prototype.getProteinOverview = function() {
+        //    return _callURL(this.getEntryName(), "overview").then(function (data){
+        //        return data.entry.overview;
+        //    });
+        //};
+
+        NextprotClient.prototype.getEntryforPeptide = function(seq) {
+            return _callPepX(seq, "true").then(function (data){
+                return data;
+            });
+        };
+
+        NextprotClient.prototype.executeSparql = function(sparql) {
+            var sparqlQuery = sparqlPrefixes+sparql;
+            var url = sparqlEndpoint+sparqlFormat+"&query="+encodeURIComponent(sparqlQuery) + "&clientInfo=" + clientInfo + "&applicationName=" + applicationName;
+            return Promise.resolve($.getJSON(url)).then(function (data){
+                return data;
+            });
+        };
+
+        NextprotClient.prototype.getAccession = function(entry) {
+            return _callURL(normalizeEntry(entry || this.getEntryName()), "accession").then(function (data){
+                return data.entry.properties;
+            });
+        };
+
+        NextprotClient.prototype.getProteinOverview = function(entry) {
+            return _callURL(normalizeEntry(entry || this.getEntryName()), "overview").then(function (data){
+                return data.entry.overview;
+            });
+        };
+
+        NextprotClient.prototype.getProteinSequence = function(entry) {
+            return _callURL(normalizeEntry(entry || this.getEntryName()), "isoform").then(function (data){
+                return data.entry.isoforms;
+            });
+        };
+
+        NextprotClient.prototype.getSecondaryStructure = function(entry) {
+            return _callURL(normalizeEntry(entry || this.getEntryName()), "secondary-structure").then(function (data){
+                return _convertToTupleMap(data);
+            });
+        };
+
+        NextprotClient.prototype.getMatureProtein = function(entry) {
+            return _callURL(normalizeEntry(entry || this.getEntryName()), "mature-protein").then(function (data){
+                return _convertToTupleMap(data);
+            });
+        };
+
+        NextprotClient.prototype.getPeptide = function(entry) {
+            return _callURL(normalizeEntry(entry || this.getEntryName()), "peptide-mapping").then(function (data){
+                return data.entry.peptideMappings;
+            });
+        };
+
+        NextprotClient.prototype.getSrmPeptide = function(entry) {
+            return _callURL(normalizeEntry(entry || this.getEntryName()), "srm-peptide-mapping").then(function (data){
+                return data.entry.srmPeptideMappings;
+            });
+        };
+
+        NextprotClient.prototype.getSignalPeptide = function(entry) {
+            return _callURL(normalizeEntry(entry || this.getEntryName()), "signal-peptide").then(function (data){
+                return _convertToTupleMap(data);
+            });
+        };
+
+        NextprotClient.prototype.getProPeptide = function(entry) {
+            return _callURL(normalizeEntry(entry || this.getEntryName()), "propeptide").then(function (data){
+                return _convertToTupleMap(data);
+            });
+        };
+
+        NextprotClient.prototype.getDisulfideBond = function(entry) {
+            return _callURL(normalizeEntry(entry || this.getEntryName()), "disulfide-bond").then(function (data){
+                return _convertToTupleMap(data);
+            });
+        };
+
+        NextprotClient.prototype.getAntibody = function(entry) {
+            return _callURL(normalizeEntry(entry || this.getEntryName()), "antibody").then(function (data){
+                return data.entry.antibodyMappings;
+            });
+        };
+        NextprotClient.prototype.getInitMeth= function(entry) {
+            return _callURL(normalizeEntry(entry || this.getEntryName()), "initiator-methionine").then(function (data){
+                return _convertToTupleMap(data);
+                //return data.entry.annotations;
+            });
+        };
+        NextprotClient.prototype.getModifResidue = function(entry) {
+            return _callURL(normalizeEntry(entry || this.getEntryName()), "modified-residue").then(function (data){
+                return _convertToTupleMap(data);
+                //return data.entry.annotations;
+            });
+        };
+        NextprotClient.prototype.getCrossLink = function(entry) {
+            return _callURL(normalizeEntry(entry || this.getEntryName()), "cross-link").then(function (data){
+                return _convertToTupleMap(data);
+            });
+        };
+        NextprotClient.prototype.getGlycoSite = function(entry) {
+            return _callURL(normalizeEntry(entry || this.getEntryName()), "glycosylation-site").then(function (data){
+                return _convertToTupleMap(data);
+            });
+        };
+
+        NextprotClient.prototype.getInteractingRegion = function(entry) {
+            return _callURL(normalizeEntry(entry || this.getEntryName()), "interacting-region").then(function (data){
+                return _convertToTupleMap(data);
+            });
+        };
+
+        NextprotClient.prototype.getMiscellaneousSite = function(entry) {
+            return _callURL(normalizeEntry(entry || this.getEntryName()), "miscellaneous-site").then(function (data){
+                return _convertToTupleMap(data);
+            });
+        };
+
+        NextprotClient.prototype.getActiveSite = function(entry) {
+            return _callURL(normalizeEntry(entry || this.getEntryName()), "active-site").then(function (data){
+                return _convertToTupleMap(data);
+            });
+        };
+
+        NextprotClient.prototype.getMetalBindingSite = function(entry) {
+            return _callURL(normalizeEntry(entry || this.getEntryName()), "metal-binding-site").then(function (data){
+                return _convertToTupleMap(data);
+            });
+        };
+
+        NextprotClient.prototype.getVariant = function(entry) {
+            return _callURL(normalizeEntry(entry || this.getEntryName()), "variant").then(function (data){
+                return _convertToTupleMap(data);
+            });
+        };
+
+        NextprotClient.prototype.getExons = function(entry) {
+            return _callURL(normalizeEntry(entry || this.getEntryName()), "genomic-mapping").then(function (data){
+                return data.entry.genomicMappings[0].isoformMappings;
+            });
+        };
+
+        NextprotClient.prototype.getIsoformMapping = function(entry) {
+            return _callURL(normalizeEntry(entry || this.getEntryName()), "isoform/mapping").then(function (data){
+                return data;
+            });
+        };
+
+        NextprotClient.prototype.getLipidationSite = function(entry) {
+            return _callURL(normalizeEntry(entry || this.getEntryName()), "lipidation-site").then(function (data){
+                return _convertToTupleMap(data);
+            });
+        };
+
+        NextprotClient.prototype.getTopologicalDomain = function(entry) {
+            return _callURL(normalizeEntry(entry || this.getEntryName()), "topological-domain").then(function (data){
+                return _convertToTupleMap(data);
+            });
+        };
+
+        NextprotClient.prototype.getTransmembraneRegion = function(entry) {
+            return _callURL(normalizeEntry(entry || this.getEntryName()), "transmembrane-region").then(function (data){
+                return _convertToTupleMap(data);
+            });
+        };
+
+        NextprotClient.prototype.getMutagenesis = function(entry) {
+            return _callURL(normalizeEntry(entry || this.getEntryName()), "mutagenesis").then(function (data){
+                return _convertToTupleMap(data);
+            });
+        };
+
+        NextprotClient.prototype.getSequenceConflict = function(entry) {
+            return _callURL(normalizeEntry(entry || this.getEntryName()), "sequence-conflict").then(function (data){
+                return _convertToTupleMap(data);
+            });
+        };
+
+        NextprotClient.prototype.getPeroxisomeTransitPeptide = function(entry) {
+            return _callURL(normalizeEntry(entry || this.getEntryName()), "peroxisome-transit-peptide").then(function (data){
+                return _convertToTupleMap(data);
+            });
+        };
+
+        NextprotClient.prototype.getMitochondrialTransitPeptide = function(entry) {
+            return _callURL(normalizeEntry(entry || this.getEntryName()), "mitochondrial-transit-peptide").then(function (data){
+                return _convertToTupleMap(data);
+            });
+        };
+
+        NextprotClient.prototype.getSelenocysteine = function(entry) {
+            return _callURL(normalizeEntry(entry || this.getEntryName()), "selenocysteine").then(function (data){
+                return _convertToTupleMap(data);
+            });
+        };
+
+        NextprotClient.prototype.getMiscellaneousRegion = function(entry) {
+            return _callURL(normalizeEntry(entry || this.getEntryName()), "miscellaneous-region").then(function (data){
+                return _convertToTupleMap(data);
+            });
+        };
+
+        NextprotClient.prototype.getDomain = function(entry) {
+            return _callURL(normalizeEntry(entry || this.getEntryName()), "domain").then(function (data){
+                return _convertToTupleMap(data);
+            });
+        };
+
+        NextprotClient.prototype.getRepeat = function(entry) {
+            return _callURL(normalizeEntry(entry || this.getEntryName()), "repeat").then(function (data){
+                return _convertToTupleMap(data);
+            });
+        };
+
+        NextprotClient.prototype.getCalciumBinding = function(entry) {
+            return _callURL(normalizeEntry(entry || this.getEntryName()), "calcium-binding-region").then(function (data){
+                return _convertToTupleMap(data);
+            });
+        };
+
+        NextprotClient.prototype.getZincFinger = function(entry) {
+            return _callURL(normalizeEntry(entry || this.getEntryName()), "zinc-finger-region").then(function (data){
+                return _convertToTupleMap(data);
+            });
+        };
+
+        NextprotClient.prototype.getDnaBinding = function(entry) {
+            return _callURL(normalizeEntry(entry || this.getEntryName()), "dna-binding-region").then(function (data){
+                return _convertToTupleMap(data);
+            });
+        };
+
+        NextprotClient.prototype.getMotif = function(entry) {
+            return _callURL(normalizeEntry(entry || this.getEntryName()), "short-sequence-motif").then(function (data){
+                return _convertToTupleMap(data);
+            });
+        };
+
+        NextprotClient.prototype.getBiasedRegion = function(entry) {
+            return _callURL(normalizeEntry(entry || this.getEntryName()), "compositionally-biased-region").then(function (data){
+                return _convertToTupleMap(data);
+            });
+        };
+
+        NextprotClient.prototype.getNucleotideBinding = function(entry) {
+            return _callURL(normalizeEntry(entry || this.getEntryName()), "nucleotide-phosphate-binding-region").then(function (data){
+                return _convertToTupleMap(data);
+            });
+        };
+
+        NextprotClient.prototype.getCoiledCoilRegion = function(entry) {
+            return _callURL(normalizeEntry(entry || this.getEntryName()), "coiled-coil-region").then(function (data){
+                return _convertToTupleMap(data);
+            });
+        };
+
+        NextprotClient.prototype.getBindingSite = function(entry) {
+            return _callURL(normalizeEntry(entry || this.getEntryName()), "binding-site").then(function (data){
+                return _convertToTupleMap(data);
+            });
+        };
+
+        NextprotClient.prototype.getCleavageSite = function(entry) {
+            return _callURL(normalizeEntry(entry || this.getEntryName()), "cleavage-site").then(function (data){
+                return _convertToTupleMap(data);
+            });
+        };
+
+        NextprotClient.prototype.getBetaStrand = function(entry) {
+            return _callURL(normalizeEntry(entry || this.getEntryName()), "beta-strand").then(function (data){
+                return _convertToTupleMap(data);
+            });
+        };
+
+        NextprotClient.prototype.getHelix = function(entry) {
+            return _callURL(normalizeEntry(entry || this.getEntryName()), "helix").then(function (data){
+                return _convertToTupleMap(data);
+            });
+        };
+
+        NextprotClient.prototype.getTurn = function(entry) {
+            return _callURL(normalizeEntry(entry || this.getEntryName()), "turn").then(function (data){
+                return _convertToTupleMap(data);
+            });
+        };
+
+        //node.js compatibility
+        if (typeof exports !== 'undefined') {
+            exports.Client = NextprotClient;
+        }
+
+
+        root.Nextprot.Client = NextprotClient;
+
+    }());
+
+
+}(this));
+//Utility methods
+var NXUtils = {
+
+    checkIsoformMatch:function(isoname, isonumber) {
+        return isoname.endsWith("-"+isonumber)
+    },
+
+    getSequenceForIsoform:function (isoSequences, isoformName){
+        var result = null;
+        //TODO allow users to specify isoform name without NX_
+        //TODO the API should return the results in a sorted array
+
+        if(typeof isoformName === "number"){
+            isoSequences.forEach(function (d) {
+
+                if (d.uniqueName.endsWith("-"+isoformName)) {
+                    //console.log("returning" + d.sequence);
+                    result = d.sequence;
+                }
+            });
+        }else {
+            isoSequences.forEach(function (d) {
+                if (d.uniqueName === isoformName)
+                    return d.sequence;
+            })
+        }
+        return result;
+    },
+    getLinkForFeature: function(accession, description, type) {
+        if (type === "peptide"){
+            var url = "https://db.systemsbiology.net/sbeams/cgi/PeptideAtlas/GetPeptide?searchWithinThis=Peptide+Name&searchForThis=" + description + ";organism_name=Human";
+            return "<a href='" + url + "'>" + description + "</a>";
+        }
+        else if (type === "antibody") {
+            var url = accession;
+            return "<a href='" + url + "'>" + description + "</a>";
+        }
+        else if (accession) {
+            var url = "http://www.nextprot.org/db/term/" + accession;
+            return "<a href='" + url + "'>" + description + "</a>";
+        }
+        else if (type==="publication") {
+            var url = "http://www.nextprot.org/db/publication/" + accession;
+            return "<a href='" + url + "'>" + description + "</a>";
+        }
+        else if (description) return description;
+        else return "";
+    },
+    convertMappingsToIsoformMap:function (featMappings, category,group){
+        var mappings = jQuery.extend([], featMappings);
+        var publiActive = false;
+        if (!(featMappings instanceof Array)) {
+            publiActive = true;
+            mappings = jQuery.extend([], featMappings.annot);
+        }
+        var result = {};
+        mappings.forEach(function (mapping) {
+            if (mapping.hasOwnProperty("targetingIsoformsMap")) {
+                for (var name in mapping.targetingIsoformsMap) {
+                    if (mapping.targetingIsoformsMap.hasOwnProperty(name)) {
+                        var start = mapping.targetingIsoformsMap[name].firstPosition,
+                            end = mapping.targetingIsoformsMap[name].lastPosition,
+                            link = NXUtils.getLinkForFeature(mapping.cvTermAccessionCode, mapping.description),
+                            description = mapping.description,
+                            quality = mapping.qualityQualifier !== "GOLD" ? mapping.qualityQualifier.toLowerCase() : "",
+                            source = mapping.evidences.map(function (d) {
+                                var pub = null;
+                                var xref = null;
+                                if (publiActive) {
+                                    if (featMappings.publi[d.publicationMD5]) {
+                                        pub = d.publicationMD5;
+                                    }
+                                    if (featMappings.xrefs[d.resourceId]) {
+                                        xref = featMappings.xrefs[d.resourceId];
+                                    }
+                                    return {
+                                        evidenceCodeName: d.evidenceCodeName,
+                                        assignedBy: d.assignedBy,
+                                        resourceDb: d.resourceDb,
+                                        externalDb: d.resourceDb !== "UniProt",
+                                        publicationMD5: d.publicationMD5,
+                                        title: pub ? NXUtils.getLinkForFeature(featMappings.publi[pub].publicationId, featMappings.publi[pub].title, "publication") : "",
+                                        authors: pub ? featMappings.publi[pub].authors.map(function (d) { return {lastName: d.lastName, initials: d.initials}}) : [],
+                                        journal: pub ? featMappings.publi[pub].cvJournal ? featMappings.publi[pub].cvJournal.name : "" : "",
+                                        volume: pub ? featMappings.publi[pub].volume : "",
+                                        year: pub ? featMappings.publi[pub].publicationYear : "",
+                                        firstPage: pub ? featMappings.publi[pub].firstPage  : "",
+                                        lastPage: pub ? (featMappings.publi[pub].lastPage === "" ? featMappings.publi[pub].firstPage : featMappings.publi[pub].lastPage) : "",
+                                        pubId: pub ? featMappings.publi[pub].publicationId : "",
+                                        abstract: pub ? featMappings.publi[pub].abstractText : "",
+                                        dbXrefs: pub ? featMappings.publi[pub].dbXrefs.map( function (o) {return {name: o.databaseName==="DOI" ? "Full Text" : o.databaseName, url:o.resolvedUrl, accession: o.accession}}) : [],
+                                        crossRef: xref ? {dbName: xref.databaseName, name: xref.accession, url: xref.resolvedUrl} : null
+                                    }
+                                }
+                                else return {
+                                    evidenceCodeName: d.evidenceCodeName,
+                                    assignedBy: d.assignedBy,
+                                    publicationMD5: d.publicationMD5,
+                                    title:"",
+                                    authors:[],
+                                    journal:"",
+                                    volume:"",
+                                    abstract:""
+                                }
+                            }),
+                            variant = false;
+                        if (mapping.hasOwnProperty("variant") && !jQuery.isEmptyObject(mapping.variant)) {
+                            link = "<span style='color:#00C500'>" + mapping.variant.original + " → " +  mapping.variant.variant + "</span>";
+                            description = "<span style=\"color:#00C500\">" + mapping.variant.original + " → " +  mapping.variant.variant + "</span>  ";
+                            variant = true;
+                            if (mapping.description) {
+                                var reg = /\[(.*?)\]/g;
+                                var match = reg.exec(mapping.description);
+                                var desc = mapping.description;
+                                if (match) {
+                                    var parseMatch = match[1].split(":");
+                                    var desc = mapping.description.replace(/(\[.*?\])/g,NXUtils.getLinkForFeature(parseMatch[2],parseMatch[0]));
+
+                                }
+                                link += " ; "+ desc;
+                            }
+                        }
+                        if (!result[name]) result[name] = [];
+                        result[name].push({
+                            start: start,
+                            end: end,
+                            length: end-start+1,
+                            id: category.replace(/\s/g,'')+"_"+start.toString()+"_"+end.toString(),
+                            description: description,
+                            quality: quality,
+                            category: category,
+                            group:group,
+                            link: link,
+                            evidenceLength: source.length,
+                            source:source,
+                            variant: variant
+                        });
+                    }
+                }
+            }
+            //TODO This is the old format, the API should evolve
+            else if (mapping.hasOwnProperty("isoformSpecificity")) {
+                for (var name in mapping.isoformSpecificity) {
+                    if (mapping.isoformSpecificity.hasOwnProperty(name)) {
+                        for (var i = 0; i < mapping.isoformSpecificity[name].positions.length; i++) {
+                            var start = mapping.isoformSpecificity[name].positions[i].first,
+                                end = mapping.isoformSpecificity[name].positions[i].second,
+                                description = "",
+                                link = "",
+                                source = [];
+                            if (mapping.hasOwnProperty("evidences")) {
+                                source = mapping.evidences.map(function (d) {return {
+                                    evidenceCodeName: d.evidenceCodeName,
+                                    assignedBy: d.assignedBy,
+                                    publicationMD5: d.publicationMD5
+                                }});
+                            }
+                            if (mapping.hasOwnProperty("xrefs")) {
+                                description = mapping.xrefs[0].accession;
+                                link = NXUtils.getLinkForFeature(mapping.xrefs[0].resolvedUrl, description, "antibody")
+                            }
+                            else {
+                                description = mapping.evidences[0].accession;
+                                for (ev in mapping.evidences) if (mapping.evidences[ev].databaseName === "PeptideAtlas" || mapping.evidences[ev].databaseName === "SRMAtlas") {
+                                    description = mapping.evidences[ev].accession;
+                                    link = NXUtils.getLinkForFeature(description, description, "peptide");
+
+                                    break;
+                                }
+                            }
+
+                            if (!result[name]) result[name] = [];
+                            result[name].push({
+                                start: start,
+                                end: end,
+                                length: end - start,
+                                id: category.replace(/\s/g, '') + "_" + start.toString() + "_" + end.toString(),
+                                description: description,
+                                category: category,
+                                group:group,
+                                link: link,
+                                evidenceLength: source.length,
+                                source:source
+                            });
+                        }
+                    }
+                }
+            }
+        });
+        for (var iso in result) {
+            result[iso].sort(function (a, b) {
+                return a.start - b.start;
+            })
+        }
+        return result;
+    },
+    convertPublications: function (publi, HashMD5) {
+        for (var pub in publi) {
+            HashMD5[publi[pub].md5]= {
+                title:publi[pub].title,
+                author:publi[pub].authors.map(function (d) { return {lastName: d.lastName, initials: d.initials}}),
+                journal:publi[pub].cvJournal.name,
+                volume:publi[pub].volume,
+                abstract:publi[pub].abstractText
+            }
+        }
+
+    },
+    convertExonsMappingsToIsoformMap:function (mappings) {
+        return mappings.map( function (d) {
+            return {
+                uniqueName: d.uniqueName,
+                isoMainName: d.isoMainName,
+                mapping: d.positionsOfIsoformOnReferencedGene.map(function (o) {
+                    return {start:o.key,end:o.value};
+                })
+            }
+        })
+    }
 };
+
+var NXViewerUtils = {
+    convertNXAnnotations:function (annotations, metadata){
+        if (!annotations) return "Cannot load this";
+        var result={};
+        for (name in annotations) {
+            var meta = jQuery.extend({}, metadata);
+            meta.data = annotations[name].map(function (annotation) {
+                return {
+                    x: annotation.start,
+                    y: annotation.end,
+                    id: annotation.id,
+                    category: annotation.category,
+                    description: annotation.description
+                }
+            });
+            result[name] = meta;
+        }
+        return result;
+    }
+};;
+
 $(function () {
+
+
+    var loadOverview = function(overview,nxEntryName){
+
+        if ($("#nx-overview").length > 0) {
+            Handlebars.registerHelper('link_to', function (type, options) {
+                switch (type) {
+                    case "family":
+                        var url = "http://www.nextprot.org/db/term/" + this.accession;
+                        return "<a href='" + url + "'>" + this.name + "</a>";
+                    case "history":
+                        console.log(type);
+                        console.log(this);
+                        var url = "http://www.uniprot.org/uniprot/" + this.slice(3) + "?version=*";
+                        return "<a href='" + url + "'>Complete UniProtKB history</a>";
+                }
+            });
+
+            console.log(nxEntryName);
+
+            var data = {
+                "entryName": overview.proteinNames[0].synonymName,
+                "alternativeName": overview.proteinNames[0].synonyms,
+                "geneName": overview.geneNames[0].synonymName,
+                "cleavage": overview.cleavedRegionNames,
+                "family": overview.families,
+                "proteineEvidence": overview.history.proteinExistence.split('_').join(' ').toLowerCase(),
+                "integDate": overview.history.formattedNextprotIntegrationDate,
+                "lastUpdate": overview.history.formattedNextprotUpdateDate,
+                "version": overview.history.uniprotVersion,
+                "UniprotIntegDate": overview.history.formattedUniprotIntegrationDate,
+                "UniprotLastUpdate": overview.history.formattedUniprotUpdateDate,
+                "seqVersion": overview.history.sequenceVersion,
+                "accessionNumber": nxEntryName
+            };
+
+            console.log(data);
+
+            var template = HBtemplates['templates/overviewProtein.tmpl'];
+            console.log(template);
+            var result = template(data);
+            $("#nx-overview").append(result);
+
+            $("#extender").click(function (event) {
+                event.stopPropagation();
+                //var isScrollbarActiveAtFirst= $(window).hasVerticalScrollBar();
+                $("#INFOS-FULL").toggle("slow");
+                $("#INFOS-LESS").toggle("slow");
+                //var isScrollbarActiveAtEnd= $(window).hasVerticalScrollBar();
+                //if ((isScrollbarActiveAtFirst) && isScrollbarActiveAtFirst !== isScrollbarActiveAtEnd) {
+                //    $(body).removeClass("ignoreShift");
+                //}
+                //else if ((isScrollbarActiveAtFirst === false) && isScrollbarActiveAtFirst !== isScrollbarActiveAtEnd) {
+                //    $(body).addClass("ignoreShift");
+                //}
+                $(this).text(function (i, text) {
+                    return text === "Extend overview" ? "Collapse overview" : "Extend overview";
+                });
+            });
+        }
+
+    };
+
     if($("#nx-overview")){ // laad the overview if it exists
         var Nextprot = window.Nextprot;
-        var nx = new Nextprot.Client("Triple-viewer", "matt viewer");
+        var nx = new Nextprot.Client("neXtprot overview loader", "Calipho Group");
         var nxEntryName = nx.getEntryName();
         nx.getProteinOverview().then(function(data) {
         loadOverview(data, nxEntryName);
+
+            var nxInputOption = nx.getInputOption();
+
+            function addEntrySelection() {
+                $("body").prepend("<div id=\"inputOptionDiv\" class=\"col-md-2 col-md-offset-5 centered\" style=\"position:absolute;padding:10px;padding-top:0px;z-index:12\">" +
+                "<div class=\"panel panel-default\"><div class=\"panel-body\">" +
+                "<input id=\"entrySelector\" type=\"text\" class=\"form-control\" placeholder=\"neXtProt or UniProt accession...\"></div>" +
+                "</div></div>");
+                $('#entrySelector').keyup(function (e) {
+                    if (e.keyCode == 13) nx.changeEntry(this);
+                })
+            }
+
+            if (nxInputOption === "true") {
+                addEntrySelection();
+                nx.getAccession().then(function (data) {
+                    $(function() {
+                        $("#inputOptionDiv").append("<div class=\"alert alert-success entry-alert\" role=\"alert\" style=\"display:none\">You successfully load the entry !</div>");
+                        $(".entry-alert").fadeIn("slow");
+                        $(".entry-alert").delay(2000).fadeOut("slow");
+                    });
+                }, function(error) {
+                    $(function() {
+                        $("#inputOptionDiv").append("<div class=\"alert alert-danger entry-alert\" role=\"alert\">This accession is not available !</div>");
+                    });
+                    console.error("Failed!", error);
+                });
+            }
+
         });
     }
-});;/////////////
+});;
+if(Handlebars){
+  
+this["HBtemplates"] = this["HBtemplates"] || {};
+
+this["HBtemplates"]["templates/overviewProtein.tmpl"] = Handlebars.template({"1":function(depth0,helpers,partials,data) {
+    var stack1, helper, options, buffer = 
+  "    <div id=\"cleavage-less\" class=\"row\">\n        <div class=\"col-md-2 col-xs-3\" style=\"color: grey;text-align:right\">Cleaved into :</div>\n        <div class=\"col-md-6 col-xs-6\">";
+  stack1 = ((helper = (helper = helpers.cleavage || (depth0 != null ? depth0.cleavage : depth0)) != null ? helper : helpers.helperMissing),(options={"name":"cleavage","hash":{},"fn":this.program(2, data, 0),"inverse":this.noop,"data":data}),(typeof helper === "function" ? helper.call(depth0,options) : helper));
+  if (!helpers.cleavage) { stack1 = helpers.blockHelperMissing.call(depth0,stack1,options)}
+  if (stack1 != null) { buffer += stack1; }
+  return buffer + "</div>\n    </div>\n";
+},"2":function(depth0,helpers,partials,data) {
+    var helper;
+
+  return "<span>"
+    + this.escapeExpression(((helper = (helper = helpers.synonymName || (depth0 != null ? depth0.synonymName : depth0)) != null ? helper : helpers.helperMissing),(typeof helper === "function" ? helper.call(depth0,{"name":"synonymName","hash":{},"data":data}) : helper)))
+    + ", </span>";
+},"4":function(depth0,helpers,partials,data) {
+    var stack1, helper, options, buffer = 
+  "    <div id=\"family-less\" class=\"row\">\n        <div class=\"col-md-2 col-xs-3\" style=\"color: grey;text-align:right\">Family Name :</div>\n        <div class=\"col-md-6 col-xs-6\">";
+  stack1 = ((helper = (helper = helpers.family || (depth0 != null ? depth0.family : depth0)) != null ? helper : helpers.helperMissing),(options={"name":"family","hash":{},"fn":this.program(5, data, 0),"inverse":this.noop,"data":data}),(typeof helper === "function" ? helper.call(depth0,options) : helper));
+  if (!helpers.family) { stack1 = helpers.blockHelperMissing.call(depth0,stack1,options)}
+  if (stack1 != null) { buffer += stack1; }
+  return buffer + "</div>\n    </div>\n";
+},"5":function(depth0,helpers,partials,data) {
+    var stack1;
+
+  return "<span>"
+    + ((stack1 = (helpers.link_to || (depth0 && depth0.link_to) || helpers.helperMissing).call(depth0,"family",{"name":"link_to","hash":{},"data":data})) != null ? stack1 : "")
+    + "</span>";
+},"7":function(depth0,helpers,partials,data) {
+    var stack1, helper, options, buffer = 
+  "                <dt>Cleaved into the following "
+    + this.escapeExpression(this.lambda(((stack1 = (depth0 != null ? depth0.cleavage : depth0)) != null ? stack1.length : stack1), depth0))
+    + " chains</dt>\n";
+  stack1 = ((helper = (helper = helpers.cleavage || (depth0 != null ? depth0.cleavage : depth0)) != null ? helper : helpers.helperMissing),(options={"name":"cleavage","hash":{},"fn":this.program(8, data, 0),"inverse":this.noop,"data":data}),(typeof helper === "function" ? helper.call(depth0,options) : helper));
+  if (!helpers.cleavage) { stack1 = helpers.blockHelperMissing.call(depth0,stack1,options)}
+  if (stack1 != null) { buffer += stack1; }
+  return buffer;
+},"8":function(depth0,helpers,partials,data) {
+    var helper;
+
+  return "                <dd>"
+    + this.escapeExpression(((helper = (helper = helpers.synonymName || (depth0 != null ? depth0.synonymName : depth0)) != null ? helper : helpers.helperMissing),(typeof helper === "function" ? helper.call(depth0,{"name":"synonymName","hash":{},"data":data}) : helper)))
+    + "</dd>\n                ";
+},"10":function(depth0,helpers,partials,data) {
+    var stack1, helper, options, buffer = 
+  "                <dt>Alternative Name</dt>\n";
+  stack1 = ((helper = (helper = helpers.alternativeName || (depth0 != null ? depth0.alternativeName : depth0)) != null ? helper : helpers.helperMissing),(options={"name":"alternativeName","hash":{},"fn":this.program(11, data, 0),"inverse":this.noop,"data":data}),(typeof helper === "function" ? helper.call(depth0,options) : helper));
+  if (!helpers.alternativeName) { stack1 = helpers.blockHelperMissing.call(depth0,stack1,options)}
+  if (stack1 != null) { buffer += stack1; }
+  return buffer;
+},"11":function(depth0,helpers,partials,data) {
+    var stack1, helper;
+
+  return "                <dd> "
+    + this.escapeExpression(((helper = (helper = helpers.synonymName || (depth0 != null ? depth0.synonymName : depth0)) != null ? helper : helpers.helperMissing),(typeof helper === "function" ? helper.call(depth0,{"name":"synonymName","hash":{},"data":data}) : helper)))
+    + "\n                    "
+    + ((stack1 = helpers['if'].call(depth0,(depth0 != null ? depth0.synonyms : depth0),{"name":"if","hash":{},"fn":this.program(12, data, 0),"inverse":this.noop,"data":data})) != null ? stack1 : "")
+    + "\n                </dd>\n                ";
+},"12":function(depth0,helpers,partials,data) {
+    var stack1;
+
+  return "<em style=\"font-size:12px;\">(short : "
+    + this.escapeExpression(this.lambda(((stack1 = ((stack1 = (depth0 != null ? depth0.synonyms : depth0)) != null ? stack1['0'] : stack1)) != null ? stack1.synonymName : stack1), depth0))
+    + ") </em>";
+},"14":function(depth0,helpers,partials,data) {
+    var stack1, helper, options, buffer = 
+  "    <div id=\"family-full\" class=\"row\">\n        <div class=\"col-md-2 col-xs-3 text-uppercase\" style=\"color: grey;\">Family</div>\n        <div class=\"col-md-6 col-xs-6\">\n            <dl>\n                <dt>Family</dt>\n";
+  stack1 = ((helper = (helper = helpers.family || (depth0 != null ? depth0.family : depth0)) != null ? helper : helpers.helperMissing),(options={"name":"family","hash":{},"fn":this.program(15, data, 0),"inverse":this.noop,"data":data}),(typeof helper === "function" ? helper.call(depth0,options) : helper));
+  if (!helpers.family) { stack1 = helpers.blockHelperMissing.call(depth0,stack1,options)}
+  if (stack1 != null) { buffer += stack1; }
+  return buffer + "            </dl>\n        </div>\n    </div>\n";
+},"15":function(depth0,helpers,partials,data) {
+    var stack1;
+
+  return "                <dd>"
+    + ((stack1 = (helpers.link_to || (depth0 && depth0.link_to) || helpers.helperMissing).call(depth0,"family",{"name":"link_to","hash":{},"data":data})) != null ? stack1 : "")
+    + "</dd>\n";
+},"17":function(depth0,helpers,partials,data) {
+    var stack1;
+
+  return ((stack1 = (helpers.link_to || (depth0 && depth0.link_to) || helpers.helperMissing).call(depth0,"history",{"name":"link_to","hash":{},"data":data})) != null ? stack1 : "");
+},"compiler":[6,">= 2.0.0-beta.1"],"main":function(depth0,helpers,partials,data) {
+    var stack1, helper, options, alias1=helpers.helperMissing, alias2="function", alias3=this.escapeExpression, buffer = 
+  "<div id=\"proteinTitle\">\n    <button id=\"extender\" class=\"btn btn-default\" style=\"float:right\">Extend overview</button>\n    <h2>"
+    + alias3(((helper = (helper = helpers.entryName || (depth0 != null ? depth0.entryName : depth0)) != null ? helper : alias1),(typeof helper === alias2 ? helper.call(depth0,{"name":"entryName","hash":{},"data":data}) : helper)))
+    + "</h2>\n</div>\n<div id=\"INFOS-LESS\" style=\"display:block\">\n"
+    + ((stack1 = helpers['if'].call(depth0,(depth0 != null ? depth0.cleavage : depth0),{"name":"if","hash":{},"fn":this.program(1, data, 0),"inverse":this.noop,"data":data})) != null ? stack1 : "")
+    + "    <div id=\"gene-less\" class=\"row\">\n        <div class=\"col-md-2 col-xs-3\" style=\"color: grey;text-align:right\">Gene Name :</div>\n        <div class=\"col-md-6 col-xs-6\">"
+    + alias3(((helper = (helper = helpers.geneName || (depth0 != null ? depth0.geneName : depth0)) != null ? helper : alias1),(typeof helper === alias2 ? helper.call(depth0,{"name":"geneName","hash":{},"data":data}) : helper)))
+    + "</div>\n    </div>\n"
+    + ((stack1 = helpers['if'].call(depth0,(depth0 != null ? depth0.family : depth0),{"name":"if","hash":{},"fn":this.program(4, data, 0),"inverse":this.noop,"data":data})) != null ? stack1 : "")
+    + "</div>\n<div id=\"INFOS-FULL\" style=\"display:none\">\n    <div id=\"gene-full\" class=\"row\">\n        <div class=\"col-md-2 col-xs-3 text-uppercase\" style=\"color: grey;\">Protein</div>\n        <div class=\"col-md-6 col-xs-6\">\n            <dl>\n                <dt>Recommended Name</dt>\n                <dd> "
+    + alias3(((helper = (helper = helpers.geneName || (depth0 != null ? depth0.geneName : depth0)) != null ? helper : alias1),(typeof helper === alias2 ? helper.call(depth0,{"name":"geneName","hash":{},"data":data}) : helper)))
+    + "</dd>\n"
+    + ((stack1 = helpers['if'].call(depth0,(depth0 != null ? depth0.cleavage : depth0),{"name":"if","hash":{},"fn":this.program(7, data, 0),"inverse":this.noop,"data":data})) != null ? stack1 : "")
+    + "\n"
+    + ((stack1 = helpers['if'].call(depth0,(depth0 != null ? depth0.alternativeName : depth0),{"name":"if","hash":{},"fn":this.program(10, data, 0),"inverse":this.noop,"data":data})) != null ? stack1 : "")
+    + "\n            </dl>\n        </div>\n    </div>\n"
+    + ((stack1 = helpers['if'].call(depth0,(depth0 != null ? depth0.family : depth0),{"name":"if","hash":{},"fn":this.program(14, data, 0),"inverse":this.noop,"data":data})) != null ? stack1 : "")
+    + "    <div id=\"History-full\" class=\"row\">\n        <div class=\"col-md-2 col-xs-3 text-uppercase\" style=\"color: grey;\">History</div>\n        <div class=\"col-md-6 col-xs-6\">\n            <dl>\n                <dt>neXtProt</dt>\n                <dd>Integrated "
+    + alias3(((helper = (helper = helpers.integDate || (depth0 != null ? depth0.integDate : depth0)) != null ? helper : alias1),(typeof helper === alias2 ? helper.call(depth0,{"name":"integDate","hash":{},"data":data}) : helper)))
+    + "</dd>\n                <dd>Last Updated "
+    + alias3(((helper = (helper = helpers.lastUpdate || (depth0 != null ? depth0.lastUpdate : depth0)) != null ? helper : alias1),(typeof helper === alias2 ? helper.call(depth0,{"name":"lastUpdate","hash":{},"data":data}) : helper)))
+    + "</dd>\n                <dt>UniProtKB</dt>\n                <dd>Entry version "
+    + alias3(((helper = (helper = helpers.version || (depth0 != null ? depth0.version : depth0)) != null ? helper : alias1),(typeof helper === alias2 ? helper.call(depth0,{"name":"version","hash":{},"data":data}) : helper)))
+    + "</dd>\n                <dd>Integration Date "
+    + alias3(((helper = (helper = helpers.UniprotIntegDate || (depth0 != null ? depth0.UniprotIntegDate : depth0)) != null ? helper : alias1),(typeof helper === alias2 ? helper.call(depth0,{"name":"UniprotIntegDate","hash":{},"data":data}) : helper)))
+    + "</dd>\n                <dd>Last Update "
+    + alias3(((helper = (helper = helpers.UniProtLastUpdate || (depth0 != null ? depth0.UniProtLastUpdate : depth0)) != null ? helper : alias1),(typeof helper === alias2 ? helper.call(depth0,{"name":"UniProtLastUpdate","hash":{},"data":data}) : helper)))
+    + "</dd>\n                <dd>Sequence version "
+    + alias3(((helper = (helper = helpers.seqVersion || (depth0 != null ? depth0.seqVersion : depth0)) != null ? helper : alias1),(typeof helper === alias2 ? helper.call(depth0,{"name":"seqVersion","hash":{},"data":data}) : helper)))
+    + "</dd>\n                <dd>";
+  stack1 = ((helper = (helper = helpers.accessionNumber || (depth0 != null ? depth0.accessionNumber : depth0)) != null ? helper : alias1),(options={"name":"accessionNumber","hash":{},"fn":this.program(17, data, 0),"inverse":this.noop,"data":data}),(typeof helper === alias2 ? helper.call(depth0,options) : helper));
+  if (!helpers.accessionNumber) { stack1 = helpers.blockHelperMissing.call(depth0,stack1,options)}
+  if (stack1 != null) { buffer += stack1; }
+  return buffer + "</dd>\n            </dl>\n        </div>\n    </div>\n</div>\n<p style=\"margin:10px 10px;\">Entry whose protein(s) existence is based on "
+    + alias3(((helper = (helper = helpers.proteineEvidence || (depth0 != null ? depth0.proteineEvidence : depth0)) != null ? helper : alias1),(typeof helper === alias2 ? helper.call(depth0,{"name":"proteineEvidence","hash":{},"data":data}) : helper)))
+    + "</p>";
+},"useData":true});
+  
+};/*!
+ * Bootstrap v3.3.5 (http://getbootstrap.com)
+ * Copyright 2011-2015 Twitter, Inc.
+ * Licensed under the MIT license
+ */
+if("undefined"==typeof jQuery)throw new Error("Bootstrap's JavaScript requires jQuery");+function(a){"use strict";var b=a.fn.jquery.split(" ")[0].split(".");if(b[0]<2&&b[1]<9||1==b[0]&&9==b[1]&&b[2]<1)throw new Error("Bootstrap's JavaScript requires jQuery version 1.9.1 or higher")}(jQuery),+function(a){"use strict";function b(){var a=document.createElement("bootstrap"),b={WebkitTransition:"webkitTransitionEnd",MozTransition:"transitionend",OTransition:"oTransitionEnd otransitionend",transition:"transitionend"};for(var c in b)if(void 0!==a.style[c])return{end:b[c]};return!1}a.fn.emulateTransitionEnd=function(b){var c=!1,d=this;a(this).one("bsTransitionEnd",function(){c=!0});var e=function(){c||a(d).trigger(a.support.transition.end)};return setTimeout(e,b),this},a(function(){a.support.transition=b(),a.support.transition&&(a.event.special.bsTransitionEnd={bindType:a.support.transition.end,delegateType:a.support.transition.end,handle:function(b){return a(b.target).is(this)?b.handleObj.handler.apply(this,arguments):void 0}})})}(jQuery),+function(a){"use strict";function b(b){return this.each(function(){var c=a(this),e=c.data("bs.alert");e||c.data("bs.alert",e=new d(this)),"string"==typeof b&&e[b].call(c)})}var c='[data-dismiss="alert"]',d=function(b){a(b).on("click",c,this.close)};d.VERSION="3.3.5",d.TRANSITION_DURATION=150,d.prototype.close=function(b){function c(){g.detach().trigger("closed.bs.alert").remove()}var e=a(this),f=e.attr("data-target");f||(f=e.attr("href"),f=f&&f.replace(/.*(?=#[^\s]*$)/,""));var g=a(f);b&&b.preventDefault(),g.length||(g=e.closest(".alert")),g.trigger(b=a.Event("close.bs.alert")),b.isDefaultPrevented()||(g.removeClass("in"),a.support.transition&&g.hasClass("fade")?g.one("bsTransitionEnd",c).emulateTransitionEnd(d.TRANSITION_DURATION):c())};var e=a.fn.alert;a.fn.alert=b,a.fn.alert.Constructor=d,a.fn.alert.noConflict=function(){return a.fn.alert=e,this},a(document).on("click.bs.alert.data-api",c,d.prototype.close)}(jQuery),+function(a){"use strict";function b(b){return this.each(function(){var d=a(this),e=d.data("bs.button"),f="object"==typeof b&&b;e||d.data("bs.button",e=new c(this,f)),"toggle"==b?e.toggle():b&&e.setState(b)})}var c=function(b,d){this.$element=a(b),this.options=a.extend({},c.DEFAULTS,d),this.isLoading=!1};c.VERSION="3.3.5",c.DEFAULTS={loadingText:"loading..."},c.prototype.setState=function(b){var c="disabled",d=this.$element,e=d.is("input")?"val":"html",f=d.data();b+="Text",null==f.resetText&&d.data("resetText",d[e]()),setTimeout(a.proxy(function(){d[e](null==f[b]?this.options[b]:f[b]),"loadingText"==b?(this.isLoading=!0,d.addClass(c).attr(c,c)):this.isLoading&&(this.isLoading=!1,d.removeClass(c).removeAttr(c))},this),0)},c.prototype.toggle=function(){var a=!0,b=this.$element.closest('[data-toggle="buttons"]');if(b.length){var c=this.$element.find("input");"radio"==c.prop("type")?(c.prop("checked")&&(a=!1),b.find(".active").removeClass("active"),this.$element.addClass("active")):"checkbox"==c.prop("type")&&(c.prop("checked")!==this.$element.hasClass("active")&&(a=!1),this.$element.toggleClass("active")),c.prop("checked",this.$element.hasClass("active")),a&&c.trigger("change")}else this.$element.attr("aria-pressed",!this.$element.hasClass("active")),this.$element.toggleClass("active")};var d=a.fn.button;a.fn.button=b,a.fn.button.Constructor=c,a.fn.button.noConflict=function(){return a.fn.button=d,this},a(document).on("click.bs.button.data-api",'[data-toggle^="button"]',function(c){var d=a(c.target);d.hasClass("btn")||(d=d.closest(".btn")),b.call(d,"toggle"),a(c.target).is('input[type="radio"]')||a(c.target).is('input[type="checkbox"]')||c.preventDefault()}).on("focus.bs.button.data-api blur.bs.button.data-api",'[data-toggle^="button"]',function(b){a(b.target).closest(".btn").toggleClass("focus",/^focus(in)?$/.test(b.type))})}(jQuery),+function(a){"use strict";function b(b){return this.each(function(){var d=a(this),e=d.data("bs.carousel"),f=a.extend({},c.DEFAULTS,d.data(),"object"==typeof b&&b),g="string"==typeof b?b:f.slide;e||d.data("bs.carousel",e=new c(this,f)),"number"==typeof b?e.to(b):g?e[g]():f.interval&&e.pause().cycle()})}var c=function(b,c){this.$element=a(b),this.$indicators=this.$element.find(".carousel-indicators"),this.options=c,this.paused=null,this.sliding=null,this.interval=null,this.$active=null,this.$items=null,this.options.keyboard&&this.$element.on("keydown.bs.carousel",a.proxy(this.keydown,this)),"hover"==this.options.pause&&!("ontouchstart"in document.documentElement)&&this.$element.on("mouseenter.bs.carousel",a.proxy(this.pause,this)).on("mouseleave.bs.carousel",a.proxy(this.cycle,this))};c.VERSION="3.3.5",c.TRANSITION_DURATION=600,c.DEFAULTS={interval:5e3,pause:"hover",wrap:!0,keyboard:!0},c.prototype.keydown=function(a){if(!/input|textarea/i.test(a.target.tagName)){switch(a.which){case 37:this.prev();break;case 39:this.next();break;default:return}a.preventDefault()}},c.prototype.cycle=function(b){return b||(this.paused=!1),this.interval&&clearInterval(this.interval),this.options.interval&&!this.paused&&(this.interval=setInterval(a.proxy(this.next,this),this.options.interval)),this},c.prototype.getItemIndex=function(a){return this.$items=a.parent().children(".item"),this.$items.index(a||this.$active)},c.prototype.getItemForDirection=function(a,b){var c=this.getItemIndex(b),d="prev"==a&&0===c||"next"==a&&c==this.$items.length-1;if(d&&!this.options.wrap)return b;var e="prev"==a?-1:1,f=(c+e)%this.$items.length;return this.$items.eq(f)},c.prototype.to=function(a){var b=this,c=this.getItemIndex(this.$active=this.$element.find(".item.active"));return a>this.$items.length-1||0>a?void 0:this.sliding?this.$element.one("slid.bs.carousel",function(){b.to(a)}):c==a?this.pause().cycle():this.slide(a>c?"next":"prev",this.$items.eq(a))},c.prototype.pause=function(b){return b||(this.paused=!0),this.$element.find(".next, .prev").length&&a.support.transition&&(this.$element.trigger(a.support.transition.end),this.cycle(!0)),this.interval=clearInterval(this.interval),this},c.prototype.next=function(){return this.sliding?void 0:this.slide("next")},c.prototype.prev=function(){return this.sliding?void 0:this.slide("prev")},c.prototype.slide=function(b,d){var e=this.$element.find(".item.active"),f=d||this.getItemForDirection(b,e),g=this.interval,h="next"==b?"left":"right",i=this;if(f.hasClass("active"))return this.sliding=!1;var j=f[0],k=a.Event("slide.bs.carousel",{relatedTarget:j,direction:h});if(this.$element.trigger(k),!k.isDefaultPrevented()){if(this.sliding=!0,g&&this.pause(),this.$indicators.length){this.$indicators.find(".active").removeClass("active");var l=a(this.$indicators.children()[this.getItemIndex(f)]);l&&l.addClass("active")}var m=a.Event("slid.bs.carousel",{relatedTarget:j,direction:h});return a.support.transition&&this.$element.hasClass("slide")?(f.addClass(b),f[0].offsetWidth,e.addClass(h),f.addClass(h),e.one("bsTransitionEnd",function(){f.removeClass([b,h].join(" ")).addClass("active"),e.removeClass(["active",h].join(" ")),i.sliding=!1,setTimeout(function(){i.$element.trigger(m)},0)}).emulateTransitionEnd(c.TRANSITION_DURATION)):(e.removeClass("active"),f.addClass("active"),this.sliding=!1,this.$element.trigger(m)),g&&this.cycle(),this}};var d=a.fn.carousel;a.fn.carousel=b,a.fn.carousel.Constructor=c,a.fn.carousel.noConflict=function(){return a.fn.carousel=d,this};var e=function(c){var d,e=a(this),f=a(e.attr("data-target")||(d=e.attr("href"))&&d.replace(/.*(?=#[^\s]+$)/,""));if(f.hasClass("carousel")){var g=a.extend({},f.data(),e.data()),h=e.attr("data-slide-to");h&&(g.interval=!1),b.call(f,g),h&&f.data("bs.carousel").to(h),c.preventDefault()}};a(document).on("click.bs.carousel.data-api","[data-slide]",e).on("click.bs.carousel.data-api","[data-slide-to]",e),a(window).on("load",function(){a('[data-ride="carousel"]').each(function(){var c=a(this);b.call(c,c.data())})})}(jQuery),+function(a){"use strict";function b(b){var c,d=b.attr("data-target")||(c=b.attr("href"))&&c.replace(/.*(?=#[^\s]+$)/,"");return a(d)}function c(b){return this.each(function(){var c=a(this),e=c.data("bs.collapse"),f=a.extend({},d.DEFAULTS,c.data(),"object"==typeof b&&b);!e&&f.toggle&&/show|hide/.test(b)&&(f.toggle=!1),e||c.data("bs.collapse",e=new d(this,f)),"string"==typeof b&&e[b]()})}var d=function(b,c){this.$element=a(b),this.options=a.extend({},d.DEFAULTS,c),this.$trigger=a('[data-toggle="collapse"][href="#'+b.id+'"],[data-toggle="collapse"][data-target="#'+b.id+'"]'),this.transitioning=null,this.options.parent?this.$parent=this.getParent():this.addAriaAndCollapsedClass(this.$element,this.$trigger),this.options.toggle&&this.toggle()};d.VERSION="3.3.5",d.TRANSITION_DURATION=350,d.DEFAULTS={toggle:!0},d.prototype.dimension=function(){var a=this.$element.hasClass("width");return a?"width":"height"},d.prototype.show=function(){if(!this.transitioning&&!this.$element.hasClass("in")){var b,e=this.$parent&&this.$parent.children(".panel").children(".in, .collapsing");if(!(e&&e.length&&(b=e.data("bs.collapse"),b&&b.transitioning))){var f=a.Event("show.bs.collapse");if(this.$element.trigger(f),!f.isDefaultPrevented()){e&&e.length&&(c.call(e,"hide"),b||e.data("bs.collapse",null));var g=this.dimension();this.$element.removeClass("collapse").addClass("collapsing")[g](0).attr("aria-expanded",!0),this.$trigger.removeClass("collapsed").attr("aria-expanded",!0),this.transitioning=1;var h=function(){this.$element.removeClass("collapsing").addClass("collapse in")[g](""),this.transitioning=0,this.$element.trigger("shown.bs.collapse")};if(!a.support.transition)return h.call(this);var i=a.camelCase(["scroll",g].join("-"));this.$element.one("bsTransitionEnd",a.proxy(h,this)).emulateTransitionEnd(d.TRANSITION_DURATION)[g](this.$element[0][i])}}}},d.prototype.hide=function(){if(!this.transitioning&&this.$element.hasClass("in")){var b=a.Event("hide.bs.collapse");if(this.$element.trigger(b),!b.isDefaultPrevented()){var c=this.dimension();this.$element[c](this.$element[c]())[0].offsetHeight,this.$element.addClass("collapsing").removeClass("collapse in").attr("aria-expanded",!1),this.$trigger.addClass("collapsed").attr("aria-expanded",!1),this.transitioning=1;var e=function(){this.transitioning=0,this.$element.removeClass("collapsing").addClass("collapse").trigger("hidden.bs.collapse")};return a.support.transition?void this.$element[c](0).one("bsTransitionEnd",a.proxy(e,this)).emulateTransitionEnd(d.TRANSITION_DURATION):e.call(this)}}},d.prototype.toggle=function(){this[this.$element.hasClass("in")?"hide":"show"]()},d.prototype.getParent=function(){return a(this.options.parent).find('[data-toggle="collapse"][data-parent="'+this.options.parent+'"]').each(a.proxy(function(c,d){var e=a(d);this.addAriaAndCollapsedClass(b(e),e)},this)).end()},d.prototype.addAriaAndCollapsedClass=function(a,b){var c=a.hasClass("in");a.attr("aria-expanded",c),b.toggleClass("collapsed",!c).attr("aria-expanded",c)};var e=a.fn.collapse;a.fn.collapse=c,a.fn.collapse.Constructor=d,a.fn.collapse.noConflict=function(){return a.fn.collapse=e,this},a(document).on("click.bs.collapse.data-api",'[data-toggle="collapse"]',function(d){var e=a(this);e.attr("data-target")||d.preventDefault();var f=b(e),g=f.data("bs.collapse"),h=g?"toggle":e.data();c.call(f,h)})}(jQuery),+function(a){"use strict";function b(b){var c=b.attr("data-target");c||(c=b.attr("href"),c=c&&/#[A-Za-z]/.test(c)&&c.replace(/.*(?=#[^\s]*$)/,""));var d=c&&a(c);return d&&d.length?d:b.parent()}function c(c){c&&3===c.which||(a(e).remove(),a(f).each(function(){var d=a(this),e=b(d),f={relatedTarget:this};e.hasClass("open")&&(c&&"click"==c.type&&/input|textarea/i.test(c.target.tagName)&&a.contains(e[0],c.target)||(e.trigger(c=a.Event("hide.bs.dropdown",f)),c.isDefaultPrevented()||(d.attr("aria-expanded","false"),e.removeClass("open").trigger("hidden.bs.dropdown",f))))}))}function d(b){return this.each(function(){var c=a(this),d=c.data("bs.dropdown");d||c.data("bs.dropdown",d=new g(this)),"string"==typeof b&&d[b].call(c)})}var e=".dropdown-backdrop",f='[data-toggle="dropdown"]',g=function(b){a(b).on("click.bs.dropdown",this.toggle)};g.VERSION="3.3.5",g.prototype.toggle=function(d){var e=a(this);if(!e.is(".disabled, :disabled")){var f=b(e),g=f.hasClass("open");if(c(),!g){"ontouchstart"in document.documentElement&&!f.closest(".navbar-nav").length&&a(document.createElement("div")).addClass("dropdown-backdrop").insertAfter(a(this)).on("click",c);var h={relatedTarget:this};if(f.trigger(d=a.Event("show.bs.dropdown",h)),d.isDefaultPrevented())return;e.trigger("focus").attr("aria-expanded","true"),f.toggleClass("open").trigger("shown.bs.dropdown",h)}return!1}},g.prototype.keydown=function(c){if(/(38|40|27|32)/.test(c.which)&&!/input|textarea/i.test(c.target.tagName)){var d=a(this);if(c.preventDefault(),c.stopPropagation(),!d.is(".disabled, :disabled")){var e=b(d),g=e.hasClass("open");if(!g&&27!=c.which||g&&27==c.which)return 27==c.which&&e.find(f).trigger("focus"),d.trigger("click");var h=" li:not(.disabled):visible a",i=e.find(".dropdown-menu"+h);if(i.length){var j=i.index(c.target);38==c.which&&j>0&&j--,40==c.which&&j<i.length-1&&j++,~j||(j=0),i.eq(j).trigger("focus")}}}};var h=a.fn.dropdown;a.fn.dropdown=d,a.fn.dropdown.Constructor=g,a.fn.dropdown.noConflict=function(){return a.fn.dropdown=h,this},a(document).on("click.bs.dropdown.data-api",c).on("click.bs.dropdown.data-api",".dropdown form",function(a){a.stopPropagation()}).on("click.bs.dropdown.data-api",f,g.prototype.toggle).on("keydown.bs.dropdown.data-api",f,g.prototype.keydown).on("keydown.bs.dropdown.data-api",".dropdown-menu",g.prototype.keydown)}(jQuery),+function(a){"use strict";function b(b,d){return this.each(function(){var e=a(this),f=e.data("bs.modal"),g=a.extend({},c.DEFAULTS,e.data(),"object"==typeof b&&b);f||e.data("bs.modal",f=new c(this,g)),"string"==typeof b?f[b](d):g.show&&f.show(d)})}var c=function(b,c){this.options=c,this.$body=a(document.body),this.$element=a(b),this.$dialog=this.$element.find(".modal-dialog"),this.$backdrop=null,this.isShown=null,this.originalBodyPad=null,this.scrollbarWidth=0,this.ignoreBackdropClick=!1,this.options.remote&&this.$element.find(".modal-content").load(this.options.remote,a.proxy(function(){this.$element.trigger("loaded.bs.modal")},this))};c.VERSION="3.3.5",c.TRANSITION_DURATION=300,c.BACKDROP_TRANSITION_DURATION=150,c.DEFAULTS={backdrop:!0,keyboard:!0,show:!0},c.prototype.toggle=function(a){return this.isShown?this.hide():this.show(a)},c.prototype.show=function(b){var d=this,e=a.Event("show.bs.modal",{relatedTarget:b});this.$element.trigger(e),this.isShown||e.isDefaultPrevented()||(this.isShown=!0,this.checkScrollbar(),this.setScrollbar(),this.$body.addClass("modal-open"),this.escape(),this.resize(),this.$element.on("click.dismiss.bs.modal",'[data-dismiss="modal"]',a.proxy(this.hide,this)),this.$dialog.on("mousedown.dismiss.bs.modal",function(){d.$element.one("mouseup.dismiss.bs.modal",function(b){a(b.target).is(d.$element)&&(d.ignoreBackdropClick=!0)})}),this.backdrop(function(){var e=a.support.transition&&d.$element.hasClass("fade");d.$element.parent().length||d.$element.appendTo(d.$body),d.$element.show().scrollTop(0),d.adjustDialog(),e&&d.$element[0].offsetWidth,d.$element.addClass("in"),d.enforceFocus();var f=a.Event("shown.bs.modal",{relatedTarget:b});e?d.$dialog.one("bsTransitionEnd",function(){d.$element.trigger("focus").trigger(f)}).emulateTransitionEnd(c.TRANSITION_DURATION):d.$element.trigger("focus").trigger(f)}))},c.prototype.hide=function(b){b&&b.preventDefault(),b=a.Event("hide.bs.modal"),this.$element.trigger(b),this.isShown&&!b.isDefaultPrevented()&&(this.isShown=!1,this.escape(),this.resize(),a(document).off("focusin.bs.modal"),this.$element.removeClass("in").off("click.dismiss.bs.modal").off("mouseup.dismiss.bs.modal"),this.$dialog.off("mousedown.dismiss.bs.modal"),a.support.transition&&this.$element.hasClass("fade")?this.$element.one("bsTransitionEnd",a.proxy(this.hideModal,this)).emulateTransitionEnd(c.TRANSITION_DURATION):this.hideModal())},c.prototype.enforceFocus=function(){a(document).off("focusin.bs.modal").on("focusin.bs.modal",a.proxy(function(a){this.$element[0]===a.target||this.$element.has(a.target).length||this.$element.trigger("focus")},this))},c.prototype.escape=function(){this.isShown&&this.options.keyboard?this.$element.on("keydown.dismiss.bs.modal",a.proxy(function(a){27==a.which&&this.hide()},this)):this.isShown||this.$element.off("keydown.dismiss.bs.modal")},c.prototype.resize=function(){this.isShown?a(window).on("resize.bs.modal",a.proxy(this.handleUpdate,this)):a(window).off("resize.bs.modal")},c.prototype.hideModal=function(){var a=this;this.$element.hide(),this.backdrop(function(){a.$body.removeClass("modal-open"),a.resetAdjustments(),a.resetScrollbar(),a.$element.trigger("hidden.bs.modal")})},c.prototype.removeBackdrop=function(){this.$backdrop&&this.$backdrop.remove(),this.$backdrop=null},c.prototype.backdrop=function(b){var d=this,e=this.$element.hasClass("fade")?"fade":"";if(this.isShown&&this.options.backdrop){var f=a.support.transition&&e;if(this.$backdrop=a(document.createElement("div")).addClass("modal-backdrop "+e).appendTo(this.$body),this.$element.on("click.dismiss.bs.modal",a.proxy(function(a){return this.ignoreBackdropClick?void(this.ignoreBackdropClick=!1):void(a.target===a.currentTarget&&("static"==this.options.backdrop?this.$element[0].focus():this.hide()))},this)),f&&this.$backdrop[0].offsetWidth,this.$backdrop.addClass("in"),!b)return;f?this.$backdrop.one("bsTransitionEnd",b).emulateTransitionEnd(c.BACKDROP_TRANSITION_DURATION):b()}else if(!this.isShown&&this.$backdrop){this.$backdrop.removeClass("in");var g=function(){d.removeBackdrop(),b&&b()};a.support.transition&&this.$element.hasClass("fade")?this.$backdrop.one("bsTransitionEnd",g).emulateTransitionEnd(c.BACKDROP_TRANSITION_DURATION):g()}else b&&b()},c.prototype.handleUpdate=function(){this.adjustDialog()},c.prototype.adjustDialog=function(){var a=this.$element[0].scrollHeight>document.documentElement.clientHeight;this.$element.css({paddingLeft:!this.bodyIsOverflowing&&a?this.scrollbarWidth:"",paddingRight:this.bodyIsOverflowing&&!a?this.scrollbarWidth:""})},c.prototype.resetAdjustments=function(){this.$element.css({paddingLeft:"",paddingRight:""})},c.prototype.checkScrollbar=function(){var a=window.innerWidth;if(!a){var b=document.documentElement.getBoundingClientRect();a=b.right-Math.abs(b.left)}this.bodyIsOverflowing=document.body.clientWidth<a,this.scrollbarWidth=this.measureScrollbar()},c.prototype.setScrollbar=function(){var a=parseInt(this.$body.css("padding-right")||0,10);this.originalBodyPad=document.body.style.paddingRight||"",this.bodyIsOverflowing&&this.$body.css("padding-right",a+this.scrollbarWidth)},c.prototype.resetScrollbar=function(){this.$body.css("padding-right",this.originalBodyPad)},c.prototype.measureScrollbar=function(){var a=document.createElement("div");a.className="modal-scrollbar-measure",this.$body.append(a);var b=a.offsetWidth-a.clientWidth;return this.$body[0].removeChild(a),b};var d=a.fn.modal;a.fn.modal=b,a.fn.modal.Constructor=c,a.fn.modal.noConflict=function(){return a.fn.modal=d,this},a(document).on("click.bs.modal.data-api",'[data-toggle="modal"]',function(c){var d=a(this),e=d.attr("href"),f=a(d.attr("data-target")||e&&e.replace(/.*(?=#[^\s]+$)/,"")),g=f.data("bs.modal")?"toggle":a.extend({remote:!/#/.test(e)&&e},f.data(),d.data());d.is("a")&&c.preventDefault(),f.one("show.bs.modal",function(a){a.isDefaultPrevented()||f.one("hidden.bs.modal",function(){d.is(":visible")&&d.trigger("focus")})}),b.call(f,g,this)})}(jQuery),+function(a){"use strict";function b(b){return this.each(function(){var d=a(this),e=d.data("bs.tooltip"),f="object"==typeof b&&b;(e||!/destroy|hide/.test(b))&&(e||d.data("bs.tooltip",e=new c(this,f)),"string"==typeof b&&e[b]())})}var c=function(a,b){this.type=null,this.options=null,this.enabled=null,this.timeout=null,this.hoverState=null,this.$element=null,this.inState=null,this.init("tooltip",a,b)};c.VERSION="3.3.5",c.TRANSITION_DURATION=150,c.DEFAULTS={animation:!0,placement:"top",selector:!1,template:'<div class="tooltip" role="tooltip"><div class="tooltip-arrow"></div><div class="tooltip-inner"></div></div>',trigger:"hover focus",title:"",delay:0,html:!1,container:!1,viewport:{selector:"body",padding:0}},c.prototype.init=function(b,c,d){if(this.enabled=!0,this.type=b,this.$element=a(c),this.options=this.getOptions(d),this.$viewport=this.options.viewport&&a(a.isFunction(this.options.viewport)?this.options.viewport.call(this,this.$element):this.options.viewport.selector||this.options.viewport),this.inState={click:!1,hover:!1,focus:!1},this.$element[0]instanceof document.constructor&&!this.options.selector)throw new Error("`selector` option must be specified when initializing "+this.type+" on the window.document object!");for(var e=this.options.trigger.split(" "),f=e.length;f--;){var g=e[f];if("click"==g)this.$element.on("click."+this.type,this.options.selector,a.proxy(this.toggle,this));else if("manual"!=g){var h="hover"==g?"mouseenter":"focusin",i="hover"==g?"mouseleave":"focusout";this.$element.on(h+"."+this.type,this.options.selector,a.proxy(this.enter,this)),this.$element.on(i+"."+this.type,this.options.selector,a.proxy(this.leave,this))}}this.options.selector?this._options=a.extend({},this.options,{trigger:"manual",selector:""}):this.fixTitle()},c.prototype.getDefaults=function(){return c.DEFAULTS},c.prototype.getOptions=function(b){return b=a.extend({},this.getDefaults(),this.$element.data(),b),b.delay&&"number"==typeof b.delay&&(b.delay={show:b.delay,hide:b.delay}),b},c.prototype.getDelegateOptions=function(){var b={},c=this.getDefaults();return this._options&&a.each(this._options,function(a,d){c[a]!=d&&(b[a]=d)}),b},c.prototype.enter=function(b){var c=b instanceof this.constructor?b:a(b.currentTarget).data("bs."+this.type);return c||(c=new this.constructor(b.currentTarget,this.getDelegateOptions()),a(b.currentTarget).data("bs."+this.type,c)),b instanceof a.Event&&(c.inState["focusin"==b.type?"focus":"hover"]=!0),c.tip().hasClass("in")||"in"==c.hoverState?void(c.hoverState="in"):(clearTimeout(c.timeout),c.hoverState="in",c.options.delay&&c.options.delay.show?void(c.timeout=setTimeout(function(){"in"==c.hoverState&&c.show()},c.options.delay.show)):c.show())},c.prototype.isInStateTrue=function(){for(var a in this.inState)if(this.inState[a])return!0;return!1},c.prototype.leave=function(b){var c=b instanceof this.constructor?b:a(b.currentTarget).data("bs."+this.type);return c||(c=new this.constructor(b.currentTarget,this.getDelegateOptions()),a(b.currentTarget).data("bs."+this.type,c)),b instanceof a.Event&&(c.inState["focusout"==b.type?"focus":"hover"]=!1),c.isInStateTrue()?void 0:(clearTimeout(c.timeout),c.hoverState="out",c.options.delay&&c.options.delay.hide?void(c.timeout=setTimeout(function(){"out"==c.hoverState&&c.hide()},c.options.delay.hide)):c.hide())},c.prototype.show=function(){var b=a.Event("show.bs."+this.type);if(this.hasContent()&&this.enabled){this.$element.trigger(b);var d=a.contains(this.$element[0].ownerDocument.documentElement,this.$element[0]);if(b.isDefaultPrevented()||!d)return;var e=this,f=this.tip(),g=this.getUID(this.type);this.setContent(),f.attr("id",g),this.$element.attr("aria-describedby",g),this.options.animation&&f.addClass("fade");var h="function"==typeof this.options.placement?this.options.placement.call(this,f[0],this.$element[0]):this.options.placement,i=/\s?auto?\s?/i,j=i.test(h);j&&(h=h.replace(i,"")||"top"),f.detach().css({top:0,left:0,display:"block"}).addClass(h).data("bs."+this.type,this),this.options.container?f.appendTo(this.options.container):f.insertAfter(this.$element),this.$element.trigger("inserted.bs."+this.type);var k=this.getPosition(),l=f[0].offsetWidth,m=f[0].offsetHeight;if(j){var n=h,o=this.getPosition(this.$viewport);h="bottom"==h&&k.bottom+m>o.bottom?"top":"top"==h&&k.top-m<o.top?"bottom":"right"==h&&k.right+l>o.width?"left":"left"==h&&k.left-l<o.left?"right":h,f.removeClass(n).addClass(h)}var p=this.getCalculatedOffset(h,k,l,m);this.applyPlacement(p,h);var q=function(){var a=e.hoverState;e.$element.trigger("shown.bs."+e.type),e.hoverState=null,"out"==a&&e.leave(e)};a.support.transition&&this.$tip.hasClass("fade")?f.one("bsTransitionEnd",q).emulateTransitionEnd(c.TRANSITION_DURATION):q()}},c.prototype.applyPlacement=function(b,c){var d=this.tip(),e=d[0].offsetWidth,f=d[0].offsetHeight,g=parseInt(d.css("margin-top"),10),h=parseInt(d.css("margin-left"),10);isNaN(g)&&(g=0),isNaN(h)&&(h=0),b.top+=g,b.left+=h,a.offset.setOffset(d[0],a.extend({using:function(a){d.css({top:Math.round(a.top),left:Math.round(a.left)})}},b),0),d.addClass("in");var i=d[0].offsetWidth,j=d[0].offsetHeight;"top"==c&&j!=f&&(b.top=b.top+f-j);var k=this.getViewportAdjustedDelta(c,b,i,j);k.left?b.left+=k.left:b.top+=k.top;var l=/top|bottom/.test(c),m=l?2*k.left-e+i:2*k.top-f+j,n=l?"offsetWidth":"offsetHeight";d.offset(b),this.replaceArrow(m,d[0][n],l)},c.prototype.replaceArrow=function(a,b,c){this.arrow().css(c?"left":"top",50*(1-a/b)+"%").css(c?"top":"left","")},c.prototype.setContent=function(){var a=this.tip(),b=this.getTitle();a.find(".tooltip-inner")[this.options.html?"html":"text"](b),a.removeClass("fade in top bottom left right")},c.prototype.hide=function(b){function d(){"in"!=e.hoverState&&f.detach(),e.$element.removeAttr("aria-describedby").trigger("hidden.bs."+e.type),b&&b()}var e=this,f=a(this.$tip),g=a.Event("hide.bs."+this.type);return this.$element.trigger(g),g.isDefaultPrevented()?void 0:(f.removeClass("in"),a.support.transition&&f.hasClass("fade")?f.one("bsTransitionEnd",d).emulateTransitionEnd(c.TRANSITION_DURATION):d(),this.hoverState=null,this)},c.prototype.fixTitle=function(){var a=this.$element;(a.attr("title")||"string"!=typeof a.attr("data-original-title"))&&a.attr("data-original-title",a.attr("title")||"").attr("title","")},c.prototype.hasContent=function(){return this.getTitle()},c.prototype.getPosition=function(b){b=b||this.$element;var c=b[0],d="BODY"==c.tagName,e=c.getBoundingClientRect();null==e.width&&(e=a.extend({},e,{width:e.right-e.left,height:e.bottom-e.top}));var f=d?{top:0,left:0}:b.offset(),g={scroll:d?document.documentElement.scrollTop||document.body.scrollTop:b.scrollTop()},h=d?{width:a(window).width(),height:a(window).height()}:null;return a.extend({},e,g,h,f)},c.prototype.getCalculatedOffset=function(a,b,c,d){return"bottom"==a?{top:b.top+b.height,left:b.left+b.width/2-c/2}:"top"==a?{top:b.top-d,left:b.left+b.width/2-c/2}:"left"==a?{top:b.top+b.height/2-d/2,left:b.left-c}:{top:b.top+b.height/2-d/2,left:b.left+b.width}},c.prototype.getViewportAdjustedDelta=function(a,b,c,d){var e={top:0,left:0};if(!this.$viewport)return e;var f=this.options.viewport&&this.options.viewport.padding||0,g=this.getPosition(this.$viewport);if(/right|left/.test(a)){var h=b.top-f-g.scroll,i=b.top+f-g.scroll+d;h<g.top?e.top=g.top-h:i>g.top+g.height&&(e.top=g.top+g.height-i)}else{var j=b.left-f,k=b.left+f+c;j<g.left?e.left=g.left-j:k>g.right&&(e.left=g.left+g.width-k)}return e},c.prototype.getTitle=function(){var a,b=this.$element,c=this.options;return a=b.attr("data-original-title")||("function"==typeof c.title?c.title.call(b[0]):c.title)},c.prototype.getUID=function(a){do a+=~~(1e6*Math.random());while(document.getElementById(a));return a},c.prototype.tip=function(){if(!this.$tip&&(this.$tip=a(this.options.template),1!=this.$tip.length))throw new Error(this.type+" `template` option must consist of exactly 1 top-level element!");return this.$tip},c.prototype.arrow=function(){return this.$arrow=this.$arrow||this.tip().find(".tooltip-arrow")},c.prototype.enable=function(){this.enabled=!0},c.prototype.disable=function(){this.enabled=!1},c.prototype.toggleEnabled=function(){this.enabled=!this.enabled},c.prototype.toggle=function(b){var c=this;b&&(c=a(b.currentTarget).data("bs."+this.type),c||(c=new this.constructor(b.currentTarget,this.getDelegateOptions()),a(b.currentTarget).data("bs."+this.type,c))),b?(c.inState.click=!c.inState.click,c.isInStateTrue()?c.enter(c):c.leave(c)):c.tip().hasClass("in")?c.leave(c):c.enter(c)},c.prototype.destroy=function(){var a=this;clearTimeout(this.timeout),this.hide(function(){a.$element.off("."+a.type).removeData("bs."+a.type),a.$tip&&a.$tip.detach(),a.$tip=null,a.$arrow=null,a.$viewport=null})};var d=a.fn.tooltip;a.fn.tooltip=b,a.fn.tooltip.Constructor=c,a.fn.tooltip.noConflict=function(){return a.fn.tooltip=d,this}}(jQuery),+function(a){"use strict";function b(b){return this.each(function(){var d=a(this),e=d.data("bs.popover"),f="object"==typeof b&&b;(e||!/destroy|hide/.test(b))&&(e||d.data("bs.popover",e=new c(this,f)),"string"==typeof b&&e[b]())})}var c=function(a,b){this.init("popover",a,b)};if(!a.fn.tooltip)throw new Error("Popover requires tooltip.js");c.VERSION="3.3.5",c.DEFAULTS=a.extend({},a.fn.tooltip.Constructor.DEFAULTS,{placement:"right",trigger:"click",content:"",template:'<div class="popover" role="tooltip"><div class="arrow"></div><h3 class="popover-title"></h3><div class="popover-content"></div></div>'}),c.prototype=a.extend({},a.fn.tooltip.Constructor.prototype),c.prototype.constructor=c,c.prototype.getDefaults=function(){return c.DEFAULTS},c.prototype.setContent=function(){var a=this.tip(),b=this.getTitle(),c=this.getContent();a.find(".popover-title")[this.options.html?"html":"text"](b),a.find(".popover-content").children().detach().end()[this.options.html?"string"==typeof c?"html":"append":"text"](c),a.removeClass("fade top bottom left right in"),a.find(".popover-title").html()||a.find(".popover-title").hide()},c.prototype.hasContent=function(){return this.getTitle()||this.getContent()},c.prototype.getContent=function(){var a=this.$element,b=this.options;return a.attr("data-content")||("function"==typeof b.content?b.content.call(a[0]):b.content)},c.prototype.arrow=function(){return this.$arrow=this.$arrow||this.tip().find(".arrow")};var d=a.fn.popover;a.fn.popover=b,a.fn.popover.Constructor=c,a.fn.popover.noConflict=function(){return a.fn.popover=d,this}}(jQuery),+function(a){"use strict";function b(c,d){this.$body=a(document.body),this.$scrollElement=a(a(c).is(document.body)?window:c),this.options=a.extend({},b.DEFAULTS,d),this.selector=(this.options.target||"")+" .nav li > a",this.offsets=[],this.targets=[],this.activeTarget=null,this.scrollHeight=0,this.$scrollElement.on("scroll.bs.scrollspy",a.proxy(this.process,this)),this.refresh(),this.process()}function c(c){return this.each(function(){var d=a(this),e=d.data("bs.scrollspy"),f="object"==typeof c&&c;e||d.data("bs.scrollspy",e=new b(this,f)),"string"==typeof c&&e[c]()})}b.VERSION="3.3.5",b.DEFAULTS={offset:10},b.prototype.getScrollHeight=function(){return this.$scrollElement[0].scrollHeight||Math.max(this.$body[0].scrollHeight,document.documentElement.scrollHeight)},b.prototype.refresh=function(){var b=this,c="offset",d=0;this.offsets=[],this.targets=[],this.scrollHeight=this.getScrollHeight(),a.isWindow(this.$scrollElement[0])||(c="position",d=this.$scrollElement.scrollTop()),this.$body.find(this.selector).map(function(){var b=a(this),e=b.data("target")||b.attr("href"),f=/^#./.test(e)&&a(e);return f&&f.length&&f.is(":visible")&&[[f[c]().top+d,e]]||null}).sort(function(a,b){return a[0]-b[0]}).each(function(){b.offsets.push(this[0]),b.targets.push(this[1])})},b.prototype.process=function(){var a,b=this.$scrollElement.scrollTop()+this.options.offset,c=this.getScrollHeight(),d=this.options.offset+c-this.$scrollElement.height(),e=this.offsets,f=this.targets,g=this.activeTarget;if(this.scrollHeight!=c&&this.refresh(),b>=d)return g!=(a=f[f.length-1])&&this.activate(a);if(g&&b<e[0])return this.activeTarget=null,this.clear();for(a=e.length;a--;)g!=f[a]&&b>=e[a]&&(void 0===e[a+1]||b<e[a+1])&&this.activate(f[a])},b.prototype.activate=function(b){this.activeTarget=b,this.clear();var c=this.selector+'[data-target="'+b+'"],'+this.selector+'[href="'+b+'"]',d=a(c).parents("li").addClass("active");d.parent(".dropdown-menu").length&&(d=d.closest("li.dropdown").addClass("active")),
+d.trigger("activate.bs.scrollspy")},b.prototype.clear=function(){a(this.selector).parentsUntil(this.options.target,".active").removeClass("active")};var d=a.fn.scrollspy;a.fn.scrollspy=c,a.fn.scrollspy.Constructor=b,a.fn.scrollspy.noConflict=function(){return a.fn.scrollspy=d,this},a(window).on("load.bs.scrollspy.data-api",function(){a('[data-spy="scroll"]').each(function(){var b=a(this);c.call(b,b.data())})})}(jQuery),+function(a){"use strict";function b(b){return this.each(function(){var d=a(this),e=d.data("bs.tab");e||d.data("bs.tab",e=new c(this)),"string"==typeof b&&e[b]()})}var c=function(b){this.element=a(b)};c.VERSION="3.3.5",c.TRANSITION_DURATION=150,c.prototype.show=function(){var b=this.element,c=b.closest("ul:not(.dropdown-menu)"),d=b.data("target");if(d||(d=b.attr("href"),d=d&&d.replace(/.*(?=#[^\s]*$)/,"")),!b.parent("li").hasClass("active")){var e=c.find(".active:last a"),f=a.Event("hide.bs.tab",{relatedTarget:b[0]}),g=a.Event("show.bs.tab",{relatedTarget:e[0]});if(e.trigger(f),b.trigger(g),!g.isDefaultPrevented()&&!f.isDefaultPrevented()){var h=a(d);this.activate(b.closest("li"),c),this.activate(h,h.parent(),function(){e.trigger({type:"hidden.bs.tab",relatedTarget:b[0]}),b.trigger({type:"shown.bs.tab",relatedTarget:e[0]})})}}},c.prototype.activate=function(b,d,e){function f(){g.removeClass("active").find("> .dropdown-menu > .active").removeClass("active").end().find('[data-toggle="tab"]').attr("aria-expanded",!1),b.addClass("active").find('[data-toggle="tab"]').attr("aria-expanded",!0),h?(b[0].offsetWidth,b.addClass("in")):b.removeClass("fade"),b.parent(".dropdown-menu").length&&b.closest("li.dropdown").addClass("active").end().find('[data-toggle="tab"]').attr("aria-expanded",!0),e&&e()}var g=d.find("> .active"),h=e&&a.support.transition&&(g.length&&g.hasClass("fade")||!!d.find("> .fade").length);g.length&&h?g.one("bsTransitionEnd",f).emulateTransitionEnd(c.TRANSITION_DURATION):f(),g.removeClass("in")};var d=a.fn.tab;a.fn.tab=b,a.fn.tab.Constructor=c,a.fn.tab.noConflict=function(){return a.fn.tab=d,this};var e=function(c){c.preventDefault(),b.call(a(this),"show")};a(document).on("click.bs.tab.data-api",'[data-toggle="tab"]',e).on("click.bs.tab.data-api",'[data-toggle="pill"]',e)}(jQuery),+function(a){"use strict";function b(b){return this.each(function(){var d=a(this),e=d.data("bs.affix"),f="object"==typeof b&&b;e||d.data("bs.affix",e=new c(this,f)),"string"==typeof b&&e[b]()})}var c=function(b,d){this.options=a.extend({},c.DEFAULTS,d),this.$target=a(this.options.target).on("scroll.bs.affix.data-api",a.proxy(this.checkPosition,this)).on("click.bs.affix.data-api",a.proxy(this.checkPositionWithEventLoop,this)),this.$element=a(b),this.affixed=null,this.unpin=null,this.pinnedOffset=null,this.checkPosition()};c.VERSION="3.3.5",c.RESET="affix affix-top affix-bottom",c.DEFAULTS={offset:0,target:window},c.prototype.getState=function(a,b,c,d){var e=this.$target.scrollTop(),f=this.$element.offset(),g=this.$target.height();if(null!=c&&"top"==this.affixed)return c>e?"top":!1;if("bottom"==this.affixed)return null!=c?e+this.unpin<=f.top?!1:"bottom":a-d>=e+g?!1:"bottom";var h=null==this.affixed,i=h?e:f.top,j=h?g:b;return null!=c&&c>=e?"top":null!=d&&i+j>=a-d?"bottom":!1},c.prototype.getPinnedOffset=function(){if(this.pinnedOffset)return this.pinnedOffset;this.$element.removeClass(c.RESET).addClass("affix");var a=this.$target.scrollTop(),b=this.$element.offset();return this.pinnedOffset=b.top-a},c.prototype.checkPositionWithEventLoop=function(){setTimeout(a.proxy(this.checkPosition,this),1)},c.prototype.checkPosition=function(){if(this.$element.is(":visible")){var b=this.$element.height(),d=this.options.offset,e=d.top,f=d.bottom,g=Math.max(a(document).height(),a(document.body).height());"object"!=typeof d&&(f=e=d),"function"==typeof e&&(e=d.top(this.$element)),"function"==typeof f&&(f=d.bottom(this.$element));var h=this.getState(g,b,e,f);if(this.affixed!=h){null!=this.unpin&&this.$element.css("top","");var i="affix"+(h?"-"+h:""),j=a.Event(i+".bs.affix");if(this.$element.trigger(j),j.isDefaultPrevented())return;this.affixed=h,this.unpin="bottom"==h?this.getPinnedOffset():null,this.$element.removeClass(c.RESET).addClass(i).trigger(i.replace("affix","affixed")+".bs.affix")}"bottom"==h&&this.$element.offset({top:g-b-f})}};var d=a.fn.affix;a.fn.affix=b,a.fn.affix.Constructor=c,a.fn.affix.noConflict=function(){return a.fn.affix=d,this},a(window).on("load",function(){a('[data-spy="affix"]').each(function(){var c=a(this),d=c.data();d.offset=d.offset||{},null!=d.offsetBottom&&(d.offset.bottom=d.offsetBottom),null!=d.offsetTop&&(d.offset.top=d.offsetTop),b.call(c,d)})})}(jQuery);;/////////////
 
 function Sequence(sequence,isoformName) {
     var isoName;
@@ -24545,873 +25437,7 @@ this["HBtemplates"]["templates/overviewProtein.tmpl"] = Handlebars.template({"1"
   return buffer + "</dd>\n            </dl>\n        </div>\n    </div>\n</div>\n<p style=\"margin:10px 10px;\">Entry whose protein(s) existence is based on "
     + alias3(((helper = (helper = helpers.proteineEvidence || (depth0 != null ? depth0.proteineEvidence : depth0)) != null ? helper : alias1),(typeof helper === alias2 ? helper.call(depth0,{"name":"proteineEvidence","hash":{},"data":data}) : helper)))
     + "</p>";
-},"useData":true});;/**
- * A neXtProt js client
- */
-( function (root) {
-    //
-    'use strict';
-    if (root.Nextprot === undefined) {
-        root.Nextprot = {};
-    }
-
-
-    (function () {
-
-        //?default-graph-uri=&named-graph-uri=&output=json
-
-        var tempApiUrl = "http://alpha-api.nextprot.org//entry/";
-        var nextprotApiUrl = "https://api.nextprot.org//entry/";
-        var sparqlEndpoint = "https://api.nextprot.org/sparql";
-        var sparqlFormat = "?output=json";
-        var sparqlPrefixes = "PREFIX :<http://nextprot.org/rdf#> "+
-            "PREFIX annotation:<http://nextprot.org/rdf/annotation/> "+
-            "PREFIX context:<http://nextprot.org/rdf/context/> "+
-            "PREFIX cv:<http://nextprot.org/rdf/terminology/> "+
-            "PREFIX db:<http://nextprot.org/rdf/db/> "+
-            "PREFIX dc:<http://purl.org/dc/elements/1.1/> "+
-            "PREFIX dcterms:<http://purl.org/dc/terms/> "+
-            "PREFIX entry:<http://nextprot.org/rdf/entry/> "+
-            "PREFIX evidence:<http://nextprot.org/rdf/evidence/> "+
-            "PREFIX foaf:<http://xmlns.com/foaf/0.1/> "+
-            "PREFIX gene:<http://nextprot.org/rdf/gene/> "+
-            "PREFIX identifier:<http://nextprot.org/rdf/identifier/> "+
-            "PREFIX isoform:<http://nextprot.org/rdf/isoform/> "+
-            "PREFIX mo:<http://purl.org/ontology/mo/> "+
-            "PREFIX ov:<http://open.vocab.org/terms/> "+
-            "PREFIX owl:<http://www.w3.org/2002/07/owl#> "+
-            "PREFIX publication:<http://nextprot.org/rdf/publication/> "+
-            "PREFIX rdf:<http://www.w3.org/1999/02/22-rdf-syntax-ns#> "+
-            "PREFIX rdfs:<http://www.w3.org/2000/01/rdf-schema#> "+
-            "PREFIX sim:<http://purl.org/ontology/similarity/> "+
-            "PREFIX source:<http://nextprot.org/rdf/source/> "+
-            "PREFIX xref:<http://nextprot.org/rdf/xref/> "+
-            "PREFIX xsd:<http://www.w3.org/2001/XMLSchema#> ";
-
-
-        var applicationName = null;
-        var clientInfo = null;
-
-
-        var NextprotClient = function (appName, clientInformation) {
-            applicationName = appName;
-            clientInfo = clientInformation;
-            if(!appName){
-                throw "Please provide some application name  ex:  new Nextprot.Client('demo application for visualizing peptides', clientInformation);";
-            }
-            
-            if(!clientInformation){
-                throw "Please provide some client information ex:  new Nextprot.Client(applicationName, 'Calipho SIB at Geneva');";
-            }
-
-        };
-
-        //Util methods
-        var _getURLParameter = function (name){
-            name = name.replace(/[\[]/, "\\[").replace(/[\]]/, "\\]");
-            var regex = new RegExp("[\\?&]" + name + "=([^&#]*)"),
-                results = regex.exec(location.search);
-            return results === null ? "" : decodeURIComponent(results[1].replace(/\+/g, " "));
-        };
-
-        //Gets the entry set in the parameter
-        NextprotClient.prototype.getEntryName = function(){
-            return _getURLParameter("nxentry") || 'NX_P01308'; //By default returns the insulin
-        };
-
-        var normalizeEntry = function (entry) {
-            if (entry.substring(0,3) !== "NX_") {
-                entry = "NX_"+ entry;
-            }
-            return entry;
-        };
-
-        //private method, convention use an underscore
-        var _callURL = function (entryName, context){
-
-            var me = this;
-
-            return new Promise(function(resolve, reject) {
-
-                var req = new XMLHttpRequest();
-                var url = nextprotApiUrl + entryName + "/" + context + ".json" + "?clientInfo=" + clientInfo + "&applicationName=" + applicationName;
-                req.open("GET", url);
-
-                req.onload = function() {
-                    // This is called even on errors so check the status
-                    if (req.status == 200) {
-                        resolve(JSON.parse(req.responseText));
-                    }else {
-                        //reject(Error(req.status + " - " + JSON.parse(req.response).message));
-                        reject(Error(req.status));
-                    }
-                };
-
-                // Handle network errors
-                req.onerror = function() {
-                    reject(Error("Network Error"));
-                };
-
-                // Make the request
-                req.send();
-            });
-        };
-        var _callURLTemp = function (entryName, context){
-
-            var me = this;
-
-            return new Promise(function(resolve, reject) {
-
-                var req = new XMLHttpRequest();
-                var url = nextprotApiUrl + entryName + "/" + context + ".json" + "?clientInfo=" + clientInfo + "&applicationName=" + applicationName;
-                req.open("GET", url);
-
-                req.onload = function() {
-                    // This is called even on errors so check the status
-                    if (req.status == 200) {
-                        resolve(JSON.parse(req.responseText));
-                    }else {
-                        //reject(Error(req.status + " - " + JSON.parse(req.response).message));
-                        reject(Error(req.status));
-                    }
-                };
-
-                // Handle network errors
-                req.onerror = function() {
-                    reject(Error("Network Error"));
-                };
-
-                // Make the request
-                req.send();
-            });
-        };
-
-        //NextprotClient.prototype.getProteinOverview = function() {
-        //    return _callURL(this.getEntryName(), "overview").then(function (data){
-        //        return data.entry.overview;
-        //    });
-        //};
-
-        NextprotClient.prototype.executeSparql = function(sparql) {
-            var sparqlQuery = sparqlPrefixes+sparql;
-            var url = sparqlEndpoint+sparqlFormat+"&query="+encodeURIComponent(sparqlQuery) + "&clientInfo=" + clientInfo + "&applicationName=" + applicationName;
-            return Promise.resolve($.getJSON(url)).then(function (data){
-                return data;
-            });
-        };
-
-        NextprotClient.prototype.getProteinOverview = function(entry) {
-            return _callURL(normalizeEntry(entry || this.getEntryName()), "overview").then(function (data){
-                return data.entry.overview;
-            });
-        };
-
-        NextprotClient.prototype.getProteinSequence = function(entry) {
-            return _callURL(normalizeEntry(entry || this.getEntryName()), "isoform").then(function (data){
-                return data.entry.isoforms;
-            });
-        };
-
-        NextprotClient.prototype.getSecondaryStructure = function(entry) {
-            return _callURL(normalizeEntry(entry || this.getEntryName()), "secondary-structure").then(function (data){
-                var publiMap = {};
-                var xrefMap = {};
-                data.entry.publications.forEach(function (p){ publiMap[p.md5] = p});
-                data.entry.xrefs.forEach(function (p){ xrefMap[p.dbXrefId] = p});
-                //return data.entry.annotations;
-                return {annot:data.entry.annotations,publi:publiMap,xrefs:xrefMap};
-            });
-        };
-
-        //NextprotClient.prototype.getPublicationById = function(pubId) {
-        //    return publicationsMap[p.md5];
-        //
-        //    //TODO if does not exist on map go and get it by the rest api
-        //
-        //};
-
-
-        NextprotClient.prototype.getMatureProtein = function(entry) {
-            return _callURL(normalizeEntry(entry || this.getEntryName()), "mature-protein").then(function (data){
-                var publiMap = {};
-                var xrefMap = {};
-                data.entry.publications.forEach(function (p){ publiMap[p.md5] = p});
-                data.entry.xrefs.forEach(function (p){ xrefMap[p.dbXrefId] = p});
-                //return data.entry.annotations;
-                return {annot:data.entry.annotations,publi:publiMap,xrefs:xrefMap};
-            });
-        };
-
-        NextprotClient.prototype.getPeptide = function(entry) {
-            return _callURL(normalizeEntry(entry || this.getEntryName()), "peptide-mapping").then(function (data){
-                return data.entry.peptideMappings;
-            });
-        };
-
-        NextprotClient.prototype.getSrmPeptide = function(entry) {
-            return _callURL(normalizeEntry(entry || this.getEntryName()), "srm-peptide-mapping").then(function (data){
-                return data.entry.srmPeptideMappings;
-            });
-        };
-
-        NextprotClient.prototype.getSignalPeptide = function(entry) {
-            return _callURL(normalizeEntry(entry || this.getEntryName()), "signal-peptide").then(function (data){
-                var publiMap = {};
-                var xrefMap = {};
-                data.entry.publications.forEach(function (p){ publiMap[p.md5] = p});
-                data.entry.xrefs.forEach(function (p){ xrefMap[p.dbXrefId] = p});
-                //return data.entry.annotations;
-                return {annot:data.entry.annotations,publi:publiMap,xrefs:xrefMap};
-            });
-        };
-
-        NextprotClient.prototype.getProPeptide = function(entry) {
-            return _callURL(normalizeEntry(entry || this.getEntryName()), "propeptide").then(function (data){
-                var publiMap = {};
-                var xrefMap = {};
-                data.entry.publications.forEach(function (p){ publiMap[p.md5] = p});
-                data.entry.xrefs.forEach(function (p){ xrefMap[p.dbXrefId] = p});
-                //return data.entry.annotations;
-                return {annot:data.entry.annotations,publi:publiMap,xrefs:xrefMap};
-            });
-        };
-
-        NextprotClient.prototype.getDisulfideBond = function(entry) {
-            return _callURL(normalizeEntry(entry || this.getEntryName()), "disulfide-bond").then(function (data){
-                var publiMap = {};
-                var xrefMap = {};
-                data.entry.publications.forEach(function (p){ publiMap[p.md5] = p});
-                data.entry.xrefs.forEach(function (p){ xrefMap[p.dbXrefId] = p});
-                //return data.entry.annotations;
-                return {annot:data.entry.annotations,publi:publiMap,xrefs:xrefMap};
-            });
-        };
-
-        NextprotClient.prototype.getAntibody = function(entry) {
-            return _callURL(normalizeEntry(entry || this.getEntryName()), "antibody").then(function (data){
-                return data.entry.antibodyMappings;
-            });
-        };
-        NextprotClient.prototype.getInitMeth= function(entry) {
-            return _callURL(normalizeEntry(entry || this.getEntryName()), "initiator-methionine").then(function (data){
-                var publiMap = {};
-                var xrefMap = {};
-                data.entry.publications.forEach(function (p){ publiMap[p.md5] = p});
-                data.entry.xrefs.forEach(function (p){ xrefMap[p.dbXrefId] = p});
-                //return data.entry.annotations;
-                return {annot:data.entry.annotations,publi:publiMap,xrefs:xrefMap};
-                //return data.entry.annotations;
-            });
-        };
-        NextprotClient.prototype.getModifResidue = function(entry) {
-            return _callURL(normalizeEntry(entry || this.getEntryName()), "modified-residue").then(function (data){
-                var publiMap = {};
-                var xrefMap = {};
-                data.entry.publications.forEach(function (p){ publiMap[p.md5] = p});
-                data.entry.xrefs.forEach(function (p){ xrefMap[p.dbXrefId] = p});
-                //return data.entry.annotations;
-                return {annot:data.entry.annotations,publi:publiMap,xrefs:xrefMap};
-                //return data.entry.annotations;
-            });
-        };
-        NextprotClient.prototype.getCrossLink = function(entry) {
-            return _callURL(normalizeEntry(entry || this.getEntryName()), "cross-link").then(function (data){
-                var publiMap = {};
-                var xrefMap = {};
-                data.entry.publications.forEach(function (p){ publiMap[p.md5] = p});
-                data.entry.xrefs.forEach(function (p){ xrefMap[p.dbXrefId] = p});
-                //return data.entry.annotations;
-                return {annot:data.entry.annotations,publi:publiMap,xrefs:xrefMap};
-            });
-        };
-        NextprotClient.prototype.getGlycoSite = function(entry) {
-            return _callURL(normalizeEntry(entry || this.getEntryName()), "glycosylation-site").then(function (data){
-                var publiMap = {};
-                var xrefMap = {};
-                data.entry.publications.forEach(function (p){ publiMap[p.md5] = p});
-                data.entry.xrefs.forEach(function (p){ xrefMap[p.dbXrefId] = p});
-                //return data.entry.annotations;
-                return {annot:data.entry.annotations,publi:publiMap,xrefs:xrefMap};
-            });
-        };
-
-        NextprotClient.prototype.getInteractingRegion = function(entry) {
-            return _callURL(normalizeEntry(entry || this.getEntryName()), "interacting-region").then(function (data){
-                var publiMap = {};
-                var xrefMap = {};
-                data.entry.publications.forEach(function (p){ publiMap[p.md5] = p});
-                data.entry.xrefs.forEach(function (p){ xrefMap[p.dbXrefId] = p});
-                //return data.entry.annotations;
-                return {annot:data.entry.annotations,publi:publiMap,xrefs:xrefMap};
-            });
-        };
-
-        NextprotClient.prototype.getMiscellaneousSite = function(entry) {
-            return _callURL(normalizeEntry(entry || this.getEntryName()), "miscellaneous-site").then(function (data){
-                var publiMap = {};
-                var xrefMap = {};
-                data.entry.publications.forEach(function (p){ publiMap[p.md5] = p});
-                data.entry.xrefs.forEach(function (p){ xrefMap[p.dbXrefId] = p});
-                //return data.entry.annotations;
-                return {annot:data.entry.annotations,publi:publiMap,xrefs:xrefMap};
-            });
-        };
-
-        NextprotClient.prototype.getActiveSite = function(entry) {
-            return _callURL(normalizeEntry(entry || this.getEntryName()), "active-site").then(function (data){
-                var publiMap = {};
-                var xrefMap = {};
-                data.entry.publications.forEach(function (p){ publiMap[p.md5] = p});
-                data.entry.xrefs.forEach(function (p){ xrefMap[p.dbXrefId] = p});
-                //return data.entry.annotations;
-                return {annot:data.entry.annotations,publi:publiMap,xrefs:xrefMap};
-            });
-        };
-
-        NextprotClient.prototype.getMetalBindingSite = function(entry) {
-            return _callURL(normalizeEntry(entry || this.getEntryName()), "metal-binding-site").then(function (data){
-                var publiMap = {};
-                var xrefMap = {};
-                data.entry.publications.forEach(function (p){ publiMap[p.md5] = p});
-                data.entry.xrefs.forEach(function (p){ xrefMap[p.dbXrefId] = p});
-                //return data.entry.annotations;
-                return {annot:data.entry.annotations,publi:publiMap,xrefs:xrefMap};
-            });
-        };
-
-        NextprotClient.prototype.getVariant = function(entry) {
-            return _callURL(normalizeEntry(entry || this.getEntryName()), "variant").then(function (data){
-                var publiMap = {};
-                var xrefMap = {};
-                data.entry.publications.forEach(function (p){ publiMap[p.md5] = p});
-                data.entry.xrefs.forEach(function (p){ xrefMap[p.dbXrefId] = p});
-                //return data.entry.annotations;
-                return {annot:data.entry.annotations,publi:publiMap,xrefs:xrefMap};
-            });
-        };
-
-        NextprotClient.prototype.getExons = function(entry) {
-            return _callURL(normalizeEntry(entry || this.getEntryName()), "genomic-mapping").then(function (data){
-                return data.entry.genomicMappings[0].isoformMappings;
-            });
-        };
-
-        NextprotClient.prototype.getIsoformMapping = function(entry) {
-            return _callURLTemp(normalizeEntry(entry || this.getEntryName()), "isoform/mapping").then(function (data){
-                return data;
-            });
-        };
-
-        NextprotClient.prototype.getLipidationSite = function(entry) {
-            return _callURL(normalizeEntry(entry || this.getEntryName()), "lipidation-site").then(function (data){
-                var publiMap = {};
-                var xrefMap = {};
-                data.entry.publications.forEach(function (p){ publiMap[p.md5] = p});
-                data.entry.xrefs.forEach(function (p){ xrefMap[p.dbXrefId] = p});
-                //return data.entry.annotations;
-                return {annot:data.entry.annotations,publi:publiMap,xrefs:xrefMap};
-            });
-        };
-
-        NextprotClient.prototype.getTopologicalDomain = function(entry) {
-            return _callURL(normalizeEntry(entry || this.getEntryName()), "topological-domain").then(function (data){
-                var publiMap = {};
-                var xrefMap = {};
-                data.entry.publications.forEach(function (p){ publiMap[p.md5] = p});
-                data.entry.xrefs.forEach(function (p){ xrefMap[p.dbXrefId] = p});
-                //return data.entry.annotations;
-                return {annot:data.entry.annotations,publi:publiMap,xrefs:xrefMap};
-            });
-        };
-
-        NextprotClient.prototype.getTransmembraneRegion = function(entry) {
-            return _callURL(normalizeEntry(entry || this.getEntryName()), "transmembrane-region").then(function (data){
-                var publiMap = {};
-                var xrefMap = {};
-                data.entry.publications.forEach(function (p){ publiMap[p.md5] = p});
-                data.entry.xrefs.forEach(function (p){ xrefMap[p.dbXrefId] = p});
-                //return data.entry.annotations;
-                return {annot:data.entry.annotations,publi:publiMap,xrefs:xrefMap};
-            });
-        };
-
-        NextprotClient.prototype.getMutagenesis = function(entry) {
-            return _callURL(normalizeEntry(entry || this.getEntryName()), "mutagenesis").then(function (data){
-                var publiMap = {};
-                var xrefMap = {};
-                data.entry.publications.forEach(function (p){ publiMap[p.md5] = p});
-                data.entry.xrefs.forEach(function (p){ xrefMap[p.dbXrefId] = p});
-                //return data.entry.annotations;
-                return {annot:data.entry.annotations,publi:publiMap,xrefs:xrefMap};
-            });
-        };
-
-        NextprotClient.prototype.getSequenceConflict = function(entry) {
-            return _callURL(normalizeEntry(entry || this.getEntryName()), "sequence-conflict").then(function (data){
-                var publiMap = {};
-                var xrefMap = {};
-                data.entry.publications.forEach(function (p){ publiMap[p.md5] = p});
-                data.entry.xrefs.forEach(function (p){ xrefMap[p.dbXrefId] = p});
-                //return data.entry.annotations;
-                return {annot:data.entry.annotations,publi:publiMap,xrefs:xrefMap};
-            });
-        };
-
-        NextprotClient.prototype.getPeroxisomeTransitPeptide = function(entry) {
-            return _callURL(normalizeEntry(entry || this.getEntryName()), "peroxisome-transit-peptide").then(function (data){
-                var publiMap = {};
-                var xrefMap = {};
-                data.entry.publications.forEach(function (p){ publiMap[p.md5] = p});
-                data.entry.xrefs.forEach(function (p){ xrefMap[p.dbXrefId] = p});
-                //return data.entry.annotations;
-                return {annot:data.entry.annotations,publi:publiMap,xrefs:xrefMap};
-            });
-        };
-
-        NextprotClient.prototype.getMitochondrialTransitPeptide = function(entry) {
-            return _callURL(normalizeEntry(entry || this.getEntryName()), "mitochondrial-transit-peptide").then(function (data){
-                var publiMap = {};
-                var xrefMap = {};
-                data.entry.publications.forEach(function (p){ publiMap[p.md5] = p});
-                data.entry.xrefs.forEach(function (p){ xrefMap[p.dbXrefId] = p});
-                //return data.entry.annotations;
-                return {annot:data.entry.annotations,publi:publiMap,xrefs:xrefMap};
-            });
-        };
-
-        NextprotClient.prototype.getSelenocysteine = function(entry) {
-            return _callURL(normalizeEntry(entry || this.getEntryName()), "selenocysteine").then(function (data){
-                var publiMap = {};
-                var xrefMap = {};
-                data.entry.publications.forEach(function (p){ publiMap[p.md5] = p});
-                data.entry.xrefs.forEach(function (p){ xrefMap[p.dbXrefId] = p});
-                //return data.entry.annotations;
-                return {annot:data.entry.annotations,publi:publiMap,xrefs:xrefMap};
-            });
-        };
-
-
-        NextprotClient.prototype.getMiscellaneousRegion = function(entry) {
-            return _callURL(normalizeEntry(entry || this.getEntryName()), "miscellaneous-region").then(function (data){
-                var publiMap = {};
-                var xrefMap = {};
-                data.entry.publications.forEach(function (p){ publiMap[p.md5] = p});
-                data.entry.xrefs.forEach(function (p){ xrefMap[p.dbXrefId] = p});
-                //return data.entry.annotations;
-                return {annot:data.entry.annotations,publi:publiMap,xrefs:xrefMap};
-            });
-        };
-
-        NextprotClient.prototype.getDomain = function(entry) {
-            return _callURL(normalizeEntry(entry || this.getEntryName()), "domain").then(function (data){
-                var publiMap = {};
-                var xrefMap = {};
-                data.entry.publications.forEach(function (p){ publiMap[p.md5] = p});
-                data.entry.xrefs.forEach(function (p){ xrefMap[p.dbXrefId] = p});
-                //return data.entry.annotations;
-                return {annot:data.entry.annotations,publi:publiMap,xrefs:xrefMap};
-            });
-        };
-
-        NextprotClient.prototype.getRepeat = function(entry) {
-            return _callURL(normalizeEntry(entry || this.getEntryName()), "repeat").then(function (data){
-                var publiMap = {};
-                var xrefMap = {};
-                data.entry.publications.forEach(function (p){ publiMap[p.md5] = p});
-                data.entry.xrefs.forEach(function (p){ xrefMap[p.dbXrefId] = p});
-                //return data.entry.annotations;
-                return {annot:data.entry.annotations,publi:publiMap,xrefs:xrefMap};
-            });
-        };
-
-        NextprotClient.prototype.getCalciumBinding = function(entry) {
-            return _callURL(normalizeEntry(entry || this.getEntryName()), "calcium-binding-region").then(function (data){
-                var publiMap = {};
-                var xrefMap = {};
-                data.entry.publications.forEach(function (p){ publiMap[p.md5] = p});
-                data.entry.xrefs.forEach(function (p){ xrefMap[p.dbXrefId] = p});
-                //return data.entry.annotations;
-                return {annot:data.entry.annotations,publi:publiMap,xrefs:xrefMap};
-            });
-        };
-
-        NextprotClient.prototype.getZincFinger = function(entry) {
-            return _callURL(normalizeEntry(entry || this.getEntryName()), "zinc-finger-region").then(function (data){
-                var publiMap = {};
-                var xrefMap = {};
-                data.entry.publications.forEach(function (p){ publiMap[p.md5] = p});
-                data.entry.xrefs.forEach(function (p){ xrefMap[p.dbXrefId] = p});
-                //return data.entry.annotations;
-                return {annot:data.entry.annotations,publi:publiMap,xrefs:xrefMap};
-            });
-        };
-
-        NextprotClient.prototype.getDnaBinding = function(entry) {
-            return _callURL(normalizeEntry(entry || this.getEntryName()), "dna-binding-region").then(function (data){
-                var publiMap = {};
-                var xrefMap = {};
-                data.entry.publications.forEach(function (p){ publiMap[p.md5] = p});
-                data.entry.xrefs.forEach(function (p){ xrefMap[p.dbXrefId] = p});
-                //return data.entry.annotations;
-                return {annot:data.entry.annotations,publi:publiMap,xrefs:xrefMap};
-            });
-        };
-
-        NextprotClient.prototype.getMotif = function(entry) {
-            return _callURL(normalizeEntry(entry || this.getEntryName()), "short-sequence-motif").then(function (data){
-                var publiMap = {};
-                var xrefMap = {};
-                data.entry.publications.forEach(function (p){ publiMap[p.md5] = p});
-                data.entry.xrefs.forEach(function (p){ xrefMap[p.dbXrefId] = p});
-                //return data.entry.annotations;
-                return {annot:data.entry.annotations,publi:publiMap,xrefs:xrefMap};
-            });
-        };
-
-        NextprotClient.prototype.getBiasedRegion = function(entry) {
-            return _callURL(normalizeEntry(entry || this.getEntryName()), "compositionally-biased-region").then(function (data){
-                var publiMap = {};
-                var xrefMap = {};
-                data.entry.publications.forEach(function (p){ publiMap[p.md5] = p});
-                data.entry.xrefs.forEach(function (p){ xrefMap[p.dbXrefId] = p});
-                //return data.entry.annotations;
-                return {annot:data.entry.annotations,publi:publiMap,xrefs:xrefMap};
-            });
-        };
-
-        NextprotClient.prototype.getNucleotideBinding = function(entry) {
-            return _callURL(normalizeEntry(entry || this.getEntryName()), "nucleotide-phosphate-binding-region").then(function (data){
-                var publiMap = {};
-                var xrefMap = {};
-                data.entry.publications.forEach(function (p){ publiMap[p.md5] = p});
-                data.entry.xrefs.forEach(function (p){ xrefMap[p.dbXrefId] = p});
-                //return data.entry.annotations;
-                return {annot:data.entry.annotations,publi:publiMap,xrefs:xrefMap};
-            });
-        };
-
-        NextprotClient.prototype.getCoiledCoilRegion = function(entry) {
-            return _callURL(normalizeEntry(entry || this.getEntryName()), "coiled-coil-region").then(function (data){
-                var publiMap = {};
-                var xrefMap = {};
-                data.entry.publications.forEach(function (p){ publiMap[p.md5] = p});
-                data.entry.xrefs.forEach(function (p){ xrefMap[p.dbXrefId] = p});
-                //return data.entry.annotations;
-                return {annot:data.entry.annotations,publi:publiMap,xrefs:xrefMap};
-            });
-        };
-
-        NextprotClient.prototype.getBindingSite = function(entry) {
-            return _callURL(normalizeEntry(entry || this.getEntryName()), "binding-site").then(function (data){
-                var publiMap = {};
-                var xrefMap = {};
-                data.entry.publications.forEach(function (p){ publiMap[p.md5] = p});
-                data.entry.xrefs.forEach(function (p){ xrefMap[p.dbXrefId] = p});
-                //return data.entry.annotations;
-                return {annot:data.entry.annotations,publi:publiMap,xrefs:xrefMap};
-            });
-        };
-
-        NextprotClient.prototype.getCleavageSite = function(entry) {
-            return _callURL(normalizeEntry(entry || this.getEntryName()), "cleavage-site").then(function (data){
-                var publiMap = {};
-                var xrefMap = {};
-                data.entry.publications.forEach(function (p){ publiMap[p.md5] = p});
-                data.entry.xrefs.forEach(function (p){ xrefMap[p.dbXrefId] = p});
-                //return data.entry.annotations;
-                return {annot:data.entry.annotations,publi:publiMap,xrefs:xrefMap};
-            });
-        };
-
-        NextprotClient.prototype.getBetaStrand = function(entry) {
-            return _callURL(normalizeEntry(entry || this.getEntryName()), "beta-strand").then(function (data){
-                var publiMap = {};
-                var xrefMap = {};
-                data.entry.publications.forEach(function (p){ publiMap[p.md5] = p});
-                data.entry.xrefs.forEach(function (p){ xrefMap[p.dbXrefId] = p});
-                //return data.entry.annotations;
-                return {annot:data.entry.annotations,publi:publiMap,xrefs:xrefMap};
-            });
-        };
-
-        NextprotClient.prototype.getHelix = function(entry) {
-            return _callURL(normalizeEntry(entry || this.getEntryName()), "helix").then(function (data){
-                var publiMap = {};
-                var xrefMap = {};
-                data.entry.publications.forEach(function (p){ publiMap[p.md5] = p});
-                data.entry.xrefs.forEach(function (p){ xrefMap[p.dbXrefId] = p});
-                //return data.entry.annotations;
-                return {annot:data.entry.annotations,publi:publiMap,xrefs:xrefMap};
-            });
-        };
-
-        NextprotClient.prototype.getTurn = function(entry) {
-            return _callURL(normalizeEntry(entry || this.getEntryName()), "turn").then(function (data){
-                var publiMap = {};
-                var xrefMap = {};
-                data.entry.publications.forEach(function (p){ publiMap[p.md5] = p});
-                data.entry.xrefs.forEach(function (p){ xrefMap[p.dbXrefId] = p});
-                //return data.entry.annotations;
-                return {annot:data.entry.annotations,publi:publiMap,xrefs:xrefMap};
-            });
-        };
-
-        //node.js compatibility
-        if (typeof exports !== 'undefined') {
-            exports.Client = NextprotClient;
-        }
-
-
-        root.Nextprot.Client = NextprotClient;
-
-    }());
-
-
-}(this));
-var numero = 0;
-//Utility methods
-var NXUtils = {
-    
-    checkIsoformMatch:function(isoname, isonumber) {
-        return isoname.endsWith("-"+isonumber)
-    },
-
-    getSequenceForIsoform:function (isoSequences, isoformName){
-        var result = null;
-        //TODO allow users to specify isoform name without NX_
-        //TODO the API should return the results in a sorted array
-        
-        if(typeof isoformName === "number"){
-            isoSequences.forEach(function (d) {
-                
-                if (d.uniqueName.endsWith("-"+isoformName)) {
-                    console.log("returning" + d.sequence);
-                    result = d.sequence;
-                }
-            });
-        }else {
-            isoSequences.forEach(function (d) {
-            if (d.uniqueName === isoformName) 
-                return d.sequence;
-            })
-        }
-        return result;
-    },
-    getLinkForFeature: function(accession, description, type) {
-        if (type === "peptide"){
-            var url = "https://db.systemsbiology.net/sbeams/cgi/PeptideAtlas/GetPeptide?searchWithinThis=Peptide+Name&searchForThis=" + description + ";organism_name=Human";
-            return "<a href='" + url + "'>" + description + "</a>";
-        }
-        else if (type === "antibody") {
-            var url = accession;
-            return "<a href='" + url + "'>" + description + "</a>";
-        }
-        else if (accession) {
-            var url = "http://www.nextprot.org/db/term/" + accession;
-            return "<a href='" + url + "'>" + description + "</a>";
-        }
-        else if (type==="publication") {
-            var url = "http://www.nextprot.org/db/publication/" + accession;
-            return "<a href='" + url + "'>" + description + "</a>";
-        }
-        else if (description) return description;
-        else return "";
-    },
-    convertMappingsToIsoformMap:function (featMappings, category,group){
-        var mappings = jQuery.extend([], featMappings);
-        var publiActive = false;
-        if (!(featMappings instanceof Array)) {
-            publiActive = true;
-            mappings = jQuery.extend([], featMappings.annot);
-        }
-        //console.log(mmappings);
-        var result = {};
-        mappings.forEach(function (mapping) {
-            if (mapping.hasOwnProperty("targetingIsoformsMap")) {
-                for (var name in mapping.targetingIsoformsMap) {
-                    if (mapping.targetingIsoformsMap.hasOwnProperty(name)) {
-                        var start = mapping.targetingIsoformsMap[name].firstPosition,
-                            end = mapping.targetingIsoformsMap[name].lastPosition,
-                            link = NXUtils.getLinkForFeature(mapping.cvTermAccessionCode, mapping.description),
-                            description = mapping.description,
-                            quality = mapping.qualityQualifier !== "GOLD" ? mapping.qualityQualifier.toLowerCase() : "",
-                            source = mapping.evidences.map(function (d) {
-                                var pub = null;
-                                var xref = null;
-                                if (publiActive) {
-                                    if (featMappings.publi[d.publicationMD5]) {
-                                        pub = d.publicationMD5;
-                                    }
-                                    if (featMappings.xrefs[d.resourceId]) {
-                                        xref = featMappings.xrefs[d.resourceId];
-                                    }
-                                    return {
-                                        evidenceCodeName: d.evidenceCodeName,
-                                        assignedBy: d.assignedBy,
-                                        resourceDb: d.resourceDb,
-                                        externalDb: d.resourceDb !== "UniProt",
-                                        publicationMD5: d.publicationMD5,
-                                        title: pub ? NXUtils.getLinkForFeature(featMappings.publi[pub].publicationId, featMappings.publi[pub].title, "publication") : "",
-                                        authors: pub ? featMappings.publi[pub].authors.map(function (d) { return {lastName: d.lastName, initials: d.initials}}) : [],
-                                        journal: pub ? featMappings.publi[pub].cvJournal ? featMappings.publi[pub].cvJournal.name : "" : "",
-                                        volume: pub ? featMappings.publi[pub].volume : "",
-                                        year: pub ? featMappings.publi[pub].publicationYear : "",
-                                        firstPage: pub ? featMappings.publi[pub].firstPage  : "",
-                                        lastPage: pub ? (featMappings.publi[pub].lastPage === "" ? featMappings.publi[pub].firstPage : featMappings.publi[pub].lastPage) : "",
-                                        pubId: pub ? featMappings.publi[pub].publicationId : "",
-                                        abstract: pub ? featMappings.publi[pub].abstractText : "",
-                                        dbXrefs: pub ? featMappings.publi[pub].dbXrefs.map( function (o) {return {name: o.databaseName==="DOI" ? "Full Text" : o.databaseName, url:o.resolvedUrl, accession: o.accession}}) : [],
-                                        crossRef: xref ? {dbName: xref.databaseName, name: xref.accession, url: xref.resolvedUrl} : null
-                                    }
-                                }
-                                else return {
-                                evidenceCodeName: d.evidenceCodeName,
-                                assignedBy: d.assignedBy,
-                                publicationMD5: d.publicationMD5,
-                                title:"",
-                                authors:[],
-                                journal:"",
-                                volume:"",
-                                abstract:""
-                                }
-                            }),
-                            variant = false;
-                        if (mapping.hasOwnProperty("variant") && !jQuery.isEmptyObject(mapping.variant)) {
-                            link = "<span style='color:#00C500'>" + mapping.variant.original + " → " +  mapping.variant.variant + "</span>";
-                            description = "<span style=\"color:#00C500\">" + mapping.variant.original + " → " +  mapping.variant.variant + "</span>  ";
-                            variant = true;
-                            if (mapping.description) {
-                                var reg = /\[(.*?)\]/g;
-                                var match = reg.exec(mapping.description);
-                                var desc = mapping.description;
-                                if (match) {
-                                    var parseMatch = match[1].split(":");
-                                    var desc = mapping.description.replace(/(\[.*?\])/g,NXUtils.getLinkForFeature(parseMatch[2],parseMatch[0]));
-
-                                }
-                                link += " ; "+ desc;
-                            }
-                        }
-                        if (!result[name]) result[name] = [];
-                        result[name].push({
-                            start: start,
-                            end: end,
-                            length: end-start+1,
-                            id: category.replace(/\s/g,'')+"_"+start.toString()+"_"+end.toString(),
-                            description: description,
-                            quality: quality,
-                            category: category,
-                            group:group,
-                            link: link,
-                            evidenceLength: source.length,
-                            source:source,
-                            variant: variant
-                        });
-                    }
-                }
-            }
-            //TODO This is the old format, the API should evolve
-            else if (mapping.hasOwnProperty("isoformSpecificity")) {
-                        for (var name in mapping.isoformSpecificity) {
-                            if (mapping.isoformSpecificity.hasOwnProperty(name)) {
-                                for (var i = 0; i < mapping.isoformSpecificity[name].positions.length; i++) {
-                                    var start = mapping.isoformSpecificity[name].positions[i].first,
-                                        end = mapping.isoformSpecificity[name].positions[i].second,
-                                        description = "",
-                                        link = "",
-                                        source = [];
-                                    if (mapping.hasOwnProperty("evidences")) {
-                                        source = mapping.evidences.map(function (d) {return {
-                                            evidenceCodeName: d.evidenceCodeName,
-                                            assignedBy: d.assignedBy,
-                                            publicationMD5: d.publicationMD5
-                                        }});
-                                    }
-                                    if (mapping.hasOwnProperty("xrefs")) {
-                                        description = mapping.xrefs[0].accession;
-                                        link = NXUtils.getLinkForFeature(mapping.xrefs[0].resolvedUrl, description, "antibody")
-                                    }
-                                    else {
-                                        description = mapping.evidences[0].accession;
-                                        for (ev in mapping.evidences) if (mapping.evidences[ev].databaseName === "PeptideAtlas" || mapping.evidences[ev].databaseName === "SRMAtlas") {
-                                            description = mapping.evidences[ev].accession;
-                                            link = NXUtils.getLinkForFeature(description, description, "peptide");
-
-                                            break;
-                                        }
-                                    }
-
-                                    if (!result[name]) result[name] = [];
-                                    result[name].push({
-                                        start: start,
-                                        end: end,
-                                        length: end - start,
-                                        id: category.replace(/\s/g, '') + "_" + start.toString() + "_" + end.toString(),
-                                        description: description,
-                                        category: category,
-                                        group:group,
-                                        link: link,
-                                        evidenceLength: source.length,
-                                        source:source
-                                    });
-                                }
-                            }
-                        }
-            }
-        });
-        numero+=1;
-        for (var iso in result) {
-            result[iso].sort(function (a, b) {
-                return a.start - b.start;
-            })
-        }
-        return result;
-    },
-    convertPublications: function (publi, HashMD5) {
-        for (var pub in publi) {
-            HashMD5[publi[pub].md5]= {
-                title:publi[pub].title,
-                author:publi[pub].authors.map(function (d) { return {lastName: d.lastName, initials: d.initials}}),
-                journal:publi[pub].cvJournal.name,
-                volume:publi[pub].volume,
-                abstract:publi[pub].abstractText
-            }
-        }
-
-    },
-    convertExonsMappingsToIsoformMap:function (mappings) {
-        return mappings.map( function (d) {
-            return {
-                uniqueName: d.uniqueName,
-                isoMainName: d.isoMainName,
-                mapping: d.positionsOfIsoformOnReferencedGene.map(function (o) {
-                    return {start:o.key,end:o.value};
-                })
-            }
-        })
-    }
-};
-
-var NXViewerUtils = {
-    convertNXAnnotations:function (annotations, metadata){
-        if (!annotations) return "Cannot load this";
-        var result={};
-        for (name in annotations) {
-            var meta = jQuery.extend({}, metadata);
-            meta.data = annotations[name].map(function (annotation) {
-                return {
-                        x: annotation.start,
-                        y: annotation.end,
-                        id: annotation.id,
-                        category: annotation.category,
-                        description: annotation.description
-                }
-            });
-            result[name] = meta;
-        }
-        return result;
-    }
-};;/*! iFrame Resizer (iframeSizer.contentWindow.min.js) - v2.8.10 - 2015-06-21
+},"useData":true});;/*! iFrame Resizer (iframeSizer.contentWindow.min.js) - v3.0.0 - 2015-08-04
  *  Desc: Include this file in any page being loaded into an iframe
  *        to force the iframe to resize to the content size.
  *  Requires: iframeResizer.min.js on host page.
@@ -25419,7 +25445,7 @@ var NXViewerUtils = {
  *  License: MIT
  */
 
-!function(){"use strict";function a(a,b,c){"addEventListener"in window?a.addEventListener(b,c,!1):"attachEvent"in window&&a.attachEvent("on"+b,c)}function b(a){return aa+"["+ca+"] "+a}function c(a){_&&"object"==typeof window.console&&console.log(b(a))}function d(a){"object"==typeof window.console&&console.warn(b(a))}function e(){c("Initialising iFrame"),f(),i(),h("background",M),h("padding",P),o(),m(),j(),q(),n(),Z=p(),E("init","Init message from host page")}function f(){function a(a){return"true"===a?!0:!1}var b=Y.substr(ba).split(":");ca=b[0],N=void 0!==b[1]?Number(b[1]):N,Q=void 0!==b[2]?a(b[2]):Q,_=void 0!==b[3]?a(b[3]):_,$=void 0!==b[4]?Number(b[4]):$,da=void 0!==b[5]?a(b[5]):da,K=void 0!==b[6]?a(b[6]):K,O=b[7],W=void 0!==b[8]?b[8]:W,M=b[9],P=b[10],ia=void 0!==b[11]?Number(b[11]):ia,Z.enable=void 0!==b[12]?a(b[12]):!1,fa=void 0!==b[13]?b[13]:fa}function g(a,b){return-1!==b.indexOf("-")&&(d("Negative CSS value ignored for "+a),b=""),b}function h(a,b){void 0!==b&&""!==b&&"null"!==b&&(document.body.style[a]=b,c("Body "+a+' set to "'+b+'"'))}function i(){void 0===O&&(O=N+"px"),g("margin",O),h("margin",O)}function j(){document.documentElement.style.height="",document.body.style.height="",c('HTML & body height set to "auto"')}function k(b){function d(c){a(window,c,function(){E(b.eventName,b.eventType)})}b.eventNames&&Array.prototype.map?(b.eventName=b.eventNames[0],b.eventNames.map(d)):d(b.eventName),c("Added event listener: "+b.eventType)}function l(){k({eventType:"Animation Start",eventNames:["animationstart","webkitAnimationStart"]}),k({eventType:"Animation Iteration",eventNames:["animationiteration","webkitAnimationIteration"]}),k({eventType:"Animation End",eventNames:["animationend","webkitAnimationEnd"]}),k({eventType:"Device Orientation Change",eventName:"orientationchange"}),k({eventType:"Transition End",eventNames:["transitionend","webkitTransitionEnd","MSTransitionEnd","oTransitionEnd","otransitionend"]}),k({eventType:"Window Clicked",eventName:"click"}),"child"===fa&&k({eventType:"IFrame Resized",eventName:"resize"})}function m(){V!==W&&(W in ma||(d(W+" is not a valid option for heightCalculationMethod."),W="bodyScroll"),c('Height calculation method set to "'+W+'"'))}function n(){!0===K?(l(),t()):c("Auto Resize disabled")}function o(){var a=document.createElement("div");a.style.clear="both",a.style.display="block",document.body.appendChild(a)}function p(){function b(){return{x:void 0!==window.pageXOffset?window.pageXOffset:document.documentElement.scrollLeft,y:void 0!==window.pageYOffset?window.pageYOffset:document.documentElement.scrollTop}}function e(a){var c=a.getBoundingClientRect(),d=b();return{x:parseInt(c.left,10)+parseInt(d.x,10),y:parseInt(c.top,10)+parseInt(d.y,10)}}function f(a){function b(a){var b=e(a);c("Moving to in page link (#"+d+") at x: "+b.x+" y: "+b.y),I(b.y,b.x,"scrollToOffset")}var d=a.split("#")[1]||"",f=decodeURIComponent(d),g=document.getElementById(f)||document.getElementsByName(f)[0];g?b(g):(c("In page link (#"+d+") not found in iFrame, so sending to parent"),I(0,0,"inPageLink","#"+d))}function g(){""!==location.hash&&"#"!==location.hash&&f(location.href)}function h(){function b(b){function c(a){a.preventDefault(),f(this.getAttribute("href"))}"#"!==b.getAttribute("href")&&a(b,"click",c)}Array.prototype.forEach.call(document.querySelectorAll('a[href^="#"]'),b)}function i(){a(window,"hashchange",g)}function j(){setTimeout(g,S)}function k(){Array.prototype.forEach&&document.querySelectorAll?(c("Setting up location.hash handlers"),h(),i(),j()):d("In page linking not fully supported in this browser! (See README.md for IE8 workaround)")}return Z.enable?k():c("In page linking not enabled"),{findTarget:f}}function q(){da&&(c("Enable public methods"),window.parentIFrame={close:function(){I(0,0,"close")},getId:function(){return ca},moveToAnchor:function(a){Z.findTarget(a)},reset:function(){H("parentIFrame.reset")},scrollTo:function(a,b){I(b,a,"scrollTo")},scrollToOffset:function(a,b){I(b,a,"scrollToOffset")},sendMessage:function(a,b){I(0,0,"message",JSON.stringify(a),b)},setHeightCalculationMethod:function(a){W=a,m()},setTargetOrigin:function(a){c("Set targetOrigin: "+a),ga=a},size:function(a,b){var c=""+(a?a:"")+(b?","+b:"");F(),E("size","parentIFrame.size("+c+")",a,b)}})}function r(){0!==$&&(c("setInterval: "+$+"ms"),setInterval(function(){E("interval","setInterval: "+$)},Math.abs($)))}function s(b){function d(b){(void 0===b.height||void 0===b.width||0===b.height||0===b.width)&&(c("Attach listerner to "+b.src),a(b,"load",function(){E("imageLoad","Image loaded")}))}b.forEach(function(a){if("attributes"===a.type&&"src"===a.attributeName)d(a.target);else if("childList"===a.type){var b=a.target.querySelectorAll("img");Array.prototype.forEach.call(b,function(a){d(a)})}})}function t(){function a(){var a=document.querySelector("body"),d={attributes:!0,attributeOldValue:!1,characterData:!0,characterDataOldValue:!1,childList:!0,subtree:!0},e=new b(function(a){E("mutationObserver","mutationObserver: "+a[0].target+" "+a[0].type),s(a)});c("Enable MutationObserver"),e.observe(a,d)}var b=window.MutationObserver||window.WebKitMutationObserver;b?0>$?r():a():(d("MutationObserver not supported in this browser!"),r())}function u(){function a(a){function b(a){var b=/^\d+(px)?$/i;if(b.test(a))return parseInt(a,L);var d=c.style.left,e=c.runtimeStyle.left;return c.runtimeStyle.left=c.currentStyle.left,c.style.left=a||0,a=c.style.pixelLeft,c.style.left=d,c.runtimeStyle.left=e,a}var c=document.body,d=0;return"defaultView"in document&&"getComputedStyle"in document.defaultView?(d=document.defaultView.getComputedStyle(c,null),d=null!==d?d[a]:0):d=b(c.currentStyle[a]),parseInt(d,L)}return document.body.offsetHeight+a("marginTop")+a("marginBottom")}function v(){return document.body.scrollHeight}function w(){return document.documentElement.offsetHeight}function x(){return document.documentElement.scrollHeight}function y(){for(var a=document.querySelectorAll("body *"),b=a.length,d=0,e=(new Date).getTime(),f=0;b>f;f++)a[f].getBoundingClientRect().bottom>d&&(d=a[f].getBoundingClientRect().bottom);return e=(new Date).getTime()-e,c("Parsed "+b+" HTML elements"),c("LowestElement bottom position calculated in "+e+"ms"),d}function z(){return[u(),v(),w(),x()]}function A(){return Math.max.apply(null,z())}function B(){return Math.min.apply(null,z())}function C(){return Math.max(u(),y())}function D(){return Math.max(document.documentElement.scrollWidth,document.body.scrollWidth)}function E(a,b,d,e){function f(){a in{reset:1,resetPage:1,init:1}||c("Trigger event: "+b)}function g(){U=n,la=o,I(U,la,a)}function h(){return ja&&a in R}function i(){function a(a,b){var c=Math.abs(a-b)<=ia;return!c}return n=void 0!==d?d:ma[W](),o=void 0!==e?e:D(),a(U,n)||Q&&a(la,o)}function j(){return!(a in{init:1,interval:1,size:1})}function k(){return W in ea}function l(){c("No change in size detected")}function m(){j()&&k()?H(b):a in{interval:1}||(f(),l())}var n,o;h()?c("Trigger event cancelled: "+a):i()||"init"===a?(f(),F(),g()):m()}function F(){ja||(ja=!0,c("Trigger event lock on")),clearTimeout(ka),ka=setTimeout(function(){ja=!1,c("Trigger event lock off"),c("--")},S)}function G(a){U=ma[W](),la=D(),I(U,la,a)}function H(a){var b=W;W=V,c("Reset trigger event: "+a),F(),G("reset"),W=b}function I(a,b,d,e,f){function g(){void 0===f?f=ga:c("Message targetOrigin: "+f)}function h(){var g=a+":"+b,h=ca+":"+g+":"+d+(void 0!==e?":"+e:"");c("Sending message to host page ("+h+")"),ha.postMessage(aa+h,f)}g(),h()}function J(a){function b(){return aa===(""+a.data).substr(0,ba)}function f(){Y=a.data,ha=a.source,e(),T=!1,setTimeout(function(){X=!1},S)}function g(){X?c("Page reset ignored by init"):(c("Page size reset by host page"),G("resetPage"))}function h(){E("resizeParent","Parent window resized")}function i(){return a.data.split("]")[1]}function j(){return"iFrameResize"in window}function k(){return a.data.split(":")[2]in{"true":1,"false":1}}if(b())if(!1===T)switch(i()){case"reset":g();break;case"resize":h();break;default:j()||d("Unexpected message ("+a.data+")")}else k()?f():c('Ignored message of type "'+i()+'". Received before initialization.')}var K=!0,L=10,M="",N=0,O="",P="",Q=!1,R={resize:1,click:1},S=128,T=!0,U=1,V="offset",W=V,X=!0,Y="",Z={},$=32,_=!1,aa="[iFrameSizer]",ba=aa.length,ca="",da=!1,ea={max:1,scroll:1,bodyScroll:1,documentElementScroll:1},fa="child",ga="*",ha=window.parent,ia=0,ja=!1,ka=null,la=1,ma={offset:u,bodyOffset:u,bodyScroll:v,documentElementOffset:w,scroll:x,documentElementScroll:x,max:A,min:B,grow:A,lowestElement:C};a(window,"message",J)}();
+!function(a){"use strict";function b(b,c,d){"addEventListener"in a?b.addEventListener(c,d,!1):"attachEvent"in a&&b.attachEvent("on"+c,d)}function c(a){return _+"["+bb+"] "+a}function d(b){$&&"object"==typeof a.console&&console.log(c(b))}function e(b){"object"==typeof a.console&&console.warn(c(b))}function f(){g(),d("Initialising iFrame ("+location.href+")"),h(),k(),j("background",L),j("padding",O),s(),p(),q(),l(),u(),r(),Y=t(),D("init","Init message from host page")}function g(){function a(a){return"true"===a?!0:!1}var b=X.substr(ab).split(":");bb=b[0],M=void 0!==b[1]?Number(b[1]):M,P=void 0!==b[2]?a(b[2]):P,$=void 0!==b[3]?a(b[3]):$,Z=void 0!==b[4]?Number(b[4]):Z,J=void 0!==b[6]?a(b[6]):J,N=b[7],V=void 0!==b[8]?b[8]:V,L=b[9],O=b[10],gb=void 0!==b[11]?Number(b[11]):gb,Y.enable=void 0!==b[12]?a(b[12]):!1,db=void 0!==b[13]?b[13]:db,lb=void 0!==b[14]?b[14]:lb}function h(){function b(){var b=a.iFrameResizer;d("Reading data from page: "+JSON.stringify(b)),mb=void 0!==b.messageCallback?b.messageCallback:mb,eb=void 0!==b.targetOrigin?b.targetOrigin:eb,V=void 0!==b.heightCalculationMethod?b.heightCalculationMethod:V,lb=void 0!==b.widthCalculationMethod?b.widthCalculationMethod:lb}"iFrameResizer"in a&&Object===a.iFrameResizer.constructor&&b()}function i(a,b){return-1!==b.indexOf("-")&&(e("Negative CSS value ignored for "+a),b=""),b}function j(a,b){void 0!==b&&""!==b&&"null"!==b&&(document.body.style[a]=b,d("Body "+a+' set to "'+b+'"'))}function k(){void 0===N&&(N=M+"px"),i("margin",N),j("margin",N)}function l(){document.documentElement.style.height="",document.body.style.height="",d('HTML & body height set to "auto"')}function m(c){function e(d){function e(){D(c.eventName,c.eventType)}b(a,d,e)}c.eventNames&&Array.prototype.map?(c.eventName=c.eventNames[0],c.eventNames.map(e)):e(c.eventName),d("Added event listener: "+c.eventType)}function n(){m({eventType:"Animation Start",eventNames:["animationstart","webkitAnimationStart"]}),m({eventType:"Animation Iteration",eventNames:["animationiteration","webkitAnimationIteration"]}),m({eventType:"Animation End",eventNames:["animationend","webkitAnimationEnd"]}),m({eventType:"Orientation Change",eventName:"orientationchange"}),m({eventType:"Input",eventName:"input"}),m({eventType:"Print",eventName:["afterprint","beforeprint"]}),m({eventType:"Transition End",eventNames:["transitionend","webkitTransitionEnd","MSTransitionEnd","oTransitionEnd","otransitionend"]}),m({eventType:"Mouse Up",eventName:"mouseup"}),"child"===db&&m({eventType:"IFrame Resized",eventName:"resize"})}function o(a,b,c,f){b!==a&&(a in c||(e(a+" is not a valid option for "+f+"CalculationMethod."),a=b),d(f+' calculation method set to "'+a+'"'))}function p(){o(V,U,nb,"height")}function q(){o(lb,kb,ob,"width")}function r(){!0===J?(n(),x()):d("Auto Resize disabled")}function s(){var a=document.createElement("div");a.style.clear="both",a.style.display="block",document.body.appendChild(a)}function t(){function c(){return{x:void 0!==a.pageXOffset?a.pageXOffset:document.documentElement.scrollLeft,y:void 0!==a.pageYOffset?a.pageYOffset:document.documentElement.scrollTop}}function f(a){var b=a.getBoundingClientRect(),d=c();return{x:parseInt(b.left,10)+parseInt(d.x,10),y:parseInt(b.top,10)+parseInt(d.y,10)}}function g(a){function b(a){var b=f(a);d("Moving to in page link (#"+c+") at x: "+b.x+" y: "+b.y),H(b.y,b.x,"scrollToOffset")}var c=a.split("#")[1]||a,e=decodeURIComponent(c),g=document.getElementById(e)||document.getElementsByName(e)[0];g?b(g):(d("In page link (#"+c+") not found in iFrame, so sending to parent"),H(0,0,"inPageLink","#"+c))}function h(){""!==location.hash&&"#"!==location.hash&&g(location.href)}function i(){function a(a){function c(a){a.preventDefault(),g(this.getAttribute("href"))}"#"!==a.getAttribute("href")&&b(a,"click",c)}Array.prototype.forEach.call(document.querySelectorAll('a[href^="#"]'),a)}function j(){b(a,"hashchange",h)}function k(){setTimeout(h,R)}function l(){Array.prototype.forEach&&document.querySelectorAll?(d("Setting up location.hash handlers"),i(),j(),k()):e("In page linking not fully supported in this browser! (See README.md for IE8 workaround)")}return Y.enable?l():d("In page linking not enabled"),{findTarget:g}}function u(){d("Enable public methods"),a.parentIFrame={close:function(){H(0,0,"close")},getId:function(){return bb},moveToAnchor:function(a){Y.findTarget(a)},reset:function(){G("parentIFrame.reset")},scrollTo:function(a,b){H(b,a,"scrollTo")},scrollToOffset:function(a,b){H(b,a,"scrollToOffset")},sendMessage:function(a,b){H(0,0,"message",JSON.stringify(a),b)},setHeightCalculationMethod:function(a){V=a,p()},setWidthCalculationMethod:function(a){lb=a,q()},setTargetOrigin:function(a){d("Set targetOrigin: "+a),eb=a},size:function(a,b){var c=""+(a?a:"")+(b?","+b:"");E(),D("size","parentIFrame.size("+c+")",a,b)}}}function v(){0!==Z&&(d("setInterval: "+Z+"ms"),setInterval(function(){D("interval","setInterval: "+Z)},Math.abs(Z)))}function w(a){return void 0===a||0===a}function x(){function b(a){function b(a){var b=D.bind(null,"imageLoad","Image loaded",void 0,void 0);(w(a.height)||w(a.width))&&(d("Attach listerner to "+a.src),a.addEventListener("load",b,!1))}"attributes"===a.type&&"src"===a.attributeName?b(a.target):"childList"===a.type&&Array.prototype.forEach.call(a.target.querySelectorAll("img"),b)}function c(a){D("mutationObserver","mutationObserver: "+a[0].target+" "+a[0].type),b(a[0])}function f(){var a=document.querySelector("body"),b={attributes:!0,attributeOldValue:!1,characterData:!0,characterDataOldValue:!1,childList:!0,subtree:!0},e=new h(c);d("Enable MutationObserver"),e.observe(a,b)}var g=0>Z,h=a.MutationObserver||a.WebKitMutationObserver;h?g?v():f():(e("MutationObserver not supported in this browser!"),v())}function y(a){function b(a){var b=/^\d+(px)?$/i;if(b.test(a))return parseInt(a,K);var d=c.style.left,e=c.runtimeStyle.left;return c.runtimeStyle.left=c.currentStyle.left,c.style.left=a||0,a=c.style.pixelLeft,c.style.left=d,c.runtimeStyle.left=e,a}var c=document.body,d=0;return"defaultView"in document&&"getComputedStyle"in document.defaultView?(d=document.defaultView.getComputedStyle(c,null),d=null!==d?d[a]:0):d=b(c.currentStyle[a]),parseInt(d,K)}function z(a,b){for(var c=b.length,e=0,f=(new Date).getTime(),g=0;c>g;g++)b[g].getBoundingClientRect()[a]>e&&(e=b[g].getBoundingClientRect()[a]);return f=(new Date).getTime()-f,d("Parsed "+c+" HTML elements"),d("Element position calculated in "+f+"ms"),e}function A(a){return[a.bodyOffset(),a.bodyScroll(),a.documentElementOffset(),a.documentElementScroll()]}function B(a,b){function c(){return e("No tagged elements ("+b+") found on page"),T}var d=document.querySelectorAll("["+b+"]");return 0===d.length?c():z(a,d)}function C(){return document.querySelectorAll("body *")}function D(a,b,c,e){function f(){a in{reset:1,resetPage:1,init:1}||d("Trigger event: "+b)}function g(){T=n,jb=o,H(T,jb,a)}function h(){return hb&&a in Q}function i(){function a(a,b){var c=Math.abs(a-b)<=gb;return!c}return n=void 0!==c?c:nb[V](),o=void 0!==e?e:ob[lb](),a(T,n)||P&&a(jb,o)}function j(){return!(a in{init:1,interval:1,size:1})}function k(){return V in cb||P&&lb in cb}function l(){d("No change in size detected")}function m(){j()&&k()?G(b):a in{interval:1}||(f(),l())}var n,o;h()?d("Trigger event cancelled: "+a):i()||"init"===a?(f(),E(),g()):m()}function E(){hb||(hb=!0,d("Trigger event lock on")),clearTimeout(ib),ib=setTimeout(function(){hb=!1,d("Trigger event lock off"),d("--")},R)}function F(a){T=nb[V](),jb=ob[lb](),H(T,jb,a)}function G(a){var b=V;V=U,d("Reset trigger event: "+a),E(),F("reset"),V=b}function H(a,b,c,e,f){function g(){void 0===f?f=eb:d("Message targetOrigin: "+f)}function h(){var g=a+":"+b,h=bb+":"+g+":"+c+(void 0!==e?":"+e:"");d("Sending message to host page ("+h+")"),fb.postMessage(_+h,f)}g(),h()}function I(b){function c(){return _===(""+b.data).substr(0,ab)}function g(){X=b.data,fb=b.source,f(),S=!1,setTimeout(function(){W=!1},R)}function h(){W?d("Page reset ignored by init"):(d("Page size reset by host page"),F("resetPage"))}function i(){D("resizeParent","Parent window requested size check")}function j(){var a=l();Y.findTarget(a)}function k(){return b.data.split("]")[1].split(":")[0]}function l(){return b.data.split(":")[1]}function m(){return"iFrameResize"in a}function n(){var a=l();d("MessageCallback called from parent: "+a),mb(JSON.parse(a)),d(" --")}function o(){return b.data.split(":")[2]in{"true":1,"false":1}}function p(){switch(k()){case"reset":h();break;case"resize":i();break;case"moveToAnchor":j();break;case"message":n();break;default:m()||o()||e("Unexpected message ("+b.data+")")}}function q(){!1===S?p():o()?g():d('Ignored message of type "'+k()+'". Received before initialization.')}c()&&q()}var J=!0,K=10,L="",M=0,N="",O="",P=!1,Q={resize:1,click:1},R=128,S=!0,T=1,U="bodyOffset",V=U,W=!0,X="",Y={},Z=32,$=!1,_="[iFrameSizer]",ab=_.length,bb="",cb={max:1,min:1,bodyScroll:1,documentElementScroll:1},db="child",eb="*",fb=a.parent,gb=0,hb=!1,ib=null,jb=1,kb="max",lb=kb,mb=function(){e("MessageCallback function not defined")},nb={bodyOffset:function(){return document.body.offsetHeight+y("marginTop")+y("marginBottom")},offset:function(){return nb.bodyOffset()},bodyScroll:function(){return document.body.scrollHeight},documentElementOffset:function(){return document.documentElement.offsetHeight},documentElementScroll:function(){return document.documentElement.scrollHeight},max:function(){return Math.max.apply(null,A(nb))},min:function(){return Math.min.apply(null,A(nb))},grow:function(){return nb.max()},lowestElement:function(){return Math.max(nb.bodyOffset(),z("bottom",C()))},taggedElement:function(){return B("bottom","data-iframe-height")}},ob={bodyScroll:function(){return document.body.scrollWidth},bodyOffset:function(){return document.body.offsetWidth},documentElementScroll:function(){return document.documentElement.scrollWidth},documentElementOffset:function(){return document.documentElement.offsetWidth},scroll:function(){return Math.max(ob.bodyScroll(),ob.documentElementScroll())},max:function(){return Math.max.apply(null,A(ob))},min:function(){return Math.min.apply(null,A(ob))},leftMostElement:function(){return z("left",C())},taggedElement:function(){return B("left","data-iframe-width")}};b(a,"message",I)}(window||{});
 //# sourceMappingURL=iframeResizer.contentWindow.map;/////////////
 
 function TripleViewer(entry) {
