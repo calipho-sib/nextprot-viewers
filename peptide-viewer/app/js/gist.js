@@ -6,11 +6,18 @@ function initNXDivs() {
     var nxEntryName = nx.getEntryName();
     var cpt = 0;
     var isoforms;
+    var firstIso;
     var annotations;
     var peptideMappings;
     var srmPeptideMappings;
     var matureProtein;
     var seq1 = null;
+
+    function getFirstIsoform(isoformList) {
+        var first;
+        var seqIDs = isoformList.map(function (p) { return p.uniqueName}).sort(function (a,b) { return parseInt(a.split("-")[1]) - parseInt(b.split("-")[1])});
+        return seqIDs[0];
+    }
 
     (function ($) {
         $.fn.hasVerticalScrollBar = function () {
@@ -699,11 +706,14 @@ function initNXDivs() {
             return sequence.then(function () {
                 return dataPromise;
             }).then(function (oneData) {
+                console.log(oneData);
                 cpt += 1;
+                console.log(cpt);
                 switch (cpt) {
                     case 1:
                         isoforms = oneData;
-                        RenderSequenceForIsoform(isoforms, nxEntryName + "-1");
+                        firstIso = getFirstIsoform(isoforms);
+                        RenderSequenceForIsoform(isoforms, firstIso);
                         nxIsoformChoice(isoforms);
                         break;
                     case 2:
@@ -727,7 +737,7 @@ function initNXDivs() {
                     case 4:
                         matureProtein = oneData.annot;
 
-                        RenderPeptidesForIsoform(peptideMappings, nxEntryName + "-1");
+                        RenderPeptidesForIsoform(peptideMappings, firstIso);
                     case 5:
                         annotations = oneData;
                         //nxPviz(annotations, isoforms);
