@@ -26,5 +26,9 @@
   "dependencies": {
     "bower": "^1.3.12",
     "grunt-cli": "^0.1.13"
+  },
+  "scripts": {
+    "test": "grunt test --verbose --debug --web-security=no",
+    "dist": "grunt hbs && grunt && grunt serve"
   }
 }

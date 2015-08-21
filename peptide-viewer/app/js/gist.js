@@ -11,10 +11,10 @@ function initNXDivs() {
     var peptideMappings;
     var srmPeptideMappings;
     var matureProtein;
+    var proPeptide;
     var seq1 = null;
 
     function getFirstIsoform(isoformList) {
-        var first;
         var seqIDs = isoformList.map(function (p) { return p.uniqueName}).sort(function (a,b) { return parseInt(a.split("-")[1]) - parseInt(b.split("-")[1])});
         return seqIDs[0];
     }
@@ -184,19 +184,19 @@ function initNXDivs() {
             });
             return isoSeq;
         },
-        MatureProteins: function (matureProtein, isoName) {
-            listMatProt = [];
-            matureProtein.forEach(function (o) {
+        getActiveProteins: function (activeProteins, isoName) {
+            var listActiveProt = [];
+            activeProteins.forEach(function (o) {
                 if (o.targetingIsoformsMap[isoName]) {
-                    var matProt = {
+                    var actProt = {
                         "isoform": o.targetingIsoformsMap[isoName].isoformName,
                         "start": o.targetingIsoformsMap[isoName].firstPosition,
                         "end": o.targetingIsoformsMap[isoName].lastPosition
                     };
-                    listMatProt.push(matProt);
+                    listActiveProt.push(actProt);
                 }
             });
-            return listMatProt;
+            return listActiveProt;
         }
     };
     function nxIsoformChoice(isoforms) {
@@ -337,7 +337,8 @@ function initNXDivs() {
                     return found;
                 }())
             };
-            var listMatureProteins = getInfoForIsoform.MatureProteins(matureProtein, isoName);
+            var listMatureProteins = getInfoForIsoform.getActiveProteins(matureProtein, isoName);
+            var listPropeptides = getInfoForIsoform.getActiveProteins(proPeptide, isoName);
             if (data.Peptides.length > 0) $("#nx-detailedPeptide").show("slow");
             else $("#nx-detailedPeptide").hide("slow");
 
@@ -400,6 +401,10 @@ function initNXDivs() {
                         var Nterm = "-";
                         var Cterm = "-";
                         listMatureProteins.forEach(function (p) {
+                            if (p.start === o.first) Nterm = "N-term";
+                            if (p.end === o.second) Cterm = "C-term";
+                        });
+                        listPropeptides.forEach(function (p) {
                             if (p.start === o.first) Nterm = "N-term";
                             if (p.end === o.second) Cterm = "C-term";
                         });
@@ -466,7 +471,8 @@ function initNXDivs() {
                     }
                     var pmidFound = false;
                     Object.keys(peptide.sources).forEach( function (o) {
-                        $("#pepSources").append("<li>" + o + " (" + peptide.sources[o] + ")" + "</li>");
+                        if (o !== "PubMed") $("#pepSources").append("<li>" + o + " (" + peptide.sources[o] + ")" + "</li>");
+                        else $("#pepSources").append("<li>" + o + " </li>");
                     });
                     peptide.tissueSpecificity.forEach(function (o) {
                         if (o.match("PMID")) {
@@ -702,7 +708,7 @@ function initNXDivs() {
     };
 
     $(function () {
-        [nx.getProteinSequence(nxEntryName), nx.getPeptide(nxEntryName), nx.getSrmPeptide(nxEntryName), nx.getMatureProtein(nxEntryName), nx.getSecondaryStructure(nxEntryName)].reduce(function (sequence, dataPromise) {
+        [nx.getProteinSequence(nxEntryName), nx.getPeptide(nxEntryName), nx.getSrmPeptide(nxEntryName), nx.getMatureProtein(nxEntryName), nx.getProPeptide(nxEntryName),  nx.getSecondaryStructure(nxEntryName)].reduce(function (sequence, dataPromise) {
             return sequence.then(function () {
                 return dataPromise;
             }).then(function (oneData) {
@@ -737,8 +743,14 @@ function initNXDivs() {
                     case 4:
                         matureProtein = oneData.annot;
 
-                        RenderPeptidesForIsoform(peptideMappings, firstIso);
+                        //RenderPeptidesForIsoform(peptideMappings, firstIso);
+                        break;
                     case 5:
+                        proPeptide = oneData.annot;
+
+                        RenderPeptidesForIsoform(peptideMappings, firstIso);
+                        break;
+                    case 6:
                         annotations = oneData;
                         //nxPviz(annotations, isoforms);
                         break;
