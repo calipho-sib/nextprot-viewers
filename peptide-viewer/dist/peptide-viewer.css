@@ -108,6 +108,9 @@ html {
 .detailedInfosFields dd{
     font-size: 12px;
 }
+#ptmInfos dt{
+    margin-top: 0px;
+}
 #peptideSpecificity {
     overflow:auto;
 }

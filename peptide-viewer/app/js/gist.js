@@ -163,11 +163,11 @@ function initNXDivs() {
                     if (pepB.position.first > pepA.position.second) break;
 
                     if(isIncludedIn(pepA, pepB)){
-                        pepA.include.push(pepB.identifier);
-                        pepB.includedIn.push(pepA.identifier);
+                        if (pepA.include.indexOf(pepB.identifier) === -1) pepA.include.push(pepB.identifier);
+                        if (pepB.includedIn.indexOf(pepA.identifier) === -1) pepB.includedIn.push(pepA.identifier);
                     }else  if(isIncludedIn(pepB, pepA)){
-                        pepB.include.push(pepA.identifier);
-                        pepA.includedIn.push(pepB.identifier);
+                        if (pepB.include.indexOf(pepA.identifier) === -1) pepB.include.push(pepA.identifier);
+                        if (pepA.includedIn.indexOf(pepB.identifier) === -1) pepA.includedIn.push(pepB.identifier);
                     }
 
                 }
@@ -481,12 +481,13 @@ function initNXDivs() {
                         $('#tissueSpec').append("<li>" + o + "</li>")
                     });
                     if (pmidFound === true) {
-                        var query = "SELECT ?iso ?ptmref ?ptmpub ?ptmpubid ?mappubid ?ptmtype ?ptmstart ?ptmend ?ptmterm ?ptmlabel ?ptmcomment WHERE {" +
+
+        var query = "SELECT ?ptmpub ?ptmpubid ?mappubid ?ptmtype ?ptmstart str(?mapsrc) ?ptmend ?mapstart ?mapend ?ptmterm ?ptmlabel ?ptmcomment WHERE {" +
                             "values (?pepName ?iso) {(\"" + peptide.name + "\"^^xsd:string isoform:" + isoName + ") }" +
                             "?iso :ptm ?ptm ." +
                             "?ptm rdf:type ?ptmtype ." +
-                            "optional { ?ptm :start ?ptmstart } ." +
-                            "optional { ?ptm :end ?ptmend } ." +
+                            "?ptm :start ?ptmstart ." +
+                            "?ptm :end ?ptmend ." +
                             "optional { ?ptm :term ?ptmterm ." +
                             "?ptmterm rdfs:label ?ptmlabel } ." +
                             "optional { ?ptm rdfs:comment ?ptmcomment } ." +
@@ -498,7 +499,11 @@ function initNXDivs() {
                             "?iso :peptideMapping ?map ." +
                             "?map :peptideName ?pepName ." +
                             "?map :evidence ?mapevi ." +
+                            "?map :position / :start ?mapstart ." +
+                            "?map :position / :end ?mapend ." +
+                            "filter (?ptmstart >= ?mapstart && ?ptmend <= ?mapend)" +
                             "?mapevi :assignedBy ?mapsrc ." +
+                            "filter(strlen(str(?mapsrc))>=44) ." +
                             "bind (substr(str(?mapsrc),37,8) as ?mappubid)" +
                             "filter (contains(str(?mapsrc), \"PMID\"))" +
                             "filter (?ptmtype  in (:CrossLink , :ModifiedResidue , :GlycosylationSite)) ." +
@@ -508,7 +513,7 @@ function initNXDivs() {
                         nx.executeSparql(query).then(function (data) {
                             if (data.results.bindings.length > 0) {
                                 data.results.bindings.forEach(function (o) {
-                                    $('#ptmInfos').append("<div class=\"row\"style=\"border-bottom:1px solid #E7EAEC;\"><dl class=\"col-md-6\"><dt>PTM ID</dt><dd>" + o.ptmterm.value.toString().match(/[^\/]*$/)[0] + "</dd></dl>" +
+                                    $('#ptmInfos').append("<div class=\"row\"style=\"border-bottom:1px solid #E7EAEC;margin-bottom:5px;\"><dl class=\"col-md-6\"><dt>PTM ID</dt><dd>" + o.ptmterm.value.toString().match(/[^\/]*$/)[0] + "</dd></dl>" +
                                     "<dl class=\"col-md-6\"><dt>Position</dt><dd>" + o.ptmstart.value + "</dd></dl>" +
                                     "<dl class=\"col-md-6\"><dt>Type</dt><dd>" + o.ptmtype.value.toString().match(/[^#]*$/)[0].slice() + "</dd></dl>" +
                                     "<dl class=\"col-md-6\"><dt>Description</dt><dd>" + o.ptmcomment.value + "</dd></dl></div>");

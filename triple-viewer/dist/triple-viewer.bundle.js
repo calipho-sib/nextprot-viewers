@@ -26012,7 +26012,7 @@ function TripleViewer(entry) {
             $(".tableHighlight").removeClass("tableHighlight");
             $(this).parent().parent().addClass("tableHighlight");
             var currentId = $(this).parent().parent().attr("id");
-            var position = currentId.split("_").splice(1).map(Number);
+            var position = currentId.split("_").slice(1).map(Number);
             if (position.length === 1) position.push(position[0]);
             var svgId = "#" + "f" + currentId;
 
