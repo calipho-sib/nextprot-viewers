@@ -14880,7 +14880,7 @@ function Sequence(sequence,isoformName) {
 this["HBtemplates"] = this["HBtemplates"] || {};
 
 this["HBtemplates"]["app/assets/templates/detailedPeptide.tmpl"] = Handlebars.template({"compiler":[6,">= 2.0.0-beta.1"],"main":function(depth0,helpers,partials,data) {
-    return "<div style=\"border-bottom: 1px solid #E7EAEC;padding-bottom:5px;margin: 5px 0px 15px;\">\n    <div style=\"display:inline-block;\">\n        <span id=\"nbPeptides\" class=\"badge\"\n              style=\"background:#C50063;color:white;padding:8px 10px;border-radius:50%;margin-right:10px;vertical-align:middle;\"></span>\n    </div>\n    <h4 style=\"display:inline-block;vertical-align:middle;\">Peptide detailed information</h4></div>\n<div class=\"row\" style=\"height:auto;margin-left:0px;\">\n    <div class=\"row-same-height\">\n        <div class=\"navbar col-md-3 col-md-height\"\n             id=\"info-left\"\n             style=\"background:#0F8292;padding:0;border-bottom-right-radius:0px;border-top-right-radius:0px;z-index: 1;vertical-align:top\">\n            <h4 style=\"color:white;font-size:24px;height:30px;font-weight:lighter;padding:5px 15px 25px;\">Peptides</h4>\n            <ul class=\"nav nav-stacked\" id=\"listNames\"\n                style=\"color:lightslategrey;height:auto;max-height:450px;overflow:auto;border-top: 1px solid #066B78;box-shadow: 0px -3px 6px -6px #5ACEDE, inset 0px 3px 6px -6px #066B78;\">\n            </ul>\n        </div>\n        <div class=\"col-md-9 col-md-height\" id=\"info-right\">\n            <div class=\"row\">\n                <div class=\"col-md-9\">\n                    <div class=\"panel panel-default\">\n                        <div class=\"panel-heading\">\n                            <h4 class=\"text-center\" id=\"titlePepName\"></h4>\n                        </div>\n                        <div id=\"peptideSpecificity\" class=\"center-block\"\n                             style=\"height:150px;margin-top:10px;\">\n                            <table id=\"pepPosTable\" class=\"table table-condensed\" style=\"font-size:12px;\">\n                                <thead>\n                                <tr>\n                                    <th class=\"col-md-2\" colspan=\"2\" style=\"font-size:14px;font-weight:700;\">Positions\n                                    </th>\n                                    <th class=\"col-md-4\" colspan=\"4\" style=\"font-size:14px;font-weight:700;\">\n                                        Trypticity\n                                    </th>\n                                    <th class=\"col-md-4\" colspan=\"4\" style=\"font-size:14px;font-weight:700;\">\n                                        C/N-Terminality\n                                    </th>\n                                </tr>\n                                <tr>\n                                    <th class=\"col-md-1\" data-sort=\"int\" data-sort-default=\"asc\" id=\"sortStart\">Start\n                                    </th>\n                                    <th class=\"col-md-1\">End</th>\n                                    <th class=\"col-md-1\">N-side</th>\n                                    <th class=\"col-md-1\">C-side</th>\n                                    <th class=\"col-md-1\">Miscleavages</th>\n                                    <th class=\"col-md-1\">Global</th>\n                                    <th class=\"col-md-1\">N-term</th>\n                                    <th class=\"col-md-1\">C-term</th>\n                                </tr>\n                                </thead>\n                                <tbody id=\"peptidePositions\"></tbody>\n                            </table>\n                        </div>\n                    </div>\n                </div>\n                <div class=\"col-md-3 detailedInfosFields\">\n                    <div class=\"panel panel-default\">\n                        <div class=\"panel-heading\">\n                            <h5 class=\"text-center\" style=\"margin:0px;\">Peptide Sequence</h5>\n                        </div>\n                        <div class=\"panel-body\" style=\"height:60px;border-bottom:1px solid #E7EAEC;\">\n                            <dl>\n                                <dt>Length</dt>\n                                <dd id=\"length\"></dd>\n                            </dl>\n                        </div>\n                        <div class=\"panel-body\" style=\"height:80px;overflow:auto;\">\n                            <dl>\n                                <dt>Sequence</dt>\n                                <dd id=\"pepSeq\" style=\"width:150px;word-break: break-all;\"></dd>\n                            </dl>\n                        </div>\n                        <div class=\"panel-body\" style=\"height:80px;border-top:1px solid #E7EAEC;\">\n                            <dl>\n                                <dt>Nature</dt>\n                                <dd>\n                                    <ul id=\"nature\" style=\"padding-left:20px;\"></ul>\n                                </dd>\n                            </dl>\n                        </div>\n                    </div>\n                </div>\n            </div>\n            <div class=\"row detailedInfosFields\">\n                <div class=\"col-lg-3 col-md-6 col-sm-6 col-xs-6\">\n                    <div class=\"panel panel-default\">\n                        <div class=\"panel-heading\">\n                            <h5 class=\"text-center\" style=\"margin:0px;\">PTM</h5>\n                        </div>\n                        <div class=\"panel-body\" id=\"ptmInfos\" style=\"height:220px;overflow: auto\">\n                        </div>\n                    </div>\n                </div>\n                <div class=\"col-lg-3 col-md-6 col-sm-6 col-xs-6\">\n                    <div id=\"proteoBlock\" class=\"panel panel-default\">\n                    </div>\n                </div>\n                <div class=\"col-lg-3 col-md-6 col-sm-6 col-xs-6\">\n                    <div class=\"panel panel-default\">\n                        <div class=\"panel-heading\">\n                            <h5 class=\"text-center\" style=\"margin:0px;\">Peptide overlap</h5>\n                        </div>\n                        <div class=\"panel-body\" style=\"height:100px;overflow:auto;border-bottom:1px solid #E7EAEC;\">\n                            <dl>\n                                <dt>Included in</dt>\n                                <dd>\n                                    <ul id=\"pepIncludedIn\" style=\"padding-left:20px;\"></ul>\n                                </dd>\n                            </dl>\n                        </div>\n                        <div class=\"panel-body\" style=\"height:120px;overflow:auto;\">\n                            <dl>\n                                <dt>Includes</dt>\n                                <dd>\n                                    <ul id=\"pepIncluded\" style=\"padding-left:20px;\"></ul>\n                                </dd>\n                            </dl>\n                        </div>\n                    </div>\n                </div>\n                <div class=\"col-lg-3 col-md-6 col-sm-6 col-xs-6\">\n                    <div class=\"panel panel-default\">\n                        <div class=\"panel-heading\">\n                            <h5 class=\"text-center\" style=\"margin:0px;\">Sources</h5>\n                        </div>\n                        <div class=\"panel-body\" style=\"height:100px;overflow:auto;border-bottom:1px solid #E7EAEC;\">\n                            <dl>\n                                <dt>Database</dt>\n                                <dd>\n                                    <ul id=\"pepSources\" style=\"padding-left:20px;\"></ul>\n                                </dd>\n                            </dl>\n                        </div>\n                        <div class=\"panel-body\" style=\"height:120px;overflow:auto;\">\n                            <dl>\n                                <dt>Subsets</dt>\n                                <dd>\n                                    <ul id=\"tissueSpec\" style=\"padding-left:20px;\"></ul>\n                                </dd>\n                            </dl>\n                        </div>\n                    </div>\n                </div>\n            </div>\n        </div>\n    </div>\n</div>";
+    return "<div style=\"border-bottom: 1px solid #E7EAEC;padding-bottom:5px;margin: 5px 0px 15px;\">\n    <div style=\"display:inline-block;\">\n        <span id=\"nbPeptides\" class=\"badge\"\n              style=\"background:#C50063;color:white;padding:8px 10px;border-radius:50%;margin-right:10px;vertical-align:middle;\"></span>\n    </div>\n    <h4 style=\"display:inline-block;vertical-align:middle;\">Peptide detailed information</h4></div>\n<div class=\"row\" style=\"height:auto;margin-left:0px;\">\n    <div class=\"row-same-height\">\n        <div class=\"navbar col-md-3 col-md-height\"\n             id=\"info-left\"\n             style=\"background:#0F8292;padding:0;border-bottom-right-radius:0px;border-top-right-radius:0px;z-index: 1;vertical-align:top\">\n            <h4 style=\"color:white;font-size:24px;height:30px;font-weight:lighter;padding:5px 15px 25px;\">Peptides</h4>\n            <ul class=\"nav nav-stacked\" id=\"listNames\"\n                style=\"color:lightslategrey;height:auto;max-height:450px;overflow:auto;border-top: 1px solid #066B78;box-shadow: 0px -3px 6px -6px #5ACEDE, inset 0px 3px 6px -6px #066B78;\">\n            </ul>\n        </div>\n        <div class=\"col-md-9 col-md-height\" id=\"info-right\">\n            <div class=\"row\">\n                <div class=\"col-md-9\">\n                    <div class=\"panel panel-default\">\n                        <div class=\"panel-heading\">\n                            <h4 class=\"text-center\" id=\"titlePepName\"></h4>\n                        </div>\n                        <div id=\"peptideSpecificity\" class=\"center-block\"\n                             style=\"height:150px;margin-top:10px;\">\n                            <table id=\"pepPosTable\" class=\"table table-condensed\" style=\"font-size:12px;\">\n                                <thead>\n                                <tr>\n                                    <th class=\"col-md-2\" colspan=\"2\" style=\"font-size:14px;font-weight:700;\">Positions\n                                    </th>\n                                    <th class=\"col-md-4\" colspan=\"4\" style=\"font-size:14px;font-weight:700;\">\n                                        Trypticity\n                                    </th>\n                                    <th class=\"col-md-4\" colspan=\"4\" style=\"font-size:14px;font-weight:700;\">\n                                        C/N-Terminality\n                                    </th>\n                                </tr>\n                                <tr>\n                                    <th class=\"col-md-1\" data-sort=\"int\" data-sort-default=\"asc\" id=\"sortStart\">Start\n                                    </th>\n                                    <th class=\"col-md-1\">End</th>\n                                    <th class=\"col-md-1\">N-side</th>\n                                    <th class=\"col-md-1\">C-side</th>\n                                    <th class=\"col-md-1\">Miscleavages</th>\n                                    <th class=\"col-md-1\">Global</th>\n                                    <th class=\"col-md-1\">N-term</th>\n                                    <th class=\"col-md-1\">C-term</th>\n                                </tr>\n                                </thead>\n                                <tbody id=\"peptidePositions\"></tbody>\n                            </table>\n                        </div>\n                    </div>\n                </div>\n                <div class=\"col-md-3 detailedInfosFields\">\n                    <div class=\"panel panel-default\">\n                        <div class=\"panel-heading\">\n                            <h5 class=\"text-center\" style=\"margin:0px;\">Peptide Sequence</h5>\n                        </div>\n                        <div class=\"panel-body\" style=\"height:60px;border-bottom:1px solid #E7EAEC;\">\n                            <dl>\n                                <dt>Length</dt>\n                                <dd id=\"length\"></dd>\n                            </dl>\n                        </div>\n                        <div class=\"panel-body\" style=\"height:80px;overflow:auto;\">\n                            <dl>\n                                <dt>Sequence</dt>\n                                <dd id=\"pepSeq\" style=\"width:150px;word-break: break-all;\"></dd>\n                            </dl>\n                        </div>\n                        <div class=\"panel-body\" style=\"height:80px;border-top:1px solid #E7EAEC;\">\n                            <dl>\n                                <dt>Nature</dt>\n                                <dd>\n                                    <ul id=\"nature\" style=\"padding-left:20px;\"></ul>\n                                </dd>\n                            </dl>\n                        </div>\n                    </div>\n                </div>\n            </div>\n            <div class=\"row detailedInfosFields\">\n                <div class=\"col-lg-3 col-md-6 col-sm-6 col-xs-6\">\n                    <div class=\"panel panel-default\">\n                        <div class=\"panel-heading\">\n                            <h5 class=\"text-center\" style=\"margin:0px;\">PTM</h5>\n                        </div>\n                        <div class=\"panel-body\" id=\"ptmInfos\" style=\"height:220px;overflow:auto;border-bottom:1px solid #E7EAEC;padding:0px;\">\n                        </div>\n                    </div>\n                </div>\n                <div class=\"col-lg-3 col-md-6 col-sm-6 col-xs-6\">\n                    <div id=\"proteoBlock\" class=\"panel panel-default\">\n                    </div>\n                </div>\n                <div class=\"col-lg-3 col-md-6 col-sm-6 col-xs-6\">\n                    <div class=\"panel panel-default\">\n                        <div class=\"panel-heading\">\n                            <h5 class=\"text-center\" style=\"margin:0px;\">Peptide overlap</h5>\n                        </div>\n                        <div class=\"panel-body\" style=\"height:100px;overflow:auto;border-bottom:1px solid #E7EAEC;\">\n                            <dl>\n                                <dt>Included in</dt>\n                                <dd>\n                                    <ul id=\"pepIncludedIn\" style=\"padding-left:20px;\"></ul>\n                                </dd>\n                            </dl>\n                        </div>\n                        <div class=\"panel-body\" style=\"height:120px;overflow:auto;\">\n                            <dl>\n                                <dt>Includes</dt>\n                                <dd>\n                                    <ul id=\"pepIncluded\" style=\"padding-left:20px;\"></ul>\n                                </dd>\n                            </dl>\n                        </div>\n                    </div>\n                </div>\n                <div class=\"col-lg-3 col-md-6 col-sm-6 col-xs-6\">\n                    <div class=\"panel panel-default\">\n                        <div class=\"panel-heading\">\n                            <h5 class=\"text-center\" style=\"margin:0px;\">Sources</h5>\n                        </div>\n                        <div class=\"panel-body\" style=\"height:220px;overflow:auto;border-bottom:1px solid #E7EAEC;\">\n                            <dl>\n                                <dd>\n                                    <ul id=\"pepSources\" style=\"padding-left:20px;\"></ul>\n                                </dd>\n                            </dl>\n                        </div>\n                    </div>\n                </div>\n            </div>\n        </div>\n    </div>\n</div>";
 },"useData":true});
 
 this["HBtemplates"]["app/assets/templates/isoformChoice.tmpl"] = Handlebars.template({"1":function(depth0,helpers,partials,data) {
@@ -14911,52 +14911,113 @@ this["HBtemplates"]["app/assets/templates/isoformChoice.tmpl"] = Handlebars.temp
 },"useData":true});
 
 this["HBtemplates"]["app/assets/templates/matchingEntries.tmpl"] = Handlebars.template({"1":function(depth0,helpers,partials,data) {
-    var stack1, helper, alias1=helpers.helperMissing, alias2="function", alias3=this.escapeExpression;
+    var stack1;
 
-  return "                                        "
-    + ((stack1 = helpers['if'].call(depth0,(depth0 != null ? depth0.withVariant : depth0),{"name":"if","hash":{},"fn":this.program(2, data, 0),"inverse":this.program(4, data, 0),"data":data})) != null ? stack1 : "")
+  return "        "
+    + ((stack1 = helpers['if'].call(depth0,(depth0 != null ? depth0.withoutVariant : depth0),{"name":"if","hash":{},"fn":this.program(2, data, 0),"inverse":this.program(4, data, 0),"data":data})) != null ? stack1 : "")
+    + "\n";
+},"2":function(depth0,helpers,partials,data) {
+    return "<div  class=\"panel panel-success\" style=\"margin:0px;min-height: 110px;\">\n        ";
+},"4":function(depth0,helpers,partials,data) {
+    return "<div class=\"panel panel-info\" style=\"margin:0px;min-height: 110px;\">";
+},"6":function(depth0,helpers,partials,data) {
+    var stack1;
+
+  return ((stack1 = helpers.unless.call(depth0,(depth0 != null ? depth0.withVariant : depth0),{"name":"unless","hash":{},"fn":this.program(7, data, 0),"inverse":this.noop,"data":data})) != null ? stack1 : "");
+},"7":function(depth0,helpers,partials,data) {
+    var helper, alias1=helpers.helperMissing, alias2="function", alias3=this.escapeExpression;
+
+  return "                        <li>"
     + alias3(((helper = (helper = helpers.name || (depth0 != null ? depth0.name : depth0)) != null ? helper : alias1),(typeof helper === alias2 ? helper.call(depth0,{"name":"name","hash":{},"data":data}) : helper)))
     + " <em> ( Gene Name : "
     + alias3(((helper = (helper = helpers.geneName || (depth0 != null ? depth0.geneName : depth0)) != null ? helper : alias1),(typeof helper === alias2 ? helper.call(depth0,{"name":"geneName","hash":{},"data":data}) : helper)))
     + " )</em></li>\n";
-},"2":function(depth0,helpers,partials,data) {
-    return "<li class=\"variantIntoAccount\" style=\"display: none\">";
-},"4":function(depth0,helpers,partials,data) {
-    return "<li>";
-},"6":function(depth0,helpers,partials,data) {
+},"9":function(depth0,helpers,partials,data) {
     var stack1;
 
-  return ((stack1 = helpers.each.call(depth0,depth0,{"name":"each","hash":{},"fn":this.program(7, data, 0),"inverse":this.noop,"data":data})) != null ? stack1 : "");
-},"7":function(depth0,helpers,partials,data) {
-    var stack1, helper;
+  return ((stack1 = helpers.each.call(depth0,depth0,{"name":"each","hash":{},"fn":this.program(10, data, 0),"inverse":this.noop,"data":data})) != null ? stack1 : "");
+},"10":function(depth0,helpers,partials,data) {
+    var stack1;
 
-  return "\n\n                                    "
-    + ((stack1 = helpers['if'].call(depth0,(depth0 != null ? depth0.variant : depth0),{"name":"if","hash":{},"fn":this.program(2, data, 0),"inverse":this.program(4, data, 0),"data":data})) != null ? stack1 : "")
+  return "\n\n"
+    + ((stack1 = helpers.unless.call(depth0,(depth0 != null ? depth0.variant : depth0),{"name":"unless","hash":{},"fn":this.program(11, data, 0),"inverse":this.noop,"data":data})) != null ? stack1 : "");
+},"11":function(depth0,helpers,partials,data) {
+    var helper;
+
+  return "                        <li>"
     + this.escapeExpression(((helper = (helper = helpers.isoform || (depth0 != null ? depth0.isoform : depth0)) != null ? helper : helpers.helperMissing),(typeof helper === "function" ? helper.call(depth0,{"name":"isoform","hash":{},"data":data}) : helper)))
-    + " "
-    + ((stack1 = helpers['if'].call(depth0,(depth0 != null ? depth0.variant : depth0),{"name":"if","hash":{},"fn":this.program(8, data, 0),"inverse":this.noop,"data":data})) != null ? stack1 : "")
     + "</li>\n";
-},"8":function(depth0,helpers,partials,data) {
-    var stack1, alias1=this.lambda, alias2=this.escapeExpression;
+},"13":function(depth0,helpers,partials,data) {
+    var stack1;
 
-  return "("
-    + alias2(alias1(((stack1 = ((stack1 = (depth0 != null ? depth0.positions : depth0)) != null ? stack1['0'] : stack1)) != null ? stack1.first : stack1), depth0))
+  return "        "
+    + ((stack1 = helpers['if'].call(depth0,(depth0 != null ? depth0.withVariant : depth0),{"name":"if","hash":{},"fn":this.program(2, data, 0),"inverse":this.program(4, data, 0),"data":data})) != null ? stack1 : "")
+    + "\n";
+},"15":function(depth0,helpers,partials,data) {
+    return "                        <li>No other entries found</li>\n";
+},"17":function(depth0,helpers,partials,data) {
+    var stack1;
+
+  return ((stack1 = helpers['if'].call(depth0,(depth0 != null ? depth0.withVariant : depth0),{"name":"if","hash":{},"fn":this.program(18, data, 0),"inverse":this.noop,"data":data})) != null ? stack1 : "");
+},"18":function(depth0,helpers,partials,data) {
+    var helper, alias1=helpers.helperMissing, alias2="function", alias3=this.escapeExpression;
+
+  return "                        <li class=\"variantIntoAccount\">"
+    + alias3(((helper = (helper = helpers.name || (depth0 != null ? depth0.name : depth0)) != null ? helper : alias1),(typeof helper === alias2 ? helper.call(depth0,{"name":"name","hash":{},"data":data}) : helper)))
+    + " <em> ( Gene Name : "
+    + alias3(((helper = (helper = helpers.geneName || (depth0 != null ? depth0.geneName : depth0)) != null ? helper : alias1),(typeof helper === alias2 ? helper.call(depth0,{"name":"geneName","hash":{},"data":data}) : helper)))
+    + " )</em></li>\n";
+},"20":function(depth0,helpers,partials,data) {
+    var stack1;
+
+  return ((stack1 = helpers.each.call(depth0,depth0,{"name":"each","hash":{},"fn":this.program(21, data, 0),"inverse":this.noop,"data":data})) != null ? stack1 : "");
+},"21":function(depth0,helpers,partials,data) {
+    var stack1;
+
+  return "\n\n"
+    + ((stack1 = helpers['if'].call(depth0,(depth0 != null ? depth0.variant : depth0),{"name":"if","hash":{},"fn":this.program(22, data, 0),"inverse":this.noop,"data":data})) != null ? stack1 : "");
+},"22":function(depth0,helpers,partials,data) {
+    var stack1, helper, alias1=this.escapeExpression, alias2=this.lambda;
+
+  return "                        <li class=\"variantIntoAccount\">"
+    + alias1(((helper = (helper = helpers.isoform || (depth0 != null ? depth0.isoform : depth0)) != null ? helper : helpers.helperMissing),(typeof helper === "function" ? helper.call(depth0,{"name":"isoform","hash":{},"data":data}) : helper)))
+    + " ("
+    + alias1(alias2(((stack1 = ((stack1 = (depth0 != null ? depth0.positions : depth0)) != null ? stack1['0'] : stack1)) != null ? stack1.first : stack1), depth0))
     + " : "
-    + alias2(alias1(((stack1 = (depth0 != null ? depth0.variant : depth0)) != null ? stack1.original : stack1), depth0))
-    + "  → "
-    + alias2(alias1(((stack1 = (depth0 != null ? depth0.variant : depth0)) != null ? stack1.variant : stack1), depth0))
-    + ")";
+    + alias1(alias2(((stack1 = (depth0 != null ? depth0.variant : depth0)) != null ? stack1.original : stack1), depth0))
+    + " →\n                            "
+    + alias1(alias2(((stack1 = (depth0 != null ? depth0.variant : depth0)) != null ? stack1.variant : stack1), depth0))
+    + ")\n                        </li>\n";
 },"compiler":[6,">= 2.0.0-beta.1"],"main":function(depth0,helpers,partials,data) {
     var stack1, helper, options, alias1=helpers.helperMissing, alias2="function", alias3=helpers.blockHelperMissing, buffer = 
-  "<div class=\"panel-heading\">\n                            <h5 class=\"text-center\" style=\"margin:0px;\">Peptide to protein mapping</h5>\n                        </div>\n                        <div class=\"panel-heading\" style=\"height:35px;\">\n                            <div class=\"checkbox text-center\" style=\"margin-top:0px\">\n                                <label>\n                                    <input type=\"checkbox\" id=\"withVariant\" value=\"option1\">\n                                    Taking variants into account\n                                </label>\n                            </div>\n                        </div>\n                        <div class=\"panel-body\" style=\"height:190px;overflow:auto;\">\n                            <div class=\"pull-right\" style=\"margin-top:-5px;margin-right: -5px;\"><button id=\"showIsoforms\" type=\"button\" class=\"btn btn-default btn-xs\">Show isoforms</button></div>\n                            <div id=\"proteomeProperties\">\n                                <div style=\"border-bottom:1px solid #E7EAEC;margin-top: -10px;margin-bottom:5px;\">\n                                    <h5 id=\"proteotypicitySentence\"></h5>\n                                </div>\n                                <div id=\"showEntry\"  style=\"display:block\">\n                                    <ul>\n";
-  stack1 = ((helper = (helper = helpers.entries || (depth0 != null ? depth0.entries : depth0)) != null ? helper : alias1),(options={"name":"entries","hash":{},"fn":this.program(1, data, 0),"inverse":this.noop,"data":data}),(typeof helper === alias2 ? helper.call(depth0,options) : helper));
+  "<div class=\"panel-heading\">\n    <h5 class=\"text-center\" style=\"margin:0px;\">Peptide to protein mapping</h5>\n</div>\n<div class=\"panel-body\" style=\"padding:0px;height:220px;overflow:auto;\">\n    <div class=\"pull-right\" style=\"margin-top:8px;margin-right: 15px;\">\n        <button id=\"showIsoforms\" type=\"button\" class=\"btn btn-default btn-xs\">Show isoforms</button>\n    </div>\n    <div id=\"proteomeProperties\">\n        <!--<div style=\"border-bottom:1px solid #E7EAEC;margin-top: -10px;margin-bottom:5px;\">-->\n        <!--<h5 id=\"proteotypicitySentence\"></h5>-->\n        <!--</div>-->\n";
+  stack1 = ((helper = (helper = helpers.proteotypicity || (depth0 != null ? depth0.proteotypicity : depth0)) != null ? helper : alias1),(options={"name":"proteotypicity","hash":{},"fn":this.program(1, data, 0),"inverse":this.noop,"data":data}),(typeof helper === alias2 ? helper.call(depth0,options) : helper));
+  if (!helpers.proteotypicity) { stack1 = alias3.call(depth0,stack1,options)}
+  if (stack1 != null) { buffer += stack1; }
+  buffer += "            <div class=\"panel-heading\" style=\"padding:1px 15px\">\n                <h5>Entries mapping</h5>\n            </div>\n            <div class=\"panel-body\">\n                <div class=\"showEntry\" style=\"display:block\">\n                    <ul>\n";
+  stack1 = ((helper = (helper = helpers.entries || (depth0 != null ? depth0.entries : depth0)) != null ? helper : alias1),(options={"name":"entries","hash":{},"fn":this.program(6, data, 0),"inverse":this.noop,"data":data}),(typeof helper === alias2 ? helper.call(depth0,options) : helper));
   if (!helpers.entries) { stack1 = alias3.call(depth0,stack1,options)}
   if (stack1 != null) { buffer += stack1; }
-  buffer += "                                    </ul>\n                                </div>\n                                <div id=\"showIsoform\" style=\"display:none\">\n                                    <ul>\n                                    ";
-  stack1 = ((helper = (helper = helpers.isoforms || (depth0 != null ? depth0.isoforms : depth0)) != null ? helper : alias1),(options={"name":"isoforms","hash":{},"fn":this.program(6, data, 0),"inverse":this.noop,"data":data}),(typeof helper === alias2 ? helper.call(depth0,options) : helper));
+  buffer += "                    </ul>\n                </div>\n                <div class=\"showIsoform\" style=\"display:none\">\n                    <ul>\n                        ";
+  stack1 = ((helper = (helper = helpers.isoforms || (depth0 != null ? depth0.isoforms : depth0)) != null ? helper : alias1),(options={"name":"isoforms","hash":{},"fn":this.program(9, data, 0),"inverse":this.noop,"data":data}),(typeof helper === alias2 ? helper.call(depth0,options) : helper));
   if (!helpers.isoforms) { stack1 = alias3.call(depth0,stack1,options)}
   if (stack1 != null) { buffer += stack1; }
-  return buffer + "                                    </ul>\n                                </div>\n                            </div>\n                        </div>";
+  buffer += "                    </ul>\n                </div>\n            </div>\n        </div>\n";
+  stack1 = ((helper = (helper = helpers.proteotypicity || (depth0 != null ? depth0.proteotypicity : depth0)) != null ? helper : alias1),(options={"name":"proteotypicity","hash":{},"fn":this.program(13, data, 0),"inverse":this.noop,"data":data}),(typeof helper === alias2 ? helper.call(depth0,options) : helper));
+  if (!helpers.proteotypicity) { stack1 = alias3.call(depth0,stack1,options)}
+  if (stack1 != null) { buffer += stack1; }
+  buffer += "            <div class=\"panel-heading\" style=\"padding:1px 15px\">\n                <h5>Additionnal entries with known variants</h5>\n            </div>\n            <div class=\"panel-body\">\n                <div class=\"showEntry\" style=\"display:block\">\n                    <ul>\n"
+    + ((stack1 = helpers['if'].call(depth0,((stack1 = (depth0 != null ? depth0.proteotypicity : depth0)) != null ? stack1.onlyVariant : stack1),{"name":"if","hash":{},"fn":this.program(15, data, 0),"inverse":this.noop,"data":data})) != null ? stack1 : "");
+  stack1 = ((helper = (helper = helpers.entries || (depth0 != null ? depth0.entries : depth0)) != null ? helper : alias1),(options={"name":"entries","hash":{},"fn":this.program(17, data, 0),"inverse":this.noop,"data":data}),(typeof helper === alias2 ? helper.call(depth0,options) : helper));
+  if (!helpers.entries) { stack1 = alias3.call(depth0,stack1,options)}
+  if (stack1 != null) { buffer += stack1; }
+  buffer += "                    </ul>\n                </div>\n                <div class=\"showIsoform\" style=\"display:none\">\n                    <ul>\n"
+    + ((stack1 = helpers['if'].call(depth0,((stack1 = (depth0 != null ? depth0.proteotypicity : depth0)) != null ? stack1.onlyVariant : stack1),{"name":"if","hash":{},"fn":this.program(15, data, 0),"inverse":this.noop,"data":data})) != null ? stack1 : "")
+    + "                        ";
+  stack1 = ((helper = (helper = helpers.isoforms || (depth0 != null ? depth0.isoforms : depth0)) != null ? helper : alias1),(options={"name":"isoforms","hash":{},"fn":this.program(20, data, 0),"inverse":this.noop,"data":data}),(typeof helper === alias2 ? helper.call(depth0,options) : helper));
+  if (!helpers.isoforms) { stack1 = alias3.call(depth0,stack1,options)}
+  if (stack1 != null) { buffer += stack1; }
+  return buffer + "                    </ul>\n                </div>\n            </div>\n        </div>\n    </div>\n</div>";
 },"useData":true});
 
 this["HBtemplates"]["app/assets/templates/overviewProtein.tmpl"] = Handlebars.template({"1":function(depth0,helpers,partials,data) {
@@ -15405,7 +15466,11 @@ function initNXDivs() {
     var seq1 = null;
 
     function getFirstIsoform(isoformList) {
-        var seqIDs = isoformList.map(function (p) { return p.uniqueName}).sort(function (a,b) { return parseInt(a.split("-")[1]) - parseInt(b.split("-")[1])});
+        var seqIDs = isoformList.map(function (p) {
+            return p.uniqueName
+        }).sort(function (a, b) {
+            return parseInt(a.split("-")[1]) - parseInt(b.split("-")[1])
+        });
         return seqIDs[0];
     }
 
@@ -15450,6 +15515,7 @@ function initNXDivs() {
             view.render();
         }
     }
+
     var getInfoForIsoform = {
         firstLoad: function () {
             RenderSequenceForIsoform(isoforms, nxEntryName + "-1");
@@ -15472,7 +15538,6 @@ function initNXDivs() {
         },
         Peptides: function (peptideMappings, isoName) {
             var peptideMap = [];
-            var dateStart = new Date().getTime();
             peptideMappings.forEach(function (o) {
                 if (o.isoformSpecificity[isoName]) {
                     for (var i = 0; i < o.isoformSpecificity[isoName].positions.length; i++) {
@@ -15497,7 +15562,7 @@ function initNXDivs() {
                             "isoformProteotypicity": "No",
                             "tissueSpecificity": o.evidences.map(function (p) {
                                 return p.assignedBy
-                            }),
+                            }).sort(),
                             "sequence": "",
                             "prePeptide": "",
                             "postPeptide": "",
@@ -15518,7 +15583,7 @@ function initNXDivs() {
                         peptide.length = peptide.position.second - peptide.position.first + 1;
 
                         peptide.sequence = getInfoForIsoform.Sequence(isoforms, isoName).slice(peptide.position.first - 1, peptide.position.second);
-                        peptide.identifier = (peptide.sequence.length > 22) ? peptide.sequence.substring(0,10) + ".." + peptide.sequence.substring(peptide.sequence.length - 10) : peptide.sequence;
+                        peptide.identifier = (peptide.sequence.length > 22) ? peptide.sequence.substring(0, 10) + ".." + peptide.sequence.substring(peptide.sequence.length - 10) : peptide.sequence;
 
                         peptide.prePeptide = getInfoForIsoform.Sequence(isoforms, isoName)[peptide.position.first - 2];
                         peptide.postPeptide = getInfoForIsoform.Sequence(isoforms, isoName)[peptide.position.second + 1];
@@ -15526,36 +15591,35 @@ function initNXDivs() {
                     }
                 }
             });
-            peptideMap.sort(function(a, b) {
+            peptideMap.sort(function (a, b) {
                 return a.length - b.length;
             });
-            peptideMap.sort(function(a, b) {
+            peptideMap.sort(function (a, b) {
                 return a.position.first - b.position.first;
             });
             var intermediate = new Date().getTime();
 
 
-
             // A ---****---
             // B ----**----
-            var isIncludedIn = function (pepA, pepB){
+            var isIncludedIn = function (pepA, pepB) {
                 return ((pepA.position.first <= pepB.position.first) && (pepA.position.second >= pepB.position.second))
             }
 
 
-            for (var i=0; i<peptideMap.length; i++){
-                for (var j=i+1; j<peptideMap.length; j++){
+            for (var i = 0; i < peptideMap.length; i++) {
+                for (var j = i + 1; j < peptideMap.length; j++) {
 
 
-                    var pepA= peptideMap[i];
-                    var pepB= peptideMap[j];
+                    var pepA = peptideMap[i];
+                    var pepB = peptideMap[j];
 
                     if (pepB.position.first > pepA.position.second) break;
 
-                    if(isIncludedIn(pepA, pepB)){
+                    if (isIncludedIn(pepA, pepB)) {
                         if (pepA.include.indexOf(pepB.identifier) === -1) pepA.include.push(pepB.identifier);
                         if (pepB.includedIn.indexOf(pepA.identifier) === -1) pepB.includedIn.push(pepA.identifier);
-                    }else  if(isIncludedIn(pepB, pepA)){
+                    } else if (isIncludedIn(pepB, pepA)) {
                         if (pepB.include.indexOf(pepA.identifier) === -1) pepB.include.push(pepA.identifier);
                         if (pepA.includedIn.indexOf(pepB.identifier) === -1) pepA.includedIn.push(pepB.identifier);
                     }
@@ -15589,6 +15653,7 @@ function initNXDivs() {
             return listActiveProt;
         }
     };
+
     function nxIsoformChoice(isoforms) {
         if ($("#nx-isoformChoice").length > 0) {
             var datas = {
@@ -15615,6 +15680,7 @@ function initNXDivs() {
             $("#nx-isoformChoice li:first-child").addClass("active");
         }
     }
+
     var RenderSequenceForIsoform = function (isoforms, isoName) {
 
 
@@ -15632,247 +15698,286 @@ function initNXDivs() {
             $("#sequenceHeader .badge").append(" aa");
         }
     };
+
     function getProteotypicityInfos(sequence) {
 
         nx.getEntryforPeptide(sequence).then(function (data) {
 
             function entryWithVariant(entry) {
                 var withVariant = false;
-                entry.annotations.forEach(function(o) {
+                entry.annotations.forEach(function (o) {
                     if (o.variant) withVariant = true;
                 });
                 return withVariant;
             }
 
-            var entriesLength = data.length;
+
             var isoformsLength = 0;
-            data.forEach(function(o) {isoformsLength += o.annotations.length});
-            var entries = data.map(function (o) { return {name:o.uniqueName, withVariant:entryWithVariant(o), geneName: o.overview.mainGeneName} });
+            data.forEach(function (o) {
+                isoformsLength += o.annotations.length
+            });
+            var entries = data.map(function (o) {
+                return {name: o.uniqueName, withVariant: entryWithVariant(o), geneName: o.overview.mainGeneName}
+            });
+            var entriesLength = data.length;
+            console.log("PROTEOTYPICITY ????");
+            var entriesLengthWithoutVariant = entries.filter(function(d) { return d.withVariant === false}).length;
+            console.log(entriesLength);
+            console.log(entriesLengthWithoutVariant);
             var entryMatching = {
-                entriesLength: entriesLength,
-                isoformsLength: isoformsLength,
-                plurality: {isoform : entriesLength > 1 ? "isoforms" : "isoform", entry: isoformsLength > 1 ? "entries" : "entry"},
+                proteotypicity: {
+                    withVariant:entriesLength <= 1,
+                    withoutVariant:entriesLengthWithoutVariant <= 1,
+                    onlyVariant: (entriesLength - entriesLengthWithoutVariant) < 1
+                },
                 entries: entries,
-                isoforms: data.map(function (o) {return o.annotations.map(function (p) { return {entryName: o.uniqueName, variant: p.variant, isoform: Object.keys(p.targetIsoformsMap)[0], positions:p.targetIsoformsMap[Object.keys(p.targetIsoformsMap)[0]].positions}})})
+                isoforms: data.map(function (o) {
+                    return o.annotations.map(function (p) {
+                        return {
+                            entryName: o.uniqueName,
+                            variant: p.variant,
+                            isoform: Object.keys(p.targetIsoformsMap)[0],
+                            positions: p.targetIsoformsMap[Object.keys(p.targetIsoformsMap)[0]].positions
+                        }
+                    })
+                })
             };
+
+            console.log("PROTEOTYPICITY ????");
+            console.log(entryMatching.proteotypicity.withoutVariant);
+            console.log(entryMatching.proteotypicity.withVariant);
             var template = HBtemplates['app/assets/templates/matchingEntries.tmpl'];
             var results = template(entryMatching);
             $("#proteoBlock").html(results);
 
             function toggleIsoforms() {
                 $('#showIsoforms').text("Show isoforms");
-                $('#showIsoforms').click(function(){
-                    $(this).text(function(i, text){
+                $('#showIsoforms').click(function () {
+                    $(this).text(function (i, text) {
                         return text === "Show isoforms" ? "Hide isoforms" : "Show isoforms";
                     });
-                    $('#showEntry').is(':visible') ? $("#showEntry").hide() : $("#showEntry").show();
-                    $('#showIsoform').is(':visible') ? $("#showIsoform").hide() : $("#showIsoform").show();
+                    $('.showEntry').is(':visible') ? $(".showEntry").hide() : $(".showEntry").show();
+                    $('.showIsoform').is(':visible') ? $(".showIsoform").hide() : $(".showIsoform").show();
                 });
             }
-            function toggleSentence(entries,isoforms) {
-                var entriesWithoutVariant = $("#showEntry li").not(".variantIntoAccount").length;
-                var isoformsWithoutVariant = $("#showIsoform li").not(".variantIntoAccount").length;
 
-                if ($("#withVariant").prop('checked')) {
-                    var plurality = {isoform : isoforms > 1 ? "isoforms" : "isoform", entry: entries> 1 ? "entries" : "entry"};
-                    $("#proteotypicitySentence").text("Maps "+ isoforms + " " + plurality.isoform + " from " + entries + " " + plurality.entry + " :");
-                }
-                else {
-                    var plurality = {isoform : isoformsWithoutVariant > 1 ? "isoforms" : "isoform", entry: entriesWithoutVariant> 1 ? "entries" : "entry"};
-                    $("#proteotypicitySentence").text("Maps "+ isoformsWithoutVariant + " " + plurality.isoform + " from " + entriesWithoutVariant + " " + plurality.entry + " :");
-                }
-            }
-            function toggleVariants() {
-                $('#withVariant').click(function(){
-                    $('.variantIntoAccount').toggle();
-                    toggleSentence(entriesLength, isoformsLength);
-                });
-            }
+            //function toggleSentence(entries, isoforms) {
+            //    var entriesWithoutVariant = $("#showEntry li").not(".variantIntoAccount").length;
+            //    var isoformsWithoutVariant = $("#showIsoform li").not(".variantIntoAccount").length;
+            //
+            //    if ($("#withVariant").prop('checked')) {
+            //        var plurality = {
+            //            isoform: isoforms > 1 ? "isoforms" : "isoform",
+            //            entry: entries > 1 ? "entries" : "entry"
+            //        };
+            //        $("#proteotypicitySentence").text("Maps " + isoforms + " " + plurality.isoform + " from " + entries + " " + plurality.entry + " :");
+            //    }
+            //    else {
+            //        var plurality = {
+            //            isoform: isoformsWithoutVariant > 1 ? "isoforms" : "isoform",
+            //            entry: entriesWithoutVariant > 1 ? "entries" : "entry"
+            //        };
+            //        $("#proteotypicitySentence").text("Maps " + isoformsWithoutVariant + " " + plurality.isoform + " from " + entriesWithoutVariant + " " + plurality.entry + " :");
+            //    }
+            //}
+            //
+            //function toggleVariants() {
+            //    $('#withVariant').click(function () {
+            //        $('.variantIntoAccount').toggle();
+            //        toggleSentence(entriesLength, isoformsLength);
+            //    });
+            //}
+
             toggleIsoforms();
-            toggleVariants();
-            toggleSentence(entriesLength, isoformsLength);
+            //toggleVariants();
+            //toggleSentence(entriesLength, isoformsLength);
         });
     }
 
     var addPeptidesInfos = function (selection, listPeptides, isoName) {
-        if ($("#nx-detailedPeptide").length > 0) {
-            var data = {
-                "Peptides": (function () {
-                    var found = [];
-                    selection.filter(function (elem, pos, a) {
-                        return a.indexOf(elem) == pos;
-                    }).forEach(function (o) {
-                        for (i = 0; i < listPeptides.length; i++) {
-                            var founded = false;
-                            if (listPeptides[i].name === o) {
-                                for (item in found) {
-                                    if (listPeptides[i].name === found[item].name) {
-                                        founded = true;
-                                        found[item].position.push(listPeptides[i].position);
-                                        found[item].prePeptide.push(listPeptides[i].prePeptide);
-                                        found[item].postPeptide.push(listPeptides[i].postPeptide);
-                                        break;
+            if ($("#nx-detailedPeptide").length > 0) {
+                var data = {
+                    "Peptides": (function () {
+                        var found = [];
+                        selection.filter(function (elem, pos, a) {
+                            return a.indexOf(elem) == pos;
+                        }).forEach(function (o) {
+                            for (i = 0; i < listPeptides.length; i++) {
+                                var founded = false;
+                                if (listPeptides[i].name === o) {
+                                    for (item in found) {
+                                        if (listPeptides[i].name === found[item].name) {
+                                            founded = true;
+                                            found[item].position.push(listPeptides[i].position);
+                                            found[item].prePeptide.push(listPeptides[i].prePeptide);
+                                            found[item].postPeptide.push(listPeptides[i].postPeptide);
+                                            break;
+                                        }
+                                    }
+                                    if (founded === false) {
+                                        var pepTemp = jQuery.extend({}, listPeptides[i]);
+                                        pepTemp.prePeptide = [pepTemp.prePeptide];
+                                        pepTemp.postPeptide = [pepTemp.postPeptide];
+                                        pepTemp.position = [pepTemp.position];
+                                        found.push(pepTemp);
                                     }
                                 }
-                                if (founded === false) {
-                                    var pepTemp = jQuery.extend({}, listPeptides[i]);
-                                    pepTemp.prePeptide = [pepTemp.prePeptide];
-                                    pepTemp.postPeptide = [pepTemp.postPeptide];
-                                    pepTemp.position = [pepTemp.position];
-                                    found.push(pepTemp);
-                                }
+                            }
+                        });
+                        return found;
+                    }())
+                };
+                var listMatureProteins = getInfoForIsoform.getActiveProteins(matureProtein, isoName);
+                var listPropeptides = getInfoForIsoform.getActiveProteins(proPeptide, isoName);
+                if (data.Peptides.length > 0) $("#nx-detailedPeptide").show("slow");
+                else $("#nx-detailedPeptide").hide("slow");
+
+                var template = HBtemplates['app/assets/templates/detailedPeptide.tmpl'];
+                $("#nx-detailedPeptide").html(template);
+
+                var fillPeptideInfo = {
+                    fillNames: function () {
+                        $("#nbPeptides").text(data.Peptides.length);
+                        var listOfNames = "";
+                        for (i = 0; i < data.Peptides.length; i++) {
+                            listOfNames += "<li><a class=\"name\" id=\"" + data.Peptides[i].name + "\" style=\"color:lightsteelblue;cursor:pointer;\">" + data.Peptides[i].identifier + "</a></li>";
+                        }
+                        $('#listNames').html(listOfNames);
+                    },
+                    peptideSelected: function () {
+                        $(".name").click(function () {
+                            var name = $(this).attr("id");
+                            console.log(name);
+                            $(".nameActive").removeClass("nameActive");
+                            $(this).addClass("nameActive");
+                            fillPeptideInfo.fillDescription(name);
+                        })
+                    },
+                    fillDescription: function (peptide) {
+                        $("#peptidePositions").html("");
+                        $('#properties').html("");
+                        $('#nature').html("");
+                        $('#tissueSpec').html("");
+                        $("#pepIncluded").html("");
+                        $('#pepIncludedIn').html("");
+                        $('#isoProteo').html("");
+                        $("#pepSources").html("");
+                        $('#ptmInfos').html("");
+                        for (i = 0; i < data.Peptides.length; i++) {
+                            if (data.Peptides[i].name === peptide) {
+                                peptide = data.Peptides[i];
+                                break;
                             }
                         }
-                    });
-                    return found;
-                }())
-            };
-            var listMatureProteins = getInfoForIsoform.getActiveProteins(matureProtein, isoName);
-            var listPropeptides = getInfoForIsoform.getActiveProteins(proPeptide, isoName);
-            if (data.Peptides.length > 0) $("#nx-detailedPeptide").show("slow");
-            else $("#nx-detailedPeptide").hide("slow");
-
-            var template = HBtemplates['app/assets/templates/detailedPeptide.tmpl'];
-            $("#nx-detailedPeptide").html(template);
-
-            var fillPeptideInfo = {
-                fillNames: function () {
-                    $("#nbPeptides").text(data.Peptides.length);
-                    var listOfNames = "";
-                    for (i = 0; i < data.Peptides.length; i++) {
-                        listOfNames += "<li><a class=\"name\" id=\"" + data.Peptides[i].name + "\" style=\"color:lightsteelblue;cursor:pointer;\">" + data.Peptides[i].identifier + "</a></li>";
-                    }
-                    $('#listNames').html(listOfNames);
-                },
-                peptideSelected: function () {
-                    $(".name").click(function () {
-                        var name = $(this).attr("id");
-                        console.log(name);
-                        $(".nameActive").removeClass("nameActive");
-                        $(this).addClass("nameActive");
-                        fillPeptideInfo.fillDescription(name);
-                    })
-                },
-                fillDescription: function (peptide) {
-                    $("#peptidePositions").html("");
-                    $('#properties').html("");
-                    $('#nature').html("");
-                    $('#tissueSpec').html("");
-                    $("#pepIncluded").html("");
-                    $('#pepIncludedIn').html("");
-                    $('#isoProteo').html("");
-                    $("#pepSources").html("");
-                    $('#ptmInfos').html("");
-                    for (i = 0; i < data.Peptides.length; i++) {
-                        if (data.Peptides[i].name === peptide) {
-                            peptide = data.Peptides[i];
-                            break;
-                        }
-                    }
-                    getProteotypicityInfos(peptide.sequence);
-                    $('#titlePepName').text(peptide.identifier);
-                    peptide.position.forEach(function (o, i) {
-                        var semiTrypticEnd = "-";
-                        if (peptide.sequence[peptide.sequence.length - 1] === "K" || peptide.sequence[peptide.sequence.length - 1] === "R") semiTrypticEnd = "Tryp";
-                        else if (peptide.postPeptide[i] === undefined) semiTrypticEnd = "Term";
-                        var semiTrypticStart = "-";
-                        if (peptide.prePeptide[i] === "K" || peptide.prePeptide[i] === "R") semiTrypticStart = "Tryp";
-                        else if (peptide.prePeptide[i] === undefined) semiTrypticEnd = "Term";
-                        var trypticity = semiTrypticStart !== "-" && semiTrypticEnd !== "-" ? "Tryptic" : semiTrypticStart === "-" && semiTrypticEnd === "-" ? "Non-Tryptic" : "semi-Tryptic";
-                        var miscleavage = "-";
-                        if (trypticity !== "Non-Tryptic") {
-                            miscleavage = 0;
-                            for (i = 0; i < peptide.sequence.length - 1; i++) {
-                                if (peptide.sequence[i] === "K" || peptide.sequence[i] === "R") {
-                                    miscleavage += 1;
+                        getProteotypicityInfos(peptide.sequence);
+                        $('#titlePepName').text(peptide.identifier);
+                        peptide.position.forEach(function (o, i) {
+                            var semiTrypticEnd = "-";
+                            if (peptide.sequence[peptide.sequence.length - 1] === "K" || peptide.sequence[peptide.sequence.length - 1] === "R") semiTrypticEnd = "Tryp";
+                            else if (peptide.postPeptide[i] === undefined) semiTrypticEnd = "Term";
+                            var semiTrypticStart = "-";
+                            if (peptide.prePeptide[i] === "K" || peptide.prePeptide[i] === "R") semiTrypticStart = "Tryp";
+                            else if (peptide.prePeptide[i] === undefined) semiTrypticEnd = "Term";
+                            var trypticity = semiTrypticStart !== "-" && semiTrypticEnd !== "-" ? "Tryptic" : semiTrypticStart === "-" && semiTrypticEnd === "-" ? "Non-Tryptic" : "semi-Tryptic";
+                            var miscleavage = "-";
+                            if (trypticity !== "Non-Tryptic") {
+                                miscleavage = 0;
+                                for (i = 0; i < peptide.sequence.length - 1; i++) {
+                                    if (peptide.sequence[i] === "K" || peptide.sequence[i] === "R") {
+                                        miscleavage += 1;
+                                    }
                                 }
                             }
+                            var Nterm = "-";
+                            var Cterm = "-";
+                            listMatureProteins.forEach(function (p) {
+                                if (p.start === o.first) Nterm = "N-term";
+                                if (p.end === o.second) Cterm = "C-term";
+                            });
+                            listPropeptides.forEach(function (p) {
+                                if (p.start === o.first) Nterm = "N-term";
+                                if (p.end === o.second) Cterm = "C-term";
+                            });
+                            $("#peptidePositions").append("<tr><td>" + o.first + "</td><td>" + o.second + "</td>" +
+                            "<td>" + semiTrypticStart + "</td><td>" + semiTrypticEnd + "</td><td style=\"text-align: center;\">" + miscleavage + "</td><td>" + trypticity + "</td>" +
+                            "<td>" + Nterm + "</td><td>" + Cterm + "</td></tr>");
+                        });
+
+                        $('#first').text(peptide.position);
+                        $('#length').text(peptide.length);
+
+                        if (peptide.properties.natural === true) {
+                            $('#nature').append("<li>natural</li>")
                         }
-                        var Nterm = "-";
-                        var Cterm = "-";
-                        listMatureProteins.forEach(function (p) {
-                            if (p.start === o.first) Nterm = "N-term";
-                            if (p.end === o.second) Cterm = "C-term";
-                        });
-                        listPropeptides.forEach(function (p) {
-                            if (p.start === o.first) Nterm = "N-term";
-                            if (p.end === o.second) Cterm = "C-term";
-                        });
-                        $("#peptidePositions").append("<tr><td>" + o.first + "</td><td>" + o.second + "</td>" +
-                        "<td>" + semiTrypticStart + "</td><td>" + semiTrypticEnd + "</td><td style=\"text-align: center;\">" + miscleavage + "</td><td>" + trypticity + "</td>" +
-                        "<td>" + Nterm + "</td><td>" + Cterm + "</td></tr>");
-                    });
-
-                    $('#first').text(peptide.position);
-                    $('#length').text(peptide.length);
-
-                    if (peptide.properties.natural === true) {
-                        $('#nature').append("<li>natural</li>")
-                    }
-                    if (peptide.properties.synthetic === true) {
-                        $('#nature').append("<li>synthetic</li>")
-                    }
-                    //if (peptide.properties.proteotypic === false) {
-                    //    $('#nature').append("<li>Non-proteotypic</li>");
-                    //    var entryMatchListHTML = "<dl><dt>Entries containing the peptide</dt><dd><ul style=\"padding-left:20px;\">";
-                    //    var query = "select distinct ?entry ?gene where { "+
-                    //        "?entry :isoform ?iso . "+
-                    //        "?entry :gene / :name ?gene ."+
-                    //        "?iso :peptideMapping / :peptideName \"" + peptide.name + "\"^^xsd:string . "+
-                    //        "}";
-                    //
-                    //    nx.executeSparql(query).then(function (data) {
-                    //        console.log(data);
-                    //        var entryMatch = [];
-                    //        data.results.bindings.forEach(function (o) {
-                    //            var infos = {
-                    //                "entryID": o.entry.value.toString().match(/[^\/]*$/)[0],
-                    //                "url": "",
-                    //                "geneName": o.gene.value
-                    //            };
-                    //            infos.url = "/?nxentry=" + infos.entryID;
-                    //            entryMatch.push(infos);
-                    //        });
-                    //        entryMatch.forEach(function (o) {
-                    //            entryMatchListHTML += "<li><a href=\"" + o.url + "\">" + o.entryID + "</a>" + "<span style=\"font-style: italic; margin-left:5px;\"> ( Gene Name : " + o.geneName + " )</span></li>";
-                    //        });
-                    //        entryMatchListHTML += "</ul></dd></dl>";
-                    //        $('#proteomeProperties').html(entryMatchListHTML);
-                    //    }, function (error) {
-                    //        console.log(error.responseText);
-                    //    });
-                    //}
-                    //else {
-                    //    $('#proteomeProperties').html("<dl> <dt>Proteotypicity</dt> <dd> <ul style=\"padding-left:20px;\"><li>Yes</li></ul> </dd> </dl>" +
-                    //    "<dl> <dt>Isoform Proteotypicity</dt><dd><ul style=\"padding-left:20px;\"><li>" + peptide.isoformProteotypicity + "</li></ul></dd></dl>");
-                    //}
-                    $('#pepSeq').text(peptide.sequence);
-                    if (peptide.include.length === 0) $('#pepIncluded').append("<p><em>None</em></p>");
-                    else {
-                        peptide.include.forEach(function (o) {
-                            $('#pepIncluded').append("<li>" + o + "</li>")
-                        });
-                    }
-                    if (peptide.includedIn.length === 0) $('#pepIncludedIn').append("<p><em>None</em></p>");
-                    else {
-                        peptide.includedIn.forEach(function (o) {
-                            $('#pepIncludedIn').append("<li>" + o + "</li>")
-                        });
-                    }
-                    var pmidFound = false;
-                    Object.keys(peptide.sources).forEach( function (o) {
-                        if (o !== "PubMed") $("#pepSources").append("<li>" + o + " (" + peptide.sources[o] + ")" + "</li>");
-                        else $("#pepSources").append("<li>" + o + " </li>");
-                    });
-                    peptide.tissueSpecificity.forEach(function (o) {
-                        if (o.match("PMID")) {
-                            pmidFound=true;
+                        if (peptide.properties.synthetic === true) {
+                            $('#nature').append("<li>synthetic</li>")
                         }
-                        $('#tissueSpec').append("<li>" + o + "</li>")
-                    });
-                    if (pmidFound === true) {
+                        //if (peptide.properties.proteotypic === false) {
+                        //    $('#nature').append("<li>Non-proteotypic</li>");
+                        //    var entryMatchListHTML = "<dl><dt>Entries containing the peptide</dt><dd><ul style=\"padding-left:20px;\">";
+                        //    var query = "select distinct ?entry ?gene where { "+
+                        //        "?entry :isoform ?iso . "+
+                        //        "?entry :gene / :name ?gene ."+
+                        //        "?iso :peptideMapping / :peptideName \"" + peptide.name + "\"^^xsd:string . "+
+                        //        "}";
+                        //
+                        //    nx.executeSparql(query).then(function (data) {
+                        //        console.log(data);
+                        //        var entryMatch = [];
+                        //        data.results.bindings.forEach(function (o) {
+                        //            var infos = {
+                        //                "entryID": o.entry.value.toString().match(/[^\/]*$/)[0],
+                        //                "url": "",
+                        //                "geneName": o.gene.value
+                        //            };
+                        //            infos.url = "/?nxentry=" + infos.entryID;
+                        //            entryMatch.push(infos);
+                        //        });
+                        //        entryMatch.forEach(function (o) {
+                        //            entryMatchListHTML += "<li><a href=\"" + o.url + "\">" + o.entryID + "</a>" + "<span style=\"font-style: italic; margin-left:5px;\"> ( Gene Name : " + o.geneName + " )</span></li>";
+                        //        });
+                        //        entryMatchListHTML += "</ul></dd></dl>";
+                        //        $('#proteomeProperties').html(entryMatchListHTML);
+                        //    }, function (error) {
+                        //        console.log(error.responseText);
+                        //    });
+                        //}
+                        //else {
+                        //    $('#proteomeProperties').html("<dl> <dt>Proteotypicity</dt> <dd> <ul style=\"padding-left:20px;\"><li>Yes</li></ul> </dd> </dl>" +
+                        //    "<dl> <dt>Isoform Proteotypicity</dt><dd><ul style=\"padding-left:20px;\"><li>" + peptide.isoformProteotypicity + "</li></ul></dd></dl>");
+                        //}
+                        $('#pepSeq').text(peptide.sequence);
+                        if (peptide.include.length === 0) $('#pepIncluded').append("<p><em>None</em></p>");
+                        else {
+                            peptide.include.forEach(function (o) {
+                                $('#pepIncluded').append("<li>" + o + "</li>")
+                            });
+                        }
+                        if (peptide.includedIn.length === 0) $('#pepIncludedIn').append("<p><em>None</em></p>");
+                        else {
+                            peptide.includedIn.forEach(function (o) {
+                                $('#pepIncludedIn').append("<li>" + o + "</li>")
+                            });
+                        }
+                        var pmidFound = false;
+                        //Object.keys(peptide.sources).forEach(function (o) {
+                        //    if (o !== "PubMed") $("#pepSources").append("<li>" + o + " (" + peptide.sources[o] + ")" + "</li>");
+                        //    else $("#pepSources").append("<li>" + o + " </li>");
+                        //});
+                        peptide.tissueSpecificity.forEach(function (o) {
+                            var sourceTemp = o;
+                            if (o.match("MDATA")) {
+                                sourceTemp = "neXtProt - " + o;
+                            }
+                            if (o.match("PMID")) {
+                                sourceTemp = "neXtProt - " + o;
+                                pmidFound = true;
+                            }
+                            $('#pepSources').append("<li>" + sourceTemp + "</li>")
+                        });
 
-        var query = "SELECT ?ptmpub ?ptmpubid ?mappubid ?ptmtype ?ptmstart str(?mapsrc) ?ptmend ?mapstart ?mapend ?ptmterm ?ptmlabel ?ptmcomment WHERE {" +
+
+                        var query = "SELECT ?ptmpub ?ptmpubid ?mappubid ?ptmtype ?ptmstart str(?mapsrc) ?ptmend ?mapstart ?mapend ?ptmterm ?ptmlabel ?ptmcomment WHERE {" +
                             "values (?pepName ?iso) {(\"" + peptide.name + "\"^^xsd:string isoform:" + isoName + ") }" +
                             "?iso :ptm ?ptm ." +
                             "?ptm rdf:type ?ptmtype ." +
@@ -15900,44 +16005,74 @@ function initNXDivs() {
                             "filter (str(?ptmpubid) = str(?mappubid))" +
                             "}";
 
-                        nx.executeSparql(query).then(function (data) {
+                        var queryRegion = "SELECT ?ptmtype ?ptmstart ?ptmend ?mapstart ?mapend ?ptmterm ?ptmcomment WHERE {" +
+                            "values (?pepName ?iso) {(\"" + peptide.name + "\"^^xsd:string isoform:" + isoName + ") }" +
+                            "?iso :ptm ?ptm ." +
+                            "?ptm rdf:type ?ptmtype ." +
+                            "?ptm :start ?ptmstart ." +
+                            "?ptm :end ?ptmend ." +
+                            "optional { ?ptm :term ?ptmterm }." +
+                            "optional { ?ptm rdfs:comment ?ptmcomment} ." +
+                            "?iso :peptideMapping ?map ." +
+                            "?map :peptideName ?pepName ." +
+                            "?map :position / :start ?mapstart ." +
+                            "?map :position / :end ?mapend ." +
+                            "filter (?ptmstart >= ?mapstart && ?ptmstart <= ?mapend || ?ptmend >= ?mapstart && ?ptmend <= ?mapend)" +
+                            "}";
+                        if (pmidFound === true) {
+                            nx.executeSparql(query).then(function (data) {
+                                $('#ptmInfos').append("<div class=\"panel-heading\" style=\"background-color: #F5F5F5;border-bottom: 1px solid #DDD;border-top:1px solid #DDD;font-weight: 500;\">PTM justified by this peptide :</div>" +
+                                "<div id=\"ptmByPeptide\" class=\"panel-body\"></div>");
+                                if (data.results.bindings.length > 0) {
+                                    data.results.bindings.forEach(function (o) {
+                                        $('#ptmByPeptide').append("<div class=\"row\"style=\"border-bottom:1px solid #E7EAEC;margin-bottom:5px;\"><dl class=\"col-md-6\"><dt>PTM ID</dt><dd>" + o.ptmterm.value.toString().match(/[^\/]*$/)[0] + "</dd></dl>" +
+                                        "<dl class=\"col-md-6\"><dt>Position</dt><dd>" + o.ptmstart.value + "</dd></dl>" +
+                                        "<dl class=\"col-md-6\"><dt>Type</dt><dd>" + o.ptmtype.value.toString().match(/[^#]*$/)[0].slice() + "</dd></dl>" +
+                                        "<dl class=\"col-md-6\"><dt>Description</dt><dd>" + o.ptmcomment.value + "</dd></dl></div>");
+                                    });
+                                }
+                                else $('#ptmByPeptide').html("No PTM found");
+                            }, function (error) {
+                                console.log(error.responseText);
+                            });
+                        }
+                        nx.executeSparql(queryRegion).then(function (data) {
+                            $('#ptmInfos').append("<div class=\"panel-heading\" style=\"background-color: #F5F5F5;border-bottom: 1px solid #DDD;border-top:1px solid #DDD;font-weight: 500;\">PTM present in this region</div>" +
+                            "<div id=\"ptmByRegion\" class=\"panel-body\"></div>");
                             if (data.results.bindings.length > 0) {
                                 data.results.bindings.forEach(function (o) {
-                                    $('#ptmInfos').append("<div class=\"row\"style=\"border-bottom:1px solid #E7EAEC;margin-bottom:5px;\"><dl class=\"col-md-6\"><dt>PTM ID</dt><dd>" + o.ptmterm.value.toString().match(/[^\/]*$/)[0] + "</dd></dl>" +
+                                    $('#ptmByRegion').append("<div class=\"row\"style=\"border-bottom:1px solid #E7EAEC;margin-bottom:5px;\"><dl class=\"col-md-6\"><dt>PTM ID</dt><dd>" + o.ptmterm.value.toString().match(/[^\/]*$/)[0] + "</dd></dl>" +
                                     "<dl class=\"col-md-6\"><dt>Position</dt><dd>" + o.ptmstart.value + "</dd></dl>" +
                                     "<dl class=\"col-md-6\"><dt>Type</dt><dd>" + o.ptmtype.value.toString().match(/[^#]*$/)[0].slice() + "</dd></dl>" +
                                     "<dl class=\"col-md-6\"><dt>Description</dt><dd>" + o.ptmcomment.value + "</dd></dl></div>");
                                 });
                             }
-                            else $('#ptmInfos').html("No PTM found");
+                            else $('#ptmByRegion').html("No PTM found");
                         }, function (error) {
                             console.log(error.responseText);
                         });
-                    }
-                    else {
-                        $('#ptmInfos').html("No PTM found");
-                    }
 
 
-                    if ($('#peptideSpecificity').hasVerticalScrollBar()) {
-                        $('#peptideSpecificity').removeClass("ignoreShift");
-                    }
-                    else $('#peptideSpecificity').addClass("ignoreShift");
+                        if ($('#peptideSpecificity').hasVerticalScrollBar()) {
+                            $('#peptideSpecificity').removeClass("ignoreShift");
+                        }
+                        else $('#peptideSpecificity').addClass("ignoreShift");
 
-                    $("#pepPosTable").stupidtable();
-                    $(function () {
-                        $("#sortStart").stupidsort("asc");
-                    });
-                }
-            };
-            fillPeptideInfo.fillNames();
-            $(".name:first").addClass("nameActive");
-            fillPeptideInfo.fillDescription($(".name:first").attr("id"));
-            fillPeptideInfo.peptideSelected();
-            //adjustHeight("#info-left","#info-right");
+                        $("#pepPosTable").stupidtable();
+                        $(function () {
+                            $("#sortStart").stupidsort("asc");
+                        });
+                    }
+                };
+                fillPeptideInfo.fillNames();
+                $(".name:first").addClass("nameActive");
+                fillPeptideInfo.fillDescription($(".name:first").attr("id"));
+                fillPeptideInfo.peptideSelected();
+//adjustHeight("#info-left","#info-right");
+            }
         }
-    };
-    var RenderPeptidesForIsoform = function (peptideMappings, isoName)  {
+        ;
+    var RenderPeptidesForIsoform = function (peptideMappings, isoName) {
 
         ////////////////////////// TEMPLATE PEPTIDES
 
@@ -15988,12 +16123,12 @@ function initNXDivs() {
                     positions = positions.split("-").map(function (o) {
                         return parseInt(o)
                     });
-                    seq1.coverage(HL.HashAA, positions[0]-1, positions[1]-1);
+                    seq1.coverage(HL.HashAA, positions[0] - 1, positions[1] - 1);
                     var ElementTop = $('#peptideHighlighted').position().top - 140;
                     var scrollPosition = $("#scroller").scrollTop();
                     var scrollingLength = ElementTop + scrollPosition;
                     $("#scroller").animate({scrollTop: scrollingLength}, 1000);
-                    $(function() {
+                    $(function () {
                         $("#preLoaderActive").remove();
                     });
                     var dateHLend = new Date().getTime();
@@ -16008,37 +16143,45 @@ function initNXDivs() {
 
                     HL.HashAA = HL.applyAAFormating(datas.Peptides);
                     seq1.coverage(HL.HashAA);
-                    var legend = [{name:"non-proteotypic", color:"#4A57D4", underscore:false}, {name:"single proteotypic", color:"#007800", underscore:false},{name:"several proteotypic", color:"#69CC33", underscore:false},{name:"synthetic", color:"#fff", underscore:true}];
+                    var legend = [{
+                        name: "non-proteotypic",
+                        color: "#4A57D4",
+                        underscore: false
+                    }, {name: "single proteotypic", color: "#007800", underscore: false}, {
+                        name: "several proteotypic",
+                        color: "#69CC33",
+                        underscore: false
+                    }, {name: "synthetic", color: "#fff", underscore: true}];
                     seq1.addLegend(legend);
                     coveredSeq = $("#fastaSeq").html();
 
                     var dateFCend = new Date().getTime();
 
                 },
-                applyAAFormating: function(list) {
+                applyAAFormating: function (list) {
                     var datestart = new Date().getTime();
                     var HashAA = [];
-                    var proteoCoverage=0;
-                    var pepCoverage=0;
-                    var jMin=0;
+                    var proteoCoverage = 0;
+                    var pepCoverage = 0;
+                    var jMin = 0;
                     var begin = 1;
                     var subseqColor = "";
                     var subseq_;
                     var seqLength = getInfoForIsoform.Sequence(isoforms, isoName).length;
-                    for (var i=1;i<seqLength+1;i++) {
+                    for (var i = 1; i < seqLength + 1; i++) {
                         var naturalPep = 0;
                         var syntheticPep = 0;
                         var proteotypicPep = 0;
                         var checkScale = false;
-                        for (var j=jMin;j<list.length;j++) {
+                        for (var j = jMin; j < list.length; j++) {
                             if (i >= list[j].position.first && i <= list[j].position.second) {
                                 if (list[j].properties.natural) naturalPep += 1;
                                 if (list[j].properties.synthetic) syntheticPep += 1;
                                 if (list[j].properties.proteotypic) proteotypicPep += 1;
                             }
                             if (i > list[j].position.second && checkScale === false) {
-                                checkScale=true;
-                                jMin=j;
+                                checkScale = true;
+                                jMin = j;
                             }
                             if (list[j].position.first > i) break;
                         }
@@ -16056,23 +16199,28 @@ function initNXDivs() {
                         }
                         if (i === 1) {
                             subseqColor = clr;
-                            subseq_=underscore;
+                            subseq_ = underscore;
                         }
                         if (!(clr === subseqColor && underscore === subseq_)) {
-                            HashAA.push({"start": begin-1, "end": i-1, "color": subseqColor, "underscore": subseq_});
-                            begin=i;
+                            HashAA.push({
+                                "start": begin - 1,
+                                "end": i - 1,
+                                "color": subseqColor,
+                                "underscore": subseq_
+                            });
+                            begin = i;
                             subseqColor = clr;
-                            subseq_=underscore;
+                            subseq_ = underscore;
                         }
                         if (i === seqLength) {
-                            HashAA.push({"start": begin-1, "end": i, "color": subseqColor, "underscore": subseq_});
+                            HashAA.push({"start": begin - 1, "end": i, "color": subseqColor, "underscore": subseq_});
                         }
 
                     }
                     var intermediate = new Date().getTime();
 
-                    proteoCoverage = ((proteoCoverage/seqLength)*100).toFixed(2);
-                    pepCoverage = ((pepCoverage/seqLength)*100).toFixed(2);
+                    proteoCoverage = ((proteoCoverage / seqLength) * 100).toFixed(2);
+                    pepCoverage = ((pepCoverage / seqLength) * 100).toFixed(2);
                     $("#proteoCover").text(proteoCoverage + "%");
                     $("#pepCover").text(pepCoverage + "%");
 
@@ -16094,7 +16242,6 @@ function initNXDivs() {
             var intermediate = new Date().getTime();
 
 
-
             $(function () {
                 HL.firstCoverage();
                 HL.clickPos();
@@ -16103,7 +16250,7 @@ function initNXDivs() {
     };
 
     $(function () {
-        [nx.getProteinSequence(nxEntryName), nx.getPeptide(nxEntryName), nx.getSrmPeptide(nxEntryName), nx.getMatureProtein(nxEntryName), nx.getProPeptide(nxEntryName),  nx.getSecondaryStructure(nxEntryName)].reduce(function (sequence, dataPromise) {
+        [nx.getProteinSequence(nxEntryName), nx.getPeptide(nxEntryName), nx.getSrmPeptide(nxEntryName), nx.getMatureProtein(nxEntryName), nx.getProPeptide(nxEntryName), nx.getSecondaryStructure(nxEntryName)].reduce(function (sequence, dataPromise) {
             return sequence.then(function () {
                 return dataPromise;
             }).then(function (oneData) {
@@ -16124,7 +16271,7 @@ function initNXDivs() {
                         srmPeptideMappings = oneData;
                         srmPeptideMappings.forEach(function (o) {
                             var alreadySaved = false;
-                            for (var i = 0; i<peptideMappings.length;i++) {
+                            for (var i = 0; i < peptideMappings.length; i++) {
                                 if (o.peptideUniqueName === peptideMappings[i].peptideUniqueName) {
                                     alreadySaved = true;
                                     break;

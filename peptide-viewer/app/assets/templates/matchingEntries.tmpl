@@ -1,35 +1,81 @@
 <div class="panel-heading">
-                            <h5 class="text-center" style="margin:0px;">Peptide to protein mapping</h5>
-                        </div>
-                        <div class="panel-heading" style="height:35px;">
-                            <div class="checkbox text-center" style="margin-top:0px">
-                                <label>
-                                    <input type="checkbox" id="withVariant" value="option1">
-                                    Taking variants into account
-                                </label>
-                            </div>
-                        </div>
-                        <div class="panel-body" style="height:190px;overflow:auto;">
-                            <div class="pull-right" style="margin-top:-5px;margin-right: -5px;"><button id="showIsoforms" type="button" class="btn btn-default btn-xs">Show isoforms</button></div>
-                            <div id="proteomeProperties">
-                                <div style="border-bottom:1px solid #E7EAEC;margin-top: -10px;margin-bottom:5px;">
-                                    <h5 id="proteotypicitySentence"></h5>
-                                </div>
-                                <div id="showEntry"  style="display:block">
-                                    <ul>
-                                        {{#entries}}
-                                        {{#if withVariant}}<li class="variantIntoAccount" style="display: none">{{else}}<li>{{/if}}{{name}} <em> ( Gene Name : {{geneName}} )</em></li>
-                                        {{/entries}}
-                                    </ul>
-                                </div>
-                                <div id="showIsoform" style="display:none">
-                                    <ul>
-                                    {{#isoforms}}{{#each this}}
+    <h5 class="text-center" style="margin:0px;">Peptide to protein mapping</h5>
+</div>
+<div class="panel-body" style="padding:0px;height:220px;overflow:auto;">
+    <div class="pull-right" style="margin-top:8px;margin-right: 15px;">
+        <button id="showIsoforms" type="button" class="btn btn-default btn-xs">Show isoforms</button>
+    </div>
+    <div id="proteomeProperties">
+        <!--<div style="border-bottom:1px solid #E7EAEC;margin-top: -10px;margin-bottom:5px;">-->
+        <!--<h5 id="proteotypicitySentence"></h5>-->
+        <!--</div>-->
+        {{#proteotypicity}}
+        {{#if withoutVariant}}<div  class="panel panel-success" style="margin:0px;min-height: 110px;">
+        {{else}}<div class="panel panel-info" style="margin:0px;min-height: 110px;">{{/if}}
+        {{/proteotypicity}}
+            <div class="panel-heading" style="padding:1px 15px">
+                <h5>Entries mapping</h5>
+            </div>
+            <div class="panel-body">
+                <div class="showEntry" style="display:block">
+                    <ul>
+                        {{#entries}}
+                        {{#unless withVariant}}
+                        <li>{{name}} <em> ( Gene Name : {{geneName}} )</em></li>
+                        {{/unless}}
+                        {{/entries}}
+                    </ul>
+                </div>
+                <div class="showIsoform" style="display:none">
+                    <ul>
+                        {{#isoforms}}{{#each this}}
 
-                                    {{#if variant}}<li class="variantIntoAccount" style="display: none">{{else}}<li>{{/if}}{{isoform}} {{#if variant}}({{positions.0.first}} : {{variant.original}}  → {{variant.variant}}){{/if}}</li>
-                                    {{/each}}
-                                    {{/isoforms}}
-                                    </ul>
-                                </div>
-                            </div>
-                        </div>
+                        {{#unless variant}}
+                        <li>{{isoform}}</li>
+                        {{/unless}}
+                        {{/each}}
+                        {{/isoforms}}
+                    </ul>
+                </div>
+            </div>
+        </div>
+        {{#proteotypicity}}
+        {{#if withVariant}}<div  class="panel panel-success" style="margin:0px;min-height: 110px;">
+        {{else}}<div class="panel panel-info" style="margin:0px;min-height: 110px;">{{/if}}
+        {{/proteotypicity}}
+            <div class="panel-heading" style="padding:1px 15px">
+                <h5>Additionnal entries with known variants</h5>
+            </div>
+            <div class="panel-body">
+                <div class="showEntry" style="display:block">
+                    <ul>
+                        {{#if proteotypicity.onlyVariant}}
+                        <li>No other entries found</li>
+                        {{/if}}
+                        {{#entries}}
+                        {{#if withVariant}}
+                        <li class="variantIntoAccount">{{name}} <em> ( Gene Name : {{geneName}} )</em></li>
+                        {{/if}}
+                        {{/entries}}
+                    </ul>
+                </div>
+                <div class="showIsoform" style="display:none">
+                    <ul>
+                        {{#if proteotypicity.onlyVariant}}
+                        <li>No other entries found</li>
+                        {{/if}}
+                        {{#isoforms}}{{#each this}}
+
+                        {{#if variant}}
+                        <li class="variantIntoAccount">{{isoform}} ({{positions.0.first}} : {{variant.original}} →
+                            {{variant.variant}})
+                        </li>
+                        {{/if}}
+                        {{/each}}
+                        {{/isoforms}}
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -102,7 +102,6 @@ html {
     /*background-image: radial-gradient(center 45deg, circle cover, #0F8292 0%, #066B78 100%) !important;*/
 }
 .detailedInfosFields dt{
-    margin-top:-10px;
     margin-bottom:5px;
 }
 .detailedInfosFields dd{
