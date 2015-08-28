@@ -40,6 +40,10 @@ function TripleViewer(entry) {
             /////////// EventListener to change isoform
             getInfoForIsoform.isoform();
 
+            $(document).ready(function(){
+                $('.isoformNames').tooltip({trigger: "hover"});
+            });
+
             $("#nx-isoformChoice li:first-child").addClass("active");
         }
     }

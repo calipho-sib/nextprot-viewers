@@ -14884,10 +14884,12 @@ this["HBtemplates"]["app/assets/templates/detailedPeptide.tmpl"] = Handlebars.te
 },"useData":true});
 
 this["HBtemplates"]["app/assets/templates/isoformChoice.tmpl"] = Handlebars.template({"1":function(depth0,helpers,partials,data) {
-    var helper;
+    var stack1, helper, alias1=this.escapeExpression;
 
-  return "        <li role=\"presentation\"><a class=\"isoformNames\" href=\"#\" role=\"tab\" data-toggle=\"tab\">"
-    + this.escapeExpression(((helper = (helper = helpers.uniqueName || (depth0 != null ? depth0.uniqueName : depth0)) != null ? helper : helpers.helperMissing),(typeof helper === "function" ? helper.call(depth0,{"name":"uniqueName","hash":{},"data":data}) : helper)))
+  return "        <li role=\"presentation\"><a class=\"isoformNames\" href=\"#\" role=\"tab\" data-toggle=\"tab\" title=\""
+    + alias1(this.lambda(((stack1 = (depth0 != null ? depth0.mainEntityName : depth0)) != null ? stack1.value : stack1), depth0))
+    + "\">"
+    + alias1(((helper = (helper = helpers.uniqueName || (depth0 != null ? depth0.uniqueName : depth0)) != null ? helper : helpers.helperMissing),(typeof helper === "function" ? helper.call(depth0,{"name":"uniqueName","hash":{},"data":data}) : helper)))
     + "</a></li>\n";
 },"3":function(depth0,helpers,partials,data) {
     var stack1;
@@ -14896,10 +14898,12 @@ this["HBtemplates"]["app/assets/templates/isoformChoice.tmpl"] = Handlebars.temp
     + ((stack1 = helpers.blockHelperMissing.call(depth0,this.lambda(((stack1 = (depth0 != null ? depth0.isoforms : depth0)) != null ? stack1.more : stack1), depth0),{"name":"isoforms.more","hash":{},"fn":this.program(4, data, 0),"inverse":this.noop,"data":data})) != null ? stack1 : "")
     + "            </ul>\n";
 },"4":function(depth0,helpers,partials,data) {
-    var helper;
+    var stack1, helper, alias1=this.escapeExpression;
 
-  return "                <li role=\"presentation\"><a class=\"isoformNames\" href=\"#\" role=\"tab\" data-toggle=\"tab\">"
-    + this.escapeExpression(((helper = (helper = helpers.uniqueName || (depth0 != null ? depth0.uniqueName : depth0)) != null ? helper : helpers.helperMissing),(typeof helper === "function" ? helper.call(depth0,{"name":"uniqueName","hash":{},"data":data}) : helper)))
+  return "                <li role=\"presentation\"><a class=\"isoformNames\" href=\"#\" role=\"tab\" data-toggle=\"tab\" title=\""
+    + alias1(this.lambda(((stack1 = (depth0 != null ? depth0.mainEntityName : depth0)) != null ? stack1.value : stack1), depth0))
+    + "\">"
+    + alias1(((helper = (helper = helpers.uniqueName || (depth0 != null ? depth0.uniqueName : depth0)) != null ? helper : helpers.helperMissing),(typeof helper === "function" ? helper.call(depth0,{"name":"uniqueName","hash":{},"data":data}) : helper)))
     + "</a>\n                </li>\n";
 },"compiler":[6,">= 2.0.0-beta.1"],"main":function(depth0,helpers,partials,data) {
     var stack1;
@@ -15676,6 +15680,9 @@ function initNXDivs() {
             $("#nx-isoformChoice").append(results);
             /////////// EventListener to change isoform
             getInfoForIsoform.Isoform();
+            $(document).ready(function(){
+                $('.isoformNames').tooltip({trigger: "hover"});
+            });
 
             $("#nx-isoformChoice li:first-child").addClass("active");
         }

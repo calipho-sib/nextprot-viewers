@@ -225,6 +225,9 @@ function initNXDivs() {
             $("#nx-isoformChoice").append(results);
             /////////// EventListener to change isoform
             getInfoForIsoform.Isoform();
+            $(document).ready(function(){
+                $('.isoformNames').tooltip({trigger: "hover"});
+            });
 
             $("#nx-isoformChoice li:first-child").addClass("active");
         }

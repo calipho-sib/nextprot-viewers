@@ -126,6 +126,15 @@ html {
     -webkit-transition: height 1s; /* Safari and Chrome */
     -o-transition: height 1s; /* Opera */
 }
+a, a:active, a:focus,
+button, button:focus, button:active,
+.btn, .btn:focus, .btn:active:focus, .btn.active:focus, .btn.focus, .btn.focus:active, .btn.active.focus {
+    outline: 0;
+}
+
+input::-moz-focus-inner {
+    border: 0;
+}
 /*body {*/
     /*margin-right: 0px !important;*/
 /*}*/
