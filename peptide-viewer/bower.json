@@ -3,7 +3,8 @@
   "dependencies": {
     "sequence-viewer": "x.x.x",
     "nextprot": "0.0.x",
-    "iframe-resizer":"x.x.x"
+    "iframe-resizer":"x.x.x",
+    "feature-viewer":"x.x.x"
 
   },
   "resolutions": {

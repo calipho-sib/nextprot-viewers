@@ -348,7 +348,6 @@ function TripleViewer(entry) {
     }
 
     function addFeatures(isoName) {
-        console.log("REGENESIS OF THE DATAAAAA");
         for (var i=0;i<featuresForViewer.length;i++) {
             if (Object.keys(featuresForViewer[i]).length !== 0 && featuresForViewer[i].hasOwnProperty(isoName) && filterOptions[featuresForViewer[i][isoName].filter.split(" ").join("_").toLowerCase()] === true) {
                 var feature = jQuery.extend({}, featuresForViewer[i][isoName]);

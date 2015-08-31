@@ -11,8 +11,10 @@ module.exports = function(grunt) {
         src: [
           'bower_components/nextprot/dist/nextprot.bundle.js',
           'bower_components/bootstrap/dist/js/bootstrap.min.js',
+          'bower_components/d3/d3.min.js',
           'app/js/highcharts.js',
           'bower_components/sequence-viewer/src/sequence-viewer.js',
+          'bower_components/feature-viewer/dist/feature-viewer.js',
           'bower_components/iframe-resizer/js/iframeResizer.contentWindow.min.js',
           'app/js/gist_templates.js',
           'app/js/stupidtable.js',
@@ -23,7 +25,7 @@ module.exports = function(grunt) {
         dest: 'dist/peptide-viewer.bundle.js'
       },
       extras: {
-        src: ['app/css/gist.css', 'bower_components/bootstrap/dist/css/bootstrap.min.css'],
+        src: ['app/css/gist.css', 'bower_components/bootstrap/dist/css/bootstrap.min.css','bower_components/feature-viewer/css/style.css'],
         dest: 'dist/peptide-viewer.css'
       }
 

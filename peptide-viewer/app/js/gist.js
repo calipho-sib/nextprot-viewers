@@ -12,6 +12,8 @@ function initNXDivs() {
     var srmPeptideMappings;
     var matureProtein;
     var proPeptide;
+    var allFeatures = [];
+    var featuresForViewer = [];
     var seq1 = null;
 
     function getFirstIsoform(isoformList) {
@@ -92,8 +94,10 @@ function initNXDivs() {
                     for (var i = 0; i < o.isoformSpecificity[isoName].positions.length; i++) {
 
                         var dict = {};
+                        var peptideAtlasID = "";
 
-                        o.evidences.map(function (q) {
+                        o.evidences.forEach(function (q) {
+                            if (q.databaseName === "PeptideAtlas") peptideAtlasID= q.accession;
                             dict[q.databaseName] = q.accession;
                         });
 
@@ -117,7 +121,8 @@ function initNXDivs() {
                             "postPeptide": "",
                             "include": [],
                             "includedIn": [],
-                            "sources": dict
+                            "sources": dict,
+                            "peptideAtlasID": peptideAtlasID
                         };
                         //if (o.natural === true) peptide.properties.push("natural");
                         //else peptide.properties.push("-");
@@ -233,6 +238,47 @@ function initNXDivs() {
         }
     }
 
+    function createSVG(sequences,isoName) {
+        sequences.forEach(function (o) {
+            if (o.uniqueName === isoName) {
+                currentSeq = o.sequence;
+                ft = new FeatureViewer(currentSeq, "#featureViewer", {
+                    showAxis: true,
+                    showSequence: true,
+                    brushActive: true,
+                    verticalLine: false,
+                    toolbar:true
+                });
+            }
+        });
+    }
+    function addFeatures(isoName) {
+        for (var i=0;i<featuresForViewer.length;i++) {
+            if (Object.keys(featuresForViewer[i]).length !== 0 && featuresForViewer[i].hasOwnProperty(isoName)) {
+                var feature = jQuery.extend({}, featuresForViewer[i][isoName]);
+                ft.addFeature(feature);
+            }
+        }
+    }
+
+    function RenderFeatureViewer(data, isoName) {
+        var metaData = [
+            {name: "Sequence"},                                                                                          {name: "Peptide",className: "pep",color: "#B3E1D1",type: "multipleRect",filter:"Peptide"},
+            {name: "Srm Peptide",className: "srmPep",color: "#B3E1F0",type: "multipleRect",filter:"none"},               {name: "Mature protein",className: "mat",color: "#B3B3C2",type: "rect",filter:"Processing"},
+            {name: "Propeptide",className: "pro",color: "#B3B3B3",type: "rect",filter:"Processing"}
+        ];
+        var featuresByIsoform=[];
+        for (var i=1; i<data.length-1;i++) {
+            var feat = NXUtils.convertMappingsToIsoformMap(data[i],metaData[i].name,metaData[i].filter);
+            featuresByIsoform.push(feat);
+            var featForViewer = NXViewerUtils.convertNXAnnotations(feat,metaData[i]);
+            featuresForViewer.push(featForViewer);
+        }
+        //addFiltering();
+        createSVG(isoforms,isoName);
+        addFeatures(isoName);
+    }
+
     var RenderSequenceForIsoform = function (isoforms, isoName) {
 
 
@@ -272,10 +318,7 @@ function initNXDivs() {
                 return {name: o.uniqueName, withVariant: entryWithVariant(o), geneName: o.overview.mainGeneName}
             });
             var entriesLength = data.length;
-            console.log("PROTEOTYPICITY ????");
             var entriesLengthWithoutVariant = entries.filter(function(d) { return d.withVariant === false}).length;
-            console.log(entriesLength);
-            console.log(entriesLengthWithoutVariant);
             var entryMatching = {
                 proteotypicity: {
                     withVariant:entriesLength <= 1,
@@ -294,10 +337,6 @@ function initNXDivs() {
                     })
                 })
             };
-
-            console.log("PROTEOTYPICITY ????");
-            console.log(entryMatching.proteotypicity.withoutVariant);
-            console.log(entryMatching.proteotypicity.withVariant);
             var template = HBtemplates['app/assets/templates/matchingEntries.tmpl'];
             var results = template(entryMatching);
             $("#proteoBlock").html(results);
@@ -422,7 +461,7 @@ function initNXDivs() {
                             }
                         }
                         getProteotypicityInfos(peptide.sequence);
-                        $('#titlePepName').text(peptide.identifier);
+                        $('#titlePepName').text(peptide.peptideAtlasID ? peptide.identifier + " (" + peptide.peptideAtlasID + ")" : peptide.identifier);
                         peptide.position.forEach(function (o, i) {
                             var semiTrypticEnd = "-";
                             if (peptide.sequence[peptide.sequence.length - 1] === "K" || peptide.sequence[peptide.sequence.length - 1] === "R") semiTrypticEnd = "Tryp";
@@ -522,14 +561,14 @@ function initNXDivs() {
                                 sourceTemp = "neXtProt - " + o;
                             }
                             if (o.match("PMID")) {
-                                sourceTemp = "neXtProt - " + o;
+                                sourceTemp = "neXtProt - " + o.replace("PMID_","PubMed:");
                                 pmidFound = true;
                             }
                             $('#pepSources').append("<li>" + sourceTemp + "</li>")
                         });
 
 
-                        var query = "SELECT ?ptmpub ?ptmpubid ?mappubid ?ptmtype ?ptmstart str(?mapsrc) ?ptmend ?mapstart ?mapend ?ptmterm ?ptmlabel ?ptmcomment WHERE {" +
+                        var query = "SELECT distinct ?ptmterm ?ptmtype ?ptmstart ?ptmend ?mapstart ?mapend ?ptmlabel ?ptmcomment WHERE {" +
                             "values (?pepName ?iso) {(\"" + peptide.name + "\"^^xsd:string isoform:" + isoName + ") }" +
                             "?iso :ptm ?ptm ." +
                             "?ptm rdf:type ?ptmtype ." +
@@ -555,7 +594,8 @@ function initNXDivs() {
                             "filter (contains(str(?mapsrc), \"PMID\"))" +
                             "filter (?ptmtype  in (:CrossLink , :ModifiedResidue , :GlycosylationSite)) ." +
                             "filter (str(?ptmpubid) = str(?mappubid))" +
-                            "}";
+                            "}" +
+                            "order by ?ptmstart";
 
                         var queryRegion = "SELECT ?ptmtype ?ptmstart ?ptmend ?mapstart ?mapend ?ptmterm ?ptmcomment WHERE {" +
                             "values (?pepName ?iso) {(\"" + peptide.name + "\"^^xsd:string isoform:" + isoName + ") }" +
@@ -587,6 +627,10 @@ function initNXDivs() {
                             }, function (error) {
                                 console.log(error.responseText);
                             });
+                        }
+                        else {
+                            $('#ptmInfos').append("<div class=\"panel-heading\" style=\"background-color: #F5F5F5;border-bottom: 1px solid #DDD;border-top:1px solid #DDD;font-weight: 500;\">PTM justified by this peptide :</div>" +
+                            "<div id=\"ptmByPeptide\" class=\"panel-body\">No PTM found</div>");
                         }
                         nx.executeSparql(queryRegion).then(function (data) {
                             $('#ptmInfos').append("<div class=\"panel-heading\" style=\"background-color: #F5F5F5;border-bottom: 1px solid #DDD;border-top:1px solid #DDD;font-weight: 500;\">PTM present in this region</div>" +
@@ -806,21 +850,22 @@ function initNXDivs() {
             return sequence.then(function () {
                 return dataPromise;
             }).then(function (oneData) {
-                console.log(oneData);
                 cpt += 1;
-                console.log(cpt);
                 switch (cpt) {
                     case 1:
                         isoforms = oneData;
+                        allFeatures.push(oneData);
                         firstIso = getFirstIsoform(isoforms);
                         RenderSequenceForIsoform(isoforms, firstIso);
                         nxIsoformChoice(isoforms);
                         break;
                     case 2:
                         peptideMappings = oneData;
+                        allFeatures.push(oneData);
                         break;
                     case 3:
                         srmPeptideMappings = oneData;
+                        allFeatures.push(oneData);
                         srmPeptideMappings.forEach(function (o) {
                             var alreadySaved = false;
                             for (var i = 0; i < peptideMappings.length; i++) {
@@ -836,17 +881,23 @@ function initNXDivs() {
                         break;
                     case 4:
                         matureProtein = oneData.annot;
-
-                        //RenderPeptidesForIsoform(peptideMappings, firstIso);
+                        allFeatures.push(oneData.annot);
                         break;
                     case 5:
                         proPeptide = oneData.annot;
+                        allFeatures.push(oneData.annot);
 
                         RenderPeptidesForIsoform(peptideMappings, firstIso);
+                        RenderFeatureViewer(allFeatures, firstIso);
+
+                        //console.log(oneData[14]);
+                        //var tv = new TripleViewer(entry);
+                        //tv.init(oneData,metaData);
                         break;
                     case 6:
                         annotations = oneData;
                         //nxPviz(annotations, isoforms);
+
                         break;
                 }
             });

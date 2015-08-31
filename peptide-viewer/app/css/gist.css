@@ -23,6 +23,14 @@ html {
     margin-top:10px;
     border-bottom: 1px solid #E7EAEC;
 }
+
+#visuContainer {
+background:#fff;
+    padding:5px 10px;
+    border-top:4px solid #E7EAEC;
+    border-bottom: 1px solid #e7eaec;
+    margin-top: 20px;
+}
 #nx-isoformChoice {
     margin-top:10px;
     margin-bottom: -5px;
