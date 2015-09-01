@@ -26,10 +26,14 @@ html {
 
 #visuContainer {
 background:#fff;
-    padding:5px 10px;
     border-top:4px solid #E7EAEC;
     border-bottom: 1px solid #e7eaec;
-    margin-top: 20px;
+}
+#buttonRightFV{
+    position:absolute;
+    right: 20px;
+    top: 10px;
+    z-index:30;
 }
 #nx-isoformChoice {
     margin-top:10px;

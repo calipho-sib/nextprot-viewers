@@ -80,9 +80,6 @@ function TripleViewer(entry) {
             for (var i=1; i<oneData.length-1;i++) {
                 var feat = NXUtils.convertMappingsToIsoformMap(oneData[i],metaData[i].name,metaData[i].filter);
                 featuresByIsoform.push(feat);
-                if (!(oneData[i] instanceof Array)) {
-                    console.log("BANANA !");
-                }
                 var featForViewer = NXViewerUtils.convertNXAnnotations(feat,metaData[i]);
                 featuresForViewer.push(featForViewer);
             }

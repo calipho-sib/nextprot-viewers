@@ -15770,7 +15770,7 @@ function FeatureViewer(sequence, div, options) {
                     .attr("class", "panel panel-default header-zoom")
                     .style("display", "inline-block")
                     .style("width", "150px")
-                    .style("margin", "0px")
+                    .style("margin", "20px 0px 0px")
                     .style("padding", "0px");
                 headerZoom
                     .append("div")
@@ -15803,7 +15803,7 @@ function FeatureViewer(sequence, div, options) {
                     .attr("class", "panel panel-default header-position")
                     .style("display", "inline-block")
                     .style("width", "175px")
-                    .style("margin", "0px 20px")
+                    .style("margin", "20px 20px 0px")
                     .style("padding", "0px");
                 headerPosition
                     .append("div")
@@ -16502,6 +16502,7 @@ function initNXDivs() {
     var cpt = 0;
     var isoforms;
     var firstIso;
+    var currentIso;
     var annotations;
     var peptideMappings;
     var srmPeptideMappings;
@@ -16580,6 +16581,10 @@ function initNXDivs() {
             $("#nx-detailedPeptide").hide("slow");
             RenderSequenceForIsoform(isoforms, isoID);
             RenderPeptidesForIsoform(peptideMappings, isoID);
+            $("#featureViewer").html("");
+            currentIso=isoID;
+            createSVG(isoforms,isoID);
+            addFeatures(isoID);
 
         },
         Peptides: function (peptideMappings, isoName) {
@@ -16702,6 +16707,21 @@ function initNXDivs() {
             return listActiveProt;
         }
     };
+    function showFeatureViewer() {
+        $("#showFV").click(function () {
+            $("#featureViewer").toggle();
+            $(this).text(function (i, text) {
+                return text === "Hide features" ? "Show features" : "Hide features";
+            });
+            if ($(this).text() === "Hide features") {
+                if ($("#featureViewer svg").width() < 10) {
+                    $("#featureViewer").html("");
+                    createSVG(isoforms,currentIso);
+                    addFeatures(currentIso);
+                }
+            }
+        });
+    }
 
     function nxIsoformChoice(isoforms) {
         if ($("#nx-isoformChoice").length > 0) {
@@ -16755,7 +16775,6 @@ function initNXDivs() {
             }
         }
     }
-
     function RenderFeatureViewer(data, isoName) {
         var metaData = [
             {name: "Sequence"},                                                                                          {name: "Peptide",className: "pep",color: "#B3E1D1",type: "multipleRect",filter:"Peptide"},
@@ -17128,7 +17147,7 @@ function initNXDivs() {
                             "<div id=\"ptmByPeptide\" class=\"panel-body\">No PTM found</div>");
                         }
                         nx.executeSparql(queryRegion).then(function (data) {
-                            $('#ptmInfos').append("<div class=\"panel-heading\" style=\"background-color: #F5F5F5;border-bottom: 1px solid #DDD;border-top:1px solid #DDD;font-weight: 500;\">PTM present in this region</div>" +
+                            $('#ptmInfos').append("<div class=\"panel-heading\" style=\"background-color: #F5F5F5;border-bottom: 1px solid #DDD;border-top:1px solid #DDD;font-weight: 500;\">PTM present in this region :</div>" +
                             "<div id=\"ptmByRegion\" class=\"panel-body\"></div>");
                             if (data.results.bindings.length > 0) {
                                 data.results.bindings.forEach(function (o) {
@@ -17161,8 +17180,7 @@ function initNXDivs() {
                 fillPeptideInfo.peptideSelected();
 //adjustHeight("#info-left","#info-right");
             }
-        }
-        ;
+    };
     var RenderPeptidesForIsoform = function (peptideMappings, isoName) {
 
         ////////////////////////// TEMPLATE PEPTIDES
@@ -17351,6 +17369,7 @@ function initNXDivs() {
                         isoforms = oneData;
                         allFeatures.push(oneData);
                         firstIso = getFirstIsoform(isoforms);
+                        currentIso = firstIso;
                         RenderSequenceForIsoform(isoforms, firstIso);
                         nxIsoformChoice(isoforms);
                         break;
@@ -17384,6 +17403,7 @@ function initNXDivs() {
 
                         RenderPeptidesForIsoform(peptideMappings, firstIso);
                         RenderFeatureViewer(allFeatures, firstIso);
+                        showFeatureViewer();
 
                         //console.log(oneData[14]);
                         //var tv = new TripleViewer(entry);
