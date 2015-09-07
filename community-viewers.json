@@ -1,13 +1,17 @@
 [
     {
         "title": "3D structure",
-        "url": "https://gist.github.com/ddtxra/a1fd0e5613ed6b72ff8fS",
+        "iFrameURL": "http://bl.ocks.org/ddtxra/a3a860b6d0c0e1ab0f76",
+        "externalURL": "https://gist.github.com/ddtxra/a3a860b6d0c0e1ab0f76",
+        "type": "gist",
         "owner": "ddtxra",
         "email": "daniel.teixeira@isb-sib.ch"
     },
     {
         "title": "Protein Existence",
-        "url": "https://gist.github.com/ddtxra/a1fd0e5613ed6b72ff8f",
+        "iFrameURL": "http://bl.ocks.org/ddtxra/a1fd0e5613ed6b72ff8f",
+        "externalURL": "https://gist.github.com/ddtxra/a1fd0e5613ed6b72ff8f",
+        "type": "gist",
         "owner": "ddtxra",
         "email": "daniel.teixeira@isb-sib.ch"
     }
