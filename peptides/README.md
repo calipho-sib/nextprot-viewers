@@ -63,7 +63,7 @@ npm install
 ```
 
 ```
-./bower_components/bin/bower install
+./node_modules/bin/bower install
 ```
 
 ##Usage
@@ -72,12 +72,12 @@ This project can be used with grunt.
 
 * To be able to see live modification of your new code on your browser (http://localhost:9000/app/assets/index.html) :
 ```
-./bower_components/.bin/grunt serve
+./node_modules/.bin/grunt serve
 ```
 
 * To create a bundle (dependencies.js) :
 ```
-./bower_components/.bin/grunt
+./node_modules/.bin/grunt
 ```
 
 * Or to merge different templates with HandleBars into a js file :

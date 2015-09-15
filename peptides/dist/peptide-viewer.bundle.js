@@ -14871,7 +14871,8 @@ function Sequence(sequence,isoformName) {
         coverage: coverage,
         addLegend: addLegend
     }
-};
+}
+;
 function FeatureViewer(sequence, div, options) {
     // if (!div) var div = window;
     var div = div;
