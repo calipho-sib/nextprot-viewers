@@ -1,387 +1,4 @@
 /*!
- * https://github.com/es-shims/es5-shim
- * @license es5-shim Copyright 2009-2014 by contributors, MIT License
- * see https://github.com/es-shims/es5-shim/blob/master/LICENSE
- */
-(function(t,r){if(typeof define==="function"&&define.amd){define(r)}else if(typeof exports==="object"){module.exports=r()}else{t.returnExports=r()}})(this,function(){var t=Function.prototype.call;var r=Array.prototype;var e=Object.prototype;var n=r.slice;var i=Array.prototype.splice;var o=Array.prototype.push;var a=Array.prototype.unshift;var l=e.toString;var u=function(t){return e.toString.call(t)==="[object Function]"};var p=function(t){return e.toString.call(t)==="[object RegExp]"};var s=function W(t){return l.call(t)==="[object Array]"};var f=function tr(t){var r=l.call(t);var e=r==="[object Arguments]";if(!e){e=!s(r)&&t!==null&&typeof t==="object"&&typeof t.length==="number"&&t.length>=0&&u(t.callee)}return e};function c(){}if(!Function.prototype.bind){Function.prototype.bind=function rr(t){var r=this;if(!u(r)){throw new TypeError("Function.prototype.bind called on incompatible "+r)}var e=n.call(arguments,1);var i=function(){if(this instanceof p){var i=r.apply(this,e.concat(n.call(arguments)));if(Object(i)===i){return i}return this}else{return r.apply(t,e.concat(n.call(arguments)))}};var o=Math.max(0,r.length-e.length);var a=[];for(var l=0;l<o;l++){a.push("$"+l)}var p=Function("binder","return function ("+a.join(",")+"){return binder.apply(this,arguments)}")(i);if(r.prototype){c.prototype=r.prototype;p.prototype=new c;c.prototype=null}return p}}var h=t.bind(e.hasOwnProperty);var y;var g;var v;var d;var b;if(b=h(e,"__defineGetter__")){y=t.bind(e.__defineGetter__);g=t.bind(e.__defineSetter__);v=t.bind(e.__lookupGetter__);d=t.bind(e.__lookupSetter__)}var m=function(){var t={};Array.prototype.splice.call(t,0,0,1);return t.length===1}();var w=[1].splice(0).length===0;var S=function(){var t=[1,2];var r=t.splice();return t.length===2&&s(r)&&r.length===0}();if(S){Array.prototype.splice=function er(t,r){if(arguments.length===0){return[]}else{return i.apply(this,arguments)}}}if(!w||!m){Array.prototype.splice=function nr(t,r){if(arguments.length===0){return[]}var e=arguments;this.length=Math.max(q(this.length),0);if(arguments.length>0&&typeof r!=="number"){e=n.call(arguments);if(e.length<2){e.push(q(r))}else{e[1]=q(r)}}return i.apply(this,e)}}if([].unshift(0)!==1){Array.prototype.unshift=function(){a.apply(this,arguments);return this.length}}if(!Array.isArray){Array.isArray=s}var x=Object("a");var A=x[0]!=="a"||!(0 in x);var j=function ir(t){var r=true;var e=true;if(t){t.call("foo",function(t,e,n){if(typeof n!=="object"){r=false}});t.call([1],function(){"use strict";e=typeof this==="string"},"x")}return!!t&&r&&e};if(!Array.prototype.forEach||!j(Array.prototype.forEach)){Array.prototype.forEach=function or(t){var r=Q(this),e=A&&l.call(this)==="[object String]"?this.split(""):r,n=arguments[1],i=-1,o=e.length>>>0;if(!u(t)){throw new TypeError}while(++i<o){if(i in e){t.call(n,e[i],i,r)}}}}if(!Array.prototype.map||!j(Array.prototype.map)){Array.prototype.map=function ar(t){var r=Q(this),e=A&&l.call(this)==="[object String]"?this.split(""):r,n=e.length>>>0,i=Array(n),o=arguments[1];if(!u(t)){throw new TypeError(t+" is not a function")}for(var a=0;a<n;a++){if(a in e){i[a]=t.call(o,e[a],a,r)}}return i}}if(!Array.prototype.filter||!j(Array.prototype.filter)){Array.prototype.filter=function lr(t){var r=Q(this),e=A&&l.call(this)==="[object String]"?this.split(""):r,n=e.length>>>0,i=[],o,a=arguments[1];if(!u(t)){throw new TypeError(t+" is not a function")}for(var p=0;p<n;p++){if(p in e){o=e[p];if(t.call(a,o,p,r)){i.push(o)}}}return i}}if(!Array.prototype.every||!j(Array.prototype.every)){Array.prototype.every=function ur(t){var r=Q(this),e=A&&l.call(this)==="[object String]"?this.split(""):r,n=e.length>>>0,i=arguments[1];if(!u(t)){throw new TypeError(t+" is not a function")}for(var o=0;o<n;o++){if(o in e&&!t.call(i,e[o],o,r)){return false}}return true}}if(!Array.prototype.some||!j(Array.prototype.some)){Array.prototype.some=function pr(t){var r=Q(this),e=A&&l.call(this)==="[object String]"?this.split(""):r,n=e.length>>>0,i=arguments[1];if(!u(t)){throw new TypeError(t+" is not a function")}for(var o=0;o<n;o++){if(o in e&&t.call(i,e[o],o,r)){return true}}return false}}var O=false;if(Array.prototype.reduce){O=typeof Array.prototype.reduce.call("es5",function(t,r,e,n){return n})==="object"}if(!Array.prototype.reduce||!O){Array.prototype.reduce=function sr(t){var r=Q(this),e=A&&l.call(this)==="[object String]"?this.split(""):r,n=e.length>>>0;if(!u(t)){throw new TypeError(t+" is not a function")}if(!n&&arguments.length===1){throw new TypeError("reduce of empty array with no initial value")}var i=0;var o;if(arguments.length>=2){o=arguments[1]}else{do{if(i in e){o=e[i++];break}if(++i>=n){throw new TypeError("reduce of empty array with no initial value")}}while(true)}for(;i<n;i++){if(i in e){o=t.call(void 0,o,e[i],i,r)}}return o}}var E=false;if(Array.prototype.reduceRight){E=typeof Array.prototype.reduceRight.call("es5",function(t,r,e,n){return n})==="object"}if(!Array.prototype.reduceRight||!E){Array.prototype.reduceRight=function fr(t){var r=Q(this),e=A&&l.call(this)==="[object String]"?this.split(""):r,n=e.length>>>0;if(!u(t)){throw new TypeError(t+" is not a function")}if(!n&&arguments.length===1){throw new TypeError("reduceRight of empty array with no initial value")}var i,o=n-1;if(arguments.length>=2){i=arguments[1]}else{do{if(o in e){i=e[o--];break}if(--o<0){throw new TypeError("reduceRight of empty array with no initial value")}}while(true)}if(o<0){return i}do{if(o in e){i=t.call(void 0,i,e[o],o,r)}}while(o--);return i}}if(!Array.prototype.indexOf||[0,1].indexOf(1,2)!==-1){Array.prototype.indexOf=function cr(t){var r=A&&l.call(this)==="[object String]"?this.split(""):Q(this),e=r.length>>>0;if(!e){return-1}var n=0;if(arguments.length>1){n=q(arguments[1])}n=n>=0?n:Math.max(0,e+n);for(;n<e;n++){if(n in r&&r[n]===t){return n}}return-1}}if(!Array.prototype.lastIndexOf||[0,1].lastIndexOf(0,-3)!==-1){Array.prototype.lastIndexOf=function hr(t){var r=A&&l.call(this)==="[object String]"?this.split(""):Q(this),e=r.length>>>0;if(!e){return-1}var n=e-1;if(arguments.length>1){n=Math.min(n,q(arguments[1]))}n=n>=0?n:e-Math.abs(n);for(;n>=0;n--){if(n in r&&t===r[n]){return n}}return-1}}var N=Object.keys&&function(){return Object.keys(arguments).length===2}(1,2);if(!Object.keys){var T=!{toString:null}.propertyIsEnumerable("toString"),I=function(){}.propertyIsEnumerable("prototype"),D=["toString","toLocaleString","valueOf","hasOwnProperty","isPrototypeOf","propertyIsEnumerable","constructor"],_=D.length;Object.keys=function yr(t){var r=u(t),e=f(t),n=t!==null&&typeof t==="object",i=n&&l.call(t)==="[object String]";if(!n&&!r&&!e){throw new TypeError("Object.keys called on a non-object")}var o=[];var a=I&&r;if(i||e){for(var p=0;p<t.length;++p){o.push(String(p))}}else{for(var s in t){if(!(a&&s==="prototype")&&h(t,s)){o.push(String(s))}}}if(T){var c=t.constructor,y=c&&c.prototype===t;for(var g=0;g<_;g++){var v=D[g];if(!(y&&v==="constructor")&&h(t,v)){o.push(v)}}}return o}}else if(!N){var M=Object.keys;Object.keys=function gr(t){if(f(t)){return M(Array.prototype.slice.call(t))}else{return M(t)}}}var F=-621987552e5,R="-000001";if(!Date.prototype.toISOString||new Date(F).toISOString().indexOf(R)===-1){Date.prototype.toISOString=function vr(){var t,r,e,n,i;if(!isFinite(this)){throw new RangeError("Date.prototype.toISOString called on non-finite value.")}n=this.getUTCFullYear();i=this.getUTCMonth();n+=Math.floor(i/12);i=(i%12+12)%12;t=[i+1,this.getUTCDate(),this.getUTCHours(),this.getUTCMinutes(),this.getUTCSeconds()];n=(n<0?"-":n>9999?"+":"")+("00000"+Math.abs(n)).slice(0<=n&&n<=9999?-4:-6);r=t.length;while(r--){e=t[r];if(e<10){t[r]="0"+e}}return n+"-"+t.slice(0,2).join("-")+"T"+t.slice(2).join(":")+"."+("000"+this.getUTCMilliseconds()).slice(-3)+"Z"}}var k=false;try{k=Date.prototype.toJSON&&new Date(NaN).toJSON()===null&&new Date(F).toJSON().indexOf(R)!==-1&&Date.prototype.toJSON.call({toISOString:function(){return true}})}catch(C){}if(!k){Date.prototype.toJSON=function dr(t){var r=Object(this),e=K(r),n;if(typeof e==="number"&&!isFinite(e)){return null}n=r.toISOString;if(typeof n!=="function"){throw new TypeError("toISOString property is not callable")}return n.call(r)}}var U=Date.parse("+033658-09-27T01:46:40.000Z")===1e15;var Z=!isNaN(Date.parse("2012-04-04T24:00:00.500Z"))||!isNaN(Date.parse("2012-11-31T23:59:59.000Z"));var J=isNaN(Date.parse("2000-01-01T00:00:00.000Z"));if(!Date.parse||J||Z||!U){Date=function(t){function r(e,n,i,o,a,l,u){var p=arguments.length;if(this instanceof t){var s=p===1&&String(e)===e?new t(r.parse(e)):p>=7?new t(e,n,i,o,a,l,u):p>=6?new t(e,n,i,o,a,l):p>=5?new t(e,n,i,o,a):p>=4?new t(e,n,i,o):p>=3?new t(e,n,i):p>=2?new t(e,n):p>=1?new t(e):new t;s.constructor=r;return s}return t.apply(this,arguments)}var e=new RegExp("^"+"(\\d{4}|[+-]\\d{6})"+"(?:-(\\d{2})"+"(?:-(\\d{2})"+"(?:"+"T(\\d{2})"+":(\\d{2})"+"(?:"+":(\\d{2})"+"(?:(\\.\\d{1,}))?"+")?"+"("+"Z|"+"(?:"+"([-+])"+"(\\d{2})"+":(\\d{2})"+")"+")?)?)?)?"+"$");var n=[0,31,59,90,120,151,181,212,243,273,304,334,365];function i(t,r){var e=r>1?1:0;return n[r]+Math.floor((t-1969+e)/4)-Math.floor((t-1901+e)/100)+Math.floor((t-1601+e)/400)+365*(t-1970)}function o(r){return Number(new t(1970,0,1,0,0,0,r))}for(var a in t){r[a]=t[a]}r.now=t.now;r.UTC=t.UTC;r.prototype=t.prototype;r.prototype.constructor=r;r.parse=function l(r){var n=e.exec(r);if(n){var a=Number(n[1]),l=Number(n[2]||1)-1,u=Number(n[3]||1)-1,p=Number(n[4]||0),s=Number(n[5]||0),f=Number(n[6]||0),c=Math.floor(Number(n[7]||0)*1e3),h=Boolean(n[4]&&!n[8]),y=n[9]==="-"?1:-1,g=Number(n[10]||0),v=Number(n[11]||0),d;if(p<(s>0||f>0||c>0?24:25)&&s<60&&f<60&&c<1e3&&l>-1&&l<12&&g<24&&v<60&&u>-1&&u<i(a,l+1)-i(a,l)){d=((i(a,l)+u)*24+p+g*y)*60;d=((d+s+v*y)*60+f)*1e3+c;if(h){d=o(d)}if(-864e13<=d&&d<=864e13){return d}}return NaN}return t.parse.apply(this,arguments)};return r}(Date)}if(!Date.now){Date.now=function br(){return(new Date).getTime()}}if(!Number.prototype.toFixed||8e-5.toFixed(3)!=="0.000"||.9.toFixed(0)==="0"||1.255.toFixed(2)!=="1.25"||0xde0b6b3a7640080.toFixed(0)!=="1000000000000000128"){(function(){var t,r,e,n;t=1e7;r=6;e=[0,0,0,0,0,0];function i(n,i){var o=-1;while(++o<r){i+=n*e[o];e[o]=i%t;i=Math.floor(i/t)}}function o(n){var i=r,o=0;while(--i>=0){o+=e[i];e[i]=Math.floor(o/n);o=o%n*t}}function a(){var t=r;var n="";while(--t>=0){if(n!==""||t===0||e[t]!==0){var i=String(e[t]);if(n===""){n=i}else{n+="0000000".slice(0,7-i.length)+i}}}return n}function l(t,r,e){return r===0?e:r%2===1?l(t,r-1,e*t):l(t*t,r/2,e)}function u(t){var r=0;while(t>=4096){r+=12;t/=4096}while(t>=2){r+=1;t/=2}return r}Number.prototype.toFixed=function p(t){var r,e,n,p,s,f,c,h;r=Number(t);r=r!==r?0:Math.floor(r);if(r<0||r>20){throw new RangeError("Number.toFixed called with invalid number of decimals")}e=Number(this);if(e!==e){return"NaN"}if(e<=-1e21||e>=1e21){return String(e)}n="";if(e<0){n="-";e=-e}p="0";if(e>1e-21){s=u(e*l(2,69,1))-69;f=s<0?e*l(2,-s,1):e/l(2,s,1);f*=4503599627370496;s=52-s;if(s>0){i(0,f);c=r;while(c>=7){i(1e7,0);c-=7}i(l(10,c,1),0);c=s-1;while(c>=23){o(1<<23);c-=23}o(1<<c);i(1,1);o(2);p=a()}else{i(0,f);i(1<<-s,0);p=a()+"0.00000000000000000000".slice(2,2+r)}}if(r>0){h=p.length;if(h<=r){p=n+"0.0000000000000000000".slice(0,r-h+2)+p}else{p=n+p.slice(0,h-r)+"."+p.slice(h-r)}}else{p=n+p}return p}})()}var $=String.prototype.split;if("ab".split(/(?:ab)*/).length!==2||".".split(/(.?)(.?)/).length!==4||"tesst".split(/(s)*/)[1]==="t"||"test".split(/(?:)/,-1).length!==4||"".split(/.?/).length||".".split(/()()/).length>1){(function(){var t=/()??/.exec("")[1]===void 0;String.prototype.split=function(r,e){var n=this;if(r===void 0&&e===0){return[]}if(l.call(r)!=="[object RegExp]"){return $.call(this,r,e)}var i=[],o=(r.ignoreCase?"i":"")+(r.multiline?"m":"")+(r.extended?"x":"")+(r.sticky?"y":""),a=0,u,p,s,f;r=new RegExp(r.source,o+"g");n+="";if(!t){u=new RegExp("^"+r.source+"$(?!\\s)",o)}e=e===void 0?-1>>>0:V(e);while(p=r.exec(n)){s=p.index+p[0].length;if(s>a){i.push(n.slice(a,p.index));if(!t&&p.length>1){p[0].replace(u,function(){for(var t=1;t<arguments.length-2;t++){if(arguments[t]===void 0){p[t]=void 0}}})}if(p.length>1&&p.index<n.length){Array.prototype.push.apply(i,p.slice(1))}f=p[0].length;a=s;if(i.length>=e){break}}if(r.lastIndex===p.index){r.lastIndex++}}if(a===n.length){if(f||!r.test("")){i.push("")}}else{i.push(n.slice(a))}return i.length>e?i.slice(0,e):i}})()}else if("0".split(void 0,0).length){String.prototype.split=function mr(t,r){if(t===void 0&&r===0){return[]}return $.call(this,t,r)}}var G=String.prototype.replace;var P=function(){var t=[];"x".replace(/x(.)?/g,function(r,e){t.push(e)});return t.length===1&&typeof t[0]==="undefined"}();if(!P){String.prototype.replace=function wr(t,r){var e=u(r);var n=p(t)&&/\)[*?]/.test(t.source);if(!e||!n){return G.call(this,t,r)}else{var i=function(e){var n=arguments.length;var i=t.lastIndex;t.lastIndex=0;var o=t.exec(e);t.lastIndex=i;o.push(arguments[n-2],arguments[n-1]);return r.apply(this,o)};return G.call(this,t,i)}}}if("".substr&&"0b".substr(-1)!=="b"){var B=String.prototype.substr;String.prototype.substr=function Sr(t,r){return B.call(this,t<0?(t=this.length+t)<0?0:t:t,r)}}var H="	\n\f\r \xa0\u1680\u180e\u2000\u2001\u2002\u2003"+"\u2004\u2005\u2006\u2007\u2008\u2009\u200a\u202f\u205f\u3000\u2028"+"\u2029\ufeff";var L="\u200b";if(!String.prototype.trim||H.trim()||!L.trim()){H="["+H+"]";var X=new RegExp("^"+H+H+"*"),Y=new RegExp(H+H+"*$");String.prototype.trim=function xr(){if(this===void 0||this===null){throw new TypeError("can't convert "+this+" to object")}return String(this).replace(X,"").replace(Y,"")}}if(parseInt(H+"08")!==8||parseInt(H+"0x16")!==22){parseInt=function(t){var r=/^0[xX]/;return function e(n,i){n=String(n).trim();if(!Number(i)){i=r.test(n)?16:10}return t(n,i)}}(parseInt)}function q(t){t=+t;if(t!==t){t=0}else if(t!==0&&t!==1/0&&t!==-(1/0)){t=(t>0||-1)*Math.floor(Math.abs(t))}return t}function z(t){var r=typeof t;return t===null||r==="undefined"||r==="boolean"||r==="number"||r==="string"}function K(t){var r,e,n;if(z(t)){return t}e=t.valueOf;if(u(e)){r=e.call(t);if(z(r)){return r}}n=t.toString;if(u(n)){r=n.call(t);if(z(r)){return r}}throw new TypeError}var Q=function(t){if(t==null){throw new TypeError("can't convert "+t+" to object")}return Object(t)};var V=function Ar(t){return t>>>0}});
-//# sourceMappingURL=es5-shim.map;
-(function e(t, n, r) {
-  function s(o, u) {
-    if (!n[o]) {
-      if (!t[o]) {
-        var a = typeof require == "function" && require;
-        if (!u && a) return a(o, !0);
-        if (i) return i(o, !0);
-        var f = new Error("Cannot find module '" + o + "'");
-        throw f.code = "MODULE_NOT_FOUND", f;
-      }
-      var l = n[o] = {
-        exports: {}
-      };
-      t[o][0].call(l.exports, function(e) {
-        var n = t[o][1][e];
-        return s(n ? n : e);
-      }, l, l.exports, e, t, n, r);
-    }
-    return n[o].exports;
-  }
-  var i = typeof require == "function" && require;
-  for (var o = 0; o < r.length; o++) s(r[o]);
-  return s;
-})({
-  1: [ function(require, module, exports) {
-    var process = module.exports = {};
-    process.nextTick = function() {
-      var canSetImmediate = typeof window !== "undefined" && window.setImmediate;
-      var canPost = typeof window !== "undefined" && window.postMessage && window.addEventListener;
-      if (canSetImmediate) {
-        return function(f) {
-          return window.setImmediate(f);
-        };
-      }
-      if (canPost) {
-        var queue = [];
-        window.addEventListener("message", function(ev) {
-          var source = ev.source;
-          if ((source === window || source === null) && ev.data === "process-tick") {
-            ev.stopPropagation();
-            if (queue.length > 0) {
-              var fn = queue.shift();
-              fn();
-            }
-          }
-        }, true);
-        return function nextTick(fn) {
-          queue.push(fn);
-          window.postMessage("process-tick", "*");
-        };
-      }
-      return function nextTick(fn) {
-        setTimeout(fn, 0);
-      };
-    }();
-    process.title = "browser";
-    process.browser = true;
-    process.env = {};
-    process.argv = [];
-    function noop() {}
-    process.on = noop;
-    process.addListener = noop;
-    process.once = noop;
-    process.off = noop;
-    process.removeListener = noop;
-    process.removeAllListeners = noop;
-    process.emit = noop;
-    process.binding = function(name) {
-      throw new Error("process.binding is not supported");
-    };
-    process.cwd = function() {
-      return "/";
-    };
-    process.chdir = function(dir) {
-      throw new Error("process.chdir is not supported");
-    };
-  }, {} ],
-  2: [ function(require, module, exports) {
-    "use strict";
-    var asap = require("asap");
-    module.exports = Promise;
-    function Promise(fn) {
-      if (typeof this !== "object") throw new TypeError("Promises must be constructed via new");
-      if (typeof fn !== "function") throw new TypeError("not a function");
-      var state = null;
-      var value = null;
-      var deferreds = [];
-      var self = this;
-      this.then = function(onFulfilled, onRejected) {
-        return new self.constructor(function(resolve, reject) {
-          handle(new Handler(onFulfilled, onRejected, resolve, reject));
-        });
-      };
-      function handle(deferred) {
-        if (state === null) {
-          deferreds.push(deferred);
-          return;
-        }
-        asap(function() {
-          var cb = state ? deferred.onFulfilled : deferred.onRejected;
-          if (cb === null) {
-            (state ? deferred.resolve : deferred.reject)(value);
-            return;
-          }
-          var ret;
-          try {
-            ret = cb(value);
-          } catch (e) {
-            deferred.reject(e);
-            return;
-          }
-          deferred.resolve(ret);
-        });
-      }
-      function resolve(newValue) {
-        try {
-          if (newValue === self) throw new TypeError("A promise cannot be resolved with itself.");
-          if (newValue && (typeof newValue === "object" || typeof newValue === "function")) {
-            var then = newValue.then;
-            if (typeof then === "function") {
-              doResolve(then.bind(newValue), resolve, reject);
-              return;
-            }
-          }
-          state = true;
-          value = newValue;
-          finale();
-        } catch (e) {
-          reject(e);
-        }
-      }
-      function reject(newValue) {
-        state = false;
-        value = newValue;
-        finale();
-      }
-      function finale() {
-        for (var i = 0, len = deferreds.length; i < len; i++) handle(deferreds[i]);
-        deferreds = null;
-      }
-      doResolve(fn, resolve, reject);
-    }
-    function Handler(onFulfilled, onRejected, resolve, reject) {
-      this.onFulfilled = typeof onFulfilled === "function" ? onFulfilled : null;
-      this.onRejected = typeof onRejected === "function" ? onRejected : null;
-      this.resolve = resolve;
-      this.reject = reject;
-    }
-    function doResolve(fn, onFulfilled, onRejected) {
-      var done = false;
-      try {
-        fn(function(value) {
-          if (done) return;
-          done = true;
-          onFulfilled(value);
-        }, function(reason) {
-          if (done) return;
-          done = true;
-          onRejected(reason);
-        });
-      } catch (ex) {
-        if (done) return;
-        done = true;
-        onRejected(ex);
-      }
-    }
-  }, {
-    asap: 4
-  } ],
-  3: [ function(require, module, exports) {
-    "use strict";
-    var Promise = require("./core.js");
-    var asap = require("asap");
-    module.exports = Promise;
-    function ValuePromise(value) {
-      this.then = function(onFulfilled) {
-        if (typeof onFulfilled !== "function") return this;
-        return new Promise(function(resolve, reject) {
-          asap(function() {
-            try {
-              resolve(onFulfilled(value));
-            } catch (ex) {
-              reject(ex);
-            }
-          });
-        });
-      };
-    }
-    ValuePromise.prototype = Promise.prototype;
-    var TRUE = new ValuePromise(true);
-    var FALSE = new ValuePromise(false);
-    var NULL = new ValuePromise(null);
-    var UNDEFINED = new ValuePromise(undefined);
-    var ZERO = new ValuePromise(0);
-    var EMPTYSTRING = new ValuePromise("");
-    Promise.resolve = function(value) {
-      if (value instanceof Promise) return value;
-      if (value === null) return NULL;
-      if (value === undefined) return UNDEFINED;
-      if (value === true) return TRUE;
-      if (value === false) return FALSE;
-      if (value === 0) return ZERO;
-      if (value === "") return EMPTYSTRING;
-      if (typeof value === "object" || typeof value === "function") {
-        try {
-          var then = value.then;
-          if (typeof then === "function") {
-            return new Promise(then.bind(value));
-          }
-        } catch (ex) {
-          return new Promise(function(resolve, reject) {
-            reject(ex);
-          });
-        }
-      }
-      return new ValuePromise(value);
-    };
-    Promise.all = function(arr) {
-      var args = Array.prototype.slice.call(arr);
-      return new Promise(function(resolve, reject) {
-        if (args.length === 0) return resolve([]);
-        var remaining = args.length;
-        function res(i, val) {
-          try {
-            if (val && (typeof val === "object" || typeof val === "function")) {
-              var then = val.then;
-              if (typeof then === "function") {
-                then.call(val, function(val) {
-                  res(i, val);
-                }, reject);
-                return;
-              }
-            }
-            args[i] = val;
-            if (--remaining === 0) {
-              resolve(args);
-            }
-          } catch (ex) {
-            reject(ex);
-          }
-        }
-        for (var i = 0; i < args.length; i++) {
-          res(i, args[i]);
-        }
-      });
-    };
-    Promise.reject = function(value) {
-      return new Promise(function(resolve, reject) {
-        reject(value);
-      });
-    };
-    Promise.race = function(values) {
-      return new Promise(function(resolve, reject) {
-        values.forEach(function(value) {
-          Promise.resolve(value).then(resolve, reject);
-        });
-      });
-    };
-    Promise.prototype["catch"] = function(onRejected) {
-      return this.then(null, onRejected);
-    };
-  }, {
-    "./core.js": 2,
-    asap: 4
-  } ],
-  4: [ function(require, module, exports) {
-    (function(process) {
-      var head = {
-        task: void 0,
-        next: null
-      };
-      var tail = head;
-      var flushing = false;
-      var requestFlush = void 0;
-      var isNodeJS = false;
-      function flush() {
-        while (head.next) {
-          head = head.next;
-          var task = head.task;
-          head.task = void 0;
-          var domain = head.domain;
-          if (domain) {
-            head.domain = void 0;
-            domain.enter();
-          }
-          try {
-            task();
-          } catch (e) {
-            if (isNodeJS) {
-              if (domain) {
-                domain.exit();
-              }
-              setTimeout(flush, 0);
-              if (domain) {
-                domain.enter();
-              }
-              throw e;
-            } else {
-              setTimeout(function() {
-                throw e;
-              }, 0);
-            }
-          }
-          if (domain) {
-            domain.exit();
-          }
-        }
-        flushing = false;
-      }
-      if (typeof process !== "undefined" && process.nextTick) {
-        isNodeJS = true;
-        requestFlush = function() {
-          process.nextTick(flush);
-        };
-      } else if (typeof setImmediate === "function") {
-        if (typeof window !== "undefined") {
-          requestFlush = setImmediate.bind(window, flush);
-        } else {
-          requestFlush = function() {
-            setImmediate(flush);
-          };
-        }
-      } else if (typeof MessageChannel !== "undefined") {
-        var channel = new MessageChannel();
-        channel.port1.onmessage = flush;
-        requestFlush = function() {
-          channel.port2.postMessage(0);
-        };
-      } else {
-        requestFlush = function() {
-          setTimeout(flush, 0);
-        };
-      }
-      function asap(task) {
-        tail = tail.next = {
-          task: task,
-          domain: isNodeJS && process.domain,
-          next: null
-        };
-        if (!flushing) {
-          flushing = true;
-          requestFlush();
-        }
-      }
-      module.exports = asap;
-    }).call(this, require("_process"));
-  }, {
-    _process: 1
-  } ],
-  5: [ function(require, module, exports) {
-    if (typeof Promise.prototype.done !== "function") {
-      Promise.prototype.done = function(onFulfilled, onRejected) {
-        var self = arguments.length ? this.then.apply(this, arguments) : this;
-        self.then(null, function(err) {
-          setTimeout(function() {
-            throw err;
-          }, 0);
-        });
-      };
-    }
-  }, {} ],
-  6: [ function(require, module, exports) {
-    var asap = require("asap");
-    if (typeof Promise === "undefined") {
-      Promise = require("./lib/core.js");
-      require("./lib/es6-extensions.js");
-    }
-    require("./polyfill-done.js");
-  }, {
-    "./lib/core.js": 2,
-    "./lib/es6-extensions.js": 3,
-    "./polyfill-done.js": 5,
-    asap: 4
-  } ]
-}, {}, [ 6 ]);
-//# sourceMappingURL=/polyfills/promise-6.1.0.js.map;
-/*!
  * jQuery JavaScript Library v2.1.3
  * http://jquery.com/
  *
@@ -13348,35 +12965,18 @@ var __module0__ = (function(__dependency1__, __dependency2__, __dependency3__, _
     (function () {
 
         //?default-graph-uri=&named-graph-uri=&output=json
-
-        var tempApiUrl = "http://dev-api.nextprot.org/entries/";
-        var nextprotApiUrl = "https://api.nextprot.org//entry/";
-        var sparqlEndpoint = "https://api.nextprot.org/sparql";
+        
+        var apiBaseUrl = "http://alpha-api.nextprot.org";
+        var sparqlEndpoint = apiBaseUrl + "/sparql";
         var sparqlFormat = "?output=json";
-        var sparqlPrefixes = "PREFIX :<http://nextprot.org/rdf#> "+
-            "PREFIX annotation:<http://nextprot.org/rdf/annotation/> "+
-            "PREFIX context:<http://nextprot.org/rdf/context/> "+
-            "PREFIX cv:<http://nextprot.org/rdf/terminology/> "+
-            "PREFIX db:<http://nextprot.org/rdf/db/> "+
-            "PREFIX dc:<http://purl.org/dc/elements/1.1/> "+
-            "PREFIX dcterms:<http://purl.org/dc/terms/> "+
-            "PREFIX entry:<http://nextprot.org/rdf/entry/> "+
-            "PREFIX evidence:<http://nextprot.org/rdf/evidence/> "+
-            "PREFIX foaf:<http://xmlns.com/foaf/0.1/> "+
-            "PREFIX gene:<http://nextprot.org/rdf/gene/> "+
-            "PREFIX identifier:<http://nextprot.org/rdf/identifier/> "+
-            "PREFIX isoform:<http://nextprot.org/rdf/isoform/> "+
-            "PREFIX mo:<http://purl.org/ontology/mo/> "+
-            "PREFIX ov:<http://open.vocab.org/terms/> "+
-            "PREFIX owl:<http://www.w3.org/2002/07/owl#> "+
-            "PREFIX publication:<http://nextprot.org/rdf/publication/> "+
-            "PREFIX rdf:<http://www.w3.org/1999/02/22-rdf-syntax-ns#> "+
-            "PREFIX rdfs:<http://www.w3.org/2000/01/rdf-schema#> "+
-            "PREFIX sim:<http://purl.org/ontology/similarity/> "+
-            "PREFIX source:<http://nextprot.org/rdf/source/> "+
-            "PREFIX xref:<http://nextprot.org/rdf/xref/> "+
-            "PREFIX xsd:<http://www.w3.org/2001/XMLSchema#> ";
+        var sparqlPrefixes = "";
 
+        $.getJSON(apiBaseUrl + "/sparql-prefixes", function (result) {
+            for (var i in result) {
+                sparqlPrefixes += (result[i] + "\n");
+            }
+        });
+        
 
         var applicationName = null;
         var clientInfo = null;
@@ -13417,6 +13017,18 @@ var __module0__ = (function(__dependency1__, __dependency2__, __dependency3__, _
             return href += (((href.indexOf("?") != -1) ? "&" : "?") + paramName + "=" + newVal);
         }
 
+        /** By default it is set to https://api.nextprot.org */
+        NextprotClient.prototype.setApiBaseUrl = function(_apiBaseUrl){
+            apiBaseUrl =  _apiBaseUrl;
+            sparqlEndpoint = apiBaseUrl + "/sparql";
+        };
+
+        /** By default it is set to https://api.nextprot.org/sparql */
+        NextprotClient.prototype.setSparqlEndpoint = function(_sparqlEndpoint){
+            sparqlEndpoint = _sparqlEndpoint;
+        };
+
+        
         //Gets the entry set in the parameter
         NextprotClient.prototype.getEntryName = function(){
             return normalizeEntry(_getURLParameter("nxentry") || 'NX_P01308'); //By default returns the insulin
@@ -13439,7 +13051,7 @@ var __module0__ = (function(__dependency1__, __dependency2__, __dependency3__, _
             return new Promise(function(resolve, reject) {
 
                 var req = new XMLHttpRequest();
-                var url = nextprotApiUrl + entryName + "/" + context + ".json" + "?clientInfo=" + clientInfo + "&applicationName=" + applicationName;
+                var url = apiBaseUrl + "/entry/"  + entryName + "/" + context + ".json" + "?clientInfo=" + clientInfo + "&applicationName=" + applicationName;
                 req.open("GET", url);
 
                 req.onload = function() {
@@ -13468,7 +13080,7 @@ var __module0__ = (function(__dependency1__, __dependency2__, __dependency3__, _
             return new Promise(function(resolve, reject) {
 
                 var req = new XMLHttpRequest();
-                var url = tempApiUrl + "search/peptide.json?peptide=" + seq + "&modeIL=" + mode;
+                var url = apiBaseUrl + "/entries/search/peptide.json?peptide=" + seq + "&modeIL=" + mode;
                 req.open("GET", url);
 
                 req.onload = function() {
@@ -13788,6 +13400,20 @@ var __module0__ = (function(__dependency1__, __dependency2__, __dependency3__, _
             });
         };
 
+        NextprotClient.prototype.getPTM = function(entry) {
+            return _callURL(normalizeEntry(entry || this.getEntryName()), "ptm").then(function (data){
+                return _convertToTupleMap(data);
+            });
+        };
+        
+        /** USE THIS INSTEAD OF THE OTHERS for example getEntryPart(NX_1038042, "ptm") */
+        NextprotClient.prototype.getEntryPart = function(entry, entryPart) {
+            return _callURL(normalizeEntry(entry || this.getEntryName()), entryPart).then(function (data){
+                return _convertToTupleMap(data);
+            });
+        };
+
+
         //node.js compatibility
         if (typeof exports !== 'undefined') {
             exports.Client = NextprotClient;
@@ -14041,18 +13667,20 @@ var NXViewerUtils = {
         return result;
     }
 };;
-
 $(function () {
 
 
-    var loadOverview = function(overview,nxEntryName){
+    var loadOverview = function (overview, nxEntryName) {
 
         if ($("#nx-overview").length > 0) {
             Handlebars.registerHelper('link_to', function (type, options) {
                 switch (type) {
-                    case "family":
+                    case "term":
                         var url = "http://www.nextprot.org/db/term/" + this.accession;
                         return "<a href='" + url + "'>" + this.name + "</a>";
+                    case "EC" :
+                        var url = "http://www.nextprot.org/db/term/" + this;
+                        return "<a href='" + url + "'> EC " + this + " </a>";
                     case "history":
                         console.log(type);
                         console.log(this);
@@ -14062,11 +13690,38 @@ $(function () {
             });
 
             console.log(nxEntryName);
+            var EC = [];
+            var short = [];
+
+            if (overview.recommendedProteinName.synonyms) {
+                overview.recommendedProteinName.synonyms.forEach(function (p) {
+                    if (p.qualifier === "EC") EC.push(p.name);
+                    if (p.qualifier === "short") short.push(p.name);
+                });
+            }
 
             var data = {
                 "entryName": overview.proteinNames[0].synonymName,
-                "alternativeName": overview.proteinNames[0].synonyms,
-                "geneName": overview.geneNames[0].synonymName,
+                "recommendedProteinName": {
+                    name: overview.recommendedProteinName.name,
+                    EC: EC,
+                    short: short,
+                    synonymName: overview.recommendedProteinName.synonymName
+                },
+                "alternativeProteinNames": overview.alternativeProteinNames.map(function (p) {
+                    return {name: p.name, short: p.synonyms}
+                }),
+                "geneName": overview.geneNames.map(function (o) {
+                    return {
+                        name: o.name,
+                        synonyms: o.synonyms ? o.synonyms.filter(function (p) {
+                            return p.category === "gene name"
+                        }) : null,
+                        orf: o.synonyms ? o.synonyms.filter(function (p) {
+                            return p.category === "ORF"
+                        }) : null
+                    }
+                }),
                 "cleavage": overview.cleavedRegionNames,
                 "family": overview.families,
                 "proteineEvidence": overview.history.proteinExistence.split('_').join(' ').toLowerCase(),
@@ -14106,12 +13761,12 @@ $(function () {
 
     };
 
-    if($("#nx-overview")){ // laad the overview if it exists
+    if ($("#nx-overview")) { // laad the overview if it exists
         var Nextprot = window.Nextprot;
         var nx = new Nextprot.Client("neXtprot overview loader", "Calipho Group");
         var nxEntryName = nx.getEntryName();
-        nx.getProteinOverview().then(function(data) {
-        loadOverview(data, nxEntryName);
+        nx.getProteinOverview().then(function (data) {
+            loadOverview(data, nxEntryName);
 
             var nxInputOption = nx.getInputOption();
 
@@ -14128,13 +13783,13 @@ $(function () {
             if (nxInputOption === "true") {
                 addEntrySelection();
                 nx.getAccession().then(function (data) {
-                    $(function() {
+                    $(function () {
                         $("#inputOptionDiv").append("<div class=\"alert alert-success entry-alert\" role=\"alert\" style=\"display:none\">You successfully load the entry !</div>");
                         $(".entry-alert").fadeIn("slow");
                         $(".entry-alert").delay(2000).fadeOut("slow");
                     });
-                }, function(error) {
-                    $(function() {
+                }, function (error) {
+                    $(function () {
                         $("#inputOptionDiv").append("<div class=\"alert alert-danger entry-alert\" role=\"alert\">This accession is not available !</div>");
                     });
                     console.error("Failed!", error);
@@ -14144,13 +13799,11 @@ $(function () {
         });
     }
 });;
-if(Handlebars){
-  
 this["HBtemplates"] = this["HBtemplates"] || {};
 
 this["HBtemplates"]["templates/overviewProtein.tmpl"] = Handlebars.template({"1":function(depth0,helpers,partials,data) {
     var stack1, helper, options, buffer = 
-  "    <div id=\"cleavage-less\" class=\"row\">\n        <div class=\"col-md-2 col-xs-3\" style=\"color: grey;text-align:right\">Cleaved into :</div>\n        <div class=\"col-md-6 col-xs-6\">";
+  "    <div id=\"cleavage-less\" class=\"row\">\n        <div class=\"col-md-3 col-xs-3\" style=\"color: grey;text-align:right\">Cleaved into :</div>\n        <div class=\"col-md-6 col-xs-6\">";
   stack1 = ((helper = (helper = helpers.cleavage || (depth0 != null ? depth0.cleavage : depth0)) != null ? helper : helpers.helperMissing),(options={"name":"cleavage","hash":{},"fn":this.program(2, data, 0),"inverse":this.noop,"data":data}),(typeof helper === "function" ? helper.call(depth0,options) : helper));
   if (!helpers.cleavage) { stack1 = helpers.blockHelperMissing.call(depth0,stack1,options)}
   if (stack1 != null) { buffer += stack1; }
@@ -14162,90 +13815,162 @@ this["HBtemplates"]["templates/overviewProtein.tmpl"] = Handlebars.template({"1"
     + this.escapeExpression(((helper = (helper = helpers.synonymName || (depth0 != null ? depth0.synonymName : depth0)) != null ? helper : helpers.helperMissing),(typeof helper === "function" ? helper.call(depth0,{"name":"synonymName","hash":{},"data":data}) : helper)))
     + ", </span>";
 },"4":function(depth0,helpers,partials,data) {
+    var stack1;
+
+  return "    <div id=\"synonym-less\" class=\"row\">\n        <div class=\"col-md-3 col-xs-3\" style=\"color: grey;text-align:right\">Protein also known as :</div>\n        <div class=\"col-md-6 col-xs-6\">"
+    + this.escapeExpression(this.lambda(((stack1 = (depth0 != null ? depth0.recommendedProteinName : depth0)) != null ? stack1.synonymName : stack1), depth0))
+    + "</div>\n    </div>\n";
+},"6":function(depth0,helpers,partials,data) {
     var stack1, helper, options, buffer = 
-  "    <div id=\"family-less\" class=\"row\">\n        <div class=\"col-md-2 col-xs-3\" style=\"color: grey;text-align:right\">Family Name :</div>\n        <div class=\"col-md-6 col-xs-6\">";
-  stack1 = ((helper = (helper = helpers.family || (depth0 != null ? depth0.family : depth0)) != null ? helper : helpers.helperMissing),(options={"name":"family","hash":{},"fn":this.program(5, data, 0),"inverse":this.noop,"data":data}),(typeof helper === "function" ? helper.call(depth0,options) : helper));
+  "    <div id=\"family-less\" class=\"row\">\n        <div class=\"col-md-3 col-xs-3\" style=\"color: grey;text-align:right\">Family Name :</div>\n        <div class=\"col-md-6 col-xs-6\">";
+  stack1 = ((helper = (helper = helpers.family || (depth0 != null ? depth0.family : depth0)) != null ? helper : helpers.helperMissing),(options={"name":"family","hash":{},"fn":this.program(7, data, 0),"inverse":this.noop,"data":data}),(typeof helper === "function" ? helper.call(depth0,options) : helper));
   if (!helpers.family) { stack1 = helpers.blockHelperMissing.call(depth0,stack1,options)}
   if (stack1 != null) { buffer += stack1; }
   return buffer + "</div>\n    </div>\n";
-},"5":function(depth0,helpers,partials,data) {
+},"7":function(depth0,helpers,partials,data) {
     var stack1;
 
   return "<span>"
-    + ((stack1 = (helpers.link_to || (depth0 && depth0.link_to) || helpers.helperMissing).call(depth0,"family",{"name":"link_to","hash":{},"data":data})) != null ? stack1 : "")
+    + ((stack1 = (helpers.link_to || (depth0 && depth0.link_to) || helpers.helperMissing).call(depth0,"term",{"name":"link_to","hash":{},"data":data})) != null ? stack1 : "")
     + "</span>";
-},"7":function(depth0,helpers,partials,data) {
+},"9":function(depth0,helpers,partials,data) {
+    var stack1, helper, options, alias1=helpers.helperMissing, alias2="function", buffer = 
+  "                <dd>"
+    + this.escapeExpression(((helper = (helper = helpers.name || (depth0 != null ? depth0.name : depth0)) != null ? helper : alias1),(typeof helper === alias2 ? helper.call(depth0,{"name":"name","hash":{},"data":data}) : helper)))
+    + " "
+    + ((stack1 = helpers['if'].call(depth0,(depth0 != null ? depth0.EC : depth0),{"name":"if","hash":{},"fn":this.program(10, data, 0),"inverse":this.noop,"data":data})) != null ? stack1 : "")
+    + " ";
+  stack1 = ((helper = (helper = helpers['short'] || (depth0 != null ? depth0['short'] : depth0)) != null ? helper : alias1),(options={"name":"short","hash":{},"fn":this.program(14, data, 0),"inverse":this.noop,"data":data}),(typeof helper === alias2 ? helper.call(depth0,options) : helper));
+  if (!helpers['short']) { stack1 = helpers.blockHelperMissing.call(depth0,stack1,options)}
+  if (stack1 != null) { buffer += stack1; }
+  return buffer + "</dd>\n";
+},"10":function(depth0,helpers,partials,data) {
+    var stack1, helper, options, buffer = 
+  "[";
+  stack1 = ((helper = (helper = helpers.EC || (depth0 != null ? depth0.EC : depth0)) != null ? helper : helpers.helperMissing),(options={"name":"EC","hash":{},"fn":this.program(11, data, 0),"inverse":this.noop,"data":data}),(typeof helper === "function" ? helper.call(depth0,options) : helper));
+  if (!helpers.EC) { stack1 = helpers.blockHelperMissing.call(depth0,stack1,options)}
+  if (stack1 != null) { buffer += stack1; }
+  return buffer + " ] ";
+},"11":function(depth0,helpers,partials,data) {
+    var stack1;
+
+  return " "
+    + ((stack1 = (helpers.link_to || (depth0 && depth0.link_to) || helpers.helperMissing).call(depth0,"EC",{"name":"link_to","hash":{},"data":data})) != null ? stack1 : "")
+    + " "
+    + ((stack1 = helpers.unless.call(depth0,(data && data.last),{"name":"unless","hash":{},"fn":this.program(12, data, 0),"inverse":this.noop,"data":data})) != null ? stack1 : "")
+    + " ";
+},"12":function(depth0,helpers,partials,data) {
+    return ",";
+},"14":function(depth0,helpers,partials,data) {
+    return "<em style=\"font-size:12px;\">(short : "
+    + this.escapeExpression(this.lambda(depth0, depth0))
+    + ") </em>";
+},"16":function(depth0,helpers,partials,data) {
     var stack1, helper, options, buffer = 
   "                <dt>Cleaved into the following "
     + this.escapeExpression(this.lambda(((stack1 = (depth0 != null ? depth0.cleavage : depth0)) != null ? stack1.length : stack1), depth0))
     + " chains</dt>\n";
-  stack1 = ((helper = (helper = helpers.cleavage || (depth0 != null ? depth0.cleavage : depth0)) != null ? helper : helpers.helperMissing),(options={"name":"cleavage","hash":{},"fn":this.program(8, data, 0),"inverse":this.noop,"data":data}),(typeof helper === "function" ? helper.call(depth0,options) : helper));
+  stack1 = ((helper = (helper = helpers.cleavage || (depth0 != null ? depth0.cleavage : depth0)) != null ? helper : helpers.helperMissing),(options={"name":"cleavage","hash":{},"fn":this.program(17, data, 0),"inverse":this.noop,"data":data}),(typeof helper === "function" ? helper.call(depth0,options) : helper));
   if (!helpers.cleavage) { stack1 = helpers.blockHelperMissing.call(depth0,stack1,options)}
   if (stack1 != null) { buffer += stack1; }
   return buffer;
-},"8":function(depth0,helpers,partials,data) {
+},"17":function(depth0,helpers,partials,data) {
     var helper;
 
   return "                <dd>"
     + this.escapeExpression(((helper = (helper = helpers.synonymName || (depth0 != null ? depth0.synonymName : depth0)) != null ? helper : helpers.helperMissing),(typeof helper === "function" ? helper.call(depth0,{"name":"synonymName","hash":{},"data":data}) : helper)))
     + "</dd>\n                ";
-},"10":function(depth0,helpers,partials,data) {
+},"19":function(depth0,helpers,partials,data) {
     var stack1, helper, options, buffer = 
   "                <dt>Alternative Name</dt>\n";
-  stack1 = ((helper = (helper = helpers.alternativeName || (depth0 != null ? depth0.alternativeName : depth0)) != null ? helper : helpers.helperMissing),(options={"name":"alternativeName","hash":{},"fn":this.program(11, data, 0),"inverse":this.noop,"data":data}),(typeof helper === "function" ? helper.call(depth0,options) : helper));
-  if (!helpers.alternativeName) { stack1 = helpers.blockHelperMissing.call(depth0,stack1,options)}
+  stack1 = ((helper = (helper = helpers.alternativeProteinNames || (depth0 != null ? depth0.alternativeProteinNames : depth0)) != null ? helper : helpers.helperMissing),(options={"name":"alternativeProteinNames","hash":{},"fn":this.program(20, data, 0),"inverse":this.noop,"data":data}),(typeof helper === "function" ? helper.call(depth0,options) : helper));
+  if (!helpers.alternativeProteinNames) { stack1 = helpers.blockHelperMissing.call(depth0,stack1,options)}
   if (stack1 != null) { buffer += stack1; }
   return buffer;
-},"11":function(depth0,helpers,partials,data) {
+},"20":function(depth0,helpers,partials,data) {
     var stack1, helper;
 
   return "                <dd> "
-    + this.escapeExpression(((helper = (helper = helpers.synonymName || (depth0 != null ? depth0.synonymName : depth0)) != null ? helper : helpers.helperMissing),(typeof helper === "function" ? helper.call(depth0,{"name":"synonymName","hash":{},"data":data}) : helper)))
+    + this.escapeExpression(((helper = (helper = helpers.name || (depth0 != null ? depth0.name : depth0)) != null ? helper : helpers.helperMissing),(typeof helper === "function" ? helper.call(depth0,{"name":"name","hash":{},"data":data}) : helper)))
     + "\n                    "
-    + ((stack1 = helpers['if'].call(depth0,(depth0 != null ? depth0.synonyms : depth0),{"name":"if","hash":{},"fn":this.program(12, data, 0),"inverse":this.noop,"data":data})) != null ? stack1 : "")
+    + ((stack1 = helpers['if'].call(depth0,(depth0 != null ? depth0['short'] : depth0),{"name":"if","hash":{},"fn":this.program(21, data, 0),"inverse":this.noop,"data":data})) != null ? stack1 : "")
     + "\n                </dd>\n                ";
-},"12":function(depth0,helpers,partials,data) {
+},"21":function(depth0,helpers,partials,data) {
     var stack1;
 
   return "<em style=\"font-size:12px;\">(short : "
-    + this.escapeExpression(this.lambda(((stack1 = ((stack1 = (depth0 != null ? depth0.synonyms : depth0)) != null ? stack1['0'] : stack1)) != null ? stack1.synonymName : stack1), depth0))
+    + this.escapeExpression(this.lambda(((stack1 = ((stack1 = (depth0 != null ? depth0['short'] : depth0)) != null ? stack1['0'] : stack1)) != null ? stack1.synonymName : stack1), depth0))
     + ") </em>";
-},"14":function(depth0,helpers,partials,data) {
+},"23":function(depth0,helpers,partials,data) {
+    var stack1, helper;
+
+  return "                <dd>"
+    + this.escapeExpression(((helper = (helper = helpers.name || (depth0 != null ? depth0.name : depth0)) != null ? helper : helpers.helperMissing),(typeof helper === "function" ? helper.call(depth0,{"name":"name","hash":{},"data":data}) : helper)))
+    + "</dd>\n"
+    + ((stack1 = helpers['if'].call(depth0,(depth0 != null ? depth0.synonyms : depth0),{"name":"if","hash":{},"fn":this.program(24, data, 0),"inverse":this.noop,"data":data})) != null ? stack1 : "")
+    + ((stack1 = helpers['if'].call(depth0,(depth0 != null ? depth0.orf : depth0),{"name":"if","hash":{},"fn":this.program(27, data, 0),"inverse":this.noop,"data":data})) != null ? stack1 : "");
+},"24":function(depth0,helpers,partials,data) {
     var stack1, helper, options, buffer = 
-  "    <div id=\"family-full\" class=\"row\">\n        <div class=\"col-md-2 col-xs-3 text-uppercase\" style=\"color: grey;\">Family</div>\n        <div class=\"col-md-6 col-xs-6\">\n            <dl>\n                <dt>Family</dt>\n";
-  stack1 = ((helper = (helper = helpers.family || (depth0 != null ? depth0.family : depth0)) != null ? helper : helpers.helperMissing),(options={"name":"family","hash":{},"fn":this.program(15, data, 0),"inverse":this.noop,"data":data}),(typeof helper === "function" ? helper.call(depth0,options) : helper));
+  "                <dt>Alternative Names</dt>\n";
+  stack1 = ((helper = (helper = helpers.synonyms || (depth0 != null ? depth0.synonyms : depth0)) != null ? helper : helpers.helperMissing),(options={"name":"synonyms","hash":{},"fn":this.program(25, data, 0),"inverse":this.noop,"data":data}),(typeof helper === "function" ? helper.call(depth0,options) : helper));
+  if (!helpers.synonyms) { stack1 = helpers.blockHelperMissing.call(depth0,stack1,options)}
+  if (stack1 != null) { buffer += stack1; }
+  return buffer;
+},"25":function(depth0,helpers,partials,data) {
+    var helper;
+
+  return "                <dd> "
+    + this.escapeExpression(((helper = (helper = helpers.name || (depth0 != null ? depth0.name : depth0)) != null ? helper : helpers.helperMissing),(typeof helper === "function" ? helper.call(depth0,{"name":"name","hash":{},"data":data}) : helper)))
+    + "</dd>\n";
+},"27":function(depth0,helpers,partials,data) {
+    var stack1, helper, options, buffer = 
+  "                <dt>ORF names</dt>\n";
+  stack1 = ((helper = (helper = helpers.orf || (depth0 != null ? depth0.orf : depth0)) != null ? helper : helpers.helperMissing),(options={"name":"orf","hash":{},"fn":this.program(25, data, 0),"inverse":this.noop,"data":data}),(typeof helper === "function" ? helper.call(depth0,options) : helper));
+  if (!helpers.orf) { stack1 = helpers.blockHelperMissing.call(depth0,stack1,options)}
+  if (stack1 != null) { buffer += stack1; }
+  return buffer;
+},"29":function(depth0,helpers,partials,data) {
+    var stack1, helper, options, buffer = 
+  "    <div id=\"family-full\" class=\"row\">\n        <div class=\"col-md-2 col-xs-3 text-uppercase\" style=\"color: grey;\">Family</div>\n        <div class=\"col-md-7 col-xs-6\">\n            <dl>\n                <dt>Family</dt>\n";
+  stack1 = ((helper = (helper = helpers.family || (depth0 != null ? depth0.family : depth0)) != null ? helper : helpers.helperMissing),(options={"name":"family","hash":{},"fn":this.program(30, data, 0),"inverse":this.noop,"data":data}),(typeof helper === "function" ? helper.call(depth0,options) : helper));
   if (!helpers.family) { stack1 = helpers.blockHelperMissing.call(depth0,stack1,options)}
   if (stack1 != null) { buffer += stack1; }
   return buffer + "            </dl>\n        </div>\n    </div>\n";
-},"15":function(depth0,helpers,partials,data) {
+},"30":function(depth0,helpers,partials,data) {
     var stack1;
 
   return "                <dd>"
-    + ((stack1 = (helpers.link_to || (depth0 && depth0.link_to) || helpers.helperMissing).call(depth0,"family",{"name":"link_to","hash":{},"data":data})) != null ? stack1 : "")
+    + ((stack1 = (helpers.link_to || (depth0 && depth0.link_to) || helpers.helperMissing).call(depth0,"term",{"name":"link_to","hash":{},"data":data})) != null ? stack1 : "")
     + "</dd>\n";
-},"17":function(depth0,helpers,partials,data) {
+},"32":function(depth0,helpers,partials,data) {
     var stack1;
 
   return ((stack1 = (helpers.link_to || (depth0 && depth0.link_to) || helpers.helperMissing).call(depth0,"history",{"name":"link_to","hash":{},"data":data})) != null ? stack1 : "");
 },"compiler":[6,">= 2.0.0-beta.1"],"main":function(depth0,helpers,partials,data) {
-    var stack1, helper, options, alias1=helpers.helperMissing, alias2="function", alias3=this.escapeExpression, buffer = 
+    var stack1, helper, options, alias1=helpers.helperMissing, alias2="function", alias3=this.escapeExpression, alias4=helpers.blockHelperMissing, buffer = 
   "<div id=\"proteinTitle\">\n    <button id=\"extender\" class=\"btn btn-default\" style=\"float:right\">Extend overview</button>\n    <h2>"
     + alias3(((helper = (helper = helpers.entryName || (depth0 != null ? depth0.entryName : depth0)) != null ? helper : alias1),(typeof helper === alias2 ? helper.call(depth0,{"name":"entryName","hash":{},"data":data}) : helper)))
     + "</h2>\n</div>\n<div id=\"INFOS-LESS\" style=\"display:block\">\n"
     + ((stack1 = helpers['if'].call(depth0,(depth0 != null ? depth0.cleavage : depth0),{"name":"if","hash":{},"fn":this.program(1, data, 0),"inverse":this.noop,"data":data})) != null ? stack1 : "")
-    + "    <div id=\"gene-less\" class=\"row\">\n        <div class=\"col-md-2 col-xs-3\" style=\"color: grey;text-align:right\">Gene Name :</div>\n        <div class=\"col-md-6 col-xs-6\">"
-    + alias3(((helper = (helper = helpers.geneName || (depth0 != null ? depth0.geneName : depth0)) != null ? helper : alias1),(typeof helper === alias2 ? helper.call(depth0,{"name":"geneName","hash":{},"data":data}) : helper)))
+    + ((stack1 = helpers['if'].call(depth0,((stack1 = (depth0 != null ? depth0.recommendedProteinName : depth0)) != null ? stack1.synonymName : stack1),{"name":"if","hash":{},"fn":this.program(4, data, 0),"inverse":this.noop,"data":data})) != null ? stack1 : "")
+    + "    <div id=\"gene-less\" class=\"row\">\n        <div class=\"col-md-3 col-xs-3\" style=\"color: grey;text-align:right\">Gene Name :</div>\n        <div class=\"col-md-6 col-xs-6\">"
+    + alias3(this.lambda(((stack1 = ((stack1 = (depth0 != null ? depth0.geneName : depth0)) != null ? stack1['0'] : stack1)) != null ? stack1.name : stack1), depth0))
     + "</div>\n    </div>\n"
-    + ((stack1 = helpers['if'].call(depth0,(depth0 != null ? depth0.family : depth0),{"name":"if","hash":{},"fn":this.program(4, data, 0),"inverse":this.noop,"data":data})) != null ? stack1 : "")
-    + "</div>\n<div id=\"INFOS-FULL\" style=\"display:none\">\n    <div id=\"gene-full\" class=\"row\">\n        <div class=\"col-md-2 col-xs-3 text-uppercase\" style=\"color: grey;\">Protein</div>\n        <div class=\"col-md-6 col-xs-6\">\n            <dl>\n                <dt>Recommended Name</dt>\n                <dd> "
-    + alias3(((helper = (helper = helpers.geneName || (depth0 != null ? depth0.geneName : depth0)) != null ? helper : alias1),(typeof helper === alias2 ? helper.call(depth0,{"name":"geneName","hash":{},"data":data}) : helper)))
-    + "</dd>\n"
-    + ((stack1 = helpers['if'].call(depth0,(depth0 != null ? depth0.cleavage : depth0),{"name":"if","hash":{},"fn":this.program(7, data, 0),"inverse":this.noop,"data":data})) != null ? stack1 : "")
+    + ((stack1 = helpers['if'].call(depth0,(depth0 != null ? depth0.family : depth0),{"name":"if","hash":{},"fn":this.program(6, data, 0),"inverse":this.noop,"data":data})) != null ? stack1 : "")
+    + "</div>\n<div id=\"INFOS-FULL\" style=\"display:none\">\n    <div id=\"protein-full\" class=\"row\">\n        <div class=\"col-md-2 col-xs-3 text-uppercase\" style=\"color: grey;\">Protein</div>\n        <div class=\"col-md-7 col-xs-6\">\n            <dl>\n                <dt>Recommended Name</dt>\n";
+  stack1 = ((helper = (helper = helpers.recommendedProteinName || (depth0 != null ? depth0.recommendedProteinName : depth0)) != null ? helper : alias1),(options={"name":"recommendedProteinName","hash":{},"fn":this.program(9, data, 0),"inverse":this.noop,"data":data}),(typeof helper === alias2 ? helper.call(depth0,options) : helper));
+  if (!helpers.recommendedProteinName) { stack1 = alias4.call(depth0,stack1,options)}
+  if (stack1 != null) { buffer += stack1; }
+  buffer += ((stack1 = helpers['if'].call(depth0,(depth0 != null ? depth0.cleavage : depth0),{"name":"if","hash":{},"fn":this.program(16, data, 0),"inverse":this.noop,"data":data})) != null ? stack1 : "")
     + "\n"
-    + ((stack1 = helpers['if'].call(depth0,(depth0 != null ? depth0.alternativeName : depth0),{"name":"if","hash":{},"fn":this.program(10, data, 0),"inverse":this.noop,"data":data})) != null ? stack1 : "")
-    + "\n            </dl>\n        </div>\n    </div>\n"
-    + ((stack1 = helpers['if'].call(depth0,(depth0 != null ? depth0.family : depth0),{"name":"if","hash":{},"fn":this.program(14, data, 0),"inverse":this.noop,"data":data})) != null ? stack1 : "")
-    + "    <div id=\"History-full\" class=\"row\">\n        <div class=\"col-md-2 col-xs-3 text-uppercase\" style=\"color: grey;\">History</div>\n        <div class=\"col-md-6 col-xs-6\">\n            <dl>\n                <dt>neXtProt</dt>\n                <dd>Integrated "
+    + ((stack1 = helpers['if'].call(depth0,(depth0 != null ? depth0.alternativeProteinNames : depth0),{"name":"if","hash":{},"fn":this.program(19, data, 0),"inverse":this.noop,"data":data})) != null ? stack1 : "")
+    + "\n            </dl>\n        </div>\n    </div>\n    <div id=\"gene-full\" class=\"row\">\n        <div class=\"col-md-2 col-xs-3 text-uppercase\" style=\"color: grey;\">Gene</div>\n        <div class=\"col-md-7 col-xs-6\">\n            <dl>\n                <dt>Recommended Name</dt>\n";
+  stack1 = ((helper = (helper = helpers.geneName || (depth0 != null ? depth0.geneName : depth0)) != null ? helper : alias1),(options={"name":"geneName","hash":{},"fn":this.program(23, data, 0),"inverse":this.noop,"data":data}),(typeof helper === alias2 ? helper.call(depth0,options) : helper));
+  if (!helpers.geneName) { stack1 = alias4.call(depth0,stack1,options)}
+  if (stack1 != null) { buffer += stack1; }
+  buffer += "            </dl>\n        </div>\n    </div>\n"
+    + ((stack1 = helpers['if'].call(depth0,(depth0 != null ? depth0.family : depth0),{"name":"if","hash":{},"fn":this.program(29, data, 0),"inverse":this.noop,"data":data})) != null ? stack1 : "")
+    + "    <div id=\"History-full\" class=\"row\">\n        <div class=\"col-md-2 col-xs-3 text-uppercase\" style=\"color: grey;\">History</div>\n        <div class=\"col-md-7 col-xs-6\">\n            <dl>\n                <dt>neXtProt</dt>\n                <dd>Integrated "
     + alias3(((helper = (helper = helpers.integDate || (depth0 != null ? depth0.integDate : depth0)) != null ? helper : alias1),(typeof helper === alias2 ? helper.call(depth0,{"name":"integDate","hash":{},"data":data}) : helper)))
     + "</dd>\n                <dd>Last Updated "
     + alias3(((helper = (helper = helpers.lastUpdate || (depth0 != null ? depth0.lastUpdate : depth0)) != null ? helper : alias1),(typeof helper === alias2 ? helper.call(depth0,{"name":"lastUpdate","hash":{},"data":data}) : helper)))
@@ -14258,15 +13983,13 @@ this["HBtemplates"]["templates/overviewProtein.tmpl"] = Handlebars.template({"1"
     + "</dd>\n                <dd>Sequence version "
     + alias3(((helper = (helper = helpers.seqVersion || (depth0 != null ? depth0.seqVersion : depth0)) != null ? helper : alias1),(typeof helper === alias2 ? helper.call(depth0,{"name":"seqVersion","hash":{},"data":data}) : helper)))
     + "</dd>\n                <dd>";
-  stack1 = ((helper = (helper = helpers.accessionNumber || (depth0 != null ? depth0.accessionNumber : depth0)) != null ? helper : alias1),(options={"name":"accessionNumber","hash":{},"fn":this.program(17, data, 0),"inverse":this.noop,"data":data}),(typeof helper === alias2 ? helper.call(depth0,options) : helper));
-  if (!helpers.accessionNumber) { stack1 = helpers.blockHelperMissing.call(depth0,stack1,options)}
+  stack1 = ((helper = (helper = helpers.accessionNumber || (depth0 != null ? depth0.accessionNumber : depth0)) != null ? helper : alias1),(options={"name":"accessionNumber","hash":{},"fn":this.program(32, data, 0),"inverse":this.noop,"data":data}),(typeof helper === alias2 ? helper.call(depth0,options) : helper));
+  if (!helpers.accessionNumber) { stack1 = alias4.call(depth0,stack1,options)}
   if (stack1 != null) { buffer += stack1; }
   return buffer + "</dd>\n            </dl>\n        </div>\n    </div>\n</div>\n<p style=\"margin:10px 10px;\">Entry whose protein(s) existence is based on "
     + alias3(((helper = (helper = helpers.proteineEvidence || (depth0 != null ? depth0.proteineEvidence : depth0)) != null ? helper : alias1),(typeof helper === alias2 ? helper.call(depth0,{"name":"proteineEvidence","hash":{},"data":data}) : helper)))
     + "</p>";
-},"useData":true});
-  
-};
+},"useData":true});;
 /*!
  * Bootstrap v3.3.5 (http://getbootstrap.com)
  * Copyright 2011-2015 Twitter, Inc.
@@ -14896,7 +14619,12 @@ function FeatureViewer(sequence, div, options) {
     var zoomMax = 50;
 
     //Init box & scaling
-    var margin = {top: 10, right: 20, bottom: 20, left: 100},
+    var margin = {
+            top: 10,
+            right: 20,
+            bottom: 20,
+            left: 100
+        },
         width = $(div).width() - margin.left - margin.right - 17,
         height = 600 - margin.top - margin.bottom;
     var scaling = d3.scale.linear()
@@ -14907,7 +14635,6 @@ function FeatureViewer(sequence, div, options) {
         .range([0, sequence.length - 1]);
 
     d3.helper = {};
-    console.log(width);
 
     d3.helper.tooltip = function (object) {
         var tooltipDiv;
@@ -14917,72 +14644,68 @@ function FeatureViewer(sequence, div, options) {
         function tooltip(selection) {
 
             selection.on('mouseover.tooltip', function (pD, pI) {
-                // Clean up lost tooltips
-                d3.select('body').selectAll('div.tooltip').remove();
-                // Append tooltip
-                var absoluteMousePos = d3.mouse(bodyNode);
-                var rightside = (absoluteMousePos[0] > width );
-                if (rightside) {
-                    tooltipDiv = d3.select(div)
-                        .append('div')
-                        .attr('class', 'tooltip3');
-                }
-                else {
-                    tooltipDiv = d3.select(div)
-                        .append('div')
-                        .attr('class', 'tooltip2');
+                    // Clean up lost tooltips
+                    d3.select('body').selectAll('div.tooltip').remove();
+                    // Append tooltip
+                    var absoluteMousePos = d3.mouse(bodyNode);
+                    var rightside = (absoluteMousePos[0] > width);
+                    if (rightside) {
+                        tooltipDiv = d3.select(div)
+                            .append('div')
+                            .attr('class', 'tooltip3');
+                    } else {
+                        tooltipDiv = d3.select(div)
+                            .append('div')
+                            .attr('class', 'tooltip2');
+                        tooltipDiv.style({
+                            left: (absoluteMousePos[0] - 15) + 'px'
+                        });
+                    }
                     tooltipDiv.style({
-                        left: (absoluteMousePos[0] - 15) + 'px'
+                        top: (absoluteMousePos[1] - 55) + 'px',
+                        'background-color': 'rgba(0, 0, 0, 0.8)',
+                        width: 'auto',
+                        'max-width': '170px',
+                        height: 'auto',
+                        'max-height': '43px',
+                        padding: '5px',
+                        "font": '10px sans-serif',
+                        'text-align': 'center',
+                        position: 'absolute',
+                        'z-index': 45,
+                        'box-shadow': '0 1px 2px 0 #656565'
                     });
-                }
-                tooltipDiv.style({
-                    top: (absoluteMousePos[1] - 55) + 'px',
-                    'background-color': 'rgba(0, 0, 0, 0.8)',
-                    width: 'auto',
-                    'max-width': '170px',
-                    height: 'auto',
-                    'max-height': '43px',
-                    padding: '5px',
-                    "font": '10px sans-serif',
-                    'text-align': 'center',
-                    position: 'absolute',
-                    'z-index': 45,
-                    'box-shadow': '0 1px 2px 0 #656565'
-                });
-                if (object.type === "path") {
-                    var first_line = '<p style="margin:2px;color:white">start : <span style="color:orangered">' + pD[0].x + '</span></p>';
-                    var second_line = '<p style="margin:2px;color:white">end : <span style="color:orangered">' + pD[1].x + '</span></p>';
-                }
-                else if (object.type === "unique") {
-                    var first_line = '<p style="margin:2px;color:orangered">' + pD.x + '</p>';
-                    if (pD.description) var second_line = '<p style="margin:2px;color:white;font-size:9px">' + pD.description + '</p>';
-                    else var second_line = '';
-                }
-                else {
-                    var first_line = '<p style="margin:2px;color:orangered">' + pD.x + ' - ' + pD.y + '</p>';
-                    if (pD.description) var second_line = '<p style="margin:2px;color:white;font-size:9px">' + pD.description + '</p>';
-                    else var second_line = '';
-                }
+                    if (object.type === "path") {
+                        var first_line = '<p style="margin:2px;color:white">start : <span style="color:orangered">' + pD[0].x + '</span></p>';
+                        var second_line = '<p style="margin:2px;color:white">end : <span style="color:orangered">' + pD[1].x + '</span></p>';
+                    } else if (object.type === "unique") {
+                        var first_line = '<p style="margin:2px;color:orangered">' + pD.x + '</p>';
+                        if (pD.description) var second_line = '<p style="margin:2px;color:white;font-size:9px">' + pD.description + '</p>';
+                        else var second_line = '';
+                    } else {
+                        var first_line = '<p style="margin:2px;color:orangered">' + pD.x + ' - ' + pD.y + '</p>';
+                        if (pD.description) var second_line = '<p style="margin:2px;color:white;font-size:9px">' + pD.description + '</p>';
+                        else var second_line = '';
+                    }
 
-                tooltipDiv.html(first_line + second_line);
-                if (rightside) {
-                    tooltipDiv.style({
-                        left: (absoluteMousePos[0] + 10 - (tooltipDiv.node().getBoundingClientRect().width)) + 'px'
-                    })
-                }
-            })
+                    tooltipDiv.html(first_line + second_line);
+                    if (rightside) {
+                        tooltipDiv.style({
+                            left: (absoluteMousePos[0] + 10 - (tooltipDiv.node().getBoundingClientRect().width)) + 'px'
+                        })
+                    }
+                })
                 .on('mousemove.tooltip', function (pD, pI) {
                     // Move tooltip
                     var absoluteMousePos = d3.mouse(bodyNode);
-                    var rightside = (absoluteMousePos[0] > width );
+                    var rightside = (absoluteMousePos[0] > width);
                     if (rightside) {
                         tooltipDiv.attr("class", "tooltip3");
                         tooltipDiv.style({
                             left: (absoluteMousePos[0] + 10 - (tooltipDiv.node().getBoundingClientRect().width)) + 'px',
                             top: (absoluteMousePos[1] - 55) + 'px'
                         });
-                    }
-                    else {
+                    } else {
                         tooltipDiv.attr("class", "tooltip2");
                         tooltipDiv.style({
                             left: (absoluteMousePos[0] - 15) + 'px',
@@ -15008,12 +14731,10 @@ function FeatureViewer(sequence, div, options) {
                     if (object.type === "path") {
                         xTemp = pD[0].x;
                         yTemp = pD[1].x;
-                    }
-                    else if (object.type === "unique") {
+                    } else if (object.type === "unique") {
                         xTemp = pD.x - 0.5;
                         yTemp = pD.y + 0.5;
-                    }
-                    else {
+                    } else {
                         xTemp = pD.x;
                         yTemp = pD.y;
                     }
@@ -15021,22 +14742,19 @@ function FeatureViewer(sequence, div, options) {
                     if (scaling(xTemp) < 0 && scaling(yTemp) > svgWidth) {
                         xRect = margin.left;
                         widthRect = svgWidth;
-                    }
-                    else if (scaling(xTemp) < 0) {
+                    } else if (scaling(xTemp) < 0) {
                         xRect = margin.left;
                         widthRect = (scaling(yTemp));
-                    }
-                    else if (scaling(yTemp) > svgWidth) {
+                    } else if (scaling(yTemp) > svgWidth) {
                         xRect = scaling(xTemp) + margin.left;
                         widthRect = svgWidth - scaling(xTemp);
-                    }
-                    else {
+                    } else {
                         xRect = scaling(xTemp) + margin.left;
                         widthRect = (scaling(yTemp) - scaling(xTemp));
                     }
                     selectedRect.style({
                         left: xRect + 'px',
-                        top: ($(div +" .svgHeader").length) ? 60 + 'px' : 10 + 'px',
+                        top: ($(div + " .svgHeader").length) ? 60 + 'px' : 10 + 'px',
                         'background-color': 'rgba(0, 0, 0, 0.2)',
                         width: widthRect + 'px',
                         height: (Yposition + 50) + 'px',
@@ -15044,8 +14762,7 @@ function FeatureViewer(sequence, div, options) {
                         'z-index': -1,
                         'box-shadow': '0 1px 2px 0 #656565'
                     });
-                })
-            ;
+                });
 
         }
 
@@ -15084,8 +14801,7 @@ function FeatureViewer(sequence, div, options) {
             if (leveling === []) {
                 leveling.push(d.y);
                 d.level = 0;
-            }
-            else {
+            } else {
                 var placed = false;
                 for (var k = 0; k < leveling.length; k++) {
                     if (d.x > leveling[k]) {
@@ -15111,8 +14827,7 @@ function FeatureViewer(sequence, div, options) {
             if (leveling === []) {
                 leveling.push(d[2].x);
                 d[1].y = 1;
-            }
-            else {
+            } else {
                 var placed = false;
                 for (var k = 0; k < leveling.length; k++) {
                     if (d[0].x > leveling[k]) {
@@ -15167,7 +14882,6 @@ function FeatureViewer(sequence, div, options) {
     }
 
     function updateSVGHeight(position) {
-        console.log("blblblbblbl");
         svg.attr("height", position + 60 + "px")
     }
 
@@ -15197,11 +14911,11 @@ function FeatureViewer(sequence, div, options) {
             .enter()
             .append("g");
         yAxisSVGgroup
-            .append("polygon")       // attach a polygon
-            .style("stroke", "none")  // colour the line
-            .style("fill", "rgba(95,46,38,0.2)")     // remove any fill colour
+            .append("polygon") // attach a polygon
+            .style("stroke", "none") // colour the line
+            .style("fill", "rgba(95,46,38,0.2)") // remove any fill colour
             .attr("points", function (d) {
-                return (margin.left - 15) + "," + (d.y - 3) + ", " + (margin.left - 15) + "," + (d.y + 12) + ", " + (margin.left - 7) + "," + (d.y + 4.5);  // x,y points
+                return (margin.left - 15) + "," + (d.y - 3) + ", " + (margin.left - 15) + "," + (d.y + 12) + ", " + (margin.left - 7) + "," + (d.y + 4.5); // x,y points
             });
         yAxisSVGgroup
             .append("rect")
@@ -15248,7 +14962,19 @@ function FeatureViewer(sequence, div, options) {
             });
             var level = addLevel(object.data);
             object.data = object.data.map(function (d) {
-                return [{x: d.x, y: 0, id: d.id}, {x: d.y, y: d.level + 1, id: d.id}, {x: d.y, y: 0, id: d.id}]
+                return [{
+                    x: d.x,
+                    y: 0,
+                    id: d.id
+                }, {
+                    x: d.y,
+                    y: d.level + 1,
+                    id: d.id
+                }, {
+                    x: d.y,
+                    y: 0,
+                    id: d.id
+                }]
             })
             pathLevel = level * 10 + 5;
             object.height = level * 10 + 5;
@@ -15267,28 +14993,39 @@ function FeatureViewer(sequence, div, options) {
             if (object.type === "rect") {
                 preComputing.multipleRect(object);
                 fillSVG.rectangle(object, sequence, Yposition, level);
-                yData.push({title: object.name, y: Yposition});
+                yData.push({
+                    title: object.name,
+                    y: Yposition
+                });
                 Yposition += (level - 1) * 20;
-            }
-            else if (object.type === "text") {
+            } else if (object.type === "text") {
                 fillSVG.sequence(object.data, Yposition);
-                yData.push({title: object.name, y: Yposition});
-            }
-            else if (object.type === "unique") {
+                yData.push({
+                    title: object.name,
+                    y: Yposition
+                });
+            } else if (object.type === "unique") {
                 fillSVG.unique(object, sequence, Yposition);
-                yData.push({title: object.name, y: Yposition});
-            }
-            else if (object.type === "multipleRect") {
+                yData.push({
+                    title: object.name,
+                    y: Yposition
+                });
+            } else if (object.type === "multipleRect") {
                 preComputing.multipleRect(object);
                 fillSVG.multipleRect(object, sequence, Yposition, level);
-                yData.push({title: object.name, y: Yposition});
+                yData.push({
+                    title: object.name,
+                    y: Yposition
+                });
                 Yposition += (level - 1) * 10;
-            }
-            else if (object.type === "path") {
+            } else if (object.type === "path") {
                 preComputing.path(object);
                 fillSVG.path(object, sequence, Yposition);
                 Yposition += pathLevel;
-                yData.push({title: object.name, y: Yposition - 10});
+                yData.push({
+                    title: object.name,
+                    y: Yposition - 10
+                });
             }
         },
         sequence: function (seq, position, start) {
@@ -15324,7 +15061,13 @@ function FeatureViewer(sequence, div, options) {
 
             for (var i = 0; i < level; i++) {
                 rectsPro.append("path")
-                    .attr("d", line([{x: 0, y: (i * rectShift)}, {x: sequence.length - 1, y: (i * rectShift)}]))
+                    .attr("d", line([{
+                        x: 0,
+                        y: (i * rectShift)
+                    }, {
+                        x: sequence.length - 1,
+                        y: (i * rectShift)
+                    }]))
                     .attr("class", function () {
                         return "line" + object.className
                     })
@@ -15373,8 +15116,7 @@ function FeatureViewer(sequence, div, options) {
                 .style("visibility", function (d) {
                     if (d.description) {
                         return (scaling(d.y) - scaling(d.x)) > d.description.length * 8 ? "visible" : "hidden";
-                    }
-                    else return "hidden";
+                    } else return "hidden";
                 })
                 .call(d3.helper.tooltip(object));
 
@@ -15401,7 +15143,13 @@ function FeatureViewer(sequence, div, options) {
                 .attr("transform", "translate(0," + position + ")");
 
             rectsPro.append("path")
-                .attr("d", line([{x: 0, y: 0}, {x: sequence.length - 1, y: 0}]))
+                .attr("d", line([{
+                    x: 0,
+                    y: 0
+                }, {
+                    x: sequence.length - 1,
+                    y: 0
+                }]))
                 .attr("class", function () {
                     return "line" + object.className
                 })
@@ -15438,7 +15186,13 @@ function FeatureViewer(sequence, div, options) {
                 .attr("transform", "translate(0," + position + ")");
 
             pathsDB.append("path")
-                .attr("d", lineBond([{x: 0, y: 0}, {x: sequence.length - 1, y: 0}]))
+                .attr("d", lineBond([{
+                    x: 0,
+                    y: 0
+                }, {
+                    x: sequence.length - 1,
+                    y: 0
+                }]))
                 .style("z-index", "0")
                 .style("stroke", object.color)
                 .style("stroke-width", "1px");
@@ -15470,7 +15224,13 @@ function FeatureViewer(sequence, div, options) {
 
             for (var i = 0; i < level; i++) {
                 rects.append("path")
-                    .attr("d", line([{x: 0, y: (i * rectShift - 2)}, {x: sequence.length - 1, y: (i * rectShift - 2)}]))
+                    .attr("d", line([{
+                        x: 0,
+                        y: (i * rectShift - 2)
+                    }, {
+                        x: sequence.length - 1,
+                        y: (i * rectShift - 2)
+                    }]))
                     .attr("class", function () {
                         return "line" + object.className
                     })
@@ -15518,8 +15278,7 @@ function FeatureViewer(sequence, div, options) {
                 .style("visibility", function (d) {
                     if (d.description) {
                         return (scaling(d.y) - scaling(d.x)) > d.description.length * 8 ? "visible" : "hidden";
-                    }
-                    else return "hidden";
+                    } else return "hidden";
                 });
         },
         multiRec: function (object) {
@@ -15580,14 +15339,14 @@ function FeatureViewer(sequence, div, options) {
             .attr('height', Yposition + 50);
     }
 
-// Show peptide selected in brush
-//function brushmove() {
-//    var extent = brush.extent();
-//    rectsPep2.classed("selected", function (d) {
-//        is_brushed = extent[0] <= d.x && d.x <= extent[1] && extent[0] <= d.y && d.y <= extent[1];
-//        return is_brushed;
-//    });
-//}
+    // Show peptide selected in brush
+    //function brushmove() {
+    //    var extent = brush.extent();
+    //    rectsPep2.classed("selected", function (d) {
+    //        is_brushed = extent[0] <= d.x && d.x <= extent[1] && extent[0] <= d.y && d.y <= extent[1];
+    //        return is_brushed;
+    //    });
+    //}
 
     function brushend() {
         d3.select(div).selectAll('div.selectedRect').remove();
@@ -15595,8 +15354,10 @@ function FeatureViewer(sequence, div, options) {
         var extent = brush.extent();
         var extentLength = Math.abs(extent[0] - extent[1]);
 
-        if (extent[0] < extent[1]) var start = parseInt(extent[0] - 1), end = parseInt(extent[1] + 1);
-        else var start = parseInt(extent[1] + 1), end = parseInt(extent[0] - 1);
+        if (extent[0] < extent[1]) var start = parseInt(extent[0] - 1),
+            end = parseInt(extent[1] + 1);
+        else var start = parseInt(extent[1] + 1),
+            end = parseInt(extent[0] - 1);
 
         var seq = displaySequence(extentLength);
         if (!brush.empty() && extentLength > zoomMax) {
@@ -15618,14 +15379,13 @@ function FeatureViewer(sequence, div, options) {
 
             //rectsPep2.classed("selected", false);
             d3.select(div).selectAll(".brush").call(brush.clear());
-        }
-        else {
+        } else {
             d3.select(div).selectAll(".brush").call(brush.clear());
             //resetAll();
         }
     }
 
-// If brush is too small, reset view as origin
+    // If brush is too small, reset view as origin
     function resetAll() {
 
         //reset scale
@@ -15645,17 +15405,13 @@ function FeatureViewer(sequence, div, options) {
         features.forEach(function (o) {
             if (o.type === "rect") {
                 transition.rectangle(o);
-            }
-            else if (o.type === "multipleRect") {
+            } else if (o.type === "multipleRect") {
                 transition.multiRec(o);
-            }
-            else if (o.type === "unique") {
+            } else if (o.type === "unique") {
                 transition.unique(o);
-            }
-            else if (o.type === "path") {
+            } else if (o.type === "path") {
                 transition.path(o);
-            }
-            else if (o.type === "text") {
+            } else if (o.type === "text") {
                 transition.text(o, start);
             }
         });
@@ -15707,27 +15463,20 @@ function FeatureViewer(sequence, div, options) {
         if (elemSelected[0].length === 3) {
             xTemp = elemSelected[0][0].x;
             yTemp = elemSelected[0][1].x;
-            console.log("aaaaaaaa");
-        }
-        else if (elemSelected[0].x === elemSelected[0].y) {
+        } else if (elemSelected[0].x === elemSelected[0].y) {
             xTemp = elemSelected[0].x - 0.5;
             yTemp = elemSelected[0].y + 0.5;
-            console.log("bbbbbbbb");
-        }
-        else {
+        } else {
             xTemp = elemSelected[0].x;
             yTemp = elemSelected[0].y;
-            console.log("ccccccc");
         }
         if (scaling(xTemp) < 0) {
             xRect = margin.left;
             widthRect = (scaling(yTemp));
-        }
-        else if (scaling(yTemp) > svgWidth) {
+        } else if (scaling(yTemp) > svgWidth) {
             xRect = scaling(xTemp) + margin.left;
             widthRect = svgWidth - scaling(xTemp);
-        }
-        else {
+        } else {
             xRect = scaling(xTemp) + margin.left;
             widthRect = (scaling(yTemp) - scaling(xTemp));
         }
@@ -15751,7 +15500,7 @@ function FeatureViewer(sequence, div, options) {
                 'brushActive': false,
                 'verticalLine': false,
                 'toolbar': false,
-                'zoommax':50
+                'zoommax': 50
             }
         }
         d3.select(div)
@@ -15761,9 +15510,9 @@ function FeatureViewer(sequence, div, options) {
         // Create SVG
 
         if (options.toolbar === true) {
-            console.log($(div + " .svgHeader").length);
+            //console.log($(div + " .svgHeader").length);
             var headerOptions = $(div + " .svgHeader").length ? d3.select(div + " .svgHeader") : d3.select(div).append("div").attr("class", "svgHeader");
-            console.log(headerOptions);
+            //console.log(headerOptions);
 
             if (!$(div + ' .header-zoom').length) {
                 var headerZoom = headerOptions
@@ -15861,8 +15610,17 @@ function FeatureViewer(sequence, div, options) {
             if (displaySequence(sequence.length)) {
                 fillSVG.sequence(sequence, Yposition);
             }
-            features.push({data: sequence, name: "Sequence", className: "AA", color: "black", type: "text"});
-            yData.push({title: "sequence", y: Yposition - 8});
+            features.push({
+                data: sequence,
+                name: "Sequence",
+                className: "AA",
+                color: "black",
+                type: "text"
+            });
+            yData.push({
+                title: "sequence",
+                y: Yposition - 8
+            });
         }
         if (options.showAxis) addXAxis(Yposition);
         addYAxis();
@@ -15884,6 +15642,7 @@ function FeatureViewer(sequence, div, options) {
     }
 
     initSVG(div, options);
+
     function addFeature(object) {
         Yposition += 20;
         features.push(object);
@@ -15906,8 +15665,7 @@ function FeatureViewer(sequence, div, options) {
         addFeature: addFeature,
         selection: addRectSelection
     }
-}
-;
+};
 /*! iFrame Resizer (iframeSizer.contentWindow.min.js) - v3.2.0 - 2015-09-04
  *  Desc: Include this file in any page being loaded into an iframe
  *        to force the iframe to resize to the content size.
@@ -16497,410 +16255,448 @@ if ($("#nx-histogram").length > 0) {
 /////////////
 function initNXDivs() {
 
-    var Nextprot = window.Nextprot;
-    var nx = new Nextprot.Client("SequenceViewer", "nextprotTeam");
-    var nxEntryName = nx.getEntryName();
-    var cpt = 0;
-    var isoforms;
-    var firstIso;
-    var currentIso;
-    var annotations;
-    var peptideMappings;
-    var srmPeptideMappings;
-    var matureProtein;
-    var proPeptide;
-    var allFeatures = [];
-    var featuresForViewer = [];
-    var seq1 = null;
+        var Nextprot = window.Nextprot;
+        var nx = new Nextprot.Client("PeptideViewer", "nextprotTeam");
+        nx.setApiBaseUrl("http://alpha-api.nextprot.org");
+        var nxEntryName = nx.getEntryName();
+        var cpt = 0;
+        var isoforms;
+        var firstIso;
+        var currentIso;
+        var annotations;
+        var peptideMappings;
+        var srmPeptideMappings;
+        var matureProtein;
+        var proPeptide;
+        var allFeatures = [];
+        var featuresForViewer = [];
+        var seq1 = null;
 
-    function getFirstIsoform(isoformList) {
-        var seqIDs = isoformList.map(function (p) {
-            return p.uniqueName
-        }).sort(function (a, b) {
-            return parseInt(a.split("-")[1]) - parseInt(b.split("-")[1])
-        });
-        return seqIDs[0];
-    }
-
-    (function ($) {
-        $.fn.hasVerticalScrollBar = function () {
-            return this.get(0) ? this.get(0).scrollHeight > this.innerHeight() : false;
+        function getFirstIsoform(isoformList) {
+            var seqIDs = isoformList.map(function (p) {
+                return p.uniqueName
+            }).sort(function (a, b) {
+                return parseInt(a.split("-")[1]) - parseInt(b.split("-")[1])
+            });
+            return seqIDs[0];
         }
-    })(jQuery);
 
-    function nxPviz(annotations, isoforms) {
-        if ($("#main").length > 0) {
-            var pviz = this.pviz;
+        (function ($) {
+            $.fn.hasVerticalScrollBar = function () {
+                return this.get(0) ? this.get(0).scrollHeight > this.innerHeight() : false;
+            }
+        })(jQuery);
 
-            var seq = isoforms[0].sequence;
-            var seqEntry = new pviz.SeqEntry({
-                sequence: seq
-            });
+        function nxPviz(annotations, isoforms) {
+            if ($("#main").length > 0) {
+                var pviz = this.pviz;
 
-            var view = new pviz.SeqEntryAnnotInteractiveView({
-                model: seqEntry,
-                el: '#main'
-            });
-            $("#main").prepend("<div style=\"border-bottom: 1px solid #E7EAEC;padding-bottom:5px;margin-bottom: 15px;\">" +
-            "<div style=\"display:inline-block;\">" +
-            "<span id=\"numberOfFeatures\" class=\"badge\" style=\"background:#C50063;color:white;padding:8px;border-radius:50%;margin-right:10px;vertical-align:middle;\"></span>" +
-            "</div><h4 style=\"display:inline-block;vertical-align:middle;\">Secondary structure</h4></div>");
-            //Setting secondary structure
-            var features = [];
-            $("#numberOfFeatures").text(annotations.length);
-            annotations.forEach(function (annot) {
-                var isoform1 = nxEntryName + "-1";
-                features.push({
-                    category: 'secondary structure',
-                    type: (annot.category === "beta strand") ? "beta_strand" : annot.category,
-                    start: annot.targetingIsoformsMap[isoform1].firstPosition,
-                    end: annot.targetingIsoformsMap[isoform1].lastPosition
+                var seq = isoforms[0].sequence;
+                var seqEntry = new pviz.SeqEntry({
+                    sequence: seq
                 });
-            });
-            //Adding features
-            seqEntry.addFeatures(features);
-            //Render at the end
-            view.render();
+
+                var view = new pviz.SeqEntryAnnotInteractiveView({
+                    model: seqEntry,
+                    el: '#main'
+                });
+                $("#main").prepend("<div style=\"border-bottom: 1px solid #E7EAEC;padding-bottom:5px;margin-bottom: 15px;\">" +
+                    "<div style=\"display:inline-block;\">" +
+                    "<span id=\"numberOfFeatures\" class=\"badge\" style=\"background:#C50063;color:white;padding:8px;border-radius:50%;margin-right:10px;vertical-align:middle;\"></span>" +
+                    "</div><h4 style=\"display:inline-block;vertical-align:middle;\">Secondary structure</h4></div>");
+                //Setting secondary structure
+                var features = [];
+                $("#numberOfFeatures").text(annotations.length);
+                annotations.forEach(function (annot) {
+                    var isoform1 = nxEntryName + "-1";
+                    features.push({
+                        category: 'secondary structure',
+                        type: (annot.category === "beta strand") ? "beta_strand" : annot.category,
+                        start: annot.targetingIsoformsMap[isoform1].firstPosition,
+                        end: annot.targetingIsoformsMap[isoform1].lastPosition
+                    });
+                });
+                //Adding features
+                seqEntry.addFeatures(features);
+                //Render at the end
+                view.render();
+            }
         }
-    }
 
-    var getInfoForIsoform = {
-        firstLoad: function () {
-            RenderSequenceForIsoform(isoforms, nxEntryName + "-1");
-            RenderPeptidesForIsoform(peptideMappings, nxEntryName + "-1");
-        },
-        Isoform: function () {
-            $(".isoformNames").click(getInfoForIsoform.reload);
-            $("#moreIsoforms a").click(function () {
-                var parentThis = $(this).text();
-                $("#extendIsoformChoice").text(parentThis);
-            });
-        },
-        reload: function (event) {
-            var isoID = $(this).text();
-            $("#nx-detailedPeptide").html("");
-            $("#nx-detailedPeptide").hide("slow");
-            RenderSequenceForIsoform(isoforms, isoID);
-            RenderPeptidesForIsoform(peptideMappings, isoID);
-            $("#featureViewer").html("");
-            currentIso=isoID;
-            createSVG(isoforms,isoID);
-            addFeatures(isoID);
+        var getInfoForIsoform = {
+            firstLoad: function () {
+                RenderSequenceForIsoform(isoforms, nxEntryName + "-1");
+                RenderPeptidesForIsoform(peptideMappings, nxEntryName + "-1");
+            },
+            Isoform: function () {
+                $(".isoformNames").click(getInfoForIsoform.reload);
+                $("#moreIsoforms a").click(function () {
+                    var parentThis = $(this).text();
+                    $("#extendIsoformChoice").text(parentThis);
+                });
+            },
+            reload: function (event) {
+                var isoID = $(this).text();
+                $("#nx-detailedPeptide").html("");
+                $("#nx-detailedPeptide").hide("slow");
+                RenderSequenceForIsoform(isoforms, isoID);
+                RenderPeptidesForIsoform(peptideMappings, isoID);
+                $("#featureViewer").html("");
+                currentIso = isoID;
+                createSVG(isoforms, isoID);
+                addFeatures(isoID);
 
-        },
-        Peptides: function (peptideMappings, isoName) {
-            var peptideMap = [];
-            peptideMappings.forEach(function (o) {
-                if (o.isoformSpecificity[isoName]) {
-                    for (var i = 0; i < o.isoformSpecificity[isoName].positions.length; i++) {
+            },
+            Peptides: function (peptideMappings, isoName) {
+                var peptideMap = [];
+                peptideMappings.forEach(function (o) {
+                    if (o.isoformSpecificity[isoName]) {
+                        for (var i = 0; i < o.isoformSpecificity[isoName].positions.length; i++) {
 
-                        var dict = {};
-                        var peptideAtlasID = "";
+                            var dict = {};
+                            var peptideAtlasID = "";
 
-                        o.evidences.forEach(function (q) {
-                            if (q.databaseName === "PeptideAtlas") peptideAtlasID= q.accession;
-                            dict[q.databaseName] = q.accession;
-                        });
+                            o.evidences.forEach(function (q) {
+                                if (q.databaseName === "PeptideAtlas") peptideAtlasID = q.accession;
+                                dict[q.databaseName] = q.accession;
+                            });
 
 
-                        var peptide = {
-                            "name": o.peptideUniqueName,
-                            "identifier": "",
-                            "position": o.isoformSpecificity[isoName].positions[i],
-                            "length": 0,
-                            "properties": {
-                                "natural": o.natural,
-                                "synthetic": o.synthetic,
-                                "proteotypic": o.proteotypic
-                            },
-                            "isoformProteotypicity": "No",
-                            "tissueSpecificity": o.evidences.map(function (p) {
-                                return p.assignedBy
-                            }).sort(),
-                            "sequence": "",
-                            "prePeptide": "",
-                            "postPeptide": "",
-                            "include": [],
-                            "includedIn": [],
-                            "sources": dict,
-                            "peptideAtlasID": peptideAtlasID
+                            var peptide = {
+                                "name": o.peptideUniqueName,
+                                "identifier": "",
+                                "position": o.isoformSpecificity[isoName].positions[i],
+                                "length": 0,
+                                "properties": {
+                                    "natural": o.natural,
+                                    "synthetic": o.synthetic,
+                                    "proteotypic": o.proteotypic
+                                },
+                                "isoformProteotypicity": "No",
+                                "tissueSpecificity": o.evidences.map(function (p) {
+                                    return p.assignedBy
+                                }).sort(),
+                                "sequence": "",
+                                "prePeptide": "",
+                                "postPeptide": "",
+                                "include": [],
+                                "includedIn": [],
+                                "sources": dict,
+                                "peptideAtlasID": peptideAtlasID
+                            };
+                            //if (o.natural === true) peptide.properties.push("natural");
+                            //else peptide.properties.push("-");
+                            if (o.proteotypic === true) {
+                                //peptide.properties.push("proteotypic");
+                                if (Object.keys(o.isoformSpecificity).length === 1) peptide.isoformProteotypicity = "Yes";
+                            }
+                            //else peptide.properties.push("-");
+                            //if (o.synthetic === true) peptide.properties.push("synthetic");
+                            //else peptide.properties.push("-");
+
+                            peptide.length = peptide.position.second - peptide.position.first + 1;
+
+                            peptide.sequence = getInfoForIsoform.Sequence(isoforms, isoName).slice(peptide.position.first - 1, peptide.position.second);
+                            peptide.identifier = (peptide.sequence.length > 22) ? peptide.sequence.substring(0, 10) + ".." + peptide.sequence.substring(peptide.sequence.length - 10) : peptide.sequence;
+
+                            peptide.prePeptide = getInfoForIsoform.Sequence(isoforms, isoName)[peptide.position.first - 2];
+                            peptide.postPeptide = getInfoForIsoform.Sequence(isoforms, isoName)[peptide.position.second + 1];
+                            peptideMap.push(peptide);
+                        }
+                    }
+                });
+                peptideMap.sort(function (a, b) {
+                    return a.length - b.length;
+                });
+                peptideMap.sort(function (a, b) {
+                    return a.position.first - b.position.first;
+                });
+                var intermediate = new Date().getTime();
+
+
+                // A ---****---
+                // B ----**----
+                var isIncludedIn = function (pepA, pepB) {
+                    return ((pepA.position.first <= pepB.position.first) && (pepA.position.second >= pepB.position.second))
+                }
+
+
+                for (var i = 0; i < peptideMap.length; i++) {
+                    for (var j = i + 1; j < peptideMap.length; j++) {
+
+
+                        var pepA = peptideMap[i];
+                        var pepB = peptideMap[j];
+
+                        if (pepB.position.first > pepA.position.second) break;
+
+                        if (isIncludedIn(pepA, pepB)) {
+                            if (pepA.include.indexOf(pepB.identifier) === -1) pepA.include.push(pepB.identifier);
+                            if (pepB.includedIn.indexOf(pepA.identifier) === -1) pepB.includedIn.push(pepA.identifier);
+                        } else if (isIncludedIn(pepB, pepA)) {
+                            if (pepB.include.indexOf(pepA.identifier) === -1) pepB.include.push(pepA.identifier);
+                            if (pepA.includedIn.indexOf(pepB.identifier) === -1) pepA.includedIn.push(pepB.identifier);
+                        }
+
+                    }
+                }
+                var dateEnd = new Date().getTime();
+
+
+                return peptideMap;
+            },
+            Sequence: function (isoforms, isoName) {
+                var isoSeq = "";
+                isoforms.forEach(function (o) {
+                    if (o.uniqueName === isoName) return isoSeq = o.sequence;
+                });
+                return isoSeq;
+            },
+            getActiveProteins: function (activeProteins, isoName) {
+                var listActiveProt = [];
+                activeProteins.forEach(function (o) {
+                    if (o.targetingIsoformsMap[isoName]) {
+                        var actProt = {
+                            "isoform": o.targetingIsoformsMap[isoName].isoformName,
+                            "start": o.targetingIsoformsMap[isoName].firstPosition,
+                            "end": o.targetingIsoformsMap[isoName].lastPosition
                         };
-                        //if (o.natural === true) peptide.properties.push("natural");
-                        //else peptide.properties.push("-");
-                        if (o.proteotypic === true) {
-                            //peptide.properties.push("proteotypic");
-                            if (Object.keys(o.isoformSpecificity).length === 1) peptide.isoformProteotypicity = "Yes";
-                        }
-                        //else peptide.properties.push("-");
-                        //if (o.synthetic === true) peptide.properties.push("synthetic");
-                        //else peptide.properties.push("-");
+                        listActiveProt.push(actProt);
+                    }
+                });
+                return listActiveProt;
+            }
+        };
 
-                        peptide.length = peptide.position.second - peptide.position.first + 1;
-
-                        peptide.sequence = getInfoForIsoform.Sequence(isoforms, isoName).slice(peptide.position.first - 1, peptide.position.second);
-                        peptide.identifier = (peptide.sequence.length > 22) ? peptide.sequence.substring(0, 10) + ".." + peptide.sequence.substring(peptide.sequence.length - 10) : peptide.sequence;
-
-                        peptide.prePeptide = getInfoForIsoform.Sequence(isoforms, isoName)[peptide.position.first - 2];
-                        peptide.postPeptide = getInfoForIsoform.Sequence(isoforms, isoName)[peptide.position.second + 1];
-                        peptideMap.push(peptide);
+        function showFeatureViewer() {
+            $("#showFV").click(function () {
+                $("#featureViewer").toggle();
+                $(this).text(function (i, text) {
+                    return text === "Hide features" ? "Show features" : "Hide features";
+                });
+                if ($(this).text() === "Hide features") {
+                    if ($("#featureViewer svg").width() < 10) {
+                        $("#featureViewer").html("");
+                        createSVG(isoforms, currentIso);
+                        addFeatures(currentIso);
                     }
                 }
             });
-            peptideMap.sort(function (a, b) {
-                return a.length - b.length;
-            });
-            peptideMap.sort(function (a, b) {
-                return a.position.first - b.position.first;
-            });
-            var intermediate = new Date().getTime();
-
-
-            // A ---****---
-            // B ----**----
-            var isIncludedIn = function (pepA, pepB) {
-                return ((pepA.position.first <= pepB.position.first) && (pepA.position.second >= pepB.position.second))
-            }
-
-
-            for (var i = 0; i < peptideMap.length; i++) {
-                for (var j = i + 1; j < peptideMap.length; j++) {
-
-
-                    var pepA = peptideMap[i];
-                    var pepB = peptideMap[j];
-
-                    if (pepB.position.first > pepA.position.second) break;
-
-                    if (isIncludedIn(pepA, pepB)) {
-                        if (pepA.include.indexOf(pepB.identifier) === -1) pepA.include.push(pepB.identifier);
-                        if (pepB.includedIn.indexOf(pepA.identifier) === -1) pepB.includedIn.push(pepA.identifier);
-                    } else if (isIncludedIn(pepB, pepA)) {
-                        if (pepB.include.indexOf(pepA.identifier) === -1) pepB.include.push(pepA.identifier);
-                        if (pepA.includedIn.indexOf(pepB.identifier) === -1) pepA.includedIn.push(pepB.identifier);
-                    }
-
-                }
-            }
-            var dateEnd = new Date().getTime();
-
-
-            return peptideMap;
-        },
-        Sequence: function (isoforms, isoName) {
-            var isoSeq = "";
-            isoforms.forEach(function (o) {
-                if (o.uniqueName === isoName) return isoSeq = o.sequence;
-            });
-            return isoSeq;
-        },
-        getActiveProteins: function (activeProteins, isoName) {
-            var listActiveProt = [];
-            activeProteins.forEach(function (o) {
-                if (o.targetingIsoformsMap[isoName]) {
-                    var actProt = {
-                        "isoform": o.targetingIsoformsMap[isoName].isoformName,
-                        "start": o.targetingIsoformsMap[isoName].firstPosition,
-                        "end": o.targetingIsoformsMap[isoName].lastPosition
-                    };
-                    listActiveProt.push(actProt);
-                }
-            });
-            return listActiveProt;
         }
-    };
-    function showFeatureViewer() {
-        $("#showFV").click(function () {
-            $("#featureViewer").toggle();
-            $(this).text(function (i, text) {
-                return text === "Hide features" ? "Show features" : "Hide features";
-            });
-            if ($(this).text() === "Hide features") {
-                if ($("#featureViewer svg").width() < 10) {
-                    $("#featureViewer").html("");
-                    createSVG(isoforms,currentIso);
-                    addFeatures(currentIso);
-                }
-            }
-        });
-    }
 
-    function nxIsoformChoice(isoforms) {
-        if ($("#nx-isoformChoice").length > 0) {
-            var datas = {
-                "isoforms": (function () {
-                    var listIsoforms = {
-                        "visible": [],
-                        "more": []
-                    };
-                    isoforms.sort(function (a, b) {
-                        return parseInt(a.uniqueName.split("-")[1]) - parseInt(b.uniqueName.split("-")[1])
-                    }).forEach(function (o, index) {
-                        if (index <= 3) listIsoforms.visible.push(o);
-                        else listIsoforms.more.push(o);
+        function nxIsoformChoice(isoforms) {
+            if ($("#nx-isoformChoice").length > 0) {
+                var datas = {
+                    "isoforms": (function () {
+                        var listIsoforms = {
+                            "visible": [],
+                            "more": []
+                        };
+                        isoforms.sort(function (a, b) {
+                            return parseInt(a.uniqueName.split("-")[1]) - parseInt(b.uniqueName.split("-")[1])
+                        }).forEach(function (o, index) {
+                            if (index <= 3) listIsoforms.visible.push(o);
+                            else listIsoforms.more.push(o);
+                        });
+                        return listIsoforms;
+                    }())
+                };
+                var template = HBtemplates['app/assets/templates/isoformChoice.tmpl'];
+                var results = template(datas);
+                $("#nx-isoformChoice").append(results);
+                /////////// EventListener to change isoform
+                getInfoForIsoform.Isoform();
+                $(document).ready(function () {
+                    $('.isoformNames').tooltip({
+                        trigger: "hover"
                     });
-                    return listIsoforms;
-                }())
-            };
-            var template = HBtemplates['app/assets/templates/isoformChoice.tmpl'];
-            var results = template(datas);
-            $("#nx-isoformChoice").append(results);
-            /////////// EventListener to change isoform
-            getInfoForIsoform.Isoform();
-            $(document).ready(function(){
-                $('.isoformNames').tooltip({trigger: "hover"});
-            });
-
-            $("#nx-isoformChoice li:first-child").addClass("active");
-        }
-    }
-
-    function createSVG(sequences,isoName) {
-        sequences.forEach(function (o) {
-            if (o.uniqueName === isoName) {
-                currentSeq = o.sequence;
-                ft = new FeatureViewer(currentSeq, "#featureViewer", {
-                    showAxis: true,
-                    showSequence: true,
-                    brushActive: true,
-                    verticalLine: false,
-                    toolbar:true
                 });
-            }
-        });
-    }
-    function addFeatures(isoName) {
-        for (var i=0;i<featuresForViewer.length;i++) {
-            if (Object.keys(featuresForViewer[i]).length !== 0 && featuresForViewer[i].hasOwnProperty(isoName)) {
-                var feature = jQuery.extend({}, featuresForViewer[i][isoName]);
-                ft.addFeature(feature);
+
+                $("#nx-isoformChoice li:first-child").addClass("active");
             }
         }
-    }
-    function RenderFeatureViewer(data, isoName) {
-        var metaData = [
-            {name: "Sequence"},                                                                                          {name: "Peptide",className: "pep",color: "#B3E1D1",type: "multipleRect",filter:"Peptide"},
-            {name: "Srm Peptide",className: "srmPep",color: "#B3E1F0",type: "multipleRect",filter:"none"},               {name: "Mature protein",className: "mat",color: "#B3B3C2",type: "rect",filter:"Processing"},
-            {name: "Propeptide",className: "pro",color: "#B3B3B3",type: "rect",filter:"Processing"}
-        ];
-        var featuresByIsoform=[];
-        for (var i=1; i<data.length-1;i++) {
-            var feat = NXUtils.convertMappingsToIsoformMap(data[i],metaData[i].name,metaData[i].filter);
-            featuresByIsoform.push(feat);
-            var featForViewer = NXViewerUtils.convertNXAnnotations(feat,metaData[i]);
-            featuresForViewer.push(featForViewer);
-        }
-        //addFiltering();
-        createSVG(isoforms,isoName);
-        addFeatures(isoName);
-    }
 
-    var RenderSequenceForIsoform = function (isoforms, isoName) {
-
-
-        ////////////////////////// TEMPLATE SEQUENCE
-        if ($("#nx-overviewSeq").length > 0) {
-            seq1 = new Sequence(getInfoForIsoform.Sequence(isoforms, isoName));
-            seq1.render('#nx-overviewSeq', {
-                'showLineNumbers': true,
-                'wrapAminoAcids': true,
-                'charsPerLine': 100
+        function createSVG(sequences, isoName) {
+            sequences.forEach(function (o) {
+                if (o.uniqueName === isoName) {
+                    currentSeq = o.sequence;
+                    ft = new FeatureViewer(currentSeq, "#featureViewer", {
+                        showAxis: true,
+                        showSequence: true,
+                        brushActive: true,
+                        verticalLine: false,
+                        toolbar: true
+                    });
+                }
             });
-            $("#sequenceHeader").append("<div class=\"pull-right\" style=\"margin-right:20px;font-style:italic;text-align: center;\"><span id=\"pepCover\" style=\"font-size:18px;color:#C50063;\"></span><br><span style=\"font-size:10px;font-weight:bold;\">Peptide coverage</span></div>");
-            $("#sequenceHeader").append("<div class=\"pull-right\" style=\"margin-right:20px;font-style:italic;text-align: center;\"><span id=\"proteoCover\" style=\"font-size:18px;color:#69CC33;\"></span><br><span style=\"font-size:10px;font-weight:bold;\">Proteotypic coverage</span></div>");
-            //$("#sequenceHeader").append("<div class=\"pull-right\" style=\"margin-right:20px;font-style:italic;text-align: center;\"><h5>Coverage</h5></div>");
-            $("#sequenceHeader .badge").append(" aa");
         }
-    };
 
-    function getProteotypicityInfos(sequence) {
-
-        nx.getEntryforPeptide(sequence).then(function (data) {
-
-            function entryWithVariant(entry) {
-                var withVariant = false;
-                entry.annotations.forEach(function (o) {
-                    if (o.variant) withVariant = true;
-                });
-                return withVariant;
+        function addFeatures(isoName) {
+            for (var i = 0; i < featuresForViewer.length; i++) {
+                if (Object.keys(featuresForViewer[i]).length !== 0 && featuresForViewer[i].hasOwnProperty(isoName)) {
+                    var feature = jQuery.extend({}, featuresForViewer[i][isoName]);
+                    ft.addFeature(feature);
+                }
             }
+        }
 
-
-            var isoformsLength = 0;
-            data.forEach(function (o) {
-                isoformsLength += o.annotations.length
-            });
-            var entries = data.map(function (o) {
-                return {name: o.uniqueName, withVariant: entryWithVariant(o), geneName: o.overview.mainGeneName}
-            });
-            var entriesLength = data.length;
-            var entriesLengthWithoutVariant = entries.filter(function(d) { return d.withVariant === false}).length;
-            var entryMatching = {
-                proteotypicity: {
-                    withVariant:entriesLength <= 1,
-                    withoutVariant:entriesLengthWithoutVariant <= 1,
-                    onlyVariant: (entriesLength - entriesLengthWithoutVariant) < 1
+        function RenderFeatureViewer(data, isoName) {
+            var metaData = [
+                {
+                    name: "Sequence"
+                }, {
+                    name: "Peptide",
+                    className: "pep",
+                    color: "#B3E1D1",
+                    type: "multipleRect",
+                    filter: "Peptide"
                 },
-                entries: entries,
-                isoforms: data.map(function (o) {
-                    return o.annotations.map(function (p) {
-                        return {
-                            entryName: o.uniqueName,
-                            variant: p.variant,
-                            isoform: Object.keys(p.targetIsoformsMap)[0],
-                            positions: p.targetIsoformsMap[Object.keys(p.targetIsoformsMap)[0]].positions
-                        }
-                    })
-                })
-            };
-            var template = HBtemplates['app/assets/templates/matchingEntries.tmpl'];
-            var results = template(entryMatching);
-            $("#proteoBlock").html(results);
-
-            function toggleIsoforms() {
-                $('#showIsoforms').text("Show isoforms");
-                $('#showIsoforms').click(function () {
-                    $(this).text(function (i, text) {
-                        return text === "Show isoforms" ? "Hide isoforms" : "Show isoforms";
-                    });
-                    $('.showEntry').is(':visible') ? $(".showEntry").hide() : $(".showEntry").show();
-                    $('.showIsoform').is(':visible') ? $(".showIsoform").hide() : $(".showIsoform").show();
-                });
+                {
+                    name: "Srm Peptide",
+                    className: "srmPep",
+                    color: "#B3E1F0",
+                    type: "multipleRect",
+                    filter: "none"
+                }, {
+                    name: "Mature protein",
+                    className: "mat",
+                    color: "#B3B3C2",
+                    type: "rect",
+                    filter: "Processing"
+                },
+                {
+                    name: "Propeptide",
+                    className: "pro",
+                    color: "#B3B3B3",
+                    type: "rect",
+                    filter: "Processing"
+                }
+        ];
+            var featuresByIsoform = [];
+            for (var i = 1; i < data.length - 1; i++) {
+                var feat = NXUtils.convertMappingsToIsoformMap(data[i], metaData[i].name, metaData[i].filter);
+                featuresByIsoform.push(feat);
+                var featForViewer = NXViewerUtils.convertNXAnnotations(feat, metaData[i]);
+                featuresForViewer.push(featForViewer);
             }
+            //addFiltering();
+            createSVG(isoforms, isoName);
+            addFeatures(isoName);
+        }
 
-            //function toggleSentence(entries, isoforms) {
-            //    var entriesWithoutVariant = $("#showEntry li").not(".variantIntoAccount").length;
-            //    var isoformsWithoutVariant = $("#showIsoform li").not(".variantIntoAccount").length;
-            //
-            //    if ($("#withVariant").prop('checked')) {
-            //        var plurality = {
-            //            isoform: isoforms > 1 ? "isoforms" : "isoform",
-            //            entry: entries > 1 ? "entries" : "entry"
-            //        };
-            //        $("#proteotypicitySentence").text("Maps " + isoforms + " " + plurality.isoform + " from " + entries + " " + plurality.entry + " :");
-            //    }
-            //    else {
-            //        var plurality = {
-            //            isoform: isoformsWithoutVariant > 1 ? "isoforms" : "isoform",
-            //            entry: entriesWithoutVariant > 1 ? "entries" : "entry"
-            //        };
-            //        $("#proteotypicitySentence").text("Maps " + isoformsWithoutVariant + " " + plurality.isoform + " from " + entriesWithoutVariant + " " + plurality.entry + " :");
-            //    }
-            //}
-            //
-            //function toggleVariants() {
-            //    $('#withVariant').click(function () {
-            //        $('.variantIntoAccount').toggle();
-            //        toggleSentence(entriesLength, isoformsLength);
-            //    });
-            //}
+        var RenderSequenceForIsoform = function (isoforms, isoName) {
 
-            toggleIsoforms();
-            //toggleVariants();
-            //toggleSentence(entriesLength, isoformsLength);
-        });
-    }
 
-    var addPeptidesInfos = function (selection, listPeptides, isoName) {
+            ////////////////////////// TEMPLATE SEQUENCE
+            if ($("#nx-overviewSeq").length > 0) {
+                seq1 = new Sequence(getInfoForIsoform.Sequence(isoforms, isoName));
+                seq1.render('#nx-overviewSeq', {
+                    'showLineNumbers': true,
+                    'wrapAminoAcids': true,
+                    'charsPerLine': 100
+                });
+                $("#sequenceHeader").append("<div class=\"pull-right\" style=\"margin-right:20px;font-style:italic;text-align: center;\"><span id=\"pepCover\" style=\"font-size:18px;color:#C50063;\"></span><br><span style=\"font-size:10px;font-weight:bold;\">Peptide coverage</span></div>");
+                $("#sequenceHeader").append("<div class=\"pull-right\" style=\"margin-right:20px;font-style:italic;text-align: center;\"><span id=\"proteoCover\" style=\"font-size:18px;color:#69CC33;\"></span><br><span style=\"font-size:10px;font-weight:bold;\">Proteotypic coverage</span></div>");
+                //$("#sequenceHeader").append("<div class=\"pull-right\" style=\"margin-right:20px;font-style:italic;text-align: center;\"><h5>Coverage</h5></div>");
+                $("#sequenceHeader .badge").append(" aa");
+            }
+        };
+
+        function getProteotypicityInfos(sequence) {
+
+            nx.getEntryforPeptide(sequence).then(function (data) {
+
+                function entryWithVariant(entry) {
+                    var withVariant = false;
+                    entry.annotations.forEach(function (o) {
+                        if (o.variant) withVariant = true;
+                    });
+                    return withVariant;
+                }
+
+
+                var isoformsLength = 0;
+                data.forEach(function (o) {
+                    isoformsLength += o.annotations.length
+                });
+                var entries = data.map(function (o) {
+                    return {
+                        name: o.uniqueName,
+                        withVariant: entryWithVariant(o),
+                        geneName: o.overview.mainGeneName
+                    }
+                });
+                var entriesLength = data.length;
+                var entriesLengthWithoutVariant = entries.filter(function (d) {
+                    return d.withVariant === false
+                }).length;
+                var entryMatching = {
+                    proteotypicity: {
+                        withVariant: entriesLength <= 1,
+                        withoutVariant: entriesLengthWithoutVariant <= 1,
+                        onlyVariant: (entriesLength - entriesLengthWithoutVariant) < 1
+                    },
+                    entries: entries,
+                    isoforms: data.map(function (o) {
+                        return o.annotations.map(function (p) {
+                            return {
+                                entryName: o.uniqueName,
+                                variant: p.variant,
+                                isoform: Object.keys(p.targetIsoformsMap)[0],
+                                positions: p.targetIsoformsMap[Object.keys(p.targetIsoformsMap)[0]].positions
+                            }
+                        })
+                    })
+                };
+                var template = HBtemplates['app/assets/templates/matchingEntries.tmpl'];
+                var results = template(entryMatching);
+                $("#proteoBlock").html(results);
+
+                function toggleIsoforms() {
+                    $('#showIsoforms').text("Show isoforms");
+                    $('#showIsoforms').click(function () {
+                        $(this).text(function (i, text) {
+                            return text === "Show isoforms" ? "Hide isoforms" : "Show isoforms";
+                        });
+                        $('.showEntry').is(':visible') ? $(".showEntry").hide() : $(".showEntry").show();
+                        $('.showIsoform').is(':visible') ? $(".showIsoform").hide() : $(".showIsoform").show();
+                    });
+                }
+
+                //function toggleSentence(entries, isoforms) {
+                //    var entriesWithoutVariant = $("#showEntry li").not(".variantIntoAccount").length;
+                //    var isoformsWithoutVariant = $("#showIsoform li").not(".variantIntoAccount").length;
+                //
+                //    if ($("#withVariant").prop('checked')) {
+                //        var plurality = {
+                //            isoform: isoforms > 1 ? "isoforms" : "isoform",
+                //            entry: entries > 1 ? "entries" : "entry"
+                //        };
+                //        $("#proteotypicitySentence").text("Maps " + isoforms + " " + plurality.isoform + " from " + entries + " " + plurality.entry + " :");
+                //    }
+                //    else {
+                //        var plurality = {
+                //            isoform: isoformsWithoutVariant > 1 ? "isoforms" : "isoform",
+                //            entry: entriesWithoutVariant > 1 ? "entries" : "entry"
+                //        };
+                //        $("#proteotypicitySentence").text("Maps " + isoformsWithoutVariant + " " + plurality.isoform + " from " + entriesWithoutVariant + " " + plurality.entry + " :");
+                //    }
+                //}
+                //
+                //function toggleVariants() {
+                //    $('#withVariant').click(function () {
+                //        $('.variantIntoAccount').toggle();
+                //        toggleSentence(entriesLength, isoformsLength);
+                //    });
+                //}
+
+                toggleIsoforms();
+                //toggleVariants();
+                //toggleSentence(entriesLength, isoformsLength);
+            });
+        }
+
+        var addPeptidesInfos = function (selection, listPeptides, isoName) {
             if ($("#nx-detailedPeptide").length > 0) {
                 var data = {
                     "Peptides": (function () {
@@ -17005,8 +16801,8 @@ function initNXDivs() {
                                 if (p.end === o.second) Cterm = "C-term";
                             });
                             $("#peptidePositions").append("<tr><td>" + o.first + "</td><td>" + o.second + "</td>" +
-                            "<td>" + semiTrypticStart + "</td><td>" + semiTrypticEnd + "</td><td style=\"text-align: center;\">" + miscleavage + "</td><td>" + trypticity + "</td>" +
-                            "<td>" + Nterm + "</td><td>" + Cterm + "</td></tr>");
+                                "<td>" + semiTrypticStart + "</td><td>" + semiTrypticEnd + "</td><td style=\"text-align: center;\">" + miscleavage + "</td><td>" + trypticity + "</td>" +
+                                "<td>" + Nterm + "</td><td>" + Cterm + "</td></tr>");
                         });
 
                         $('#first').text(peptide.position);
@@ -17076,7 +16872,7 @@ function initNXDivs() {
                                 sourceTemp = "neXtProt - " + o;
                             }
                             if (o.match("PMID")) {
-                                sourceTemp = "neXtProt - " + o.replace("PMID_","PubMed:");
+                                sourceTemp = "neXtProt - " + o.replace("PMID_", "PubMed:");
                                 pmidFound = true;
                             }
                             $('#pepSources').append("<li>" + sourceTemp + "</li>")
@@ -17129,36 +16925,33 @@ function initNXDivs() {
                         if (pmidFound === true) {
                             nx.executeSparql(query).then(function (data) {
                                 $('#ptmInfos').append("<div class=\"panel-heading\" style=\"background-color: #F5F5F5;border-bottom: 1px solid #DDD;border-top:1px solid #DDD;font-weight: 500;\">PTM justified by this peptide :</div>" +
-                                "<div id=\"ptmByPeptide\" class=\"panel-body\"></div>");
+                                    "<div id=\"ptmByPeptide\" class=\"panel-body\"></div>");
                                 if (data.results.bindings.length > 0) {
                                     data.results.bindings.forEach(function (o) {
                                         $('#ptmByPeptide').append("<div class=\"row\"style=\"border-bottom:1px solid #E7EAEC;margin-bottom:5px;\"><dl class=\"col-md-6\"><dt>PTM ID</dt><dd>" + o.ptmterm.value.toString().match(/[^\/]*$/)[0] + "</dd></dl>" +
-                                        "<dl class=\"col-md-6\"><dt>Position</dt><dd>" + o.ptmstart.value + "</dd></dl>" +
-                                        "<dl class=\"col-md-6\"><dt>Type</dt><dd>" + o.ptmtype.value.toString().match(/[^#]*$/)[0].slice() + "</dd></dl>" +
-                                        "<dl class=\"col-md-6\"><dt>Description</dt><dd>" + o.ptmcomment.value + "</dd></dl></div>");
+                                            "<dl class=\"col-md-6\"><dt>Position</dt><dd>" + o.ptmstart.value + "</dd></dl>" +
+                                            "<dl class=\"col-md-6\"><dt>Type</dt><dd>" + o.ptmtype.value.toString().match(/[^#]*$/)[0].slice() + "</dd></dl>" +
+                                            "<dl class=\"col-md-6\"><dt>Description</dt><dd>" + o.ptmcomment.value + "</dd></dl></div>");
                                     });
-                                }
-                                else $('#ptmByPeptide').html("No PTM found");
+                                } else $('#ptmByPeptide').html("No PTM found");
                             }, function (error) {
                                 console.log(error.responseText);
                             });
-                        }
-                        else {
+                        } else {
                             $('#ptmInfos').append("<div class=\"panel-heading\" style=\"background-color: #F5F5F5;border-bottom: 1px solid #DDD;border-top:1px solid #DDD;font-weight: 500;\">PTM justified by this peptide :</div>" +
-                            "<div id=\"ptmByPeptide\" class=\"panel-body\">No PTM found</div>");
+                                "<div id=\"ptmByPeptide\" class=\"panel-body\">No PTM found</div>");
                         }
                         nx.executeSparql(queryRegion).then(function (data) {
                             $('#ptmInfos').append("<div class=\"panel-heading\" style=\"background-color: #F5F5F5;border-bottom: 1px solid #DDD;border-top:1px solid #DDD;font-weight: 500;\">PTM present in this region :</div>" +
-                            "<div id=\"ptmByRegion\" class=\"panel-body\"></div>");
+                                "<div id=\"ptmByRegion\" class=\"panel-body\"></div>");
                             if (data.results.bindings.length > 0) {
                                 data.results.bindings.forEach(function (o) {
                                     $('#ptmByRegion').append("<div class=\"row\"style=\"border-bottom:1px solid #E7EAEC;margin-bottom:5px;\"><dl class=\"col-md-6\"><dt>PTM ID</dt><dd>" + o.ptmterm.value.toString().match(/[^\/]*$/)[0] + "</dd></dl>" +
-                                    "<dl class=\"col-md-6\"><dt>Position</dt><dd>" + o.ptmstart.value + "</dd></dl>" +
-                                    "<dl class=\"col-md-6\"><dt>Type</dt><dd>" + o.ptmtype.value.toString().match(/[^#]*$/)[0].slice() + "</dd></dl>" +
-                                    "<dl class=\"col-md-6\"><dt>Description</dt><dd>" + o.ptmcomment.value + "</dd></dl></div>");
+                                        "<dl class=\"col-md-6\"><dt>Position</dt><dd>" + o.ptmstart.value + "</dd></dl>" +
+                                        "<dl class=\"col-md-6\"><dt>Type</dt><dd>" + o.ptmtype.value.toString().match(/[^#]*$/)[0].slice() + "</dd></dl>" +
+                                        "<dl class=\"col-md-6\"><dt>Description</dt><dd>" + o.ptmcomment.value + "</dd></dl></div>");
                                 });
-                            }
-                            else $('#ptmByRegion').html("No PTM found");
+                            } else $('#ptmByRegion').html("No PTM found");
                         }, function (error) {
                             console.log(error.responseText);
                         });
@@ -17166,8 +16959,7 @@ function initNXDivs() {
 
                         if ($('#peptideSpecificity').hasVerticalScrollBar()) {
                             $('#peptideSpecificity').removeClass("ignoreShift");
-                        }
-                        else $('#peptideSpecificity').addClass("ignoreShift");
+                        } else $('#peptideSpecificity').addClass("ignoreShift");
 
                         $("#pepPosTable").stupidtable();
                         $(function () {
@@ -17179,257 +16971,272 @@ function initNXDivs() {
                 $(".name:first").addClass("nameActive");
                 fillPeptideInfo.fillDescription($(".name:first").attr("id"));
                 fillPeptideInfo.peptideSelected();
-//adjustHeight("#info-left","#info-right");
+                //adjustHeight("#info-left","#info-right");
             }
-    };
-    var RenderPeptidesForIsoform = function (peptideMappings, isoName) {
+        };
+        var RenderPeptidesForIsoform = function (peptideMappings, isoName) {
 
-        ////////////////////////// TEMPLATE PEPTIDES
+            ////////////////////////// TEMPLATE PEPTIDES
 
-        if ($("#nx-overviewPeptide").length > 0) {
-            var datas = {
-                "PeptideLength": 0,
-                "Peptides": getInfoForIsoform.Peptides(peptideMappings, isoName)
-            };
-            datas.PeptideLength = datas.Peptides.length;
+            if ($("#nx-overviewPeptide").length > 0) {
+                var datas = {
+                    "PeptideLength": 0,
+                    "Peptides": getInfoForIsoform.Peptides(peptideMappings, isoName)
+                };
+                datas.PeptideLength = datas.Peptides.length;
 
-            var template = HBtemplates['app/assets/templates/peptideTable.tmpl'];
-            var results = template(datas);
-            $("#nx-overviewPeptide").html(results);
-            var defaultSeq = $("#fastaSeq").html();
-            var coveredSeq = $("#fastaSeq").html();
+                var template = HBtemplates['app/assets/templates/peptideTable.tmpl'];
+                var results = template(datas);
+                $("#nx-overviewPeptide").html(results);
+                var defaultSeq = $("#fastaSeq").html();
+                var coveredSeq = $("#fastaSeq").html();
 
-            $(function () {
-                $("#pepTableSorted").stupidtable({
-                    "positions": function (a, b) {
+                $(function () {
+                    $("#pepTableSorted").stupidtable({
+                        "positions": function (a, b) {
 
-                        var aNum = a.split("-")[0];
-                        var bNum = b.split("-")[0];
+                            var aNum = a.split("-")[0];
+                            var bNum = b.split("-")[0];
 
-                        return parseInt(aNum, 10) - parseInt(bNum, 10);
-                    }
+                            return parseInt(aNum, 10) - parseInt(bNum, 10);
+                        }
+                    });
+                    //$("#pepTableSorted th:nth-child(4)").stupidsort("asc");
+                    //$("#pepTableSorted th:nth-child(3)").stupidsort("asc");
                 });
-                //$("#pepTableSorted th:nth-child(4)").stupidsort("asc");
-                //$("#pepTableSorted th:nth-child(3)").stupidsort("asc");
-            });
 
-            var HL = {
-                "HashAA": [],
-                "HashAA2": [],
-                clickPos: function () {
-                    $(".pepPos").click(HL.findPeptide);
-                    $(".PepSelected").click(HL.moreInfos);
-                    $(document).click(HL.stopHL);
-                },
-                findPeptide: function (event) {
-                    //var templateLoader = HBtemplates['app/assets/templates/preLoader.tmpl'];
-                    //$("#peptideTableTitle").append(templateLoader);
-                    event.stopPropagation();
-                    var positions = $(this).text();
-                    HL.highlighting(positions);
-                },
-                highlighting: function (positions) {
-                    var dateHL = new Date().getTime();
-                    positions = positions.split("-").map(function (o) {
-                        return parseInt(o)
-                    });
-                    seq1.coverage(HL.HashAA, positions[0] - 1, positions[1] - 1);
-                    var ElementTop = $('#peptideHighlighted').position().top - 140;
-                    var scrollPosition = $("#scroller").scrollTop();
-                    var scrollingLength = ElementTop + scrollPosition;
-                    $("#scroller").animate({scrollTop: scrollingLength}, 1000);
-                    $(function () {
-                        $("#preLoaderActive").remove();
-                    });
-                    var dateHLend = new Date().getTime();
+                var HL = {
+                    "HashAA": [],
+                    "HashAA2": [],
+                    clickPos: function () {
+                        $(".pepPos").click(HL.findPeptide);
+                        $(".PepSelected").click(HL.moreInfos);
+                        $(document).click(HL.stopHL);
+                    },
+                    findPeptide: function (event) {
+                        //var templateLoader = HBtemplates['app/assets/templates/preLoader.tmpl'];
+                        //$("#peptideTableTitle").append(templateLoader);
+                        event.stopPropagation();
+                        var positions = $(this).text();
+                        HL.highlighting(positions);
+                    },
+                    highlighting: function (positions) {
+                        var dateHL = new Date().getTime();
+                        positions = positions.split("-").map(function (o) {
+                            return parseInt(o)
+                        });
+                        seq1.coverage(HL.HashAA, positions[0] - 1, positions[1] - 1);
+                        var ElementTop = $('#peptideHighlighted').position().top - 140;
+                        var scrollPosition = $("#scroller").scrollTop();
+                        var scrollingLength = ElementTop + scrollPosition;
+                        $("#scroller").animate({
+                            scrollTop: scrollingLength
+                        }, 1000);
+                        $(function () {
+                            $("#preLoaderActive").remove();
+                        });
+                        var dateHLend = new Date().getTime();
 
-                },
-                //if clicking anywhere in the document
-                stopHL: function () {
-                    $("#fastaSeq").html(coveredSeq);
-                },
-                firstCoverage: function () {
-                    var dateFC = new Date().getTime();
+                    },
+                    //if clicking anywhere in the document
+                    stopHL: function () {
+                        $("#fastaSeq").html(coveredSeq);
+                    },
+                    firstCoverage: function () {
+                        var dateFC = new Date().getTime();
 
-                    HL.HashAA = HL.applyAAFormating(datas.Peptides);
-                    seq1.coverage(HL.HashAA);
-                    var legend = [{
-                        name: "non-proteotypic",
-                        color: "#4A57D4",
-                        underscore: false
-                    }, {name: "single proteotypic", color: "#007800", underscore: false}, {
-                        name: "several proteotypic",
-                        color: "#69CC33",
-                        underscore: false
-                    }, {name: "synthetic", color: "#fff", underscore: true}];
-                    seq1.addLegend(legend);
-                    coveredSeq = $("#fastaSeq").html();
+                        HL.HashAA = HL.applyAAFormating(datas.Peptides);
+                        seq1.coverage(HL.HashAA);
+                        var legend = [{
+                            name: "non-proteotypic",
+                            color: "#4A57D4",
+                            underscore: false
+                    }, {
+                            name: "single proteotypic",
+                            color: "#007800",
+                            underscore: false
+                        }, {
+                            name: "several proteotypic",
+                            color: "#69CC33",
+                            underscore: false
+                    }, {
+                            name: "synthetic",
+                            color: "#fff",
+                            underscore: true
+                        }];
+                        seq1.addLegend(legend);
+                        coveredSeq = $("#fastaSeq").html();
 
-                    var dateFCend = new Date().getTime();
+                        var dateFCend = new Date().getTime();
 
-                },
-                applyAAFormating: function (list) {
-                    var datestart = new Date().getTime();
-                    var HashAA = [];
-                    var proteoCoverage = 0;
-                    var pepCoverage = 0;
-                    var jMin = 0;
-                    var begin = 1;
-                    var subseqColor = "";
-                    var subseq_;
-                    var seqLength = getInfoForIsoform.Sequence(isoforms, isoName).length;
-                    for (var i = 1; i < seqLength + 1; i++) {
-                        var naturalPep = 0;
-                        var syntheticPep = 0;
-                        var proteotypicPep = 0;
-                        var checkScale = false;
-                        for (var j = jMin; j < list.length; j++) {
-                            if (i >= list[j].position.first && i <= list[j].position.second) {
-                                if (list[j].properties.natural) naturalPep += 1;
-                                if (list[j].properties.synthetic) syntheticPep += 1;
-                                if (list[j].properties.proteotypic) proteotypicPep += 1;
-                            }
-                            if (i > list[j].position.second && checkScale === false) {
-                                checkScale = true;
-                                jMin = j;
-                            }
-                            if (list[j].position.first > i) break;
-                        }
-                        var clr = "black";
-                        var underscore = false;
-                        if (syntheticPep > 0) underscore = true;
-                        if (naturalPep > 0) {
-                            clr = "#4A57D4";
-                            pepCoverage += 1;
-                        }
-                        if (proteotypicPep > 0) {
-                            if (syntheticPep === 0) proteoCoverage += 1;
-                            if (proteotypicPep === 1) clr = "#007800";
-                            else clr = "#00C500";
-                        }
-                        if (i === 1) {
-                            subseqColor = clr;
-                            subseq_ = underscore;
-                        }
-                        if (!(clr === subseqColor && underscore === subseq_)) {
-                            HashAA.push({
-                                "start": begin - 1,
-                                "end": i - 1,
-                                "color": subseqColor,
-                                "underscore": subseq_
-                            });
-                            begin = i;
-                            subseqColor = clr;
-                            subseq_ = underscore;
-                        }
-                        if (i === seqLength) {
-                            HashAA.push({"start": begin - 1, "end": i, "color": subseqColor, "underscore": subseq_});
-                        }
-
-                    }
-                    var intermediate = new Date().getTime();
-
-                    proteoCoverage = ((proteoCoverage / seqLength) * 100).toFixed(2);
-                    pepCoverage = ((pepCoverage / seqLength) * 100).toFixed(2);
-                    $("#proteoCover").text(proteoCoverage + "%");
-                    $("#pepCover").text(pepCoverage + "%");
-
-                    return HashAA;
-                },
-                moreInfos: function (event) {
-                    var selection = [];
-                    $(".PepSelected").each(function (o) {
-                        if ($(this).prop("checked")) {
-                            selection.push($(this).parent().parent().attr("id"));
-                        }
-                    });
-                    addPeptidesInfos(selection, datas.Peptides, isoName);
-
-                }
-            };
-            var datestart = new Date().getTime();
-            pepHistogram(datas.Peptides);
-            var intermediate = new Date().getTime();
-
-
-            $(function () {
-                HL.firstCoverage();
-                HL.clickPos();
-            });
-        }
-    };
-
-    $(function () {
-        [nx.getProteinSequence(nxEntryName), nx.getPeptide(nxEntryName), nx.getSrmPeptide(nxEntryName), nx.getMatureProtein(nxEntryName), nx.getProPeptide(nxEntryName), nx.getSecondaryStructure(nxEntryName)].reduce(function (sequence, dataPromise) {
-            return sequence.then(function () {
-                return dataPromise;
-            }).then(function (oneData) {
-                cpt += 1;
-                switch (cpt) {
-                    case 1:
-                        isoforms = oneData;
-                        allFeatures.push(oneData);
-                        firstIso = getFirstIsoform(isoforms);
-                        currentIso = firstIso;
-                        RenderSequenceForIsoform(isoforms, firstIso);
-                        nxIsoformChoice(isoforms);
-                        break;
-                    case 2:
-                        peptideMappings = oneData;
-                        allFeatures.push(oneData);
-                        break;
-                    case 3:
-                        srmPeptideMappings = oneData;
-                        allFeatures.push(oneData);
-                        srmPeptideMappings.forEach(function (o) {
-                            var alreadySaved = false;
-                            for (var i = 0; i < peptideMappings.length; i++) {
-                                if (o.peptideUniqueName === peptideMappings[i].peptideUniqueName) {
-                                    alreadySaved = true;
-                                    break;
+                    },
+                    applyAAFormating: function (list) {
+                        var datestart = new Date().getTime();
+                        var HashAA = [];
+                        var proteoCoverage = 0;
+                        var pepCoverage = 0;
+                        var jMin = 0;
+                        var begin = 1;
+                        var subseqColor = "";
+                        var subseq_;
+                        var seqLength = getInfoForIsoform.Sequence(isoforms, isoName).length;
+                        for (var i = 1; i < seqLength + 1; i++) {
+                            var naturalPep = 0;
+                            var syntheticPep = 0;
+                            var proteotypicPep = 0;
+                            var checkScale = false;
+                            for (var j = jMin; j < list.length; j++) {
+                                if (i >= list[j].position.first && i <= list[j].position.second) {
+                                    if (list[j].properties.natural) naturalPep += 1;
+                                    if (list[j].properties.synthetic) syntheticPep += 1;
+                                    if (list[j].properties.proteotypic) proteotypicPep += 1;
                                 }
+                                if (i > list[j].position.second && checkScale === false) {
+                                    checkScale = true;
+                                    jMin = j;
+                                }
+                                if (list[j].position.first > i) break;
                             }
-                            if (alreadySaved === false) {
-                                peptideMappings.push(o);
+                            var clr = "black";
+                            var underscore = false;
+                            if (syntheticPep > 0) underscore = true;
+                            if (naturalPep > 0) {
+                                clr = "#4A57D4";
+                                pepCoverage += 1;
+                            }
+                            if (proteotypicPep > 0) {
+                                if (syntheticPep === 0) proteoCoverage += 1;
+                                if (proteotypicPep === 1) clr = "#007800";
+                                else clr = "#00C500";
+                            }
+                            if (i === 1) {
+                                subseqColor = clr;
+                                subseq_ = underscore;
+                            }
+                            if (!(clr === subseqColor && underscore === subseq_)) {
+                                HashAA.push({
+                                    "start": begin - 1,
+                                    "end": i - 1,
+                                    "color": subseqColor,
+                                    "underscore": subseq_
+                                });
+                                begin = i;
+                                subseqColor = clr;
+                                subseq_ = underscore;
+                            }
+                            if (i === seqLength) {
+                                HashAA.push({
+                                    "start": begin - 1,
+                                    "end": i,
+                                    "color": subseqColor,
+                                    "underscore": subseq_
+                                });
+                            }
+
+                        }
+                        var intermediate = new Date().getTime();
+
+                        proteoCoverage = ((proteoCoverage / seqLength) * 100).toFixed(2);
+                        pepCoverage = ((pepCoverage / seqLength) * 100).toFixed(2);
+                        $("#proteoCover").text(proteoCoverage + "%");
+                        $("#pepCover").text(pepCoverage + "%");
+
+                        return HashAA;
+                    },
+                    moreInfos: function (event) {
+                        var selection = [];
+                        $(".PepSelected").each(function (o) {
+                            if ($(this).prop("checked")) {
+                                selection.push($(this).parent().parent().attr("id"));
                             }
                         });
-                        break;
-                    case 4:
-                        matureProtein = oneData.annot;
-                        allFeatures.push(oneData.annot);
-                        break;
-                    case 5:
-                        proPeptide = oneData.annot;
-                        allFeatures.push(oneData.annot);
+                        addPeptidesInfos(selection, datas.Peptides, isoName);
 
-                        RenderPeptidesForIsoform(peptideMappings, firstIso);
-                        RenderFeatureViewer(allFeatures, firstIso);
-                        showFeatureViewer();
+                    }
+                };
+                var datestart = new Date().getTime();
+                pepHistogram(datas.Peptides);
+                var intermediate = new Date().getTime();
 
-                        //console.log(oneData[14]);
-                        //var tv = new TripleViewer(entry);
-                        //tv.init(oneData,metaData);
-                        break;
-                    case 6:
-                        annotations = oneData;
-                        //nxPviz(annotations, isoforms);
 
-                        break;
-                }
-            });
-        }, Promise.resolve())
-            .then(function () {
-                console.log("All done");
-            })
-            .catch(function (err) {
-                // catch any error that happened along the way
-                console.log("Argh, broken: " + err.message);
-                console.log("Error at line : " + err.stack);
-            })
-    });
+                $(function () {
+                    HL.firstCoverage();
+                    HL.clickPos();
+                });
+            }
+        };
 
-}
-// Shorthand for $( document ).ready()
+        $(function () {
+        [nx.getProteinSequence(nxEntryName), nx.getPeptide(nxEntryName), nx.getSrmPeptide(nxEntryName), nx.getMatureProtein(nxEntryName), nx.getProPeptide(nxEntryName), nx.getSecondaryStructure(nxEntryName)].reduce(function (sequence, dataPromise) {
+                    return sequence.then(function () {
+                        return dataPromise;
+                    }).then(function (oneData) {
+                        cpt += 1;
+                        switch (cpt) {
+                        case 1:
+                            isoforms = oneData;
+                            allFeatures.push(oneData);
+                            firstIso = getFirstIsoform(isoforms);
+                            currentIso = firstIso;
+                            RenderSequenceForIsoform(isoforms, firstIso);
+                            nxIsoformChoice(isoforms);
+                            break;
+                        case 2:
+                            peptideMappings = oneData;
+                            allFeatures.push(oneData);
+                            break;
+                        case 3:
+                            srmPeptideMappings = oneData;
+                            allFeatures.push(oneData);
+                            srmPeptideMappings.forEach(function (o) {
+                                var alreadySaved = false;
+                                for (var i = 0; i < peptideMappings.length; i++) {
+                                    if (o.peptideUniqueName === peptideMappings[i].peptideUniqueName) {
+                                        alreadySaved = true;
+                                        break;
+                                    }
+                                }
+                                if (alreadySaved === false) {
+                                    peptideMappings.push(o);
+                                }
+                            });
+                            break;
+                        case 4:
+                            matureProtein = oneData.annot;
+                            allFeatures.push(oneData.annot);
+                            break;
+                        case 5:
+                            proPeptide = oneData.annot;
+                            allFeatures.push(oneData.annot);
+
+                            RenderPeptidesForIsoform(peptideMappings, firstIso);
+                            RenderFeatureViewer(allFeatures, firstIso);
+                            showFeatureViewer();
+
+                            //console.log(oneData[14]);
+                            //var tv = new TripleViewer(entry);
+                            //tv.init(oneData,metaData);
+                            break;
+                        case 6:
+                            annotations = oneData;
+                            //nxPviz(annotations, isoforms);
+
+                            break;
+                        }
+                    });
+                }, Promise.resolve())
+                .then(function () {
+                    console.log("All done");
+                })
+                .catch(function (err) {
+                    // catch any error that happened along the way
+                    console.log("Argh, broken: " + err.message);
+                    console.log("Error at line : " + err.stack);
+                })
+        });
+
+    }
+    // Shorthand for $( document ).ready()
 $(function () {
     initNXDivs();
 });

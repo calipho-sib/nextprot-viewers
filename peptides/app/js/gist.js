@@ -1,410 +1,448 @@
 /////////////
 function initNXDivs() {
 
-    var Nextprot = window.Nextprot;
-    var nx = new Nextprot.Client("SequenceViewer", "nextprotTeam");
-    var nxEntryName = nx.getEntryName();
-    var cpt = 0;
-    var isoforms;
-    var firstIso;
-    var currentIso;
-    var annotations;
-    var peptideMappings;
-    var srmPeptideMappings;
-    var matureProtein;
-    var proPeptide;
-    var allFeatures = [];
-    var featuresForViewer = [];
-    var seq1 = null;
+        var Nextprot = window.Nextprot;
+        var nx = new Nextprot.Client("PeptideViewer", "nextprotTeam");
+        nx.setApiBaseUrl("http://alpha-api.nextprot.org");
+        var nxEntryName = nx.getEntryName();
+        var cpt = 0;
+        var isoforms;
+        var firstIso;
+        var currentIso;
+        var annotations;
+        var peptideMappings;
+        var srmPeptideMappings;
+        var matureProtein;
+        var proPeptide;
+        var allFeatures = [];
+        var featuresForViewer = [];
+        var seq1 = null;
 
-    function getFirstIsoform(isoformList) {
-        var seqIDs = isoformList.map(function (p) {
-            return p.uniqueName
-        }).sort(function (a, b) {
-            return parseInt(a.split("-")[1]) - parseInt(b.split("-")[1])
-        });
-        return seqIDs[0];
-    }
-
-    (function ($) {
-        $.fn.hasVerticalScrollBar = function () {
-            return this.get(0) ? this.get(0).scrollHeight > this.innerHeight() : false;
+        function getFirstIsoform(isoformList) {
+            var seqIDs = isoformList.map(function (p) {
+                return p.uniqueName
+            }).sort(function (a, b) {
+                return parseInt(a.split("-")[1]) - parseInt(b.split("-")[1])
+            });
+            return seqIDs[0];
         }
-    })(jQuery);
 
-    function nxPviz(annotations, isoforms) {
-        if ($("#main").length > 0) {
-            var pviz = this.pviz;
+        (function ($) {
+            $.fn.hasVerticalScrollBar = function () {
+                return this.get(0) ? this.get(0).scrollHeight > this.innerHeight() : false;
+            }
+        })(jQuery);
 
-            var seq = isoforms[0].sequence;
-            var seqEntry = new pviz.SeqEntry({
-                sequence: seq
-            });
+        function nxPviz(annotations, isoforms) {
+            if ($("#main").length > 0) {
+                var pviz = this.pviz;
 
-            var view = new pviz.SeqEntryAnnotInteractiveView({
-                model: seqEntry,
-                el: '#main'
-            });
-            $("#main").prepend("<div style=\"border-bottom: 1px solid #E7EAEC;padding-bottom:5px;margin-bottom: 15px;\">" +
-            "<div style=\"display:inline-block;\">" +
-            "<span id=\"numberOfFeatures\" class=\"badge\" style=\"background:#C50063;color:white;padding:8px;border-radius:50%;margin-right:10px;vertical-align:middle;\"></span>" +
-            "</div><h4 style=\"display:inline-block;vertical-align:middle;\">Secondary structure</h4></div>");
-            //Setting secondary structure
-            var features = [];
-            $("#numberOfFeatures").text(annotations.length);
-            annotations.forEach(function (annot) {
-                var isoform1 = nxEntryName + "-1";
-                features.push({
-                    category: 'secondary structure',
-                    type: (annot.category === "beta strand") ? "beta_strand" : annot.category,
-                    start: annot.targetingIsoformsMap[isoform1].firstPosition,
-                    end: annot.targetingIsoformsMap[isoform1].lastPosition
+                var seq = isoforms[0].sequence;
+                var seqEntry = new pviz.SeqEntry({
+                    sequence: seq
                 });
-            });
-            //Adding features
-            seqEntry.addFeatures(features);
-            //Render at the end
-            view.render();
+
+                var view = new pviz.SeqEntryAnnotInteractiveView({
+                    model: seqEntry,
+                    el: '#main'
+                });
+                $("#main").prepend("<div style=\"border-bottom: 1px solid #E7EAEC;padding-bottom:5px;margin-bottom: 15px;\">" +
+                    "<div style=\"display:inline-block;\">" +
+                    "<span id=\"numberOfFeatures\" class=\"badge\" style=\"background:#C50063;color:white;padding:8px;border-radius:50%;margin-right:10px;vertical-align:middle;\"></span>" +
+                    "</div><h4 style=\"display:inline-block;vertical-align:middle;\">Secondary structure</h4></div>");
+                //Setting secondary structure
+                var features = [];
+                $("#numberOfFeatures").text(annotations.length);
+                annotations.forEach(function (annot) {
+                    var isoform1 = nxEntryName + "-1";
+                    features.push({
+                        category: 'secondary structure',
+                        type: (annot.category === "beta strand") ? "beta_strand" : annot.category,
+                        start: annot.targetingIsoformsMap[isoform1].firstPosition,
+                        end: annot.targetingIsoformsMap[isoform1].lastPosition
+                    });
+                });
+                //Adding features
+                seqEntry.addFeatures(features);
+                //Render at the end
+                view.render();
+            }
         }
-    }
 
-    var getInfoForIsoform = {
-        firstLoad: function () {
-            RenderSequenceForIsoform(isoforms, nxEntryName + "-1");
-            RenderPeptidesForIsoform(peptideMappings, nxEntryName + "-1");
-        },
-        Isoform: function () {
-            $(".isoformNames").click(getInfoForIsoform.reload);
-            $("#moreIsoforms a").click(function () {
-                var parentThis = $(this).text();
-                $("#extendIsoformChoice").text(parentThis);
-            });
-        },
-        reload: function (event) {
-            var isoID = $(this).text();
-            $("#nx-detailedPeptide").html("");
-            $("#nx-detailedPeptide").hide("slow");
-            RenderSequenceForIsoform(isoforms, isoID);
-            RenderPeptidesForIsoform(peptideMappings, isoID);
-            $("#featureViewer").html("");
-            currentIso=isoID;
-            createSVG(isoforms,isoID);
-            addFeatures(isoID);
+        var getInfoForIsoform = {
+            firstLoad: function () {
+                RenderSequenceForIsoform(isoforms, nxEntryName + "-1");
+                RenderPeptidesForIsoform(peptideMappings, nxEntryName + "-1");
+            },
+            Isoform: function () {
+                $(".isoformNames").click(getInfoForIsoform.reload);
+                $("#moreIsoforms a").click(function () {
+                    var parentThis = $(this).text();
+                    $("#extendIsoformChoice").text(parentThis);
+                });
+            },
+            reload: function (event) {
+                var isoID = $(this).text();
+                $("#nx-detailedPeptide").html("");
+                $("#nx-detailedPeptide").hide("slow");
+                RenderSequenceForIsoform(isoforms, isoID);
+                RenderPeptidesForIsoform(peptideMappings, isoID);
+                $("#featureViewer").html("");
+                currentIso = isoID;
+                createSVG(isoforms, isoID);
+                addFeatures(isoID);
 
-        },
-        Peptides: function (peptideMappings, isoName) {
-            var peptideMap = [];
-            peptideMappings.forEach(function (o) {
-                if (o.isoformSpecificity[isoName]) {
-                    for (var i = 0; i < o.isoformSpecificity[isoName].positions.length; i++) {
+            },
+            Peptides: function (peptideMappings, isoName) {
+                var peptideMap = [];
+                peptideMappings.forEach(function (o) {
+                    if (o.isoformSpecificity[isoName]) {
+                        for (var i = 0; i < o.isoformSpecificity[isoName].positions.length; i++) {
 
-                        var dict = {};
-                        var peptideAtlasID = "";
+                            var dict = {};
+                            var peptideAtlasID = "";
 
-                        o.evidences.forEach(function (q) {
-                            if (q.databaseName === "PeptideAtlas") peptideAtlasID= q.accession;
-                            dict[q.databaseName] = q.accession;
-                        });
+                            o.evidences.forEach(function (q) {
+                                if (q.databaseName === "PeptideAtlas") peptideAtlasID = q.accession;
+                                dict[q.databaseName] = q.accession;
+                            });
 
 
-                        var peptide = {
-                            "name": o.peptideUniqueName,
-                            "identifier": "",
-                            "position": o.isoformSpecificity[isoName].positions[i],
-                            "length": 0,
-                            "properties": {
-                                "natural": o.natural,
-                                "synthetic": o.synthetic,
-                                "proteotypic": o.proteotypic
-                            },
-                            "isoformProteotypicity": "No",
-                            "tissueSpecificity": o.evidences.map(function (p) {
-                                return p.assignedBy
-                            }).sort(),
-                            "sequence": "",
-                            "prePeptide": "",
-                            "postPeptide": "",
-                            "include": [],
-                            "includedIn": [],
-                            "sources": dict,
-                            "peptideAtlasID": peptideAtlasID
+                            var peptide = {
+                                "name": o.peptideUniqueName,
+                                "identifier": "",
+                                "position": o.isoformSpecificity[isoName].positions[i],
+                                "length": 0,
+                                "properties": {
+                                    "natural": o.natural,
+                                    "synthetic": o.synthetic,
+                                    "proteotypic": o.proteotypic
+                                },
+                                "isoformProteotypicity": "No",
+                                "tissueSpecificity": o.evidences.map(function (p) {
+                                    return p.assignedBy
+                                }).sort(),
+                                "sequence": "",
+                                "prePeptide": "",
+                                "postPeptide": "",
+                                "include": [],
+                                "includedIn": [],
+                                "sources": dict,
+                                "peptideAtlasID": peptideAtlasID
+                            };
+                            //if (o.natural === true) peptide.properties.push("natural");
+                            //else peptide.properties.push("-");
+                            if (o.proteotypic === true) {
+                                //peptide.properties.push("proteotypic");
+                                if (Object.keys(o.isoformSpecificity).length === 1) peptide.isoformProteotypicity = "Yes";
+                            }
+                            //else peptide.properties.push("-");
+                            //if (o.synthetic === true) peptide.properties.push("synthetic");
+                            //else peptide.properties.push("-");
+
+                            peptide.length = peptide.position.second - peptide.position.first + 1;
+
+                            peptide.sequence = getInfoForIsoform.Sequence(isoforms, isoName).slice(peptide.position.first - 1, peptide.position.second);
+                            peptide.identifier = (peptide.sequence.length > 22) ? peptide.sequence.substring(0, 10) + ".." + peptide.sequence.substring(peptide.sequence.length - 10) : peptide.sequence;
+
+                            peptide.prePeptide = getInfoForIsoform.Sequence(isoforms, isoName)[peptide.position.first - 2];
+                            peptide.postPeptide = getInfoForIsoform.Sequence(isoforms, isoName)[peptide.position.second + 1];
+                            peptideMap.push(peptide);
+                        }
+                    }
+                });
+                peptideMap.sort(function (a, b) {
+                    return a.length - b.length;
+                });
+                peptideMap.sort(function (a, b) {
+                    return a.position.first - b.position.first;
+                });
+                var intermediate = new Date().getTime();
+
+
+                // A ---****---
+                // B ----**----
+                var isIncludedIn = function (pepA, pepB) {
+                    return ((pepA.position.first <= pepB.position.first) && (pepA.position.second >= pepB.position.second))
+                }
+
+
+                for (var i = 0; i < peptideMap.length; i++) {
+                    for (var j = i + 1; j < peptideMap.length; j++) {
+
+
+                        var pepA = peptideMap[i];
+                        var pepB = peptideMap[j];
+
+                        if (pepB.position.first > pepA.position.second) break;
+
+                        if (isIncludedIn(pepA, pepB)) {
+                            if (pepA.include.indexOf(pepB.identifier) === -1) pepA.include.push(pepB.identifier);
+                            if (pepB.includedIn.indexOf(pepA.identifier) === -1) pepB.includedIn.push(pepA.identifier);
+                        } else if (isIncludedIn(pepB, pepA)) {
+                            if (pepB.include.indexOf(pepA.identifier) === -1) pepB.include.push(pepA.identifier);
+                            if (pepA.includedIn.indexOf(pepB.identifier) === -1) pepA.includedIn.push(pepB.identifier);
+                        }
+
+                    }
+                }
+                var dateEnd = new Date().getTime();
+
+
+                return peptideMap;
+            },
+            Sequence: function (isoforms, isoName) {
+                var isoSeq = "";
+                isoforms.forEach(function (o) {
+                    if (o.uniqueName === isoName) return isoSeq = o.sequence;
+                });
+                return isoSeq;
+            },
+            getActiveProteins: function (activeProteins, isoName) {
+                var listActiveProt = [];
+                activeProteins.forEach(function (o) {
+                    if (o.targetingIsoformsMap[isoName]) {
+                        var actProt = {
+                            "isoform": o.targetingIsoformsMap[isoName].isoformName,
+                            "start": o.targetingIsoformsMap[isoName].firstPosition,
+                            "end": o.targetingIsoformsMap[isoName].lastPosition
                         };
-                        //if (o.natural === true) peptide.properties.push("natural");
-                        //else peptide.properties.push("-");
-                        if (o.proteotypic === true) {
-                            //peptide.properties.push("proteotypic");
-                            if (Object.keys(o.isoformSpecificity).length === 1) peptide.isoformProteotypicity = "Yes";
-                        }
-                        //else peptide.properties.push("-");
-                        //if (o.synthetic === true) peptide.properties.push("synthetic");
-                        //else peptide.properties.push("-");
+                        listActiveProt.push(actProt);
+                    }
+                });
+                return listActiveProt;
+            }
+        };
 
-                        peptide.length = peptide.position.second - peptide.position.first + 1;
-
-                        peptide.sequence = getInfoForIsoform.Sequence(isoforms, isoName).slice(peptide.position.first - 1, peptide.position.second);
-                        peptide.identifier = (peptide.sequence.length > 22) ? peptide.sequence.substring(0, 10) + ".." + peptide.sequence.substring(peptide.sequence.length - 10) : peptide.sequence;
-
-                        peptide.prePeptide = getInfoForIsoform.Sequence(isoforms, isoName)[peptide.position.first - 2];
-                        peptide.postPeptide = getInfoForIsoform.Sequence(isoforms, isoName)[peptide.position.second + 1];
-                        peptideMap.push(peptide);
+        function showFeatureViewer() {
+            $("#showFV").click(function () {
+                $("#featureViewer").toggle();
+                $(this).text(function (i, text) {
+                    return text === "Hide features" ? "Show features" : "Hide features";
+                });
+                if ($(this).text() === "Hide features") {
+                    if ($("#featureViewer svg").width() < 10) {
+                        $("#featureViewer").html("");
+                        createSVG(isoforms, currentIso);
+                        addFeatures(currentIso);
                     }
                 }
             });
-            peptideMap.sort(function (a, b) {
-                return a.length - b.length;
-            });
-            peptideMap.sort(function (a, b) {
-                return a.position.first - b.position.first;
-            });
-            var intermediate = new Date().getTime();
-
-
-            // A ---****---
-            // B ----**----
-            var isIncludedIn = function (pepA, pepB) {
-                return ((pepA.position.first <= pepB.position.first) && (pepA.position.second >= pepB.position.second))
-            }
-
-
-            for (var i = 0; i < peptideMap.length; i++) {
-                for (var j = i + 1; j < peptideMap.length; j++) {
-
-
-                    var pepA = peptideMap[i];
-                    var pepB = peptideMap[j];
-
-                    if (pepB.position.first > pepA.position.second) break;
-
-                    if (isIncludedIn(pepA, pepB)) {
-                        if (pepA.include.indexOf(pepB.identifier) === -1) pepA.include.push(pepB.identifier);
-                        if (pepB.includedIn.indexOf(pepA.identifier) === -1) pepB.includedIn.push(pepA.identifier);
-                    } else if (isIncludedIn(pepB, pepA)) {
-                        if (pepB.include.indexOf(pepA.identifier) === -1) pepB.include.push(pepA.identifier);
-                        if (pepA.includedIn.indexOf(pepB.identifier) === -1) pepA.includedIn.push(pepB.identifier);
-                    }
-
-                }
-            }
-            var dateEnd = new Date().getTime();
-
-
-            return peptideMap;
-        },
-        Sequence: function (isoforms, isoName) {
-            var isoSeq = "";
-            isoforms.forEach(function (o) {
-                if (o.uniqueName === isoName) return isoSeq = o.sequence;
-            });
-            return isoSeq;
-        },
-        getActiveProteins: function (activeProteins, isoName) {
-            var listActiveProt = [];
-            activeProteins.forEach(function (o) {
-                if (o.targetingIsoformsMap[isoName]) {
-                    var actProt = {
-                        "isoform": o.targetingIsoformsMap[isoName].isoformName,
-                        "start": o.targetingIsoformsMap[isoName].firstPosition,
-                        "end": o.targetingIsoformsMap[isoName].lastPosition
-                    };
-                    listActiveProt.push(actProt);
-                }
-            });
-            return listActiveProt;
         }
-    };
-    function showFeatureViewer() {
-        $("#showFV").click(function () {
-            $("#featureViewer").toggle();
-            $(this).text(function (i, text) {
-                return text === "Hide features" ? "Show features" : "Hide features";
-            });
-            if ($(this).text() === "Hide features") {
-                if ($("#featureViewer svg").width() < 10) {
-                    $("#featureViewer").html("");
-                    createSVG(isoforms,currentIso);
-                    addFeatures(currentIso);
-                }
-            }
-        });
-    }
 
-    function nxIsoformChoice(isoforms) {
-        if ($("#nx-isoformChoice").length > 0) {
-            var datas = {
-                "isoforms": (function () {
-                    var listIsoforms = {
-                        "visible": [],
-                        "more": []
-                    };
-                    isoforms.sort(function (a, b) {
-                        return parseInt(a.uniqueName.split("-")[1]) - parseInt(b.uniqueName.split("-")[1])
-                    }).forEach(function (o, index) {
-                        if (index <= 3) listIsoforms.visible.push(o);
-                        else listIsoforms.more.push(o);
+        function nxIsoformChoice(isoforms) {
+            if ($("#nx-isoformChoice").length > 0) {
+                var datas = {
+                    "isoforms": (function () {
+                        var listIsoforms = {
+                            "visible": [],
+                            "more": []
+                        };
+                        isoforms.sort(function (a, b) {
+                            return parseInt(a.uniqueName.split("-")[1]) - parseInt(b.uniqueName.split("-")[1])
+                        }).forEach(function (o, index) {
+                            if (index <= 3) listIsoforms.visible.push(o);
+                            else listIsoforms.more.push(o);
+                        });
+                        return listIsoforms;
+                    }())
+                };
+                var template = HBtemplates['app/assets/templates/isoformChoice.tmpl'];
+                var results = template(datas);
+                $("#nx-isoformChoice").append(results);
+                /////////// EventListener to change isoform
+                getInfoForIsoform.Isoform();
+                $(document).ready(function () {
+                    $('.isoformNames').tooltip({
+                        trigger: "hover"
                     });
-                    return listIsoforms;
-                }())
-            };
-            var template = HBtemplates['app/assets/templates/isoformChoice.tmpl'];
-            var results = template(datas);
-            $("#nx-isoformChoice").append(results);
-            /////////// EventListener to change isoform
-            getInfoForIsoform.Isoform();
-            $(document).ready(function(){
-                $('.isoformNames').tooltip({trigger: "hover"});
-            });
-
-            $("#nx-isoformChoice li:first-child").addClass("active");
-        }
-    }
-
-    function createSVG(sequences,isoName) {
-        sequences.forEach(function (o) {
-            if (o.uniqueName === isoName) {
-                currentSeq = o.sequence;
-                ft = new FeatureViewer(currentSeq, "#featureViewer", {
-                    showAxis: true,
-                    showSequence: true,
-                    brushActive: true,
-                    verticalLine: false,
-                    toolbar:true
                 });
-            }
-        });
-    }
-    function addFeatures(isoName) {
-        for (var i=0;i<featuresForViewer.length;i++) {
-            if (Object.keys(featuresForViewer[i]).length !== 0 && featuresForViewer[i].hasOwnProperty(isoName)) {
-                var feature = jQuery.extend({}, featuresForViewer[i][isoName]);
-                ft.addFeature(feature);
+
+                $("#nx-isoformChoice li:first-child").addClass("active");
             }
         }
-    }
-    function RenderFeatureViewer(data, isoName) {
-        var metaData = [
-            {name: "Sequence"},                                                                                          {name: "Peptide",className: "pep",color: "#B3E1D1",type: "multipleRect",filter:"Peptide"},
-            {name: "Srm Peptide",className: "srmPep",color: "#B3E1F0",type: "multipleRect",filter:"none"},               {name: "Mature protein",className: "mat",color: "#B3B3C2",type: "rect",filter:"Processing"},
-            {name: "Propeptide",className: "pro",color: "#B3B3B3",type: "rect",filter:"Processing"}
-        ];
-        var featuresByIsoform=[];
-        for (var i=1; i<data.length-1;i++) {
-            var feat = NXUtils.convertMappingsToIsoformMap(data[i],metaData[i].name,metaData[i].filter);
-            featuresByIsoform.push(feat);
-            var featForViewer = NXViewerUtils.convertNXAnnotations(feat,metaData[i]);
-            featuresForViewer.push(featForViewer);
-        }
-        //addFiltering();
-        createSVG(isoforms,isoName);
-        addFeatures(isoName);
-    }
 
-    var RenderSequenceForIsoform = function (isoforms, isoName) {
-
-
-        ////////////////////////// TEMPLATE SEQUENCE
-        if ($("#nx-overviewSeq").length > 0) {
-            seq1 = new Sequence(getInfoForIsoform.Sequence(isoforms, isoName));
-            seq1.render('#nx-overviewSeq', {
-                'showLineNumbers': true,
-                'wrapAminoAcids': true,
-                'charsPerLine': 100
+        function createSVG(sequences, isoName) {
+            sequences.forEach(function (o) {
+                if (o.uniqueName === isoName) {
+                    currentSeq = o.sequence;
+                    ft = new FeatureViewer(currentSeq, "#featureViewer", {
+                        showAxis: true,
+                        showSequence: true,
+                        brushActive: true,
+                        verticalLine: false,
+                        toolbar: true
+                    });
+                }
             });
-            $("#sequenceHeader").append("<div class=\"pull-right\" style=\"margin-right:20px;font-style:italic;text-align: center;\"><span id=\"pepCover\" style=\"font-size:18px;color:#C50063;\"></span><br><span style=\"font-size:10px;font-weight:bold;\">Peptide coverage</span></div>");
-            $("#sequenceHeader").append("<div class=\"pull-right\" style=\"margin-right:20px;font-style:italic;text-align: center;\"><span id=\"proteoCover\" style=\"font-size:18px;color:#69CC33;\"></span><br><span style=\"font-size:10px;font-weight:bold;\">Proteotypic coverage</span></div>");
-            //$("#sequenceHeader").append("<div class=\"pull-right\" style=\"margin-right:20px;font-style:italic;text-align: center;\"><h5>Coverage</h5></div>");
-            $("#sequenceHeader .badge").append(" aa");
         }
-    };
 
-    function getProteotypicityInfos(sequence) {
-
-        nx.getEntryforPeptide(sequence).then(function (data) {
-
-            function entryWithVariant(entry) {
-                var withVariant = false;
-                entry.annotations.forEach(function (o) {
-                    if (o.variant) withVariant = true;
-                });
-                return withVariant;
+        function addFeatures(isoName) {
+            for (var i = 0; i < featuresForViewer.length; i++) {
+                if (Object.keys(featuresForViewer[i]).length !== 0 && featuresForViewer[i].hasOwnProperty(isoName)) {
+                    var feature = jQuery.extend({}, featuresForViewer[i][isoName]);
+                    ft.addFeature(feature);
+                }
             }
+        }
 
-
-            var isoformsLength = 0;
-            data.forEach(function (o) {
-                isoformsLength += o.annotations.length
-            });
-            var entries = data.map(function (o) {
-                return {name: o.uniqueName, withVariant: entryWithVariant(o), geneName: o.overview.mainGeneName}
-            });
-            var entriesLength = data.length;
-            var entriesLengthWithoutVariant = entries.filter(function(d) { return d.withVariant === false}).length;
-            var entryMatching = {
-                proteotypicity: {
-                    withVariant:entriesLength <= 1,
-                    withoutVariant:entriesLengthWithoutVariant <= 1,
-                    onlyVariant: (entriesLength - entriesLengthWithoutVariant) < 1
+        function RenderFeatureViewer(data, isoName) {
+            var metaData = [
+                {
+                    name: "Sequence"
+                }, {
+                    name: "Peptide",
+                    className: "pep",
+                    color: "#B3E1D1",
+                    type: "multipleRect",
+                    filter: "Peptide"
                 },
-                entries: entries,
-                isoforms: data.map(function (o) {
-                    return o.annotations.map(function (p) {
-                        return {
-                            entryName: o.uniqueName,
-                            variant: p.variant,
-                            isoform: Object.keys(p.targetIsoformsMap)[0],
-                            positions: p.targetIsoformsMap[Object.keys(p.targetIsoformsMap)[0]].positions
-                        }
-                    })
-                })
-            };
-            var template = HBtemplates['app/assets/templates/matchingEntries.tmpl'];
-            var results = template(entryMatching);
-            $("#proteoBlock").html(results);
-
-            function toggleIsoforms() {
-                $('#showIsoforms').text("Show isoforms");
-                $('#showIsoforms').click(function () {
-                    $(this).text(function (i, text) {
-                        return text === "Show isoforms" ? "Hide isoforms" : "Show isoforms";
-                    });
-                    $('.showEntry').is(':visible') ? $(".showEntry").hide() : $(".showEntry").show();
-                    $('.showIsoform').is(':visible') ? $(".showIsoform").hide() : $(".showIsoform").show();
-                });
+                {
+                    name: "Srm Peptide",
+                    className: "srmPep",
+                    color: "#B3E1F0",
+                    type: "multipleRect",
+                    filter: "none"
+                }, {
+                    name: "Mature protein",
+                    className: "mat",
+                    color: "#B3B3C2",
+                    type: "rect",
+                    filter: "Processing"
+                },
+                {
+                    name: "Propeptide",
+                    className: "pro",
+                    color: "#B3B3B3",
+                    type: "rect",
+                    filter: "Processing"
+                }
+        ];
+            var featuresByIsoform = [];
+            for (var i = 1; i < data.length - 1; i++) {
+                var feat = NXUtils.convertMappingsToIsoformMap(data[i], metaData[i].name, metaData[i].filter);
+                featuresByIsoform.push(feat);
+                var featForViewer = NXViewerUtils.convertNXAnnotations(feat, metaData[i]);
+                featuresForViewer.push(featForViewer);
             }
+            //addFiltering();
+            createSVG(isoforms, isoName);
+            addFeatures(isoName);
+        }
 
-            //function toggleSentence(entries, isoforms) {
-            //    var entriesWithoutVariant = $("#showEntry li").not(".variantIntoAccount").length;
-            //    var isoformsWithoutVariant = $("#showIsoform li").not(".variantIntoAccount").length;
-            //
-            //    if ($("#withVariant").prop('checked')) {
-            //        var plurality = {
-            //            isoform: isoforms > 1 ? "isoforms" : "isoform",
-            //            entry: entries > 1 ? "entries" : "entry"
-            //        };
-            //        $("#proteotypicitySentence").text("Maps " + isoforms + " " + plurality.isoform + " from " + entries + " " + plurality.entry + " :");
-            //    }
-            //    else {
-            //        var plurality = {
-            //            isoform: isoformsWithoutVariant > 1 ? "isoforms" : "isoform",
-            //            entry: entriesWithoutVariant > 1 ? "entries" : "entry"
-            //        };
-            //        $("#proteotypicitySentence").text("Maps " + isoformsWithoutVariant + " " + plurality.isoform + " from " + entriesWithoutVariant + " " + plurality.entry + " :");
-            //    }
-            //}
-            //
-            //function toggleVariants() {
-            //    $('#withVariant').click(function () {
-            //        $('.variantIntoAccount').toggle();
-            //        toggleSentence(entriesLength, isoformsLength);
-            //    });
-            //}
+        var RenderSequenceForIsoform = function (isoforms, isoName) {
 
-            toggleIsoforms();
-            //toggleVariants();
-            //toggleSentence(entriesLength, isoformsLength);
-        });
-    }
 
-    var addPeptidesInfos = function (selection, listPeptides, isoName) {
+            ////////////////////////// TEMPLATE SEQUENCE
+            if ($("#nx-overviewSeq").length > 0) {
+                seq1 = new Sequence(getInfoForIsoform.Sequence(isoforms, isoName));
+                seq1.render('#nx-overviewSeq', {
+                    'showLineNumbers': true,
+                    'wrapAminoAcids': true,
+                    'charsPerLine': 100
+                });
+                $("#sequenceHeader").append("<div class=\"pull-right\" style=\"margin-right:20px;font-style:italic;text-align: center;\"><span id=\"pepCover\" style=\"font-size:18px;color:#C50063;\"></span><br><span style=\"font-size:10px;font-weight:bold;\">Peptide coverage</span></div>");
+                $("#sequenceHeader").append("<div class=\"pull-right\" style=\"margin-right:20px;font-style:italic;text-align: center;\"><span id=\"proteoCover\" style=\"font-size:18px;color:#69CC33;\"></span><br><span style=\"font-size:10px;font-weight:bold;\">Proteotypic coverage</span></div>");
+                //$("#sequenceHeader").append("<div class=\"pull-right\" style=\"margin-right:20px;font-style:italic;text-align: center;\"><h5>Coverage</h5></div>");
+                $("#sequenceHeader .badge").append(" aa");
+            }
+        };
+
+        function getProteotypicityInfos(sequence) {
+
+            nx.getEntryforPeptide(sequence).then(function (data) {
+
+                function entryWithVariant(entry) {
+                    var withVariant = false;
+                    entry.annotations.forEach(function (o) {
+                        if (o.variant) withVariant = true;
+                    });
+                    return withVariant;
+                }
+
+
+                var isoformsLength = 0;
+                data.forEach(function (o) {
+                    isoformsLength += o.annotations.length
+                });
+                var entries = data.map(function (o) {
+                    return {
+                        name: o.uniqueName,
+                        withVariant: entryWithVariant(o),
+                        geneName: o.overview.mainGeneName
+                    }
+                });
+                var entriesLength = data.length;
+                var entriesLengthWithoutVariant = entries.filter(function (d) {
+                    return d.withVariant === false
+                }).length;
+                var entryMatching = {
+                    proteotypicity: {
+                        withVariant: entriesLength <= 1,
+                        withoutVariant: entriesLengthWithoutVariant <= 1,
+                        onlyVariant: (entriesLength - entriesLengthWithoutVariant) < 1
+                    },
+                    entries: entries,
+                    isoforms: data.map(function (o) {
+                        return o.annotations.map(function (p) {
+                            return {
+                                entryName: o.uniqueName,
+                                variant: p.variant,
+                                isoform: Object.keys(p.targetIsoformsMap)[0],
+                                positions: p.targetIsoformsMap[Object.keys(p.targetIsoformsMap)[0]].positions
+                            }
+                        })
+                    })
+                };
+                var template = HBtemplates['app/assets/templates/matchingEntries.tmpl'];
+                var results = template(entryMatching);
+                $("#proteoBlock").html(results);
+
+                function toggleIsoforms() {
+                    $('#showIsoforms').text("Show isoforms");
+                    $('#showIsoforms').click(function () {
+                        $(this).text(function (i, text) {
+                            return text === "Show isoforms" ? "Hide isoforms" : "Show isoforms";
+                        });
+                        $('.showEntry').is(':visible') ? $(".showEntry").hide() : $(".showEntry").show();
+                        $('.showIsoform').is(':visible') ? $(".showIsoform").hide() : $(".showIsoform").show();
+                    });
+                }
+
+                //function toggleSentence(entries, isoforms) {
+                //    var entriesWithoutVariant = $("#showEntry li").not(".variantIntoAccount").length;
+                //    var isoformsWithoutVariant = $("#showIsoform li").not(".variantIntoAccount").length;
+                //
+                //    if ($("#withVariant").prop('checked')) {
+                //        var plurality = {
+                //            isoform: isoforms > 1 ? "isoforms" : "isoform",
+                //            entry: entries > 1 ? "entries" : "entry"
+                //        };
+                //        $("#proteotypicitySentence").text("Maps " + isoforms + " " + plurality.isoform + " from " + entries + " " + plurality.entry + " :");
+                //    }
+                //    else {
+                //        var plurality = {
+                //            isoform: isoformsWithoutVariant > 1 ? "isoforms" : "isoform",
+                //            entry: entriesWithoutVariant > 1 ? "entries" : "entry"
+                //        };
+                //        $("#proteotypicitySentence").text("Maps " + isoformsWithoutVariant + " " + plurality.isoform + " from " + entriesWithoutVariant + " " + plurality.entry + " :");
+                //    }
+                //}
+                //
+                //function toggleVariants() {
+                //    $('#withVariant').click(function () {
+                //        $('.variantIntoAccount').toggle();
+                //        toggleSentence(entriesLength, isoformsLength);
+                //    });
+                //}
+
+                toggleIsoforms();
+                //toggleVariants();
+                //toggleSentence(entriesLength, isoformsLength);
+            });
+        }
+
+        var addPeptidesInfos = function (selection, listPeptides, isoName) {
             if ($("#nx-detailedPeptide").length > 0) {
                 var data = {
                     "Peptides": (function () {
@@ -509,8 +547,8 @@ function initNXDivs() {
                                 if (p.end === o.second) Cterm = "C-term";
                             });
                             $("#peptidePositions").append("<tr><td>" + o.first + "</td><td>" + o.second + "</td>" +
-                            "<td>" + semiTrypticStart + "</td><td>" + semiTrypticEnd + "</td><td style=\"text-align: center;\">" + miscleavage + "</td><td>" + trypticity + "</td>" +
-                            "<td>" + Nterm + "</td><td>" + Cterm + "</td></tr>");
+                                "<td>" + semiTrypticStart + "</td><td>" + semiTrypticEnd + "</td><td style=\"text-align: center;\">" + miscleavage + "</td><td>" + trypticity + "</td>" +
+                                "<td>" + Nterm + "</td><td>" + Cterm + "</td></tr>");
                         });
 
                         $('#first').text(peptide.position);
@@ -580,7 +618,7 @@ function initNXDivs() {
                                 sourceTemp = "neXtProt - " + o;
                             }
                             if (o.match("PMID")) {
-                                sourceTemp = "neXtProt - " + o.replace("PMID_","PubMed:");
+                                sourceTemp = "neXtProt - " + o.replace("PMID_", "PubMed:");
                                 pmidFound = true;
                             }
                             $('#pepSources').append("<li>" + sourceTemp + "</li>")
@@ -633,36 +671,33 @@ function initNXDivs() {
                         if (pmidFound === true) {
                             nx.executeSparql(query).then(function (data) {
                                 $('#ptmInfos').append("<div class=\"panel-heading\" style=\"background-color: #F5F5F5;border-bottom: 1px solid #DDD;border-top:1px solid #DDD;font-weight: 500;\">PTM justified by this peptide :</div>" +
-                                "<div id=\"ptmByPeptide\" class=\"panel-body\"></div>");
+                                    "<div id=\"ptmByPeptide\" class=\"panel-body\"></div>");
                                 if (data.results.bindings.length > 0) {
                                     data.results.bindings.forEach(function (o) {
                                         $('#ptmByPeptide').append("<div class=\"row\"style=\"border-bottom:1px solid #E7EAEC;margin-bottom:5px;\"><dl class=\"col-md-6\"><dt>PTM ID</dt><dd>" + o.ptmterm.value.toString().match(/[^\/]*$/)[0] + "</dd></dl>" +
-                                        "<dl class=\"col-md-6\"><dt>Position</dt><dd>" + o.ptmstart.value + "</dd></dl>" +
-                                        "<dl class=\"col-md-6\"><dt>Type</dt><dd>" + o.ptmtype.value.toString().match(/[^#]*$/)[0].slice() + "</dd></dl>" +
-                                        "<dl class=\"col-md-6\"><dt>Description</dt><dd>" + o.ptmcomment.value + "</dd></dl></div>");
+                                            "<dl class=\"col-md-6\"><dt>Position</dt><dd>" + o.ptmstart.value + "</dd></dl>" +
+                                            "<dl class=\"col-md-6\"><dt>Type</dt><dd>" + o.ptmtype.value.toString().match(/[^#]*$/)[0].slice() + "</dd></dl>" +
+                                            "<dl class=\"col-md-6\"><dt>Description</dt><dd>" + o.ptmcomment.value + "</dd></dl></div>");
                                     });
-                                }
-                                else $('#ptmByPeptide').html("No PTM found");
+                                } else $('#ptmByPeptide').html("No PTM found");
                             }, function (error) {
                                 console.log(error.responseText);
                             });
-                        }
-                        else {
+                        } else {
                             $('#ptmInfos').append("<div class=\"panel-heading\" style=\"background-color: #F5F5F5;border-bottom: 1px solid #DDD;border-top:1px solid #DDD;font-weight: 500;\">PTM justified by this peptide :</div>" +
-                            "<div id=\"ptmByPeptide\" class=\"panel-body\">No PTM found</div>");
+                                "<div id=\"ptmByPeptide\" class=\"panel-body\">No PTM found</div>");
                         }
                         nx.executeSparql(queryRegion).then(function (data) {
                             $('#ptmInfos').append("<div class=\"panel-heading\" style=\"background-color: #F5F5F5;border-bottom: 1px solid #DDD;border-top:1px solid #DDD;font-weight: 500;\">PTM present in this region :</div>" +
-                            "<div id=\"ptmByRegion\" class=\"panel-body\"></div>");
+                                "<div id=\"ptmByRegion\" class=\"panel-body\"></div>");
                             if (data.results.bindings.length > 0) {
                                 data.results.bindings.forEach(function (o) {
                                     $('#ptmByRegion').append("<div class=\"row\"style=\"border-bottom:1px solid #E7EAEC;margin-bottom:5px;\"><dl class=\"col-md-6\"><dt>PTM ID</dt><dd>" + o.ptmterm.value.toString().match(/[^\/]*$/)[0] + "</dd></dl>" +
-                                    "<dl class=\"col-md-6\"><dt>Position</dt><dd>" + o.ptmstart.value + "</dd></dl>" +
-                                    "<dl class=\"col-md-6\"><dt>Type</dt><dd>" + o.ptmtype.value.toString().match(/[^#]*$/)[0].slice() + "</dd></dl>" +
-                                    "<dl class=\"col-md-6\"><dt>Description</dt><dd>" + o.ptmcomment.value + "</dd></dl></div>");
+                                        "<dl class=\"col-md-6\"><dt>Position</dt><dd>" + o.ptmstart.value + "</dd></dl>" +
+                                        "<dl class=\"col-md-6\"><dt>Type</dt><dd>" + o.ptmtype.value.toString().match(/[^#]*$/)[0].slice() + "</dd></dl>" +
+                                        "<dl class=\"col-md-6\"><dt>Description</dt><dd>" + o.ptmcomment.value + "</dd></dl></div>");
                                 });
-                            }
-                            else $('#ptmByRegion').html("No PTM found");
+                            } else $('#ptmByRegion').html("No PTM found");
                         }, function (error) {
                             console.log(error.responseText);
                         });
@@ -670,8 +705,7 @@ function initNXDivs() {
 
                         if ($('#peptideSpecificity').hasVerticalScrollBar()) {
                             $('#peptideSpecificity').removeClass("ignoreShift");
-                        }
-                        else $('#peptideSpecificity').addClass("ignoreShift");
+                        } else $('#peptideSpecificity').addClass("ignoreShift");
 
                         $("#pepPosTable").stupidtable();
                         $(function () {
@@ -683,257 +717,272 @@ function initNXDivs() {
                 $(".name:first").addClass("nameActive");
                 fillPeptideInfo.fillDescription($(".name:first").attr("id"));
                 fillPeptideInfo.peptideSelected();
-//adjustHeight("#info-left","#info-right");
+                //adjustHeight("#info-left","#info-right");
             }
-    };
-    var RenderPeptidesForIsoform = function (peptideMappings, isoName) {
+        };
+        var RenderPeptidesForIsoform = function (peptideMappings, isoName) {
 
-        ////////////////////////// TEMPLATE PEPTIDES
+            ////////////////////////// TEMPLATE PEPTIDES
 
-        if ($("#nx-overviewPeptide").length > 0) {
-            var datas = {
-                "PeptideLength": 0,
-                "Peptides": getInfoForIsoform.Peptides(peptideMappings, isoName)
-            };
-            datas.PeptideLength = datas.Peptides.length;
+            if ($("#nx-overviewPeptide").length > 0) {
+                var datas = {
+                    "PeptideLength": 0,
+                    "Peptides": getInfoForIsoform.Peptides(peptideMappings, isoName)
+                };
+                datas.PeptideLength = datas.Peptides.length;
 
-            var template = HBtemplates['app/assets/templates/peptideTable.tmpl'];
-            var results = template(datas);
-            $("#nx-overviewPeptide").html(results);
-            var defaultSeq = $("#fastaSeq").html();
-            var coveredSeq = $("#fastaSeq").html();
+                var template = HBtemplates['app/assets/templates/peptideTable.tmpl'];
+                var results = template(datas);
+                $("#nx-overviewPeptide").html(results);
+                var defaultSeq = $("#fastaSeq").html();
+                var coveredSeq = $("#fastaSeq").html();
 
-            $(function () {
-                $("#pepTableSorted").stupidtable({
-                    "positions": function (a, b) {
+                $(function () {
+                    $("#pepTableSorted").stupidtable({
+                        "positions": function (a, b) {
 
-                        var aNum = a.split("-")[0];
-                        var bNum = b.split("-")[0];
+                            var aNum = a.split("-")[0];
+                            var bNum = b.split("-")[0];
 
-                        return parseInt(aNum, 10) - parseInt(bNum, 10);
-                    }
+                            return parseInt(aNum, 10) - parseInt(bNum, 10);
+                        }
+                    });
+                    //$("#pepTableSorted th:nth-child(4)").stupidsort("asc");
+                    //$("#pepTableSorted th:nth-child(3)").stupidsort("asc");
                 });
-                //$("#pepTableSorted th:nth-child(4)").stupidsort("asc");
-                //$("#pepTableSorted th:nth-child(3)").stupidsort("asc");
-            });
 
-            var HL = {
-                "HashAA": [],
-                "HashAA2": [],
-                clickPos: function () {
-                    $(".pepPos").click(HL.findPeptide);
-                    $(".PepSelected").click(HL.moreInfos);
-                    $(document).click(HL.stopHL);
-                },
-                findPeptide: function (event) {
-                    //var templateLoader = HBtemplates['app/assets/templates/preLoader.tmpl'];
-                    //$("#peptideTableTitle").append(templateLoader);
-                    event.stopPropagation();
-                    var positions = $(this).text();
-                    HL.highlighting(positions);
-                },
-                highlighting: function (positions) {
-                    var dateHL = new Date().getTime();
-                    positions = positions.split("-").map(function (o) {
-                        return parseInt(o)
-                    });
-                    seq1.coverage(HL.HashAA, positions[0] - 1, positions[1] - 1);
-                    var ElementTop = $('#peptideHighlighted').position().top - 140;
-                    var scrollPosition = $("#scroller").scrollTop();
-                    var scrollingLength = ElementTop + scrollPosition;
-                    $("#scroller").animate({scrollTop: scrollingLength}, 1000);
-                    $(function () {
-                        $("#preLoaderActive").remove();
-                    });
-                    var dateHLend = new Date().getTime();
+                var HL = {
+                    "HashAA": [],
+                    "HashAA2": [],
+                    clickPos: function () {
+                        $(".pepPos").click(HL.findPeptide);
+                        $(".PepSelected").click(HL.moreInfos);
+                        $(document).click(HL.stopHL);
+                    },
+                    findPeptide: function (event) {
+                        //var templateLoader = HBtemplates['app/assets/templates/preLoader.tmpl'];
+                        //$("#peptideTableTitle").append(templateLoader);
+                        event.stopPropagation();
+                        var positions = $(this).text();
+                        HL.highlighting(positions);
+                    },
+                    highlighting: function (positions) {
+                        var dateHL = new Date().getTime();
+                        positions = positions.split("-").map(function (o) {
+                            return parseInt(o)
+                        });
+                        seq1.coverage(HL.HashAA, positions[0] - 1, positions[1] - 1);
+                        var ElementTop = $('#peptideHighlighted').position().top - 140;
+                        var scrollPosition = $("#scroller").scrollTop();
+                        var scrollingLength = ElementTop + scrollPosition;
+                        $("#scroller").animate({
+                            scrollTop: scrollingLength
+                        }, 1000);
+                        $(function () {
+                            $("#preLoaderActive").remove();
+                        });
+                        var dateHLend = new Date().getTime();
 
-                },
-                //if clicking anywhere in the document
-                stopHL: function () {
-                    $("#fastaSeq").html(coveredSeq);
-                },
-                firstCoverage: function () {
-                    var dateFC = new Date().getTime();
+                    },
+                    //if clicking anywhere in the document
+                    stopHL: function () {
+                        $("#fastaSeq").html(coveredSeq);
+                    },
+                    firstCoverage: function () {
+                        var dateFC = new Date().getTime();
 
-                    HL.HashAA = HL.applyAAFormating(datas.Peptides);
-                    seq1.coverage(HL.HashAA);
-                    var legend = [{
-                        name: "non-proteotypic",
-                        color: "#4A57D4",
-                        underscore: false
-                    }, {name: "single proteotypic", color: "#007800", underscore: false}, {
-                        name: "several proteotypic",
-                        color: "#69CC33",
-                        underscore: false
-                    }, {name: "synthetic", color: "#fff", underscore: true}];
-                    seq1.addLegend(legend);
-                    coveredSeq = $("#fastaSeq").html();
+                        HL.HashAA = HL.applyAAFormating(datas.Peptides);
+                        seq1.coverage(HL.HashAA);
+                        var legend = [{
+                            name: "non-proteotypic",
+                            color: "#4A57D4",
+                            underscore: false
+                    }, {
+                            name: "single proteotypic",
+                            color: "#007800",
+                            underscore: false
+                        }, {
+                            name: "several proteotypic",
+                            color: "#69CC33",
+                            underscore: false
+                    }, {
+                            name: "synthetic",
+                            color: "#fff",
+                            underscore: true
+                        }];
+                        seq1.addLegend(legend);
+                        coveredSeq = $("#fastaSeq").html();
 
-                    var dateFCend = new Date().getTime();
+                        var dateFCend = new Date().getTime();
 
-                },
-                applyAAFormating: function (list) {
-                    var datestart = new Date().getTime();
-                    var HashAA = [];
-                    var proteoCoverage = 0;
-                    var pepCoverage = 0;
-                    var jMin = 0;
-                    var begin = 1;
-                    var subseqColor = "";
-                    var subseq_;
-                    var seqLength = getInfoForIsoform.Sequence(isoforms, isoName).length;
-                    for (var i = 1; i < seqLength + 1; i++) {
-                        var naturalPep = 0;
-                        var syntheticPep = 0;
-                        var proteotypicPep = 0;
-                        var checkScale = false;
-                        for (var j = jMin; j < list.length; j++) {
-                            if (i >= list[j].position.first && i <= list[j].position.second) {
-                                if (list[j].properties.natural) naturalPep += 1;
-                                if (list[j].properties.synthetic) syntheticPep += 1;
-                                if (list[j].properties.proteotypic) proteotypicPep += 1;
-                            }
-                            if (i > list[j].position.second && checkScale === false) {
-                                checkScale = true;
-                                jMin = j;
-                            }
-                            if (list[j].position.first > i) break;
-                        }
-                        var clr = "black";
-                        var underscore = false;
-                        if (syntheticPep > 0) underscore = true;
-                        if (naturalPep > 0) {
-                            clr = "#4A57D4";
-                            pepCoverage += 1;
-                        }
-                        if (proteotypicPep > 0) {
-                            if (syntheticPep === 0) proteoCoverage += 1;
-                            if (proteotypicPep === 1) clr = "#007800";
-                            else clr = "#00C500";
-                        }
-                        if (i === 1) {
-                            subseqColor = clr;
-                            subseq_ = underscore;
-                        }
-                        if (!(clr === subseqColor && underscore === subseq_)) {
-                            HashAA.push({
-                                "start": begin - 1,
-                                "end": i - 1,
-                                "color": subseqColor,
-                                "underscore": subseq_
-                            });
-                            begin = i;
-                            subseqColor = clr;
-                            subseq_ = underscore;
-                        }
-                        if (i === seqLength) {
-                            HashAA.push({"start": begin - 1, "end": i, "color": subseqColor, "underscore": subseq_});
-                        }
-
-                    }
-                    var intermediate = new Date().getTime();
-
-                    proteoCoverage = ((proteoCoverage / seqLength) * 100).toFixed(2);
-                    pepCoverage = ((pepCoverage / seqLength) * 100).toFixed(2);
-                    $("#proteoCover").text(proteoCoverage + "%");
-                    $("#pepCover").text(pepCoverage + "%");
-
-                    return HashAA;
-                },
-                moreInfos: function (event) {
-                    var selection = [];
-                    $(".PepSelected").each(function (o) {
-                        if ($(this).prop("checked")) {
-                            selection.push($(this).parent().parent().attr("id"));
-                        }
-                    });
-                    addPeptidesInfos(selection, datas.Peptides, isoName);
-
-                }
-            };
-            var datestart = new Date().getTime();
-            pepHistogram(datas.Peptides);
-            var intermediate = new Date().getTime();
-
-
-            $(function () {
-                HL.firstCoverage();
-                HL.clickPos();
-            });
-        }
-    };
-
-    $(function () {
-        [nx.getProteinSequence(nxEntryName), nx.getPeptide(nxEntryName), nx.getSrmPeptide(nxEntryName), nx.getMatureProtein(nxEntryName), nx.getProPeptide(nxEntryName), nx.getSecondaryStructure(nxEntryName)].reduce(function (sequence, dataPromise) {
-            return sequence.then(function () {
-                return dataPromise;
-            }).then(function (oneData) {
-                cpt += 1;
-                switch (cpt) {
-                    case 1:
-                        isoforms = oneData;
-                        allFeatures.push(oneData);
-                        firstIso = getFirstIsoform(isoforms);
-                        currentIso = firstIso;
-                        RenderSequenceForIsoform(isoforms, firstIso);
-                        nxIsoformChoice(isoforms);
-                        break;
-                    case 2:
-                        peptideMappings = oneData;
-                        allFeatures.push(oneData);
-                        break;
-                    case 3:
-                        srmPeptideMappings = oneData;
-                        allFeatures.push(oneData);
-                        srmPeptideMappings.forEach(function (o) {
-                            var alreadySaved = false;
-                            for (var i = 0; i < peptideMappings.length; i++) {
-                                if (o.peptideUniqueName === peptideMappings[i].peptideUniqueName) {
-                                    alreadySaved = true;
-                                    break;
+                    },
+                    applyAAFormating: function (list) {
+                        var datestart = new Date().getTime();
+                        var HashAA = [];
+                        var proteoCoverage = 0;
+                        var pepCoverage = 0;
+                        var jMin = 0;
+                        var begin = 1;
+                        var subseqColor = "";
+                        var subseq_;
+                        var seqLength = getInfoForIsoform.Sequence(isoforms, isoName).length;
+                        for (var i = 1; i < seqLength + 1; i++) {
+                            var naturalPep = 0;
+                            var syntheticPep = 0;
+                            var proteotypicPep = 0;
+                            var checkScale = false;
+                            for (var j = jMin; j < list.length; j++) {
+                                if (i >= list[j].position.first && i <= list[j].position.second) {
+                                    if (list[j].properties.natural) naturalPep += 1;
+                                    if (list[j].properties.synthetic) syntheticPep += 1;
+                                    if (list[j].properties.proteotypic) proteotypicPep += 1;
                                 }
+                                if (i > list[j].position.second && checkScale === false) {
+                                    checkScale = true;
+                                    jMin = j;
+                                }
+                                if (list[j].position.first > i) break;
                             }
-                            if (alreadySaved === false) {
-                                peptideMappings.push(o);
+                            var clr = "black";
+                            var underscore = false;
+                            if (syntheticPep > 0) underscore = true;
+                            if (naturalPep > 0) {
+                                clr = "#4A57D4";
+                                pepCoverage += 1;
+                            }
+                            if (proteotypicPep > 0) {
+                                if (syntheticPep === 0) proteoCoverage += 1;
+                                if (proteotypicPep === 1) clr = "#007800";
+                                else clr = "#00C500";
+                            }
+                            if (i === 1) {
+                                subseqColor = clr;
+                                subseq_ = underscore;
+                            }
+                            if (!(clr === subseqColor && underscore === subseq_)) {
+                                HashAA.push({
+                                    "start": begin - 1,
+                                    "end": i - 1,
+                                    "color": subseqColor,
+                                    "underscore": subseq_
+                                });
+                                begin = i;
+                                subseqColor = clr;
+                                subseq_ = underscore;
+                            }
+                            if (i === seqLength) {
+                                HashAA.push({
+                                    "start": begin - 1,
+                                    "end": i,
+                                    "color": subseqColor,
+                                    "underscore": subseq_
+                                });
+                            }
+
+                        }
+                        var intermediate = new Date().getTime();
+
+                        proteoCoverage = ((proteoCoverage / seqLength) * 100).toFixed(2);
+                        pepCoverage = ((pepCoverage / seqLength) * 100).toFixed(2);
+                        $("#proteoCover").text(proteoCoverage + "%");
+                        $("#pepCover").text(pepCoverage + "%");
+
+                        return HashAA;
+                    },
+                    moreInfos: function (event) {
+                        var selection = [];
+                        $(".PepSelected").each(function (o) {
+                            if ($(this).prop("checked")) {
+                                selection.push($(this).parent().parent().attr("id"));
                             }
                         });
-                        break;
-                    case 4:
-                        matureProtein = oneData.annot;
-                        allFeatures.push(oneData.annot);
-                        break;
-                    case 5:
-                        proPeptide = oneData.annot;
-                        allFeatures.push(oneData.annot);
+                        addPeptidesInfos(selection, datas.Peptides, isoName);
 
-                        RenderPeptidesForIsoform(peptideMappings, firstIso);
-                        RenderFeatureViewer(allFeatures, firstIso);
-                        showFeatureViewer();
+                    }
+                };
+                var datestart = new Date().getTime();
+                pepHistogram(datas.Peptides);
+                var intermediate = new Date().getTime();
 
-                        //console.log(oneData[14]);
-                        //var tv = new TripleViewer(entry);
-                        //tv.init(oneData,metaData);
-                        break;
-                    case 6:
-                        annotations = oneData;
-                        //nxPviz(annotations, isoforms);
 
-                        break;
-                }
-            });
-        }, Promise.resolve())
-            .then(function () {
-                console.log("All done");
-            })
-            .catch(function (err) {
-                // catch any error that happened along the way
-                console.log("Argh, broken: " + err.message);
-                console.log("Error at line : " + err.stack);
-            })
-    });
+                $(function () {
+                    HL.firstCoverage();
+                    HL.clickPos();
+                });
+            }
+        };
 
-}
-// Shorthand for $( document ).ready()
+        $(function () {
+        [nx.getProteinSequence(nxEntryName), nx.getPeptide(nxEntryName), nx.getSrmPeptide(nxEntryName), nx.getMatureProtein(nxEntryName), nx.getProPeptide(nxEntryName), nx.getSecondaryStructure(nxEntryName)].reduce(function (sequence, dataPromise) {
+                    return sequence.then(function () {
+                        return dataPromise;
+                    }).then(function (oneData) {
+                        cpt += 1;
+                        switch (cpt) {
+                        case 1:
+                            isoforms = oneData;
+                            allFeatures.push(oneData);
+                            firstIso = getFirstIsoform(isoforms);
+                            currentIso = firstIso;
+                            RenderSequenceForIsoform(isoforms, firstIso);
+                            nxIsoformChoice(isoforms);
+                            break;
+                        case 2:
+                            peptideMappings = oneData;
+                            allFeatures.push(oneData);
+                            break;
+                        case 3:
+                            srmPeptideMappings = oneData;
+                            allFeatures.push(oneData);
+                            srmPeptideMappings.forEach(function (o) {
+                                var alreadySaved = false;
+                                for (var i = 0; i < peptideMappings.length; i++) {
+                                    if (o.peptideUniqueName === peptideMappings[i].peptideUniqueName) {
+                                        alreadySaved = true;
+                                        break;
+                                    }
+                                }
+                                if (alreadySaved === false) {
+                                    peptideMappings.push(o);
+                                }
+                            });
+                            break;
+                        case 4:
+                            matureProtein = oneData.annot;
+                            allFeatures.push(oneData.annot);
+                            break;
+                        case 5:
+                            proPeptide = oneData.annot;
+                            allFeatures.push(oneData.annot);
+
+                            RenderPeptidesForIsoform(peptideMappings, firstIso);
+                            RenderFeatureViewer(allFeatures, firstIso);
+                            showFeatureViewer();
+
+                            //console.log(oneData[14]);
+                            //var tv = new TripleViewer(entry);
+                            //tv.init(oneData,metaData);
+                            break;
+                        case 6:
+                            annotations = oneData;
+                            //nxPviz(annotations, isoforms);
+
+                            break;
+                        }
+                    });
+                }, Promise.resolve())
+                .then(function () {
+                    console.log("All done");
+                })
+                .catch(function (err) {
+                    // catch any error that happened along the way
+                    console.log("Argh, broken: " + err.message);
+                    console.log("Error at line : " + err.stack);
+                })
+        });
+
+    }
+    // Shorthand for $( document ).ready()
 $(function () {
     initNXDivs();
 });

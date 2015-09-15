@@ -1,387 +1,4 @@
 /*!
- * https://github.com/es-shims/es5-shim
- * @license es5-shim Copyright 2009-2014 by contributors, MIT License
- * see https://github.com/es-shims/es5-shim/blob/master/LICENSE
- */
-(function(t,r){if(typeof define==="function"&&define.amd){define(r)}else if(typeof exports==="object"){module.exports=r()}else{t.returnExports=r()}})(this,function(){var t=Function.prototype.call;var r=Array.prototype;var e=Object.prototype;var n=r.slice;var i=Array.prototype.splice;var o=Array.prototype.push;var a=Array.prototype.unshift;var l=e.toString;var u=function(t){return e.toString.call(t)==="[object Function]"};var p=function(t){return e.toString.call(t)==="[object RegExp]"};var s=function W(t){return l.call(t)==="[object Array]"};var f=function tr(t){var r=l.call(t);var e=r==="[object Arguments]";if(!e){e=!s(r)&&t!==null&&typeof t==="object"&&typeof t.length==="number"&&t.length>=0&&u(t.callee)}return e};function c(){}if(!Function.prototype.bind){Function.prototype.bind=function rr(t){var r=this;if(!u(r)){throw new TypeError("Function.prototype.bind called on incompatible "+r)}var e=n.call(arguments,1);var i=function(){if(this instanceof p){var i=r.apply(this,e.concat(n.call(arguments)));if(Object(i)===i){return i}return this}else{return r.apply(t,e.concat(n.call(arguments)))}};var o=Math.max(0,r.length-e.length);var a=[];for(var l=0;l<o;l++){a.push("$"+l)}var p=Function("binder","return function ("+a.join(",")+"){return binder.apply(this,arguments)}")(i);if(r.prototype){c.prototype=r.prototype;p.prototype=new c;c.prototype=null}return p}}var h=t.bind(e.hasOwnProperty);var y;var g;var v;var d;var b;if(b=h(e,"__defineGetter__")){y=t.bind(e.__defineGetter__);g=t.bind(e.__defineSetter__);v=t.bind(e.__lookupGetter__);d=t.bind(e.__lookupSetter__)}var m=function(){var t={};Array.prototype.splice.call(t,0,0,1);return t.length===1}();var w=[1].splice(0).length===0;var S=function(){var t=[1,2];var r=t.splice();return t.length===2&&s(r)&&r.length===0}();if(S){Array.prototype.splice=function er(t,r){if(arguments.length===0){return[]}else{return i.apply(this,arguments)}}}if(!w||!m){Array.prototype.splice=function nr(t,r){if(arguments.length===0){return[]}var e=arguments;this.length=Math.max(q(this.length),0);if(arguments.length>0&&typeof r!=="number"){e=n.call(arguments);if(e.length<2){e.push(q(r))}else{e[1]=q(r)}}return i.apply(this,e)}}if([].unshift(0)!==1){Array.prototype.unshift=function(){a.apply(this,arguments);return this.length}}if(!Array.isArray){Array.isArray=s}var x=Object("a");var A=x[0]!=="a"||!(0 in x);var j=function ir(t){var r=true;var e=true;if(t){t.call("foo",function(t,e,n){if(typeof n!=="object"){r=false}});t.call([1],function(){"use strict";e=typeof this==="string"},"x")}return!!t&&r&&e};if(!Array.prototype.forEach||!j(Array.prototype.forEach)){Array.prototype.forEach=function or(t){var r=Q(this),e=A&&l.call(this)==="[object String]"?this.split(""):r,n=arguments[1],i=-1,o=e.length>>>0;if(!u(t)){throw new TypeError}while(++i<o){if(i in e){t.call(n,e[i],i,r)}}}}if(!Array.prototype.map||!j(Array.prototype.map)){Array.prototype.map=function ar(t){var r=Q(this),e=A&&l.call(this)==="[object String]"?this.split(""):r,n=e.length>>>0,i=Array(n),o=arguments[1];if(!u(t)){throw new TypeError(t+" is not a function")}for(var a=0;a<n;a++){if(a in e){i[a]=t.call(o,e[a],a,r)}}return i}}if(!Array.prototype.filter||!j(Array.prototype.filter)){Array.prototype.filter=function lr(t){var r=Q(this),e=A&&l.call(this)==="[object String]"?this.split(""):r,n=e.length>>>0,i=[],o,a=arguments[1];if(!u(t)){throw new TypeError(t+" is not a function")}for(var p=0;p<n;p++){if(p in e){o=e[p];if(t.call(a,o,p,r)){i.push(o)}}}return i}}if(!Array.prototype.every||!j(Array.prototype.every)){Array.prototype.every=function ur(t){var r=Q(this),e=A&&l.call(this)==="[object String]"?this.split(""):r,n=e.length>>>0,i=arguments[1];if(!u(t)){throw new TypeError(t+" is not a function")}for(var o=0;o<n;o++){if(o in e&&!t.call(i,e[o],o,r)){return false}}return true}}if(!Array.prototype.some||!j(Array.prototype.some)){Array.prototype.some=function pr(t){var r=Q(this),e=A&&l.call(this)==="[object String]"?this.split(""):r,n=e.length>>>0,i=arguments[1];if(!u(t)){throw new TypeError(t+" is not a function")}for(var o=0;o<n;o++){if(o in e&&t.call(i,e[o],o,r)){return true}}return false}}var O=false;if(Array.prototype.reduce){O=typeof Array.prototype.reduce.call("es5",function(t,r,e,n){return n})==="object"}if(!Array.prototype.reduce||!O){Array.prototype.reduce=function sr(t){var r=Q(this),e=A&&l.call(this)==="[object String]"?this.split(""):r,n=e.length>>>0;if(!u(t)){throw new TypeError(t+" is not a function")}if(!n&&arguments.length===1){throw new TypeError("reduce of empty array with no initial value")}var i=0;var o;if(arguments.length>=2){o=arguments[1]}else{do{if(i in e){o=e[i++];break}if(++i>=n){throw new TypeError("reduce of empty array with no initial value")}}while(true)}for(;i<n;i++){if(i in e){o=t.call(void 0,o,e[i],i,r)}}return o}}var E=false;if(Array.prototype.reduceRight){E=typeof Array.prototype.reduceRight.call("es5",function(t,r,e,n){return n})==="object"}if(!Array.prototype.reduceRight||!E){Array.prototype.reduceRight=function fr(t){var r=Q(this),e=A&&l.call(this)==="[object String]"?this.split(""):r,n=e.length>>>0;if(!u(t)){throw new TypeError(t+" is not a function")}if(!n&&arguments.length===1){throw new TypeError("reduceRight of empty array with no initial value")}var i,o=n-1;if(arguments.length>=2){i=arguments[1]}else{do{if(o in e){i=e[o--];break}if(--o<0){throw new TypeError("reduceRight of empty array with no initial value")}}while(true)}if(o<0){return i}do{if(o in e){i=t.call(void 0,i,e[o],o,r)}}while(o--);return i}}if(!Array.prototype.indexOf||[0,1].indexOf(1,2)!==-1){Array.prototype.indexOf=function cr(t){var r=A&&l.call(this)==="[object String]"?this.split(""):Q(this),e=r.length>>>0;if(!e){return-1}var n=0;if(arguments.length>1){n=q(arguments[1])}n=n>=0?n:Math.max(0,e+n);for(;n<e;n++){if(n in r&&r[n]===t){return n}}return-1}}if(!Array.prototype.lastIndexOf||[0,1].lastIndexOf(0,-3)!==-1){Array.prototype.lastIndexOf=function hr(t){var r=A&&l.call(this)==="[object String]"?this.split(""):Q(this),e=r.length>>>0;if(!e){return-1}var n=e-1;if(arguments.length>1){n=Math.min(n,q(arguments[1]))}n=n>=0?n:e-Math.abs(n);for(;n>=0;n--){if(n in r&&t===r[n]){return n}}return-1}}var N=Object.keys&&function(){return Object.keys(arguments).length===2}(1,2);if(!Object.keys){var T=!{toString:null}.propertyIsEnumerable("toString"),I=function(){}.propertyIsEnumerable("prototype"),D=["toString","toLocaleString","valueOf","hasOwnProperty","isPrototypeOf","propertyIsEnumerable","constructor"],_=D.length;Object.keys=function yr(t){var r=u(t),e=f(t),n=t!==null&&typeof t==="object",i=n&&l.call(t)==="[object String]";if(!n&&!r&&!e){throw new TypeError("Object.keys called on a non-object")}var o=[];var a=I&&r;if(i||e){for(var p=0;p<t.length;++p){o.push(String(p))}}else{for(var s in t){if(!(a&&s==="prototype")&&h(t,s)){o.push(String(s))}}}if(T){var c=t.constructor,y=c&&c.prototype===t;for(var g=0;g<_;g++){var v=D[g];if(!(y&&v==="constructor")&&h(t,v)){o.push(v)}}}return o}}else if(!N){var M=Object.keys;Object.keys=function gr(t){if(f(t)){return M(Array.prototype.slice.call(t))}else{return M(t)}}}var F=-621987552e5,R="-000001";if(!Date.prototype.toISOString||new Date(F).toISOString().indexOf(R)===-1){Date.prototype.toISOString=function vr(){var t,r,e,n,i;if(!isFinite(this)){throw new RangeError("Date.prototype.toISOString called on non-finite value.")}n=this.getUTCFullYear();i=this.getUTCMonth();n+=Math.floor(i/12);i=(i%12+12)%12;t=[i+1,this.getUTCDate(),this.getUTCHours(),this.getUTCMinutes(),this.getUTCSeconds()];n=(n<0?"-":n>9999?"+":"")+("00000"+Math.abs(n)).slice(0<=n&&n<=9999?-4:-6);r=t.length;while(r--){e=t[r];if(e<10){t[r]="0"+e}}return n+"-"+t.slice(0,2).join("-")+"T"+t.slice(2).join(":")+"."+("000"+this.getUTCMilliseconds()).slice(-3)+"Z"}}var k=false;try{k=Date.prototype.toJSON&&new Date(NaN).toJSON()===null&&new Date(F).toJSON().indexOf(R)!==-1&&Date.prototype.toJSON.call({toISOString:function(){return true}})}catch(C){}if(!k){Date.prototype.toJSON=function dr(t){var r=Object(this),e=K(r),n;if(typeof e==="number"&&!isFinite(e)){return null}n=r.toISOString;if(typeof n!=="function"){throw new TypeError("toISOString property is not callable")}return n.call(r)}}var U=Date.parse("+033658-09-27T01:46:40.000Z")===1e15;var Z=!isNaN(Date.parse("2012-04-04T24:00:00.500Z"))||!isNaN(Date.parse("2012-11-31T23:59:59.000Z"));var J=isNaN(Date.parse("2000-01-01T00:00:00.000Z"));if(!Date.parse||J||Z||!U){Date=function(t){function r(e,n,i,o,a,l,u){var p=arguments.length;if(this instanceof t){var s=p===1&&String(e)===e?new t(r.parse(e)):p>=7?new t(e,n,i,o,a,l,u):p>=6?new t(e,n,i,o,a,l):p>=5?new t(e,n,i,o,a):p>=4?new t(e,n,i,o):p>=3?new t(e,n,i):p>=2?new t(e,n):p>=1?new t(e):new t;s.constructor=r;return s}return t.apply(this,arguments)}var e=new RegExp("^"+"(\\d{4}|[+-]\\d{6})"+"(?:-(\\d{2})"+"(?:-(\\d{2})"+"(?:"+"T(\\d{2})"+":(\\d{2})"+"(?:"+":(\\d{2})"+"(?:(\\.\\d{1,}))?"+")?"+"("+"Z|"+"(?:"+"([-+])"+"(\\d{2})"+":(\\d{2})"+")"+")?)?)?)?"+"$");var n=[0,31,59,90,120,151,181,212,243,273,304,334,365];function i(t,r){var e=r>1?1:0;return n[r]+Math.floor((t-1969+e)/4)-Math.floor((t-1901+e)/100)+Math.floor((t-1601+e)/400)+365*(t-1970)}function o(r){return Number(new t(1970,0,1,0,0,0,r))}for(var a in t){r[a]=t[a]}r.now=t.now;r.UTC=t.UTC;r.prototype=t.prototype;r.prototype.constructor=r;r.parse=function l(r){var n=e.exec(r);if(n){var a=Number(n[1]),l=Number(n[2]||1)-1,u=Number(n[3]||1)-1,p=Number(n[4]||0),s=Number(n[5]||0),f=Number(n[6]||0),c=Math.floor(Number(n[7]||0)*1e3),h=Boolean(n[4]&&!n[8]),y=n[9]==="-"?1:-1,g=Number(n[10]||0),v=Number(n[11]||0),d;if(p<(s>0||f>0||c>0?24:25)&&s<60&&f<60&&c<1e3&&l>-1&&l<12&&g<24&&v<60&&u>-1&&u<i(a,l+1)-i(a,l)){d=((i(a,l)+u)*24+p+g*y)*60;d=((d+s+v*y)*60+f)*1e3+c;if(h){d=o(d)}if(-864e13<=d&&d<=864e13){return d}}return NaN}return t.parse.apply(this,arguments)};return r}(Date)}if(!Date.now){Date.now=function br(){return(new Date).getTime()}}if(!Number.prototype.toFixed||8e-5.toFixed(3)!=="0.000"||.9.toFixed(0)==="0"||1.255.toFixed(2)!=="1.25"||0xde0b6b3a7640080.toFixed(0)!=="1000000000000000128"){(function(){var t,r,e,n;t=1e7;r=6;e=[0,0,0,0,0,0];function i(n,i){var o=-1;while(++o<r){i+=n*e[o];e[o]=i%t;i=Math.floor(i/t)}}function o(n){var i=r,o=0;while(--i>=0){o+=e[i];e[i]=Math.floor(o/n);o=o%n*t}}function a(){var t=r;var n="";while(--t>=0){if(n!==""||t===0||e[t]!==0){var i=String(e[t]);if(n===""){n=i}else{n+="0000000".slice(0,7-i.length)+i}}}return n}function l(t,r,e){return r===0?e:r%2===1?l(t,r-1,e*t):l(t*t,r/2,e)}function u(t){var r=0;while(t>=4096){r+=12;t/=4096}while(t>=2){r+=1;t/=2}return r}Number.prototype.toFixed=function p(t){var r,e,n,p,s,f,c,h;r=Number(t);r=r!==r?0:Math.floor(r);if(r<0||r>20){throw new RangeError("Number.toFixed called with invalid number of decimals")}e=Number(this);if(e!==e){return"NaN"}if(e<=-1e21||e>=1e21){return String(e)}n="";if(e<0){n="-";e=-e}p="0";if(e>1e-21){s=u(e*l(2,69,1))-69;f=s<0?e*l(2,-s,1):e/l(2,s,1);f*=4503599627370496;s=52-s;if(s>0){i(0,f);c=r;while(c>=7){i(1e7,0);c-=7}i(l(10,c,1),0);c=s-1;while(c>=23){o(1<<23);c-=23}o(1<<c);i(1,1);o(2);p=a()}else{i(0,f);i(1<<-s,0);p=a()+"0.00000000000000000000".slice(2,2+r)}}if(r>0){h=p.length;if(h<=r){p=n+"0.0000000000000000000".slice(0,r-h+2)+p}else{p=n+p.slice(0,h-r)+"."+p.slice(h-r)}}else{p=n+p}return p}})()}var $=String.prototype.split;if("ab".split(/(?:ab)*/).length!==2||".".split(/(.?)(.?)/).length!==4||"tesst".split(/(s)*/)[1]==="t"||"test".split(/(?:)/,-1).length!==4||"".split(/.?/).length||".".split(/()()/).length>1){(function(){var t=/()??/.exec("")[1]===void 0;String.prototype.split=function(r,e){var n=this;if(r===void 0&&e===0){return[]}if(l.call(r)!=="[object RegExp]"){return $.call(this,r,e)}var i=[],o=(r.ignoreCase?"i":"")+(r.multiline?"m":"")+(r.extended?"x":"")+(r.sticky?"y":""),a=0,u,p,s,f;r=new RegExp(r.source,o+"g");n+="";if(!t){u=new RegExp("^"+r.source+"$(?!\\s)",o)}e=e===void 0?-1>>>0:V(e);while(p=r.exec(n)){s=p.index+p[0].length;if(s>a){i.push(n.slice(a,p.index));if(!t&&p.length>1){p[0].replace(u,function(){for(var t=1;t<arguments.length-2;t++){if(arguments[t]===void 0){p[t]=void 0}}})}if(p.length>1&&p.index<n.length){Array.prototype.push.apply(i,p.slice(1))}f=p[0].length;a=s;if(i.length>=e){break}}if(r.lastIndex===p.index){r.lastIndex++}}if(a===n.length){if(f||!r.test("")){i.push("")}}else{i.push(n.slice(a))}return i.length>e?i.slice(0,e):i}})()}else if("0".split(void 0,0).length){String.prototype.split=function mr(t,r){if(t===void 0&&r===0){return[]}return $.call(this,t,r)}}var G=String.prototype.replace;var P=function(){var t=[];"x".replace(/x(.)?/g,function(r,e){t.push(e)});return t.length===1&&typeof t[0]==="undefined"}();if(!P){String.prototype.replace=function wr(t,r){var e=u(r);var n=p(t)&&/\)[*?]/.test(t.source);if(!e||!n){return G.call(this,t,r)}else{var i=function(e){var n=arguments.length;var i=t.lastIndex;t.lastIndex=0;var o=t.exec(e);t.lastIndex=i;o.push(arguments[n-2],arguments[n-1]);return r.apply(this,o)};return G.call(this,t,i)}}}if("".substr&&"0b".substr(-1)!=="b"){var B=String.prototype.substr;String.prototype.substr=function Sr(t,r){return B.call(this,t<0?(t=this.length+t)<0?0:t:t,r)}}var H="	\n\f\r \xa0\u1680\u180e\u2000\u2001\u2002\u2003"+"\u2004\u2005\u2006\u2007\u2008\u2009\u200a\u202f\u205f\u3000\u2028"+"\u2029\ufeff";var L="\u200b";if(!String.prototype.trim||H.trim()||!L.trim()){H="["+H+"]";var X=new RegExp("^"+H+H+"*"),Y=new RegExp(H+H+"*$");String.prototype.trim=function xr(){if(this===void 0||this===null){throw new TypeError("can't convert "+this+" to object")}return String(this).replace(X,"").replace(Y,"")}}if(parseInt(H+"08")!==8||parseInt(H+"0x16")!==22){parseInt=function(t){var r=/^0[xX]/;return function e(n,i){n=String(n).trim();if(!Number(i)){i=r.test(n)?16:10}return t(n,i)}}(parseInt)}function q(t){t=+t;if(t!==t){t=0}else if(t!==0&&t!==1/0&&t!==-(1/0)){t=(t>0||-1)*Math.floor(Math.abs(t))}return t}function z(t){var r=typeof t;return t===null||r==="undefined"||r==="boolean"||r==="number"||r==="string"}function K(t){var r,e,n;if(z(t)){return t}e=t.valueOf;if(u(e)){r=e.call(t);if(z(r)){return r}}n=t.toString;if(u(n)){r=n.call(t);if(z(r)){return r}}throw new TypeError}var Q=function(t){if(t==null){throw new TypeError("can't convert "+t+" to object")}return Object(t)};var V=function Ar(t){return t>>>0}});
-//# sourceMappingURL=es5-shim.map;
-(function e(t, n, r) {
-  function s(o, u) {
-    if (!n[o]) {
-      if (!t[o]) {
-        var a = typeof require == "function" && require;
-        if (!u && a) return a(o, !0);
-        if (i) return i(o, !0);
-        var f = new Error("Cannot find module '" + o + "'");
-        throw f.code = "MODULE_NOT_FOUND", f;
-      }
-      var l = n[o] = {
-        exports: {}
-      };
-      t[o][0].call(l.exports, function(e) {
-        var n = t[o][1][e];
-        return s(n ? n : e);
-      }, l, l.exports, e, t, n, r);
-    }
-    return n[o].exports;
-  }
-  var i = typeof require == "function" && require;
-  for (var o = 0; o < r.length; o++) s(r[o]);
-  return s;
-})({
-  1: [ function(require, module, exports) {
-    var process = module.exports = {};
-    process.nextTick = function() {
-      var canSetImmediate = typeof window !== "undefined" && window.setImmediate;
-      var canPost = typeof window !== "undefined" && window.postMessage && window.addEventListener;
-      if (canSetImmediate) {
-        return function(f) {
-          return window.setImmediate(f);
-        };
-      }
-      if (canPost) {
-        var queue = [];
-        window.addEventListener("message", function(ev) {
-          var source = ev.source;
-          if ((source === window || source === null) && ev.data === "process-tick") {
-            ev.stopPropagation();
-            if (queue.length > 0) {
-              var fn = queue.shift();
-              fn();
-            }
-          }
-        }, true);
-        return function nextTick(fn) {
-          queue.push(fn);
-          window.postMessage("process-tick", "*");
-        };
-      }
-      return function nextTick(fn) {
-        setTimeout(fn, 0);
-      };
-    }();
-    process.title = "browser";
-    process.browser = true;
-    process.env = {};
-    process.argv = [];
-    function noop() {}
-    process.on = noop;
-    process.addListener = noop;
-    process.once = noop;
-    process.off = noop;
-    process.removeListener = noop;
-    process.removeAllListeners = noop;
-    process.emit = noop;
-    process.binding = function(name) {
-      throw new Error("process.binding is not supported");
-    };
-    process.cwd = function() {
-      return "/";
-    };
-    process.chdir = function(dir) {
-      throw new Error("process.chdir is not supported");
-    };
-  }, {} ],
-  2: [ function(require, module, exports) {
-    "use strict";
-    var asap = require("asap");
-    module.exports = Promise;
-    function Promise(fn) {
-      if (typeof this !== "object") throw new TypeError("Promises must be constructed via new");
-      if (typeof fn !== "function") throw new TypeError("not a function");
-      var state = null;
-      var value = null;
-      var deferreds = [];
-      var self = this;
-      this.then = function(onFulfilled, onRejected) {
-        return new self.constructor(function(resolve, reject) {
-          handle(new Handler(onFulfilled, onRejected, resolve, reject));
-        });
-      };
-      function handle(deferred) {
-        if (state === null) {
-          deferreds.push(deferred);
-          return;
-        }
-        asap(function() {
-          var cb = state ? deferred.onFulfilled : deferred.onRejected;
-          if (cb === null) {
-            (state ? deferred.resolve : deferred.reject)(value);
-            return;
-          }
-          var ret;
-          try {
-            ret = cb(value);
-          } catch (e) {
-            deferred.reject(e);
-            return;
-          }
-          deferred.resolve(ret);
-        });
-      }
-      function resolve(newValue) {
-        try {
-          if (newValue === self) throw new TypeError("A promise cannot be resolved with itself.");
-          if (newValue && (typeof newValue === "object" || typeof newValue === "function")) {
-            var then = newValue.then;
-            if (typeof then === "function") {
-              doResolve(then.bind(newValue), resolve, reject);
-              return;
-            }
-          }
-          state = true;
-          value = newValue;
-          finale();
-        } catch (e) {
-          reject(e);
-        }
-      }
-      function reject(newValue) {
-        state = false;
-        value = newValue;
-        finale();
-      }
-      function finale() {
-        for (var i = 0, len = deferreds.length; i < len; i++) handle(deferreds[i]);
-        deferreds = null;
-      }
-      doResolve(fn, resolve, reject);
-    }
-    function Handler(onFulfilled, onRejected, resolve, reject) {
-      this.onFulfilled = typeof onFulfilled === "function" ? onFulfilled : null;
-      this.onRejected = typeof onRejected === "function" ? onRejected : null;
-      this.resolve = resolve;
-      this.reject = reject;
-    }
-    function doResolve(fn, onFulfilled, onRejected) {
-      var done = false;
-      try {
-        fn(function(value) {
-          if (done) return;
-          done = true;
-          onFulfilled(value);
-        }, function(reason) {
-          if (done) return;
-          done = true;
-          onRejected(reason);
-        });
-      } catch (ex) {
-        if (done) return;
-        done = true;
-        onRejected(ex);
-      }
-    }
-  }, {
-    asap: 4
-  } ],
-  3: [ function(require, module, exports) {
-    "use strict";
-    var Promise = require("./core.js");
-    var asap = require("asap");
-    module.exports = Promise;
-    function ValuePromise(value) {
-      this.then = function(onFulfilled) {
-        if (typeof onFulfilled !== "function") return this;
-        return new Promise(function(resolve, reject) {
-          asap(function() {
-            try {
-              resolve(onFulfilled(value));
-            } catch (ex) {
-              reject(ex);
-            }
-          });
-        });
-      };
-    }
-    ValuePromise.prototype = Promise.prototype;
-    var TRUE = new ValuePromise(true);
-    var FALSE = new ValuePromise(false);
-    var NULL = new ValuePromise(null);
-    var UNDEFINED = new ValuePromise(undefined);
-    var ZERO = new ValuePromise(0);
-    var EMPTYSTRING = new ValuePromise("");
-    Promise.resolve = function(value) {
-      if (value instanceof Promise) return value;
-      if (value === null) return NULL;
-      if (value === undefined) return UNDEFINED;
-      if (value === true) return TRUE;
-      if (value === false) return FALSE;
-      if (value === 0) return ZERO;
-      if (value === "") return EMPTYSTRING;
-      if (typeof value === "object" || typeof value === "function") {
-        try {
-          var then = value.then;
-          if (typeof then === "function") {
-            return new Promise(then.bind(value));
-          }
-        } catch (ex) {
-          return new Promise(function(resolve, reject) {
-            reject(ex);
-          });
-        }
-      }
-      return new ValuePromise(value);
-    };
-    Promise.all = function(arr) {
-      var args = Array.prototype.slice.call(arr);
-      return new Promise(function(resolve, reject) {
-        if (args.length === 0) return resolve([]);
-        var remaining = args.length;
-        function res(i, val) {
-          try {
-            if (val && (typeof val === "object" || typeof val === "function")) {
-              var then = val.then;
-              if (typeof then === "function") {
-                then.call(val, function(val) {
-                  res(i, val);
-                }, reject);
-                return;
-              }
-            }
-            args[i] = val;
-            if (--remaining === 0) {
-              resolve(args);
-            }
-          } catch (ex) {
-            reject(ex);
-          }
-        }
-        for (var i = 0; i < args.length; i++) {
-          res(i, args[i]);
-        }
-      });
-    };
-    Promise.reject = function(value) {
-      return new Promise(function(resolve, reject) {
-        reject(value);
-      });
-    };
-    Promise.race = function(values) {
-      return new Promise(function(resolve, reject) {
-        values.forEach(function(value) {
-          Promise.resolve(value).then(resolve, reject);
-        });
-      });
-    };
-    Promise.prototype["catch"] = function(onRejected) {
-      return this.then(null, onRejected);
-    };
-  }, {
-    "./core.js": 2,
-    asap: 4
-  } ],
-  4: [ function(require, module, exports) {
-    (function(process) {
-      var head = {
-        task: void 0,
-        next: null
-      };
-      var tail = head;
-      var flushing = false;
-      var requestFlush = void 0;
-      var isNodeJS = false;
-      function flush() {
-        while (head.next) {
-          head = head.next;
-          var task = head.task;
-          head.task = void 0;
-          var domain = head.domain;
-          if (domain) {
-            head.domain = void 0;
-            domain.enter();
-          }
-          try {
-            task();
-          } catch (e) {
-            if (isNodeJS) {
-              if (domain) {
-                domain.exit();
-              }
-              setTimeout(flush, 0);
-              if (domain) {
-                domain.enter();
-              }
-              throw e;
-            } else {
-              setTimeout(function() {
-                throw e;
-              }, 0);
-            }
-          }
-          if (domain) {
-            domain.exit();
-          }
-        }
-        flushing = false;
-      }
-      if (typeof process !== "undefined" && process.nextTick) {
-        isNodeJS = true;
-        requestFlush = function() {
-          process.nextTick(flush);
-        };
-      } else if (typeof setImmediate === "function") {
-        if (typeof window !== "undefined") {
-          requestFlush = setImmediate.bind(window, flush);
-        } else {
-          requestFlush = function() {
-            setImmediate(flush);
-          };
-        }
-      } else if (typeof MessageChannel !== "undefined") {
-        var channel = new MessageChannel();
-        channel.port1.onmessage = flush;
-        requestFlush = function() {
-          channel.port2.postMessage(0);
-        };
-      } else {
-        requestFlush = function() {
-          setTimeout(flush, 0);
-        };
-      }
-      function asap(task) {
-        tail = tail.next = {
-          task: task,
-          domain: isNodeJS && process.domain,
-          next: null
-        };
-        if (!flushing) {
-          flushing = true;
-          requestFlush();
-        }
-      }
-      module.exports = asap;
-    }).call(this, require("_process"));
-  }, {
-    _process: 1
-  } ],
-  5: [ function(require, module, exports) {
-    if (typeof Promise.prototype.done !== "function") {
-      Promise.prototype.done = function(onFulfilled, onRejected) {
-        var self = arguments.length ? this.then.apply(this, arguments) : this;
-        self.then(null, function(err) {
-          setTimeout(function() {
-            throw err;
-          }, 0);
-        });
-      };
-    }
-  }, {} ],
-  6: [ function(require, module, exports) {
-    var asap = require("asap");
-    if (typeof Promise === "undefined") {
-      Promise = require("./lib/core.js");
-      require("./lib/es6-extensions.js");
-    }
-    require("./polyfill-done.js");
-  }, {
-    "./lib/core.js": 2,
-    "./lib/es6-extensions.js": 3,
-    "./polyfill-done.js": 5,
-    asap: 4
-  } ]
-}, {}, [ 6 ]);
-//# sourceMappingURL=/polyfills/promise-6.1.0.js.map;
-/*!
  * jQuery JavaScript Library v2.1.3
  * http://jquery.com/
  *
@@ -13348,35 +12965,18 @@ var __module0__ = (function(__dependency1__, __dependency2__, __dependency3__, _
     (function () {
 
         //?default-graph-uri=&named-graph-uri=&output=json
-
-        var tempApiUrl = "http://dev-api.nextprot.org/entries/";
-        var nextprotApiUrl = "https://api.nextprot.org//entry/";
-        var sparqlEndpoint = "https://api.nextprot.org/sparql";
+        
+        var apiBaseUrl = "http://alpha-api.nextprot.org";
+        var sparqlEndpoint = apiBaseUrl + "/sparql";
         var sparqlFormat = "?output=json";
-        var sparqlPrefixes = "PREFIX :<http://nextprot.org/rdf#> "+
-            "PREFIX annotation:<http://nextprot.org/rdf/annotation/> "+
-            "PREFIX context:<http://nextprot.org/rdf/context/> "+
-            "PREFIX cv:<http://nextprot.org/rdf/terminology/> "+
-            "PREFIX db:<http://nextprot.org/rdf/db/> "+
-            "PREFIX dc:<http://purl.org/dc/elements/1.1/> "+
-            "PREFIX dcterms:<http://purl.org/dc/terms/> "+
-            "PREFIX entry:<http://nextprot.org/rdf/entry/> "+
-            "PREFIX evidence:<http://nextprot.org/rdf/evidence/> "+
-            "PREFIX foaf:<http://xmlns.com/foaf/0.1/> "+
-            "PREFIX gene:<http://nextprot.org/rdf/gene/> "+
-            "PREFIX identifier:<http://nextprot.org/rdf/identifier/> "+
-            "PREFIX isoform:<http://nextprot.org/rdf/isoform/> "+
-            "PREFIX mo:<http://purl.org/ontology/mo/> "+
-            "PREFIX ov:<http://open.vocab.org/terms/> "+
-            "PREFIX owl:<http://www.w3.org/2002/07/owl#> "+
-            "PREFIX publication:<http://nextprot.org/rdf/publication/> "+
-            "PREFIX rdf:<http://www.w3.org/1999/02/22-rdf-syntax-ns#> "+
-            "PREFIX rdfs:<http://www.w3.org/2000/01/rdf-schema#> "+
-            "PREFIX sim:<http://purl.org/ontology/similarity/> "+
-            "PREFIX source:<http://nextprot.org/rdf/source/> "+
-            "PREFIX xref:<http://nextprot.org/rdf/xref/> "+
-            "PREFIX xsd:<http://www.w3.org/2001/XMLSchema#> ";
+        var sparqlPrefixes = "";
 
+        $.getJSON(apiBaseUrl + "/sparql-prefixes", function (result) {
+            for (var i in result) {
+                sparqlPrefixes += (result[i] + "\n");
+            }
+        });
+        
 
         var applicationName = null;
         var clientInfo = null;
@@ -13417,6 +13017,18 @@ var __module0__ = (function(__dependency1__, __dependency2__, __dependency3__, _
             return href += (((href.indexOf("?") != -1) ? "&" : "?") + paramName + "=" + newVal);
         }
 
+        /** By default it is set to https://api.nextprot.org */
+        NextprotClient.prototype.setApiBaseUrl = function(_apiBaseUrl){
+            apiBaseUrl =  _apiBaseUrl;
+            sparqlEndpoint = apiBaseUrl + "/sparql";
+        };
+
+        /** By default it is set to https://api.nextprot.org/sparql */
+        NextprotClient.prototype.setSparqlEndpoint = function(_sparqlEndpoint){
+            sparqlEndpoint = _sparqlEndpoint;
+        };
+
+        
         //Gets the entry set in the parameter
         NextprotClient.prototype.getEntryName = function(){
             return normalizeEntry(_getURLParameter("nxentry") || 'NX_P01308'); //By default returns the insulin
@@ -13439,7 +13051,7 @@ var __module0__ = (function(__dependency1__, __dependency2__, __dependency3__, _
             return new Promise(function(resolve, reject) {
 
                 var req = new XMLHttpRequest();
-                var url = nextprotApiUrl + entryName + "/" + context + ".json" + "?clientInfo=" + clientInfo + "&applicationName=" + applicationName;
+                var url = apiBaseUrl + "/entry/"  + entryName + "/" + context + ".json" + "?clientInfo=" + clientInfo + "&applicationName=" + applicationName;
                 req.open("GET", url);
 
                 req.onload = function() {
@@ -13468,7 +13080,7 @@ var __module0__ = (function(__dependency1__, __dependency2__, __dependency3__, _
             return new Promise(function(resolve, reject) {
 
                 var req = new XMLHttpRequest();
-                var url = tempApiUrl + "search/peptide.json?peptide=" + seq + "&modeIL=" + mode;
+                var url = apiBaseUrl + "/entries/search/peptide.json?peptide=" + seq + "&modeIL=" + mode;
                 req.open("GET", url);
 
                 req.onload = function() {
@@ -13788,6 +13400,20 @@ var __module0__ = (function(__dependency1__, __dependency2__, __dependency3__, _
             });
         };
 
+        NextprotClient.prototype.getPTM = function(entry) {
+            return _callURL(normalizeEntry(entry || this.getEntryName()), "ptm").then(function (data){
+                return _convertToTupleMap(data);
+            });
+        };
+        
+        /** USE THIS INSTEAD OF THE OTHERS for example getEntryPart(NX_1038042, "ptm") */
+        NextprotClient.prototype.getEntryPart = function(entry, entryPart) {
+            return _callURL(normalizeEntry(entry || this.getEntryName()), entryPart).then(function (data){
+                return _convertToTupleMap(data);
+            });
+        };
+
+
         //node.js compatibility
         if (typeof exports !== 'undefined') {
             exports.Client = NextprotClient;
@@ -14041,18 +13667,20 @@ var NXViewerUtils = {
         return result;
     }
 };;
-
 $(function () {
 
 
-    var loadOverview = function(overview,nxEntryName){
+    var loadOverview = function (overview, nxEntryName) {
 
         if ($("#nx-overview").length > 0) {
             Handlebars.registerHelper('link_to', function (type, options) {
                 switch (type) {
-                    case "family":
+                    case "term":
                         var url = "http://www.nextprot.org/db/term/" + this.accession;
                         return "<a href='" + url + "'>" + this.name + "</a>";
+                    case "EC" :
+                        var url = "http://www.nextprot.org/db/term/" + this;
+                        return "<a href='" + url + "'> EC " + this + " </a>";
                     case "history":
                         console.log(type);
                         console.log(this);
@@ -14062,11 +13690,38 @@ $(function () {
             });
 
             console.log(nxEntryName);
+            var EC = [];
+            var short = [];
+
+            if (overview.recommendedProteinName.synonyms) {
+                overview.recommendedProteinName.synonyms.forEach(function (p) {
+                    if (p.qualifier === "EC") EC.push(p.name);
+                    if (p.qualifier === "short") short.push(p.name);
+                });
+            }
 
             var data = {
                 "entryName": overview.proteinNames[0].synonymName,
-                "alternativeName": overview.proteinNames[0].synonyms,
-                "geneName": overview.geneNames[0].synonymName,
+                "recommendedProteinName": {
+                    name: overview.recommendedProteinName.name,
+                    EC: EC,
+                    short: short,
+                    synonymName: overview.recommendedProteinName.synonymName
+                },
+                "alternativeProteinNames": overview.alternativeProteinNames.map(function (p) {
+                    return {name: p.name, short: p.synonyms}
+                }),
+                "geneName": overview.geneNames.map(function (o) {
+                    return {
+                        name: o.name,
+                        synonyms: o.synonyms ? o.synonyms.filter(function (p) {
+                            return p.category === "gene name"
+                        }) : null,
+                        orf: o.synonyms ? o.synonyms.filter(function (p) {
+                            return p.category === "ORF"
+                        }) : null
+                    }
+                }),
                 "cleavage": overview.cleavedRegionNames,
                 "family": overview.families,
                 "proteineEvidence": overview.history.proteinExistence.split('_').join(' ').toLowerCase(),
@@ -14106,12 +13761,12 @@ $(function () {
 
     };
 
-    if($("#nx-overview")){ // laad the overview if it exists
+    if ($("#nx-overview")) { // laad the overview if it exists
         var Nextprot = window.Nextprot;
         var nx = new Nextprot.Client("neXtprot overview loader", "Calipho Group");
         var nxEntryName = nx.getEntryName();
-        nx.getProteinOverview().then(function(data) {
-        loadOverview(data, nxEntryName);
+        nx.getProteinOverview().then(function (data) {
+            loadOverview(data, nxEntryName);
 
             var nxInputOption = nx.getInputOption();
 
@@ -14128,13 +13783,13 @@ $(function () {
             if (nxInputOption === "true") {
                 addEntrySelection();
                 nx.getAccession().then(function (data) {
-                    $(function() {
+                    $(function () {
                         $("#inputOptionDiv").append("<div class=\"alert alert-success entry-alert\" role=\"alert\" style=\"display:none\">You successfully load the entry !</div>");
                         $(".entry-alert").fadeIn("slow");
                         $(".entry-alert").delay(2000).fadeOut("slow");
                     });
-                }, function(error) {
-                    $(function() {
+                }, function (error) {
+                    $(function () {
                         $("#inputOptionDiv").append("<div class=\"alert alert-danger entry-alert\" role=\"alert\">This accession is not available !</div>");
                     });
                     console.error("Failed!", error);
@@ -14144,13 +13799,11 @@ $(function () {
         });
     }
 });;
-if(Handlebars){
-  
 this["HBtemplates"] = this["HBtemplates"] || {};
 
 this["HBtemplates"]["templates/overviewProtein.tmpl"] = Handlebars.template({"1":function(depth0,helpers,partials,data) {
     var stack1, helper, options, buffer = 
-  "    <div id=\"cleavage-less\" class=\"row\">\n        <div class=\"col-md-2 col-xs-3\" style=\"color: grey;text-align:right\">Cleaved into :</div>\n        <div class=\"col-md-6 col-xs-6\">";
+  "    <div id=\"cleavage-less\" class=\"row\">\n        <div class=\"col-md-3 col-xs-3\" style=\"color: grey;text-align:right\">Cleaved into :</div>\n        <div class=\"col-md-6 col-xs-6\">";
   stack1 = ((helper = (helper = helpers.cleavage || (depth0 != null ? depth0.cleavage : depth0)) != null ? helper : helpers.helperMissing),(options={"name":"cleavage","hash":{},"fn":this.program(2, data, 0),"inverse":this.noop,"data":data}),(typeof helper === "function" ? helper.call(depth0,options) : helper));
   if (!helpers.cleavage) { stack1 = helpers.blockHelperMissing.call(depth0,stack1,options)}
   if (stack1 != null) { buffer += stack1; }
@@ -14162,90 +13815,162 @@ this["HBtemplates"]["templates/overviewProtein.tmpl"] = Handlebars.template({"1"
     + this.escapeExpression(((helper = (helper = helpers.synonymName || (depth0 != null ? depth0.synonymName : depth0)) != null ? helper : helpers.helperMissing),(typeof helper === "function" ? helper.call(depth0,{"name":"synonymName","hash":{},"data":data}) : helper)))
     + ", </span>";
 },"4":function(depth0,helpers,partials,data) {
+    var stack1;
+
+  return "    <div id=\"synonym-less\" class=\"row\">\n        <div class=\"col-md-3 col-xs-3\" style=\"color: grey;text-align:right\">Protein also known as :</div>\n        <div class=\"col-md-6 col-xs-6\">"
+    + this.escapeExpression(this.lambda(((stack1 = (depth0 != null ? depth0.recommendedProteinName : depth0)) != null ? stack1.synonymName : stack1), depth0))
+    + "</div>\n    </div>\n";
+},"6":function(depth0,helpers,partials,data) {
     var stack1, helper, options, buffer = 
-  "    <div id=\"family-less\" class=\"row\">\n        <div class=\"col-md-2 col-xs-3\" style=\"color: grey;text-align:right\">Family Name :</div>\n        <div class=\"col-md-6 col-xs-6\">";
-  stack1 = ((helper = (helper = helpers.family || (depth0 != null ? depth0.family : depth0)) != null ? helper : helpers.helperMissing),(options={"name":"family","hash":{},"fn":this.program(5, data, 0),"inverse":this.noop,"data":data}),(typeof helper === "function" ? helper.call(depth0,options) : helper));
+  "    <div id=\"family-less\" class=\"row\">\n        <div class=\"col-md-3 col-xs-3\" style=\"color: grey;text-align:right\">Family Name :</div>\n        <div class=\"col-md-6 col-xs-6\">";
+  stack1 = ((helper = (helper = helpers.family || (depth0 != null ? depth0.family : depth0)) != null ? helper : helpers.helperMissing),(options={"name":"family","hash":{},"fn":this.program(7, data, 0),"inverse":this.noop,"data":data}),(typeof helper === "function" ? helper.call(depth0,options) : helper));
   if (!helpers.family) { stack1 = helpers.blockHelperMissing.call(depth0,stack1,options)}
   if (stack1 != null) { buffer += stack1; }
   return buffer + "</div>\n    </div>\n";
-},"5":function(depth0,helpers,partials,data) {
+},"7":function(depth0,helpers,partials,data) {
     var stack1;
 
   return "<span>"
-    + ((stack1 = (helpers.link_to || (depth0 && depth0.link_to) || helpers.helperMissing).call(depth0,"family",{"name":"link_to","hash":{},"data":data})) != null ? stack1 : "")
+    + ((stack1 = (helpers.link_to || (depth0 && depth0.link_to) || helpers.helperMissing).call(depth0,"term",{"name":"link_to","hash":{},"data":data})) != null ? stack1 : "")
     + "</span>";
-},"7":function(depth0,helpers,partials,data) {
+},"9":function(depth0,helpers,partials,data) {
+    var stack1, helper, options, alias1=helpers.helperMissing, alias2="function", buffer = 
+  "                <dd>"
+    + this.escapeExpression(((helper = (helper = helpers.name || (depth0 != null ? depth0.name : depth0)) != null ? helper : alias1),(typeof helper === alias2 ? helper.call(depth0,{"name":"name","hash":{},"data":data}) : helper)))
+    + " "
+    + ((stack1 = helpers['if'].call(depth0,(depth0 != null ? depth0.EC : depth0),{"name":"if","hash":{},"fn":this.program(10, data, 0),"inverse":this.noop,"data":data})) != null ? stack1 : "")
+    + " ";
+  stack1 = ((helper = (helper = helpers['short'] || (depth0 != null ? depth0['short'] : depth0)) != null ? helper : alias1),(options={"name":"short","hash":{},"fn":this.program(14, data, 0),"inverse":this.noop,"data":data}),(typeof helper === alias2 ? helper.call(depth0,options) : helper));
+  if (!helpers['short']) { stack1 = helpers.blockHelperMissing.call(depth0,stack1,options)}
+  if (stack1 != null) { buffer += stack1; }
+  return buffer + "</dd>\n";
+},"10":function(depth0,helpers,partials,data) {
+    var stack1, helper, options, buffer = 
+  "[";
+  stack1 = ((helper = (helper = helpers.EC || (depth0 != null ? depth0.EC : depth0)) != null ? helper : helpers.helperMissing),(options={"name":"EC","hash":{},"fn":this.program(11, data, 0),"inverse":this.noop,"data":data}),(typeof helper === "function" ? helper.call(depth0,options) : helper));
+  if (!helpers.EC) { stack1 = helpers.blockHelperMissing.call(depth0,stack1,options)}
+  if (stack1 != null) { buffer += stack1; }
+  return buffer + " ] ";
+},"11":function(depth0,helpers,partials,data) {
+    var stack1;
+
+  return " "
+    + ((stack1 = (helpers.link_to || (depth0 && depth0.link_to) || helpers.helperMissing).call(depth0,"EC",{"name":"link_to","hash":{},"data":data})) != null ? stack1 : "")
+    + " "
+    + ((stack1 = helpers.unless.call(depth0,(data && data.last),{"name":"unless","hash":{},"fn":this.program(12, data, 0),"inverse":this.noop,"data":data})) != null ? stack1 : "")
+    + " ";
+},"12":function(depth0,helpers,partials,data) {
+    return ",";
+},"14":function(depth0,helpers,partials,data) {
+    return "<em style=\"font-size:12px;\">(short : "
+    + this.escapeExpression(this.lambda(depth0, depth0))
+    + ") </em>";
+},"16":function(depth0,helpers,partials,data) {
     var stack1, helper, options, buffer = 
   "                <dt>Cleaved into the following "
     + this.escapeExpression(this.lambda(((stack1 = (depth0 != null ? depth0.cleavage : depth0)) != null ? stack1.length : stack1), depth0))
     + " chains</dt>\n";
-  stack1 = ((helper = (helper = helpers.cleavage || (depth0 != null ? depth0.cleavage : depth0)) != null ? helper : helpers.helperMissing),(options={"name":"cleavage","hash":{},"fn":this.program(8, data, 0),"inverse":this.noop,"data":data}),(typeof helper === "function" ? helper.call(depth0,options) : helper));
+  stack1 = ((helper = (helper = helpers.cleavage || (depth0 != null ? depth0.cleavage : depth0)) != null ? helper : helpers.helperMissing),(options={"name":"cleavage","hash":{},"fn":this.program(17, data, 0),"inverse":this.noop,"data":data}),(typeof helper === "function" ? helper.call(depth0,options) : helper));
   if (!helpers.cleavage) { stack1 = helpers.blockHelperMissing.call(depth0,stack1,options)}
   if (stack1 != null) { buffer += stack1; }
   return buffer;
-},"8":function(depth0,helpers,partials,data) {
+},"17":function(depth0,helpers,partials,data) {
     var helper;
 
   return "                <dd>"
     + this.escapeExpression(((helper = (helper = helpers.synonymName || (depth0 != null ? depth0.synonymName : depth0)) != null ? helper : helpers.helperMissing),(typeof helper === "function" ? helper.call(depth0,{"name":"synonymName","hash":{},"data":data}) : helper)))
     + "</dd>\n                ";
-},"10":function(depth0,helpers,partials,data) {
+},"19":function(depth0,helpers,partials,data) {
     var stack1, helper, options, buffer = 
   "                <dt>Alternative Name</dt>\n";
-  stack1 = ((helper = (helper = helpers.alternativeName || (depth0 != null ? depth0.alternativeName : depth0)) != null ? helper : helpers.helperMissing),(options={"name":"alternativeName","hash":{},"fn":this.program(11, data, 0),"inverse":this.noop,"data":data}),(typeof helper === "function" ? helper.call(depth0,options) : helper));
-  if (!helpers.alternativeName) { stack1 = helpers.blockHelperMissing.call(depth0,stack1,options)}
+  stack1 = ((helper = (helper = helpers.alternativeProteinNames || (depth0 != null ? depth0.alternativeProteinNames : depth0)) != null ? helper : helpers.helperMissing),(options={"name":"alternativeProteinNames","hash":{},"fn":this.program(20, data, 0),"inverse":this.noop,"data":data}),(typeof helper === "function" ? helper.call(depth0,options) : helper));
+  if (!helpers.alternativeProteinNames) { stack1 = helpers.blockHelperMissing.call(depth0,stack1,options)}
   if (stack1 != null) { buffer += stack1; }
   return buffer;
-},"11":function(depth0,helpers,partials,data) {
+},"20":function(depth0,helpers,partials,data) {
     var stack1, helper;
 
   return "                <dd> "
-    + this.escapeExpression(((helper = (helper = helpers.synonymName || (depth0 != null ? depth0.synonymName : depth0)) != null ? helper : helpers.helperMissing),(typeof helper === "function" ? helper.call(depth0,{"name":"synonymName","hash":{},"data":data}) : helper)))
+    + this.escapeExpression(((helper = (helper = helpers.name || (depth0 != null ? depth0.name : depth0)) != null ? helper : helpers.helperMissing),(typeof helper === "function" ? helper.call(depth0,{"name":"name","hash":{},"data":data}) : helper)))
     + "\n                    "
-    + ((stack1 = helpers['if'].call(depth0,(depth0 != null ? depth0.synonyms : depth0),{"name":"if","hash":{},"fn":this.program(12, data, 0),"inverse":this.noop,"data":data})) != null ? stack1 : "")
+    + ((stack1 = helpers['if'].call(depth0,(depth0 != null ? depth0['short'] : depth0),{"name":"if","hash":{},"fn":this.program(21, data, 0),"inverse":this.noop,"data":data})) != null ? stack1 : "")
     + "\n                </dd>\n                ";
-},"12":function(depth0,helpers,partials,data) {
+},"21":function(depth0,helpers,partials,data) {
     var stack1;
 
   return "<em style=\"font-size:12px;\">(short : "
-    + this.escapeExpression(this.lambda(((stack1 = ((stack1 = (depth0 != null ? depth0.synonyms : depth0)) != null ? stack1['0'] : stack1)) != null ? stack1.synonymName : stack1), depth0))
+    + this.escapeExpression(this.lambda(((stack1 = ((stack1 = (depth0 != null ? depth0['short'] : depth0)) != null ? stack1['0'] : stack1)) != null ? stack1.synonymName : stack1), depth0))
     + ") </em>";
-},"14":function(depth0,helpers,partials,data) {
+},"23":function(depth0,helpers,partials,data) {
+    var stack1, helper;
+
+  return "                <dd>"
+    + this.escapeExpression(((helper = (helper = helpers.name || (depth0 != null ? depth0.name : depth0)) != null ? helper : helpers.helperMissing),(typeof helper === "function" ? helper.call(depth0,{"name":"name","hash":{},"data":data}) : helper)))
+    + "</dd>\n"
+    + ((stack1 = helpers['if'].call(depth0,(depth0 != null ? depth0.synonyms : depth0),{"name":"if","hash":{},"fn":this.program(24, data, 0),"inverse":this.noop,"data":data})) != null ? stack1 : "")
+    + ((stack1 = helpers['if'].call(depth0,(depth0 != null ? depth0.orf : depth0),{"name":"if","hash":{},"fn":this.program(27, data, 0),"inverse":this.noop,"data":data})) != null ? stack1 : "");
+},"24":function(depth0,helpers,partials,data) {
     var stack1, helper, options, buffer = 
-  "    <div id=\"family-full\" class=\"row\">\n        <div class=\"col-md-2 col-xs-3 text-uppercase\" style=\"color: grey;\">Family</div>\n        <div class=\"col-md-6 col-xs-6\">\n            <dl>\n                <dt>Family</dt>\n";
-  stack1 = ((helper = (helper = helpers.family || (depth0 != null ? depth0.family : depth0)) != null ? helper : helpers.helperMissing),(options={"name":"family","hash":{},"fn":this.program(15, data, 0),"inverse":this.noop,"data":data}),(typeof helper === "function" ? helper.call(depth0,options) : helper));
+  "                <dt>Alternative Names</dt>\n";
+  stack1 = ((helper = (helper = helpers.synonyms || (depth0 != null ? depth0.synonyms : depth0)) != null ? helper : helpers.helperMissing),(options={"name":"synonyms","hash":{},"fn":this.program(25, data, 0),"inverse":this.noop,"data":data}),(typeof helper === "function" ? helper.call(depth0,options) : helper));
+  if (!helpers.synonyms) { stack1 = helpers.blockHelperMissing.call(depth0,stack1,options)}
+  if (stack1 != null) { buffer += stack1; }
+  return buffer;
+},"25":function(depth0,helpers,partials,data) {
+    var helper;
+
+  return "                <dd> "
+    + this.escapeExpression(((helper = (helper = helpers.name || (depth0 != null ? depth0.name : depth0)) != null ? helper : helpers.helperMissing),(typeof helper === "function" ? helper.call(depth0,{"name":"name","hash":{},"data":data}) : helper)))
+    + "</dd>\n";
+},"27":function(depth0,helpers,partials,data) {
+    var stack1, helper, options, buffer = 
+  "                <dt>ORF names</dt>\n";
+  stack1 = ((helper = (helper = helpers.orf || (depth0 != null ? depth0.orf : depth0)) != null ? helper : helpers.helperMissing),(options={"name":"orf","hash":{},"fn":this.program(25, data, 0),"inverse":this.noop,"data":data}),(typeof helper === "function" ? helper.call(depth0,options) : helper));
+  if (!helpers.orf) { stack1 = helpers.blockHelperMissing.call(depth0,stack1,options)}
+  if (stack1 != null) { buffer += stack1; }
+  return buffer;
+},"29":function(depth0,helpers,partials,data) {
+    var stack1, helper, options, buffer = 
+  "    <div id=\"family-full\" class=\"row\">\n        <div class=\"col-md-2 col-xs-3 text-uppercase\" style=\"color: grey;\">Family</div>\n        <div class=\"col-md-7 col-xs-6\">\n            <dl>\n                <dt>Family</dt>\n";
+  stack1 = ((helper = (helper = helpers.family || (depth0 != null ? depth0.family : depth0)) != null ? helper : helpers.helperMissing),(options={"name":"family","hash":{},"fn":this.program(30, data, 0),"inverse":this.noop,"data":data}),(typeof helper === "function" ? helper.call(depth0,options) : helper));
   if (!helpers.family) { stack1 = helpers.blockHelperMissing.call(depth0,stack1,options)}
   if (stack1 != null) { buffer += stack1; }
   return buffer + "            </dl>\n        </div>\n    </div>\n";
-},"15":function(depth0,helpers,partials,data) {
+},"30":function(depth0,helpers,partials,data) {
     var stack1;
 
   return "                <dd>"
-    + ((stack1 = (helpers.link_to || (depth0 && depth0.link_to) || helpers.helperMissing).call(depth0,"family",{"name":"link_to","hash":{},"data":data})) != null ? stack1 : "")
+    + ((stack1 = (helpers.link_to || (depth0 && depth0.link_to) || helpers.helperMissing).call(depth0,"term",{"name":"link_to","hash":{},"data":data})) != null ? stack1 : "")
     + "</dd>\n";
-},"17":function(depth0,helpers,partials,data) {
+},"32":function(depth0,helpers,partials,data) {
     var stack1;
 
   return ((stack1 = (helpers.link_to || (depth0 && depth0.link_to) || helpers.helperMissing).call(depth0,"history",{"name":"link_to","hash":{},"data":data})) != null ? stack1 : "");
 },"compiler":[6,">= 2.0.0-beta.1"],"main":function(depth0,helpers,partials,data) {
-    var stack1, helper, options, alias1=helpers.helperMissing, alias2="function", alias3=this.escapeExpression, buffer = 
+    var stack1, helper, options, alias1=helpers.helperMissing, alias2="function", alias3=this.escapeExpression, alias4=helpers.blockHelperMissing, buffer = 
   "<div id=\"proteinTitle\">\n    <button id=\"extender\" class=\"btn btn-default\" style=\"float:right\">Extend overview</button>\n    <h2>"
     + alias3(((helper = (helper = helpers.entryName || (depth0 != null ? depth0.entryName : depth0)) != null ? helper : alias1),(typeof helper === alias2 ? helper.call(depth0,{"name":"entryName","hash":{},"data":data}) : helper)))
     + "</h2>\n</div>\n<div id=\"INFOS-LESS\" style=\"display:block\">\n"
     + ((stack1 = helpers['if'].call(depth0,(depth0 != null ? depth0.cleavage : depth0),{"name":"if","hash":{},"fn":this.program(1, data, 0),"inverse":this.noop,"data":data})) != null ? stack1 : "")
-    + "    <div id=\"gene-less\" class=\"row\">\n        <div class=\"col-md-2 col-xs-3\" style=\"color: grey;text-align:right\">Gene Name :</div>\n        <div class=\"col-md-6 col-xs-6\">"
-    + alias3(((helper = (helper = helpers.geneName || (depth0 != null ? depth0.geneName : depth0)) != null ? helper : alias1),(typeof helper === alias2 ? helper.call(depth0,{"name":"geneName","hash":{},"data":data}) : helper)))
+    + ((stack1 = helpers['if'].call(depth0,((stack1 = (depth0 != null ? depth0.recommendedProteinName : depth0)) != null ? stack1.synonymName : stack1),{"name":"if","hash":{},"fn":this.program(4, data, 0),"inverse":this.noop,"data":data})) != null ? stack1 : "")
+    + "    <div id=\"gene-less\" class=\"row\">\n        <div class=\"col-md-3 col-xs-3\" style=\"color: grey;text-align:right\">Gene Name :</div>\n        <div class=\"col-md-6 col-xs-6\">"
+    + alias3(this.lambda(((stack1 = ((stack1 = (depth0 != null ? depth0.geneName : depth0)) != null ? stack1['0'] : stack1)) != null ? stack1.name : stack1), depth0))
     + "</div>\n    </div>\n"
-    + ((stack1 = helpers['if'].call(depth0,(depth0 != null ? depth0.family : depth0),{"name":"if","hash":{},"fn":this.program(4, data, 0),"inverse":this.noop,"data":data})) != null ? stack1 : "")
-    + "</div>\n<div id=\"INFOS-FULL\" style=\"display:none\">\n    <div id=\"gene-full\" class=\"row\">\n        <div class=\"col-md-2 col-xs-3 text-uppercase\" style=\"color: grey;\">Protein</div>\n        <div class=\"col-md-6 col-xs-6\">\n            <dl>\n                <dt>Recommended Name</dt>\n                <dd> "
-    + alias3(((helper = (helper = helpers.geneName || (depth0 != null ? depth0.geneName : depth0)) != null ? helper : alias1),(typeof helper === alias2 ? helper.call(depth0,{"name":"geneName","hash":{},"data":data}) : helper)))
-    + "</dd>\n"
-    + ((stack1 = helpers['if'].call(depth0,(depth0 != null ? depth0.cleavage : depth0),{"name":"if","hash":{},"fn":this.program(7, data, 0),"inverse":this.noop,"data":data})) != null ? stack1 : "")
+    + ((stack1 = helpers['if'].call(depth0,(depth0 != null ? depth0.family : depth0),{"name":"if","hash":{},"fn":this.program(6, data, 0),"inverse":this.noop,"data":data})) != null ? stack1 : "")
+    + "</div>\n<div id=\"INFOS-FULL\" style=\"display:none\">\n    <div id=\"protein-full\" class=\"row\">\n        <div class=\"col-md-2 col-xs-3 text-uppercase\" style=\"color: grey;\">Protein</div>\n        <div class=\"col-md-7 col-xs-6\">\n            <dl>\n                <dt>Recommended Name</dt>\n";
+  stack1 = ((helper = (helper = helpers.recommendedProteinName || (depth0 != null ? depth0.recommendedProteinName : depth0)) != null ? helper : alias1),(options={"name":"recommendedProteinName","hash":{},"fn":this.program(9, data, 0),"inverse":this.noop,"data":data}),(typeof helper === alias2 ? helper.call(depth0,options) : helper));
+  if (!helpers.recommendedProteinName) { stack1 = alias4.call(depth0,stack1,options)}
+  if (stack1 != null) { buffer += stack1; }
+  buffer += ((stack1 = helpers['if'].call(depth0,(depth0 != null ? depth0.cleavage : depth0),{"name":"if","hash":{},"fn":this.program(16, data, 0),"inverse":this.noop,"data":data})) != null ? stack1 : "")
     + "\n"
-    + ((stack1 = helpers['if'].call(depth0,(depth0 != null ? depth0.alternativeName : depth0),{"name":"if","hash":{},"fn":this.program(10, data, 0),"inverse":this.noop,"data":data})) != null ? stack1 : "")
-    + "\n            </dl>\n        </div>\n    </div>\n"
-    + ((stack1 = helpers['if'].call(depth0,(depth0 != null ? depth0.family : depth0),{"name":"if","hash":{},"fn":this.program(14, data, 0),"inverse":this.noop,"data":data})) != null ? stack1 : "")
-    + "    <div id=\"History-full\" class=\"row\">\n        <div class=\"col-md-2 col-xs-3 text-uppercase\" style=\"color: grey;\">History</div>\n        <div class=\"col-md-6 col-xs-6\">\n            <dl>\n                <dt>neXtProt</dt>\n                <dd>Integrated "
+    + ((stack1 = helpers['if'].call(depth0,(depth0 != null ? depth0.alternativeProteinNames : depth0),{"name":"if","hash":{},"fn":this.program(19, data, 0),"inverse":this.noop,"data":data})) != null ? stack1 : "")
+    + "\n            </dl>\n        </div>\n    </div>\n    <div id=\"gene-full\" class=\"row\">\n        <div class=\"col-md-2 col-xs-3 text-uppercase\" style=\"color: grey;\">Gene</div>\n        <div class=\"col-md-7 col-xs-6\">\n            <dl>\n                <dt>Recommended Name</dt>\n";
+  stack1 = ((helper = (helper = helpers.geneName || (depth0 != null ? depth0.geneName : depth0)) != null ? helper : alias1),(options={"name":"geneName","hash":{},"fn":this.program(23, data, 0),"inverse":this.noop,"data":data}),(typeof helper === alias2 ? helper.call(depth0,options) : helper));
+  if (!helpers.geneName) { stack1 = alias4.call(depth0,stack1,options)}
+  if (stack1 != null) { buffer += stack1; }
+  buffer += "            </dl>\n        </div>\n    </div>\n"
+    + ((stack1 = helpers['if'].call(depth0,(depth0 != null ? depth0.family : depth0),{"name":"if","hash":{},"fn":this.program(29, data, 0),"inverse":this.noop,"data":data})) != null ? stack1 : "")
+    + "    <div id=\"History-full\" class=\"row\">\n        <div class=\"col-md-2 col-xs-3 text-uppercase\" style=\"color: grey;\">History</div>\n        <div class=\"col-md-7 col-xs-6\">\n            <dl>\n                <dt>neXtProt</dt>\n                <dd>Integrated "
     + alias3(((helper = (helper = helpers.integDate || (depth0 != null ? depth0.integDate : depth0)) != null ? helper : alias1),(typeof helper === alias2 ? helper.call(depth0,{"name":"integDate","hash":{},"data":data}) : helper)))
     + "</dd>\n                <dd>Last Updated "
     + alias3(((helper = (helper = helpers.lastUpdate || (depth0 != null ? depth0.lastUpdate : depth0)) != null ? helper : alias1),(typeof helper === alias2 ? helper.call(depth0,{"name":"lastUpdate","hash":{},"data":data}) : helper)))
@@ -14258,15 +13983,13 @@ this["HBtemplates"]["templates/overviewProtein.tmpl"] = Handlebars.template({"1"
     + "</dd>\n                <dd>Sequence version "
     + alias3(((helper = (helper = helpers.seqVersion || (depth0 != null ? depth0.seqVersion : depth0)) != null ? helper : alias1),(typeof helper === alias2 ? helper.call(depth0,{"name":"seqVersion","hash":{},"data":data}) : helper)))
     + "</dd>\n                <dd>";
-  stack1 = ((helper = (helper = helpers.accessionNumber || (depth0 != null ? depth0.accessionNumber : depth0)) != null ? helper : alias1),(options={"name":"accessionNumber","hash":{},"fn":this.program(17, data, 0),"inverse":this.noop,"data":data}),(typeof helper === alias2 ? helper.call(depth0,options) : helper));
-  if (!helpers.accessionNumber) { stack1 = helpers.blockHelperMissing.call(depth0,stack1,options)}
+  stack1 = ((helper = (helper = helpers.accessionNumber || (depth0 != null ? depth0.accessionNumber : depth0)) != null ? helper : alias1),(options={"name":"accessionNumber","hash":{},"fn":this.program(32, data, 0),"inverse":this.noop,"data":data}),(typeof helper === alias2 ? helper.call(depth0,options) : helper));
+  if (!helpers.accessionNumber) { stack1 = alias4.call(depth0,stack1,options)}
   if (stack1 != null) { buffer += stack1; }
   return buffer + "</dd>\n            </dl>\n        </div>\n    </div>\n</div>\n<p style=\"margin:10px 10px;\">Entry whose protein(s) existence is based on "
     + alias3(((helper = (helper = helpers.proteineEvidence || (depth0 != null ? depth0.proteineEvidence : depth0)) != null ? helper : alias1),(typeof helper === alias2 ? helper.call(depth0,{"name":"proteineEvidence","hash":{},"data":data}) : helper)))
     + "</p>";
-},"useData":true});
-  
-};/*!
+},"useData":true});;/*!
  * Bootstrap v3.3.5 (http://getbootstrap.com)
  * Copyright 2011-2015 Twitter, Inc.
  * Licensed under the MIT license
@@ -24066,7 +23789,12 @@ function Sequence(sequence,isoformName) {
     var zoomMax = 50;
 
     //Init box & scaling
-    var margin = {top: 10, right: 20, bottom: 20, left: 100},
+    var margin = {
+            top: 10,
+            right: 20,
+            bottom: 20,
+            left: 100
+        },
         width = $(div).width() - margin.left - margin.right - 17,
         height = 600 - margin.top - margin.bottom;
     var scaling = d3.scale.linear()
@@ -24077,7 +23805,6 @@ function Sequence(sequence,isoformName) {
         .range([0, sequence.length - 1]);
 
     d3.helper = {};
-    console.log(width);
 
     d3.helper.tooltip = function (object) {
         var tooltipDiv;
@@ -24087,72 +23814,68 @@ function Sequence(sequence,isoformName) {
         function tooltip(selection) {
 
             selection.on('mouseover.tooltip', function (pD, pI) {
-                // Clean up lost tooltips
-                d3.select('body').selectAll('div.tooltip').remove();
-                // Append tooltip
-                var absoluteMousePos = d3.mouse(bodyNode);
-                var rightside = (absoluteMousePos[0] > width );
-                if (rightside) {
-                    tooltipDiv = d3.select(div)
-                        .append('div')
-                        .attr('class', 'tooltip3');
-                }
-                else {
-                    tooltipDiv = d3.select(div)
-                        .append('div')
-                        .attr('class', 'tooltip2');
+                    // Clean up lost tooltips
+                    d3.select('body').selectAll('div.tooltip').remove();
+                    // Append tooltip
+                    var absoluteMousePos = d3.mouse(bodyNode);
+                    var rightside = (absoluteMousePos[0] > width);
+                    if (rightside) {
+                        tooltipDiv = d3.select(div)
+                            .append('div')
+                            .attr('class', 'tooltip3');
+                    } else {
+                        tooltipDiv = d3.select(div)
+                            .append('div')
+                            .attr('class', 'tooltip2');
+                        tooltipDiv.style({
+                            left: (absoluteMousePos[0] - 15) + 'px'
+                        });
+                    }
                     tooltipDiv.style({
-                        left: (absoluteMousePos[0] - 15) + 'px'
+                        top: (absoluteMousePos[1] - 55) + 'px',
+                        'background-color': 'rgba(0, 0, 0, 0.8)',
+                        width: 'auto',
+                        'max-width': '170px',
+                        height: 'auto',
+                        'max-height': '43px',
+                        padding: '5px',
+                        "font": '10px sans-serif',
+                        'text-align': 'center',
+                        position: 'absolute',
+                        'z-index': 45,
+                        'box-shadow': '0 1px 2px 0 #656565'
                     });
-                }
-                tooltipDiv.style({
-                    top: (absoluteMousePos[1] - 55) + 'px',
-                    'background-color': 'rgba(0, 0, 0, 0.8)',
-                    width: 'auto',
-                    'max-width': '170px',
-                    height: 'auto',
-                    'max-height': '43px',
-                    padding: '5px',
-                    "font": '10px sans-serif',
-                    'text-align': 'center',
-                    position: 'absolute',
-                    'z-index': 45,
-                    'box-shadow': '0 1px 2px 0 #656565'
-                });
-                if (object.type === "path") {
-                    var first_line = '<p style="margin:2px;color:white">start : <span style="color:orangered">' + pD[0].x + '</span></p>';
-                    var second_line = '<p style="margin:2px;color:white">end : <span style="color:orangered">' + pD[1].x + '</span></p>';
-                }
-                else if (object.type === "unique") {
-                    var first_line = '<p style="margin:2px;color:orangered">' + pD.x + '</p>';
-                    if (pD.description) var second_line = '<p style="margin:2px;color:white;font-size:9px">' + pD.description + '</p>';
-                    else var second_line = '';
-                }
-                else {
-                    var first_line = '<p style="margin:2px;color:orangered">' + pD.x + ' - ' + pD.y + '</p>';
-                    if (pD.description) var second_line = '<p style="margin:2px;color:white;font-size:9px">' + pD.description + '</p>';
-                    else var second_line = '';
-                }
+                    if (object.type === "path") {
+                        var first_line = '<p style="margin:2px;color:white">start : <span style="color:orangered">' + pD[0].x + '</span></p>';
+                        var second_line = '<p style="margin:2px;color:white">end : <span style="color:orangered">' + pD[1].x + '</span></p>';
+                    } else if (object.type === "unique") {
+                        var first_line = '<p style="margin:2px;color:orangered">' + pD.x + '</p>';
+                        if (pD.description) var second_line = '<p style="margin:2px;color:white;font-size:9px">' + pD.description + '</p>';
+                        else var second_line = '';
+                    } else {
+                        var first_line = '<p style="margin:2px;color:orangered">' + pD.x + ' - ' + pD.y + '</p>';
+                        if (pD.description) var second_line = '<p style="margin:2px;color:white;font-size:9px">' + pD.description + '</p>';
+                        else var second_line = '';
+                    }
 
-                tooltipDiv.html(first_line + second_line);
-                if (rightside) {
-                    tooltipDiv.style({
-                        left: (absoluteMousePos[0] + 10 - (tooltipDiv.node().getBoundingClientRect().width)) + 'px'
-                    })
-                }
-            })
+                    tooltipDiv.html(first_line + second_line);
+                    if (rightside) {
+                        tooltipDiv.style({
+                            left: (absoluteMousePos[0] + 10 - (tooltipDiv.node().getBoundingClientRect().width)) + 'px'
+                        })
+                    }
+                })
                 .on('mousemove.tooltip', function (pD, pI) {
                     // Move tooltip
                     var absoluteMousePos = d3.mouse(bodyNode);
-                    var rightside = (absoluteMousePos[0] > width );
+                    var rightside = (absoluteMousePos[0] > width);
                     if (rightside) {
                         tooltipDiv.attr("class", "tooltip3");
                         tooltipDiv.style({
                             left: (absoluteMousePos[0] + 10 - (tooltipDiv.node().getBoundingClientRect().width)) + 'px',
                             top: (absoluteMousePos[1] - 55) + 'px'
                         });
-                    }
-                    else {
+                    } else {
                         tooltipDiv.attr("class", "tooltip2");
                         tooltipDiv.style({
                             left: (absoluteMousePos[0] - 15) + 'px',
@@ -24178,12 +23901,10 @@ function Sequence(sequence,isoformName) {
                     if (object.type === "path") {
                         xTemp = pD[0].x;
                         yTemp = pD[1].x;
-                    }
-                    else if (object.type === "unique") {
+                    } else if (object.type === "unique") {
                         xTemp = pD.x - 0.5;
                         yTemp = pD.y + 0.5;
-                    }
-                    else {
+                    } else {
                         xTemp = pD.x;
                         yTemp = pD.y;
                     }
@@ -24191,22 +23912,19 @@ function Sequence(sequence,isoformName) {
                     if (scaling(xTemp) < 0 && scaling(yTemp) > svgWidth) {
                         xRect = margin.left;
                         widthRect = svgWidth;
-                    }
-                    else if (scaling(xTemp) < 0) {
+                    } else if (scaling(xTemp) < 0) {
                         xRect = margin.left;
                         widthRect = (scaling(yTemp));
-                    }
-                    else if (scaling(yTemp) > svgWidth) {
+                    } else if (scaling(yTemp) > svgWidth) {
                         xRect = scaling(xTemp) + margin.left;
                         widthRect = svgWidth - scaling(xTemp);
-                    }
-                    else {
+                    } else {
                         xRect = scaling(xTemp) + margin.left;
                         widthRect = (scaling(yTemp) - scaling(xTemp));
                     }
                     selectedRect.style({
                         left: xRect + 'px',
-                        top: ($(div +" .svgHeader").length) ? 60 + 'px' : 10 + 'px',
+                        top: ($(div + " .svgHeader").length) ? 60 + 'px' : 10 + 'px',
                         'background-color': 'rgba(0, 0, 0, 0.2)',
                         width: widthRect + 'px',
                         height: (Yposition + 50) + 'px',
@@ -24214,8 +23932,7 @@ function Sequence(sequence,isoformName) {
                         'z-index': -1,
                         'box-shadow': '0 1px 2px 0 #656565'
                     });
-                })
-            ;
+                });
 
         }
 
@@ -24254,8 +23971,7 @@ function Sequence(sequence,isoformName) {
             if (leveling === []) {
                 leveling.push(d.y);
                 d.level = 0;
-            }
-            else {
+            } else {
                 var placed = false;
                 for (var k = 0; k < leveling.length; k++) {
                     if (d.x > leveling[k]) {
@@ -24281,8 +23997,7 @@ function Sequence(sequence,isoformName) {
             if (leveling === []) {
                 leveling.push(d[2].x);
                 d[1].y = 1;
-            }
-            else {
+            } else {
                 var placed = false;
                 for (var k = 0; k < leveling.length; k++) {
                     if (d[0].x > leveling[k]) {
@@ -24337,7 +24052,6 @@ function Sequence(sequence,isoformName) {
     }
 
     function updateSVGHeight(position) {
-        console.log("blblblbblbl");
         svg.attr("height", position + 60 + "px")
     }
 
@@ -24367,11 +24081,11 @@ function Sequence(sequence,isoformName) {
             .enter()
             .append("g");
         yAxisSVGgroup
-            .append("polygon")       // attach a polygon
-            .style("stroke", "none")  // colour the line
-            .style("fill", "rgba(95,46,38,0.2)")     // remove any fill colour
+            .append("polygon") // attach a polygon
+            .style("stroke", "none") // colour the line
+            .style("fill", "rgba(95,46,38,0.2)") // remove any fill colour
             .attr("points", function (d) {
-                return (margin.left - 15) + "," + (d.y - 3) + ", " + (margin.left - 15) + "," + (d.y + 12) + ", " + (margin.left - 7) + "," + (d.y + 4.5);  // x,y points
+                return (margin.left - 15) + "," + (d.y - 3) + ", " + (margin.left - 15) + "," + (d.y + 12) + ", " + (margin.left - 7) + "," + (d.y + 4.5); // x,y points
             });
         yAxisSVGgroup
             .append("rect")
@@ -24418,7 +24132,19 @@ function Sequence(sequence,isoformName) {
             });
             var level = addLevel(object.data);
             object.data = object.data.map(function (d) {
-                return [{x: d.x, y: 0, id: d.id}, {x: d.y, y: d.level + 1, id: d.id}, {x: d.y, y: 0, id: d.id}]
+                return [{
+                    x: d.x,
+                    y: 0,
+                    id: d.id
+                }, {
+                    x: d.y,
+                    y: d.level + 1,
+                    id: d.id
+                }, {
+                    x: d.y,
+                    y: 0,
+                    id: d.id
+                }]
             })
             pathLevel = level * 10 + 5;
             object.height = level * 10 + 5;
@@ -24437,28 +24163,39 @@ function Sequence(sequence,isoformName) {
             if (object.type === "rect") {
                 preComputing.multipleRect(object);
                 fillSVG.rectangle(object, sequence, Yposition, level);
-                yData.push({title: object.name, y: Yposition});
+                yData.push({
+                    title: object.name,
+                    y: Yposition
+                });
                 Yposition += (level - 1) * 20;
-            }
-            else if (object.type === "text") {
+            } else if (object.type === "text") {
                 fillSVG.sequence(object.data, Yposition);
-                yData.push({title: object.name, y: Yposition});
-            }
-            else if (object.type === "unique") {
+                yData.push({
+                    title: object.name,
+                    y: Yposition
+                });
+            } else if (object.type === "unique") {
                 fillSVG.unique(object, sequence, Yposition);
-                yData.push({title: object.name, y: Yposition});
-            }
-            else if (object.type === "multipleRect") {
+                yData.push({
+                    title: object.name,
+                    y: Yposition
+                });
+            } else if (object.type === "multipleRect") {
                 preComputing.multipleRect(object);
                 fillSVG.multipleRect(object, sequence, Yposition, level);
-                yData.push({title: object.name, y: Yposition});
+                yData.push({
+                    title: object.name,
+                    y: Yposition
+                });
                 Yposition += (level - 1) * 10;
-            }
-            else if (object.type === "path") {
+            } else if (object.type === "path") {
                 preComputing.path(object);
                 fillSVG.path(object, sequence, Yposition);
                 Yposition += pathLevel;
-                yData.push({title: object.name, y: Yposition - 10});
+                yData.push({
+                    title: object.name,
+                    y: Yposition - 10
+                });
             }
         },
         sequence: function (seq, position, start) {
@@ -24494,7 +24231,13 @@ function Sequence(sequence,isoformName) {
 
             for (var i = 0; i < level; i++) {
                 rectsPro.append("path")
-                    .attr("d", line([{x: 0, y: (i * rectShift)}, {x: sequence.length - 1, y: (i * rectShift)}]))
+                    .attr("d", line([{
+                        x: 0,
+                        y: (i * rectShift)
+                    }, {
+                        x: sequence.length - 1,
+                        y: (i * rectShift)
+                    }]))
                     .attr("class", function () {
                         return "line" + object.className
                     })
@@ -24543,8 +24286,7 @@ function Sequence(sequence,isoformName) {
                 .style("visibility", function (d) {
                     if (d.description) {
                         return (scaling(d.y) - scaling(d.x)) > d.description.length * 8 ? "visible" : "hidden";
-                    }
-                    else return "hidden";
+                    } else return "hidden";
                 })
                 .call(d3.helper.tooltip(object));
 
@@ -24571,7 +24313,13 @@ function Sequence(sequence,isoformName) {
                 .attr("transform", "translate(0," + position + ")");
 
             rectsPro.append("path")
-                .attr("d", line([{x: 0, y: 0}, {x: sequence.length - 1, y: 0}]))
+                .attr("d", line([{
+                    x: 0,
+                    y: 0
+                }, {
+                    x: sequence.length - 1,
+                    y: 0
+                }]))
                 .attr("class", function () {
                     return "line" + object.className
                 })
@@ -24608,7 +24356,13 @@ function Sequence(sequence,isoformName) {
                 .attr("transform", "translate(0," + position + ")");
 
             pathsDB.append("path")
-                .attr("d", lineBond([{x: 0, y: 0}, {x: sequence.length - 1, y: 0}]))
+                .attr("d", lineBond([{
+                    x: 0,
+                    y: 0
+                }, {
+                    x: sequence.length - 1,
+                    y: 0
+                }]))
                 .style("z-index", "0")
                 .style("stroke", object.color)
                 .style("stroke-width", "1px");
@@ -24640,7 +24394,13 @@ function Sequence(sequence,isoformName) {
 
             for (var i = 0; i < level; i++) {
                 rects.append("path")
-                    .attr("d", line([{x: 0, y: (i * rectShift - 2)}, {x: sequence.length - 1, y: (i * rectShift - 2)}]))
+                    .attr("d", line([{
+                        x: 0,
+                        y: (i * rectShift - 2)
+                    }, {
+                        x: sequence.length - 1,
+                        y: (i * rectShift - 2)
+                    }]))
                     .attr("class", function () {
                         return "line" + object.className
                     })
@@ -24688,8 +24448,7 @@ function Sequence(sequence,isoformName) {
                 .style("visibility", function (d) {
                     if (d.description) {
                         return (scaling(d.y) - scaling(d.x)) > d.description.length * 8 ? "visible" : "hidden";
-                    }
-                    else return "hidden";
+                    } else return "hidden";
                 });
         },
         multiRec: function (object) {
@@ -24750,14 +24509,14 @@ function Sequence(sequence,isoformName) {
             .attr('height', Yposition + 50);
     }
 
-// Show peptide selected in brush
-//function brushmove() {
-//    var extent = brush.extent();
-//    rectsPep2.classed("selected", function (d) {
-//        is_brushed = extent[0] <= d.x && d.x <= extent[1] && extent[0] <= d.y && d.y <= extent[1];
-//        return is_brushed;
-//    });
-//}
+    // Show peptide selected in brush
+    //function brushmove() {
+    //    var extent = brush.extent();
+    //    rectsPep2.classed("selected", function (d) {
+    //        is_brushed = extent[0] <= d.x && d.x <= extent[1] && extent[0] <= d.y && d.y <= extent[1];
+    //        return is_brushed;
+    //    });
+    //}
 
     function brushend() {
         d3.select(div).selectAll('div.selectedRect').remove();
@@ -24765,8 +24524,10 @@ function Sequence(sequence,isoformName) {
         var extent = brush.extent();
         var extentLength = Math.abs(extent[0] - extent[1]);
 
-        if (extent[0] < extent[1]) var start = parseInt(extent[0] - 1), end = parseInt(extent[1] + 1);
-        else var start = parseInt(extent[1] + 1), end = parseInt(extent[0] - 1);
+        if (extent[0] < extent[1]) var start = parseInt(extent[0] - 1),
+            end = parseInt(extent[1] + 1);
+        else var start = parseInt(extent[1] + 1),
+            end = parseInt(extent[0] - 1);
 
         var seq = displaySequence(extentLength);
         if (!brush.empty() && extentLength > zoomMax) {
@@ -24788,14 +24549,13 @@ function Sequence(sequence,isoformName) {
 
             //rectsPep2.classed("selected", false);
             d3.select(div).selectAll(".brush").call(brush.clear());
-        }
-        else {
+        } else {
             d3.select(div).selectAll(".brush").call(brush.clear());
             //resetAll();
         }
     }
 
-// If brush is too small, reset view as origin
+    // If brush is too small, reset view as origin
     function resetAll() {
 
         //reset scale
@@ -24815,17 +24575,13 @@ function Sequence(sequence,isoformName) {
         features.forEach(function (o) {
             if (o.type === "rect") {
                 transition.rectangle(o);
-            }
-            else if (o.type === "multipleRect") {
+            } else if (o.type === "multipleRect") {
                 transition.multiRec(o);
-            }
-            else if (o.type === "unique") {
+            } else if (o.type === "unique") {
                 transition.unique(o);
-            }
-            else if (o.type === "path") {
+            } else if (o.type === "path") {
                 transition.path(o);
-            }
-            else if (o.type === "text") {
+            } else if (o.type === "text") {
                 transition.text(o, start);
             }
         });
@@ -24877,27 +24633,20 @@ function Sequence(sequence,isoformName) {
         if (elemSelected[0].length === 3) {
             xTemp = elemSelected[0][0].x;
             yTemp = elemSelected[0][1].x;
-            console.log("aaaaaaaa");
-        }
-        else if (elemSelected[0].x === elemSelected[0].y) {
+        } else if (elemSelected[0].x === elemSelected[0].y) {
             xTemp = elemSelected[0].x - 0.5;
             yTemp = elemSelected[0].y + 0.5;
-            console.log("bbbbbbbb");
-        }
-        else {
+        } else {
             xTemp = elemSelected[0].x;
             yTemp = elemSelected[0].y;
-            console.log("ccccccc");
         }
         if (scaling(xTemp) < 0) {
             xRect = margin.left;
             widthRect = (scaling(yTemp));
-        }
-        else if (scaling(yTemp) > svgWidth) {
+        } else if (scaling(yTemp) > svgWidth) {
             xRect = scaling(xTemp) + margin.left;
             widthRect = svgWidth - scaling(xTemp);
-        }
-        else {
+        } else {
             xRect = scaling(xTemp) + margin.left;
             widthRect = (scaling(yTemp) - scaling(xTemp));
         }
@@ -24921,7 +24670,7 @@ function Sequence(sequence,isoformName) {
                 'brushActive': false,
                 'verticalLine': false,
                 'toolbar': false,
-                'zoommax':50
+                'zoommax': 50
             }
         }
         d3.select(div)
@@ -24931,9 +24680,9 @@ function Sequence(sequence,isoformName) {
         // Create SVG
 
         if (options.toolbar === true) {
-            console.log($(div + " .svgHeader").length);
+            //console.log($(div + " .svgHeader").length);
             var headerOptions = $(div + " .svgHeader").length ? d3.select(div + " .svgHeader") : d3.select(div).append("div").attr("class", "svgHeader");
-            console.log(headerOptions);
+            //console.log(headerOptions);
 
             if (!$(div + ' .header-zoom').length) {
                 var headerZoom = headerOptions
@@ -25031,8 +24780,17 @@ function Sequence(sequence,isoformName) {
             if (displaySequence(sequence.length)) {
                 fillSVG.sequence(sequence, Yposition);
             }
-            features.push({data: sequence, name: "Sequence", className: "AA", color: "black", type: "text"});
-            yData.push({title: "sequence", y: Yposition - 8});
+            features.push({
+                data: sequence,
+                name: "Sequence",
+                className: "AA",
+                color: "black",
+                type: "text"
+            });
+            yData.push({
+                title: "sequence",
+                y: Yposition - 8
+            });
         }
         if (options.showAxis) addXAxis(Yposition);
         addYAxis();
@@ -25054,6 +24812,7 @@ function Sequence(sequence,isoformName) {
     }
 
     initSVG(div, options);
+
     function addFeature(object) {
         Yposition += 20;
         features.push(object);
@@ -25076,8 +24835,7 @@ function Sequence(sequence,isoformName) {
         addFeature: addFeature,
         selection: addRectSelection
     }
-}
-;this["HBtemplates"] = this["HBtemplates"] || {};
+};this["HBtemplates"] = this["HBtemplates"] || {};
 
 this["HBtemplates"]["templates/featureTable2.tmpl"] = Handlebars.template({"1":function(depth0,helpers,partials,data,blockParams,depths) {
     var stack1;
@@ -25441,7 +25199,7 @@ this["HBtemplates"]["templates/overviewProtein.tmpl"] = Handlebars.template({"1"
   return buffer + "</dd>\n            </dl>\n        </div>\n    </div>\n</div>\n<p style=\"margin:10px 10px;\">Entry whose protein(s) existence is based on "
     + alias3(((helper = (helper = helpers.proteineEvidence || (depth0 != null ? depth0.proteineEvidence : depth0)) != null ? helper : alias1),(typeof helper === alias2 ? helper.call(depth0,{"name":"proteineEvidence","hash":{},"data":data}) : helper)))
     + "</p>";
-},"useData":true});;/*! iFrame Resizer (iframeSizer.contentWindow.min.js) - v3.0.0 - 2015-08-04
+},"useData":true});;/*! iFrame Resizer (iframeSizer.contentWindow.min.js) - v3.2.0 - 2015-09-04
  *  Desc: Include this file in any page being loaded into an iframe
  *        to force the iframe to resize to the content size.
  *  Requires: iframeResizer.min.js on host page.
@@ -25449,7 +25207,7 @@ this["HBtemplates"]["templates/overviewProtein.tmpl"] = Handlebars.template({"1"
  *  License: MIT
  */
 
-!function(a){"use strict";function b(b,c,d){"addEventListener"in a?b.addEventListener(c,d,!1):"attachEvent"in a&&b.attachEvent("on"+c,d)}function c(a){return _+"["+bb+"] "+a}function d(b){$&&"object"==typeof a.console&&console.log(c(b))}function e(b){"object"==typeof a.console&&console.warn(c(b))}function f(){g(),d("Initialising iFrame ("+location.href+")"),h(),k(),j("background",L),j("padding",O),s(),p(),q(),l(),u(),r(),Y=t(),D("init","Init message from host page")}function g(){function a(a){return"true"===a?!0:!1}var b=X.substr(ab).split(":");bb=b[0],M=void 0!==b[1]?Number(b[1]):M,P=void 0!==b[2]?a(b[2]):P,$=void 0!==b[3]?a(b[3]):$,Z=void 0!==b[4]?Number(b[4]):Z,J=void 0!==b[6]?a(b[6]):J,N=b[7],V=void 0!==b[8]?b[8]:V,L=b[9],O=b[10],gb=void 0!==b[11]?Number(b[11]):gb,Y.enable=void 0!==b[12]?a(b[12]):!1,db=void 0!==b[13]?b[13]:db,lb=void 0!==b[14]?b[14]:lb}function h(){function b(){var b=a.iFrameResizer;d("Reading data from page: "+JSON.stringify(b)),mb=void 0!==b.messageCallback?b.messageCallback:mb,eb=void 0!==b.targetOrigin?b.targetOrigin:eb,V=void 0!==b.heightCalculationMethod?b.heightCalculationMethod:V,lb=void 0!==b.widthCalculationMethod?b.widthCalculationMethod:lb}"iFrameResizer"in a&&Object===a.iFrameResizer.constructor&&b()}function i(a,b){return-1!==b.indexOf("-")&&(e("Negative CSS value ignored for "+a),b=""),b}function j(a,b){void 0!==b&&""!==b&&"null"!==b&&(document.body.style[a]=b,d("Body "+a+' set to "'+b+'"'))}function k(){void 0===N&&(N=M+"px"),i("margin",N),j("margin",N)}function l(){document.documentElement.style.height="",document.body.style.height="",d('HTML & body height set to "auto"')}function m(c){function e(d){function e(){D(c.eventName,c.eventType)}b(a,d,e)}c.eventNames&&Array.prototype.map?(c.eventName=c.eventNames[0],c.eventNames.map(e)):e(c.eventName),d("Added event listener: "+c.eventType)}function n(){m({eventType:"Animation Start",eventNames:["animationstart","webkitAnimationStart"]}),m({eventType:"Animation Iteration",eventNames:["animationiteration","webkitAnimationIteration"]}),m({eventType:"Animation End",eventNames:["animationend","webkitAnimationEnd"]}),m({eventType:"Orientation Change",eventName:"orientationchange"}),m({eventType:"Input",eventName:"input"}),m({eventType:"Print",eventName:["afterprint","beforeprint"]}),m({eventType:"Transition End",eventNames:["transitionend","webkitTransitionEnd","MSTransitionEnd","oTransitionEnd","otransitionend"]}),m({eventType:"Mouse Up",eventName:"mouseup"}),"child"===db&&m({eventType:"IFrame Resized",eventName:"resize"})}function o(a,b,c,f){b!==a&&(a in c||(e(a+" is not a valid option for "+f+"CalculationMethod."),a=b),d(f+' calculation method set to "'+a+'"'))}function p(){o(V,U,nb,"height")}function q(){o(lb,kb,ob,"width")}function r(){!0===J?(n(),x()):d("Auto Resize disabled")}function s(){var a=document.createElement("div");a.style.clear="both",a.style.display="block",document.body.appendChild(a)}function t(){function c(){return{x:void 0!==a.pageXOffset?a.pageXOffset:document.documentElement.scrollLeft,y:void 0!==a.pageYOffset?a.pageYOffset:document.documentElement.scrollTop}}function f(a){var b=a.getBoundingClientRect(),d=c();return{x:parseInt(b.left,10)+parseInt(d.x,10),y:parseInt(b.top,10)+parseInt(d.y,10)}}function g(a){function b(a){var b=f(a);d("Moving to in page link (#"+c+") at x: "+b.x+" y: "+b.y),H(b.y,b.x,"scrollToOffset")}var c=a.split("#")[1]||a,e=decodeURIComponent(c),g=document.getElementById(e)||document.getElementsByName(e)[0];g?b(g):(d("In page link (#"+c+") not found in iFrame, so sending to parent"),H(0,0,"inPageLink","#"+c))}function h(){""!==location.hash&&"#"!==location.hash&&g(location.href)}function i(){function a(a){function c(a){a.preventDefault(),g(this.getAttribute("href"))}"#"!==a.getAttribute("href")&&b(a,"click",c)}Array.prototype.forEach.call(document.querySelectorAll('a[href^="#"]'),a)}function j(){b(a,"hashchange",h)}function k(){setTimeout(h,R)}function l(){Array.prototype.forEach&&document.querySelectorAll?(d("Setting up location.hash handlers"),i(),j(),k()):e("In page linking not fully supported in this browser! (See README.md for IE8 workaround)")}return Y.enable?l():d("In page linking not enabled"),{findTarget:g}}function u(){d("Enable public methods"),a.parentIFrame={close:function(){H(0,0,"close")},getId:function(){return bb},moveToAnchor:function(a){Y.findTarget(a)},reset:function(){G("parentIFrame.reset")},scrollTo:function(a,b){H(b,a,"scrollTo")},scrollToOffset:function(a,b){H(b,a,"scrollToOffset")},sendMessage:function(a,b){H(0,0,"message",JSON.stringify(a),b)},setHeightCalculationMethod:function(a){V=a,p()},setWidthCalculationMethod:function(a){lb=a,q()},setTargetOrigin:function(a){d("Set targetOrigin: "+a),eb=a},size:function(a,b){var c=""+(a?a:"")+(b?","+b:"");E(),D("size","parentIFrame.size("+c+")",a,b)}}}function v(){0!==Z&&(d("setInterval: "+Z+"ms"),setInterval(function(){D("interval","setInterval: "+Z)},Math.abs(Z)))}function w(a){return void 0===a||0===a}function x(){function b(a){function b(a){var b=D.bind(null,"imageLoad","Image loaded",void 0,void 0);(w(a.height)||w(a.width))&&(d("Attach listerner to "+a.src),a.addEventListener("load",b,!1))}"attributes"===a.type&&"src"===a.attributeName?b(a.target):"childList"===a.type&&Array.prototype.forEach.call(a.target.querySelectorAll("img"),b)}function c(a){D("mutationObserver","mutationObserver: "+a[0].target+" "+a[0].type),b(a[0])}function f(){var a=document.querySelector("body"),b={attributes:!0,attributeOldValue:!1,characterData:!0,characterDataOldValue:!1,childList:!0,subtree:!0},e=new h(c);d("Enable MutationObserver"),e.observe(a,b)}var g=0>Z,h=a.MutationObserver||a.WebKitMutationObserver;h?g?v():f():(e("MutationObserver not supported in this browser!"),v())}function y(a){function b(a){var b=/^\d+(px)?$/i;if(b.test(a))return parseInt(a,K);var d=c.style.left,e=c.runtimeStyle.left;return c.runtimeStyle.left=c.currentStyle.left,c.style.left=a||0,a=c.style.pixelLeft,c.style.left=d,c.runtimeStyle.left=e,a}var c=document.body,d=0;return"defaultView"in document&&"getComputedStyle"in document.defaultView?(d=document.defaultView.getComputedStyle(c,null),d=null!==d?d[a]:0):d=b(c.currentStyle[a]),parseInt(d,K)}function z(a,b){for(var c=b.length,e=0,f=(new Date).getTime(),g=0;c>g;g++)b[g].getBoundingClientRect()[a]>e&&(e=b[g].getBoundingClientRect()[a]);return f=(new Date).getTime()-f,d("Parsed "+c+" HTML elements"),d("Element position calculated in "+f+"ms"),e}function A(a){return[a.bodyOffset(),a.bodyScroll(),a.documentElementOffset(),a.documentElementScroll()]}function B(a,b){function c(){return e("No tagged elements ("+b+") found on page"),T}var d=document.querySelectorAll("["+b+"]");return 0===d.length?c():z(a,d)}function C(){return document.querySelectorAll("body *")}function D(a,b,c,e){function f(){a in{reset:1,resetPage:1,init:1}||d("Trigger event: "+b)}function g(){T=n,jb=o,H(T,jb,a)}function h(){return hb&&a in Q}function i(){function a(a,b){var c=Math.abs(a-b)<=gb;return!c}return n=void 0!==c?c:nb[V](),o=void 0!==e?e:ob[lb](),a(T,n)||P&&a(jb,o)}function j(){return!(a in{init:1,interval:1,size:1})}function k(){return V in cb||P&&lb in cb}function l(){d("No change in size detected")}function m(){j()&&k()?G(b):a in{interval:1}||(f(),l())}var n,o;h()?d("Trigger event cancelled: "+a):i()||"init"===a?(f(),E(),g()):m()}function E(){hb||(hb=!0,d("Trigger event lock on")),clearTimeout(ib),ib=setTimeout(function(){hb=!1,d("Trigger event lock off"),d("--")},R)}function F(a){T=nb[V](),jb=ob[lb](),H(T,jb,a)}function G(a){var b=V;V=U,d("Reset trigger event: "+a),E(),F("reset"),V=b}function H(a,b,c,e,f){function g(){void 0===f?f=eb:d("Message targetOrigin: "+f)}function h(){var g=a+":"+b,h=bb+":"+g+":"+c+(void 0!==e?":"+e:"");d("Sending message to host page ("+h+")"),fb.postMessage(_+h,f)}g(),h()}function I(b){function c(){return _===(""+b.data).substr(0,ab)}function g(){X=b.data,fb=b.source,f(),S=!1,setTimeout(function(){W=!1},R)}function h(){W?d("Page reset ignored by init"):(d("Page size reset by host page"),F("resetPage"))}function i(){D("resizeParent","Parent window requested size check")}function j(){var a=l();Y.findTarget(a)}function k(){return b.data.split("]")[1].split(":")[0]}function l(){return b.data.split(":")[1]}function m(){return"iFrameResize"in a}function n(){var a=l();d("MessageCallback called from parent: "+a),mb(JSON.parse(a)),d(" --")}function o(){return b.data.split(":")[2]in{"true":1,"false":1}}function p(){switch(k()){case"reset":h();break;case"resize":i();break;case"moveToAnchor":j();break;case"message":n();break;default:m()||o()||e("Unexpected message ("+b.data+")")}}function q(){!1===S?p():o()?g():d('Ignored message of type "'+k()+'". Received before initialization.')}c()&&q()}var J=!0,K=10,L="",M=0,N="",O="",P=!1,Q={resize:1,click:1},R=128,S=!0,T=1,U="bodyOffset",V=U,W=!0,X="",Y={},Z=32,$=!1,_="[iFrameSizer]",ab=_.length,bb="",cb={max:1,min:1,bodyScroll:1,documentElementScroll:1},db="child",eb="*",fb=a.parent,gb=0,hb=!1,ib=null,jb=1,kb="max",lb=kb,mb=function(){e("MessageCallback function not defined")},nb={bodyOffset:function(){return document.body.offsetHeight+y("marginTop")+y("marginBottom")},offset:function(){return nb.bodyOffset()},bodyScroll:function(){return document.body.scrollHeight},documentElementOffset:function(){return document.documentElement.offsetHeight},documentElementScroll:function(){return document.documentElement.scrollHeight},max:function(){return Math.max.apply(null,A(nb))},min:function(){return Math.min.apply(null,A(nb))},grow:function(){return nb.max()},lowestElement:function(){return Math.max(nb.bodyOffset(),z("bottom",C()))},taggedElement:function(){return B("bottom","data-iframe-height")}},ob={bodyScroll:function(){return document.body.scrollWidth},bodyOffset:function(){return document.body.offsetWidth},documentElementScroll:function(){return document.documentElement.scrollWidth},documentElementOffset:function(){return document.documentElement.offsetWidth},scroll:function(){return Math.max(ob.bodyScroll(),ob.documentElementScroll())},max:function(){return Math.max.apply(null,A(ob))},min:function(){return Math.min.apply(null,A(ob))},leftMostElement:function(){return z("left",C())},taggedElement:function(){return B("left","data-iframe-width")}};b(a,"message",I)}(window||{});
+!function(a){"use strict";function b(b,c,d){"addEventListener"in a?b.addEventListener(c,d,!1):"attachEvent"in a&&b.attachEvent("on"+c,d)}function c(b,c,d){"removeEventListener"in a?b.removeEventListener(c,d,!1):"detachEvent"in a&&b.detachEvent("on"+c,d)}function d(a){return a.charAt(0).toUpperCase()+a.slice(1)}function e(a){var b,c,d,e=null,f=0,g=function(){f=Ba(),e=null,d=a.apply(b,c),e||(b=c=null)};return function(){var h=Ba();f||(f=h);var i=va-(h-f);return b=this,c=arguments,0>=i||i>va?(e&&(clearTimeout(e),e=null),f=h,d=a.apply(b,c),e||(b=c=null)):e||(e=setTimeout(g,i)),d}}function f(a){return ka+"["+ma+"] "+a}function g(b){ja&&"object"==typeof a.console&&console.log(f(b))}function h(b){"object"==typeof a.console&&console.warn(f(b))}function i(){j(),g("Initialising iFrame ("+location.href+")"),k(),n(),m("background",V),m("padding",Z),z(),s(),t(),o(),B(),u(),ha=A(),M("init","Init message from host page"),Aa()}function j(){function a(a){return"true"===a?!0:!1}var b=ga.substr(la).split(":");ma=b[0],W=void 0!==b[1]?Number(b[1]):W,$=void 0!==b[2]?a(b[2]):$,ja=void 0!==b[3]?a(b[3]):ja,ia=void 0!==b[4]?Number(b[4]):ia,T=void 0!==b[6]?a(b[6]):T,X=b[7],ea=void 0!==b[8]?b[8]:ea,V=b[9],Z=b[10],sa=void 0!==b[11]?Number(b[11]):sa,ha.enable=void 0!==b[12]?a(b[12]):!1,oa=void 0!==b[13]?b[13]:oa,ya=void 0!==b[14]?b[14]:ya}function k(){function b(){var b=a.iFrameResizer;g("Reading data from page: "+JSON.stringify(b)),za=void 0!==b.messageCallback?b.messageCallback:za,Aa=void 0!==b.readyCallback?b.readyCallback:Aa,ra=void 0!==b.targetOrigin?b.targetOrigin:ra,ea=void 0!==b.heightCalculationMethod?b.heightCalculationMethod:ea,ya=void 0!==b.widthCalculationMethod?b.widthCalculationMethod:ya}"iFrameResizer"in a&&Object===a.iFrameResizer.constructor&&b()}function l(a,b){return-1!==b.indexOf("-")&&(h("Negative CSS value ignored for "+a),b=""),b}function m(a,b){void 0!==b&&""!==b&&"null"!==b&&(document.body.style[a]=b,g("Body "+a+' set to "'+b+'"'))}function n(){void 0===X&&(X=W+"px"),l("margin",X),m("margin",X)}function o(){document.documentElement.style.height="",document.body.style.height="",g('HTML & body height set to "auto"')}function p(e){function f(){M(e.eventName,e.eventType)}var h={add:function(c){b(a,c,f)},remove:function(b){c(a,b,f)}};e.eventNames&&Array.prototype.map?(e.eventName=e.eventNames[0],e.eventNames.map(h[e.method])):h[e.method](e.eventName),g(d(e.method)+" event listener: "+e.eventType)}function q(a){p({method:a,eventType:"Animation Start",eventNames:["animationstart","webkitAnimationStart"]}),p({method:a,eventType:"Animation Iteration",eventNames:["animationiteration","webkitAnimationIteration"]}),p({method:a,eventType:"Animation End",eventNames:["animationend","webkitAnimationEnd"]}),p({method:a,eventType:"Orientation Change",eventName:"orientationchange"}),p({method:a,eventType:"Input",eventName:"input"}),p({method:a,eventType:"Print",eventName:["afterprint","beforeprint"]}),p({method:a,eventType:"Transition End",eventNames:["transitionend","webkitTransitionEnd","MSTransitionEnd","oTransitionEnd","otransitionend"]}),p({method:a,eventType:"Mouse Up",eventName:"mouseup"}),p({method:a,eventType:"Mouse Down",eventName:"mousedown"}),"child"===oa&&p({method:a,eventType:"IFrame Resized",eventName:"resize"})}function r(a,b,c,d){b!==a&&(a in c||(h(a+" is not a valid option for "+d+"CalculationMethod."),a=b),g(d+' calculation method set to "'+a+'"'))}function s(){r(ea,da,Ca,"height")}function t(){r(ya,xa,Da,"width")}function u(){!0===T?(q("add"),E()):g("Auto Resize disabled")}function v(){g("Disable outgoing messages"),pa=!1}function w(){g("Remove event listener: Message"),c(a,"message",R)}function x(){null!==Y&&Y.disconnect()}function y(){v(),w(),q("remove"),x()}function z(){var a=document.createElement("div");a.style.clear="both",a.style.display="block",document.body.appendChild(a)}function A(){function c(){return{x:void 0!==a.pageXOffset?a.pageXOffset:document.documentElement.scrollLeft,y:void 0!==a.pageYOffset?a.pageYOffset:document.documentElement.scrollTop}}function d(a){var b=a.getBoundingClientRect(),d=c();return{x:parseInt(b.left,10)+parseInt(d.x,10),y:parseInt(b.top,10)+parseInt(d.y,10)}}function e(a){function b(a){var b=d(a);g("Moving to in page link (#"+c+") at x: "+b.x+" y: "+b.y),Q(b.y,b.x,"scrollToOffset")}var c=a.split("#")[1]||a,e=decodeURIComponent(c),f=document.getElementById(e)||document.getElementsByName(e)[0];void 0!==f?b(f):(g("In page link (#"+c+") not found in iFrame, so sending to parent"),Q(0,0,"inPageLink","#"+c))}function f(){""!==location.hash&&"#"!==location.hash&&e(location.href)}function i(){function a(a){function c(a){a.preventDefault(),e(this.getAttribute("href"))}"#"!==a.getAttribute("href")&&b(a,"click",c)}Array.prototype.forEach.call(document.querySelectorAll('a[href^="#"]'),a)}function j(){b(a,"hashchange",f)}function k(){setTimeout(f,aa)}function l(){Array.prototype.forEach&&document.querySelectorAll?(g("Setting up location.hash handlers"),i(),j(),k()):h("In page linking not fully supported in this browser! (See README.md for IE8 workaround)")}return ha.enable?l():g("In page linking not enabled"),{findTarget:e}}function B(){g("Enable public methods"),a.parentIFrame={close:function(){Q(0,0,"close"),y()},getId:function(){return ma},moveToAnchor:function(a){ha.findTarget(a)},reset:function(){P("parentIFrame.reset")},scrollTo:function(a,b){Q(b,a,"scrollTo")},scrollToOffset:function(a,b){Q(b,a,"scrollToOffset")},sendMessage:function(a,b){Q(0,0,"message",JSON.stringify(a),b)},setHeightCalculationMethod:function(a){ea=a,s()},setWidthCalculationMethod:function(a){ya=a,t()},setTargetOrigin:function(a){g("Set targetOrigin: "+a),ra=a},size:function(a,b){var c=""+(a?a:"")+(b?","+b:"");N(),M("size","parentIFrame.size("+c+")",a,b)}}}function C(){0!==ia&&(g("setInterval: "+ia+"ms"),setInterval(function(){M("interval","setInterval: "+ia)},Math.abs(ia)))}function D(){function b(a){function b(a){!1===a.complete&&(g("Attach listeners to "+a.src),a.addEventListener("load",f,!1),a.addEventListener("error",h,!1),k.push(a))}"attributes"===a.type&&"src"===a.attributeName?b(a.target):"childList"===a.type&&Array.prototype.forEach.call(a.target.querySelectorAll("img"),b)}function c(a){k.splice(k.indexOf(a),1)}function d(a){g("Remove listeners from "+a.src),a.removeEventListener("load",f,!1),a.removeEventListener("error",h,!1),c(a)}function e(a,b,c){d(a.target),M(b,c+": "+a.target.src,void 0,void 0)}function f(a){e(a,"imageLoad","Image loaded")}function h(a){e(a,"imageLoadFailed","Image load failed")}function i(a){M("mutationObserver","mutationObserver: "+a[0].target+" "+a[0].type),a.forEach(b)}function j(){var a=document.querySelector("body"),b={attributes:!0,attributeOldValue:!1,characterData:!0,characterDataOldValue:!1,childList:!0,subtree:!0};return m=new l(i),g("Enable MutationObserver"),m.observe(a,b),m}var k=[],l=a.MutationObserver||a.WebKitMutationObserver,m=j();return{disconnect:function(){"disconnect"in m&&(g("Disconnect MutationObserver"),m.disconnect(),k.forEach(d))}}}function E(){var b=0>ia;a.MutationObserver||a.WebKitMutationObserver?b?C():Y=D():(g("MutationObserver not supported in this browser!"),C())}function F(a){function b(a){var b=/^\d+(px)?$/i;if(b.test(a))return parseInt(a,U);var d=c.style.left,e=c.runtimeStyle.left;return c.runtimeStyle.left=c.currentStyle.left,c.style.left=a||0,a=c.style.pixelLeft,c.style.left=d,c.runtimeStyle.left=e,a}var c=document.body,d=0;return"defaultView"in document&&"getComputedStyle"in document.defaultView?(d=document.defaultView.getComputedStyle(c,null),d=null!==d?d[a]:0):d=b(c.currentStyle[a]),parseInt(d,U)}function G(a){a>va/2&&(va=2*a,g("Event throttle increased to "+va+"ms"))}function H(a,b){for(var c=b.length,e=0,f=0,h=d(a),i=Ba(),j=0;c>j;j++)e=b[j].getBoundingClientRect()[a]+F("margin"+h),e>f&&(f=e);return i=Ba()-i,g("Parsed "+c+" HTML elements"),g("Element position calculated in "+i+"ms"),G(i),f}function I(a){return[a.bodyOffset(),a.bodyScroll(),a.documentElementOffset(),a.documentElementScroll()]}function J(a,b){function c(){return h("No tagged elements ("+b+") found on page"),ca}var d=document.querySelectorAll("["+b+"]");return 0===d.length?c():H(a,d)}function K(){return document.querySelectorAll("body *")}function L(a,b,c,d){function e(){ca=l,wa=m,Q(ca,wa,a)}function f(){function a(a,b){var c=Math.abs(a-b)<=sa;return!c}return l=void 0!==c?c:Ca[ea](),m=void 0!==d?d:Da[ya](),a(ca,l)||$&&a(wa,m)}function h(){return!(a in{init:1,interval:1,size:1})}function i(){return ea in na||$&&ya in na}function j(){g("No change in size detected")}function k(){h()&&i()?P(b):a in{interval:1}||j()}var l,m;f()||"init"===a?(N(),e()):k()}function M(a,b,c,d){function e(){a in{reset:1,resetPage:1,init:1}||g("Trigger event: "+b)}function f(){return ta&&a in _}f()?g("Trigger event cancelled: "+a):(e(),Ea(a,b,c,d))}function N(){ta||(ta=!0,g("Trigger event lock on")),clearTimeout(ua),ua=setTimeout(function(){ta=!1,g("Trigger event lock off"),g("--")},aa)}function O(a){ca=Ca[ea](),wa=Da[ya](),Q(ca,wa,a)}function P(a){var b=ea;ea=da,g("Reset trigger event: "+a),N(),O("reset"),ea=b}function Q(a,b,c,d,e){function f(){void 0===e?e=ra:g("Message targetOrigin: "+e)}function h(){var f=a+":"+b,h=ma+":"+f+":"+c+(void 0!==d?":"+d:"");g("Sending message to host page ("+h+")"),qa.postMessage(ka+h,e)}!0===pa&&(f(),h())}function R(b){function c(){return ka===(""+b.data).substr(0,la)}function d(){ga=b.data,qa=b.source,i(),ba=!1,setTimeout(function(){fa=!1},aa)}function e(){fa?g("Page reset ignored by init"):(g("Page size reset by host page"),O("resetPage"))}function f(){M("resizeParent","Parent window requested size check")}function h(){var a=k();ha.findTarget(a)}function j(){return b.data.split("]")[1].split(":")[0]}function k(){return b.data.substr(b.data.indexOf(":")+1)}function l(){return"iFrameResize"in a}function m(){var a=k();g("MessageCallback called from parent: "+a),za(JSON.parse(a)),g(" --")}function n(){return b.data.split(":")[2]in{"true":1,"false":1}}function o(){switch(j()){case"reset":e();break;case"resize":f();break;case"moveToAnchor":h();break;case"message":m();break;default:!l()&&!n()}}function p(){!1===ba?o():n()?d():g('Ignored message of type "'+j()+'". Received before initialization.')}c()&&p()}function S(){"loading"!==document.readyState&&a.parent.postMessage("[iFrameResizerChild]Ready","*")}var T=!0,U=10,V="",W=0,X="",Y=null,Z="",$=!1,_={resize:1,click:1},aa=128,ba=!0,ca=1,da="bodyOffset",ea=da,fa=!0,ga="",ha={},ia=32,ja=!1,ka="[iFrameSizer]",la=ka.length,ma="",na={max:1,min:1,bodyScroll:1,documentElementScroll:1},oa="child",pa=!0,qa=a.parent,ra="*",sa=0,ta=!1,ua=null,va=0,wa=1,xa="scroll",ya=xa,za=function(){h("MessageCallback function not defined")},Aa=function(){},Ba=Date.now||function(){return(new Date).getTime()},Ca={bodyOffset:function(){return document.body.offsetHeight+F("marginTop")+F("marginBottom")},offset:function(){return Ca.bodyOffset()},bodyScroll:function(){return document.body.scrollHeight},documentElementOffset:function(){return document.documentElement.offsetHeight},documentElementScroll:function(){return document.documentElement.scrollHeight},max:function(){return Math.max.apply(null,I(Ca))},min:function(){return Math.min.apply(null,I(Ca))},grow:function(){return Ca.max()},lowestElement:function(){return Math.max(Ca.bodyOffset(),H("bottom",K()))},taggedElement:function(){return J("bottom","data-iframe-height")}},Da={bodyScroll:function(){return document.body.scrollWidth},bodyOffset:function(){return document.body.offsetWidth},documentElementScroll:function(){return document.documentElement.scrollWidth},documentElementOffset:function(){return document.documentElement.offsetWidth},scroll:function(){return Math.max(Da.bodyScroll(),Da.documentElementScroll())},max:function(){return Math.max.apply(null,I(Da))},min:function(){return Math.min.apply(null,I(Da))},leftMostElement:function(){return H("left",K())},taggedElement:function(){return J("left","data-iframe-width")}},Ea=e(L);b(a,"message",R),S()}(window||{});
 //# sourceMappingURL=iframeResizer.contentWindow.map;/////////////
 
 function TripleViewer(entry) {
@@ -25532,9 +25290,6 @@ function TripleViewer(entry) {
             for (var i=1; i<oneData.length-1;i++) {
                 var feat = NXUtils.convertMappingsToIsoformMap(oneData[i],metaData[i].name,metaData[i].filter);
                 featuresByIsoform.push(feat);
-                if (!(oneData[i] instanceof Array)) {
-                    console.log("BANANA !");
-                }
                 var featForViewer = NXViewerUtils.convertNXAnnotations(feat,metaData[i]);
                 featuresForViewer.push(featForViewer);
             }
@@ -25800,7 +25555,6 @@ function TripleViewer(entry) {
     }
 
     function addFeatures(isoName) {
-        console.log("REGENESIS OF THE DATAAAAA");
         for (var i=0;i<featuresForViewer.length;i++) {
             if (Object.keys(featuresForViewer[i]).length !== 0 && featuresForViewer[i].hasOwnProperty(isoName) && filterOptions[featuresForViewer[i][isoName].filter.split(" ").join("_").toLowerCase()] === true) {
                 var feature = jQuery.extend({}, featuresForViewer[i][isoName]);
