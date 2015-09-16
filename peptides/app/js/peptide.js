@@ -19,7 +19,9 @@ function initNXDivs() {
         var featuresForViewer = [];
         var seq1 = null;
 
-        function getFirstIsoform(isoformList) {
+        var pepComp = new PeptideComputation();
+
+    function getFirstIsoform(isoformList) {
             var seqIDs = isoformList.map(function (p) {
                 return p.uniqueName
             }).sort(function (a, b) {
@@ -768,11 +770,12 @@ function initNXDivs() {
                         HL.highlighting(positions);
                     },
                     highlighting: function (positions) {
-                        var dateHL = new Date().getTime();
                         positions = positions.split("-").map(function (o) {
                             return parseInt(o)
                         });
-                        seq1.coverage(HL.HashAA, positions[0] - 1, positions[1] - 1);
+                        seq1.coverage(pepComp.getHighlighting(datas.Peptides), positions[0] - 1, positions[1] - 1);
+
+                        //seq1.coverage(HL.HashAA, positions[0] - 1, positions[1] - 1);
                         var ElementTop = $('#peptideHighlighted').position().top - 140;
                         var scrollPosition = $("#scroller").scrollTop();
                         var scrollingLength = ElementTop + scrollPosition;
@@ -790,23 +793,24 @@ function initNXDivs() {
                         $("#fastaSeq").html(coveredSeq);
                     },
                     firstCoverage: function () {
-                        var dateFC = new Date().getTime();
 
-                        HL.HashAA = HL.applyAAFormating(datas.Peptides);
-                        seq1.coverage(HL.HashAA);
+                        var list = datas.Peptides;
+                        var seqLength = getInfoForIsoform.Sequence(isoforms, isoName).length;
+                        $("#proteoCover").text(pepComp.computeProteotypicCoverage(list, seqLength) + "%");
+                        $("#pepCover").text(pepComp.computePeptideCoverage(list, seqLength) + "%");
+
+                        seq1.coverage(pepComp.getHighlighting(list, seqLength));
+
                         var legend = [{
                             name: "non-proteotypic",
                             color: "#4A57D4",
-                            underscore: false
-                    }, {
+                            underscore: false}, {
                             name: "single proteotypic",
                             color: "#007800",
-                            underscore: false
-                        }, {
+                            underscore: false}, {
                             name: "several proteotypic",
                             color: "#69CC33",
-                            underscore: false
-                    }, {
+                            underscore: false}, {
                             name: "synthetic",
                             color: "#fff",
                             underscore: true
@@ -814,79 +818,6 @@ function initNXDivs() {
                         seq1.addLegend(legend);
                         coveredSeq = $("#fastaSeq").html();
 
-                        var dateFCend = new Date().getTime();
-
-                    },
-                    applyAAFormating: function (list) {
-
-                        //For test console.log(JSON.stringify(list));
-
-                        var datestart = new Date().getTime();
-                        var HashAA = [];
-                        var jMin = 0;
-                        var begin = 1;
-                        var subseqColor = "";
-                        var subseq_;
-                        var seqLength = getInfoForIsoform.Sequence(isoforms, isoName).length;
-                        for (var i = 1; i < seqLength + 1; i++) {
-                            var naturalPep = 0;
-                            var syntheticPep = 0;
-                            var proteotypicPep = 0;
-                            var checkScale = false;
-                            for (var j = jMin; j < list.length; j++) {
-                                if (i >= list[j].position.first && i <= list[j].position.second) {
-                                    if (list[j].properties.natural) naturalPep += 1;
-                                    if (list[j].properties.synthetic) syntheticPep += 1;
-                                    if (list[j].properties.proteotypic) proteotypicPep += 1;
-                                }
-                                if (i > list[j].position.second && checkScale === false) {
-                                    checkScale = true;
-                                    jMin = j;
-                                }
-                                if (list[j].position.first > i) break;
-                            }
-                            var clr = "black";
-                            var underscore = false;
-                            if (syntheticPep > 0) underscore = true;
-                            if (naturalPep > 0) {
-                                clr = "#4A57D4";
-                            }
-                            if (proteotypicPep > 0) {
-                                if (proteotypicPep === 1) clr = "#007800";
-                                else clr = "#00C500";
-                            }
-                            if (i === 1) {
-                                subseqColor = clr;
-                                subseq_ = underscore;
-                            }
-                            if (!(clr === subseqColor && underscore === subseq_)) {
-                                HashAA.push({
-                                    "start": begin - 1,
-                                    "end": i - 1,
-                                    "color": subseqColor,
-                                    "underscore": subseq_
-                                });
-                                begin = i;
-                                subseqColor = clr;
-                                subseq_ = underscore;
-                            }
-                            if (i === seqLength) {
-                                HashAA.push({
-                                    "start": begin - 1,
-                                    "end": i,
-                                    "color": subseqColor,
-                                    "underscore": subseq_
-                                });
-                            }
-
-                        }
-                        var intermediate = new Date().getTime();
-
-                        var pepComp = new PeptideComputation();
-                        $("#proteoCover").text(pepComp.computeProteotypicCoverage(list, seqLength) + "%");
-                        $("#pepCover").text(pepComp.computePeptideCoverage(list, seqLength) + "%");
-
-                        return HashAA;
                     },
                     moreInfos: function (event) {
                         var selection = [];
@@ -899,10 +830,7 @@ function initNXDivs() {
 
                     }
                 };
-                var datestart = new Date().getTime();
                 pepHistogram(datas.Peptides);
-                var intermediate = new Date().getTime();
-
 
                 $(function () {
                     HL.firstCoverage();
@@ -971,7 +899,6 @@ function initNXDivs() {
                     });
                 }, Promise.resolve())
                 .then(function () {
-                    console.log("All done");
                 })
                 .catch(function (err) {
                     // catch any error that happened along the way

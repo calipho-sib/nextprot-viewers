@@ -14338,9 +14338,6 @@ function Sequence(sequence,isoformName) {
     var isoName;
     if (isoformName !== undefined) isoName = isoformName;
     else isoName = "";
-    console.log(isoName);
-    var popo = this;
-    console.log(popo);
     var sequence = sequence;
     var seqInit = "";
     var lineJump = 0;
@@ -14353,14 +14350,14 @@ function Sequence(sequence,isoformName) {
             var options = {
                 'showLineNumbers': true,
                 'wrapAminoAcids': true,
-                'charsPerLine': 30,
+                'charsPerLine': 50,
                 'search': false,
                 'toolbar': false
             }
         }
         else sequenceOptions = options;
         if (typeof options.charsPerLine === 'undefined') {
-            lineJump = 30;
+            lineJump = 50;
         }
         else lineJump = options.charsPerLine;
 
@@ -14396,7 +14393,7 @@ function Sequence(sequence,isoformName) {
         if (options.toolbar) {
             addToolbar();
             if (isoName !== "") {
-                $("#sequenceToolbar").append(
+                $(divID + " #sequenceToolbar").append(
                     "<a class=\"btn btn-default\" href=\"http://www.nextprot.org/db/entry/" + isoName.split("-")[0] + "/fasta?isoform=" + isoName.slice(3) + "\" style=\"margin-left:15px;\">view Fasta</a>" +
                     "<a class=\"btn btn-default disabled\" href=\"\" style=\"margin-left:15px;\">Blast sequence</a>" +
                     "<a class=\"btn btn-default disabled\" href=\"\" style=\"margin-left:15px;\">Blast selection</a>"
@@ -14428,7 +14425,6 @@ function Sequence(sequence,isoformName) {
         }
         var hlSeq = seqInit;
         var seqTemp = hlSeq.toString();
-        console.log("length : " + ArrayHL.length);
         var positionStart=0;
         var positionEnd=0;
         for (i in ArrayHL) {
@@ -14447,11 +14443,9 @@ function Sequence(sequence,isoformName) {
         for (var i = 0; i < hashLegend.length; i++) {
             if (hashLegend[i].underscore === true) {
                 $(divID + " #coverageLegend").append("<div style=\"display:inline-block;background:" + hashLegend[i].color + ";width:20px;height:20px;vertical-align:middle;margin:0px 5px 0px 10px;border-radius:50%; border: 1px solid grey;text-align:center; line-height:0.8;\">_</div><p style=\"display:inline-block;font-weight:bold;font-size:11px;font-style:italic;margin:0;padding-top:3px;vertical-align:top;\">" + hashLegend[i].name + "</p></div>");
-                console.log("duh !");
             }
             else {
                 $(divID + " #coverageLegend").append("<div style=\"display:inline-block;background:" + hashLegend[i].color + ";width:20px;height:20px;vertical-align:middle;margin:0px 5px 0px 10px;border-radius:50%;\"></div><p style=\"display:inline-block;font-weight:bold;font-size:11px;font-style:italic;margin:0;padding-top:3px;vertical-align:top;\">" + hashLegend[i].name + "</p>");
-                console.log("dah !");
             }
         }
     }
@@ -14502,9 +14496,6 @@ function Sequence(sequence,isoformName) {
             }
         }
         $(divID + " #fastaSeq").html(source);
-        var timeend = new Date().getTime();
-
-        console.log('Time to execute all: ', (timeend - timestart));
     }
 
     function lineNumbers(textAreaID, lineNumberID) {
@@ -14518,7 +14509,7 @@ function Sequence(sequence,isoformName) {
         }
         $(lineNumberID).html(newTextContent.join(""));
 
-    };
+    }
 
     function sequenceLayout(textAreaID) {
 
@@ -14531,29 +14522,32 @@ function Sequence(sequence,isoformName) {
     }
 
     function addSequenceSearch() {
-        $("#sequenceHeader").append('<input id=\"inputSearchSeq\" type=\"text\" class=\"form-control pull-right\" style=\"width:40%;margin-top:3px;\" placeholder=\"Search in sequence.. (Regex supported)\">');
+        $(divID + " #sequenceHeader").append('<input id=\"inputSearchSeq\" type=\"text\" class=\"form-control pull-right\" style=\"width:40%;margin-top:3px;\" placeholder=\"Search in sequence.. (Regex supported)\">');
         sequenceSearch();
 
     }
 
     function sequenceSearch() {
-        $("#inputSearchSeq").keyup(function() {
+        $(divID + " #inputSearchSeq").keyup(function() {
             var text = $(this).val();
             if (text !== "") {
-                var text2 = new RegExp(text, "gi");
+                var regex = new RegExp(text, "gi");
                 var match;
                 var matches = [];
-                console.log("while begin");
-                while (( match = text2.exec(sequence) ) != null) {
+                //While begin
+                var previousIndex = -1;
+                while (( match = regex.exec(sequence) ) != null  && match.index > previousIndex && match.index < sequence.length) {
+                    previousIndex = match.index;
                     matches.push({start: match.index, end: match.index + match[0].length});
                 }
-                console.log("while finished");
+                //While finished
+
+                //Sort matches
                 matches.sort(function (a, b) {
                     return b.start - a.start;
                 });
-                console.log("matches sorted");
+                //Highlight matches
                 multiHighlighting(matches, "#C50063");
-                console.log("matches highlighted");
             }
             else {
                 $(divID + " #fastaSeq").html(seqInit);
@@ -14562,7 +14556,6 @@ function Sequence(sequence,isoformName) {
     }
 
     function changeCharsPerLine(selection) {
-        console.log("BANANAAAAAAAA!!");
         var options = sequenceOptions;
         options.charsPerLine = selection.value;
         renderHtml(divID, options);
@@ -14570,7 +14563,7 @@ function Sequence(sequence,isoformName) {
 
     function addToolbar() {
         var listOfCharsPerLine = ["50", "60", "70", "80", "90", "100"];
-        var source = "<form class=\"form-inline\" role=\"form\">" +
+        var source = "<div class=\"form-inline\" role=\"form\">" +
             "<div id=\"sequenceToolbar\" class=\"row\"style=\"margin-bottom:15px;\">" +
             "<div class=\"input-group\" style=\"margin-left:20px;\"> <span class=\"input-group-addon\">Char per line</i></span>" +
 
@@ -14580,15 +14573,15 @@ function Sequence(sequence,isoformName) {
             "</select>" +
             "</div>" +
             "</div>" +
-            "</form>";
+            "</div>";
         var template = Handlebars.compile(source);
         var html = template({
             "CPL": listOfCharsPerLine
         });
-        $("#sequenceBody").prepend(html);
-        $("#CPLChoice").change(function () {
+        $(divID + " #sequenceBody").prepend(html);
+        $(divID + " #CPLChoice").change(function () {
             changeCharsPerLine(this);
-            $("#CPLChoice" + " option:selected").text($(this).val());
+            $(divID + " #CPLChoice" + " option:selected").text($(this).val());
         });
     }
 
@@ -15727,6 +15720,111 @@ var PeptideComputation = function () {
 
     }
 
+
+    /**
+     *
+     * //Coverage list
+     var exempleSequenceCoverage = [
+     {start: 0, end: 25, color: "black", underscore: false},
+     {start: 25, end: 47, color: "#ff0000", underscore: false},
+     {start: 47, end: 54, color: "#ff0000", underscore: true},
+     {start: 54, end: 55, color: "#ff0000", underscore: false},
+     {start: 55, end: 56, color: "black", underscore: false},
+     {start: 56, end: 89, color: "#69CC33", underscore: false},
+     {start: 89, end: 90, color: "black", underscore: false},
+     {start: 90, end: 110, color: "#ff0000", underscore: false}
+     ];
+     seq3.coverage(exempleSequenceCoverage);
+     *
+     *
+     *
+     * @param peptides
+     * @param proteinLength
+     * @returns {*}
+     */
+    function getHighlighting (peptides, proteinLength){
+
+        var result = [];
+        var aminoAcidsCoverage = [];
+        for(var i=0; i<proteinLength; i++){
+            aminoAcidsCoverage.push(0); // no cover
+        }
+
+        var aminoAcidsSyntheticCoverage = [];
+        for(var i=0; i<proteinLength; i++){
+            aminoAcidsSyntheticCoverage.push(0); // no cover
+        }
+
+        var syntheticlPeptides = peptides.filter(function (pep){return pep.properties.synthetic});
+        for(var ni in syntheticlPeptides){
+            var pep = syntheticlPeptides[ni];
+            var first = pep.position.first;
+            var last = pep.position.second;
+            for (var i=first;i<=last;i++) {
+                aminoAcidsSyntheticCoverage[i-1]=1;
+            }
+        }
+
+        var naturalPeptides = peptides.filter(function (pep){return pep.properties.natural});
+
+        var proteotypicPeptides = naturalPeptides.filter(function (pep){return pep.properties.proteotypic});
+        var nonProteotypicPeptides = naturalPeptides.filter(function (pep){return !pep.properties.proteotypic});
+
+
+        for(var ni in nonProteotypicPeptides){
+            var pep = nonProteotypicPeptides[ni];
+            var first = pep.position.first;
+            var last = pep.position.second;
+            for (var i=first;i<=last;i++) {
+                aminoAcidsCoverage[i-1]=1;
+            }
+        }
+
+        for(var ni in proteotypicPeptides){
+            var pep = proteotypicPeptides[ni];
+            var first = pep.position.first;
+            var last = pep.position.second;
+            for (var i=first;i<=last;i++) {
+                if(aminoAcidsCoverage[i-1] === 1){
+                    aminoAcidsCoverage[i-1]=10;
+                }else {
+                    aminoAcidsCoverage[i-1]=aminoAcidsCoverage[i-1] + 10;
+                }
+            }
+        }
+
+        // 0 not any peptide
+        // 1 non-proteotypic peptide (can have one or more)
+        // 10 single proteotypic
+        // 20+ or more several protetypic
+
+        var lastState = {cov: aminoAcidsCoverage[0], synth: aminoAcidsSyntheticCoverage[0]};
+        var lastAminoAcidIndex = 0;
+
+        for(var i=0; i<proteinLength; i++){
+            var currentState = {cov: aminoAcidsCoverage[i], synth: aminoAcidsSyntheticCoverage[i]};
+            if(currentState!=lastState) {
+                result.push({start: lastAminoAcidIndex, end: i, color: getColorMap(lastState.cov), underscore: (lastState.synth === 1)});
+                lastState = currentState;
+                lastAminoAcidIndex = i;
+            }
+        }
+        result.push({start: lastAminoAcidIndex, end: i, color: getColorMap(lastState.cov), underscore: (lastState.synth === 1)});
+
+        return result;
+
+    }
+
+    function getColorMap(state){
+        switch(state){
+            case 0 : return 'grey';
+            case 1 : return 'blue';
+            case 10 : return 'green';
+            default : return 'violet'; // 20 or
+        }
+    }
+
+
     function computePeptideCoverage (peptides, proteinLength){
 
         return computeCoverage(peptides, proteinLength, function (pep){return pep.properties.natural});
@@ -15739,10 +15837,12 @@ var PeptideComputation = function () {
 
     }
 
+
     return {
 
         computePeptideCoverage : computePeptideCoverage,
-        computeProteotypicCoverage : computeProteotypicCoverage
+        computeProteotypicCoverage : computeProteotypicCoverage,
+        getHighlighting : getHighlighting
 
     }
 
@@ -16347,7 +16447,9 @@ function initNXDivs() {
         var featuresForViewer = [];
         var seq1 = null;
 
-        function getFirstIsoform(isoformList) {
+        var pepComp = new PeptideComputation();
+
+    function getFirstIsoform(isoformList) {
             var seqIDs = isoformList.map(function (p) {
                 return p.uniqueName
             }).sort(function (a, b) {
@@ -17096,11 +17198,12 @@ function initNXDivs() {
                         HL.highlighting(positions);
                     },
                     highlighting: function (positions) {
-                        var dateHL = new Date().getTime();
                         positions = positions.split("-").map(function (o) {
                             return parseInt(o)
                         });
-                        seq1.coverage(HL.HashAA, positions[0] - 1, positions[1] - 1);
+                        seq1.coverage(pepComp.getHighlighting(datas.Peptides), positions[0] - 1, positions[1] - 1);
+
+                        //seq1.coverage(HL.HashAA, positions[0] - 1, positions[1] - 1);
                         var ElementTop = $('#peptideHighlighted').position().top - 140;
                         var scrollPosition = $("#scroller").scrollTop();
                         var scrollingLength = ElementTop + scrollPosition;
@@ -17118,23 +17221,24 @@ function initNXDivs() {
                         $("#fastaSeq").html(coveredSeq);
                     },
                     firstCoverage: function () {
-                        var dateFC = new Date().getTime();
 
-                        HL.HashAA = HL.applyAAFormating(datas.Peptides);
-                        seq1.coverage(HL.HashAA);
+                        var list = datas.Peptides;
+                        var seqLength = getInfoForIsoform.Sequence(isoforms, isoName).length;
+                        $("#proteoCover").text(pepComp.computeProteotypicCoverage(list, seqLength) + "%");
+                        $("#pepCover").text(pepComp.computePeptideCoverage(list, seqLength) + "%");
+
+                        seq1.coverage(pepComp.getHighlighting(list, seqLength));
+
                         var legend = [{
                             name: "non-proteotypic",
                             color: "#4A57D4",
-                            underscore: false
-                    }, {
+                            underscore: false}, {
                             name: "single proteotypic",
                             color: "#007800",
-                            underscore: false
-                        }, {
+                            underscore: false}, {
                             name: "several proteotypic",
                             color: "#69CC33",
-                            underscore: false
-                    }, {
+                            underscore: false}, {
                             name: "synthetic",
                             color: "#fff",
                             underscore: true
@@ -17142,79 +17246,6 @@ function initNXDivs() {
                         seq1.addLegend(legend);
                         coveredSeq = $("#fastaSeq").html();
 
-                        var dateFCend = new Date().getTime();
-
-                    },
-                    applyAAFormating: function (list) {
-
-                        //For test console.log(JSON.stringify(list));
-
-                        var datestart = new Date().getTime();
-                        var HashAA = [];
-                        var jMin = 0;
-                        var begin = 1;
-                        var subseqColor = "";
-                        var subseq_;
-                        var seqLength = getInfoForIsoform.Sequence(isoforms, isoName).length;
-                        for (var i = 1; i < seqLength + 1; i++) {
-                            var naturalPep = 0;
-                            var syntheticPep = 0;
-                            var proteotypicPep = 0;
-                            var checkScale = false;
-                            for (var j = jMin; j < list.length; j++) {
-                                if (i >= list[j].position.first && i <= list[j].position.second) {
-                                    if (list[j].properties.natural) naturalPep += 1;
-                                    if (list[j].properties.synthetic) syntheticPep += 1;
-                                    if (list[j].properties.proteotypic) proteotypicPep += 1;
-                                }
-                                if (i > list[j].position.second && checkScale === false) {
-                                    checkScale = true;
-                                    jMin = j;
-                                }
-                                if (list[j].position.first > i) break;
-                            }
-                            var clr = "black";
-                            var underscore = false;
-                            if (syntheticPep > 0) underscore = true;
-                            if (naturalPep > 0) {
-                                clr = "#4A57D4";
-                            }
-                            if (proteotypicPep > 0) {
-                                if (proteotypicPep === 1) clr = "#007800";
-                                else clr = "#00C500";
-                            }
-                            if (i === 1) {
-                                subseqColor = clr;
-                                subseq_ = underscore;
-                            }
-                            if (!(clr === subseqColor && underscore === subseq_)) {
-                                HashAA.push({
-                                    "start": begin - 1,
-                                    "end": i - 1,
-                                    "color": subseqColor,
-                                    "underscore": subseq_
-                                });
-                                begin = i;
-                                subseqColor = clr;
-                                subseq_ = underscore;
-                            }
-                            if (i === seqLength) {
-                                HashAA.push({
-                                    "start": begin - 1,
-                                    "end": i,
-                                    "color": subseqColor,
-                                    "underscore": subseq_
-                                });
-                            }
-
-                        }
-                        var intermediate = new Date().getTime();
-
-                        var pepComp = new PeptideComputation();
-                        $("#proteoCover").text(pepComp.computeProteotypicCoverage(list, seqLength) + "%");
-                        $("#pepCover").text(pepComp.computePeptideCoverage(list, seqLength) + "%");
-
-                        return HashAA;
                     },
                     moreInfos: function (event) {
                         var selection = [];
@@ -17227,10 +17258,7 @@ function initNXDivs() {
 
                     }
                 };
-                var datestart = new Date().getTime();
                 pepHistogram(datas.Peptides);
-                var intermediate = new Date().getTime();
-
 
                 $(function () {
                     HL.firstCoverage();
@@ -17299,7 +17327,6 @@ function initNXDivs() {
                     });
                 }, Promise.resolve())
                 .then(function () {
-                    console.log("All done");
                 })
                 .catch(function (err) {
                     // catch any error that happened along the way
