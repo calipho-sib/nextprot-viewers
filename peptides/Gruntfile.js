@@ -16,6 +16,7 @@ module.exports = function (grunt) {
                     'bower_components/sequence-viewer/dist/sequence-viewer.js',
                     'bower_components/feature-viewer/dist/feature-viewer.js',
                     'bower_components/iframe-resizer/js/iframeResizer.contentWindow.min.js',
+                    'app/js/peptide-computation.js',
                     'app/js/peptide_templates.js',
                     'vendor/stupidtable.js',
                     'app/js/nextprot-histogram.js',

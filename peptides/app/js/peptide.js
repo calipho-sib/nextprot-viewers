@@ -817,10 +817,11 @@ function initNXDivs() {
 
                     },
                     applyAAFormating: function (list) {
+
+                        //For test console.log(JSON.stringify(list));
+
                         var datestart = new Date().getTime();
                         var HashAA = [];
-                        var proteoCoverage = 0;
-                        var pepCoverage = 0;
                         var jMin = 0;
                         var begin = 1;
                         var subseqColor = "";
@@ -848,10 +849,8 @@ function initNXDivs() {
                             if (syntheticPep > 0) underscore = true;
                             if (naturalPep > 0) {
                                 clr = "#4A57D4";
-                                pepCoverage += 1;
                             }
                             if (proteotypicPep > 0) {
-                                if (syntheticPep === 0) proteoCoverage += 1;
                                 if (proteotypicPep === 1) clr = "#007800";
                                 else clr = "#00C500";
                             }
@@ -882,10 +881,9 @@ function initNXDivs() {
                         }
                         var intermediate = new Date().getTime();
 
-                        proteoCoverage = ((proteoCoverage / seqLength) * 100).toFixed(2);
-                        pepCoverage = ((pepCoverage / seqLength) * 100).toFixed(2);
-                        $("#proteoCover").text(proteoCoverage + "%");
-                        $("#pepCover").text(pepCoverage + "%");
+                        var pepComp = new PeptideComputation();
+                        $("#proteoCover").text(pepComp.computeProteotypicCoverage(list, seqLength) + "%");
+                        $("#pepCover").text(pepComp.computePeptideCoverage(list, seqLength) + "%");
 
                         return HashAA;
                     },

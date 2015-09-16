@@ -1,0 +1,51 @@
+<html xmlns="http://www.w3.org/1999/html">
+<head>
+    <script src="../app/js/peptide-computation.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.0.0-alpha1/jquery.js"></script>
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body >
+<div class="container">
+
+    <div class="page-header">
+        <h1>Peptide Coverage Test</h1>
+    </div>
+
+    <div class="row">
+        <div class="form-group">
+            Protein Length<input type="text" id="proteinLength" value="360">
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="form-group">
+            <textarea id="jsonData" class="form-control">[ { "name": "NX_PEPT01538309", "identifier": "MPGTVATLR", "position": { "first": 1, "second": 9 }, "length": 9, "properties": { "natural": true, "synthetic": false, "proteotypic": true }, "isoformProteotypicity": "Yes", "tissueSpecificity": [ "PeptideAtlas human adrenal gland", "PeptideAtlas human digestive system", "PeptideAtlas human heart", "PeptideAtlas human kidney", "PeptideAtlas human liver", "PeptideAtlas human lung", "PeptideAtlas human others", "PeptideAtlas human plasma" ], "sequence": "MPGTVATLR", "postPeptide": "Q", "include": [ "MPGTVATLR" ], "includedIn": [ ], "sources": { "PeptideAtlas": "PAp00163562" }, "peptideAtlasID": "PAp00163562" }, { "name": "NX_PEPT00363688", "identifier": "MPGTVATLR", "position": { "first": 1, "second": 9 }, "length": 9, "properties": { "natural": false, "synthetic": true, "proteotypic": true }, "isoformProteotypicity": "Yes", "tissueSpecificity": [ "SRMAtlas" ], "sequence": "MPGTVATLR", "postPeptide": "Q", "include": [ ], "includedIn": [ "MPGTVATLR" ], "sources": { "SRMAtlas": "PAp00163562" }, "peptideAtlasID": "" }, { "name": "NX_PEPT01153407", "identifier": "VTAEGDSHTEVVISR", "position": { "first": 238, "second": 252 }, "length": 15, "properties": { "natural": false, "synthetic": true, "proteotypic": true }, "isoformProteotypicity": "Yes", "tissueSpecificity": [ "SRMAtlas" ], "sequence": "VTAEGDSHTEVVISR", "prePeptide": "R", "postPeptide": "R", "include": [ ], "includedIn": [ ], "sources": { "SRMAtlas": "PAp01574406" }, "peptideAtlasID": "" }, { "name": "NX_PEPT01115176", "identifier": "APPRPGPPDPAYR", "position": { "first": 287, "second": 299 }, "length": 13, "properties": { "natural": false, "synthetic": true, "proteotypic": true }, "isoformProteotypicity": "Yes", "tissueSpecificity": [ "SRMAtlas" ], "sequence": "APPRPGPPDPAYR", "prePeptide": "R", "postPeptide": "R", "include": [ ], "includedIn": [ ], "sources": { "SRMAtlas": "PAp01073943" }, "peptideAtlasID": "" }, { "name": "NX_PEPT01120622", "identifier": "FNGDVLSPSYIQSFR", "position": { "first": 308, "second": 322 }, "length": 15, "properties": { "natural": false, "synthetic": true, "proteotypic": true }, "isoformProteotypicity": "Yes", "tissueSpecificity": [ "SRMAtlas" ], "sequence": "FNGDVLSPSYIQSFR", "prePeptide": "R", "postPeptide": "R", "include": [ ], "includedIn": [ ], "sources": { "SRMAtlas": "PAp01559952" }, "peptideAtlasID": "" }, { "name": "NX_PEPT01152732", "identifier": "GPLTACSGPPVR", "position": { "first": 348, "second": 359 }, "length": 12, "properties": { "natural": false, "synthetic": true, "proteotypic": true }, "isoformProteotypicity": "Yes", "tissueSpecificity": [ "SRMAtlas" ], "sequence": "GPLTACSGPPVR", "prePeptide": "R", "include": [ ], "includedIn": [ "GPLTACSGPPVRV" ], "sources": { "SRMAtlas": "PAp01557502" }, "peptideAtlasID": "" }, { "name": "NX_PEPT02076334", "identifier": "GPLTACSGPPVRV", "position": { "first": 348, "second": 360 }, "length": 13, "properties": { "natural": true, "synthetic": false, "proteotypic": true }, "isoformProteotypicity": "Yes", "tissueSpecificity": [ "PMID_23312004" ], "sequence": "GPLTACSGPPVRV", "prePeptide": "R", "include": [ "GPLTACSGPPVR" ], "includedIn": [ ], "sources": { "PubMed": "23312004" }, "peptideAtlasID": "" } ]   </textarea>
+        </div>
+        To get this json make a JSON.stringify on peptide js
+    </div>
+    <button id="computeButton" type="button" class="btn btn-info">Compute coverage</button>
+    <span id="pepResult" class="badge"></span>
+    <span id="protResult" class="badge"></span>
+
+
+</div>
+<script>
+
+
+    $( "#computeButton" ).click(function() {
+
+        var pepComputation = new PeptideComputation();
+        var peptides = JSON.parse($("#jsonData").val());
+        var proteinLength = parseInt($("#proteinLength").val());
+        var pepCov = pepComputation.computePeptideCoverage(peptides, proteinLength);
+        var protCov = pepComputation.computeProteotypicCoverage(peptides, proteinLength);
+
+        $("#protResult").text(protCov + "% proteotypic");
+        $("#pepResult").text(pepCov + "% peptide coverage");
+
+    });
+
+
+</script>
+</body>
+</html>
