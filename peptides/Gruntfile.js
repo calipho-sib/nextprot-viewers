@@ -9,19 +9,18 @@ module.exports = function (grunt) {
             },
             basic: {
                 src: [
-          'bower_components/nextprot/dist/nextprot.bundle.js',
-          'bower_components/bootstrap/dist/js/bootstrap.min.js',
-          'bower_components/d3/d3.min.js',
-          'vendor/highcharts.js',
-          'bower_components/sequence-viewer/dist/sequence-viewer.js',
-          'bower_components/feature-viewer/dist/feature-viewer.js',
-          'bower_components/iframe-resizer/js/iframeResizer.contentWindow.min.js',
-          'app/js/gist_templates.js',
-          'vendor/stupidtable.js',
-          'app/js/nextprot-histogram.js',
-          'app/js/gist.js'
-
-        ],
+                    'bower_components/nextprot/dist/nextprot.bundle.js',
+                    'bower_components/bootstrap/dist/js/bootstrap.min.js',
+                    'bower_components/d3/d3.min.js',
+                    'vendor/highcharts.js',
+                    'bower_components/sequence-viewer/dist/sequence-viewer.js',
+                    'bower_components/feature-viewer/dist/feature-viewer.js',
+                    'bower_components/iframe-resizer/js/iframeResizer.contentWindow.min.js',
+                    'app/js/gist_templates.js',
+                    'vendor/stupidtable.js',
+                    'app/js/nextprot-histogram.js',
+                    'app/js/gist.js'
+                ],
                 dest: 'dist/peptide-viewer.bundle.js'
             },
             extras: {
@@ -44,7 +43,8 @@ module.exports = function (grunt) {
                 options: {
                     livereload: true
                 },
-                files: ['app/js/*.js']
+                files: ['app/js/*.js'],
+                tasks: ['concat']
             },
             handlebars: {
                 files: 'app/assets/templates/*.tmpl',
