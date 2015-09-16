@@ -25,7 +25,10 @@ module.exports = function (grunt) {
                 dest: 'dist/peptide-viewer.bundle.js'
             },
             extras: {
-                src: ['app/css/gist.css', 'bower_components/bootstrap/dist/css/bootstrap.min.css', 'bower_components/feature-viewer/css/style.css'],
+                src: ['app/css/peptide.css',
+                      'bower_components/bootstrap/dist/css/bootstrap.min.css',
+                      'bower_components/feature-viewer/css/style.css',
+                      'bower_components/css-spinners/css/spinner/heartbeat.css'],
                 dest: 'dist/peptide-viewer.css'
             }
 
