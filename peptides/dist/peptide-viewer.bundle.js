@@ -16464,41 +16464,6 @@ function initNXDivs() {
             }
         })(jQuery);
 
-        function nxPviz(annotations, isoforms) {
-            if ($("#main").length > 0) {
-                var pviz = this.pviz;
-
-                var seq = isoforms[0].sequence;
-                var seqEntry = new pviz.SeqEntry({
-                    sequence: seq
-                });
-
-                var view = new pviz.SeqEntryAnnotInteractiveView({
-                    model: seqEntry,
-                    el: '#main'
-                });
-                $("#main").prepend("<div style=\"border-bottom: 1px solid #E7EAEC;padding-bottom:5px;margin-bottom: 15px;\">" +
-                    "<div style=\"display:inline-block;\">" +
-                    "<span id=\"numberOfFeatures\" class=\"badge\" style=\"background:#C50063;color:white;padding:8px;border-radius:50%;margin-right:10px;vertical-align:middle;\"></span>" +
-                    "</div><h4 style=\"display:inline-block;vertical-align:middle;\">Secondary structure</h4></div>");
-                //Setting secondary structure
-                var features = [];
-                $("#numberOfFeatures").text(annotations.length);
-                annotations.forEach(function (annot) {
-                    var isoform1 = nxEntryName + "-1";
-                    features.push({
-                        category: 'secondary structure',
-                        type: (annot.category === "beta strand") ? "beta_strand" : annot.category,
-                        start: annot.targetingIsoformsMap[isoform1].firstPosition,
-                        end: annot.targetingIsoformsMap[isoform1].lastPosition
-                    });
-                });
-                //Adding features
-                seqEntry.addFeatures(features);
-                //Render at the end
-                view.render();
-            }
-        }
 
         var getInfoForIsoform = {
             firstLoad: function () {
