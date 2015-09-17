@@ -43,16 +43,16 @@ module.exports = function (grunt) {
             }
         },
         watch: {
+            options: {
+                livereload: true
+            },
             all: {
-                options: {
-                    livereload: true
-                },
                 files: ['app/js/*.js'],
                 tasks: ['concat']
             },
             handlebars: {
                 files: 'app/assets/templates/*.tmpl',
-                tasks: ['handlebars:compile']
+                tasks: ['handlebars:compile', 'concat']
             }
         },
         handlebars: {
