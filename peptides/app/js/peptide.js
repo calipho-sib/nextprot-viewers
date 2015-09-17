@@ -754,6 +754,8 @@ function initNXDivs() {
                     //$("#pepTableSorted th:nth-child(3)").stupidsort("asc");
                 });
 
+
+                //events
                 var HL = {
                     "HashAA": [],
                     "HashAA2": [],
@@ -773,9 +775,12 @@ function initNXDivs() {
                         positions = positions.split("-").map(function (o) {
                             return parseInt(o)
                         });
-                        seq1.coverage(pepComp.getHighlighting(datas.Peptides), positions[0] - 1, positions[1] - 1);
+                        var seqLength = getInfoForIsoform.Sequence(isoforms, isoName).length;
 
-                        //seq1.coverage(HL.HashAA, positions[0] - 1, positions[1] - 1);
+                        var hl = pepComp.getHighlighting(datas.Peptides, seqLength);
+                        seq1.coverage(hl, positions[0] - 1, positions[1] - 1);
+
+                        //TODO looks like this is not doing anything
                         var ElementTop = $('#peptideHighlighted').position().top - 140;
                         var scrollPosition = $("#scroller").scrollTop();
                         var scrollingLength = ElementTop + scrollPosition;
@@ -785,7 +790,7 @@ function initNXDivs() {
                         $(function () {
                             $("#preLoaderActive").remove();
                         });
-                        var dateHLend = new Date().getTime();
+
 
                     },
                     //if clicking anywhere in the document
@@ -799,6 +804,7 @@ function initNXDivs() {
                         $("#proteoCover").text(pepComp.computeProteotypicCoverage(list, seqLength) + "%");
                         $("#pepCover").text(pepComp.computePeptideCoverage(list, seqLength) + "%");
 
+                        var hl = pepComp.getHighlighting(list, seqLength);
                         seq1.coverage(pepComp.getHighlighting(list, seqLength));
 
                         var legend = [{
