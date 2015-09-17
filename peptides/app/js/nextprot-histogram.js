@@ -37,7 +37,14 @@ if ($("#nx-histogram").length > 0) {
         }
     });
 
-        //var colors = Highcharts.getOptions().colors;
+
+    function sortPositions(listPositions) {
+        return listPositions.sort(function (posA, posB) {
+            return (posA.x - posB.x);
+        })
+    }
+
+    //var colors = Highcharts.getOptions().colors;
         //$.each(colors, function (i, color) {
         //    colors[i] =
         //    {
@@ -111,11 +118,11 @@ if ($("#nx-histogram").length > 0) {
             credits: {enabled: false},
             series: [{
                 name: "proteotypic",
-                data: proteoDistribution
+                data: sortPositions(proteoDistribution)
             },
             {
                 name: "non-proteotypic",
-                data: nonProteoDistribution
+                data: sortPositions(nonProteoDistribution)
             }]
 
         });
