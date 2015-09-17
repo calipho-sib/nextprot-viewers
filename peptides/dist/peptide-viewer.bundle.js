@@ -16965,7 +16965,7 @@ function initNXDivs() {
                     if (peptide.properties.natural) str += "natural|";
                     if (peptide.properties.synthetic) str += "synthetic|";
 
-                    str = str.substr(0, str.length - 1) + " peptides";
+                    str = str.substr(0, str.length - 1) + "(s)";
 
                     $('#pepIncludesInType').html(str);
                     $('#pepIncludedFromType').html(str);
