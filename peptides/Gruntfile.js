@@ -17,7 +17,7 @@ module.exports = function (grunt) {
                     'bower_components/feature-viewer/dist/feature-viewer.js',
                     'bower_components/iframe-resizer/js/iframeResizer.contentWindow.min.js',
                     'app/js/peptide-computation.js',
-                    'app/js/peptide_templates.js',
+                    'app/build/compiled_peptide_templates.js',
                     'vendor/stupidtable.js',
                     'app/js/nextprot-histogram.js',
                     'app/js/peptide.js'
@@ -58,7 +58,7 @@ module.exports = function (grunt) {
         handlebars: {
             compile: {
                 src: 'app/assets/templates/*.tmpl',
-                dest: 'app/js/peptide_templates.js',
+                dest: 'app/build/compiled_peptide_templates.js',
                 options: {
                     namespace: "HBtemplates"
                 }
