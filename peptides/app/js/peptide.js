@@ -720,6 +720,37 @@ function initNXDivs() {
                 });
 
 
+                var noPepColor = 'grey';
+                var nonProtColor = '#4A57D4';
+                var singProtColor = '#007800';
+                var sevProtColor = '#69CC33';
+                var synPepColor = '#fff';
+
+                var legend = [{
+                    name: "non-proteotypic",
+                    color: nonProtColor,
+                    underscore: false}, {
+                    name: "single proteotypic",
+                    color: singProtColor,
+                    underscore: false}, {
+                    name: "several proteotypic",
+                    color: sevProtColor,
+                    underscore: false}, {
+                    name: "synthetic",
+                    color: synPepColor,
+                    underscore: true
+                }];
+
+
+                function getColorMap(state){
+                    switch(state){
+                        case 0 : return noPepColor; //'grey';
+                        case 1 : return nonProtColor; //'blue';
+                        case 10 : return singProtColor; //'green';
+                        default : return sevProtColor // 20 or
+                    }
+                }
+
                 //events
                 var HL = {
                     "HashAA": [],
@@ -742,7 +773,7 @@ function initNXDivs() {
                         });
                         var seqLength = getInfoForIsoform.Sequence(isoforms, isoName).length;
 
-                        var hl = pepComp.getHighlighting(datas.Peptides, seqLength);
+                        var hl = PeptideComputation.getAminoAcidColors(datas.Peptides, seqLength, getColorMap);
                         seq1.coverage(hl, positions[0] - 1, positions[1] - 1);
 
                         //TODO looks like this is not doing anything
@@ -769,23 +800,7 @@ function initNXDivs() {
                         $("#proteoCover").text(pepComp.computeProteotypicCoverage(list, seqLength) + "%");
                         $("#pepCover").text(pepComp.computePeptideCoverage(list, seqLength) + "%");
 
-                        var hl = pepComp.getHighlighting(list, seqLength);
-                        seq1.coverage(pepComp.getHighlighting(list, seqLength));
-
-                        var legend = [{
-                            name: "non-proteotypic",
-                            color: "#4A57D4",
-                            underscore: false}, {
-                            name: "single proteotypic",
-                            color: "#007800",
-                            underscore: false}, {
-                            name: "several proteotypic",
-                            color: "#69CC33",
-                            underscore: false}, {
-                            name: "synthetic",
-                            color: "#fff",
-                            underscore: true
-                        }];
+                        seq1.coverage(pepComp.getAminoAcidColors(list, seqLength, getColorMap));
                         seq1.addLegend(legend);
                         coveredSeq = $("#fastaSeq").html();
 

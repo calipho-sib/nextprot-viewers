@@ -45,28 +45,7 @@ var PeptideComputation = function () {
     }
 
 
-    /**
-     *
-     * //Coverage list
-     var exempleSequenceCoverage = [
-     {start: 0, end: 25, color: "black", underscore: false},
-     {start: 25, end: 47, color: "#ff0000", underscore: false},
-     {start: 47, end: 54, color: "#ff0000", underscore: true},
-     {start: 54, end: 55, color: "#ff0000", underscore: false},
-     {start: 55, end: 56, color: "black", underscore: false},
-     {start: 56, end: 89, color: "#69CC33", underscore: false},
-     {start: 89, end: 90, color: "black", underscore: false},
-     {start: 90, end: 110, color: "#ff0000", underscore: false}
-     ];
-     seq3.coverage(exempleSequenceCoverage);
-     *
-     *
-     *
-     * @param peptides
-     * @param proteinLength
-     * @returns {*}
-     */
-    function getHighlighting (peptides, proteinLength){
+    function getAminoAcidColors (peptides, proteinLength, colorMapFunction){
 
         var result = [];
         var aminoAcidsCoverage = [];
@@ -128,25 +107,18 @@ var PeptideComputation = function () {
         for(var i=0; i<proteinLength; i++){
             var currentState = {cov: aminoAcidsCoverage[i], synth: aminoAcidsSyntheticCoverage[i]};
             if(currentState!=lastState) {
-                result.push({start: lastAminoAcidIndex, end: i, color: getColorMap(lastState.cov), underscore: (lastState.synth === 1)});
+                result.push({start: lastAminoAcidIndex, end: i, color: colorMapFunction(lastState.cov), underscore: (lastState.synth === 1)});
                 lastState = currentState;
                 lastAminoAcidIndex = i;
             }
         }
-        result.push({start: lastAminoAcidIndex, end: i, color: getColorMap(lastState.cov), underscore: (lastState.synth === 1)});
+        result.push({start: lastAminoAcidIndex, end: i, color: colorMapFunction(lastState.cov), underscore: (lastState.synth === 1)});
 
         return result;
 
     }
 
-    function getColorMap(state){
-        switch(state){
-            case 0 : return 'grey';
-            case 1 : return 'blue';
-            case 10 : return 'green';
-            default : return 'violet'; // 20 or
-        }
-    }
+
 
 
     function computePeptideCoverage (peptides, proteinLength){
@@ -166,7 +138,7 @@ var PeptideComputation = function () {
 
         computePeptideCoverage : computePeptideCoverage,
         computeProteotypicCoverage : computeProteotypicCoverage,
-        getHighlighting : getHighlighting
+        getAminoAcidColors : getAminoAcidColors
 
     }
 
