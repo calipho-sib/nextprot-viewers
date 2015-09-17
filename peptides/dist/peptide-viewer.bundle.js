@@ -16428,7 +16428,6 @@ function initNXDivs() {
         var isoforms;
         var firstIso;
         var currentIso;
-        var annotations;
         var peptideMappings;
         var srmPeptideMappings;
         var matureProtein;
@@ -16457,8 +16456,8 @@ function initNXDivs() {
 
         var getInfoForIsoform = {
             firstLoad: function () {
-                RenderSequenceForIsoform(isoforms, nxEntryName + "-1");
-                RenderPeptidesForIsoform(peptideMappings, nxEntryName + "-1");
+                renderSequenceForIsoform(isoforms, nxEntryName + "-1");
+                renderPeptidesForIsoform(peptideMappings, nxEntryName + "-1");
             },
             Isoform: function () {
                 $(".isoformNames").click(getInfoForIsoform.reload);
@@ -16471,8 +16470,8 @@ function initNXDivs() {
                 var isoID = $(this).text();
                 $("#nx-detailedPeptide").html("");
                 $("#nx-detailedPeptide").hide("slow");
-                RenderSequenceForIsoform(isoforms, isoID);
-                RenderPeptidesForIsoform(peptideMappings, isoID);
+                renderSequenceForIsoform(isoforms, isoID);
+                renderPeptidesForIsoform(peptideMappings, isoID);
                 $("#featureViewer").html("");
                 currentIso = isoID;
                 createSVG(isoforms, isoID);
@@ -16672,51 +16671,9 @@ function initNXDivs() {
             }
         }
 
-        function RenderFeatureViewer(data, isoName) {
-            var metaData = [
-                {
-                    name: "Sequence"
-                }, {
-                    name: "Peptide",
-                    className: "pep",
-                    color: "#B3E1D1",
-                    type: "multipleRect",
-                    filter: "Peptide"
-                },
-                {
-                    name: "Srm Peptide",
-                    className: "srmPep",
-                    color: "#B3E1F0",
-                    type: "multipleRect",
-                    filter: "none"
-                }, {
-                    name: "Mature protein",
-                    className: "mat",
-                    color: "#B3B3C2",
-                    type: "rect",
-                    filter: "Processing"
-                },
-                {
-                    name: "Propeptide",
-                    className: "pro",
-                    color: "#B3B3B3",
-                    type: "rect",
-                    filter: "Processing"
-                }
-        ];
-            var featuresByIsoform = [];
-            for (var i = 1; i < data.length - 1; i++) {
-                var feat = NXUtils.convertMappingsToIsoformMap(data[i], metaData[i].name, metaData[i].filter);
-                featuresByIsoform.push(feat);
-                var featForViewer = NXViewerUtils.convertNXAnnotations(feat, metaData[i]);
-                featuresForViewer.push(featForViewer);
-            }
-            //addFiltering();
-            createSVG(isoforms, isoName);
-            addFeatures(isoName);
-        }
 
-        var RenderSequenceForIsoform = function (isoforms, isoName) {
+
+        var renderSequenceForIsoform = function (isoforms, isoName) {
 
 
             ////////////////////////// TEMPLATE SEQUENCE
@@ -17106,7 +17063,7 @@ function initNXDivs() {
                 //adjustHeight("#info-left","#info-right");
             }
         };
-        var RenderPeptidesForIsoform = function (peptideMappings, isoName) {
+        var renderPeptidesForIsoform = function (peptideMappings, isoName) {
 
             ////////////////////////// TEMPLATE PEPTIDES
 
@@ -17243,8 +17200,33 @@ function initNXDivs() {
             }
         };
 
+
+        function renderFeatureViewer(data, isoName) {
+
+            var metaData = [
+                { name: "Sequence" },
+                { name: "Peptide",  className: "pep",  color: "#B3E1D1", type: "multipleRect", filter: "Peptide"},
+                { name: "SRM Peptide", className: "srmPep",  color: "#B3E1F0", type: "multipleRect", filter: "none"},
+                { name: "Mature protein", className: "mat", color: "#B3B3C2", type: "rect", filter: "Processing" },
+                { name: "Propeptide", className: "pro", color: "#B3B3B3", type: "rect",  filter: "Processing" }
+            ];
+
+            for (var i = 1; i < data.length - 1; i++) {
+                var feat = NXUtils.convertMappingsToIsoformMap(data[i], metaData[i].name, metaData[i].filter);
+                var featForViewer = NXViewerUtils.convertNXAnnotations(feat, metaData[i]);
+                featuresForViewer.push(featForViewer);
+            }
+            createSVG(isoforms, isoName);
+            addFeatures(isoName);
+        }
+
         $(function () {
-        [nx.getProteinSequence(nxEntryName), nx.getPeptide(nxEntryName), nx.getSrmPeptide(nxEntryName), nx.getMatureProtein(nxEntryName), nx.getProPeptide(nxEntryName), nx.getSecondaryStructure(nxEntryName)].reduce(function (sequence, dataPromise) {
+        [   nx.getProteinSequence(nxEntryName), //1
+            nx.getPeptide(nxEntryName), //2
+            nx.getSrmPeptide(nxEntryName), //3
+            nx.getMatureProtein(nxEntryName), //4
+            nx.getProPeptide(nxEntryName) //5
+        ] .reduce(function (sequence, dataPromise) {
                     return sequence.then(function () {
                         return dataPromise;
                     }).then(function (oneData) {
@@ -17255,12 +17237,16 @@ function initNXDivs() {
                             allFeatures.push(oneData);
                             firstIso = getFirstIsoform(isoforms);
                             currentIso = firstIso;
-                            RenderSequenceForIsoform(isoforms, firstIso);
+                            renderSequenceForIsoform(isoforms, firstIso);
                             nxIsoformChoice(isoforms);
                             break;
-                        case 2:
+                            case 2:
+
+                            //TODO peptideMappings was given as a reference in allFeatures and peptides were added to it on case 3!
+                            //TODO for entry NX_Q8IYL9 in here we find allFeatures[1] = 2 but on case 3 we find  allFeatures[1] = 8
+                            //TODO Daniel: I have used splice(0) to give a shallow copy in allFeatures (I hope this doesn't have any other consequences...) check this Mathieu
                             peptideMappings = oneData;
-                            allFeatures.push(oneData);
+                            allFeatures.push(oneData.splice(0)); //TODO it was like this: allFeatures.push(oneData);
                             break;
                         case 3:
                             srmPeptideMappings = oneData;
@@ -17274,7 +17260,7 @@ function initNXDivs() {
                                     }
                                 }
                                 if (alreadySaved === false) {
-                                    peptideMappings.push(o);
+                                    peptideMappings.push(o); //TODO fix this! This is referenced in allFeatures[1] so it should not be pushed like this
                                 }
                             });
                             break;
@@ -17286,17 +17272,9 @@ function initNXDivs() {
                             proPeptide = oneData.annot;
                             allFeatures.push(oneData.annot);
 
-                            RenderPeptidesForIsoform(peptideMappings, firstIso);
-                            RenderFeatureViewer(allFeatures, firstIso);
+                            renderPeptidesForIsoform(peptideMappings, firstIso);
+                            renderFeatureViewer(allFeatures, firstIso);
                             showFeatureViewer();
-
-                            //console.log(oneData[14]);
-                            //var tv = new TripleViewer(entry);
-                            //tv.init(oneData,metaData);
-                            break;
-                        case 6:
-                            annotations = oneData;
-                            //nxPviz(annotations, isoforms);
 
                             break;
                         }
