@@ -14,7 +14,6 @@ var PeptideComputation = (function () {
         })
     }
 
-
     function computeCoveragePercentage(listPositions, length) {
 
         var currentPosition = 0;
@@ -46,10 +45,50 @@ var PeptideComputation = (function () {
             })
 
         return computeCoveragePercentage(positions, proteinLength);
-
-
     }
 
+    // Return true if pepA is striclty included in pepB and both of the same nature.
+    // PepA     --  --     -- ----- ---   -----
+    // PepB    ---- ---- ---- -----  ----   --
+    // Returns true true true false false false
+    function isIncludedIn(pepA, pepB) {
+
+        var ret = false;
+
+        if (pepA.properties.natural && pepB.properties.natural || pepA.properties.synthetic && pepB.properties.synthetic) {
+            if (pepA.position.first == pepB.position.first && pepA.position.second == pepB.position.second)
+                ret = false;
+            else
+                ret = pepA.position.first >= pepB.position.first && pepA.position.second <= pepB.position.second;
+        }
+
+        //console.log("is ", pepA.sequence, pepA.position.first, ":", pepA.position.second, ", natu?", pepA.properties.natural, " synth?", pepA.properties.synthetic,
+        //    " included in ", pepB.sequence, pepB.position.first, ":", pepB.position.second, ", natu?", pepB.properties.natural, " synth?", pepB.properties.synthetic,"? ANSWER=", ret);
+
+        return ret;
+    }
+
+    function updateInclusionLists(pepA, pepB) {
+
+        if (pepA.includedIn.indexOf(pepB.identifier) === -1) {
+            pepA.includedIn.push(pepB.identifier);
+            pepB.include.push(pepA.identifier);
+        }
+    }
+
+    PeptideComputation.prototype.computeInterPeptideInclusions = function(peptides) {
+
+        for (var i = 0; i < peptides.length; i++) {
+            var pepA = peptides[i];
+
+            for (var j = i + 1; j < peptides.length; j++) {
+                var pepB = peptides[j];
+
+                if (isIncludedIn(pepA, pepB)) updateInclusionLists(pepA, pepB);
+                else if (isIncludedIn(pepB, pepA)) updateInclusionLists(pepB, pepA);
+            }
+        }
+    };
 
     PeptideComputation.prototype.getAminoAcidColors = function (peptides, proteinLength, colorMapFunction) {
 
@@ -140,8 +179,7 @@ var PeptideComputation = (function () {
 
         return result;
 
-    }
-
+    };
 
     PeptideComputation.prototype.computePeptideCoverage = function (peptides, proteinLength) {
 
@@ -149,7 +187,7 @@ var PeptideComputation = (function () {
             return pep.properties.natural
         });
 
-    }
+    };
 
     PeptideComputation.prototype.computeProteotypicCoverage = function (peptides, proteinLength) {
 
@@ -157,9 +195,7 @@ var PeptideComputation = (function () {
             return (pep.properties.natural && pep.properties.proteotypic)
         });
 
-    }
+    };
 
     return PeptideComputation;
-
-
 }());

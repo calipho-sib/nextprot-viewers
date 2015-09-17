@@ -15690,7 +15690,6 @@ var PeptideComputation = (function () {
         })
     }
 
-
     function computeCoveragePercentage(listPositions, length) {
 
         var currentPosition = 0;
@@ -15722,10 +15721,52 @@ var PeptideComputation = (function () {
             })
 
         return computeCoveragePercentage(positions, proteinLength);
-
-
     }
 
+    // Return true if pepA is striclty included in pepB and both of the same nature.
+    // PepA     --  --     -- ----- ---   -----
+    // PepB    ---- ---- ---- -----  ----   --
+    // Returns true true true false false false
+    function isIncludedIn(pepA, pepB) {
+
+        var ret = false;
+
+        if (pepA.properties.natural && pepB.properties.natural || pepA.properties.synthetic && pepB.properties.synthetic) {
+            if (pepA.position.first == pepB.position.first && pepA.position.second == pepB.position.second)
+                ret = false;
+            else
+                ret = pepA.position.first >= pepB.position.first && pepA.position.second <= pepB.position.second;
+        }
+
+        console.log("is ", pepA.sequence, pepA.position.first, ":", pepA.position.second, ", natu?", pepA.properties.natural, " synth?", pepA.properties.synthetic,
+            " included in ", pepB.sequence, pepB.position.first, ":", pepB.position.second, ", natu?", pepB.properties.natural, " synth?", pepB.properties.synthetic,"? ANSWER=", ret);
+
+        return ret;
+    }
+
+    PeptideComputation.prototype.computeInterPeptideInclusions = function(peptides) {
+
+        console.log(peptides.length);
+        for (var i = 0; i < peptides.length; i++) {
+            for (var j = i + 1; j < peptides.length; j++) {
+
+                var pepA = peptides[i];
+                var pepB = peptides[j];
+
+                //if (pepB.position.first > pepA.position.second) break;
+
+                if (isIncludedIn(pepA, pepB)) {
+
+                    if (pepA.includedIn.indexOf(pepB.identifier) === -1) pepA.includedIn.push(pepB.identifier);
+                    if (pepB.include.indexOf(pepA.identifier) === -1) pepB.include.push(pepA.identifier);
+                } else if (isIncludedIn(pepB, pepA)) {
+
+                    if (pepB.includedIn.indexOf(pepA.identifier) === -1) pepB.includedIn.push(pepA.identifier);
+                    if (pepA.include.indexOf(pepB.identifier) === -1) pepA.include.push(pepB.identifier);
+                }
+            }
+        }
+    };
 
     PeptideComputation.prototype.getAminoAcidColors = function (peptides, proteinLength, colorMapFunction) {
 
@@ -15816,8 +15857,7 @@ var PeptideComputation = (function () {
 
         return result;
 
-    }
-
+    };
 
     PeptideComputation.prototype.computePeptideCoverage = function (peptides, proteinLength) {
 
@@ -15825,7 +15865,7 @@ var PeptideComputation = (function () {
             return pep.properties.natural
         });
 
-    }
+    };
 
     PeptideComputation.prototype.computeProteotypicCoverage = function (peptides, proteinLength) {
 
@@ -15833,11 +15873,9 @@ var PeptideComputation = (function () {
             return (pep.properties.natural && pep.properties.proteotypic)
         });
 
-    }
+    };
 
     return PeptideComputation;
-
-
 }());
 ;
 this["HBtemplates"] = this["HBtemplates"] || {};
@@ -16439,7 +16477,7 @@ function initNXDivs() {
 
         var pepComp = new PeptideComputation();
 
-    function getFirstIsoform(isoformList) {
+        function getFirstIsoform(isoformList) {
             var seqIDs = isoformList.map(function (p) {
                 return p.uniqueName
             }).sort(function (a, b) {
@@ -16480,7 +16518,7 @@ function initNXDivs() {
 
             },
             Peptides: function (peptideMappings, isoName) {
-                var peptideMap = [];
+                var peptideList = [];
                 peptideMappings.forEach(function (o) {
                     if (o.isoformSpecificity[isoName]) {
                         for (var i = 0; i < o.isoformSpecificity[isoName].positions.length; i++) {
@@ -16533,49 +16571,20 @@ function initNXDivs() {
 
                             peptide.prePeptide = getInfoForIsoform.Sequence(isoforms, isoName)[peptide.position.first - 2];
                             peptide.postPeptide = getInfoForIsoform.Sequence(isoforms, isoName)[peptide.position.second + 1];
-                            peptideMap.push(peptide);
+                            peptideList.push(peptide);
                         }
                     }
                 });
-                peptideMap.sort(function (a, b) {
+                peptideList.sort(function (a, b) {
                     return a.length - b.length;
                 });
-                peptideMap.sort(function (a, b) {
+                peptideList.sort(function (a, b) {
                     return a.position.first - b.position.first;
                 });
-                var intermediate = new Date().getTime();
 
+                pepComp.computeInterPeptideInclusions(peptideList);
 
-                // A ---****---
-                // B ----**----
-                var isIncludedIn = function (pepA, pepB) {
-                    return ((pepA.position.first <= pepB.position.first) && (pepA.position.second >= pepB.position.second))
-                }
-
-
-                for (var i = 0; i < peptideMap.length; i++) {
-                    for (var j = i + 1; j < peptideMap.length; j++) {
-
-
-                        var pepA = peptideMap[i];
-                        var pepB = peptideMap[j];
-
-                        if (pepB.position.first > pepA.position.second) break;
-
-                        if (isIncludedIn(pepA, pepB)) {
-                            if (pepA.include.indexOf(pepB.identifier) === -1) pepA.include.push(pepB.identifier);
-                            if (pepB.includedIn.indexOf(pepA.identifier) === -1) pepB.includedIn.push(pepA.identifier);
-                        } else if (isIncludedIn(pepB, pepA)) {
-                            if (pepB.include.indexOf(pepA.identifier) === -1) pepB.include.push(pepA.identifier);
-                            if (pepA.includedIn.indexOf(pepB.identifier) === -1) pepA.includedIn.push(pepB.identifier);
-                        }
-
-                    }
-                }
-                var dateEnd = new Date().getTime();
-
-
-                return peptideMap;
+                return peptideList;
             },
             Sequence: function (isoforms, isoName) {
                 var isoSeq = "";
