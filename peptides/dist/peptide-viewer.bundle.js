@@ -17201,7 +17201,8 @@ function initNXDivs() {
                         positions = positions.split("-").map(function (o) {
                             return parseInt(o)
                         });
-                        seq1.coverage(pepComp.getHighlighting(datas.Peptides), positions[0] - 1, positions[1] - 1);
+                        var seqLength = getInfoForIsoform.Sequence(isoforms, isoName).length;
+                        seq1.coverage(pepComp.getHighlighting(datas.Peptides,seqLength), positions[0] - 1, positions[1] - 1);
 
                         //seq1.coverage(HL.HashAA, positions[0] - 1, positions[1] - 1);
                         var ElementTop = $('#peptideHighlighted').position().top - 140;
