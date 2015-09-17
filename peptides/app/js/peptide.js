@@ -545,7 +545,17 @@ function initNXDivs() {
                             peptide.includedIn.forEach(function (o) {
                                 $('#pepIncludedIn').append("<li>" + o + "</li>")
                             });
+
                         }
+                        var str="";
+                        if (peptide.properties.natural) str += "natural|";
+                        if (peptide.properties.synthetic) str += "synthetic|";
+
+                        str = str.substr(0, str.length-1) + " peptides";
+
+                        $('#pepIncludesInType').html(str);
+                        $('#pepIncludedFromType').html(str);
+
                         var pmidFound = false;
                         //Object.keys(peptide.sources).forEach(function (o) {
                         //    if (o !== "PubMed") $("#pepSources").append("<li>" + o + " (" + peptide.sources[o] + ")" + "</li>");
