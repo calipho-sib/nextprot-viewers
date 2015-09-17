@@ -16684,7 +16684,7 @@ function initNXDivs() {
                     filter: "Peptide"
                 },
                 {
-                    name: "Srm Peptide",
+                    name: "SRM Peptide",
                     className: "srmPep",
                     color: "#B3E1F0",
                     type: "multipleRect",
