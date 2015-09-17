@@ -36,8 +36,8 @@ function initNXDivs() {
 
     var getInfoForIsoform = {
         firstLoad: function () {
-            renderSequenceForIsoform(isoforms, nxEntryName + "-1");
-            renderPeptidesForIsoform(peptideMappings, nxEntryName + "-1");
+            RenderSequenceForIsoform(isoforms, nxEntryName + "-1");
+            RenderPeptidesForIsoform(peptideMappings, nxEntryName + "-1");
         },
         Isoform: function () {
             $(".isoformNames").click(getInfoForIsoform.reload);
@@ -50,8 +50,8 @@ function initNXDivs() {
             var isoID = $(this).text();
             $("#nx-detailedPeptide").html("");
             $("#nx-detailedPeptide").hide("slow");
-            renderSequenceForIsoform(isoforms, isoID);
-            renderPeptidesForIsoform(peptideMappings, isoID);
+            RenderSequenceForIsoform(isoforms, isoID);
+            RenderPeptidesForIsoform(peptideMappings, isoID);
             $("#featureViewer").html("");
             currentIso = isoID;
             createSVG(isoforms, isoID);
@@ -59,7 +59,7 @@ function initNXDivs() {
 
         },
         Peptides: function (peptideMappings, isoName) {
-            var peptideMap = [];
+            var peptideList = [];
             peptideMappings.forEach(function (o) {
                 if (o.isoformSpecificity[isoName]) {
                     for (var i = 0; i < o.isoformSpecificity[isoName].positions.length; i++) {
@@ -71,7 +71,6 @@ function initNXDivs() {
                             if (q.databaseName === "PeptideAtlas") peptideAtlasID = q.accession;
                             dict[q.databaseName] = q.accession;
                         });
-
 
                         var peptide = {
                             "name": o.peptideUniqueName,
@@ -112,49 +111,20 @@ function initNXDivs() {
 
                         peptide.prePeptide = getInfoForIsoform.Sequence(isoforms, isoName)[peptide.position.first - 2];
                         peptide.postPeptide = getInfoForIsoform.Sequence(isoforms, isoName)[peptide.position.second + 1];
-                        peptideMap.push(peptide);
+                        peptideList.push(peptide);
                     }
                 }
             });
-            peptideMap.sort(function (a, b) {
+            peptideList.sort(function (a, b) {
                 return a.length - b.length;
             });
-            peptideMap.sort(function (a, b) {
+            peptideList.sort(function (a, b) {
                 return a.position.first - b.position.first;
             });
-            var intermediate = new Date().getTime();
 
+            pepComp.computeInterPeptideInclusions(peptideList);
 
-            // A ---****---
-            // B ----**----
-            var isIncludedIn = function (pepA, pepB) {
-                return ((pepA.position.first <= pepB.position.first) && (pepA.position.second >= pepB.position.second))
-            }
-
-
-            for (var i = 0; i < peptideMap.length; i++) {
-                for (var j = i + 1; j < peptideMap.length; j++) {
-
-
-                    var pepA = peptideMap[i];
-                    var pepB = peptideMap[j];
-
-                    if (pepB.position.first > pepA.position.second) break;
-
-                    if (isIncludedIn(pepA, pepB)) {
-                        if (pepA.include.indexOf(pepB.identifier) === -1) pepA.include.push(pepB.identifier);
-                        if (pepB.includedIn.indexOf(pepA.identifier) === -1) pepB.includedIn.push(pepA.identifier);
-                    } else if (isIncludedIn(pepB, pepA)) {
-                        if (pepB.include.indexOf(pepA.identifier) === -1) pepB.include.push(pepA.identifier);
-                        if (pepA.includedIn.indexOf(pepB.identifier) === -1) pepA.includedIn.push(pepB.identifier);
-                    }
-
-                }
-            }
-            var dateEnd = new Date().getTime();
-
-
-            return peptideMap;
+            return peptideList;
         },
         Sequence: function (isoforms, isoName) {
             var isoSeq = "";
@@ -469,8 +439,8 @@ function initNXDivs() {
                             if (p.end === o.second) Cterm = "C-term";
                         });
                         $("#peptidePositions").append("<tr><td>" + o.first + "</td><td>" + o.second + "</td>" +
-                        "<td>" + semiTrypticStart + "</td><td>" + semiTrypticEnd + "</td><td style=\"text-align: center;\">" + miscleavage + "</td><td>" + trypticity + "</td>" +
-                        "<td>" + Nterm + "</td><td>" + Cterm + "</td></tr>");
+                            "<td>" + semiTrypticStart + "</td><td>" + semiTrypticEnd + "</td><td style=\"text-align: center;\">" + miscleavage + "</td><td>" + trypticity + "</td>" +
+                            "<td>" + Nterm + "</td><td>" + Cterm + "</td></tr>");
                     });
 
                     $('#first').text(peptide.position);
@@ -529,6 +499,16 @@ function initNXDivs() {
                             $('#pepIncludedIn').append("<li>" + o + "</li>")
                         });
                     }
+
+                    var str = "";
+                    if (peptide.properties.natural) str += "natural|";
+                    if (peptide.properties.synthetic) str += "synthetic|";
+
+                    str = str.substr(0, str.length - 1) + " peptides";
+
+                    $('#pepIncludesInType').html(str);
+                    $('#pepIncludedFromType').html(str);
+
                     var pmidFound = false;
                     //Object.keys(peptide.sources).forEach(function (o) {
                     //    if (o !== "PubMed") $("#pepSources").append("<li>" + o + " (" + peptide.sources[o] + ")" + "</li>");
@@ -545,7 +525,6 @@ function initNXDivs() {
                         }
                         $('#pepSources').append("<li>" + sourceTemp + "</li>")
                     });
-
 
                     var query = "SELECT distinct ?ptmterm ?ptmtype ?ptmstart ?ptmend ?mapstart ?mapend ?ptmlabel ?ptmcomment WHERE {" +
                         "values (?pepName ?iso) {(\"" + peptide.name + "\"^^xsd:string isoform:" + isoName + ") }" +
@@ -593,13 +572,13 @@ function initNXDivs() {
                     if (pmidFound === true) {
                         nx.executeSparql(query).then(function (data) {
                             $('#ptmInfos').append("<div class=\"panel-heading\" style=\"background-color: #F5F5F5;border-bottom: 1px solid #DDD;border-top:1px solid #DDD;font-weight: 500;\">PTM justified by this peptide :</div>" +
-                            "<div id=\"ptmByPeptide\" class=\"panel-body\"></div>");
+                                "<div id=\"ptmByPeptide\" class=\"panel-body\"></div>");
                             if (data.results.bindings.length > 0) {
                                 data.results.bindings.forEach(function (o) {
                                     $('#ptmByPeptide').append("<div class=\"row\"style=\"border-bottom:1px solid #E7EAEC;margin-bottom:5px;\"><dl class=\"col-md-6\"><dt>PTM ID</dt><dd>" + o.ptmterm.value.toString().match(/[^\/]*$/)[0] + "</dd></dl>" +
-                                    "<dl class=\"col-md-6\"><dt>Position</dt><dd>" + o.ptmstart.value + "</dd></dl>" +
-                                    "<dl class=\"col-md-6\"><dt>Type</dt><dd>" + o.ptmtype.value.toString().match(/[^#]*$/)[0].slice() + "</dd></dl>" +
-                                    "<dl class=\"col-md-6\"><dt>Description</dt><dd>" + o.ptmcomment.value + "</dd></dl></div>");
+                                        "<dl class=\"col-md-6\"><dt>Position</dt><dd>" + o.ptmstart.value + "</dd></dl>" +
+                                        "<dl class=\"col-md-6\"><dt>Type</dt><dd>" + o.ptmtype.value.toString().match(/[^#]*$/)[0].slice() + "</dd></dl>" +
+                                        "<dl class=\"col-md-6\"><dt>Description</dt><dd>" + o.ptmcomment.value + "</dd></dl></div>");
                                 });
                             } else $('#ptmByPeptide').html("No PTM found");
                         }, function (error) {
@@ -607,17 +586,17 @@ function initNXDivs() {
                         });
                     } else {
                         $('#ptmInfos').append("<div class=\"panel-heading\" style=\"background-color: #F5F5F5;border-bottom: 1px solid #DDD;border-top:1px solid #DDD;font-weight: 500;\">PTM justified by this peptide :</div>" +
-                        "<div id=\"ptmByPeptide\" class=\"panel-body\">No PTM found</div>");
+                            "<div id=\"ptmByPeptide\" class=\"panel-body\">No PTM found</div>");
                     }
                     nx.executeSparql(queryRegion).then(function (data) {
                         $('#ptmInfos').append("<div class=\"panel-heading\" style=\"background-color: #F5F5F5;border-bottom: 1px solid #DDD;border-top:1px solid #DDD;font-weight: 500;\">PTM present in this region :</div>" +
-                        "<div id=\"ptmByRegion\" class=\"panel-body\"></div>");
+                            "<div id=\"ptmByRegion\" class=\"panel-body\"></div>");
                         if (data.results.bindings.length > 0) {
                             data.results.bindings.forEach(function (o) {
                                 $('#ptmByRegion').append("<div class=\"row\"style=\"border-bottom:1px solid #E7EAEC;margin-bottom:5px;\"><dl class=\"col-md-6\"><dt>PTM ID</dt><dd>" + o.ptmterm.value.toString().match(/[^\/]*$/)[0] + "</dd></dl>" +
-                                "<dl class=\"col-md-6\"><dt>Position</dt><dd>" + o.ptmstart.value + "</dd></dl>" +
-                                "<dl class=\"col-md-6\"><dt>Type</dt><dd>" + o.ptmtype.value.toString().match(/[^#]*$/)[0].slice() + "</dd></dl>" +
-                                "<dl class=\"col-md-6\"><dt>Description</dt><dd>" + o.ptmcomment.value + "</dd></dl></div>");
+                                    "<dl class=\"col-md-6\"><dt>Position</dt><dd>" + o.ptmstart.value + "</dd></dl>" +
+                                    "<dl class=\"col-md-6\"><dt>Type</dt><dd>" + o.ptmtype.value.toString().match(/[^#]*$/)[0].slice() + "</dd></dl>" +
+                                    "<dl class=\"col-md-6\"><dt>Description</dt><dd>" + o.ptmcomment.value + "</dd></dl></div>");
                             });
                         } else $('#ptmByRegion').html("No PTM found");
                     }, function (error) {

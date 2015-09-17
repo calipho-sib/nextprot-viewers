@@ -15690,7 +15690,6 @@ var PeptideComputation = (function () {
         })
     }
 
-
     function computeCoveragePercentage(listPositions, length) {
 
         var currentPosition = 0;
@@ -15722,10 +15721,50 @@ var PeptideComputation = (function () {
             })
 
         return computeCoveragePercentage(positions, proteinLength);
-
-
     }
 
+    // Return true if pepA is striclty included in pepB and both of the same nature.
+    // PepA     --  --     -- ----- ---   -----
+    // PepB    ---- ---- ---- -----  ----   --
+    // Returns true true true false false false
+    function isIncludedIn(pepA, pepB) {
+
+        var ret = false;
+
+        if (pepA.properties.natural && pepB.properties.natural || pepA.properties.synthetic && pepB.properties.synthetic) {
+            if (pepA.position.first == pepB.position.first && pepA.position.second == pepB.position.second)
+                ret = false;
+            else
+                ret = pepA.position.first >= pepB.position.first && pepA.position.second <= pepB.position.second;
+        }
+
+        //console.log("is ", pepA.sequence, pepA.position.first, ":", pepA.position.second, ", natu?", pepA.properties.natural, " synth?", pepA.properties.synthetic,
+        //    " included in ", pepB.sequence, pepB.position.first, ":", pepB.position.second, ", natu?", pepB.properties.natural, " synth?", pepB.properties.synthetic,"? ANSWER=", ret);
+
+        return ret;
+    }
+
+    function updateInclusionLists(pepA, pepB) {
+
+        if (pepA.includedIn.indexOf(pepB.identifier) === -1) {
+            pepA.includedIn.push(pepB.identifier);
+            pepB.include.push(pepA.identifier);
+        }
+    }
+
+    PeptideComputation.prototype.computeInterPeptideInclusions = function(peptides) {
+
+        for (var i = 0; i < peptides.length; i++) {
+            var pepA = peptides[i];
+
+            for (var j = i + 1; j < peptides.length; j++) {
+                var pepB = peptides[j];
+
+                if (isIncludedIn(pepA, pepB)) updateInclusionLists(pepA, pepB);
+                else if (isIncludedIn(pepB, pepA)) updateInclusionLists(pepB, pepA);
+            }
+        }
+    };
 
     PeptideComputation.prototype.getAminoAcidColors = function (peptides, proteinLength, colorMapFunction) {
 
@@ -15816,8 +15855,7 @@ var PeptideComputation = (function () {
 
         return result;
 
-    }
-
+    };
 
     PeptideComputation.prototype.computePeptideCoverage = function (peptides, proteinLength) {
 
@@ -15825,7 +15863,7 @@ var PeptideComputation = (function () {
             return pep.properties.natural
         });
 
-    }
+    };
 
     PeptideComputation.prototype.computeProteotypicCoverage = function (peptides, proteinLength) {
 
@@ -15833,17 +15871,15 @@ var PeptideComputation = (function () {
             return (pep.properties.natural && pep.properties.proteotypic)
         });
 
-    }
+    };
 
     return PeptideComputation;
-
-
 }());
 ;
 this["HBtemplates"] = this["HBtemplates"] || {};
 
 this["HBtemplates"]["app/assets/templates/detailedPeptide.tmpl"] = Handlebars.template({"compiler":[6,">= 2.0.0-beta.1"],"main":function(depth0,helpers,partials,data) {
-    return "<div style=\"border-bottom: 1px solid #E7EAEC;padding-bottom:5px;margin: 5px 0px 15px;\">\n    <div style=\"display:inline-block;\">\n        <span id=\"nbPeptides\" class=\"badge\"\n              style=\"background:#C50063;color:white;padding:8px 10px;border-radius:50%;margin-right:10px;vertical-align:middle;\"></span>\n    </div>\n    <h4 style=\"display:inline-block;vertical-align:middle;\">Peptide detailed information</h4></div>\n<div class=\"row\" style=\"height:auto;margin-left:0px;\">\n    <div class=\"row-same-height\">\n        <div class=\"navbar col-md-3 col-md-height\"\n             id=\"info-left\"\n             style=\"background:#0F8292;padding:0;border-bottom-right-radius:0px;border-top-right-radius:0px;z-index: 1;vertical-align:top\">\n            <h4 style=\"color:white;font-size:24px;height:30px;font-weight:lighter;padding:5px 15px 25px;\">Peptides</h4>\n            <ul class=\"nav nav-stacked\" id=\"listNames\"\n                style=\"color:lightslategrey;height:auto;max-height:450px;overflow:auto;border-top: 1px solid #066B78;box-shadow: 0px -3px 6px -6px #5ACEDE, inset 0px 3px 6px -6px #066B78;\">\n            </ul>\n        </div>\n        <div class=\"col-md-9 col-md-height\" id=\"info-right\">\n            <div class=\"row\">\n                <div class=\"col-md-9\">\n                    <div class=\"panel panel-default\">\n                        <div class=\"panel-heading\">\n                            <h4 class=\"text-center\" id=\"titlePepName\"></h4>\n                        </div>\n                        <div id=\"peptideSpecificity\" class=\"center-block\"\n                             style=\"height:150px;margin-top:10px;\">\n                            <table id=\"pepPosTable\" class=\"table table-condensed\" style=\"font-size:12px;\">\n                                <thead>\n                                <tr>\n                                    <th class=\"col-md-2\" colspan=\"2\" style=\"font-size:14px;font-weight:700;\">Positions\n                                    </th>\n                                    <th class=\"col-md-4\" colspan=\"4\" style=\"font-size:14px;font-weight:700;\">\n                                        Trypticity\n                                    </th>\n                                    <th class=\"col-md-4\" colspan=\"4\" style=\"font-size:14px;font-weight:700;\">\n                                        C/N-Terminality\n                                    </th>\n                                </tr>\n                                <tr>\n                                    <th class=\"col-md-1\" data-sort=\"int\" data-sort-default=\"asc\" id=\"sortStart\">Start\n                                    </th>\n                                    <th class=\"col-md-1\">End</th>\n                                    <th class=\"col-md-1\">N-side</th>\n                                    <th class=\"col-md-1\">C-side</th>\n                                    <th class=\"col-md-1\">Miscleavages</th>\n                                    <th class=\"col-md-1\">Global</th>\n                                    <th class=\"col-md-1\">N-term</th>\n                                    <th class=\"col-md-1\">C-term</th>\n                                </tr>\n                                </thead>\n                                <tbody id=\"peptidePositions\"></tbody>\n                            </table>\n                        </div>\n                    </div>\n                </div>\n                <div class=\"col-md-3 detailedInfosFields\">\n                    <div class=\"panel panel-default\">\n                        <div class=\"panel-heading\">\n                            <h5 class=\"text-center\" style=\"margin:0px;\">Peptide Sequence</h5>\n                        </div>\n                        <div class=\"panel-body\" style=\"height:60px;border-bottom:1px solid #E7EAEC;\">\n                            <dl>\n                                <dt>Length</dt>\n                                <dd id=\"length\"></dd>\n                            </dl>\n                        </div>\n                        <div class=\"panel-body\" style=\"height:80px;overflow:auto;\">\n                            <dl>\n                                <dt>Sequence</dt>\n                                <dd id=\"pepSeq\" style=\"width:150px;word-break: break-all;\"></dd>\n                            </dl>\n                        </div>\n                        <div class=\"panel-body\" style=\"height:80px;border-top:1px solid #E7EAEC;\">\n                            <dl>\n                                <dt>Nature</dt>\n                                <dd>\n                                    <ul id=\"nature\" style=\"padding-left:20px;\"></ul>\n                                </dd>\n                            </dl>\n                        </div>\n                    </div>\n                </div>\n            </div>\n            <div class=\"row detailedInfosFields\">\n                <div class=\"col-lg-3 col-md-6 col-sm-6 col-xs-6\">\n                    <div class=\"panel panel-default\">\n                        <div class=\"panel-heading\">\n                            <h5 class=\"text-center\" style=\"margin:0px;\">PTM</h5>\n                        </div>\n                        <div class=\"panel-body\" id=\"ptmInfos\" style=\"height:220px;overflow:auto;border-bottom:1px solid #E7EAEC;padding:0px;\">\n                        </div>\n                    </div>\n                </div>\n                <div class=\"col-lg-3 col-md-6 col-sm-6 col-xs-6\">\n                    <div id=\"proteoBlock\" class=\"panel panel-default\">\n                    </div>\n                </div>\n                <div class=\"col-lg-3 col-md-6 col-sm-6 col-xs-6\">\n                    <div class=\"panel panel-default\">\n                        <div class=\"panel-heading\">\n                            <h5 class=\"text-center\" style=\"margin:0px;\">Peptide overlap</h5>\n                        </div>\n                        <div class=\"panel-body\" style=\"height:100px;overflow:auto;border-bottom:1px solid #E7EAEC;\">\n                            <dl>\n                                <dt>Included in</dt>\n                                <dd>\n                                    <ul id=\"pepIncludedIn\" style=\"padding-left:20px;\"></ul>\n                                </dd>\n                            </dl>\n                        </div>\n                        <div class=\"panel-body\" style=\"height:120px;overflow:auto;\">\n                            <dl>\n                                <dt>Includes</dt>\n                                <dd>\n                                    <ul id=\"pepIncluded\" style=\"padding-left:20px;\"></ul>\n                                </dd>\n                            </dl>\n                        </div>\n                    </div>\n                </div>\n                <div class=\"col-lg-3 col-md-6 col-sm-6 col-xs-6\">\n                    <div class=\"panel panel-default\">\n                        <div class=\"panel-heading\">\n                            <h5 class=\"text-center\" style=\"margin:0px;\">Sources</h5>\n                        </div>\n                        <div class=\"panel-body\" style=\"height:220px;overflow:auto;border-bottom:1px solid #E7EAEC;\">\n                            <dl>\n                                <dd>\n                                    <ul id=\"pepSources\" style=\"padding-left:20px;\"></ul>\n                                </dd>\n                            </dl>\n                        </div>\n                    </div>\n                </div>\n            </div>\n        </div>\n    </div>\n</div>";
+    return "<div style=\"border-bottom: 1px solid #E7EAEC;padding-bottom:5px;margin: 5px 0px 15px;\">\n    <div style=\"display:inline-block;\">\n        <span id=\"nbPeptides\" class=\"badge\"\n              style=\"background:#C50063;color:white;padding:8px 10px;border-radius:50%;margin-right:10px;vertical-align:middle;\"></span>\n    </div>\n    <h4 style=\"display:inline-block;vertical-align:middle;\">Peptide detailed information</h4></div>\n<div class=\"row\" style=\"height:auto;margin-left:0px;\">\n    <div class=\"row-same-height\">\n        <div class=\"navbar col-md-3 col-md-height\"\n             id=\"info-left\"\n             style=\"background:#0F8292;padding:0;border-bottom-right-radius:0px;border-top-right-radius:0px;z-index: 1;vertical-align:top\">\n            <h4 style=\"color:white;font-size:24px;height:30px;font-weight:lighter;padding:5px 15px 25px;\">Peptides</h4>\n            <ul class=\"nav nav-stacked\" id=\"listNames\"\n                style=\"color:lightslategrey;height:auto;max-height:450px;overflow:auto;border-top: 1px solid #066B78;box-shadow: 0px -3px 6px -6px #5ACEDE, inset 0px 3px 6px -6px #066B78;\">\n            </ul>\n        </div>\n        <div class=\"col-md-9 col-md-height\" id=\"info-right\">\n            <div class=\"row\">\n                <div class=\"col-md-9\">\n                    <div class=\"panel panel-default\">\n                        <div class=\"panel-heading\">\n                            <h4 class=\"text-center\" id=\"titlePepName\"></h4>\n                        </div>\n                        <div id=\"peptideSpecificity\" class=\"center-block\"\n                             style=\"height:150px;margin-top:10px;\">\n                            <table id=\"pepPosTable\" class=\"table table-condensed\" style=\"font-size:12px;\">\n                                <thead>\n                                <tr>\n                                    <th class=\"col-md-2\" colspan=\"2\" style=\"font-size:14px;font-weight:700;\">Positions\n                                    </th>\n                                    <th class=\"col-md-4\" colspan=\"4\" style=\"font-size:14px;font-weight:700;\">\n                                        Trypticity\n                                    </th>\n                                    <th class=\"col-md-4\" colspan=\"4\" style=\"font-size:14px;font-weight:700;\">\n                                        C/N-Terminality\n                                    </th>\n                                </tr>\n                                <tr>\n                                    <th class=\"col-md-1\" data-sort=\"int\" data-sort-default=\"asc\" id=\"sortStart\">Start\n                                    </th>\n                                    <th class=\"col-md-1\">End</th>\n                                    <th class=\"col-md-1\">N-side</th>\n                                    <th class=\"col-md-1\">C-side</th>\n                                    <th class=\"col-md-1\">Miscleavages</th>\n                                    <th class=\"col-md-1\">Global</th>\n                                    <th class=\"col-md-1\">N-term</th>\n                                    <th class=\"col-md-1\">C-term</th>\n                                </tr>\n                                </thead>\n                                <tbody id=\"peptidePositions\"></tbody>\n                            </table>\n                        </div>\n                    </div>\n                </div>\n                <div class=\"col-md-3 detailedInfosFields\">\n                    <div class=\"panel panel-default\">\n                        <div class=\"panel-heading\">\n                            <h5 class=\"text-center\" style=\"margin:0px;\">Peptide Sequence</h5>\n                        </div>\n                        <div class=\"panel-body\" style=\"height:60px;border-bottom:1px solid #E7EAEC;\">\n                            <dl>\n                                <dt>Length</dt>\n                                <dd id=\"length\"></dd>\n                            </dl>\n                        </div>\n                        <div class=\"panel-body\" style=\"height:80px;overflow:auto;\">\n                            <dl>\n                                <dt>Sequence</dt>\n                                <dd id=\"pepSeq\" style=\"width:150px;word-break: break-all;\"></dd>\n                            </dl>\n                        </div>\n                        <div class=\"panel-body\" style=\"height:80px;border-top:1px solid #E7EAEC;\">\n                            <dl>\n                                <dt>Nature</dt>\n                                <dd>\n                                    <ul id=\"nature\" style=\"padding-left:20px;\"></ul>\n                                </dd>\n                            </dl>\n                        </div>\n                    </div>\n                </div>\n            </div>\n            <div class=\"row detailedInfosFields\">\n                <div class=\"col-lg-3 col-md-6 col-sm-6 col-xs-6\">\n                    <div class=\"panel panel-default\">\n                        <div class=\"panel-heading\">\n                            <h5 class=\"text-center\" style=\"margin:0px;\">PTM</h5>\n                        </div>\n                        <div class=\"panel-body\" id=\"ptmInfos\" style=\"height:220px;overflow:auto;border-bottom:1px solid #E7EAEC;padding:0px;\">\n                        </div>\n                    </div>\n                </div>\n                <div class=\"col-lg-3 col-md-6 col-sm-6 col-xs-6\">\n                    <div id=\"proteoBlock\" class=\"panel panel-default\">\n                    </div>\n                </div>\n                <div class=\"col-lg-3 col-md-6 col-sm-6 col-xs-6\">\n                    <div class=\"panel panel-default\">\n                        <div class=\"panel-heading\">\n                            <h5 class=\"text-center\" style=\"margin:0px;\">Peptide overlap</h5>\n                        </div>\n                        <div class=\"panel-body\" style=\"height:100px;overflow:auto;border-bottom:1px solid #E7EAEC;\">\n                            <dl>\n                                <dt>Included in <span id=\"pepIncludesInType\"></span></dt>\n                                <dd>\n                                    <ul id=\"pepIncludedIn\" style=\"padding-left:20px;\"></ul>\n                                </dd>\n                            </dl>\n                        </div>\n                        <div class=\"panel-body\" style=\"height:120px;overflow:auto;\">\n                            <dl>\n                                <dt>Includes <span id=\"pepIncludedFromType\"></span></dt>\n                                <dd>\n                                    <ul id=\"pepIncluded\" style=\"padding-left:20px;\"></ul>\n                                </dd>\n                            </dl>\n                        </div>\n                    </div>\n                </div>\n                <div class=\"col-lg-3 col-md-6 col-sm-6 col-xs-6\">\n                    <div class=\"panel panel-default\">\n                        <div class=\"panel-heading\">\n                            <h5 class=\"text-center\" style=\"margin:0px;\">Sources</h5>\n                        </div>\n                        <div class=\"panel-body\" style=\"height:220px;overflow:auto;border-bottom:1px solid #E7EAEC;\">\n                            <dl>\n                                <dd>\n                                    <ul id=\"pepSources\" style=\"padding-left:20px;\"></ul>\n                                </dd>\n                            </dl>\n                        </div>\n                    </div>\n                </div>\n            </div>\n        </div>\n    </div>\n</div>";
 },"useData":true});
 
 this["HBtemplates"]["app/assets/templates/isoformChoice.tmpl"] = Handlebars.template({"1":function(depth0,helpers,partials,data) {
@@ -16461,8 +16497,8 @@ function initNXDivs() {
 
     var getInfoForIsoform = {
         firstLoad: function () {
-            renderSequenceForIsoform(isoforms, nxEntryName + "-1");
-            renderPeptidesForIsoform(peptideMappings, nxEntryName + "-1");
+            RenderSequenceForIsoform(isoforms, nxEntryName + "-1");
+            RenderPeptidesForIsoform(peptideMappings, nxEntryName + "-1");
         },
         Isoform: function () {
             $(".isoformNames").click(getInfoForIsoform.reload);
@@ -16475,8 +16511,8 @@ function initNXDivs() {
             var isoID = $(this).text();
             $("#nx-detailedPeptide").html("");
             $("#nx-detailedPeptide").hide("slow");
-            renderSequenceForIsoform(isoforms, isoID);
-            renderPeptidesForIsoform(peptideMappings, isoID);
+            RenderSequenceForIsoform(isoforms, isoID);
+            RenderPeptidesForIsoform(peptideMappings, isoID);
             $("#featureViewer").html("");
             currentIso = isoID;
             createSVG(isoforms, isoID);
@@ -16484,7 +16520,7 @@ function initNXDivs() {
 
         },
         Peptides: function (peptideMappings, isoName) {
-            var peptideMap = [];
+            var peptideList = [];
             peptideMappings.forEach(function (o) {
                 if (o.isoformSpecificity[isoName]) {
                     for (var i = 0; i < o.isoformSpecificity[isoName].positions.length; i++) {
@@ -16496,7 +16532,6 @@ function initNXDivs() {
                             if (q.databaseName === "PeptideAtlas") peptideAtlasID = q.accession;
                             dict[q.databaseName] = q.accession;
                         });
-
 
                         var peptide = {
                             "name": o.peptideUniqueName,
@@ -16537,49 +16572,20 @@ function initNXDivs() {
 
                         peptide.prePeptide = getInfoForIsoform.Sequence(isoforms, isoName)[peptide.position.first - 2];
                         peptide.postPeptide = getInfoForIsoform.Sequence(isoforms, isoName)[peptide.position.second + 1];
-                        peptideMap.push(peptide);
+                        peptideList.push(peptide);
                     }
                 }
             });
-            peptideMap.sort(function (a, b) {
+            peptideList.sort(function (a, b) {
                 return a.length - b.length;
             });
-            peptideMap.sort(function (a, b) {
+            peptideList.sort(function (a, b) {
                 return a.position.first - b.position.first;
             });
-            var intermediate = new Date().getTime();
 
+            pepComp.computeInterPeptideInclusions(peptideList);
 
-            // A ---****---
-            // B ----**----
-            var isIncludedIn = function (pepA, pepB) {
-                return ((pepA.position.first <= pepB.position.first) && (pepA.position.second >= pepB.position.second))
-            }
-
-
-            for (var i = 0; i < peptideMap.length; i++) {
-                for (var j = i + 1; j < peptideMap.length; j++) {
-
-
-                    var pepA = peptideMap[i];
-                    var pepB = peptideMap[j];
-
-                    if (pepB.position.first > pepA.position.second) break;
-
-                    if (isIncludedIn(pepA, pepB)) {
-                        if (pepA.include.indexOf(pepB.identifier) === -1) pepA.include.push(pepB.identifier);
-                        if (pepB.includedIn.indexOf(pepA.identifier) === -1) pepB.includedIn.push(pepA.identifier);
-                    } else if (isIncludedIn(pepB, pepA)) {
-                        if (pepB.include.indexOf(pepA.identifier) === -1) pepB.include.push(pepA.identifier);
-                        if (pepA.includedIn.indexOf(pepB.identifier) === -1) pepA.includedIn.push(pepB.identifier);
-                    }
-
-                }
-            }
-            var dateEnd = new Date().getTime();
-
-
-            return peptideMap;
+            return peptideList;
         },
         Sequence: function (isoforms, isoName) {
             var isoSeq = "";
@@ -16894,8 +16900,8 @@ function initNXDivs() {
                             if (p.end === o.second) Cterm = "C-term";
                         });
                         $("#peptidePositions").append("<tr><td>" + o.first + "</td><td>" + o.second + "</td>" +
-                        "<td>" + semiTrypticStart + "</td><td>" + semiTrypticEnd + "</td><td style=\"text-align: center;\">" + miscleavage + "</td><td>" + trypticity + "</td>" +
-                        "<td>" + Nterm + "</td><td>" + Cterm + "</td></tr>");
+                            "<td>" + semiTrypticStart + "</td><td>" + semiTrypticEnd + "</td><td style=\"text-align: center;\">" + miscleavage + "</td><td>" + trypticity + "</td>" +
+                            "<td>" + Nterm + "</td><td>" + Cterm + "</td></tr>");
                     });
 
                     $('#first').text(peptide.position);
@@ -16954,6 +16960,16 @@ function initNXDivs() {
                             $('#pepIncludedIn').append("<li>" + o + "</li>")
                         });
                     }
+
+                    var str = "";
+                    if (peptide.properties.natural) str += "natural|";
+                    if (peptide.properties.synthetic) str += "synthetic|";
+
+                    str = str.substr(0, str.length - 1) + " peptides";
+
+                    $('#pepIncludesInType').html(str);
+                    $('#pepIncludedFromType').html(str);
+
                     var pmidFound = false;
                     //Object.keys(peptide.sources).forEach(function (o) {
                     //    if (o !== "PubMed") $("#pepSources").append("<li>" + o + " (" + peptide.sources[o] + ")" + "</li>");
@@ -16970,7 +16986,6 @@ function initNXDivs() {
                         }
                         $('#pepSources').append("<li>" + sourceTemp + "</li>")
                     });
-
 
                     var query = "SELECT distinct ?ptmterm ?ptmtype ?ptmstart ?ptmend ?mapstart ?mapend ?ptmlabel ?ptmcomment WHERE {" +
                         "values (?pepName ?iso) {(\"" + peptide.name + "\"^^xsd:string isoform:" + isoName + ") }" +
@@ -17018,13 +17033,13 @@ function initNXDivs() {
                     if (pmidFound === true) {
                         nx.executeSparql(query).then(function (data) {
                             $('#ptmInfos').append("<div class=\"panel-heading\" style=\"background-color: #F5F5F5;border-bottom: 1px solid #DDD;border-top:1px solid #DDD;font-weight: 500;\">PTM justified by this peptide :</div>" +
-                            "<div id=\"ptmByPeptide\" class=\"panel-body\"></div>");
+                                "<div id=\"ptmByPeptide\" class=\"panel-body\"></div>");
                             if (data.results.bindings.length > 0) {
                                 data.results.bindings.forEach(function (o) {
                                     $('#ptmByPeptide').append("<div class=\"row\"style=\"border-bottom:1px solid #E7EAEC;margin-bottom:5px;\"><dl class=\"col-md-6\"><dt>PTM ID</dt><dd>" + o.ptmterm.value.toString().match(/[^\/]*$/)[0] + "</dd></dl>" +
-                                    "<dl class=\"col-md-6\"><dt>Position</dt><dd>" + o.ptmstart.value + "</dd></dl>" +
-                                    "<dl class=\"col-md-6\"><dt>Type</dt><dd>" + o.ptmtype.value.toString().match(/[^#]*$/)[0].slice() + "</dd></dl>" +
-                                    "<dl class=\"col-md-6\"><dt>Description</dt><dd>" + o.ptmcomment.value + "</dd></dl></div>");
+                                        "<dl class=\"col-md-6\"><dt>Position</dt><dd>" + o.ptmstart.value + "</dd></dl>" +
+                                        "<dl class=\"col-md-6\"><dt>Type</dt><dd>" + o.ptmtype.value.toString().match(/[^#]*$/)[0].slice() + "</dd></dl>" +
+                                        "<dl class=\"col-md-6\"><dt>Description</dt><dd>" + o.ptmcomment.value + "</dd></dl></div>");
                                 });
                             } else $('#ptmByPeptide').html("No PTM found");
                         }, function (error) {
@@ -17032,17 +17047,17 @@ function initNXDivs() {
                         });
                     } else {
                         $('#ptmInfos').append("<div class=\"panel-heading\" style=\"background-color: #F5F5F5;border-bottom: 1px solid #DDD;border-top:1px solid #DDD;font-weight: 500;\">PTM justified by this peptide :</div>" +
-                        "<div id=\"ptmByPeptide\" class=\"panel-body\">No PTM found</div>");
+                            "<div id=\"ptmByPeptide\" class=\"panel-body\">No PTM found</div>");
                     }
                     nx.executeSparql(queryRegion).then(function (data) {
                         $('#ptmInfos').append("<div class=\"panel-heading\" style=\"background-color: #F5F5F5;border-bottom: 1px solid #DDD;border-top:1px solid #DDD;font-weight: 500;\">PTM present in this region :</div>" +
-                        "<div id=\"ptmByRegion\" class=\"panel-body\"></div>");
+                            "<div id=\"ptmByRegion\" class=\"panel-body\"></div>");
                         if (data.results.bindings.length > 0) {
                             data.results.bindings.forEach(function (o) {
                                 $('#ptmByRegion').append("<div class=\"row\"style=\"border-bottom:1px solid #E7EAEC;margin-bottom:5px;\"><dl class=\"col-md-6\"><dt>PTM ID</dt><dd>" + o.ptmterm.value.toString().match(/[^\/]*$/)[0] + "</dd></dl>" +
-                                "<dl class=\"col-md-6\"><dt>Position</dt><dd>" + o.ptmstart.value + "</dd></dl>" +
-                                "<dl class=\"col-md-6\"><dt>Type</dt><dd>" + o.ptmtype.value.toString().match(/[^#]*$/)[0].slice() + "</dd></dl>" +
-                                "<dl class=\"col-md-6\"><dt>Description</dt><dd>" + o.ptmcomment.value + "</dd></dl></div>");
+                                    "<dl class=\"col-md-6\"><dt>Position</dt><dd>" + o.ptmstart.value + "</dd></dl>" +
+                                    "<dl class=\"col-md-6\"><dt>Type</dt><dd>" + o.ptmtype.value.toString().match(/[^#]*$/)[0].slice() + "</dd></dl>" +
+                                    "<dl class=\"col-md-6\"><dt>Description</dt><dd>" + o.ptmcomment.value + "</dd></dl></div>");
                             });
                         } else $('#ptmByRegion').html("No PTM found");
                     }, function (error) {
