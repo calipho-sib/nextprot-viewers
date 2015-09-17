@@ -35,32 +35,49 @@
 
     ($(function () {
 
-        var Nextprot = window.Nextprot;
         var nx = new Nextprot.Client("neXtProt proteomics view", "Calipho-Team");
         var entry = nx.getEntryName();
         
         $(function () {
-            var startTime = new Date().getTime();
-            Promise.all([nx.getProteinSequence(entry), nx.getProPeptide(entry), nx.getMatureProtein(entry), nx.getSignalPeptide(entry), nx.getPeroxisomeTransitPeptide(entry),
-                nx.getMitochondrialTransitPeptide(entry), nx.getDisulfideBond(entry),nx.getAntibody(entry), nx.getInitMeth(entry), nx.getModifResidue(entry), nx.getCrossLink(entry),
-                nx.getGlycoSite(entry), nx.getLipidationSite(entry), nx.getSelenocysteine(entry), nx.getPeptide(entry), nx.getSrmPeptide(entry),nx.getIsoformMapping(entry)]).then(function (oneData) {
 
-                /*                var featuresName = ["Sequence",         "Propeptide",             "Mature protein",          "Signal peptide",           "Disulfide bonds",
-                 "Antibody",         "Initiator meth",       "Modified residue",         "Cross-link",           "Glycosylation",        "Peptide",
-                 "SRM peptide"];
-                 */
+            Promise.all([
+                nx.getProteinSequence(entry), //1
+                nx.getProPeptide(entry), //2
+                nx.getMatureProtein(entry), //3
+                nx.getSignalPeptide(entry), //4
+                nx.getPeroxisomeTransitPeptide(entry), //5
+                nx.getMitochondrialTransitPeptide(entry), //6
+                nx.getDisulfideBond(entry), //7
+                nx.getAntibody(entry), //8
+                nx.getInitMeth(entry), //9
+                nx.getModifResidue(entry), //10
+                nx.getCrossLink(entry), //11
+                nx.getGlycoSite(entry), //12
+                nx.getLipidationSite(entry), //13
+                nx.getSelenocysteine(entry), //14
+                nx.getPeptide(entry), //15
+                nx.getSrmPeptide(entry), //16
+                nx.getIsoformMapping(entry) //17
+            ]).then(function (oneData) {
 
 
                 var metaData = [
-                    {name: "Sequence"},
-                    {name: "Propeptide",className: "pro",color: "#B3B3B3",type: "rect",filter:"Processing"},                     {name: "Mature protein",className: "mat",color: "#B3B3C2",type: "rect",filter:"Processing"},
-                    {name: "Signal peptide",className: "sign",color: "#B3B3E1",type: "rect",filter:"Processing"},                {name: "Transit peptide",className: "pero",color: "#B3B3F0",type: "rect",filter:"Processing"},
-                    {name: "Transit peptide",className: "mito",color: "#B3B3F0",type: "rect",filter:"Processing"},               {name: "Disulfide bond",className: "dsB",color: "#B3B3E1",type: "path",filter:"Modified Residue"},
-                    {name: "Antibody",className: "anti",color: "#B3C2F0",type: "rect",filter:"none"},                            {name: "Initiator meth",className: "initMeth",color: "#B3B3D1",type: "unique",filter:"Processing"},
-                    {name: "Modified residue",className: "modifRes",color: "#B3C2B3",type: "unique",filter:"Modified Residue"},  {name: "Cross-link",className: "crossLink",color: "#B3C2C2",type: "unique",filter:"Modified Residue"},
-                    {name: "Glycosylation",className: "glycoSite",color: "#B3C2D1",type: "unique",filter:"Modified Residue"},    {name: "Lipidation",className: "lipidation",color: "#A3B5DB",type: "unique",filter:"Modified Residue"},
-                    {name: "Non standart AA",className: "seleno",color: "#859DE7",type: "unique",filter:"Modified Residue"},      {name: "Peptide",className: "pep",color: "#B3E1D1",type: "multipleRect",filter:"Peptide"},
-                    {name: "SRM Peptide",className: "srmPep",color: "#B3E1F0",type: "multipleRect",filter:"none"}
+                    {name: "Sequence"}, //1
+                    {name: "Propeptide",className: "pro",color: "#B3B3B3",type: "rect",filter:"Processing"}, //2
+                    {name: "Mature protein",className: "mat",color: "#B3B3C2",type: "rect",filter:"Processing"}, // 3
+                    {name: "Signal peptide",className: "sign",color: "#B3B3E1",type: "rect",filter:"Processing"}, //4
+                    {name: "Transit peptide",className: "pero",color: "#B3B3F0",type: "rect",filter:"Processing"}, //5
+                    {name: "Transit peptide",className: "mito",color: "#B3B3F0",type: "rect",filter:"Processing"}, //6
+                    {name: "Disulfide bond",className: "dsB",color: "#B3B3E1",type: "path",filter:"Modified Residue"}, //7
+                    {name: "Antibody",className: "anti",color: "#B3C2F0",type: "rect",filter:"none"}, //8
+                    {name: "Initiator meth",className: "initMeth",color: "#B3B3D1",type: "unique",filter:"Processing"}, //9
+                    {name: "Modified residue",className: "modifRes",color: "#B3C2B3",type: "unique",filter:"Modified Residue"}, //10
+                    {name: "Cross-link",className: "crossLink",color: "#B3C2C2",type: "unique",filter:"Modified Residue"}, //11
+                    {name: "Glycosylation",className: "glycoSite",color: "#B3C2D1",type: "unique",filter:"Modified Residue"}, //12
+                    {name: "Lipidation",className: "lipidation",color: "#A3B5DB",type: "unique",filter:"Modified Residue"}, //13
+                    {name: "Non standart AA",className: "seleno",color: "#859DE7",type: "unique",filter:"Modified Residue"}, //14
+                    {name: "Peptide",className: "pep",color: "#B3E1D1",type: "multipleRect",filter:"Peptide"}, //15
+                    {name: "SRM Peptide",className: "srmPep",color: "#B3E1F0",type: "multipleRect",filter:"none"} //16
                 ];
 
                 var tv = new TripleViewer(entry);
