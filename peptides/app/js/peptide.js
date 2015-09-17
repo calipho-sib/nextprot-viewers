@@ -773,7 +773,7 @@ function initNXDivs() {
                         });
                         var seqLength = getInfoForIsoform.Sequence(isoforms, isoName).length;
 
-                        var hl = PeptideComputation.getAminoAcidColors(datas.Peptides, seqLength, getColorMap);
+                        var hl = pepComp.getAminoAcidColors(datas.Peptides, seqLength, getColorMap);
                         seq1.coverage(hl, positions[0] - 1, positions[1] - 1);
 
                         //TODO looks like this is not doing anything
