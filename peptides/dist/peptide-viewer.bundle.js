@@ -15697,8 +15697,6 @@ var PeptideComputation = (function () {
 
         var sortedPositions = sortPositions(listPositions);
 
-        //console.log(sortedPositions.map(function(o){ return o.first+"-"+ o.last; }));
-
         for (var i in sortedPositions) {
             var pos = sortedPositions[i];
             var first = Math.max(pos.first, prevStartPosition);
@@ -15709,8 +15707,6 @@ var PeptideComputation = (function () {
                 prevStartPosition = last + 1;
             }
         }
-
-        //console.log("cov="+coveredLength+", len="+length);
 
         return (coveredLength / length * 100).toFixed(2);
     }
@@ -15770,7 +15766,7 @@ var PeptideComputation = (function () {
 
     PeptideComputation.prototype.computeInterPeptideInclusions = function(peptides) {
 
-        //var stringifiedPeptides = JSON.stringify(peptides); console.log(stringifiedPeptides);
+        var stringifiedPeptides = JSON.stringify(peptides); console.log(stringifiedPeptides);
 
         for (var i = 0; i < peptides.length; i++) {
             var pepA = peptides[i];

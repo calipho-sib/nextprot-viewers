@@ -1,7 +1,7 @@
 var PeptideComputation = (function () {
 
     var PeptideComputation = function () {
-    }
+    };
 
     function sortPositions(listPositions) {
 
@@ -21,8 +21,6 @@ var PeptideComputation = (function () {
 
         var sortedPositions = sortPositions(listPositions);
 
-        //console.log(sortedPositions.map(function(o){ return o.first+"-"+ o.last; }));
-
         for (var i in sortedPositions) {
             var pos = sortedPositions[i];
             var first = Math.max(pos.first, prevStartPosition);
@@ -33,8 +31,6 @@ var PeptideComputation = (function () {
                 prevStartPosition = last + 1;
             }
         }
-
-        //console.log("cov="+coveredLength+", len="+length);
 
         return (coveredLength / length * 100).toFixed(2);
     }
