@@ -15744,15 +15744,31 @@ var PeptideComputation = (function () {
         return ret;
     }
 
+    function findIndexByKeyValue(array, key, value) {
+
+        for (var i = 0; i < array.length; i++) {
+
+            if (array[i][key] == value) {
+                return i;
+            }
+        }
+        return -1;
+    }
+
     function updateInclusionLists(pepA, pepB) {
 
-        if (pepA.includedIn.indexOf(pepB.identifier) === -1) {
-            pepA.includedIn.push(pepB.identifier);
-            pepB.include.push(pepA.identifier);
+        var index = findIndexByKeyValue(pepA.includedIn, "name", pepB.name)
+
+        if (index === -1) {
+
+            pepA.includedIn.push(pepB);
+            pepB.include.push(pepA);
         }
     }
 
     PeptideComputation.prototype.computeInterPeptideInclusions = function(peptides) {
+
+        //var stringifiedPeptides = JSON.stringify(peptides); console.log(stringifiedPeptides);
 
         for (var i = 0; i < peptides.length; i++) {
             var pepA = peptides[i];
@@ -16479,9 +16495,9 @@ function initNXDivs() {
 
     function getFirstIsoform(isoformList) {
         var seqIDs = isoformList.map(function (p) {
-            return p.uniqueName
+            return p.uniqueName;
         }).sort(function (a, b) {
-            return parseInt(a.split("-")[1]) - parseInt(b.split("-")[1])
+            return parseInt(a.split("-")[1]) - parseInt(b.split("-")[1]);
         });
         return seqIDs[0];
     }
@@ -16495,8 +16511,8 @@ function initNXDivs() {
 
     var getInfoForIsoform = {
         firstLoad: function () {
-            RenderSequenceForIsoform(isoforms, nxEntryName + "-1");
-            RenderPeptidesForIsoform(peptideMappings, nxEntryName + "-1");
+            renderSequenceForIsoform(isoforms, nxEntryName + "-1");
+            renderPeptidesForIsoform(peptideMappings, nxEntryName + "-1");
         },
         Isoform: function () {
             $(".isoformNames").click(getInfoForIsoform.reload);
@@ -16509,8 +16525,8 @@ function initNXDivs() {
             var isoID = $(this).text();
             $("#nx-detailedPeptide").html("");
             $("#nx-detailedPeptide").hide("slow");
-            RenderSequenceForIsoform(isoforms, isoID);
-            RenderPeptidesForIsoform(peptideMappings, isoID);
+            renderSequenceForIsoform(isoforms, isoID);
+            renderPeptidesForIsoform(peptideMappings, isoID);
             $("#featureViewer").html("");
             currentIso = isoID;
             createSVG(isoforms, isoID);
@@ -16714,18 +16730,18 @@ function initNXDivs() {
 
             var isoformsLength = 0;
             data.forEach(function (o) {
-                isoformsLength += o.annotations.length
+                isoformsLength += o.annotations.length;
             });
             var entries = data.map(function (o) {
                 return {
                     name: o.uniqueName,
                     withVariant: entryWithVariant(o),
                     geneName: o.overview.mainGeneName
-                }
+                };
             });
             var entriesLength = data.length;
             var entriesLengthWithoutVariant = entries.filter(function (d) {
-                return d.withVariant === false
+                return d.withVariant === false;
             }).length;
             var entryMatching = {
                 proteotypicity: {
@@ -16741,8 +16757,8 @@ function initNXDivs() {
                             variant: p.variant,
                             isoform: Object.keys(p.targetIsoformsMap)[0],
                             positions: p.targetIsoformsMap[Object.keys(p.targetIsoformsMap)[0]].positions
-                        }
-                    })
+                        };
+                    });
                 })
             };
             var template = HBtemplates['app/assets/templates/matchingEntries.tmpl'];
@@ -16804,7 +16820,7 @@ function initNXDivs() {
                         for (i = 0; i < listPeptides.length; i++) {
                             var founded = false;
                             if (listPeptides[i].name === o) {
-                                for (item in found) {
+                                for (var item in found) {
                                     if (listPeptides[i].name === found[item].name) {
                                         founded = true;
                                         found[item].position.push(listPeptides[i].position);
@@ -16949,13 +16965,13 @@ function initNXDivs() {
                     if (peptide.include.length === 0) $('#pepIncluded').append("<p><em>None</em></p>");
                     else {
                         peptide.include.forEach(function (o) {
-                            $('#pepIncluded').append("<li>" + o + "</li>")
+                            $('#pepIncluded').append("<li>" + o.identifier + "</li>")
                         });
                     }
                     if (peptide.includedIn.length === 0) $('#pepIncludedIn').append("<p><em>None</em></p>");
                     else {
                         peptide.includedIn.forEach(function (o) {
-                            $('#pepIncludedIn').append("<li>" + o + "</li>")
+                            $('#pepIncludedIn').append("<li>" + o.identifier + "</li>")
                         });
                     }
 
