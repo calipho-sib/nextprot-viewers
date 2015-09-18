@@ -15692,25 +15692,27 @@ var PeptideComputation = (function () {
 
     function computeCoveragePercentage(listPositions, length) {
 
-        var currentPosition = 0;
+        var prevStartPosition = 0;
         var coveredLength = 0;
 
         var sortedPositions = sortPositions(listPositions);
 
-        for (var pi in sortedPositions) {
-            var pos = sortedPositions[pi];
-            var first = Math.max(pos.first, currentPosition);
-            var last = pos.last;
-            var posLength = last - first + 1;
+        //console.log(sortedPositions.map(function(o){ return o.first+"-"+ o.last; }));
 
-            coveredLength += posLength;
-            currentPosition = last + 1;
+        for (var i in sortedPositions) {
+            var pos = sortedPositions[i];
+            var first = Math.max(pos.first, prevStartPosition);
+            var last = pos.last;
+
+            if (first <= last) {
+                coveredLength += last - first + 1;
+                prevStartPosition = last + 1;
+            }
         }
 
+        //console.log("cov="+coveredLength+", len="+length);
 
         return (coveredLength / length * 100).toFixed(2);
-        ;
-
     }
 
     function computeCoverage(peptides, proteinLength, condition) {
@@ -15718,7 +15720,7 @@ var PeptideComputation = (function () {
         var positions = peptides.filter(condition) // filter on condition
             .map(function (pep) {
                 return {first: pep.position.first, last: pep.position.second}
-            })
+            });
 
         return computeCoveragePercentage(positions, proteinLength);
     }
