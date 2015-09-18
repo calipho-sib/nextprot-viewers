@@ -17101,10 +17101,16 @@ function initNXDivs() {
                 $("#pepTableSorted").stupidtable({
                     "positions": function (a, b) {
 
-                        var aNum = a.split("-")[0];
-                        var bNum = b.split("-")[0];
+                        var posA = a.split("-");
+                        var posB = b.split("-");
 
-                        return parseInt(aNum, 10) - parseInt(bNum, 10);
+                        // compare starts
+                        var cmp = parseInt(posA[0], 10) - parseInt(posB[0], 10);
+
+                        // if same starts compare ends
+                        if (cmp === 0) cmp = parseInt(posA[1], 10) - parseInt(posB[1], 10);
+
+                        return cmp;
                     }
                 });
                 //$("#pepTableSorted th:nth-child(4)").stupidsort("asc");
