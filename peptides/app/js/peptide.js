@@ -3,8 +3,6 @@ function initNXDivs() {
 
     var Nextprot = window.Nextprot;
     var nx = new Nextprot.Client("PeptideViewer", "nextprotTeam");
-    //TODO remove this
-    nx.setApiBaseUrl("http://alpha-api.nextprot.org");
     var nxEntryName = nx.getEntryName();
     var cpt = 0;
     var isoforms;
