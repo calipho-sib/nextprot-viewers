@@ -637,7 +637,7 @@ function initNXDivs() {
             var coveredSeq = $("#fastaSeq").html();
 
             $(function () {
-                $("#pepTableSorted").stupidtable({
+                var table = $("#pepTableSorted").stupidtable({
                     "positions": function (a, b) {
 
                         var posA = a.split("-");
@@ -652,10 +652,20 @@ function initNXDivs() {
                         return cmp;
                     }
                 });
+
+                /*table.on("aftertablesort", function (event, data) {
+                    var th = $(this).find("th");
+                    th.find(".arrow").remove();
+                    var dir = $.fn.stupidtable.dir;
+                    var arrow = data.direction === dir.ASC ? "&uarr;" : "&darr;";
+                    th.eq(data.column).append('<span class="arrow">' + arrow +'</span>');
+                });*/
+
                 //$("#pepTableSorted th:nth-child(4)").stupidsort("asc");
                 //$("#pepTableSorted th:nth-child(3)").stupidsort("asc");
-            });
 
+                $("#pepTableSorted").find("th").eq(2).click();
+            });
 
             var noPepColor = 'grey';
             var nonProtColor = '#4A57D4';
