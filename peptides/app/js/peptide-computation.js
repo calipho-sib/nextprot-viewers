@@ -68,15 +68,31 @@ var PeptideComputation = (function () {
         return ret;
     }
 
+    function findIndexByKeyValue(array, key, value) {
+
+        for (var i = 0; i < array.length; i++) {
+
+            if (array[i][key] == value) {
+                return i;
+            }
+        }
+        return -1;
+    }
+
     function updateInclusionLists(pepA, pepB) {
 
-        if (pepA.includedIn.indexOf(pepB.identifier) === -1) {
-            pepA.includedIn.push(pepB.identifier);
-            pepB.include.push(pepA.identifier);
+        var index = findIndexByKeyValue(pepA.includedIn, "name", pepB.name)
+
+        if (index === -1) {
+
+            pepA.includedIn.push(pepB);
+            pepB.include.push(pepA);
         }
     }
 
     PeptideComputation.prototype.computeInterPeptideInclusions = function(peptides) {
+
+        //var stringifiedPeptides = JSON.stringify(peptides); console.log(stringifiedPeptides);
 
         for (var i = 0; i < peptides.length; i++) {
             var pepA = peptides[i];

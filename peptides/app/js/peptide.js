@@ -488,13 +488,13 @@ function initNXDivs() {
                     if (peptide.include.length === 0) $('#pepIncluded').append("<p><em>None</em></p>");
                     else {
                         peptide.include.forEach(function (o) {
-                            $('#pepIncluded').append("<li>" + o + "</li>")
+                            $('#pepIncluded').append("<li>" + o.identifier + "</li>")
                         });
                     }
                     if (peptide.includedIn.length === 0) $('#pepIncludedIn').append("<p><em>None</em></p>");
                     else {
                         peptide.includedIn.forEach(function (o) {
-                            $('#pepIncludedIn').append("<li>" + o + "</li>")
+                            $('#pepIncludedIn').append("<li>" + o.identifier + "</li>")
                         });
                     }
 
