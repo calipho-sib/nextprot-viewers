@@ -24,16 +24,17 @@
     "jasmine-core": "^2.3.4",
     "karma": "~0.13",
     "karma-chrome-launcher": "^0.1.12",
+    "karma-phantomjs-launcher": "~0.1",
     "karma-firefox-launcher": "^0.1.6",
     "karma-jasmine": "^0.3.5",
-    "karma-junit-reporter": "^0.2.2"
+    "grunt-karma": "^0.12.1"
   },
   "dependencies": {
     "bower": "^1.3.12",
     "grunt-cli": "^0.1.13"
   },
   "scripts": {
-    "test": "grunt karma",
+    "test": "grunt karma:continuous",
     "dist": "grunt hbs && grunt && grunt serve"
   }
 }
