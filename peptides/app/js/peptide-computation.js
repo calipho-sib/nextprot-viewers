@@ -1,7 +1,7 @@
 var PeptideComputation = (function () {
 
     var PeptideComputation = function () {
-    }
+    };
 
     function sortPositions(listPositions) {
 
@@ -16,25 +16,23 @@ var PeptideComputation = (function () {
 
     function computeCoveragePercentage(listPositions, length) {
 
-        var currentPosition = 0;
+        var prevStartPosition = 0;
         var coveredLength = 0;
 
         var sortedPositions = sortPositions(listPositions);
 
-        for (var pi in sortedPositions) {
-            var pos = sortedPositions[pi];
-            var first = Math.max(pos.first, currentPosition);
+        for (var i in sortedPositions) {
+            var pos = sortedPositions[i];
+            var first = Math.max(pos.first, prevStartPosition);
             var last = pos.last;
-            var posLength = last - first + 1;
 
-            coveredLength += posLength;
-            currentPosition = last + 1;
+            if (first <= last) {
+                coveredLength += last - first + 1;
+                prevStartPosition = last + 1;
+            }
         }
 
-
         return (coveredLength / length * 100).toFixed(2);
-        ;
-
     }
 
     function computeCoverage(peptides, proteinLength, condition) {
@@ -42,7 +40,7 @@ var PeptideComputation = (function () {
         var positions = peptides.filter(condition) // filter on condition
             .map(function (pep) {
                 return {first: pep.position.first, last: pep.position.second}
-            })
+            });
 
         return computeCoveragePercentage(positions, proteinLength);
     }
@@ -68,15 +66,31 @@ var PeptideComputation = (function () {
         return ret;
     }
 
+    function findIndexByKeyValue(array, key, value) {
+
+        for (var i = 0; i < array.length; i++) {
+
+            if (array[i][key] == value) {
+                return i;
+            }
+        }
+        return -1;
+    }
+
     function updateInclusionLists(pepA, pepB) {
 
-        if (pepA.includedIn.indexOf(pepB.identifier) === -1) {
-            pepA.includedIn.push(pepB.identifier);
-            pepB.include.push(pepA.identifier);
+        var index = findIndexByKeyValue(pepA.includedIn, "name", pepB.name)
+
+        if (index === -1) {
+
+            pepA.includedIn.push(pepB);
+            pepB.include.push(pepA);
         }
     }
 
     PeptideComputation.prototype.computeInterPeptideInclusions = function(peptides) {
+
+        //var stringifiedPeptides = JSON.stringify(peptides); console.log(stringifiedPeptides);
 
         for (var i = 0; i < peptides.length; i++) {
             var pepA = peptides[i];

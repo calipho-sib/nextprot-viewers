@@ -18,9 +18,9 @@ function initNXDivs() {
 
     function getFirstIsoform(isoformList) {
         var seqIDs = isoformList.map(function (p) {
-            return p.uniqueName
+            return p.uniqueName;
         }).sort(function (a, b) {
-            return parseInt(a.split("-")[1]) - parseInt(b.split("-")[1])
+            return parseInt(a.split("-")[1]) - parseInt(b.split("-")[1]);
         });
         return seqIDs[0];
     }
@@ -34,8 +34,8 @@ function initNXDivs() {
 
     var getInfoForIsoform = {
         firstLoad: function () {
-            RenderSequenceForIsoform(isoforms, nxEntryName + "-1");
-            RenderPeptidesForIsoform(peptideMappings, nxEntryName + "-1");
+            renderSequenceForIsoform(isoforms, nxEntryName + "-1");
+            renderPeptidesForIsoform(peptideMappings, nxEntryName + "-1");
         },
         Isoform: function () {
             $(".isoformNames").click(getInfoForIsoform.reload);
@@ -48,8 +48,8 @@ function initNXDivs() {
             var isoID = $(this).text();
             $("#nx-detailedPeptide").html("");
             $("#nx-detailedPeptide").hide("slow");
-            RenderSequenceForIsoform(isoforms, isoID);
-            RenderPeptidesForIsoform(peptideMappings, isoID);
+            renderSequenceForIsoform(isoforms, isoID);
+            renderPeptidesForIsoform(peptideMappings, isoID);
             $("#featureViewer").html("");
             currentIso = isoID;
             createSVG(isoforms, isoID);
@@ -253,18 +253,18 @@ function initNXDivs() {
 
             var isoformsLength = 0;
             data.forEach(function (o) {
-                isoformsLength += o.annotations.length
+                isoformsLength += o.annotations.length;
             });
             var entries = data.map(function (o) {
                 return {
                     name: o.uniqueName,
                     withVariant: entryWithVariant(o),
                     geneName: o.overview.mainGeneName
-                }
+                };
             });
             var entriesLength = data.length;
             var entriesLengthWithoutVariant = entries.filter(function (d) {
-                return d.withVariant === false
+                return d.withVariant === false;
             }).length;
             var entryMatching = {
                 proteotypicity: {
@@ -280,8 +280,8 @@ function initNXDivs() {
                             variant: p.variant,
                             isoform: Object.keys(p.targetIsoformsMap)[0],
                             positions: p.targetIsoformsMap[Object.keys(p.targetIsoformsMap)[0]].positions
-                        }
-                    })
+                        };
+                    });
                 })
             };
             var template = HBtemplates['app/assets/templates/matchingEntries.tmpl'];
@@ -343,7 +343,7 @@ function initNXDivs() {
                         for (i = 0; i < listPeptides.length; i++) {
                             var founded = false;
                             if (listPeptides[i].name === o) {
-                                for (item in found) {
+                                for (var item in found) {
                                     if (listPeptides[i].name === found[item].name) {
                                         founded = true;
                                         found[item].position.push(listPeptides[i].position);
@@ -488,13 +488,13 @@ function initNXDivs() {
                     if (peptide.include.length === 0) $('#pepIncluded').append("<p><em>None</em></p>");
                     else {
                         peptide.include.forEach(function (o) {
-                            $('#pepIncluded').append("<li>" + o + "</li>")
+                            $('#pepIncluded').append("<li>" + o.identifier + "</li>")
                         });
                     }
                     if (peptide.includedIn.length === 0) $('#pepIncludedIn').append("<p><em>None</em></p>");
                     else {
                         peptide.includedIn.forEach(function (o) {
-                            $('#pepIncludedIn').append("<li>" + o + "</li>")
+                            $('#pepIncludedIn').append("<li>" + o.identifier + "</li>")
                         });
                     }
 
@@ -637,19 +637,35 @@ function initNXDivs() {
             var coveredSeq = $("#fastaSeq").html();
 
             $(function () {
-                $("#pepTableSorted").stupidtable({
+                var table = $("#pepTableSorted").stupidtable({
                     "positions": function (a, b) {
 
-                        var aNum = a.split("-")[0];
-                        var bNum = b.split("-")[0];
+                        var posA = a.split("-");
+                        var posB = b.split("-");
 
-                        return parseInt(aNum, 10) - parseInt(bNum, 10);
+                        // compare starts
+                        var cmp = parseInt(posA[0], 10) - parseInt(posB[0], 10);
+
+                        // if same starts compare ends
+                        if (cmp === 0) cmp = parseInt(posA[1], 10) - parseInt(posB[1], 10);
+
+                        return cmp;
                     }
                 });
+
+                /*table.on("aftertablesort", function (event, data) {
+                    var th = $(this).find("th");
+                    th.find(".arrow").remove();
+                    var dir = $.fn.stupidtable.dir;
+                    var arrow = data.direction === dir.ASC ? "&uarr;" : "&darr;";
+                    th.eq(data.column).append('<span class="arrow">' + arrow +'</span>');
+                });*/
+
                 //$("#pepTableSorted th:nth-child(4)").stupidsort("asc");
                 //$("#pepTableSorted th:nth-child(3)").stupidsort("asc");
-            });
 
+                $("#pepTableSorted").find("th").eq(2).click();
+            });
 
             var noPepColor = 'grey';
             var nonProtColor = '#4A57D4';
