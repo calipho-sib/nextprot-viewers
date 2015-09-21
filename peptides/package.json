@@ -34,7 +34,7 @@
     "grunt-cli": "^0.1.13"
   },
   "scripts": {
-    "test": "grunt karma",
+    "test": "grunt karma:continuous",
     "dist": "grunt hbs && grunt && grunt serve"
   }
 }
