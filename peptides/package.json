@@ -23,7 +23,7 @@
     "grunt-serve": "^0.1.6",
     "load-grunt-tasks": "^0.6.0",
     "jasmine-core": "^2.3.4",
-    "karma": "~0.12",
+    "karma": "~0.13",
     "karma-chrome-launcher": "^0.1.12",
     "karma-firefox-launcher": "^0.1.6",
     "karma-jasmine": "^0.3.5",
@@ -34,7 +34,7 @@
     "grunt-cli": "^0.1.13"
   },
   "scripts": {
-    "test": "grunt test --verbose --debug --web-security=no",
+    "test": "grunt karma",
     "dist": "grunt hbs && grunt && grunt serve"
   }
 }
