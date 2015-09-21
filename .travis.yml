@@ -6,4 +6,4 @@ before_install:
   - npm install -g npm
   - npm config set loglevel warn
 before_script:
-  - npm install -g grunt-cli
+  - npm install
