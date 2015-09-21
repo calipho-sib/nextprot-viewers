@@ -25,13 +25,12 @@ module.exports = function (grunt) {
                 dest: 'dist/peptide-viewer.bundle.js'
             },
             extras: {
-                src: ['app/css/peptide.css',
+                src: ['app/css/*.css',
                       'bower_components/bootstrap/dist/css/bootstrap.min.css',
                       'bower_components/feature-viewer/css/style.css',
-                      'bower_components/css-spinners/css/spinner/heartbeat.css'],
+                      'bower_components/css-spinners/css/spinner/throbber.css'],
                 dest: 'dist/peptide-viewer.css'
             }
-
         },
         connect: {
             server: {
@@ -47,7 +46,7 @@ module.exports = function (grunt) {
                 livereload: true
             },
             all: {
-                files: ['app/js/*.js'],
+                files: ['app/js/*.js', 'app/css/*.css'],
                 tasks: ['concat']
             },
             handlebars: {
@@ -63,16 +62,31 @@ module.exports = function (grunt) {
                     namespace: "HBtemplates"
                 }
             }
+        },
+        karma: {
+            options: {
+                configFile: 'karma.conf.js'
+            },
+
+            unit: {
+                singleRun: true,
+                browsers: ['Chrome']
+            },
+
+            //continuous integration mode: run tests once in PhantomJS browser.
+            continuous: {
+                singleRun: true,
+                browsers: ['PhantomJS']
+            }
         }
     });
-
-
 
     // Load the plugin that provides the "uglify" task.
     grunt.loadNpmTasks('grunt-contrib-concat');
     grunt.loadNpmTasks('grunt-contrib-connect');
     grunt.loadNpmTasks('grunt-contrib-handlebars');
     grunt.loadNpmTasks('grunt-contrib-watch');
+    grunt.loadNpmTasks('grunt-karma');
 
 
     // Default task(s).
