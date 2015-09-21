@@ -15677,7 +15677,7 @@ function FeatureViewer(sequence, div, options) {
 var PeptideComputation = (function () {
 
     var PeptideComputation = function () {
-    }
+    };
 
     function sortPositions(listPositions) {
 
@@ -15766,7 +15766,7 @@ var PeptideComputation = (function () {
 
     PeptideComputation.prototype.computeInterPeptideInclusions = function(peptides) {
 
-        var stringifiedPeptides = JSON.stringify(peptides); console.log(stringifiedPeptides);
+        //var stringifiedPeptides = JSON.stringify(peptides); console.log(stringifiedPeptides);
 
         for (var i = 0; i < peptides.length; i++) {
             var pepA = peptides[i];
@@ -16704,7 +16704,7 @@ function initNXDivs() {
             seq1.render('#nx-overviewSeq', {
                 'showLineNumbers': true,
                 'wrapAminoAcids': true,
-                'charsPerLine': 100
+                'charsPerLine': 50
             });
             $("#sequenceHeader").append("<div class=\"pull-right\" style=\"margin-right:20px;font-style:italic;text-align: center;\"><span id=\"pepCover\" style=\"font-size:18px;color:#C50063;\"></span><br><span style=\"font-size:10px;font-weight:bold;\">Peptide coverage</span></div>");
             $("#sequenceHeader").append("<div class=\"pull-right\" style=\"margin-right:20px;font-style:italic;text-align: center;\"><span id=\"proteoCover\" style=\"font-size:18px;color:#69CC33;\"></span><br><span style=\"font-size:10px;font-weight:bold;\">Proteotypic coverage</span></div>");
