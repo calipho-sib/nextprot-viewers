@@ -42,6 +42,7 @@ module.exports = function (grunt) {
             }
         },
         uglify: {
+            options : {sourceMap : true},
             all: {
                 src: 'dist/peptide-viewer.bundle.js',
                 dest: 'dist/peptide-viewer.bundle.js'
