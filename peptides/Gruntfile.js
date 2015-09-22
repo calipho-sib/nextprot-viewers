@@ -13,7 +13,7 @@ module.exports = function (grunt) {
                     'bower_components/bootstrap/dist/js/bootstrap.min.js',
                     'bower_components/d3/d3.min.js',
                     'vendor/highcharts.js',
-                    'bower_components/sequence-viewer/dist/sequence-viewer.js',
+                    'bower_components/sequence-viewer/dist/sequence-viewer.min.js',
                     'bower_components/feature-viewer/dist/feature-viewer.js',
                     'bower_components/iframe-resizer/js/iframeResizer.contentWindow.min.js',
                     'app/js/peptide-computation.js',
@@ -41,12 +41,19 @@ module.exports = function (grunt) {
                 }
             }
         },
+        uglify: {
+            options : {sourceMap : true},
+            all: {
+                src: 'dist/peptide-viewer.bundle.js',
+                dest: 'dist/peptide-viewer.bundle.js'
+            }
+        },
         watch: {
             options: {
                 livereload: true
             },
             all: {
-                files: ['app/js/*.js', 'app/css/*.css'],
+                files: ['app/js/*.js', 'app/css/*.css', 'app/index.html'],
                 tasks: ['concat']
             },
             handlebars: {
@@ -87,10 +94,14 @@ module.exports = function (grunt) {
     grunt.loadNpmTasks('grunt-contrib-handlebars');
     grunt.loadNpmTasks('grunt-contrib-watch');
     grunt.loadNpmTasks('grunt-karma');
+    grunt.loadNpmTasks('grunt-contrib-uglify');
 
 
     // Default task(s).
     grunt.registerTask('default', ['concat']);
+
+    // Call this task for production
+    grunt.registerTask('prod', ['concat', 'uglify']);
     grunt.registerTask('hbs', ['handlebars:compile']);
     grunt.registerTask('serve', ['connect:server', 'watch']);
 
