@@ -41,6 +41,12 @@ module.exports = function (grunt) {
                 }
             }
         },
+        uglify: {
+            all: {
+                src: 'dist/peptide-viewer.bundle.js',
+                dest: 'dist/peptide-viewer.bundle.js'
+            }
+        },
         watch: {
             options: {
                 livereload: true
@@ -87,10 +93,14 @@ module.exports = function (grunt) {
     grunt.loadNpmTasks('grunt-contrib-handlebars');
     grunt.loadNpmTasks('grunt-contrib-watch');
     grunt.loadNpmTasks('grunt-karma');
+    grunt.loadNpmTasks('grunt-contrib-uglify');
 
 
     // Default task(s).
     grunt.registerTask('default', ['concat']);
+
+    // Call this task for production
+    grunt.registerTask('prod', ['concat', 'uglify']);
     grunt.registerTask('hbs', ['handlebars:compile']);
     grunt.registerTask('serve', ['connect:server', 'watch']);
 
