@@ -1,7 +1,5 @@
 # Peptide-viewer
 
-[![Build Status](https://travis-ci.org/calipho-sib/nextprot-viewers.svg?branch=master)](https://travis-ci.org/calipho-sib/nextprot-viewers)
-
 This peptide viewer shows detailed information of the peptides covering of a specific human protein given in the url.
 To access to a specific protein, simply add "?nxentry=NX_" followed by an Uniprot ID.
 

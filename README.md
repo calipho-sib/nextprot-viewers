@@ -1,4 +1,7 @@
 # neXtProt viewers (nextprot-viewers)
+
+[![Build Status](https://travis-ci.org/calipho-sib/nextprot-viewers.svg?branch=master)](https://travis-ci.org/calipho-sib/nextprot-viewers)
+
 This repository groups viewers developed for [neXtProt Search](https://search.nextprot.org).
 All this viewers could be reused
 
