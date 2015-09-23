@@ -542,8 +542,8 @@ function initNXDivs() {
                         "?iso :peptideMapping ?map ." +
                         "?map :peptideName ?pepName ." +
                         "?map :evidence ?mapevi ." +
-                        "?map :position / :start ?mapstart ." +
-                        "?map :position / :end ?mapend ." +
+                        "?map :start ?mapstart ." +
+                        "?map :end ?mapend ." +
                         "filter (?ptmstart >= ?mapstart && ?ptmend <= ?mapend)" +
                         "?mapevi :assignedBy ?mapsrc ." +
                         "filter(strlen(str(?mapsrc))>=44) ." +
@@ -564,8 +564,8 @@ function initNXDivs() {
                         "optional { ?ptm rdfs:comment ?ptmcomment} ." +
                         "?iso :peptideMapping ?map ." +
                         "?map :peptideName ?pepName ." +
-                        "?map :position / :start ?mapstart ." +
-                        "?map :position / :end ?mapend ." +
+                        "?map :start ?mapstart ." +
+                        "?map :end ?mapend ." +
                         "filter (?ptmstart >= ?mapstart && ?ptmstart <= ?mapend || ?ptmend >= ?mapstart && ?ptmend <= ?mapend)" +
                         "}";
                     if (pmidFound === true) {

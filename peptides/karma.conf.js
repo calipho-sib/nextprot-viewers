@@ -13,8 +13,9 @@ module.exports = function(config) {
 
     // list of files / patterns to load in the browser
     files: [
-        //'bower_components/handlebars/*.js',
+        //'bower_components/**/*.js',
         //'app/js/*.js',
+        //'test/*.js'
         'dist/*.js',
         'test/**/*.js'
     ],

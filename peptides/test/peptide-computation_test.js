@@ -25,4 +25,169 @@ describe("Testing peptide computations", function() {
 
         expect(percentCov).toBe("50.00");
     });
+
+    it("same peptide do share nature", function() {
+
+        var peptide = {"name":"PEP_A", "position": {"first":25,"second":39}, "properties":{"natural":true,"synthetic":false}, "include":[],"includedIn":[]};
+
+        var pepComputation = new PeptideComputation();
+
+        var doShareNature = pepComputation.doShareNature(peptide, peptide);
+
+        expect(doShareNature).toBe(true);
+    });
+
+    it("peptides do share natural nature", function() {
+
+        var peptides = [
+            {"name":"PEP_A", "properties":{"natural":true,"synthetic":true}},
+            {"name":"PEP_B", "properties":{"natural":true,"synthetic":false}}
+        ];
+        var pepComputation = new PeptideComputation();
+
+        var doShareNature = pepComputation.doShareNature(peptides[0], peptides[1]);
+
+        expect(doShareNature).toBe(true);
+    });
+
+    it("peptides do share synthetic nature", function() {
+
+        var peptides = [
+            {"name":"PEP_A", "properties":{"natural":false,"synthetic":true}},
+            {"name":"PEP_B", "properties":{"natural":true,"synthetic":true}}
+        ];
+        var pepComputation = new PeptideComputation();
+
+        var doShareNature = pepComputation.doShareNature(peptides[0], peptides[1]);
+
+        expect(doShareNature).toBe(true);
+    });
+
+    it("peptides do not share nature", function() {
+
+        var peptides = [
+            {"name":"PEP_A", "properties":{"natural":false,"synthetic":true}},
+            {"name":"PEP_B", "properties":{"natural":true,"synthetic":false}}
+        ];
+        var pepComputation = new PeptideComputation();
+
+        var doShareNature = pepComputation.doShareNature(peptides[0], peptides[1]);
+
+        expect(doShareNature).toBe(false);
+    });
+
+    it("one peptide position does not include its own position", function() {
+
+        var peptide = {"name":"PEP_A", "position": {"first":25,"second":39}, "properties":{"natural":true,"synthetic":false}};
+
+        var pepComputation = new PeptideComputation();
+
+        var isIncluded = pepComputation.isPositionStrictyIncludedIn(peptide, peptide);
+
+        expect(isIncluded).toBe(false);
+    });
+
+    it("one peptide position is strictly included in other position", function() {
+
+        var peptides = [
+            {"name":"PEP_A", "position": {"first":25,"second":39}, "properties":{"natural":true,"synthetic":false}},
+            {"name":"PEP_B", "position": {"first":15,"second":40}, "properties":{"natural":true,"synthetic":false}}
+        ];
+        var pepComputation = new PeptideComputation();
+
+        var isIncluded = pepComputation.isPositionStrictyIncludedIn(peptides[0], peptides[1]);
+
+        expect(isIncluded).toBe(true);
+    });
+
+    it("one natural peptide is strictly included in other mixed nature peptide", function() {
+
+        var peptides = [
+            {"name":"PEP_A", "position": {"first":25,"second":39}, "properties":{"natural":true,"synthetic":false}},
+            {"name":"PEP_B", "position": {"first":15,"second":40}, "properties":{"natural":true,"synthetic":true}}
+        ];
+        var pepComputation = new PeptideComputation();
+
+        var isIncluded = pepComputation.isPositionStrictyIncludedIn(peptides[0], peptides[1]);
+
+        expect(isIncluded).toBe(true);
+    });
+
+    it("one synthetic peptide is strictly included in other mixed nature peptide", function() {
+
+        var peptides = [
+            {"name":"PEP_A", "position": {"first":25,"second":39}, "properties":{"natural":false,"synthetic":true}},
+            {"name":"PEP_B", "position": {"first":15,"second":40}, "properties":{"natural":true,"synthetic":true}}
+        ];
+        var pepComputation = new PeptideComputation();
+
+        var isIncluded = pepComputation.isPositionStrictyIncludedIn(peptides[0], peptides[1]);
+
+        expect(isIncluded).toBe(true);
+    });
+
+    it("one peptide is not included in other if different nature", function() {
+
+        var peptides = [
+            {"name":"PEP_A", "position": {"first":25,"second":39}, "properties":{"natural":false,"synthetic":true}},
+            {"name":"PEP_B", "position": {"first":15,"second":40}, "properties":{"natural":true,"synthetic":false}}
+        ];
+        var pepComputation = new PeptideComputation();
+
+        var isIncluded = pepComputation.isPositionStrictyIncludedIn(peptides[0], peptides[1]);
+
+        expect(isIncluded).toBe(false);
+    });
+
+    it("one peptide is not included in other", function() {
+
+        var peptides = [
+            {"name":"PEP_A", "position": {"first":1,"second":39}, "properties":{"natural":true,"synthetic":false}},
+            {"name":"PEP_B", "position": {"first":40,"second":50}, "properties":{"natural":true,"synthetic":false}}
+        ];
+        var pepComputation = new PeptideComputation();
+
+        var isIncluded = pepComputation.isPositionStrictyIncludedIn(peptides[0], peptides[1]);
+
+        expect(isIncluded).toBe(false);
+    });
+
+    it("one included peptide is not included in other", function() {
+
+        var peptides = [
+            {"name":"PEP_A", "position": {"first":1,"second":39}, "properties":{"natural":true,"synthetic":false}},
+            {"name":"PEP_B", "position": {"first":3,"second":20}, "properties":{"natural":true,"synthetic":false}}
+        ];
+        var pepComputation = new PeptideComputation();
+
+        var isIncluded = pepComputation.isPositionStrictyIncludedIn(peptides[0], peptides[1]);
+
+        expect(isIncluded).toBe(false);
+    });
+
+    it("one included peptide is included in other (same starting point)", function() {
+
+        var peptides = [
+            {"name":"PEP_A", "position": {"first":1,"second":20}, "properties":{"natural":true,"synthetic":false}},
+            {"name":"PEP_B", "position": {"first":1,"second":30}, "properties":{"natural":true,"synthetic":false}}
+        ];
+        var pepComputation = new PeptideComputation();
+
+        var isIncluded = pepComputation.isPositionStrictyIncludedIn(peptides[0], peptides[1]);
+
+        expect(isIncluded).toBe(true);
+    });
+
+    it("one included peptide is included in other (same ending point)", function() {
+
+        var peptides = [
+            {"name":"PEP_A", "position": {"first":10,"second":20}, "properties":{"natural":true,"synthetic":false}},
+            {"name":"PEP_B", "position": {"first":1,"second":20}, "properties":{"natural":true,"synthetic":false}}
+        ];
+        var pepComputation = new PeptideComputation();
+
+        var isIncluded = pepComputation.isPositionStrictyIncludedIn(peptides[0], peptides[1]);
+
+        expect(isIncluded).toBe(true);
+    });
 });
