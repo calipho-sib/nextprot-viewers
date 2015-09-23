@@ -76,7 +76,7 @@ var PeptideComputation = (function () {
     // PepA     --  --     -- ----- ---   -----
     // PepB    ---- ---- ---- -----  ----   --
     // Returns true true true false false false
-    PeptideComputation.prototype.isStrictyIncludedIn = function(pepA, pepB) {
+    PeptideComputation.prototype.isPositionStrictyIncludedIn = function(pepA, pepB) {
 
         var ret = false;
 
@@ -100,8 +100,8 @@ var PeptideComputation = (function () {
             for (var j = i + 1; j < peptides.length; j++) {
                 var pepB = peptides[j];
 
-                if (this.isStrictyIncludedIn(pepA, pepB)) updateInclusionLists(pepA, pepB);
-                else if (this.isStrictyIncludedIn(pepB, pepA)) updateInclusionLists(pepB, pepA);
+                if (this.isPositionStrictyIncludedIn(pepA, pepB)) updateInclusionLists(pepA, pepB);
+                else if (this.isPositionStrictyIncludedIn(pepB, pepA)) updateInclusionLists(pepB, pepA);
             }
         }
     };
