@@ -25,4 +25,54 @@ describe("Testing peptide computations", function() {
 
         expect(percentCov).toBe("50.00");
     });
+
+    it("same peptide do share nature", function() {
+
+        var peptide = {"name":"PEP_A", "position": {"first":25,"second":39}, "properties":{"natural":true,"synthetic":false}, "include":[],"includedIn":[]};
+
+        var pepComputation = new PeptideComputation();
+
+        var doShareNature = pepComputation.doShareNature(peptide, peptide);
+
+        expect(doShareNature).toBe(true);
+    });
+
+    it("peptides do share natural nature", function() {
+
+        var peptides = [
+            {"name":"PEP_A", "properties":{"natural":true,"synthetic":true}},
+            {"name":"PEP_B", "properties":{"natural":true,"synthetic":false}}
+        ];
+        var pepComputation = new PeptideComputation();
+
+        var doShareNature = pepComputation.doShareNature(peptides[0], peptides[1]);
+
+        expect(doShareNature).toBe(true);
+    });
+
+    it("peptides do share synthetic nature", function() {
+
+        var peptides = [
+            {"name":"PEP_A", "properties":{"natural":false,"synthetic":true}},
+            {"name":"PEP_B", "properties":{"natural":true,"synthetic":true}}
+        ];
+        var pepComputation = new PeptideComputation();
+
+        var doShareNature = pepComputation.doShareNature(peptides[0], peptides[1]);
+
+        expect(doShareNature).toBe(true);
+    });
+
+    it("peptides do not share nature", function() {
+
+        var peptides = [
+            {"name":"PEP_A", "properties":{"natural":false,"synthetic":true}},
+            {"name":"PEP_B", "properties":{"natural":true,"synthetic":false}}
+        ];
+        var pepComputation = new PeptideComputation();
+
+        var doShareNature = pepComputation.doShareNature(peptides[0], peptides[1]);
+
+        expect(doShareNature).toBe(false);
+    });
 });
