@@ -45,27 +45,6 @@ var PeptideComputation = (function () {
         return computeCoveragePercentage(positions, proteinLength);
     }
 
-    // Return true if pepA is striclty included in pepB and both of the same nature.
-    // PepA     --  --     -- ----- ---   -----
-    // PepB    ---- ---- ---- -----  ----   --
-    // Returns true true true false false false
-    function isIncludedIn(pepA, pepB) {
-
-        var ret = false;
-
-        if (pepA.properties.natural && pepB.properties.natural || pepA.properties.synthetic && pepB.properties.synthetic) {
-            if (pepA.position.first == pepB.position.first && pepA.position.second == pepB.position.second)
-                ret = false;
-            else
-                ret = pepA.position.first >= pepB.position.first && pepA.position.second <= pepB.position.second;
-        }
-
-        //console.log("is ", pepA.sequence, pepA.position.first, ":", pepA.position.second, ", natu?", pepA.properties.natural, " synth?", pepA.properties.synthetic,
-        //    " included in ", pepB.sequence, pepB.position.first, ":", pepB.position.second, ", natu?", pepB.properties.natural, " synth?", pepB.properties.synthetic,"? ANSWER=", ret);
-
-        return ret;
-    }
-
     function findIndexByKeyValue(array, key, value) {
 
         for (var i = 0; i < array.length; i++) {
@@ -88,6 +67,29 @@ var PeptideComputation = (function () {
         }
     }
 
+    PeptideComputation.prototype.doShareNature = function(pepA, pepB) {
+
+        return pepA.properties.natural && pepB.properties.natural || pepA.properties.synthetic && pepB.properties.synthetic;
+    };
+
+    // Return true if pepA is strictly included in pepB and both of the same nature.
+    // PepA     --  --     -- ----- ---   -----
+    // PepB    ---- ---- ---- -----  ----   --
+    // Returns true true true false false false
+    PeptideComputation.prototype.isPositionStrictyIncludedIn = function(pepA, pepB) {
+
+        var ret = false;
+
+        if (this.doShareNature(pepA, pepB)) {
+            if (pepA.position.first == pepB.position.first && pepA.position.second == pepB.position.second)
+                ret = false;
+            else
+                ret = pepA.position.first >= pepB.position.first && pepA.position.second <= pepB.position.second;
+        }
+
+        return ret;
+    };
+
     PeptideComputation.prototype.computeInterPeptideInclusions = function(peptides) {
 
         //var stringifiedPeptides = JSON.stringify(peptides); console.log(stringifiedPeptides);
@@ -98,8 +100,8 @@ var PeptideComputation = (function () {
             for (var j = i + 1; j < peptides.length; j++) {
                 var pepB = peptides[j];
 
-                if (isIncludedIn(pepA, pepB)) updateInclusionLists(pepA, pepB);
-                else if (isIncludedIn(pepB, pepA)) updateInclusionLists(pepB, pepA);
+                if (this.isPositionStrictyIncludedIn(pepA, pepB)) updateInclusionLists(pepA, pepB);
+                else if (this.isPositionStrictyIncludedIn(pepB, pepA)) updateInclusionLists(pepB, pepA);
             }
         }
     };
