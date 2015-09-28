@@ -825,7 +825,6 @@ function initNXDivs() {
                             nxIsoformChoice(isoforms);
                             break;
                         case 2:
-
                             peptideMappings = oneData;
                             //adding a copy for the feature viewer, because pepetides will be added to peptideMappings
                             allFeatures.push(jQuery.merge([], oneData));
@@ -835,15 +834,15 @@ function initNXDivs() {
                             allFeatures.push(oneData);
                             // Hack: add srm peptide mapping evidences into peptide mapping evidences of natural/synthetic peptides
                             srmPeptideMappings.forEach(function (srmPeptideMapping) {
-                                var alreadySaved = false;
+                                var isPurelySynthetic = true;
                                 for (var i = 0; i < peptideMappings.length; i++) {
                                     if (srmPeptideMapping.peptideUniqueName === peptideMappings[i].peptideUniqueName) {
                                         peptideMappings[i].evidences = peptideMappings[i].evidences.concat(srmPeptideMapping.evidences);
-                                        alreadySaved = true;
+                                        isPurelySynthetic = false;
                                         break;
                                     }
                                 }
-                                if (alreadySaved === false) {
+                                if (isPurelySynthetic) {
                                     peptideMappings.push(srmPeptideMapping); //TODO fix this! This is referenced in allFeatures[1] so it should not be pushed like this
                                 }
                             });
