@@ -833,16 +833,18 @@ function initNXDivs() {
                         case 3:
                             srmPeptideMappings = oneData;
                             allFeatures.push(oneData);
-                            srmPeptideMappings.forEach(function (o) {
+                            // Hack: add srm peptide mapping evidences into peptide mapping evidences of natural/synthetic peptides
+                            srmPeptideMappings.forEach(function (srmPeptideMapping) {
                                 var alreadySaved = false;
                                 for (var i = 0; i < peptideMappings.length; i++) {
-                                    if (o.peptideUniqueName === peptideMappings[i].peptideUniqueName) {
+                                    if (srmPeptideMapping.peptideUniqueName === peptideMappings[i].peptideUniqueName) {
+                                        peptideMappings[i].evidences = peptideMappings[i].evidences.concat(srmPeptideMapping.evidences);
                                         alreadySaved = true;
                                         break;
                                     }
                                 }
                                 if (alreadySaved === false) {
-                                    peptideMappings.push(o); //TODO fix this! This is referenced in allFeatures[1] so it should not be pushed like this
+                                    peptideMappings.push(srmPeptideMapping); //TODO fix this! This is referenced in allFeatures[1] so it should not be pushed like this
                                 }
                             });
                             break;
