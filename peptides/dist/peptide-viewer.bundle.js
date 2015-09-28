@@ -2818,11 +2818,12 @@ function initNXDivs() {
                         "?ptm :end ?ptmend ." +
                         "optional { ?ptm :term ?ptmterm }." +
                         "optional { ?ptm rdfs:comment ?ptmcomment} ." +
-                        "?iso :peptideMapping ?map ." +
+                        "?iso :mapping ?map ." +
                         "?map :peptideName ?pepName ." +
                         "?map :start ?mapstart ." +
                         "?map :end ?mapend ." +
-                        "filter (?ptmstart >= ?mapstart && ?ptmstart <= ?mapend || ?ptmend >= ?mapstart && ?ptmend <= ?mapend)" +
+                        "filter (?ptmstart >= ?mapstart && ?ptmstart <= ?mapend || ?ptmend >= ?mapstart && ?ptmend <= ?mapend) " +
+                        "filter not exists {?map a :PdbMapping}" +
                         "}";
                     if (pmidFound === true) {
                         nx.executeSparql(query).then(function (data) {
