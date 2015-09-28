@@ -808,8 +808,8 @@ function initNXDivs() {
         [nx.getProteinSequence(nxEntryName), //1
             nx.getPeptide(nxEntryName), //2
             nx.getSrmPeptide(nxEntryName), //3
-            nx.getMatureProtein(nxEntryName), //4
-            nx.getProPeptide(nxEntryName) //5
+            nx.getAnnotationsByCategory(nxEntryName, "mature-protein"), //4
+            nx.getAnnotationsByCategory(nxEntryName, "propeptide") //5
         ].reduce(function (sequence, dataPromise) {
                 return sequence.then(function () {
                     return dataPromise;
@@ -870,7 +870,7 @@ function initNXDivs() {
                 // catch any error that happened along the way
                 console.log("Argh, broken: " + err.message);
                 console.log("Error at line : " + err.stack);
-            })
+            });
     });
 
 }

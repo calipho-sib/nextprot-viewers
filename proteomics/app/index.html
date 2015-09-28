@@ -1,14 +1,9 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <!--[if IE]>
-    <script type="text/javascript">
-    window.location = "http://www.google.com/";
-    </script>
-    <![endif]-->
     <meta charset="utf-8">
-    <link rel="stylesheet" href="../../triple-viewer/dist/triple-viewer.css">
-    <script src="../../triple-viewer/dist/triple-viewer.bundle.js"></script>
+    <link rel="stylesheet" href="../../lib/triple-viewer/dist/triple-viewer.css">
+    <script src="../../lib/triple-viewer/dist/triple-viewer.bundle.js"></script>
 </head>
 
 <body>
@@ -42,19 +37,19 @@
 
             Promise.all([
                 nx.getProteinSequence(entry), //1
-                nx.getProPeptide(entry), //2
-                nx.getMatureProtein(entry), //3
-                nx.getSignalPeptide(entry), //4
-                nx.getPeroxisomeTransitPeptide(entry), //5
-                nx.getMitochondrialTransitPeptide(entry), //6
-                nx.getDisulfideBond(entry), //7
+                nx.getAnnotationsByCategory(entry, "propeptide"), //2
+                nx.getAnnotationsByCategory(entry, "mature-protein"), //3
+                nx.getAnnotationsByCategory(entry, "signal-peptide"), //4
+                nx.getAnnotationsByCategory(entry, "peroxisome-transit-peptide"), //5
+                nx.getAnnotationsByCategory(entry, "mitochondrial-transit-peptide"), //6
+                nx.getAnnotationsByCategory(entry, "disulfide-bond"), //7
                 nx.getAntibody(entry), //8
-                nx.getInitMeth(entry), //9
-                nx.getModifResidue(entry), //10
-                nx.getCrossLink(entry), //11
-                nx.getGlycoSite(entry), //12
-                nx.getLipidationSite(entry), //13
-                nx.getSelenocysteine(entry), //14
+                nx.getAnnotationsByCategory(entry, "initiator-methionine "), //9
+                nx.getAnnotationsByCategory(entry, "modified-residue"), //10
+                nx.getAnnotationsByCategory(entry, "cross-link"), //11
+                nx.getAnnotationsByCategory(entry, "glycosylation-site "), //12
+                nx.getAnnotationsByCategory(entry, "lipidation-site"), //13
+                nx.getAnnotationsByCategory(entry, "selenocysteine"), //14
                 nx.getPeptide(entry), //15
                 nx.getSrmPeptide(entry), //16
                 nx.getIsoformMapping(entry) //17

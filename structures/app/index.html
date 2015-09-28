@@ -2,8 +2,8 @@
 <html>
 <head>
     <meta charset="utf-8">
-    <link rel="stylesheet" href="../../triple-viewer/dist/triple-viewer.css">
-    <script src="../../triple-viewer/dist/triple-viewer.bundle.js"></script>
+    <link rel="stylesheet" href="../../lib/triple-viewer/dist/triple-viewer.css">
+    <script src="../../lib/triple-viewer/dist/triple-viewer.bundle.js"></script>
 </head>
 
 <body>
@@ -34,17 +34,32 @@
         var entry = nx.getEntryName();
 
         $(function () {
-            var startTime = new Date().getTime();
-            Promise.all([nx.getProteinSequence(entry), nx.getInteractingRegion(entry), nx.getMiscellaneousRegion(entry), nx.getDomain(entry), nx.getRepeat(entry), nx.getCalciumBinding(entry), nx.getZincFinger(entry), nx.getDnaBinding(entry),
-                nx.getNucleotideBinding(entry), nx.getCoiledCoilRegion(entry), nx.getMotif(entry), nx.getBiasedRegion(entry), nx.getTopologicalDomain(entry), nx.getTransmembraneRegion(entry),
-                nx.getMiscellaneousSite(entry), nx.getActiveSite(entry), nx.getBindingSite(entry), nx.getCleavageSite(entry), nx.getMetalBindingSite(entry),
-                nx.getVariant(entry), nx.getMutagenesis(entry), nx.getSequenceConflict(entry), nx.getBetaStrand(entry), nx.getHelix(entry), nx.getTurn(entry), nx.getIsoformMapping(entry)]).then(function (oneData) {
-                var endTime2 = new Date().getTime();
-                var time2 = endTime2 - startTime;
-//                console.log('Execution time: ' + time2);
-//
-//                var featuresName = ["Sequence","Propeptide", "Mature protein", "Signal peptide", "Disulfide bonds", "Initiator meth", "Interacting region",
-//                    "Modified residue","Cross-link", "Glycosylation", "Site", "Active site", "Metal binding","Variant"];
+            Promise.all([nx.getProteinSequence(entry),
+                nx.getAnnotationsByCategory(entry, "interacting-region"),
+                nx.getAnnotationsByCategory(entry, "miscellaneous-region"),
+                nx.getAnnotationsByCategory(entry, "domain"),
+                nx.getAnnotationsByCategory(entry, "repeat"),
+                nx.getAnnotationsByCategory(entry, "calcium-binding-region"),
+                nx.getAnnotationsByCategory(entry, "zinc-finger-region"),
+                nx.getAnnotationsByCategory(entry, "dna-binding-region"),
+                nx.getAnnotationsByCategory(entry, "nucleotide-phosphate-binding-region"),
+                nx.getAnnotationsByCategory(entry, "coiled-coil-region"),
+                nx.getAnnotationsByCategory(entry, "short-sequence-motif"),
+                nx.getAnnotationsByCategory(entry, "compositionally-biased-region"),
+                nx.getAnnotationsByCategory(entry, "topological-domain"),
+                nx.getAnnotationsByCategory(entry, "transmembrane-region "),
+                nx.getAnnotationsByCategory(entry, "miscellaneous-site"),
+                nx.getAnnotationsByCategory(entry, "active-site"),
+                nx.getAnnotationsByCategory(entry, "binding-site"),
+                nx.getAnnotationsByCategory(entry, "cleavage-site"),
+                nx.getAnnotationsByCategory(entry, "metal-binding-site"),
+                nx.getAnnotationsByCategory(entry, "variant"),
+                nx.getAnnotationsByCategory(entry, "mutagenesis"),
+                nx.getAnnotationsByCategory(entry, "sequence-conflict"),
+                nx.getAnnotationsByCategory(entry, "beta-strand"),
+                nx.getAnnotationsByCategory(entry, "helix"),
+                nx.getAnnotationsByCategory(entry, "turn"),
+                nx.getIsoformMapping(entry)]).then(function (oneData) {
 
                 var metaData = [
                     {name: "Sequence"},                                                                                              {name: "Interacting region",className: "intregion",color: "#B3C2F0",type: "rect",filter:"Region"},
@@ -66,10 +81,7 @@
                 var tv = new TripleViewer(entry);
                 tv.init(oneData,metaData);
 
-                var endTime = new Date().getTime();
-                var time = endTime - startTime;
-                console.log('Execution time: ' + time);
-            }).catch(function (err) {
+         }).catch(function (err) {
                 // catch any error that happened so far
                 console.log("Argh, broken: " + err.message);
                 console.log("Error at line : " + err.stack);
