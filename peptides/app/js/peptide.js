@@ -826,7 +826,6 @@ function initNXDivs() {
                             nxIsoformChoice(isoforms);
                             break;
                         case 2:
-
                             peptideMappings = oneData;
                             //adding a copy for the feature viewer, because pepetides will be added to peptideMappings
                             allFeatures.push(jQuery.merge([], oneData));
@@ -834,16 +833,18 @@ function initNXDivs() {
                         case 3:
                             srmPeptideMappings = oneData;
                             allFeatures.push(oneData);
-                            srmPeptideMappings.forEach(function (o) {
-                                var alreadySaved = false;
+                            // Hack: add srm peptide mapping evidences into peptide mapping evidences of natural/synthetic peptides
+                            srmPeptideMappings.forEach(function (srmPeptideMapping) {
+                                var isPurelySynthetic = true;
                                 for (var i = 0; i < peptideMappings.length; i++) {
-                                    if (o.peptideUniqueName === peptideMappings[i].peptideUniqueName) {
-                                        alreadySaved = true;
+                                    if (srmPeptideMapping.peptideUniqueName === peptideMappings[i].peptideUniqueName) {
+                                        peptideMappings[i].evidences = peptideMappings[i].evidences.concat(srmPeptideMapping.evidences);
+                                        isPurelySynthetic = false;
                                         break;
                                     }
                                 }
-                                if (alreadySaved === false) {
-                                    peptideMappings.push(o); //TODO fix this! This is referenced in allFeatures[1] so it should not be pushed like this
+                                if (isPurelySynthetic) {
+                                    peptideMappings.push(srmPeptideMapping); //TODO fix this! This is referenced in allFeatures[1] so it should not be pushed like this
                                 }
                             });
                             break;
