@@ -19,4 +19,4 @@ A demo page of this viewer is visible here:
 This peptide viewer shows detailed information of the peptide covering of a specific human protein.
 A demo page of this viewer is visible here:
 * https://cdn.rawgit.com/calipho-sib/nextprot-viewers/master/peptides/app/index.html?nxentry=NX_P46976
-![Peptide viewer](./peptide/app/assets/img/ScrSht_peptide-viewer.png)
+![Peptide viewer](./peptides/app/assets/img/ScrSht_peptide-viewer.png)
