@@ -28,7 +28,6 @@ module.exports = function (grunt) {
             },
             extras: {
                 src: ['app/css/*.css',
-                      'bower_components/bootstrap/dist/css/bootstrap.min.css',
                       'bower_components/feature-viewer/css/style.css',
                       'bower_components/css-spinners/css/spinner/throbber.css'],
                 dest: 'dist/peptide-viewer.css'

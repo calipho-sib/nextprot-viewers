@@ -35,54 +35,108 @@
         
         $(function () {
 
-            Promise.all([
-                nx.getProteinSequence(entry), //1
-                nx.getAnnotationsByCategory(entry, "propeptide"), //2
-                nx.getAnnotationsByCategory(entry, "mature-protein"), //3
-                nx.getAnnotationsByCategory(entry, "signal-peptide"), //4
-                nx.getAnnotationsByCategory(entry, "peroxisome-transit-peptide"), //5
-                nx.getAnnotationsByCategory(entry, "mitochondrial-transit-peptide"), //6
-                nx.getAnnotationsByCategory(entry, "disulfide-bond"), //7
-                nx.getAntibody(entry), //8
-                nx.getAnnotationsByCategory(entry, "initiator-methionine "), //9
-                nx.getAnnotationsByCategory(entry, "modified-residue"), //10
-                nx.getAnnotationsByCategory(entry, "cross-link"), //11
-                nx.getAnnotationsByCategory(entry, "glycosylation-site "), //12
-                nx.getAnnotationsByCategory(entry, "lipidation-site"), //13
-                nx.getAnnotationsByCategory(entry, "selenocysteine"), //14
-                nx.getPeptide(entry), //15
-                nx.getSrmPeptide(entry), //16
-                nx.getIsoformMapping(entry) //17
-            ]).then(function (oneData) {
 
+            function getFeaturesByview(list,entry) {
+                var data = [];
+                for (var feat in list) {
+                    switch (list[feat].APIRef) {
+                        case "sequence":
+                            data.push(nx.getProteinSequence(entry));
+                            break;
+                        case "antibody":
+                            data.push(nx.getAntibody(entry));
+                            break;
+                        case "peptide":
+                            data.push(nx.getPeptide(entry));
+                            break;
+                        case "srmpeptide":
+                            data.push(nx.getSrmPeptide(entry));
+                            break;
+                        case "isoform-mapping":
+                            data.push(nx.getIsoformMapping(entry));
+                            break;
+                        default:
+                            data.push(nx.getAnnotationsByCategory(entry, list[feat].APIRef));
+                            break;
+                    }
+                }
+                return data;
+            }
+            function getMetadataByView(list) {
+                var metadata=[];
+                for (var i=0; i<list.length-1;i++) {
+                    metadata.push(list[i].metadata);
+                }
+                return metadata;
+            }
 
-                var metaData = [
-                    {name: "Sequence"}, //1
-                    {name: "Propeptide",className: "pro",color: "#B3B3B3",type: "rect",filter:"Processing"}, //2
-                    {name: "Mature protein",className: "mat",color: "#B3B3C2",type: "rect",filter:"Processing"}, // 3
-                    {name: "Signal peptide",className: "sign",color: "#B3B3E1",type: "rect",filter:"Processing"}, //4
-                    {name: "Transit peptide",className: "pero",color: "#B3B3F0",type: "rect",filter:"Processing"}, //5
-                    {name: "Transit peptide",className: "mito",color: "#B3B3F0",type: "rect",filter:"Processing"}, //6
-                    {name: "Disulfide bond",className: "dsB",color: "#B3B3E1",type: "path",filter:"Modified Residue"}, //7
-                    {name: "Antibody",className: "anti",color: "#B3C2F0",type: "rect",filter:"none"}, //8
-                    {name: "Initiator meth",className: "initMeth",color: "#B3B3D1",type: "unique",filter:"Processing"}, //9
-                    {name: "Modified residue",className: "modifRes",color: "#B3C2B3",type: "unique",filter:"Modified Residue"}, //10
-                    {name: "Cross-link",className: "crossLink",color: "#B3C2C2",type: "unique",filter:"Modified Residue"}, //11
-                    {name: "Glycosylation",className: "glycoSite",color: "#B3C2D1",type: "unique",filter:"Modified Residue"}, //12
-                    {name: "Lipidation",className: "lipidation",color: "#A3B5DB",type: "unique",filter:"Modified Residue"}, //13
-                    {name: "Non standart AA",className: "seleno",color: "#859DE7",type: "unique",filter:"Modified Residue"}, //14
-                    {name: "Peptide",className: "pep",color: "#B3E1D1",type: "multipleRect",filter:"Peptide"}, //15
-                    {name: "SRM Peptide",className: "srmPep",color: "#B3E1F0",type: "multipleRect",filter:"none"} //16
-                ];
+            $.getJSON("featureConfig.json", function (config) {
+                console.log(config);
+                Promise.all(getFeaturesByview(config.proteomics,entry))
+                    .then(function (oneData) {
 
-                var tv = new TripleViewer(entry);
-                tv.init(oneData,metaData);
+                        var metaData = getMetadataByView(config.proteomics);
 
-            }).catch(function (err) {
-                // catch any error that happened so far
-                console.log("Argh, broken: " + err.message);
-                console.log("Error at line : " + err.stack);
+                        var tv = new TripleViewer(entry);
+                        tv.init(oneData,metaData);
+
+                    }).catch(function (err) {
+                        // catch any error that happened so far
+                        console.log("Argh, broken: " + err.message);
+                        console.log("Error at line : " + err.stack);
+                    });
+
             });
+
+
+//            Promise.all([
+//                nx.getProteinSequence(entry), //1
+//                nx.getAnnotationsByCategory(entry, "propeptide"), //2
+//                nx.getAnnotationsByCategory(entry, "mature-protein"), //3
+//                nx.getAnnotationsByCategory(entry, "signal-peptide"), //4
+//                nx.getAnnotationsByCategory(entry, "peroxisome-transit-peptide"), //5
+//                nx.getAnnotationsByCategory(entry, "mitochondrial-transit-peptide"), //6
+//                nx.getAnnotationsByCategory(entry, "disulfide-bond"), //7
+//                nx.getAntibody(entry), //8
+//                nx.getAnnotationsByCategory(entry, "initiator-methionine"), //9
+//                nx.getAnnotationsByCategory(entry, "modified-residue"), //10
+//                nx.getAnnotationsByCategory(entry, "cross-link"), //11
+//                nx.getAnnotationsByCategory(entry, "glycosylation-site"), //12
+//                nx.getAnnotationsByCategory(entry, "lipidation-site"), //13
+//                nx.getAnnotationsByCategory(entry, "selenocysteine"), //14
+//                nx.getPeptide(entry), //15
+//                nx.getSrmPeptide(entry), //16
+//                nx.getIsoformMapping(entry) //17
+//            ]).then(function (oneData) {
+//
+//
+//                var metaData = [
+//                    {name: "Sequence"}, //1
+//                    {name: "Propeptide",className: "pro",color: "#B3B3B3",type: "rect",filter:"Processing"}, //2
+//                    {name: "Mature protein",className: "mat",color: "#B3B3C2",type: "rect",filter:"Processing"}, // 3
+//                    {name: "Signal peptide",className: "sign",color: "#B3B3E1",type: "rect",filter:"Processing"}, //4
+//                    {name: "Transit peptide",className: "pero",color: "#B3B3F0",type: "rect",filter:"Processing"}, //5
+//                    {name: "Transit peptide",className: "mito",color: "#B3B3F0",type: "rect",filter:"Processing"}, //6
+//                    {name: "Disulfide bond",className: "dsB",color: "#B3B3E1",type: "path",filter:"Modified Residue"}, //7
+//                    {name: "Antibody",className: "anti",color: "#B3C2F0",type: "rect",filter:"none"}, //8
+//                    {name: "Initiator meth",className: "initMeth",color: "#B3B3D1",type: "unique",filter:"Processing"}, //9
+//                    {name: "Modified residue",className: "modifRes",color: "#B3C2B3",type: "unique",filter:"Modified Residue"}, //10
+//                    {name: "Cross-link",className: "crossLink",color: "#B3C2C2",type: "unique",filter:"Modified Residue"}, //11
+//                    {name: "Glycosylation",className: "glycoSite",color: "#B3C2D1",type: "unique",filter:"Modified Residue"}, //12
+//                    {name: "Lipidation",className: "lipidation",color: "#A3B5DB",type: "unique",filter:"Modified Residue"}, //13
+//                    {name: "Non standart AA",className: "seleno",color: "#859DE7",type: "unique",filter:"Modified Residue"}, //14
+//                    {name: "Peptide",className: "pep",color: "#B3E1D1",type: "multipleRect",filter:"Peptide"}, //15
+//                    {name: "SRM Peptide",className: "srmPep",color: "#B3E1F0",type: "multipleRect",filter:"none"} //16
+//                ];
+//
+//                var tv = new TripleViewer(entry);
+//                tv.init(oneData,metaData);
+//
+//            }).catch(function (err) {
+//                // catch any error that happened so far
+//                console.log("Argh, broken: " + err.message);
+//                console.log("Error at line : " + err.stack);
+//            });
         });
     }));
 </script>

@@ -786,10 +786,10 @@ function initNXDivs() {
 
         var metaData = [
             {name: "Sequence"},
-            {name: "Peptide", className: "pep", color: "#B3E1D1", type: "multipleRect", filter: "Peptide"},
-            {name: "SRM Peptide", className: "srmPep", color: "#B3E1F0", type: "multipleRect", filter: "none"},
+            {name: "Propeptide", className: "pro", color: "#B3B3B3", type: "rect", filter: "Processing"},
             {name: "Mature protein", className: "mat", color: "#B3B3C2", type: "rect", filter: "Processing"},
-            {name: "Propeptide", className: "pro", color: "#B3B3B3", type: "rect", filter: "Processing"}
+            {name: "Peptide", className: "pep", color: "#B3E1D1", type: "multipleRect", filter: "Peptide"},
+            {name: "SRM Peptide", className: "srmPep", color: "#B3E1F0", type: "multipleRect", filter: "none"}
         ];
 
         for (var i = 1; i < data.length - 1; i++) {
@@ -806,11 +806,12 @@ function initNXDivs() {
     var featuresForViewer = [];
 
     $(function () {
-        [nx.getProteinSequence(nxEntryName), //1
-            nx.getPeptide(nxEntryName), //2
-            nx.getSrmPeptide(nxEntryName), //3
-            nx.getAnnotationsByCategory(nxEntryName, "mature-protein"), //4
-            nx.getAnnotationsByCategory(nxEntryName, "propeptide") //5
+        [
+            nx.getProteinSequence(nxEntryName), //1
+            nx.getAnnotationsByCategory(nxEntryName, "propeptide"), //2
+            nx.getAnnotationsByCategory(nxEntryName, "mature-protein"), //3
+            nx.getPeptide(nxEntryName), //4
+            nx.getSrmPeptide(nxEntryName) //5
         ].reduce(function (sequence, dataPromise) {
                 return sequence.then(function () {
                     return dataPromise;
@@ -826,11 +827,19 @@ function initNXDivs() {
                             nxIsoformChoice(isoforms);
                             break;
                         case 2:
+                            proPeptide = oneData.annot;
+                            allFeatures.push(oneData.annot);
+                            break;
+                        case 3:
+                            matureProtein = oneData.annot;
+                            allFeatures.push(oneData.annot);
+                            break;
+                        case 4:
                             peptideMappings = oneData;
                             //adding a copy for the feature viewer, because pepetides will be added to peptideMappings
                             allFeatures.push(jQuery.merge([], oneData));
                             break;
-                        case 3:
+                        case 5:
                             srmPeptideMappings = oneData;
                             allFeatures.push(oneData);
                             // Hack: add srm peptide mapping evidences into peptide mapping evidences of natural/synthetic peptides
@@ -847,15 +856,6 @@ function initNXDivs() {
                                     peptideMappings.push(srmPeptideMapping); //TODO fix this! This is referenced in allFeatures[1] so it should not be pushed like this
                                 }
                             });
-                            break;
-                        case 4:
-                            matureProtein = oneData.annot;
-                            allFeatures.push(oneData.annot);
-                            break;
-                        case 5:
-                            proPeptide = oneData.annot;
-                            allFeatures.push(oneData.annot);
-
                             renderPeptidesForIsoform(peptideMappings, firstIso);
                             renderFeatureViewer(allFeatures, firstIso);
                             showFeatureViewer();
