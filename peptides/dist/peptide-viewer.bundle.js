@@ -538,6 +538,9 @@ var NXUtils = {
         });
         for (var iso in result) {
             result[iso].sort(function (a, b) {
+                return b.length - a.length;
+            })
+            result[iso].sort(function (a, b) {
                 return a.start - b.start;
             })
         }
@@ -3019,7 +3022,7 @@ function initNXDivs() {
                         var proteo = false;
                         o.properties.forEach(function (p) {
                             if (p.name === "peptide name") npName = p.value;
-                            if (p.name === "is proteotypic") proteo = p.value === "Y" ? true : false;
+                            if (p.name === "is proteotypic") proteo = p.value === "Y";
                         })
 
                         var peptide = {
@@ -3032,8 +3035,8 @@ function initNXDivs() {
                             },
                             "length": 0,
                             "properties": {
-                                "natural": o.category === "peptide mapping" ? true : false,
-                                "synthetic": o.category === "SRM peptide mapping" ? true : false,
+                                "natural": o.category === "peptide mapping" || o.category === "natAndSynth",
+                                "synthetic": o.category === "SRM peptide mapping" || o.category === "natAndSynth",
                                 "proteotypic": proteo
                             },
                             "isoformProteotypicity": "No",
@@ -3072,10 +3075,12 @@ function initNXDivs() {
             for (var i = 0; i < array.length; i++) {
                 var isPurelySynthetic = true;
                 for (var j = i; j < array.length; j++) {
-                    if (array[i].nextprotName === array[j].nextprotName && array[i].properties !== array[j].properties) {
-                        peptideMappings[i].evidences = peptideMappings[i].evidences.concat(srmPeptideMapping.evidences);
-                        isPurelySynthetic = false;
-                        break;
+                    if (array[i].nextprotName === array[j].nextprotName && array[i].position === array[j].position) {
+                        if (array[i].properties.natural === array[j].nextprotName && array[i].properties !== array[j].properties) {
+                            peptideMappings[i].evidences = peptideMappings[i].evidences.concat(srmPeptideMapping.evidences);
+                            isPurelySynthetic = false;
+                            break;
+                        }
                     }
                 }
                 if (isPurelySynthetic) {
@@ -3918,7 +3923,21 @@ function initNXDivs() {
                             allFeatures.push(jQuery.extend({}, oneData));
                             break;
                         case 7:
-                            pepSyntMap2 = jQuery.merge(pepMap2, oneData.annot);
+                            var pepSynthetic = jQuery.merge([], oneData.annot);
+                            pepSynthetic.forEach(function(ps) {
+                                var isPurelySynthetic = true;
+                                for (var i = 0; i < pepMap2.length; i++) {
+                                    if (ps.annotationId === pepMap2[i].annotationId) {
+                                        pepMap2[i].evidences = pepMap2[i].evidences.concat(ps.evidences);
+                                        pepMap2[i].category ="natAndSynth";
+                                        isPurelySynthetic = false;
+                                        break;
+                                    }
+                                }
+                                if (isPurelySynthetic) {
+                                    peptideMappings.push(ps); //TODO fix this! This is referenced in allFeatures[1] so it should not be pushed like this
+                                }
+                            });
                             //adding a copy for the feature viewer, because pepetides will be added to peptideMappings
                             allFeatures.push(jQuery.extend({}, oneData));
                             renderPeptidesForIsoform(peptideMappings, firstIso);
