@@ -190,40 +190,40 @@ d._setup(c),!c.partial&&a.useData&&(f=j(b,f));var g=void 0,h=a.useBlockParams?[]
         // Keeps SPARQL prefixes in cache
         var sparqlPrefixPromise;
         NextprotClient.prototype.getSparqlPrefixes = function () {
-            sparqlPrefixPromise = sparqlPrefixPromise || _getJSON(apiBaseUrl + "/sparql-prefixes").then(_transformPrefixesFunction, 
-                                                                                                        function (){ 
-            //assures backward compatibility with old API
-                return "PREFIX :<http://nextprot.org/rdf#> "+
-            "PREFIX annotation:<http://nextprot.org/rdf/annotation/> "+
-            "PREFIX context:<http://nextprot.org/rdf/context/> "+
-            "PREFIX cv:<http://nextprot.org/rdf/terminology/> "+
-            "PREFIX db:<http://nextprot.org/rdf/db/> "+
-            "PREFIX dc:<http://purl.org/dc/elements/1.1/> "+
-            "PREFIX dcterms:<http://purl.org/dc/terms/> "+
-            "PREFIX entry:<http://nextprot.org/rdf/entry/> "+
-            "PREFIX evidence:<http://nextprot.org/rdf/evidence/> "+
-            "PREFIX foaf:<http://xmlns.com/foaf/0.1/> "+
-            "PREFIX gene:<http://nextprot.org/rdf/gene/> "+
-            "PREFIX identifier:<http://nextprot.org/rdf/identifier/> "+
-            "PREFIX isoform:<http://nextprot.org/rdf/isoform/> "+
-            "PREFIX mo:<http://purl.org/ontology/mo/> "+
-            "PREFIX ov:<http://open.vocab.org/terms/> "+
-            "PREFIX owl:<http://www.w3.org/2002/07/owl#> "+
-            "PREFIX publication:<http://nextprot.org/rdf/publication/> "+
-            "PREFIX rdf:<http://www.w3.org/1999/02/22-rdf-syntax-ns#> "+
-            "PREFIX rdfs:<http://www.w3.org/2000/01/rdf-schema#> "+
-            "PREFIX sim:<http://purl.org/ontology/similarity/> "+
-            "PREFIX source:<http://nextprot.org/rdf/source/> "+
-            "PREFIX xref:<http://nextprot.org/rdf/xref/> "+
-            "PREFIX xsd:<http://www.w3.org/2001/XMLSchema#> ";
-                
-            });
+            sparqlPrefixPromise = sparqlPrefixPromise || _getJSON(apiBaseUrl + "/sparql-prefixes").then(_transformPrefixesFunction,
+                function (){
+                    //assures backward compatibility with old API
+                    return "PREFIX :<http://nextprot.org/rdf#> "+
+                        "PREFIX annotation:<http://nextprot.org/rdf/annotation/> "+
+                        "PREFIX context:<http://nextprot.org/rdf/context/> "+
+                        "PREFIX cv:<http://nextprot.org/rdf/terminology/> "+
+                        "PREFIX db:<http://nextprot.org/rdf/db/> "+
+                        "PREFIX dc:<http://purl.org/dc/elements/1.1/> "+
+                        "PREFIX dcterms:<http://purl.org/dc/terms/> "+
+                        "PREFIX entry:<http://nextprot.org/rdf/entry/> "+
+                        "PREFIX evidence:<http://nextprot.org/rdf/evidence/> "+
+                        "PREFIX foaf:<http://xmlns.com/foaf/0.1/> "+
+                        "PREFIX gene:<http://nextprot.org/rdf/gene/> "+
+                        "PREFIX identifier:<http://nextprot.org/rdf/identifier/> "+
+                        "PREFIX isoform:<http://nextprot.org/rdf/isoform/> "+
+                        "PREFIX mo:<http://purl.org/ontology/mo/> "+
+                        "PREFIX ov:<http://open.vocab.org/terms/> "+
+                        "PREFIX owl:<http://www.w3.org/2002/07/owl#> "+
+                        "PREFIX publication:<http://nextprot.org/rdf/publication/> "+
+                        "PREFIX rdf:<http://www.w3.org/1999/02/22-rdf-syntax-ns#> "+
+                        "PREFIX rdfs:<http://www.w3.org/2000/01/rdf-schema#> "+
+                        "PREFIX sim:<http://purl.org/ontology/similarity/> "+
+                        "PREFIX source:<http://nextprot.org/rdf/source/> "+
+                        "PREFIX xref:<http://nextprot.org/rdf/xref/> "+
+                        "PREFIX xsd:<http://www.w3.org/2001/XMLSchema#> ";
+
+                });
             return sparqlPrefixPromise;
         };
 
         NextprotClient.prototype.executeSparql = function (sparql, includePrefixes) {
             return this.getSparqlPrefixes().then(function (sparqlPrefixes) {
-                
+
                 var incPrefs = (includePrefixes === undefined) ? true : includePrefixes;
                 var sparqlQuery = incPrefs ? sparqlPrefixes + sparql : sparql; //add SPARQL prefixes if flag not set to false
                 var url = sparqlEndpoint + sparqlFormat + "&query=" + encodeURIComponent(sparqlQuery);
@@ -1970,8 +1970,7 @@ function FeatureViewer(sequence, div, options) {
                 'brushActive': false,
                 'verticalLine': false,
                 'toolbar': false,
-                'bubbleHelp':false,
-                'zoomMax': 50
+                'zoommax': 50
             }
         }
         d3.select(div)
@@ -1979,9 +1978,6 @@ function FeatureViewer(sequence, div, options) {
             .style("padding", "0px")
             .style("z-index", "2");
         // Create SVG
-        if (options.zoomMax) {
-            zoomMax = options.zoomMax;
-        }
 
         if (options.toolbar === true) {
             //console.log($(div + " .svgHeader").length);
@@ -1994,7 +1990,7 @@ function FeatureViewer(sequence, div, options) {
                     .attr("class", "panel panel-default header-zoom")
                     .style("display", "inline-block")
                     .style("width", "150px")
-                    .style("margin", "20px 0px 0px")
+                    .style("margin", "0px")
                     .style("padding", "0px");
                 headerZoom
                     .append("div")
@@ -2027,7 +2023,7 @@ function FeatureViewer(sequence, div, options) {
                     .attr("class", "panel panel-default header-position")
                     .style("display", "inline-block")
                     .style("width", "175px")
-                    .style("margin", "20px 20px 0px")
+                    .style("margin", "0px 20px")
                     .style("padding", "0px");
                 headerPosition
                     .append("div")
@@ -2051,35 +2047,6 @@ function FeatureViewer(sequence, div, options) {
                     .append("span")
                     .attr("id", "zoomPosition")
                     .text("0");
-            }
-            if (options.bubbleHelp === true) {
-                if (!$(div + ' .header-help').length) {
-                    var helpContent = "<div><strong>To zoom in :</strong> Left click to select area of interest</div>" +
-                        "<div><strong>To zoom out :</strong> Right click to reset the scale</div>" +
-                        "<div><strong>Zoom max  :</strong> Defined at <strong>" + zoomMax.toString() + "</strong></div>";
-                    var headerHelp = headerOptions
-                        .append("div")
-                        .attr("class", "pull-right")
-                        .style("display", "inline-block")
-                        .style("margin", "20px 0px 0px")
-                        .style("padding", "0px");
-                    var buttonHelp = headerHelp
-                        .append("a")
-                        .attr("type", "button")
-                        .attr("class", "header-help")
-                        .attr("data-toggle", "popover")
-                        .attr("data-placement", "left")
-                        .attr("title", "Help")
-                        .attr("data-content", helpContent)
-                        .style("font-size", "1.5em");
-                    buttonHelp
-                        .append("span")
-                        .attr("class", "glyphicon glyphicon-info-sign")
-                        .attr("aria-hidden", "true");
-                    $(function () {
-                        $('[data-toggle="popover"]').popover({html: true});
-                    })
-                }
             }
         }
         svg = d3.select(div).append("svg")
@@ -2135,6 +2102,9 @@ function FeatureViewer(sequence, div, options) {
         if (options.verticalLine) {
             SVGOptions.verticalLine = true;
             addVerticalLine();
+        }
+        if (options.zoomMax) {
+            zoomMax = options.zoomMax;
         }
 
         updateSVGHeight(Yposition);
@@ -2397,7 +2367,7 @@ var PeptideComputation = (function () {
 this["HBtemplates"] = this["HBtemplates"] || {};
 
 this["HBtemplates"]["app/assets/templates/detailedPeptide.tmpl"] = Handlebars.template({"compiler":[6,">= 2.0.0-beta.1"],"main":function(depth0,helpers,partials,data) {
-    return "<div style=\"border-bottom: 1px solid #E7EAEC;padding-bottom:5px;margin: 5px 0px 15px;\">\r\n    <div style=\"display:inline-block;\">\r\n        <span id=\"nbPeptides\" class=\"badge\"\r\n              style=\"background:#C50063;color:white;padding:8px 10px;border-radius:50%;margin-right:10px;vertical-align:middle;\"></span>\r\n    </div>\r\n    <h4 style=\"display:inline-block;vertical-align:middle;\">Peptide detailed information</h4></div>\r\n<div class=\"row\" style=\"height:auto;margin-left:0px;\">\r\n    <div class=\"row-same-height\">\r\n        <div class=\"navbar col-md-3 col-md-height\"\r\n             id=\"info-left\"\r\n             style=\"background:#0F8292;padding:0;border-bottom-right-radius:0px;border-top-right-radius:0px;z-index: 1;vertical-align:top\">\r\n            <h4 style=\"color:white;font-size:24px;height:30px;font-weight:lighter;padding:5px 15px 25px;\">Peptides</h4>\r\n            <ul class=\"nav nav-stacked\" id=\"listNames\"\r\n                style=\"color:lightslategrey;height:auto;max-height:450px;overflow:auto;border-top: 1px solid #066B78;box-shadow: 0px -3px 6px -6px #5ACEDE, inset 0px 3px 6px -6px #066B78;\">\r\n            </ul>\r\n        </div>\r\n        <div class=\"col-md-9 col-md-height\" id=\"info-right\">\r\n            <div class=\"row\">\r\n                <div class=\"col-md-9\">\r\n                    <div class=\"panel panel-default\">\r\n                        <div class=\"panel-heading\">\r\n                            <h4 class=\"text-center\" id=\"titlePepName\"></h4>\r\n                        </div>\r\n                        <div id=\"peptideSpecificity\" class=\"center-block\"\r\n                             style=\"height:150px;margin-top:10px;\">\r\n                            <table id=\"pepPosTable\" class=\"table table-condensed\" style=\"font-size:12px;\">\r\n                                <thead>\r\n                                <tr>\r\n                                    <th class=\"col-md-2\" colspan=\"2\" style=\"font-size:14px;font-weight:700;\">Positions\r\n                                    </th>\r\n                                    <th class=\"col-md-4\" colspan=\"4\" style=\"font-size:14px;font-weight:700;\">\r\n                                        Trypticity\r\n                                    </th>\r\n                                    <th class=\"col-md-4\" colspan=\"4\" style=\"font-size:14px;font-weight:700;\">\r\n                                        C/N-Terminality\r\n                                    </th>\r\n                                </tr>\r\n                                <tr>\r\n                                    <th class=\"col-md-1\" data-sort=\"int\" data-sort-default=\"asc\" id=\"sortStart\">Start\r\n                                    </th>\r\n                                    <th class=\"col-md-1\">End</th>\r\n                                    <th class=\"col-md-1\">N-side</th>\r\n                                    <th class=\"col-md-1\">C-side</th>\r\n                                    <th class=\"col-md-1\">Miscleavages</th>\r\n                                    <th class=\"col-md-1\">Global</th>\r\n                                    <th class=\"col-md-1\">N-term</th>\r\n                                    <th class=\"col-md-1\">C-term</th>\r\n                                </tr>\r\n                                </thead>\r\n                                <tbody id=\"peptidePositions\"></tbody>\r\n                            </table>\r\n                        </div>\r\n                    </div>\r\n                </div>\r\n                <div class=\"col-md-3 detailedInfosFields\">\r\n                    <div class=\"panel panel-default\">\r\n                        <div class=\"panel-heading\">\r\n                            <h5 class=\"text-center\" style=\"margin:0px;\">Peptide Sequence</h5>\r\n                        </div>\r\n                        <div class=\"panel-body\" style=\"height:60px;border-bottom:1px solid #E7EAEC;\">\r\n                            <dl>\r\n                                <dt>Length</dt>\r\n                                <dd id=\"length\"></dd>\r\n                            </dl>\r\n                        </div>\r\n                        <div class=\"panel-body\" style=\"height:80px;overflow:auto;\">\r\n                            <dl>\r\n                                <dt>Sequence</dt>\r\n                                <dd id=\"pepSeq\" style=\"width:150px;word-break: break-all;\"></dd>\r\n                            </dl>\r\n                        </div>\r\n                        <div class=\"panel-body\" style=\"height:80px;border-top:1px solid #E7EAEC;\">\r\n                            <dl>\r\n                                <dt>Nature</dt>\r\n                                <dd>\r\n                                    <ul id=\"nature\" style=\"padding-left:20px;\"></ul>\r\n                                </dd>\r\n                            </dl>\r\n                        </div>\r\n                    </div>\r\n                </div>\r\n            </div>\r\n            <div class=\"row detailedInfosFields\">\r\n                <div class=\"col-lg-3 col-md-6 col-sm-6 col-xs-6\">\r\n                    <div class=\"panel panel-default\">\r\n                        <div class=\"panel-heading\">\r\n                            <h5 class=\"text-center\" style=\"margin:0px;\">PTM</h5>\r\n                        </div>\r\n                        <div class=\"panel-body\" id=\"ptmInfos\" style=\"height:220px;overflow:auto;border-bottom:1px solid #E7EAEC;padding:0px;\">\r\n                        </div>\r\n                    </div>\r\n                </div>\r\n                <div class=\"col-lg-3 col-md-6 col-sm-6 col-xs-6\">\r\n                    <div id=\"proteoBlock\" class=\"panel panel-default\">\r\n                    </div>\r\n                </div>\r\n                <div class=\"col-lg-3 col-md-6 col-sm-6 col-xs-6\">\r\n                    <div class=\"panel panel-default\">\r\n                        <div class=\"panel-heading\">\r\n                            <h5 class=\"text-center\" style=\"margin:0px;\">Peptide overlap (<span id=\"pepIncludeType\"></span>)</h5>\r\n                        </div>\r\n                        <div class=\"panel-body\" style=\"height:100px;overflow:auto;border-bottom:1px solid #E7EAEC;\">\r\n                            <dl>\r\n                                <dt>Included in</dt>\r\n                                <dd>\r\n                                    <ul id=\"pepIncludedIn\" style=\"padding-left:20px;\"></ul>\r\n                                </dd>\r\n                            </dl>\r\n                        </div>\r\n                        <div class=\"panel-body\" style=\"height:120px;overflow:auto;\">\r\n                            <dl>\r\n                                <dt>Includes</dt>\r\n                                <dd>\r\n                                    <ul id=\"pepIncluded\" style=\"padding-left:20px;\"></ul>\r\n                                </dd>\r\n                            </dl>\r\n                        </div>\r\n                    </div>\r\n                </div>\r\n                <div class=\"col-lg-3 col-md-6 col-sm-6 col-xs-6\">\r\n                    <div class=\"panel panel-default\">\r\n                        <div class=\"panel-heading\">\r\n                            <h5 class=\"text-center\" style=\"margin:0px;\">Sources</h5>\r\n                        </div>\r\n                        <div class=\"panel-body\" style=\"height:220px;overflow:auto;border-bottom:1px solid #E7EAEC;\">\r\n                            <dl>\r\n                                <dd>\r\n                                    <ul id=\"pepSources\" style=\"padding-left:20px;\"></ul>\r\n                                </dd>\r\n                            </dl>\r\n                        </div>\r\n                    </div>\r\n                </div>\r\n            </div>\r\n        </div>\r\n    </div>\r\n</div>";
+    return "<div style=\"border-bottom: 1px solid #E7EAEC;padding-bottom:5px;margin: 5px 0px 15px;\">\n    <div style=\"display:inline-block;\">\n        <span id=\"nbPeptides\" class=\"badge\"\n              style=\"background:#C50063;color:white;padding:8px 10px;border-radius:50%;margin-right:10px;vertical-align:middle;\"></span>\n    </div>\n    <h4 style=\"display:inline-block;vertical-align:middle;\">Peptide detailed information</h4></div>\n<div class=\"row\" style=\"height:auto;margin-left:0px;\">\n    <div class=\"row-same-height\">\n        <div class=\"navbar col-md-3 col-md-height\"\n             id=\"info-left\"\n             style=\"background:#0F8292;padding:0;border-bottom-right-radius:0px;border-top-right-radius:0px;z-index: 1;vertical-align:top\">\n            <h4 style=\"color:white;font-size:24px;height:30px;font-weight:lighter;padding:5px 15px 25px;\">Peptides</h4>\n            <ul class=\"nav nav-stacked\" id=\"listNames\"\n                style=\"color:lightslategrey;height:auto;max-height:450px;overflow:auto;border-top: 1px solid #066B78;box-shadow: 0px -3px 6px -6px #5ACEDE, inset 0px 3px 6px -6px #066B78;\">\n            </ul>\n        </div>\n        <div class=\"col-md-9 col-md-height\" id=\"info-right\">\n            <div class=\"row\">\n                <div class=\"col-md-9\">\n                    <div class=\"panel panel-default\">\n                        <div class=\"panel-heading\">\n                            <h4 class=\"text-center\" id=\"titlePepName\"></h4>\n                        </div>\n                        <div id=\"peptideSpecificity\" class=\"center-block\"\n                             style=\"height:150px;margin-top:10px;\">\n                            <table id=\"pepPosTable\" class=\"table table-condensed\" style=\"font-size:12px;\">\n                                <thead>\n                                <tr>\n                                    <th class=\"col-md-2\" colspan=\"2\" style=\"font-size:14px;font-weight:700;\">Positions\n                                    </th>\n                                    <th class=\"col-md-4\" colspan=\"4\" style=\"font-size:14px;font-weight:700;\">\n                                        Trypticity\n                                    </th>\n                                    <th class=\"col-md-4\" colspan=\"4\" style=\"font-size:14px;font-weight:700;\">\n                                        C/N-Terminality\n                                    </th>\n                                </tr>\n                                <tr>\n                                    <th class=\"col-md-1\" data-sort=\"int\" data-sort-default=\"asc\" id=\"sortStart\">Start\n                                    </th>\n                                    <th class=\"col-md-1\">End</th>\n                                    <th class=\"col-md-1\">N-side</th>\n                                    <th class=\"col-md-1\">C-side</th>\n                                    <th class=\"col-md-1\">Miscleavages</th>\n                                    <th class=\"col-md-1\">Global</th>\n                                    <th class=\"col-md-1\">N-term</th>\n                                    <th class=\"col-md-1\">C-term</th>\n                                </tr>\n                                </thead>\n                                <tbody id=\"peptidePositions\"></tbody>\n                            </table>\n                        </div>\n                    </div>\n                </div>\n                <div class=\"col-md-3 detailedInfosFields\">\n                    <div class=\"panel panel-default\">\n                        <div class=\"panel-heading\">\n                            <h5 class=\"text-center\" style=\"margin:0px;\">Peptide Sequence</h5>\n                        </div>\n                        <div class=\"panel-body\" style=\"height:60px;border-bottom:1px solid #E7EAEC;\">\n                            <dl>\n                                <dt>Length</dt>\n                                <dd id=\"length\"></dd>\n                            </dl>\n                        </div>\n                        <div class=\"panel-body\" style=\"height:80px;overflow:auto;\">\n                            <dl>\n                                <dt>Sequence</dt>\n                                <dd id=\"pepSeq\" style=\"width:150px;word-break: break-all;\"></dd>\n                            </dl>\n                        </div>\n                        <div class=\"panel-body\" style=\"height:80px;border-top:1px solid #E7EAEC;\">\n                            <dl>\n                                <dt>Nature</dt>\n                                <dd>\n                                    <ul id=\"nature\" style=\"padding-left:20px;\"></ul>\n                                </dd>\n                            </dl>\n                        </div>\n                    </div>\n                </div>\n            </div>\n            <div class=\"row detailedInfosFields\">\n                <div class=\"col-lg-3 col-md-6 col-sm-6 col-xs-6\">\n                    <div class=\"panel panel-default\">\n                        <div class=\"panel-heading\">\n                            <h5 class=\"text-center\" style=\"margin:0px;\">PTM</h5>\n                        </div>\n                        <div class=\"panel-body\" id=\"ptmInfos\" style=\"height:220px;overflow:auto;border-bottom:1px solid #E7EAEC;padding:0px;\">\n                        </div>\n                    </div>\n                </div>\n                <div class=\"col-lg-3 col-md-6 col-sm-6 col-xs-6\">\n                    <div id=\"proteoBlock\" class=\"panel panel-default\">\n                    </div>\n                </div>\n                <div class=\"col-lg-3 col-md-6 col-sm-6 col-xs-6\">\n                    <div class=\"panel panel-default\">\n                        <div class=\"panel-heading\">\n                            <h5 class=\"text-center\" style=\"margin:0px;\">Peptide overlap (<span id=\"pepIncludeType\"></span>)</h5>\n                        </div>\n                        <div class=\"panel-body\" style=\"height:100px;overflow:auto;border-bottom:1px solid #E7EAEC;\">\n                            <dl>\n                                <dt>Included in</dt>\n                                <dd>\n                                    <ul id=\"pepIncludedIn\" style=\"padding-left:20px;\"></ul>\n                                </dd>\n                            </dl>\n                        </div>\n                        <div class=\"panel-body\" style=\"height:120px;overflow:auto;\">\n                            <dl>\n                                <dt>Includes</dt>\n                                <dd>\n                                    <ul id=\"pepIncluded\" style=\"padding-left:20px;\"></ul>\n                                </dd>\n                            </dl>\n                        </div>\n                    </div>\n                </div>\n                <div class=\"col-lg-3 col-md-6 col-sm-6 col-xs-6\">\n                    <div class=\"panel panel-default\">\n                        <div class=\"panel-heading\">\n                            <h5 class=\"text-center\" style=\"margin:0px;\">Sources</h5>\n                        </div>\n                        <div class=\"panel-body\" style=\"height:220px;overflow:auto;border-bottom:1px solid #E7EAEC;\">\n                            <dl>\n                                <dd>\n                                    <ul id=\"pepSources\" style=\"padding-left:20px;\"></ul>\n                                </dd>\n                            </dl>\n                        </div>\n                    </div>\n                </div>\n            </div>\n        </div>\n    </div>\n</div>";
 },"useData":true});
 
 this["HBtemplates"]["app/assets/templates/isoformChoice.tmpl"] = Handlebars.template({"1":function(depth0,helpers,partials,data) {
@@ -2407,13 +2377,13 @@ this["HBtemplates"]["app/assets/templates/isoformChoice.tmpl"] = Handlebars.temp
     + alias1(this.lambda(((stack1 = (depth0 != null ? depth0.mainEntityName : depth0)) != null ? stack1.value : stack1), depth0))
     + "\">"
     + alias1(((helper = (helper = helpers.uniqueName || (depth0 != null ? depth0.uniqueName : depth0)) != null ? helper : helpers.helperMissing),(typeof helper === "function" ? helper.call(depth0,{"name":"uniqueName","hash":{},"data":data}) : helper)))
-    + "</a></li>\r\n";
+    + "</a></li>\n";
 },"3":function(depth0,helpers,partials,data) {
     var stack1;
 
-  return "        <li role=\"presentation\" class=\"dropdown\">\r\n            <a class=\"dropdown-toggle\" data-toggle=\"dropdown\" href=\"#\" role=\"button\" aria-expanded=\"false\"><span\r\n                    id=\"extendIsoformChoice\">More</span><span style=\"margin-left:5px;\" class=\"caret\"></span></a>\r\n            <ul id=\"moreIsoforms\" class=\"dropdown-menu\" role=\"menu\">\r\n                <li role=\"presentation\"><p href=\"#\" role=\"tab\" data-toggle=\"tab\"\r\n                                           style=\"pointer-events:none;cursor:default;padding: 3px 20px;\">Others\r\n                    Isoforms</p></li>\r\n"
+  return "        <li role=\"presentation\" class=\"dropdown\">\n            <a class=\"dropdown-toggle\" data-toggle=\"dropdown\" href=\"#\" role=\"button\" aria-expanded=\"false\"><span\n                    id=\"extendIsoformChoice\">More</span><span style=\"margin-left:5px;\" class=\"caret\"></span></a>\n            <ul id=\"moreIsoforms\" class=\"dropdown-menu\" role=\"menu\">\n                <li role=\"presentation\"><p href=\"#\" role=\"tab\" data-toggle=\"tab\"\n                                           style=\"pointer-events:none;cursor:default;padding: 3px 20px;\">Others\n                    Isoforms</p></li>\n"
     + ((stack1 = helpers.blockHelperMissing.call(depth0,this.lambda(((stack1 = (depth0 != null ? depth0.isoforms : depth0)) != null ? stack1.more : stack1), depth0),{"name":"isoforms.more","hash":{},"fn":this.program(4, data, 0),"inverse":this.noop,"data":data})) != null ? stack1 : "")
-    + "            </ul>\r\n";
+    + "            </ul>\n";
 },"4":function(depth0,helpers,partials,data) {
     var stack1, helper, alias1=this.escapeExpression;
 
@@ -2421,14 +2391,14 @@ this["HBtemplates"]["app/assets/templates/isoformChoice.tmpl"] = Handlebars.temp
     + alias1(this.lambda(((stack1 = (depth0 != null ? depth0.mainEntityName : depth0)) != null ? stack1.value : stack1), depth0))
     + "\">"
     + alias1(((helper = (helper = helpers.uniqueName || (depth0 != null ? depth0.uniqueName : depth0)) != null ? helper : helpers.helperMissing),(typeof helper === "function" ? helper.call(depth0,{"name":"uniqueName","hash":{},"data":data}) : helper)))
-    + "</a>\r\n                </li>\r\n";
+    + "</a>\n                </li>\n";
 },"compiler":[6,">= 2.0.0-beta.1"],"main":function(depth0,helpers,partials,data) {
     var stack1;
 
-  return "<div role=\"tabpanel\">\r\n    <div class=\"navbar-brand \" style=\"padding:10px 15px;color:#C50063;height:auto;font-size:20px;\">Isoforms</div>\r\n    <ul class=\"nav nav-tabs\" role=\"tablist\" style=\"border:none\">\r\n"
+  return "<div role=\"tabpanel\">\n    <div class=\"navbar-brand \" style=\"padding:10px 15px;color:#C50063;height:auto;font-size:20px;\">Isoforms</div>\n    <ul class=\"nav nav-tabs\" role=\"tablist\" style=\"border:none\">\n"
     + ((stack1 = helpers.blockHelperMissing.call(depth0,this.lambda(((stack1 = (depth0 != null ? depth0.isoforms : depth0)) != null ? stack1.visible : stack1), depth0),{"name":"isoforms.visible","hash":{},"fn":this.program(1, data, 0),"inverse":this.noop,"data":data})) != null ? stack1 : "")
     + ((stack1 = helpers['if'].call(depth0,((stack1 = (depth0 != null ? depth0.isoforms : depth0)) != null ? stack1.more : stack1),{"name":"if","hash":{},"fn":this.program(3, data, 0),"inverse":this.noop,"data":data})) != null ? stack1 : "")
-    + "    </ul>\r\n</div>";
+    + "    </ul>\n</div>";
 },"useData":true});
 
 this["HBtemplates"]["app/assets/templates/matchingEntries.tmpl"] = Handlebars.template({"1":function(depth0,helpers,partials,data) {
@@ -2436,9 +2406,9 @@ this["HBtemplates"]["app/assets/templates/matchingEntries.tmpl"] = Handlebars.te
 
   return "        "
     + ((stack1 = helpers['if'].call(depth0,(depth0 != null ? depth0.withoutVariant : depth0),{"name":"if","hash":{},"fn":this.program(2, data, 0),"inverse":this.program(4, data, 0),"data":data})) != null ? stack1 : "")
-    + "\r\n";
+    + "\n";
 },"2":function(depth0,helpers,partials,data) {
-    return "<div  class=\"panel panel-success\" style=\"margin:0px;min-height: 110px;\">\r\n        ";
+    return "<div  class=\"panel panel-success\" style=\"margin:0px;min-height: 110px;\">\n        ";
 },"4":function(depth0,helpers,partials,data) {
     return "<div class=\"panel panel-info\" style=\"margin:0px;min-height: 110px;\">";
 },"6":function(depth0,helpers,partials,data) {
@@ -2452,7 +2422,7 @@ this["HBtemplates"]["app/assets/templates/matchingEntries.tmpl"] = Handlebars.te
     + alias3(((helper = (helper = helpers.name || (depth0 != null ? depth0.name : depth0)) != null ? helper : alias1),(typeof helper === alias2 ? helper.call(depth0,{"name":"name","hash":{},"data":data}) : helper)))
     + " <em> ( Gene Name : "
     + alias3(((helper = (helper = helpers.geneName || (depth0 != null ? depth0.geneName : depth0)) != null ? helper : alias1),(typeof helper === alias2 ? helper.call(depth0,{"name":"geneName","hash":{},"data":data}) : helper)))
-    + " )</em></li>\r\n";
+    + " )</em></li>\n";
 },"9":function(depth0,helpers,partials,data) {
     var stack1;
 
@@ -2460,22 +2430,22 @@ this["HBtemplates"]["app/assets/templates/matchingEntries.tmpl"] = Handlebars.te
 },"10":function(depth0,helpers,partials,data) {
     var stack1;
 
-  return "\r\n\r\n"
+  return "\n\n"
     + ((stack1 = helpers.unless.call(depth0,(depth0 != null ? depth0.variant : depth0),{"name":"unless","hash":{},"fn":this.program(11, data, 0),"inverse":this.noop,"data":data})) != null ? stack1 : "");
 },"11":function(depth0,helpers,partials,data) {
     var helper;
 
   return "                        <li>"
     + this.escapeExpression(((helper = (helper = helpers.isoform || (depth0 != null ? depth0.isoform : depth0)) != null ? helper : helpers.helperMissing),(typeof helper === "function" ? helper.call(depth0,{"name":"isoform","hash":{},"data":data}) : helper)))
-    + "</li>\r\n";
+    + "</li>\n";
 },"13":function(depth0,helpers,partials,data) {
     var stack1;
 
   return "        "
     + ((stack1 = helpers['if'].call(depth0,(depth0 != null ? depth0.withVariant : depth0),{"name":"if","hash":{},"fn":this.program(2, data, 0),"inverse":this.program(4, data, 0),"data":data})) != null ? stack1 : "")
-    + "\r\n";
+    + "\n";
 },"15":function(depth0,helpers,partials,data) {
-    return "                        <li>No other entries found</li>\r\n";
+    return "                        <li>No other entries found</li>\n";
 },"17":function(depth0,helpers,partials,data) {
     var stack1;
 
@@ -2487,7 +2457,7 @@ this["HBtemplates"]["app/assets/templates/matchingEntries.tmpl"] = Handlebars.te
     + alias3(((helper = (helper = helpers.name || (depth0 != null ? depth0.name : depth0)) != null ? helper : alias1),(typeof helper === alias2 ? helper.call(depth0,{"name":"name","hash":{},"data":data}) : helper)))
     + " <em> ( Gene Name : "
     + alias3(((helper = (helper = helpers.geneName || (depth0 != null ? depth0.geneName : depth0)) != null ? helper : alias1),(typeof helper === alias2 ? helper.call(depth0,{"name":"geneName","hash":{},"data":data}) : helper)))
-    + " )</em></li>\r\n";
+    + " )</em></li>\n";
 },"20":function(depth0,helpers,partials,data) {
     var stack1;
 
@@ -2495,7 +2465,7 @@ this["HBtemplates"]["app/assets/templates/matchingEntries.tmpl"] = Handlebars.te
 },"21":function(depth0,helpers,partials,data) {
     var stack1;
 
-  return "\r\n\r\n"
+  return "\n\n"
     + ((stack1 = helpers['if'].call(depth0,(depth0 != null ? depth0.variant : depth0),{"name":"if","hash":{},"fn":this.program(22, data, 0),"inverse":this.noop,"data":data})) != null ? stack1 : "");
 },"22":function(depth0,helpers,partials,data) {
     var stack1, helper, alias1=this.escapeExpression, alias2=this.lambda;
@@ -2506,48 +2476,48 @@ this["HBtemplates"]["app/assets/templates/matchingEntries.tmpl"] = Handlebars.te
     + alias1(alias2(((stack1 = ((stack1 = (depth0 != null ? depth0.positions : depth0)) != null ? stack1['0'] : stack1)) != null ? stack1.first : stack1), depth0))
     + " : "
     + alias1(alias2(((stack1 = (depth0 != null ? depth0.variant : depth0)) != null ? stack1.original : stack1), depth0))
-    + " →\r\n                            "
+    + " →\n                            "
     + alias1(alias2(((stack1 = (depth0 != null ? depth0.variant : depth0)) != null ? stack1.variant : stack1), depth0))
-    + ")\r\n                        </li>\r\n";
+    + ")\n                        </li>\n";
 },"compiler":[6,">= 2.0.0-beta.1"],"main":function(depth0,helpers,partials,data) {
     var stack1, helper, options, alias1=helpers.helperMissing, alias2="function", alias3=helpers.blockHelperMissing, buffer = 
-  "<div class=\"panel-heading\">\r\n    <h5 class=\"text-center\" style=\"margin:0px;\">Peptide to protein mapping</h5>\r\n</div>\r\n<div class=\"panel-body\" style=\"padding:0px;height:220px;overflow:auto;\">\r\n    <div class=\"pull-right\" style=\"margin-top:8px;margin-right: 15px;\">\r\n        <button id=\"showIsoforms\" type=\"button\" class=\"btn btn-default btn-xs\">Show isoforms</button>\r\n    </div>\r\n    <div id=\"proteomeProperties\">\r\n        <!--<div style=\"border-bottom:1px solid #E7EAEC;margin-top: -10px;margin-bottom:5px;\">-->\r\n        <!--<h5 id=\"proteotypicitySentence\"></h5>-->\r\n        <!--</div>-->\r\n";
+  "<div class=\"panel-heading\">\n    <h5 class=\"text-center\" style=\"margin:0px;\">Peptide to protein mapping</h5>\n</div>\n<div class=\"panel-body\" style=\"padding:0px;height:220px;overflow:auto;\">\n    <div class=\"pull-right\" style=\"margin-top:8px;margin-right: 15px;\">\n        <button id=\"showIsoforms\" type=\"button\" class=\"btn btn-default btn-xs\">Show isoforms</button>\n    </div>\n    <div id=\"proteomeProperties\">\n        <!--<div style=\"border-bottom:1px solid #E7EAEC;margin-top: -10px;margin-bottom:5px;\">-->\n        <!--<h5 id=\"proteotypicitySentence\"></h5>-->\n        <!--</div>-->\n";
   stack1 = ((helper = (helper = helpers.proteotypicity || (depth0 != null ? depth0.proteotypicity : depth0)) != null ? helper : alias1),(options={"name":"proteotypicity","hash":{},"fn":this.program(1, data, 0),"inverse":this.noop,"data":data}),(typeof helper === alias2 ? helper.call(depth0,options) : helper));
   if (!helpers.proteotypicity) { stack1 = alias3.call(depth0,stack1,options)}
   if (stack1 != null) { buffer += stack1; }
-  buffer += "            <div class=\"panel-heading\" style=\"padding:1px 15px\">\r\n                <h5>Entry mapping</h5>\r\n            </div>\r\n            <div class=\"panel-body\">\r\n                <div class=\"showEntry\" style=\"display:block\">\r\n                    <ul>\r\n";
+  buffer += "            <div class=\"panel-heading\" style=\"padding:1px 15px\">\n                <h5>Entry mapping</h5>\n            </div>\n            <div class=\"panel-body\">\n                <div class=\"showEntry\" style=\"display:block\">\n                    <ul>\n";
   stack1 = ((helper = (helper = helpers.entries || (depth0 != null ? depth0.entries : depth0)) != null ? helper : alias1),(options={"name":"entries","hash":{},"fn":this.program(6, data, 0),"inverse":this.noop,"data":data}),(typeof helper === alias2 ? helper.call(depth0,options) : helper));
   if (!helpers.entries) { stack1 = alias3.call(depth0,stack1,options)}
   if (stack1 != null) { buffer += stack1; }
-  buffer += "                    </ul>\r\n                </div>\r\n                <div class=\"showIsoform\" style=\"display:none\">\r\n                    <ul>\r\n                        ";
+  buffer += "                    </ul>\n                </div>\n                <div class=\"showIsoform\" style=\"display:none\">\n                    <ul>\n                        ";
   stack1 = ((helper = (helper = helpers.isoforms || (depth0 != null ? depth0.isoforms : depth0)) != null ? helper : alias1),(options={"name":"isoforms","hash":{},"fn":this.program(9, data, 0),"inverse":this.noop,"data":data}),(typeof helper === alias2 ? helper.call(depth0,options) : helper));
   if (!helpers.isoforms) { stack1 = alias3.call(depth0,stack1,options)}
   if (stack1 != null) { buffer += stack1; }
-  buffer += "                    </ul>\r\n                </div>\r\n            </div>\r\n        </div>\r\n";
+  buffer += "                    </ul>\n                </div>\n            </div>\n        </div>\n";
   stack1 = ((helper = (helper = helpers.proteotypicity || (depth0 != null ? depth0.proteotypicity : depth0)) != null ? helper : alias1),(options={"name":"proteotypicity","hash":{},"fn":this.program(13, data, 0),"inverse":this.noop,"data":data}),(typeof helper === alias2 ? helper.call(depth0,options) : helper));
   if (!helpers.proteotypicity) { stack1 = alias3.call(depth0,stack1,options)}
   if (stack1 != null) { buffer += stack1; }
-  buffer += "            <div class=\"panel-heading\" style=\"padding:1px 15px\">\r\n                <h5>Additional entries with known variants</h5>\r\n            </div>\r\n            <div class=\"panel-body\">\r\n                <div class=\"showEntry\" style=\"display:block\">\r\n                    <ul>\r\n"
+  buffer += "            <div class=\"panel-heading\" style=\"padding:1px 15px\">\n                <h5>Additional entries with known variants</h5>\n            </div>\n            <div class=\"panel-body\">\n                <div class=\"showEntry\" style=\"display:block\">\n                    <ul>\n"
     + ((stack1 = helpers['if'].call(depth0,((stack1 = (depth0 != null ? depth0.proteotypicity : depth0)) != null ? stack1.onlyVariant : stack1),{"name":"if","hash":{},"fn":this.program(15, data, 0),"inverse":this.noop,"data":data})) != null ? stack1 : "");
   stack1 = ((helper = (helper = helpers.entries || (depth0 != null ? depth0.entries : depth0)) != null ? helper : alias1),(options={"name":"entries","hash":{},"fn":this.program(17, data, 0),"inverse":this.noop,"data":data}),(typeof helper === alias2 ? helper.call(depth0,options) : helper));
   if (!helpers.entries) { stack1 = alias3.call(depth0,stack1,options)}
   if (stack1 != null) { buffer += stack1; }
-  buffer += "                    </ul>\r\n                </div>\r\n                <div class=\"showIsoform\" style=\"display:none\">\r\n                    <ul>\r\n"
+  buffer += "                    </ul>\n                </div>\n                <div class=\"showIsoform\" style=\"display:none\">\n                    <ul>\n"
     + ((stack1 = helpers['if'].call(depth0,((stack1 = (depth0 != null ? depth0.proteotypicity : depth0)) != null ? stack1.onlyVariant : stack1),{"name":"if","hash":{},"fn":this.program(15, data, 0),"inverse":this.noop,"data":data})) != null ? stack1 : "")
     + "                        ";
   stack1 = ((helper = (helper = helpers.isoforms || (depth0 != null ? depth0.isoforms : depth0)) != null ? helper : alias1),(options={"name":"isoforms","hash":{},"fn":this.program(20, data, 0),"inverse":this.noop,"data":data}),(typeof helper === alias2 ? helper.call(depth0,options) : helper));
   if (!helpers.isoforms) { stack1 = alias3.call(depth0,stack1,options)}
   if (stack1 != null) { buffer += stack1; }
-  return buffer + "                    </ul>\r\n                </div>\r\n            </div>\r\n        </div>\r\n    </div>\r\n</div>";
+  return buffer + "                    </ul>\n                </div>\n            </div>\n        </div>\n    </div>\n</div>";
 },"useData":true});
 
 this["HBtemplates"]["app/assets/templates/overviewProtein.tmpl"] = Handlebars.template({"1":function(depth0,helpers,partials,data) {
     var stack1, helper, options, buffer = 
-  "    <div id=\"cleavage-less\" class=\"row\">\r\n        <div class=\"col-md-2 col-xs-3\" style=\"color: grey;text-align:right\">Cleaved into :</div>\r\n        <div class=\"col-md-6 col-xs-6\">";
+  "    <div id=\"cleavage-less\" class=\"row\">\n        <div class=\"col-md-2 col-xs-3\" style=\"color: grey;text-align:right\">Cleaved into :</div>\n        <div class=\"col-md-6 col-xs-6\">";
   stack1 = ((helper = (helper = helpers.cleavage || (depth0 != null ? depth0.cleavage : depth0)) != null ? helper : helpers.helperMissing),(options={"name":"cleavage","hash":{},"fn":this.program(2, data, 0),"inverse":this.noop,"data":data}),(typeof helper === "function" ? helper.call(depth0,options) : helper));
   if (!helpers.cleavage) { stack1 = helpers.blockHelperMissing.call(depth0,stack1,options)}
   if (stack1 != null) { buffer += stack1; }
-  return buffer + "</div>\r\n    </div>\r\n";
+  return buffer + "</div>\n    </div>\n";
 },"2":function(depth0,helpers,partials,data) {
     var helper;
 
@@ -2556,11 +2526,11 @@ this["HBtemplates"]["app/assets/templates/overviewProtein.tmpl"] = Handlebars.te
     + ", </span>";
 },"4":function(depth0,helpers,partials,data) {
     var stack1, helper, options, buffer = 
-  "    <div id=\"family-less\" class=\"row\">\r\n        <div class=\"col-md-2 col-xs-3\" style=\"color: grey;text-align:right\">Family Name :</div>\r\n        <div class=\"col-md-6 col-xs-6\">";
+  "    <div id=\"family-less\" class=\"row\">\n        <div class=\"col-md-2 col-xs-3\" style=\"color: grey;text-align:right\">Family Name :</div>\n        <div class=\"col-md-6 col-xs-6\">";
   stack1 = ((helper = (helper = helpers.family || (depth0 != null ? depth0.family : depth0)) != null ? helper : helpers.helperMissing),(options={"name":"family","hash":{},"fn":this.program(5, data, 0),"inverse":this.noop,"data":data}),(typeof helper === "function" ? helper.call(depth0,options) : helper));
   if (!helpers.family) { stack1 = helpers.blockHelperMissing.call(depth0,stack1,options)}
   if (stack1 != null) { buffer += stack1; }
-  return buffer + "</div>\r\n    </div>\r\n";
+  return buffer + "</div>\n    </div>\n";
 },"5":function(depth0,helpers,partials,data) {
     var stack1;
 
@@ -2571,7 +2541,7 @@ this["HBtemplates"]["app/assets/templates/overviewProtein.tmpl"] = Handlebars.te
     var stack1, helper, options, buffer = 
   "                <dt>Cleaved into the following "
     + this.escapeExpression(this.lambda(((stack1 = (depth0 != null ? depth0.cleavage : depth0)) != null ? stack1.length : stack1), depth0))
-    + " chains</dt>\r\n";
+    + " chains</dt>\n";
   stack1 = ((helper = (helper = helpers.cleavage || (depth0 != null ? depth0.cleavage : depth0)) != null ? helper : helpers.helperMissing),(options={"name":"cleavage","hash":{},"fn":this.program(8, data, 0),"inverse":this.noop,"data":data}),(typeof helper === "function" ? helper.call(depth0,options) : helper));
   if (!helpers.cleavage) { stack1 = helpers.blockHelperMissing.call(depth0,stack1,options)}
   if (stack1 != null) { buffer += stack1; }
@@ -2581,10 +2551,10 @@ this["HBtemplates"]["app/assets/templates/overviewProtein.tmpl"] = Handlebars.te
 
   return "                <dd>"
     + this.escapeExpression(((helper = (helper = helpers.synonymName || (depth0 != null ? depth0.synonymName : depth0)) != null ? helper : helpers.helperMissing),(typeof helper === "function" ? helper.call(depth0,{"name":"synonymName","hash":{},"data":data}) : helper)))
-    + "</dd>\r\n                ";
+    + "</dd>\n                ";
 },"10":function(depth0,helpers,partials,data) {
     var stack1, helper, options, buffer = 
-  "                <dt>Alternative Name</dt>\r\n";
+  "                <dt>Alternative Name</dt>\n";
   stack1 = ((helper = (helper = helpers.alternativeName || (depth0 != null ? depth0.alternativeName : depth0)) != null ? helper : helpers.helperMissing),(options={"name":"alternativeName","hash":{},"fn":this.program(11, data, 0),"inverse":this.noop,"data":data}),(typeof helper === "function" ? helper.call(depth0,options) : helper));
   if (!helpers.alternativeName) { stack1 = helpers.blockHelperMissing.call(depth0,stack1,options)}
   if (stack1 != null) { buffer += stack1; }
@@ -2594,9 +2564,9 @@ this["HBtemplates"]["app/assets/templates/overviewProtein.tmpl"] = Handlebars.te
 
   return "                <dd> "
     + this.escapeExpression(((helper = (helper = helpers.synonymName || (depth0 != null ? depth0.synonymName : depth0)) != null ? helper : helpers.helperMissing),(typeof helper === "function" ? helper.call(depth0,{"name":"synonymName","hash":{},"data":data}) : helper)))
-    + "\r\n                    "
+    + "\n                    "
     + ((stack1 = helpers['if'].call(depth0,(depth0 != null ? depth0.synonyms : depth0),{"name":"if","hash":{},"fn":this.program(12, data, 0),"inverse":this.noop,"data":data})) != null ? stack1 : "")
-    + "\r\n                </dd>\r\n                ";
+    + "\n                </dd>\n                ";
 },"12":function(depth0,helpers,partials,data) {
     var stack1;
 
@@ -2605,56 +2575,56 @@ this["HBtemplates"]["app/assets/templates/overviewProtein.tmpl"] = Handlebars.te
     + ") </em>";
 },"14":function(depth0,helpers,partials,data) {
     var stack1, helper, options, buffer = 
-  "    <div id=\"family-full\" class=\"row\">\r\n        <div class=\"col-md-2 col-xs-3 text-uppercase\" style=\"color: grey;\">Family</div>\r\n        <div class=\"col-md-6 col-xs-6\">\r\n            <dl>\r\n                <dt>Family</dt>\r\n";
+  "    <div id=\"family-full\" class=\"row\">\n        <div class=\"col-md-2 col-xs-3 text-uppercase\" style=\"color: grey;\">Family</div>\n        <div class=\"col-md-6 col-xs-6\">\n            <dl>\n                <dt>Family</dt>\n";
   stack1 = ((helper = (helper = helpers.family || (depth0 != null ? depth0.family : depth0)) != null ? helper : helpers.helperMissing),(options={"name":"family","hash":{},"fn":this.program(15, data, 0),"inverse":this.noop,"data":data}),(typeof helper === "function" ? helper.call(depth0,options) : helper));
   if (!helpers.family) { stack1 = helpers.blockHelperMissing.call(depth0,stack1,options)}
   if (stack1 != null) { buffer += stack1; }
-  return buffer + "            </dl>\r\n        </div>\r\n    </div>\r\n";
+  return buffer + "            </dl>\n        </div>\n    </div>\n";
 },"15":function(depth0,helpers,partials,data) {
     var stack1;
 
   return "                <dd>"
     + ((stack1 = (helpers.link_to || (depth0 && depth0.link_to) || helpers.helperMissing).call(depth0,"family",{"name":"link_to","hash":{},"data":data})) != null ? stack1 : "")
-    + "</dd>\r\n";
+    + "</dd>\n";
 },"17":function(depth0,helpers,partials,data) {
     var stack1;
 
   return ((stack1 = (helpers.link_to || (depth0 && depth0.link_to) || helpers.helperMissing).call(depth0,"history",{"name":"link_to","hash":{},"data":data})) != null ? stack1 : "");
 },"compiler":[6,">= 2.0.0-beta.1"],"main":function(depth0,helpers,partials,data) {
     var stack1, helper, options, alias1=helpers.helperMissing, alias2="function", alias3=this.escapeExpression, buffer = 
-  "<div id=\"proteinTitle\">\r\n    <button id=\"extender\" class=\"btn btn-default\" style=\"float:right\">Extend overview</button>\r\n    <h2>"
+  "<div id=\"proteinTitle\">\n    <button id=\"extender\" class=\"btn btn-default\" style=\"float:right\">Extend overview</button>\n    <h2>"
     + alias3(((helper = (helper = helpers.entryName || (depth0 != null ? depth0.entryName : depth0)) != null ? helper : alias1),(typeof helper === alias2 ? helper.call(depth0,{"name":"entryName","hash":{},"data":data}) : helper)))
-    + "</h2>\r\n</div>\r\n<div id=\"INFOS-LESS\" style=\"display:block\">\r\n"
+    + "</h2>\n</div>\n<div id=\"INFOS-LESS\" style=\"display:block\">\n"
     + ((stack1 = helpers['if'].call(depth0,(depth0 != null ? depth0.cleavage : depth0),{"name":"if","hash":{},"fn":this.program(1, data, 0),"inverse":this.noop,"data":data})) != null ? stack1 : "")
-    + "    <div id=\"gene-less\" class=\"row\">\r\n        <div class=\"col-md-2 col-xs-3\" style=\"color: grey;text-align:right\">Gene Name :</div>\r\n        <div class=\"col-md-6 col-xs-6\">"
+    + "    <div id=\"gene-less\" class=\"row\">\n        <div class=\"col-md-2 col-xs-3\" style=\"color: grey;text-align:right\">Gene Name :</div>\n        <div class=\"col-md-6 col-xs-6\">"
     + alias3(((helper = (helper = helpers.geneName || (depth0 != null ? depth0.geneName : depth0)) != null ? helper : alias1),(typeof helper === alias2 ? helper.call(depth0,{"name":"geneName","hash":{},"data":data}) : helper)))
-    + "</div>\r\n    </div>\r\n"
+    + "</div>\n    </div>\n"
     + ((stack1 = helpers['if'].call(depth0,(depth0 != null ? depth0.family : depth0),{"name":"if","hash":{},"fn":this.program(4, data, 0),"inverse":this.noop,"data":data})) != null ? stack1 : "")
-    + "</div>\r\n<div id=\"INFOS-FULL\" style=\"display:none\">\r\n    <div id=\"gene-full\" class=\"row\">\r\n        <div class=\"col-md-2 col-xs-3 text-uppercase\" style=\"color: grey;\">Protein</div>\r\n        <div class=\"col-md-6 col-xs-6\">\r\n            <dl>\r\n                <dt>Recommended Name</dt>\r\n                <dd> "
+    + "</div>\n<div id=\"INFOS-FULL\" style=\"display:none\">\n    <div id=\"gene-full\" class=\"row\">\n        <div class=\"col-md-2 col-xs-3 text-uppercase\" style=\"color: grey;\">Protein</div>\n        <div class=\"col-md-6 col-xs-6\">\n            <dl>\n                <dt>Recommended Name</dt>\n                <dd> "
     + alias3(((helper = (helper = helpers.geneName || (depth0 != null ? depth0.geneName : depth0)) != null ? helper : alias1),(typeof helper === alias2 ? helper.call(depth0,{"name":"geneName","hash":{},"data":data}) : helper)))
-    + "</dd>\r\n"
+    + "</dd>\n"
     + ((stack1 = helpers['if'].call(depth0,(depth0 != null ? depth0.cleavage : depth0),{"name":"if","hash":{},"fn":this.program(7, data, 0),"inverse":this.noop,"data":data})) != null ? stack1 : "")
-    + "\r\n"
+    + "\n"
     + ((stack1 = helpers['if'].call(depth0,(depth0 != null ? depth0.alternativeName : depth0),{"name":"if","hash":{},"fn":this.program(10, data, 0),"inverse":this.noop,"data":data})) != null ? stack1 : "")
-    + "\r\n            </dl>\r\n        </div>\r\n    </div>\r\n"
+    + "\n            </dl>\n        </div>\n    </div>\n"
     + ((stack1 = helpers['if'].call(depth0,(depth0 != null ? depth0.family : depth0),{"name":"if","hash":{},"fn":this.program(14, data, 0),"inverse":this.noop,"data":data})) != null ? stack1 : "")
-    + "    <div id=\"History-full\" class=\"row\">\r\n        <div class=\"col-md-2 col-xs-3 text-uppercase\" style=\"color: grey;\">History</div>\r\n        <div class=\"col-md-6 col-xs-6\">\r\n            <dl>\r\n                <dt>neXtProt</dt>\r\n                <dd>Integrated "
+    + "    <div id=\"History-full\" class=\"row\">\n        <div class=\"col-md-2 col-xs-3 text-uppercase\" style=\"color: grey;\">History</div>\n        <div class=\"col-md-6 col-xs-6\">\n            <dl>\n                <dt>neXtProt</dt>\n                <dd>Integrated "
     + alias3(((helper = (helper = helpers.integDate || (depth0 != null ? depth0.integDate : depth0)) != null ? helper : alias1),(typeof helper === alias2 ? helper.call(depth0,{"name":"integDate","hash":{},"data":data}) : helper)))
-    + "</dd>\r\n                <dd>Last Updated "
+    + "</dd>\n                <dd>Last Updated "
     + alias3(((helper = (helper = helpers.lastUpdate || (depth0 != null ? depth0.lastUpdate : depth0)) != null ? helper : alias1),(typeof helper === alias2 ? helper.call(depth0,{"name":"lastUpdate","hash":{},"data":data}) : helper)))
-    + "</dd>\r\n                <dt>UniProtKB</dt>\r\n                <dd>Entry version "
+    + "</dd>\n                <dt>UniProtKB</dt>\n                <dd>Entry version "
     + alias3(((helper = (helper = helpers.version || (depth0 != null ? depth0.version : depth0)) != null ? helper : alias1),(typeof helper === alias2 ? helper.call(depth0,{"name":"version","hash":{},"data":data}) : helper)))
-    + "</dd>\r\n                <dd>Integration Date "
+    + "</dd>\n                <dd>Integration Date "
     + alias3(((helper = (helper = helpers.UniprotIntegDate || (depth0 != null ? depth0.UniprotIntegDate : depth0)) != null ? helper : alias1),(typeof helper === alias2 ? helper.call(depth0,{"name":"UniprotIntegDate","hash":{},"data":data}) : helper)))
-    + "</dd>\r\n                <dd>Last Update "
+    + "</dd>\n                <dd>Last Update "
     + alias3(((helper = (helper = helpers.UniProtLastUpdate || (depth0 != null ? depth0.UniProtLastUpdate : depth0)) != null ? helper : alias1),(typeof helper === alias2 ? helper.call(depth0,{"name":"UniProtLastUpdate","hash":{},"data":data}) : helper)))
-    + "</dd>\r\n                <dd>Sequence version "
+    + "</dd>\n                <dd>Sequence version "
     + alias3(((helper = (helper = helpers.seqVersion || (depth0 != null ? depth0.seqVersion : depth0)) != null ? helper : alias1),(typeof helper === alias2 ? helper.call(depth0,{"name":"seqVersion","hash":{},"data":data}) : helper)))
-    + "</dd>\r\n                <dd>";
+    + "</dd>\n                <dd>";
   stack1 = ((helper = (helper = helpers.accessionNumber || (depth0 != null ? depth0.accessionNumber : depth0)) != null ? helper : alias1),(options={"name":"accessionNumber","hash":{},"fn":this.program(17, data, 0),"inverse":this.noop,"data":data}),(typeof helper === alias2 ? helper.call(depth0,options) : helper));
   if (!helpers.accessionNumber) { stack1 = helpers.blockHelperMissing.call(depth0,stack1,options)}
   if (stack1 != null) { buffer += stack1; }
-  return buffer + "</dd>\r\n            </dl>\r\n        </div>\r\n    </div>\r\n</div>\r\n<p style=\"margin:10px 10px;\">Entry whose protein(s) existence is based on "
+  return buffer + "</dd>\n            </dl>\n        </div>\n    </div>\n</div>\n<p style=\"margin:10px 10px;\">Entry whose protein(s) existence is based on "
     + alias3(((helper = (helper = helpers.proteineEvidence || (depth0 != null ? depth0.proteineEvidence : depth0)) != null ? helper : alias1),(typeof helper === alias2 ? helper.call(depth0,{"name":"proteineEvidence","hash":{},"data":data}) : helper)))
     + "</p>";
 },"useData":true});
@@ -2663,53 +2633,53 @@ this["HBtemplates"]["app/assets/templates/peptideTable.tmpl"] = Handlebars.templ
     var stack1, helper, options, alias1=helpers.helperMissing, alias2="function", alias3=this.escapeExpression, alias4=this.lambda, buffer = 
   "        <tr id="
     + alias3(((helper = (helper = helpers.name || (depth0 != null ? depth0.name : depth0)) != null ? helper : alias1),(typeof helper === alias2 ? helper.call(depth0,{"name":"name","hash":{},"data":data}) : helper)))
-    + ">\r\n            <td><input class=\"PepSelected\" type=\"checkbox\"></td>\r\n            <td style=\"text-align:justify;\">"
+    + ">\n            <td><input class=\"PepSelected\" type=\"checkbox\"></td>\n            <td style=\"text-align:justify;\">"
     + alias3(((helper = (helper = helpers.identifier || (depth0 != null ? depth0.identifier : depth0)) != null ? helper : alias1),(typeof helper === alias2 ? helper.call(depth0,{"name":"identifier","hash":{},"data":data}) : helper)))
-    + "</td>\r\n            <td style=\"text-align:center;\"><a class=\"pepPos\" style=\"cursor:pointer;\">"
+    + "</td>\n            <td style=\"text-align:center;\"><a class=\"pepPos\" style=\"cursor:pointer;\">"
     + alias3(alias4(((stack1 = (depth0 != null ? depth0.position : depth0)) != null ? stack1.first : stack1), depth0))
     + " - "
     + alias3(alias4(((stack1 = (depth0 != null ? depth0.position : depth0)) != null ? stack1.second : stack1), depth0))
-    + "</a></td>\r\n            <td style=\"text-align:center;\">"
+    + "</a></td>\n            <td style=\"text-align:center;\">"
     + alias3(((helper = (helper = helpers.length || (depth0 != null ? depth0.length : depth0)) != null ? helper : alias1),(typeof helper === alias2 ? helper.call(depth0,{"name":"length","hash":{},"data":data}) : helper)))
-    + "</td>\r\n";
+    + "</td>\n";
   stack1 = ((helper = (helper = helpers.properties || (depth0 != null ? depth0.properties : depth0)) != null ? helper : alias1),(options={"name":"properties","hash":{},"fn":this.program(2, data, 0),"inverse":this.noop,"data":data}),(typeof helper === alias2 ? helper.call(depth0,options) : helper));
   if (!helpers.properties) { stack1 = helpers.blockHelperMissing.call(depth0,stack1,options)}
   if (stack1 != null) { buffer += stack1; }
-  return buffer + "\r\n        </tr>";
+  return buffer + "\n        </tr>";
 },"2":function(depth0,helpers,partials,data) {
     var stack1;
 
   return "            "
     + ((stack1 = helpers['if'].call(depth0,(depth0 != null ? depth0.natural : depth0),{"name":"if","hash":{},"fn":this.program(3, data, 0),"inverse":this.program(8, data, 0),"data":data})) != null ? stack1 : "")
-    + "\r\n            "
+    + "\n            "
     + ((stack1 = helpers['if'].call(depth0,(depth0 != null ? depth0.proteotypic : depth0),{"name":"if","hash":{},"fn":this.program(10, data, 0),"inverse":this.program(12, data, 0),"data":data})) != null ? stack1 : "");
 },"3":function(depth0,helpers,partials,data) {
     var stack1;
 
   return ((stack1 = helpers['if'].call(depth0,(depth0 != null ? depth0.synthetic : depth0),{"name":"if","hash":{},"fn":this.program(4, data, 0),"inverse":this.program(6, data, 0),"data":data})) != null ? stack1 : "");
 },"4":function(depth0,helpers,partials,data) {
-    return "<td>natural+synthetic</td>\r\n            ";
+    return "<td>natural+synthetic</td>\n            ";
 },"6":function(depth0,helpers,partials,data) {
     return "<td>natural</td>";
 },"8":function(depth0,helpers,partials,data) {
     return "<td>synthetic</td>";
 },"10":function(depth0,helpers,partials,data) {
-    return "<td>proteotypic</td>\r\n            ";
+    return "<td>proteotypic</td>\n            ";
 },"12":function(depth0,helpers,partials,data) {
     return "<td>non-proteotypic</td>";
 },"compiler":[6,">= 2.0.0-beta.1"],"main":function(depth0,helpers,partials,data) {
     var stack1, helper, options, alias1=helpers.helperMissing, alias2="function", buffer = 
-  "<div id=\"peptideTableTitle\" style=\"border-bottom: 1px solid #E7EAEC;padding-bottom:5px;;margin-bottom: 15px;\">\r\n    <div style=\"display:inline-block;\">\r\n            <span class=\"badge\"\r\n                  style=\"background:#C50063;color:white;padding:8px;border-radius:70%;margin-right:10px;vertical-align:middle;\">"
+  "<div id=\"peptideTableTitle\" style=\"border-bottom: 1px solid #E7EAEC;padding-bottom:5px;;margin-bottom: 15px;\">\n    <div style=\"display:inline-block;\">\n            <span class=\"badge\"\n                  style=\"background:#C50063;color:white;padding:8px;border-radius:70%;margin-right:10px;vertical-align:middle;\">"
     + this.escapeExpression(((helper = (helper = helpers.PeptideLength || (depth0 != null ? depth0.PeptideLength : depth0)) != null ? helper : alias1),(typeof helper === alias2 ? helper.call(depth0,{"name":"PeptideLength","hash":{},"data":data}) : helper)))
-    + "</span>\r\n    </div>\r\n    <h4 id=\"test\" style=\"display:inline-block;vertical-align:middle;\">Peptides</h4></div>\r\n<div style=\"height:200px;overflow: auto\">\r\n    <table id= \"pepTableSorted\" class=\"table table-striped table-fixed\" style=\"font-size:12px;\">\r\n        <thead>\r\n        <tr>\r\n            <th class=\"col-md-1\">Select</th>\r\n            <th data-sort=\"string\" class=\"col-md-2\" style=\"text-align:justify;\">Peptide sequence <span class=\"caret\"></span></th>\r\n            <th data-sort=\"positions\" class=\"col-md-2\" style=\"text-align:center;white-space: nowrap;\">Position <span class=\"caret\"></span></th>\r\n            <th data-sort=\"int\" class=\"col-md-2\" style=\"text-align:center;white-space: nowrap;\">Length <span class=\"caret\"></span></th>\r\n            <th data-sort=\"string\" class=\"col-md-2\">Category <span class=\"caret\"></span></th>\r\n            <th data-sort=\"string\" class=\"col-md-2\" style=\"white-space: nowrap;\">Proteotypicity <span class=\"caret\"></span></th>\r\n        </tr>\r\n        </thead>\r\n        <tbody>\r\n";
+    + "</span>\n    </div>\n    <h4 id=\"test\" style=\"display:inline-block;vertical-align:middle;\">Peptides</h4></div>\n<div style=\"height:200px;overflow: auto\">\n    <table id= \"pepTableSorted\" class=\"table table-striped table-fixed\" style=\"font-size:12px;\">\n        <thead>\n        <tr>\n            <th class=\"col-md-1\">Select</th>\n            <th data-sort=\"string\" class=\"col-md-2\" style=\"text-align:justify;\">Peptide sequence <span class=\"caret\"></span></th>\n            <th data-sort=\"positions\" class=\"col-md-2\" style=\"text-align:center;white-space: nowrap;\">Position <span class=\"caret\"></span></th>\n            <th data-sort=\"int\" class=\"col-md-2\" style=\"text-align:center;white-space: nowrap;\">Length <span class=\"caret\"></span></th>\n            <th data-sort=\"string\" class=\"col-md-2\">Category <span class=\"caret\"></span></th>\n            <th data-sort=\"string\" class=\"col-md-2\" style=\"white-space: nowrap;\">Proteotypicity <span class=\"caret\"></span></th>\n        </tr>\n        </thead>\n        <tbody>\n";
   stack1 = ((helper = (helper = helpers.Peptides || (depth0 != null ? depth0.Peptides : depth0)) != null ? helper : alias1),(options={"name":"Peptides","hash":{},"fn":this.program(1, data, 0),"inverse":this.noop,"data":data}),(typeof helper === alias2 ? helper.call(depth0,options) : helper));
   if (!helpers.Peptides) { stack1 = helpers.blockHelperMissing.call(depth0,stack1,options)}
   if (stack1 != null) { buffer += stack1; }
-  return buffer + "</tbody>\r\n    </table>\r\n</div>";
+  return buffer + "</tbody>\n    </table>\n</div>";
 },"useData":true});
 
 this["HBtemplates"]["app/assets/templates/preLoader.tmpl"] = Handlebars.template({"compiler":[6,">= 2.0.0-beta.1"],"main":function(depth0,helpers,partials,data) {
-    return "<div id=\"preLoaderActive\" class=\"circularGparent\" style=\"display:inline-block;\">\r\n    <div class=\"circularG_1 circularG\">\r\n    </div>\r\n    <div class=\"circularG_2 circularG\">\r\n    </div>\r\n    <div class=\"circularG_3 circularG\">\r\n    </div>\r\n    <div class=\"circularG_4 circularG\">\r\n    </div>\r\n    <div class=\"circularG_5 circularG\">\r\n    </div>\r\n    <div class=\"circularG_6 circularG\">\r\n    </div>\r\n    <div class=\"circularG_7 circularG\">\r\n    </div>\r\n    <div class=\"circularG_8 circularG\">\r\n    </div>\r\n</div>";
+    return "<div id=\"preLoaderActive\" class=\"circularGparent\" style=\"display:inline-block;\">\n    <div class=\"circularG_1 circularG\">\n    </div>\n    <div class=\"circularG_2 circularG\">\n    </div>\n    <div class=\"circularG_3 circularG\">\n    </div>\n    <div class=\"circularG_4 circularG\">\n    </div>\n    <div class=\"circularG_5 circularG\">\n    </div>\n    <div class=\"circularG_6 circularG\">\n    </div>\n    <div class=\"circularG_7 circularG\">\n    </div>\n    <div class=\"circularG_8 circularG\">\n    </div>\n</div>";
 },"useData":true});;
 // Stupid jQuery table plugin.
 
@@ -3098,6 +3068,21 @@ function initNXDivs() {
                     
             return peptide;
         },
+        mergeSyntheticWithNatural: function (array) {
+            for (var i = 0; i < array.length; i++) {
+                var isPurelySynthetic = true;
+                for (var j = i; j < array.length; j++) {
+                    if (array[i].nextprotName === array[j].nextprotName && array[i].properties !== array[j].properties) {
+                        peptideMappings[i].evidences = peptideMappings[i].evidences.concat(srmPeptideMapping.evidences);
+                        isPurelySynthetic = false;
+                        break;
+                    }
+                }
+                if (isPurelySynthetic) {
+                    peptideMappings.push(srmPeptideMapping); //TODO fix this! This is referenced in allFeatures[1] so it should not be pushed like this
+                }
+            };
+        },
         Peptides: function (peptideMappings, isoName) {
             var peptideList = [];
             peptideMappings.forEach(function (o) {
@@ -3179,7 +3164,7 @@ function initNXDivs() {
             peptideList2.sort(function (a, b) {
                 return a.position.first - b.position.first;
             });
-
+            console.log(peptideList2);
             pepComp.computeInterPeptideInclusions(peptideList2);
 
             return peptideList2;

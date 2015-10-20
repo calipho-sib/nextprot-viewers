@@ -227,7 +227,10 @@ input::-moz-focus-inner {
     stroke:rgba(0,255,154,0.6);
     stroke-width:1px;
 }
-
+body{
+    background:#F4F3F3 !important;
+    overflow-y: auto;
+}
 a:focus {
     outline:0 !important;
 }
@@ -307,20 +310,6 @@ a:focus {
 }
 .yaxis{
     background-color:green;
-}
-.header-help{
-    color: #C50063;;
-}
-.header-help:hover{
-    color: #98004C;
-    cursor: pointer;
-}
-.header-help:focus{
-    color: #98004C;
-}
-.popover-title{
-    text-align: center;
-    background-color: rgba(197, 0, 99, 0.1);
 };
 @-moz-keyframes throbber-loader {
   0% {

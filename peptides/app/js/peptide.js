@@ -119,6 +119,21 @@ function initNXDivs() {
                     
             return peptide;
         },
+        mergeSyntheticWithNatural: function (array) {
+            for (var i = 0; i < array.length; i++) {
+                var isPurelySynthetic = true;
+                for (var j = i; j < array.length; j++) {
+                    if (array[i].nextprotName === array[j].nextprotName && array[i].properties !== array[j].properties) {
+                        peptideMappings[i].evidences = peptideMappings[i].evidences.concat(srmPeptideMapping.evidences);
+                        isPurelySynthetic = false;
+                        break;
+                    }
+                }
+                if (isPurelySynthetic) {
+                    peptideMappings.push(srmPeptideMapping); //TODO fix this! This is referenced in allFeatures[1] so it should not be pushed like this
+                }
+            };
+        },
         Peptides: function (peptideMappings, isoName) {
             var peptideList = [];
             peptideMappings.forEach(function (o) {
@@ -200,7 +215,7 @@ function initNXDivs() {
             peptideList2.sort(function (a, b) {
                 return a.position.first - b.position.first;
             });
-
+            console.log(peptideList2);
             pepComp.computeInterPeptideInclusions(peptideList2);
 
             return peptideList2;
