@@ -2634,8 +2634,8 @@ this["HBtemplates"]["app/assets/templates/overviewProtein.tmpl"] = Handlebars.te
 
 this["HBtemplates"]["app/assets/templates/peptideTable.tmpl"] = Handlebars.template({"1":function(depth0,helpers,partials,data) {
     var stack1, helper, options, alias1=helpers.helperMissing, alias2="function", alias3=this.escapeExpression, alias4=this.lambda, buffer = 
-  "        <tr id="
-    + alias3(((helper = (helper = helpers.name || (depth0 != null ? depth0.name : depth0)) != null ? helper : alias1),(typeof helper === alias2 ? helper.call(depth0,{"name":"name","hash":{},"data":data}) : helper)))
+  "        <tr class="
+    + alias3(((helper = (helper = helpers.nextprotName || (depth0 != null ? depth0.nextprotName : depth0)) != null ? helper : alias1),(typeof helper === alias2 ? helper.call(depth0,{"name":"nextprotName","hash":{},"data":data}) : helper)))
     + ">\n            <td><input class=\"PepSelected\" type=\"checkbox\"></td>\n            <td style=\"text-align:justify;\">"
     + alias3(((helper = (helper = helpers.identifier || (depth0 != null ? depth0.identifier : depth0)) != null ? helper : alias1),(typeof helper === alias2 ? helper.call(depth0,{"name":"identifier","hash":{},"data":data}) : helper)))
     + "</td>\n            <td style=\"text-align:center;\"><a class=\"pepPos\" style=\"cursor:pointer;\">"
@@ -2960,14 +2960,10 @@ function initNXDivs() {
     var isoforms;
     var firstIso;
     var currentIso;
-    var peptideMappings;
-    var srmPeptideMappings;
     var matureProtein;
     var proPeptide;
     var seq1 = null;
-    var pepMap1;
-    var pepMap2;
-    var pepSyntMap2;
+    var pepMap;
 
     var pepComp = new PeptideComputation();
 
@@ -3391,11 +3387,11 @@ function initNXDivs() {
                     selection.filter(function (elem, pos, a) {
                         return a.indexOf(elem) == pos;
                     }).forEach(function (o) {
-                        for (i = 0; i < listPeptides.length; i++) {
+                        for (var i = 0; i < listPeptides.length; i++) {
                             var founded = false;
-                            if (listPeptides[i].name === o) {
+                            if (listPeptides[i].nextprotName === o) {
                                 for (var item in found) {
-                                    if (listPeptides[i].name === found[item].name) {
+                                    if (listPeptides[i].nextprotName === found[item].nextprotName) {
                                         founded = true;
                                         found[item].position.push(listPeptides[i].position);
                                         found[item].prePeptide.push(listPeptides[i].prePeptide);
@@ -3678,13 +3674,8 @@ function initNXDivs() {
         if ($("#nx-overviewPeptide").length > 0) {
             var datas = {
                 "PeptideLength": 0,
-                "Peptides": getInfoForIsoform.Peptides2(pepMap2, isoName)
+                "Peptides": getInfoForIsoform.Peptides2(peptideMappings, isoName)
             };
-            var data2 = getInfoForIsoform.Peptides2(pepMap2, isoName);
-//                getInfoForIsoform.Peptides(peptideMappings, isoName)
-            
-            console.log(datas.Peptides);
-            console.log(data2);
             datas.PeptideLength = datas.Peptides.length;
 
             var template = HBtemplates['app/assets/templates/peptideTable.tmpl'];
@@ -3758,7 +3749,7 @@ function initNXDivs() {
                     case 10 :
                         return singProtColor; //'green';
                     default :
-                        return sevProtColor // 20 or
+                        return sevProtColor; // 20 or
                 }
             }
 
@@ -3820,7 +3811,7 @@ function initNXDivs() {
                     var selection = [];
                     $(".PepSelected").each(function (o) {
                         if ($(this).prop("checked")) {
-                            selection.push($(this).parent().parent().attr("id"));
+                            selection.push($(this).parent().parent().attr("class"));
                         }
                     });
                     addPeptidesInfos(selection, datas.Peptides, isoName);
@@ -3843,10 +3834,8 @@ function initNXDivs() {
             {name: "Sequence"},
             {name: "Propeptide", className: "pro", color: "#B3B3B3", type: "rect", filter: "Processing"},
             {name: "Mature protein", className: "mat", color: "#B3B3C2", type: "rect", filter: "Processing"},
-            {name: "Peptide", className: "pep", color: "#B3E1D1", type: "multipleRect", filter: "Peptide"},
-            {name: "SRM Peptide", className: "srmPep", color: "#B3E1F0", type: "multipleRect", filter: "none"},
             {name: "Peptide", className: "pep2", color: "#B3E1D1", type: "multipleRect", filter: "Peptide"},
-            {name: "SRM Peptide", className: "pepsynt2", color: "#B3E1D1", type: "multipleRect", filter: "Peptide"}
+            {name: "SRM Peptide", className: "srmPep", color: "#B3E1F0", type: "multipleRect", filter: "none"}
         ];
 
         for (var i = 1; i < data.length; i++) {
@@ -3867,10 +3856,8 @@ function initNXDivs() {
             nx.getProteinSequence(nxEntryName), //1
             nx.getAnnotationsByCategory(nxEntryName, "propeptide"), //2
             nx.getAnnotationsByCategory(nxEntryName, "mature-protein"), //3
-            nx.getPeptide(nxEntryName), //4
-            nx.getSrmPeptide(nxEntryName), //5
-            nx.getAnnotationsByCategory(nxEntryName, "peptide-mapping"), //6
-            nx.getAnnotationsByCategory(nxEntryName, "srm-peptide-mapping") //7
+            nx.getAnnotationsByCategory(nxEntryName, "peptide-mapping"), //4
+            nx.getAnnotationsByCategory(nxEntryName, "srm-peptide-mapping") //5
         ].reduce(function (sequence, dataPromise) {
                 return sequence.then(function () {
                     return dataPromise;
@@ -3894,53 +3881,29 @@ function initNXDivs() {
                             allFeatures.push(oneData.annot);
                             break;
                         case 4:
-                            peptideMappings = oneData;
-                            pepMap1 = jQuery.merge([], oneData);
-                            //adding a copy for the feature viewer, because pepetides will be added to peptideMappings
-                            allFeatures.push(jQuery.merge([], oneData));
-                            break;
-                        case 5:
-                            srmPeptideMappings = oneData;
-                            allFeatures.push(oneData);
-                            // Hack: add srm peptide mapping evidences into peptide mapping evidences of natural/synthetic peptides
-                            srmPeptideMappings.forEach(function (srmPeptideMapping) {
-                                var isPurelySynthetic = true;
-                                for (var i = 0; i < peptideMappings.length; i++) {
-                                    if (srmPeptideMapping.peptideUniqueName === peptideMappings[i].peptideUniqueName) {
-                                        peptideMappings[i].evidences = peptideMappings[i].evidences.concat(srmPeptideMapping.evidences);
-                                        isPurelySynthetic = false;
-                                        break;
-                                    }
-                                }
-                                if (isPurelySynthetic) {
-                                    peptideMappings.push(srmPeptideMapping); //TODO fix this! This is referenced in allFeatures[1] so it should not be pushed like this
-                                }
-                            });
-                            break;
-                        case 6:
-                            pepMap2 = jQuery.merge([], oneData.annot);
+                            pepMap = jQuery.merge([], oneData.annot);
                             //adding a copy for the feature viewer, because pepetides will be added to peptideMappings
                             allFeatures.push(jQuery.extend({}, oneData));
                             break;
-                        case 7:
+                        case 5:
                             var pepSynthetic = jQuery.merge([], oneData.annot);
                             pepSynthetic.forEach(function(ps) {
                                 var isPurelySynthetic = true;
-                                for (var i = 0; i < pepMap2.length; i++) {
-                                    if (ps.annotationId === pepMap2[i].annotationId) {
-                                        pepMap2[i].evidences = pepMap2[i].evidences.concat(ps.evidences);
-                                        pepMap2[i].category ="natAndSynth";
+                                for (var i = 0; i < pepMap.length; i++) {
+                                    if (ps.annotationId === pepMap[i].annotationId) {
+                                        pepMap[i].evidences = pepMap[i].evidences.concat(ps.evidences);
+                                        pepMap[i].category ="natAndSynth";
                                         isPurelySynthetic = false;
                                         break;
                                     }
                                 }
                                 if (isPurelySynthetic) {
-                                    peptideMappings.push(ps); //TODO fix this! This is referenced in allFeatures[1] so it should not be pushed like this
+                                    pepMap.push(ps); //TODO fix this! This is referenced in allFeatures[1] so it should not be pushed like this
                                 }
                             });
                             //adding a copy for the feature viewer, because pepetides will be added to peptideMappings
                             allFeatures.push(jQuery.extend({}, oneData));
-                            renderPeptidesForIsoform(peptideMappings, firstIso);
+                            renderPeptidesForIsoform(pepMap, firstIso);
                             renderFeatureViewer(allFeatures, firstIso);
                             showFeatureViewer();
                             break;
