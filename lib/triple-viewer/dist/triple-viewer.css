@@ -301,7 +301,15 @@ a:focus {
     color:#999;
     padding:2px 6px;
 }
-
+.nonProteotypic{
+    border: #ebeffa 1px solid;
+    background-color: white;
+    border-radius: 5px;
+    color: #666;
+    font-size: 1em;
+    padding-left: 5px;
+    padding-right: 5px;
+}
 /*!
  * Bootstrap v3.3.5 (http://getbootstrap.com)
  * Copyright 2011-2015 Twitter, Inc.

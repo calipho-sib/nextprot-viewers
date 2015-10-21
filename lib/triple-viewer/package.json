@@ -70,5 +70,8 @@
     "viewer",
     "biojs"
   ],
-  "readmeFilename": "README.md"
+  "readmeFilename": "README.md",
+  "scripts": {
+    "dist": "grunt && grunt serve"
+  }
 }

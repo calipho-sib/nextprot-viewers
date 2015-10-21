@@ -769,8 +769,8 @@
                 nx.getAnnotationsByCategory(entry, "glycosylation-site "), //12
                 nx.getAnnotationsByCategory(entry, "lipidation-site"), //13
                 nx.getAnnotationsByCategory(entry, "selenocysteine"), //14
-                nx.getPeptide(entry), //15
-                nx.getSrmPeptide(entry), //16
+                nx.getAnnotationsByCategory(entry, "peptide-mapping"), //14
+                nx.getAnnotationsByCategory(entry, "srm-peptide-mapping"), //14
                 nx.getIsoformMapping(entry) //17
             ]).then(function (oneData) {
 

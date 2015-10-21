@@ -57,11 +57,11 @@
       "metadata": {"name": "Non standart AA","className": "seleno","color": "#859DE7","type": "unique","filter":"Modified Residue"}
     },
     {
-      "APIRef": "peptide",
+      "APIRef": "peptide-mapping",
       "metadata": {"name": "Peptide","className": "pep","color": "#B3E1D1","type": "multipleRect","filter":"Peptide"}
     },
     {
-      "APIRef": "srmpeptide",
+      "APIRef": "srm-peptide-mapping",
       "metadata": {"name": "SRM Peptide","className": "srmPep","color": "#B3E1F0","type": "multipleRect","filter":"none"}
     },
     {
