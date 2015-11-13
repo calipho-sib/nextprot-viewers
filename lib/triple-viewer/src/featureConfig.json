@@ -152,7 +152,7 @@
           "className": "srmPep",
           "color": "#B3E1F0",
           "type": "multipleRect",
-          "filter": "none"
+          "filter": "Peptide"
         }
       },
       {
