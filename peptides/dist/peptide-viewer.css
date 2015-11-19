@@ -26,13 +26,21 @@ background:#fff;
 }
 /*TOFIX*/
 #featureViewer{
-    padding-top: 15px !important;
+    /*padding-top: 15px !important;*/
 }
 #buttonRightFV{
-    position:absolute;
-    right: 20px;
-    top: 10px;
-    z-index:30;
+    /*margin-right:20px;*/
+    /*z-index:1000;*/
+    position: relative;
+    height:5px;
+}
+#showFV{
+    /*margin-right:20px;*/
+    position: relative;
+    margin-top:15px;
+    margin-bottom:-20px;
+
+    z-index:1000;
 }
 #nx-isoformChoice {
     margin-top:10px;
@@ -227,10 +235,7 @@ input::-moz-focus-inner {
     stroke:rgba(0,255,154,0.6);
     stroke-width:1px;
 }
-body{
-    background:#F4F3F3 !important;
-    overflow-y: auto;
-}
+
 a:focus {
     outline:0 !important;
 }
@@ -310,6 +315,26 @@ a:focus {
 }
 .yaxis{
     background-color:green;
+}
+.header-help{
+    color: #C50063;
+}
+.header-help:hover{
+    color: #98004C;
+    cursor: pointer;
+    text-decoration: none;
+}
+.header-help:focus{
+    color: #98004C;
+}
+.popover-title{
+    text-align: center;
+    background-color: rgba(197, 0, 99, 0.1);
+}
+.label-as-badge {
+    border-radius: 1em;
+    font-size:0.7em;
+    background-color: #C50063;
 };
 @-moz-keyframes throbber-loader {
   0% {
