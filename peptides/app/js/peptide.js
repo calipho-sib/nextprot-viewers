@@ -699,10 +699,13 @@ function initNXDivs() {
                             $('#ptmByPeptide').html("");
                             if (data.results.bindings.length > 0) {
                                 data.results.bindings.forEach(function (o) {
-                                    $('#ptmByPeptide').append("<div class=\"row\"style=\"border-bottom:1px solid #E7EAEC;margin-bottom:5px;\"><dl class=\"col-md-6\"><dt>PTM ID</dt><dd>" + o.ptmterm.value.toString().match(/[^\/]*$/)[0] + "</dd></dl>" +
+                                    var tempID = o.ptmterm ? o.ptmterm.value.toString().match(/[^\/]*$/)[0] : "-";
+                                    var tempDesc = o.ptmcomment ? o.ptmcomment.value : "-";
+
+                                    $('#ptmByPeptide').append("<div class=\"row\"style=\"border-bottom:1px solid #E7EAEC;margin-bottom:5px;\"><dl class=\"col-md-6\"><dt>PTM ID</dt><dd>" +   tempID + "</dd></dl>" +
                                         "<dl class=\"col-md-6\"><dt>Position</dt><dd>" + o.ptmstart.value + "</dd></dl>" +
                                         "<dl class=\"col-md-6\"><dt>Type</dt><dd>" + o.ptmtype.value.toString().match(/[^#]*$/)[0].slice() + "</dd></dl>" +
-                                        "<dl class=\"col-md-6\"><dt>Description</dt><dd>" + o.ptmcomment.value + "</dd></dl></div>");
+                                        "<dl class=\"col-md-6\"><dt>Description</dt><dd>" +  tempDesc + "</dd></dl></div>");
                                 });
                             } else $('#ptmByPeptide').html("No PTM found");
                         }, function (error) {
@@ -715,10 +718,13 @@ function initNXDivs() {
                         $('#ptmByRegion').html("");
                         if (data.results.bindings.length > 0) {
                             data.results.bindings.forEach(function (o) {
-                                $('#ptmByRegion').append("<div class=\"row\"style=\"border-bottom:1px solid #E7EAEC;margin-bottom:5px;\"><dl class=\"col-md-6\"><dt>PTM ID</dt><dd>" + o.ptmterm.value.toString().match(/[^\/]*$/)[0] + "</dd></dl>" +
+                                var tempID = o.ptmterm ? o.ptmterm.value.toString().match(/[^\/]*$/)[0] : "-";
+                                var tempDesc = o.ptmcomment ? o.ptmcomment.value : "-";
+
+                                $('#ptmByRegion').append("<div class=\"row\"style=\"border-bottom:1px solid #E7EAEC;margin-bottom:5px;\"><dl class=\"col-md-6\"><dt>PTM ID</dt><dd>" + tempID + "</dd></dl>" +
                                     "<dl class=\"col-md-6\"><dt>Position</dt><dd>" + o.ptmstart.value + "</dd></dl>" +
                                     "<dl class=\"col-md-6\"><dt>Type</dt><dd>" + o.ptmtype.value.toString().match(/[^#]*$/)[0].slice() + "</dd></dl>" +
-                                    "<dl class=\"col-md-6\"><dt>Description</dt><dd>" + o.ptmcomment.value + "</dd></dl></div>");
+                                    "<dl class=\"col-md-6\"><dt>Description</dt><dd>" + tempDesc + "</dd></dl></div>");
                             });
                         } else $('#ptmByRegion').html("No PTM found");
                     }, function (error) {
