@@ -8,11 +8,10 @@ function initNXDivs() {
     var isoforms;
     var firstIso;
     var currentIso;
-    var peptideMappings;
-    var srmPeptideMappings;
     var matureProtein;
     var proPeptide;
     var seq1 = null;
+    var pepMap;
 
     var pepComp = new PeptideComputation();
 
@@ -35,7 +34,7 @@ function initNXDivs() {
     var getInfoForIsoform = {
         firstLoad: function () {
             renderSequenceForIsoform(isoforms, nxEntryName + "-1");
-            renderPeptidesForIsoform(peptideMappings, nxEntryName + "-1");
+            renderPeptidesForIsoform(pepMap, nxEntryName + "-1");
         },
         Isoform: function () {
             $(".isoformNames").click(getInfoForIsoform.reload);
@@ -49,12 +48,89 @@ function initNXDivs() {
             $("#nx-detailedPeptide").html("");
             $("#nx-detailedPeptide").hide("slow");
             renderSequenceForIsoform(isoforms, isoID);
-            renderPeptidesForIsoform(peptideMappings, isoID);
+            renderPeptidesForIsoform(pepMap, isoID);
             $("#featureViewer").html("");
             currentIso = isoID;
             createSVG(isoforms, isoID);
             addFeatures(isoID);
 
+        },
+        parsePepMapping: function (o,isoName) {
+                        var dict = {};
+                        var peptideAtlasID = "";
+                        o.evidences.forEach(function (q) {
+                            if (peptideAtlasID === "" && q.resourceDb === "PeptideAtlas") peptideAtlasID = q.resourceAccession;
+                            dict[q.resourceDb] = q.resourceAccession;
+                        });
+                        var npName = "";
+                        var proteo = false;
+                        o.properties.forEach(function (p) {
+                            if (p.name === "peptide name") npName = p.value;
+                            if (p.name === "is proteotypic") proteo = p.value === "Y";
+                        });
+
+                        var peptide = {
+                            "name": o.uniqueName,
+                            "nextprotName": npName,
+                            "identifier": "",
+                            "position": {
+                                "first":o.targetingIsoformsMap[isoName].firstPosition,
+                                "second":o.targetingIsoformsMap[isoName].lastPosition
+                            },
+                            "length": 0,
+                            "properties": {
+                                "natural": o.category === "peptide mapping" || o.category === "natAndSynth",
+                                "synthetic": o.category === "SRM peptide mapping" || o.category === "natAndSynth",
+                                "proteotypic": proteo
+                            },
+                            "isoformProteotypicity": "No",
+                            "tissueSpecificity": o.evidences.map(function (p) {
+                                return p.assignedBy
+                            }).sort(),
+                            "sequence": "",
+                            "prePeptide": "",
+                            "postPeptide": "",
+                            "include": [],
+                            "includedIn": [],
+                            "sources": dict,
+                            "peptideAtlasID": peptideAtlasID
+                        };
+                        //if (o.natural === true) peptide.properties.push("natural");
+                        //else peptide.properties.push("-");
+                        if (peptide.properties.proteotypic === true) {
+                            //peptide.properties.push("proteotypic");
+                            if (Object.keys(o.targetingIsoformsMap).length === 1) peptide.isoformProteotypicity = "Yes";
+                        }
+                        //else peptide.properties.push("-");
+                        //if (o.synthetic === true) peptide.properties.push("synthetic");
+                        //else peptide.properties.push("-");
+
+                        peptide.length = peptide.position.second - peptide.position.first + 1;
+
+                        peptide.sequence = getInfoForIsoform.Sequence(isoforms, isoName).slice(peptide.position.first - 1, peptide.position.second);
+                        peptide.identifier = (peptide.sequence.length > 22) ? peptide.sequence.substring(0, 10) + ".." + peptide.sequence.substring(peptide.sequence.length - 10) : peptide.sequence;
+
+                        peptide.prePeptide = getInfoForIsoform.Sequence(isoforms, isoName)[peptide.position.first - 2];
+                        peptide.postPeptide = getInfoForIsoform.Sequence(isoforms, isoName)[peptide.position.second + 1];
+                    
+            return peptide;
+        },
+        mergeSyntheticWithNatural: function (array) {
+            for (var i = 0; i < array.length; i++) {
+                var isPurelySynthetic = true;
+                for (var j = i; j < array.length; j++) {
+                    if (array[i].nextprotName === array[j].nextprotName && array[i].position === array[j].position) {
+                        if (array[i].properties.natural === array[j].nextprotName && array[i].properties !== array[j].properties) {
+                            peptideMappings[i].evidences = peptideMappings[i].evidences.concat(srmPeptideMapping.evidences);
+                            isPurelySynthetic = false;
+                            break;
+                        }
+                    }
+                }
+                if (isPurelySynthetic) {
+                    peptideMappings.push(srmPeptideMapping); //TODO fix this! This is referenced in allFeatures[1] so it should not be pushed like this
+                }
+            };
         },
         Peptides: function (peptideMappings, isoName) {
             var peptideList = [];
@@ -123,6 +199,23 @@ function initNXDivs() {
             pepComp.computeInterPeptideInclusions(peptideList);
 
             return peptideList;
+        },
+        Peptides2: function (pepMap, isoName) {
+            var peptideList2 = [];
+            pepMap.forEach(function (o) {
+                if (o.targetingIsoformsMap[isoName]) {
+                    peptideList2.push(getInfoForIsoform.parsePepMapping(o,isoName));
+                }
+            });
+            peptideList2.sort(function (a, b) {
+                return a.length - b.length;
+            });
+            peptideList2.sort(function (a, b) {
+                return a.position.first - b.position.first;
+            });
+            pepComp.computeInterPeptideInclusions(peptideList2);
+
+            return peptideList2;
         },
         Sequence: function (isoforms, isoName) {
             var isoSeq = "";
@@ -203,8 +296,8 @@ function initNXDivs() {
                     showAxis: true,
                     showSequence: true,
                     brushActive: true,
-                    verticalLine: false,
-                    toolbar: true
+                    toolbar: true,
+                    bubbleHelp: true
                 });
             }
         });
@@ -230,7 +323,8 @@ function initNXDivs() {
                 'showLineNumbers': true,
                 'wrapAminoAcids': true,
                 'charsPerLine': 50,
-                'maxLines' : 10
+                'sequenceMaxHeight': "220px"
+
             });
             $("#sequenceHeader").append("<div class=\"pull-right\" style=\"margin-right:20px;font-style:italic;text-align: center;\"><span id=\"pepCover\" style=\"font-size:18px;color:#C50063;\"></span><br><span style=\"font-size:10px;font-weight:bold;\">Peptide coverage</span></div>");
             $("#sequenceHeader").append("<div class=\"pull-right\" style=\"margin-right:20px;font-style:italic;text-align: center;\"><span id=\"proteoCover\" style=\"font-size:18px;color:#69CC33;\"></span><br><span style=\"font-size:10px;font-weight:bold;\">Proteotypic coverage</span></div>");
@@ -279,15 +373,18 @@ function initNXDivs() {
                         return {
                             entryName: o.uniqueName,
                             variant: p.variant,
-                            isoform: Object.keys(p.targetIsoformsMap)[0],
-                            positions: p.targetIsoformsMap[Object.keys(p.targetIsoformsMap)[0]].positions
+                            isoform: Object.keys(p.targetingIsoformsMap)[0],
+                            positions: {
+                                first:p.targetingIsoformsMap[Object.keys(p.targetingIsoformsMap)[0]].firstPosition,
+                                last:p.targetingIsoformsMap[Object.keys(p.targetingIsoformsMap)[0]].lastPosition
+                            }
                         };
                     });
                 })
             };
             var template = HBtemplates['app/assets/templates/matchingEntries.tmpl'];
             var results = template(entryMatching);
-            $("#proteoBlock").html(results);
+            $("#proteoBody").html(results);
 
             function toggleIsoforms() {
                 $('#showIsoforms').text("Show isoforms");
@@ -341,15 +438,27 @@ function initNXDivs() {
                     selection.filter(function (elem, pos, a) {
                         return a.indexOf(elem) == pos;
                     }).forEach(function (o) {
-                        for (i = 0; i < listPeptides.length; i++) {
+                        for (var i = 0; i < listPeptides.length; i++) {
                             var founded = false;
-                            if (listPeptides[i].name === o) {
+                            if (listPeptides[i].nextprotName === o) {
                                 for (var item in found) {
-                                    if (listPeptides[i].name === found[item].name) {
+                                    if (listPeptides[i].nextprotName === found[item].nextprotName) {
                                         founded = true;
                                         found[item].position.push(listPeptides[i].position);
                                         found[item].prePeptide.push(listPeptides[i].prePeptide);
                                         found[item].postPeptide.push(listPeptides[i].postPeptide);
+                                        if (listPeptides[i].include.length){
+                                            found[item].include.concat(listPeptides[i].include);
+                                            found[item].include.filter(function(item, pos, self) {
+                                                return self.indexOf(item) == pos;
+                                            });
+                                        }
+                                        if (listPeptides[i].includedIn.length){
+                                            found[item].includedIn.concat(listPeptides[i].includeIn);
+                                            found[item].includedIn.filter(function(item, pos, self) {
+                                                return self.indexOf(item) == pos;
+                                            });
+                                        }
                                         break;
                                     }
                                 }
@@ -373,6 +482,9 @@ function initNXDivs() {
 
             var template = HBtemplates['app/assets/templates/detailedPeptide.tmpl'];
             $("#nx-detailedPeptide").html(template);
+
+            var loader="<div class='spinner-center' style='margin-top: 50px;'>" +
+            "<div class='throbber-loader'></div></div>";
 
             var fillPeptideInfo = {
                 fillNames: function () {
@@ -401,7 +513,9 @@ function initNXDivs() {
                     $('#pepIncludedIn').html("");
                     $('#isoProteo').html("");
                     $("#pepSources").html("");
-                    $('#ptmInfos').html("");
+                    $('#ptmByPeptide').html(loader);
+                    $('#ptmByRegion').html(loader);
+                    $('#proteoBody').html(loader);
                     for (i = 0; i < data.Peptides.length; i++) {
                         if (data.Peptides[i].name === peptide) {
                             peptide = data.Peptides[i];
@@ -526,7 +640,7 @@ function initNXDivs() {
                     });
 
                     var query = "SELECT distinct ?ptmterm ?ptmtype ?ptmstart ?ptmend ?mapstart ?mapend ?ptmlabel ?ptmcomment WHERE {" +
-                        "values (?pepName ?iso) {(\"" + peptide.name + "\"^^xsd:string isoform:" + isoName + ") }" +
+                        "values (?pepName ?iso) {(\"" + peptide.nextprotName + "\"^^xsd:string isoform:" + isoName + ") }" +
                         "?iso :ptm ?ptm ." +
                         "?ptm rdf:type ?ptmtype ." +
                         "?ptm :start ?ptmstart ." +
@@ -555,7 +669,7 @@ function initNXDivs() {
                         "order by ?ptmstart";
 
                     var queryRegion = "SELECT ?ptmtype ?ptmstart ?ptmend ?mapstart ?mapend ?ptmterm ?ptmcomment WHERE {" +
-                        "values (?pepName ?iso) {(\"" + peptide.name + "\"^^xsd:string isoform:" + isoName + ") }" +
+                        "values (?pepName ?iso) {(\"" + peptide.nextprotName + "\"^^xsd:string isoform:" + isoName + ") }" +
                         "?iso :ptm ?ptm ." +
                         "?ptm rdf:type ?ptmtype ." +
                         "?ptm :start ?ptmstart ." +
@@ -570,33 +684,47 @@ function initNXDivs() {
                         "filter not exists {?map a :PdbMapping}" +
                         "}";
                     if (pmidFound === true) {
+                        //Promise.all(nx.executeSparql(query),nx.executeSparql(queryRegion)).then(function (data) {
+                        //    if (data[0].results.bindings.length > 0) {
+                        //        data[0].results.bindings.forEach(function (o) {
+                        //            $('#ptmByPeptide').append("<div class=\"row\"style=\"border-bottom:1px solid #E7EAEC;margin-bottom:5px;\"><dl class=\"col-md-6\"><dt>PTM ID</dt><dd>" + o.ptmterm.value.toString().match(/[^\/]*$/)[0] + "</dd></dl>" +
+                        //            "<dl class=\"col-md-6\"><dt>Position</dt><dd>" + o.ptmstart.value + "</dd></dl>" +
+                        //            "<dl class=\"col-md-6\"><dt>Type</dt><dd>" + o.ptmtype.value.toString().match(/[^#]*$/)[0].slice() + "</dd></dl>" +
+                        //            "<dl class=\"col-md-6\"><dt>Description</dt><dd>" + o.ptmcomment.value + "</dd></dl></div>");
+                        //        });
+                        //    } else $('#ptmByPeptide').html("No PTM found");
+                        //
+                        //}
                         nx.executeSparql(query).then(function (data) {
-                            $('#ptmInfos').append("<div class=\"panel-heading\" style=\"background-color: #F5F5F5;border-bottom: 1px solid #DDD;border-top:1px solid #DDD;font-weight: 500;\">PTM justified by this peptide :</div>" +
-                                "<div id=\"ptmByPeptide\" class=\"panel-body\"></div>");
+                            $('#ptmByPeptide').html("");
                             if (data.results.bindings.length > 0) {
                                 data.results.bindings.forEach(function (o) {
-                                    $('#ptmByPeptide').append("<div class=\"row\"style=\"border-bottom:1px solid #E7EAEC;margin-bottom:5px;\"><dl class=\"col-md-6\"><dt>PTM ID</dt><dd>" + o.ptmterm.value.toString().match(/[^\/]*$/)[0] + "</dd></dl>" +
+                                    var tempID = o.ptmterm ? o.ptmterm.value.toString().match(/[^\/]*$/)[0] : "-";
+                                    var tempDesc = o.ptmcomment ? o.ptmcomment.value : "-";
+
+                                    $('#ptmByPeptide').append("<div class=\"row\"style=\"border-bottom:1px solid #E7EAEC;margin-bottom:5px;\"><dl class=\"col-md-6\"><dt>PTM ID</dt><dd>" +   tempID + "</dd></dl>" +
                                         "<dl class=\"col-md-6\"><dt>Position</dt><dd>" + o.ptmstart.value + "</dd></dl>" +
                                         "<dl class=\"col-md-6\"><dt>Type</dt><dd>" + o.ptmtype.value.toString().match(/[^#]*$/)[0].slice() + "</dd></dl>" +
-                                        "<dl class=\"col-md-6\"><dt>Description</dt><dd>" + o.ptmcomment.value + "</dd></dl></div>");
+                                        "<dl class=\"col-md-6\"><dt>Description</dt><dd>" +  tempDesc + "</dd></dl></div>");
                                 });
                             } else $('#ptmByPeptide').html("No PTM found");
                         }, function (error) {
                             console.log(error.responseText);
                         });
                     } else {
-                        $('#ptmInfos').append("<div class=\"panel-heading\" style=\"background-color: #F5F5F5;border-bottom: 1px solid #DDD;border-top:1px solid #DDD;font-weight: 500;\">PTM justified by this peptide :</div>" +
-                            "<div id=\"ptmByPeptide\" class=\"panel-body\">No PTM found</div>");
+                        $('#ptmByPeptide').html("No PTM found");
                     }
                     nx.executeSparql(queryRegion).then(function (data) {
-                        $('#ptmInfos').append("<div class=\"panel-heading\" style=\"background-color: #F5F5F5;border-bottom: 1px solid #DDD;border-top:1px solid #DDD;font-weight: 500;\">PTM present in this region :</div>" +
-                            "<div id=\"ptmByRegion\" class=\"panel-body\"></div>");
+                        $('#ptmByRegion').html("");
                         if (data.results.bindings.length > 0) {
                             data.results.bindings.forEach(function (o) {
-                                $('#ptmByRegion').append("<div class=\"row\"style=\"border-bottom:1px solid #E7EAEC;margin-bottom:5px;\"><dl class=\"col-md-6\"><dt>PTM ID</dt><dd>" + o.ptmterm.value.toString().match(/[^\/]*$/)[0] + "</dd></dl>" +
+                                var tempID = o.ptmterm ? o.ptmterm.value.toString().match(/[^\/]*$/)[0] : "-";
+                                var tempDesc = o.ptmcomment ? o.ptmcomment.value : "-";
+
+                                $('#ptmByRegion').append("<div class=\"row\"style=\"border-bottom:1px solid #E7EAEC;margin-bottom:5px;\"><dl class=\"col-md-6\"><dt>PTM ID</dt><dd>" + tempID + "</dd></dl>" +
                                     "<dl class=\"col-md-6\"><dt>Position</dt><dd>" + o.ptmstart.value + "</dd></dl>" +
                                     "<dl class=\"col-md-6\"><dt>Type</dt><dd>" + o.ptmtype.value.toString().match(/[^#]*$/)[0].slice() + "</dd></dl>" +
-                                    "<dl class=\"col-md-6\"><dt>Description</dt><dd>" + o.ptmcomment.value + "</dd></dl></div>");
+                                    "<dl class=\"col-md-6\"><dt>Description</dt><dd>" + tempDesc + "</dd></dl></div>");
                             });
                         } else $('#ptmByRegion').html("No PTM found");
                     }, function (error) {
@@ -628,7 +756,7 @@ function initNXDivs() {
         if ($("#nx-overviewPeptide").length > 0) {
             var datas = {
                 "PeptideLength": 0,
-                "Peptides": getInfoForIsoform.Peptides(peptideMappings, isoName)
+                "Peptides": getInfoForIsoform.Peptides2(peptideMappings, isoName)
             };
             datas.PeptideLength = datas.Peptides.length;
 
@@ -703,7 +831,7 @@ function initNXDivs() {
                     case 10 :
                         return singProtColor; //'green';
                     default :
-                        return sevProtColor // 20 or
+                        return sevProtColor; // 20 or
                 }
             }
 
@@ -765,7 +893,7 @@ function initNXDivs() {
                     var selection = [];
                     $(".PepSelected").each(function (o) {
                         if ($(this).prop("checked")) {
-                            selection.push($(this).parent().parent().attr("id"));
+                            selection.push($(this).parent().parent().attr("class"));
                         }
                     });
                     addPeptidesInfos(selection, datas.Peptides, isoName);
@@ -786,13 +914,13 @@ function initNXDivs() {
 
         var metaData = [
             {name: "Sequence"},
-            {name: "Peptide", className: "pep", color: "#B3E1D1", type: "multipleRect", filter: "Peptide"},
-            {name: "SRM Peptide", className: "srmPep", color: "#B3E1F0", type: "multipleRect", filter: "none"},
+            {name: "Propeptide", className: "pro", color: "#B3B3B3", type: "rect", filter: "Processing"},
             {name: "Mature protein", className: "mat", color: "#B3B3C2", type: "rect", filter: "Processing"},
-            {name: "Propeptide", className: "pro", color: "#B3B3B3", type: "rect", filter: "Processing"}
+            {name: "Peptide", className: "pep2", color: "#B3E1D1", type: "multipleRect", filter: "Peptide"},
+            {name: "SRM Peptide", className: "srmPep", color: "#B3E1F0", type: "multipleRect", filter: "none"}
         ];
 
-        for (var i = 1; i < data.length - 1; i++) {
+        for (var i = 1; i < data.length; i++) {
 
             var feat = NXUtils.convertMappingsToIsoformMap(data[i], metaData[i].name, metaData[i].filter);
             var featForViewer = NXViewerUtils.convertNXAnnotations(feat, metaData[i]);
@@ -806,11 +934,12 @@ function initNXDivs() {
     var featuresForViewer = [];
 
     $(function () {
-        [nx.getProteinSequence(nxEntryName), //1
-            nx.getPeptide(nxEntryName), //2
-            nx.getSrmPeptide(nxEntryName), //3
-            nx.getAnnotationsByCategory(nxEntryName, "mature-protein"), //4
-            nx.getAnnotationsByCategory(nxEntryName, "propeptide") //5
+        [
+            nx.getProteinSequence(nxEntryName), //1
+            nx.getAnnotationsByCategory(nxEntryName, "propeptide"), //2
+            nx.getAnnotationsByCategory(nxEntryName, "mature-protein"), //3
+            nx.getAnnotationsByCategory(nxEntryName, "peptide-mapping"), //4
+            nx.getAnnotationsByCategory(nxEntryName, "srm-peptide-mapping") //5
         ].reduce(function (sequence, dataPromise) {
                 return sequence.then(function () {
                     return dataPromise;
@@ -826,40 +955,44 @@ function initNXDivs() {
                             nxIsoformChoice(isoforms);
                             break;
                         case 2:
-                            peptideMappings = oneData;
-                            //adding a copy for the feature viewer, because pepetides will be added to peptideMappings
-                            allFeatures.push(jQuery.merge([], oneData));
+                            proPeptide = oneData.annot;
+                            allFeatures.push(oneData.annot);
                             break;
                         case 3:
-                            srmPeptideMappings = oneData;
-                            allFeatures.push(oneData);
-                            // Hack: add srm peptide mapping evidences into peptide mapping evidences of natural/synthetic peptides
-                            srmPeptideMappings.forEach(function (srmPeptideMapping) {
-                                var isPurelySynthetic = true;
-                                for (var i = 0; i < peptideMappings.length; i++) {
-                                    if (srmPeptideMapping.peptideUniqueName === peptideMappings[i].peptideUniqueName) {
-                                        peptideMappings[i].evidences = peptideMappings[i].evidences.concat(srmPeptideMapping.evidences);
-                                        isPurelySynthetic = false;
-                                        break;
-                                    }
-                                }
-                                if (isPurelySynthetic) {
-                                    peptideMappings.push(srmPeptideMapping); //TODO fix this! This is referenced in allFeatures[1] so it should not be pushed like this
-                                }
-                            });
-                            break;
-                        case 4:
                             matureProtein = oneData.annot;
                             allFeatures.push(oneData.annot);
                             break;
+                        case 4:
+                            pepMap = jQuery.merge([], oneData.annot);
+                            //adding a copy for the feature viewer, because peptides will be added to peptideMappings
+                            allFeatures.push(jQuery.extend({}, oneData));
+                            break;
                         case 5:
-                            proPeptide = oneData.annot;
-                            allFeatures.push(oneData.annot);
+                            var pepSynthetic = jQuery.merge([], oneData.annot);
+                            pepSynthetic.forEach(function(ps) {
+                                var psFirstIso = Object.keys(ps.targetingIsoformsMap)[0];
+                                var psStart = ps.targetingIsoformsMap[psFirstIso].firstPosition;
+                                var psLast = ps.targetingIsoformsMap[psFirstIso].lastPosition;
 
-                            renderPeptidesForIsoform(peptideMappings, firstIso);
+                                var isPurelySynthetic = true;
+                                for (var i = 0; i < pepMap.length; i++) {
+                                    if (pepMap[i].targetingIsoformsMap.hasOwnProperty(psFirstIso)){
+                                        if (pepMap[i].targetingIsoformsMap[psFirstIso].firstPosition === psStart && pepMap[i].targetingIsoformsMap[psFirstIso].lastPosition === psLast) {
+                                            pepMap[i].evidences = pepMap[i].evidences.concat(ps.evidences);
+                                            pepMap[i].category ="natAndSynth";
+                                            isPurelySynthetic = false;
+                                        }
+                                    }
+                                }
+                                if (isPurelySynthetic) {
+                                    pepMap.push(ps); //TODO fix this! This is referenced in allFeatures[1] so it should not be pushed like this
+                                }
+                            });
+                            //adding a copy for the feature viewer, because pepetides will be added to peptideMappings
+                            allFeatures.push(jQuery.extend({}, oneData));
+                            renderPeptidesForIsoform(pepMap, firstIso);
                             renderFeatureViewer(allFeatures, firstIso);
                             showFeatureViewer();
-
                             break;
                     }
                 });
