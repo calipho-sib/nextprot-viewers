@@ -160,17 +160,7 @@
         "metadata": {}
       }
     ],
-    "crossRef": {
-      "Family and domain databases":["Gene3D","InterPro","Pfam","PRINTS","PROSITE","SMART","SUPFAM"],
-      "Genome annotation databases":["Ensembl", "KEGG", "UCSC"],
-      "Organism-specific databases":["MGI"],
-      "Other":["EvolutionaryTrace", "PMAP-CutDB"],
-      "PTM databases":["PhosphoSite"],
-      "Phylogenomic databases":["eggNOG", "GeneTree", "HOGENOM", "HOVERGEN", "InParanoid", "KO", "OMA", "PhylomeDB", "TreeFam"],
-      "Polymorphism and mutation databases":["BioMuta"],
-      "Sequence databases":["CCDS", "EMBL", "PIR", "RefSeq", "UniProtKB"],
-      "Protocols and materials databases":["DNASU"]
-    }
+    "crossRef": {}
   },
   "sequence": {
     "features": [
@@ -513,7 +503,17 @@
         "metadata": {}
       }
     ],
-    "crossRef": []
+    "crossRef": {
+      "Family and domain databases":["Gene3D","InterPro","Pfam","PRINTS","PROSITE","SMART","SUPFAM"],
+      "Genome annotation databases":["Ensembl", "KEGG", "UCSC"],
+      "Organism-specific databases":["MGI"],
+      "Other":["EvolutionaryTrace", "PMAP-CutDB"],
+      "PTM databases":["PhosphoSite"],
+      "Phylogenomic databases":["eggNOG", "GeneTree", "HOGENOM", "HOVERGEN", "InParanoid", "KO", "OMA", "PhylomeDB", "TreeFam"],
+      "Polymorphism and mutation databases":["BioMuta"],
+      "Sequence databases":["CCDS", "EMBL", "PIR", "RefSeq", "UniProtKB"],
+      "Protocols and materials databases":["DNASU"]
+    }
   },
   "structures": {
     "features": [
@@ -766,7 +766,7 @@
         "metadata": {}
       }
     ],
-    "crossRef": []
+    "crossRef": {}
   },
   "peptide": {
     "features": [
