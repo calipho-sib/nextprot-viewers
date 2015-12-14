@@ -85,10 +85,6 @@ var evInfoUnit = evInfoGroup
 //.style("opacity","1")
 .text("");
 
-div.append("p")
-    .attr("id", "intro")
-    .text("Click to zoom!");
-
 var partition = d3.layout.partition()
     .sort(null)
 //    .value(function(d) { return 5.8 - d.depth; });
@@ -111,6 +107,8 @@ var dataResult = {
     "name": "protein existence by chromosome"
 };
 
+var $table = $("#chromosomePETable").stupidtable();
+
 nx.executeSparql(sparqlQuery).then(function (response) {
     var seriesData = {};
     response.results.bindings.forEach(function (data) {
@@ -123,7 +121,18 @@ nx.executeSparql(sparqlQuery).then(function (response) {
             "size": cnt
         });
         seriesData[chr] = chrValues;
+        var chrs = "";
+
+        if (chr < 10 && chr > 0){
+          chrs = "0" + chr;
+        }else {
+          chrs = chr;
+        }
+
+        $("#tableBody").append("<tr>  <td> " + chrs + "</td>   <td> " + pe + "</td>  <td> " + cnt +  "</td></tr>");
+
     });
+
     var children = Object.keys(seriesData).map(function (chromosome) {
 
         var childrenPerChrosome = seriesData[chromosome].map(function (i) {
@@ -137,17 +146,19 @@ nx.executeSparql(sparqlQuery).then(function (response) {
             "name": chromosome,
             "children": childrenPerChrosome
         }
-    })
+    });
+
+
     dataResult.children = children;
     dataResult.name = dataResult.name.charAt(0).toUpperCase() + dataResult.name.slice(1);
   var nodes = partition.nodes(dataResult);
-    
+
   var path = vis.selectAll("path").data(nodes);
   maxSize = nodes[0].value;
 //    var g = svg.datum(dataResult).selectAll("g")
 //    .data(partition.nodes)
 //    .enter().append("g");
-//    
+//
   path.enter().append("path")
       .attr("id", function(d, i) { return "path-" + i; })
       .attr("d", arc)
@@ -208,13 +219,13 @@ nx.executeSparql(sparqlQuery).then(function (response) {
         var t0 = evInfoGroup
             .transition().duration(500)
             .style("opacity","0");
-            
+
         var t1 = t0
             .transition().delay(500).duration(1000)
             .style("opacity","01");
-          
-        var evPercent = (d.value/d.parent.value * 100).toFixed(2);  
-        
+
+        var evPercent = (d.value/d.parent.value * 100).toFixed(2);
+
         evInfoTitle.transition().delay(500).text(d.name.split("_").join(" "));
         evInfoTitle.transition().delay(500).style("font-size",function(f) {return d.depth === 2 ? "1.1em" : "60px"});
         evInfoNb.transition().delay(500).text(d.value + " proteins");
@@ -225,10 +236,10 @@ nx.executeSparql(sparqlQuery).then(function (response) {
             .transition().duration(500)
             .style("opacity","0");
       }
-      
+
     maxSize = d.value;
     maxLevel = d.depth;
-      
+
     path.transition()
       .duration(duration)
       .attrTween("d", arcTween(d));
@@ -300,8 +311,8 @@ function arcTween(d) {
     console.log(my);
   return function(d) {
     return function(t) {
-        x.domain(xd(t)); 
-        y.domain(yd(t)).range(yr(t)); 
+        x.domain(xd(t));
+        y.domain(yd(t)).range(yr(t));
         return arc(d); };
   };
 }

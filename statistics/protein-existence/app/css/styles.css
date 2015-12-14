@@ -1,0 +1,97 @@
+path {
+    stroke: #fff;
+    stroke-width: 1;
+    cursor: pointer;
+}
+
+text {
+    font: 11px sans-serif;
+    cursor: pointer;
+}
+
+.title {
+    font:28px Helvetica;
+    font-weight: 100;
+}
+.title .proteinsNb {
+    font:22px Helvetica;
+    font-weight: 100;
+}
+.subtitle {
+    font:18px Helvetica;
+    font-weight: 900;
+}
+.evTitle {
+    font:50px Helvetica;
+    font-weight: 900;
+}
+.evNb {
+    font:18px Helvetica;
+    font-weight: 900;
+}
+body {
+    width: 880px;
+    margin: 0 auto;
+}
+
+h1 {
+    font-family: Helvetica;
+    text-align: center;
+    font-weight:300;
+    margin: .5em 0;
+}
+
+p#intro {
+    text-align: center;
+    margin: 1em 0;
+}
+
+#breadcrumbs {
+    display: none;
+}
+
+.d3-tip {
+line-height: 1;
+font-weight: bold;
+padding: 12px;
+background: rgba(0, 0, 0, 0.8);
+color: #fff;
+border-radius: 2px;
+}
+
+/* Creates a small triangle extender for the tooltip */
+.d3-tip:after {
+box-sizing: border-box;
+display: inline;
+font-size: 10px;
+width: 100%;
+line-height: 1;
+color: rgba(0, 0, 0, 0.8);
+content: "\25BC";
+position: absolute;
+text-align: center;
+}
+
+/* Style northward tooltips differently */
+.d3-tip.n:after {
+margin: -1px 0 0 0;
+top: 100%;
+left: 0;
+}
+
+table {
+  border-collapse: collapse;
+}
+th, td {
+  padding: 5px 10px;
+  border: 1px solid #999;
+}
+th {
+  background-color: #eee;
+}
+th[data-sort]{
+  cursor:pointer;
+}
+tr.awesome{
+  color: red;
+}
