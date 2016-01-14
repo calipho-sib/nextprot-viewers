@@ -7,36 +7,67 @@
 
 <title>Protein existence</title>
 <meta name="description" content="Protein existence by chromosome.">
-<link rel="stylesheet" href="css/bootstrap.min.css" >
+<link rel="stylesheet" href="css/bootstrap.min.css">
 <link rel="stylesheet" type="text/css" href="css/styles.css">
-
-<h1>Protein existence by chromosome</h1>
-
+<div class="header">
+    <h1>Protein existence by chromosome</h1>
+</div>
 <div>
-
-<div class="row">
-<div class="col-md-7 col-md-offset-1">
-  <div id="vis" style="margin-top:40px;"></div>
-</div>
-<div class="col-md-3" style="padding:0px">
-<div id="chrTable" style='margin-top:60px;'>
-  <table class="table table-striped" id="chromosomePETable">
-      <thead>
-        <tr>
-          <th id="chrColumn" data-sort="int">Chromosome</th>
-          <th data-sort="int">PE1</th>
-          <th data-sort="int">PE2</th>
-          <th data-sort="int">PE3</th>
-          <th data-sort="int">PE4</th>
-          <th data-sort="int">PE5</th>
-        </tr>
-      </thead>
-      <tbody id="tableBody"></tbody>
-  </table>
-  
-</div>
-</div>
-</div>
+    <div class="row" style="margin:40px 0px 0px 0px;">
+        <div class="col-md-6 col-md-offset-1">
+            <div id="vis"></div>
+        </div>
+        <div class="col-md-4" style="padding:20px 0px 0px;">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h3 class="panel-title">Statistiques</h3>
+                </div>
+                <div class="panel-body" style="margin:0px;padding:0px;">
+                    <div id="tableLegend">
+                        <p><strong>PE1 : </strong><em> Evidence at protein level</em>
+                            <br>
+                            <strong>PE2 : </strong><em> Evidence at transcript level</em>
+                            <br>
+                            <strong>PE3 : </strong><em> Inferred from homology</em>
+                            <br>
+                            <strong>PE4 : </strong><em> Predicted</em>
+                            <br>
+                            <strong>PE5 : </strong><em> Uncertain</em></p>
+                    </div>
+                    <div class="chrTable" style='height: 300px;'>
+                        <table class="table table-striped" id="chromosomePETable">
+                            <thead>
+                                <tr>
+                                    <th id="chrColumn" data-sort="int" style="text-align:center;">Chromosome</th>
+                                    <th data-sort="int">PE1</th>
+                                    <th data-sort="int">PE2</th>
+                                    <th data-sort="int">PE3</th>
+                                    <th data-sort="int">PE4</th>
+                                    <th data-sort="int">PE5</th>
+                                </tr>
+                            </thead>
+                            <tbody id="tableBody"></tbody>
+                        </table>
+                    </div>
+                    <div class="chrTableTotal">
+                        <table class="table table-striped" id="totalTable">
+                            <thead>
+                                <tr>
+                                    <th data-sort="int" style="text-align:center;padding-left:40px;padding-right:40px;">Total</th>
+                                    <th data-sort="int">PE1</th>
+                                    <th data-sort="int">PE2</th>
+                                    <th data-sort="int">PE3</th>
+                                    <th data-sort="int">PE4</th>
+                                    <th data-sort="int">PE5</th>
+                                </tr>
+                            </thead>
+                            <tbody id="tableBodyTotal"></tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
 
 <script src="js/app.js"></script>

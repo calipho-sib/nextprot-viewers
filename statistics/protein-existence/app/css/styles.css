@@ -1,3 +1,11 @@
+.header{
+    background-color: #eee;
+    border-bottom: 1px solid #ddd;
+}
+.header h1{
+    margin:0px;
+    padding:5px;
+}
 path {
     stroke: #fff;
     stroke-width: 1;
@@ -27,6 +35,11 @@ text {
 }
 .evNb {
     font:18px Helvetica;
+    font-weight: 900;
+}
+.evBack {
+    font:18px Helvetica;
+    color:#eee;
     font-weight: 900;
 }
 body {
@@ -83,10 +96,44 @@ th[data-sort]{
 tr.awesome{
   color: red;
 }
-#chrTable{
-    height: 500px;
+.chrTable{
     overflow-y: scroll;
-    overflow-x: visible;
+    overflow-x: auto;
+    border-bottom: 1px solid #eee;
+    border-top: 1px solid #eee;
+    margin-top:0px;
 }
-
-
+.chrTableTotal{
+    overflow-y: auto;
+    overflow-x:auto;
+    border-bottom: 1px solid #eee;
+    border-top: 1px solid #eee;
+    margin-top:0px;
+}
+.chrNumber button{
+    width:100%;
+}
+#totalTable tr:first-child td:first-child {
+    padding-top:2px;
+    padding-bottom:2px;
+}
+#tableLegend{
+    padding:10px 10px 0px;
+}
+#totalTable{  
+    height: 60px;
+    overflow-y: scroll;
+    margin-bottom: 0px;
+}
+#total{
+    text-align: center;
+    padding-left:20px;
+}
+#total button{
+    text-align: center;
+    padding-left:30px;
+    padding-right:30px;
+}
+.chrSelected{
+    background-color:#DE9C5B !important;
+}
