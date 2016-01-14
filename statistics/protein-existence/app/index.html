@@ -7,30 +7,34 @@
 
 <title>Protein existence</title>
 <meta name="description" content="Protein existence by chromosome.">
-<link rel="stylesheet" type="text/css" href="css/styles.css">
 <link rel="stylesheet" href="css/bootstrap.min.css" >
+<link rel="stylesheet" type="text/css" href="css/styles.css">
 
 <h1>Protein existence by chromosome</h1>
 
-<div class="container">
+<div>
 
 <div class="row">
-<div class="col-md-9 col-md-offset-1">
-  <div id="vis"></div>
+<div class="col-md-7 col-md-offset-1">
+  <div id="vis" style="margin-top:40px;"></div>
 </div>
-<div class="col-md-1">
-  <div id="table">
-  <table id="chromosomePETable">
+<div class="col-md-3" style="padding:0px">
+<div id="chrTable" style='margin-top:60px;'>
+  <table class="table table-striped" id="chromosomePETable">
       <thead>
         <tr>
-          <a href="#"><th data-sort="int">Chromosome</th></a>
-          <a href="#"><th data-sort="string">Level</th>
-          <a href="#"><th data-sort="int">count</th>
+          <th id="chrColumn" data-sort="int">Chromosome</th>
+          <th data-sort="int">PE1</th>
+          <th data-sort="int">PE2</th>
+          <th data-sort="int">PE3</th>
+          <th data-sort="int">PE4</th>
+          <th data-sort="int">PE5</th>
         </tr>
       </thead>
       <tbody id="tableBody"></tbody>
   </table>
-  </div>
+  
+</div>
 </div>
 </div>
 </div>

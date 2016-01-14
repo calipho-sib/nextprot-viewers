@@ -30,8 +30,7 @@ text {
     font-weight: 900;
 }
 body {
-    width: 880px;
-    margin: 0 auto;
+    width: 100%;
 }
 
 h1 {
@@ -78,20 +77,16 @@ margin: -1px 0 0 0;
 top: 100%;
 left: 0;
 }
-
-table {
-  border-collapse: collapse;
-}
-th, td {
-  padding: 5px 10px;
-  border: 1px solid #999;
-}
-th {
-  background-color: #eee;
-}
 th[data-sort]{
   cursor:pointer;
 }
 tr.awesome{
   color: red;
 }
+#chrTable{
+    height: 500px;
+    overflow-y: scroll;
+    overflow-x: visible;
+}
+
+

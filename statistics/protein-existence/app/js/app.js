@@ -1,4 +1,4 @@
-var w = 800,
+var w = 600,
     h = w,
     r = w / 2,
     x = d3.scale.linear().range([0, 2 * Math.PI]),
@@ -107,31 +107,84 @@ var dataResult = {
     "name": "protein existence by chromosome"
 };
 
-var $table = $("#chromosomePETable").stupidtable();
 
 nx.executeSparql(sparqlQuery).then(function (response) {
     var seriesData = {};
-    response.results.bindings.forEach(function (data) {
-        var pe = data.pe.value.replace("http://nextprot.org/rdf#", "");
-        var cnt = parseInt(data.cnt.value);
-        var chr = data.chr.value;
+    response.results.bindings.forEach(function (elem, i, data) {
+        var pe = elem.pe.value.replace("http://nextprot.org/rdf#", "");
+        var cnt = parseInt(elem.cnt.value);
+        var chr = elem.chr.value;
         var chrValues = seriesData[chr] || [];
         chrValues.push({
             "name": pe,
             "size": cnt
         });
         seriesData[chr] = chrValues;
-        var chrs = "";
-
-        if (chr < 10 && chr > 0){
-          chrs = "0" + chr;
-        }else {
-          chrs = chr;
+        if (!(data[i+1]) || data[i+1].chr.value !== chr) {
+            var chrs = "";
+            if (chr > 100 && chr > 0){
+              chrs = "0" + chr;
+            }else {
+              chrs = chr;
+            }
+            var chrHtml = "";
+            switch(chrs){
+                case "X":
+                    chrHtml = "<td class=\"chrNumber\" data-sort-value=\"23\">" + chrs + "</td>";
+                    break;
+                case "Y":
+                    chrHtml = "<td class=\"chrNumber\" data-sort-value=\"24\">" + chrs + "</td>";
+                    break;
+                case "MT":
+                    chrHtml = "<td class=\"chrNumber\" data-sort-value=\"25\">" + chrs + "</td>";
+                    break;
+                case "unknown":
+                    chrHtml = "<td class=\"chrNumber\" data-sort-value=\"26\">" + chrs + "</td>";
+                    break;
+                default:
+                    chrHtml = "<td class=\"chrNumber\" data-sort-value=" + chrs + "> " + chrs + "</td>";
+                    break;
+            }
+            var cntHtml = "";
+            if (chrValues.length === 5) {
+                for (var ev in chrValues) {
+                    cntHtml +=  "<td> " + chrValues[ev].size +  "</td>";
+                }
+            }
+            else {
+                var partChr = [];
+                partChr.push(chrValues.filter(function(a){ return a.name === "Evidence_at_protein_level" })[0]);
+                partChr.push(chrValues.filter(function(a){ return a.name === "Evidence_at_transcript_level" })[0]);
+                partChr.push(chrValues.filter(function(a){ return a.name === "Uncertain" })[0]);
+                partChr.push(chrValues.filter(function(a){ return a.name === "Inferred_from_homology" })[0]);
+                partChr.push(chrValues.filter(function(a){ return a.name === "Predicted" })[0]);
+                console.log(partChr);
+                partChr.forEach(function (d){
+                    var pex = d ? d.size : 0;
+                    cntHtml +=  "<td> " + pex +  "</td>";
+                })
+            }
+//            console.log("<tr>" + chrHtml + cntHtml + "</tr>");
+//            $("#tableBody").append("<tr>  <td> " + chrs + "</td>   <td> " + pe + "</td>  <td> " + cnt +  "</td></tr>");
+            $("#tableBody").append("<tr>" + chrHtml + cntHtml + "</tr>");
         }
 
-        $("#tableBody").append("<tr>  <td> " + chrs + "</td>   <td> " + pe + "</td>  <td> " + cnt +  "</td></tr>");
-
     });
+    jQuery.fn.d3Click = function () {
+  this.each(function (i, e) {
+    var evt = document.createEvent("MouseEvents");
+    evt.initMouseEvent("click", true, true, window, 0, 0, 0, 0, 0, false, false, false, false, 0, null);
+
+    e.dispatchEvent(evt);
+  });
+};
+    $("#chromosomePETable").stupidtable();
+    $("#chrColumn").stupidsort('asc');
+    $("#tableBody tr td:first-child").click(function(){
+        var chrSelected = $(this).text().replace(" ", "");
+        $("#path-" + chrSelected).d3Click();
+        console.log("clicked");
+    })
 
     var children = Object.keys(seriesData).map(function (chromosome) {
 
@@ -160,7 +213,7 @@ nx.executeSparql(sparqlQuery).then(function (response) {
 //    .enter().append("g");
 //
   path.enter().append("path")
-      .attr("id", function(d, i) { return "path-" + i; })
+      .attr("id", function(d, i) { console.log(d.name); return d.name.length > 8 ? "path" + i : "path-" + d.name; })
       .attr("d", arc)
       .attr("fill-rule", "evenodd")
 //      .style("fill", colour)
@@ -196,9 +249,11 @@ nx.executeSparql(sparqlQuery).then(function (response) {
   ;
   textEnter.append("tspan")
       .attr("x", 0)
+      .style("font-size","0.9em")
       .text(function(d) { return d.depth === 0 ? d.name.split(" ")[0] + " " + d.name.split(" ")[1]  : d.depth >0 ? d.name.split(" ")[0] : ""; });
   textEnter.append("tspan")
       .attr("x", 0)
+      .style("font-size","0.9em")
       .attr("dy", "1.2em")
       .text(function(d) { return d.depth === 0 ? d.name.split(" ")[2] + " " + d.name.split(" ")[3] : d.depth >0 ? d.name.split(" ")[1] : ""; });
 
@@ -210,10 +265,12 @@ nx.executeSparql(sparqlQuery).then(function (response) {
   textEnter.append("tspan")
       .attr("x", 0)
       .attr("class","proteinsNb")
+      .style("font-size","0.7em")
       .attr("dy", "2.8em")
       .text(function(d) { return d.depth === 0 ? d.value + " proteins" : d.depth >0 ? d.name.split(" ")[3] : ""; });
 
   function click(d) {
+      console.log(d);
       console.log("test");
       if (d.depth !== 0) {
         var t0 = evInfoGroup
