@@ -391,7 +391,7 @@ nx.executeSparql(sparqlQuery).then(function (response) {
     }
 
     function click(d) {
-//        if (d.depth === 2) return false;
+        if (d.depth === 2) return false;
         console.log(d);
         console.log("test");
         if (d.depth !== 0) {
