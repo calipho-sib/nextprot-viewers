@@ -1,3 +1,6 @@
+body{
+    background-color: #F9F9F9;
+}
 .header{
     background-color: #eee;
     border-bottom: 1px solid #ddd;
@@ -6,6 +9,27 @@
     margin:0px;
     padding:5px;
 }
+#vis{
+    text-align: center;
+}
+#visContainer{
+/*    padding-left: 30px;*/
+    padding-right: 30px;
+/*
+    margin-left:10px;
+    margin-right:10px;
+*/
+}
+#legendContainer{
+    padding-left: 30px;
+/*    padding-right: 30px;*/
+/*
+    margin-left:10px;
+    margin-right:10px;
+*/
+}
+
+
 path {
     stroke: #fff;
     stroke-width: 1;
@@ -99,7 +123,7 @@ tr.awesome{
 .chrTable{
     overflow-y: scroll;
     overflow-x: auto;
-    border-bottom: 1px solid #eee;
+    border-bottom: 1px solid #ccc;
     border-top: 1px solid #eee;
     margin-top:0px;
 }
@@ -159,4 +183,7 @@ tr.awesome{
 }
 .legendText em{
     font-weight: 500;
+}
+#legendBody{
+    background-color: #eee;
 }
