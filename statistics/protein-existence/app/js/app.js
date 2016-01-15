@@ -8,7 +8,7 @@ var w = 600,
     duration = 1000;
 
 //var color = d3.scale.category20c();
-var colorList = ["#f7f7f7", "white", "white"].concat(colorbrewer.Oranges[9].slice(2, -1), colorbrewer.Greens[9].slice(2, -1), colorbrewer.Blues[9].slice(2, -1), colorbrewer.Purples[9].slice(2, -1));
+var colorList = ["#ccc", "#ccc", "#ccc"].concat(colorbrewer.Oranges[9].slice(2, -1), colorbrewer.Greens[9].slice(2, -1), colorbrewer.Blues[9].slice(2, -1), colorbrewer.Purples[9].slice(1, -1));
 var color = d3.scale.ordinal()
     .domain(["foo", "bar", "baz"])
     .range(colorList);
@@ -16,7 +16,28 @@ console.log(colorList);
 console.log(color);
 var maxSize = 0;
 var maxLevel = 0;
+var evLevelColor1 = {
+    "Evidence_at_protein_level": "#DBFFD6",
+    "Evidence_at_transcript_level": "#DAFFF8",
+    "Inferred_from_homology": "#FFFAD2",
+    "Predicted": "#FFE7CF",
+    "Uncertain": "#FFD3D4",
+}
 var evLevelColor = {
+    "Evidence_at_protein_level": "#C1F3BA",
+    "Evidence_at_transcript_level": "#C8F7EE",
+    "Inferred_from_homology": "#FFFAD2",
+    "Predicted": "#FFE7CF",
+    "Uncertain": "#FFD3D4",
+}
+var evLevelColor2 = {
+    "Evidence_at_protein_level": "#2AB293",
+    "Evidence_at_transcript_level": "#6DAECC",
+    "Inferred_from_homology": "#FFE8A2",
+    "Predicted": "#FF936F",
+    "Uncertain": "#E86859",
+}
+var evLevelColorGreys = {
     "Evidence_at_protein_level": "#f7f7f7",
     "Evidence_at_transcript_level": "#d9d9d9",
     "Inferred_from_homology": "#bdbdbd",
@@ -155,13 +176,13 @@ nx.executeSparql(sparqlQuery).then(function (response) {
             var chrHtml = "";
             switch (chrs) {
             case "X":
-                chrHtml = "<td class=\"chrNumber\" data-sort-value=\"23\" style=\"padding:2px 20px;\"><button type=\"button\" class=\"btn btn-info\">" + chrs + "</button></td>";
-                break;
-            case "Y":
                 chrHtml = "<td class=\"chrNumber\" data-sort-value=\"24\" style=\"padding:2px 20px;\"><button type=\"button\" class=\"btn btn-info\">" + chrs + "</button></td>";
                 break;
-            case "MT":
+            case "Y":
                 chrHtml = "<td class=\"chrNumber\" data-sort-value=\"25\" style=\"padding:2px 20px;\"><button type=\"button\" class=\"btn btn-info\">" + chrs + "</button></td>";
+                break;
+            case "MT":
+                chrHtml = "<td class=\"chrNumber\" data-sort-value=\"23\" style=\"padding:2px 20px;\"><button type=\"button\" class=\"btn btn-info\">" + chrs + "</button></td>";
                 break;
             case "unknown":
                 chrHtml = "<td class=\"chrNumber\" data-sort-value=\"26\" style=\"padding:2px 20px;\"><button type=\"button\" class=\"btn btn-info\">" + chrs + "</button></td>";
@@ -311,13 +332,13 @@ nx.executeSparql(sparqlQuery).then(function (response) {
     ;
     textEnter.append("tspan")
         .attr("x", 0)
-        .style("font-size", "0.9em")
+        .style("font-size", function(d){return d.depth > 1 ? "1.1em" : d.depth === 0 ? "0.8em" : "0.9em"})
         .text(function (d) {
             return d.depth === 0 ? d.name.split(" ")[0] + " " + d.name.split(" ")[1] : d.depth === 2 ? d.name.split("_")[0] + " " + (d.name.split("_")[1] || "") : (d.name.split(" ")[0] || "");
         });
     textEnter.append("tspan")
         .attr("x", 0)
-        .style("font-size", "0.9em")
+        .style("font-size", function(d){return d.depth > 1 ? "1.1em" : d.depth === 0 ? "0.8em" : "0.9em"})
         .attr("dy", "1.2em")
         .text(function (d) {
             return d.depth === 0 ? d.name.split(" ")[2] + " " + d.name.split(" ")[3] : d.depth === 2 ? (d.name.split("_")[2] || "") + " " + (d.name.split("_")[3] || "") : (d.name.split(" ")[1] || "");
@@ -333,8 +354,8 @@ nx.executeSparql(sparqlQuery).then(function (response) {
     textEnter.append("tspan")
         .attr("x", 0)
         .attr("class", "proteinsNb")
-        .style("font-size", "0.7em")
-        .attr("dy", "2.8em")
+        .style("font-size", "0.6em")
+        .attr("dy", "3em")
         .text(function (d) {
             return d.depth === 0 ? d.value + " proteins" : d.depth > 0 ? d.name.split(" ")[3] : "";
         });
@@ -425,18 +446,20 @@ nx.executeSparql(sparqlQuery).then(function (response) {
                 };
             })
             .style("opacity", function (e) {
-                return isParentOf(d, e) ? showText(e) ? 1 : 1e-6 : 1e-6;
+                return isParentOf(d, e) ? showText(e,"begin") ? 1 : 1e-6 : 1e-6;
             })
             .each("end", function (e) {
-                d3.select(this).style("visibility", isParentOf(d, e) ? showText(e) ? null : "hidden" : "hidden");
+                d3.select(this).style("visibility", isParentOf(d, e) ? showText(e,"end") ? null : "hidden" : "hidden");
             });
     }
 });
 
-function showText(a) {
+function showText(a,step) {
+    
     //    console.log(a);
     //    console.log("maxSize : " + maxSize + "; value : " + a.value);
     if (a.depth > maxLevel + 1) return false;
+    else if (maxLevel === 1 && a.depth === 1 && step === "end") return false;
     else if (a.name.split("_").length < 3 && a.value < 1 / 100 * maxSize || a.name.split("_").length > 2 && a.value < 2 / 100 * maxSize) return false;
     else return true;
 }

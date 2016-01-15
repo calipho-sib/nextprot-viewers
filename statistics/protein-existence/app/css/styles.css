@@ -118,7 +118,7 @@ tr.awesome{
     padding-bottom:2px;
 }
 #tableLegend{
-    padding:10px 10px 0px;
+    padding:10px 10px 10px;
 }
 #totalTable{  
     height: 60px;
@@ -136,4 +136,27 @@ tr.awesome{
 }
 .chrSelected{
     background-color:#DE9C5B !important;
+}
+.legendIcon{
+    display:inline-block;
+    width:20px;
+    height:20px;
+    vertical-align:middle;
+    margin:0px 5px 0px 10px;
+    border-radius:50%; 
+    border: 1px solid grey;
+    text-align:center; 
+    line-height:0.8;
+}
+.legendText{
+    display:inline-block;
+    font-weight:bold;
+    font-size:1em;
+    font-style:italic;
+    margin:0;
+    padding-top:3px;
+    vertical-align:top;
+}
+.legendText em{
+    font-weight: 500;
 }
