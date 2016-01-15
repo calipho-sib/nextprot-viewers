@@ -142,12 +142,12 @@ var applicationName = 'App to show protein existence level by chromosome';
 var clientInfo = 'neXtProt Team';
 var nx = new Nextprot.Client(applicationName, clientInfo);
 var sparqlQuery = "select ?pe ?label ?level ?chr count(?entry) as ?cnt  where {" +
-    "?entry :existence ?pe;" +
-    ":gene / :chromosome ?chr ." +
-    "?pe :level ?level." +
-    "?pe rdfs:label ?label ." +
-    "}" +
-    "group by ?chr ?pe ?level ?label order by ?chr ?level";
+  "select distinct ?entry ?chr ?pe ?level ?label where {" +
+  "?entry :existence ?pe; " +
+  ":gene / :chromosome ?chr ." +
+  "?pe :level ?level." +
+  "?pe rdfs:label ?label . }}" +
+"group by ?chr ?pe ?level ?label order by ?chr ?level";
 var dataResult = {
     "name": "protein existence by chromosome"
 };
@@ -156,6 +156,7 @@ var dataResult = {
 nx.executeSparql(sparqlQuery).then(function (response) {
     var seriesData = {};
     response.results.bindings.forEach(function (elem, i, data) {
+        console.log(elem);
         var pe = elem.pe.value.replace("http://nextprot.org/rdf#", "");
         var cnt = parseInt(elem.cnt.value);
         var chr = elem.chr.value;
