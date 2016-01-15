@@ -160,6 +160,8 @@ nx.executeSparql(sparqlQuery).then(function (response) {
         var cnt = parseInt(elem.cnt.value);
         var chr = elem.chr.value;
         var chrValues = seriesData[chr] || [];
+        console.log("elem");
+        console.log(elem);
         chrValues.push({
             "name": pe,
             "size": cnt
@@ -176,25 +178,27 @@ nx.executeSparql(sparqlQuery).then(function (response) {
             var chrHtml = "";
             switch (chrs) {
             case "X":
-                chrHtml = "<td class=\"chrNumber\" data-sort-value=\"24\" style=\"padding:2px 20px;\"><button type=\"button\" class=\"btn btn-info\">" + chrs + "</button></td>";
+                chrHtml = "<td class=\"chrNumber\" data-sort-value=\"24\"><button type=\"button\" class=\"btn btn-info\">" + chrs + "</button></td>";
                 break;
             case "Y":
-                chrHtml = "<td class=\"chrNumber\" data-sort-value=\"25\" style=\"padding:2px 20px;\"><button type=\"button\" class=\"btn btn-info\">" + chrs + "</button></td>";
+                chrHtml = "<td class=\"chrNumber\" data-sort-value=\"25\"><button type=\"button\" class=\"btn btn-info\">" + chrs + "</button></td>";
                 break;
             case "MT":
-                chrHtml = "<td class=\"chrNumber\" data-sort-value=\"23\" style=\"padding:2px 20px;\"><button type=\"button\" class=\"btn btn-info\">" + chrs + "</button></td>";
+                chrHtml = "<td class=\"chrNumber\" data-sort-value=\"23\"><button type=\"button\" class=\"btn btn-info\">" + chrs + "</button></td>";
                 break;
             case "unknown":
-                chrHtml = "<td class=\"chrNumber\" data-sort-value=\"26\" style=\"padding:2px 20px;\"><button type=\"button\" class=\"btn btn-info\">" + chrs + "</button></td>";
+                chrHtml = "<td class=\"chrNumber\" data-sort-value=\"26\"><button type=\"button\" class=\"btn btn-info\">" + chrs + "</button></td>";
                 break;
             default:
-                chrHtml = "<td class=\"chrNumber\" data-sort-value=" + chrs + " style=\"padding:2px 20px;\"><button type=\"button\" class=\"btn btn-info\">" + chrs + "</button></td>";
+                chrHtml = "<td class=\"chrNumber\" data-sort-value=" + chrs + "><button type=\"button\" class=\"btn btn-info\">" + chrs + "</button></td>";
                 break;
             }
             var cntHtml = "";
+            var pTotal = 0;
             if (chrValues.length === 5) {
                 for (var ev in chrValues) {
                     cntHtml += "<td> " + chrValues[ev].size + "</td>";
+                    pTotal += chrValues[ev].size;
                 }
             } else {
                 var partChr = [];
@@ -215,12 +219,13 @@ nx.executeSparql(sparqlQuery).then(function (response) {
                 })[0]);
                 partChr.forEach(function (d) {
                     var pex = d ? d.size : 0;
+                    pTotal += pex;
                     cntHtml += "<td> " + pex + "</td>";
                 })
             }
             //            console.log("<tr>" + chrHtml + cntHtml + "</tr>");
             //            $("#tableBody").append("<tr>  <td> " + chrs + "</td>   <td> " + pe + "</td>  <td> " + cnt +  "</td></tr>");
-            $("#tableBody").append(chrId + chrHtml + cntHtml + "</tr>");
+            $("#tableBody").append(chrId + chrHtml + cntHtml + "<td> " + pTotal + "</td></tr>");
         }
 
     });
@@ -281,8 +286,8 @@ nx.executeSparql(sparqlQuery).then(function (response) {
     var pe3 = (parseInt(PEStats["Inferred_from_homology"])/parseInt(PEStats["Total"])).toFixed(2);
     var pe4 = (parseInt(PEStats["Predicted"])/parseInt(PEStats["Total"])).toFixed(2);
     var pe5 = (parseInt(PEStats["Uncertain"])/parseInt(PEStats["Total"])).toFixed(2);
-    var intStats = "<tr><td class=\"chrNumber\" id=\"total\"><button type=\"button\" class=\"btn btn-info\">" + PEStats["Total"] + "</button></td><td>" + PEStats["Evidence_at_protein_level"] + "</td><td>" + PEStats["Evidence_at_transcript_level"] + "</td><td>" + PEStats["Inferred_from_homology"] + "</td><td>" + PEStats["Predicted"] + "</td><td>" + PEStats["Uncertain"] + "</td></tr>";
-    var percStats = "<tr><td class=\"chrNumber\" id=\"total\">100%</td><td>" + pe1 + "%</td><td>" + pe2 + "%</td><td>" + pe3 + "%</td><td>" + pe4 + "%</td><td>" + pe5 + "%</td></tr>";
+    var intStats = "<tr><td class=\"chrNumber\" id=\"total\"><button type=\"button\" class=\"btn btn-info\">All</button></td><td>" + PEStats["Evidence_at_protein_level"] + "</td><td>" + PEStats["Evidence_at_transcript_level"] + "</td><td>" + PEStats["Inferred_from_homology"] + "</td><td>" + PEStats["Predicted"] + "</td><td>" + PEStats["Uncertain"] + "</td><td>" + PEStats["Total"] + "</td></tr>";
+    var percStats = "<tr><td> </td><td>" + pe1 + "<span class=\"perc\">%</span></td><td>" + pe2 + "<span class=\"perc\">%</span></td><td>" + pe3 + "<span class=\"perc\">%</span></td><td>" + pe4 + "<span class=\"perc\">%</span></td><td>" + pe5 + "<span class=\"perc\">%</span></td><td>100<span class=\"perc\">%</span></td></tr>";
     $("#tableBodyTotal").append(intStats);
     $("#tableBodyTotal").append(percStats);
     $("#total").click(function () {
@@ -386,6 +391,7 @@ nx.executeSparql(sparqlQuery).then(function (response) {
     }
 
     function click(d) {
+//        if (d.depth === 2) return false;
         console.log(d);
         console.log("test");
         if (d.depth !== 0) {

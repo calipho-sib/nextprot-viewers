@@ -1,5 +1,5 @@
 body{
-    background-color: #F9F9F9;
+    background-color: #F7F6F6;
 }
 .header{
     background-color: #eee;
@@ -134,8 +134,24 @@ tr.awesome{
     border-top: 1px solid #eee;
     margin-top:0px;
 }
+.chrTableTotal td{
+    font-size:12px;
+}
+#tableBodyTotal{
+    margin-right:110px;
+}
+#legendBody th{
+    text-align: center;
+}
 .chrNumber button{
     width:100%;
+}
+td.chrNumber {
+    padding: 2px 0px !important;
+}
+.chrNumber button{
+    text-align: center;
+    padding:6px 0px;
 }
 #totalTable tr:first-child td:first-child {
     padding-top:2px;
@@ -149,14 +165,15 @@ tr.awesome{
     overflow-y: scroll;
     margin-bottom: 0px;
 }
+/*
 #total{
     text-align: center;
     padding-left:20px;
 }
+*/
 #total button{
     text-align: center;
-    padding-left:30px;
-    padding-right:30px;
+    padding: 6px 19px;
 }
 .chrSelected{
     background-color:#DE9C5B !important;
@@ -186,4 +203,10 @@ tr.awesome{
 }
 #legendBody{
     background-color: #eee;
+}
+#legendBody tbody{
+    text-align: right;
+}
+.perc{
+    font-size:8px;
 }
