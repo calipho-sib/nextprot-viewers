@@ -204,8 +204,11 @@ td.chrNumber {
 #legendBody{
     background-color: #eee;
 }
-#legendBody tbody{
+#chromosomePETable tbody{
     text-align: right;
+}
+#totalTable tbody{
+    text-align: center;
 }
 .perc{
     font-size:8px;

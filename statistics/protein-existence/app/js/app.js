@@ -282,11 +282,11 @@ nx.executeSparql(sparqlQuery).then(function (response) {
 
     var PEStats = dataStats(dataResult.children);
     PEStats["Total"]=dataResult.value;
-    var pe1 = (parseInt(PEStats["Evidence_at_protein_level"])/parseInt(PEStats["Total"])).toFixed(2);
-    var pe2 = (parseInt(PEStats["Evidence_at_transcript_level"])/parseInt(PEStats["Total"])).toFixed(2);
-    var pe3 = (parseInt(PEStats["Inferred_from_homology"])/parseInt(PEStats["Total"])).toFixed(2);
-    var pe4 = (parseInt(PEStats["Predicted"])/parseInt(PEStats["Total"])).toFixed(2);
-    var pe5 = (parseInt(PEStats["Uncertain"])/parseInt(PEStats["Total"])).toFixed(2);
+    var pe1 = (parseInt(PEStats["Evidence_at_protein_level"])/parseInt(PEStats["Total"])*100).toFixed(2);
+    var pe2 = (parseInt(PEStats["Evidence_at_transcript_level"])/parseInt(PEStats["Total"])*100).toFixed(2);
+    var pe3 = (parseInt(PEStats["Inferred_from_homology"])/parseInt(PEStats["Total"])*100).toFixed(2);
+    var pe4 = (parseInt(PEStats["Predicted"])/parseInt(PEStats["Total"])*100).toFixed(2);
+    var pe5 = (parseInt(PEStats["Uncertain"])/parseInt(PEStats["Total"])*100).toFixed(2);
     var intStats = "<tr><td class=\"chrNumber\" id=\"total\"><button type=\"button\" class=\"btn btn-info\">All</button></td><td>" + PEStats["Evidence_at_protein_level"] + "</td><td>" + PEStats["Evidence_at_transcript_level"] + "</td><td>" + PEStats["Inferred_from_homology"] + "</td><td>" + PEStats["Predicted"] + "</td><td>" + PEStats["Uncertain"] + "</td><td>" + PEStats["Total"] + "</td></tr>";
     var percStats = "<tr><td> </td><td>" + pe1 + "<span class=\"perc\">%</span></td><td>" + pe2 + "<span class=\"perc\">%</span></td><td>" + pe3 + "<span class=\"perc\">%</span></td><td>" + pe4 + "<span class=\"perc\">%</span></td><td>" + pe5 + "<span class=\"perc\">%</span></td><td>100<span class=\"perc\">%</span></td></tr>";
     $("#tableBodyTotal").append(intStats);
