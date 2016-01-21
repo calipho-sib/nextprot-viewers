@@ -4,35 +4,69 @@
 <script src="js/d3.v3.min.js"></script>
 <script src="js/colors.js"></script>
 <script src="js/stupidtable.min.js"></script>
+<script src="js/iframeResizer.contentWindow.min.js"></script>
 
 <title>Protein existence</title>
 <meta name="description" content="Protein existence by chromosome.">
+<link rel="stylesheet" href="css/bootstrap.min.css">
 <link rel="stylesheet" type="text/css" href="css/styles.css">
-<link rel="stylesheet" href="css/bootstrap.min.css" >
-
-<h1>Protein existence by chromosome</h1>
-
-<div class="container">
-
-<div class="row">
-<div class="col-md-9 col-md-offset-1">
-  <div id="vis"></div>
+<div class="header">
+    <h1>Protein existence by chromosome</h1>
 </div>
-<div class="col-md-1">
-  <div id="table">
-  <table id="chromosomePETable">
-      <thead>
-        <tr>
-          <a href="#"><th data-sort="int">Chromosome</th></a>
-          <a href="#"><th data-sort="string">Level</th>
-          <a href="#"><th data-sort="int">count</th>
-        </tr>
-      </thead>
-      <tbody id="tableBody"></tbody>
-  </table>
-  </div>
-</div>
-</div>
+<div>
+    <div class="row" style="margin:40px 0px 0px 0px;">
+        <div id="visContainer" class="col-lg-6 col-xs-12 col-sm-12 col-md-7 col-lg-offset-1">
+            <div id="vis"></div>
+        </div>
+        <div id="legendContainer" class="col-md-5 col-lg-4 col-sm-12 col-xs-12" style="padding-top:10px;">
+            <div class="panel panel-default">
+                <div class="panel-heading" style="text-align:center;">
+                    <h3 class="panel-title">Statistics</h3>
+                </div>
+                <div id="legendBody" class="panel-body" style="margin:0px;padding:0px;text-align:left;">
+                    <div id="tableLegend" style="display:inline-block;margin:auto;padding:auto;text-align:left;">
+                        <div class="legendIcon" style="background:#C1F3BA;"> </div><p class="legendText"><strong>PE1 : </strong><em> Evidence at protein level</em></p><br>
+                        <div class="legendIcon" style="background:#C8F7EE;"> </div><p class="legendText"><strong>PE2 : </strong><em> Evidence at transcript level</em></p><br>
+                        <div class="legendIcon" style="background:#FFFAD2;"> </div><p class="legendText"><strong>PE3 : </strong><em> Inferred from homology</em></p><br>
+                        <div class="legendIcon" style="background:#FFE7CF;"> </div><p class="legendText"><strong>PE4 : </strong><em> Predicted</em></p><br>
+                        <div class="legendIcon" style="background:#FFD3D4;"> </div><p class="legendText"><strong>PE5 : </strong><em> Uncertain</em></p>
+                    </div>
+                    <div class="chrTable" style='height: 300px;'>
+                        <table class="table table-striped" id="chromosomePETable">
+                            <thead>
+                                <tr>
+                                    <th id="chrColumn" data-sort="int" style="text-align:center;">Chr</th>
+                                    <th data-sort="int">PE1</th>
+                                    <th data-sort="int">PE2</th>
+                                    <th data-sort="int">PE3</th>
+                                    <th data-sort="int">PE4</th>
+                                    <th data-sort="int">PE5</th>
+                                    <th data-sort="int">Total</th>
+                                </tr>
+                            </thead>
+                            <tbody id="tableBody"></tbody>
+                        </table>
+                    </div>
+                    <div class="chrTableTotal">
+                        <table class="table table-striped" id="totalTable">
+                            <thead>
+                                <tr>
+                                    <th style="text-align:center;">Chr</th>
+                                    <th>PE1</th>
+                                    <th>PE2</th>
+                                    <th>PE3</th>
+                                    <th>PE4</th>
+                                    <th>PE5</th>
+                                    <th>Total</th>
+                                </tr>
+                            </thead>
+                            <tbody id="tableBodyTotal"></tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
 
 <script src="js/app.js"></script>

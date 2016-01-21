@@ -1,3 +1,35 @@
+body{
+    background-color: #F7F6F6;
+}
+.header{
+    background-color: #eee;
+    border-bottom: 1px solid #ddd;
+}
+.header h1{
+    margin:0px;
+    padding:5px;
+}
+#vis{
+    text-align: center;
+}
+#visContainer{
+/*    padding-left: 30px;*/
+    padding-right: 30px;
+/*
+    margin-left:10px;
+    margin-right:10px;
+*/
+}
+#legendContainer{
+    padding-left: 30px;
+/*    padding-right: 30px;*/
+/*
+    margin-left:10px;
+    margin-right:10px;
+*/
+}
+
+
 path {
     stroke: #fff;
     stroke-width: 1;
@@ -29,9 +61,13 @@ text {
     font:18px Helvetica;
     font-weight: 900;
 }
+.evBack {
+    font:18px Helvetica;
+    color:#eee;
+    font-weight: 900;
+}
 body {
-    width: 880px;
-    margin: 0 auto;
+    width: 100%;
 }
 
 h1 {
@@ -78,24 +114,102 @@ margin: -1px 0 0 0;
 top: 100%;
 left: 0;
 }
-
-table {
-  border-collapse: collapse;
-}
-th, td {
-  padding: 5px 10px;
-  border: 1px solid #999;
-}
-th {
-  background-color: #eee;
-}
 th[data-sort]{
   cursor:pointer;
 }
 tr.awesome{
   color: red;
 }
-
-.container{
-  height: 2048;
+.chrTable{
+    overflow-y: scroll;
+    overflow-x: auto;
+    border-bottom: 1px solid #ccc;
+    border-top: 1px solid #eee;
+    margin-top:0px;
+}
+.chrTableTotal{
+    overflow-y: auto;
+    overflow-x:auto;
+    border-bottom: 1px solid #eee;
+    border-top: 1px solid #eee;
+    margin-top:0px;
+}
+.chrTableTotal td{
+    font-size:12px;
+}
+#tableBodyTotal{
+    margin-right:110px;
+}
+#legendBody th{
+    text-align: center;
+}
+.chrNumber button{
+    width:100%;
+}
+td.chrNumber {
+    padding: 2px 0px !important;
+}
+.chrNumber button{
+    text-align: center;
+    padding:6px 0px;
+}
+#totalTable tr:first-child td:first-child {
+    padding-top:2px;
+    padding-bottom:2px;
+}
+#tableLegend{
+    padding:10px 10px 10px;
+}
+#totalTable{  
+    height: 60px;
+    overflow-y: scroll;
+    margin-bottom: 0px;
+}
+/*
+#total{
+    text-align: center;
+    padding-left:20px;
+}
+*/
+#total button{
+    text-align: center;
+    padding: 6px 19px;
+}
+.chrSelected{
+    background-color:#DE9C5B !important;
+}
+.legendIcon{
+    display:inline-block;
+    width:20px;
+    height:20px;
+    vertical-align:middle;
+    margin:0px 5px 0px 10px;
+    border-radius:50%; 
+    border: 1px solid grey;
+    text-align:center; 
+    line-height:0.8;
+}
+.legendText{
+    display:inline-block;
+    font-weight:bold;
+    font-size:1em;
+    font-style:italic;
+    margin:0;
+    padding-top:3px;
+    vertical-align:top;
+}
+.legendText em{
+    font-weight: 500;
+}
+#legendBody{
+    background-color: #eee;
+}
+#chromosomePETable tbody{
+    text-align: right;
+}
+#totalTable tbody{
+    text-align: center;
+}
+.perc{
+    font-size:8px;
 }
