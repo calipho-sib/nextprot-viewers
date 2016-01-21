@@ -1,39 +1,14 @@
 <html>
 <head>
-    <title>neXtProt phenotypes</title>
-  <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
-  <script src="../stupidtable.js?dev"></script>
-  <script>
-    $(function(){
-        $("table").stupidtable();
-    });
-  </script>
-  <style type="text/css">
-    table {
-      border-collapse: collapse;
-    }
-    th, td {
-      padding: 5px 10px;
-      border: 1px solid #999;
-    }
-    th {
-      background-color: #eee;
-    }
-    th[data-sort]{
-      cursor:pointer;
-    }
-  </style>
-  </style>
+  <title>neXtProt phenotypes</title>
+  <link rel="stylesheet" href="style.css"/>
 </head>
 </head>
-<body class="container col-lg-12 col-md-12 col-xs-12" style="background:#F3F3F4;">
+<body>
+    <h2>BRCA1 phenotypes</h2>
 
     <div class="row">
         Iso Selection (ISO 1,2,...)
-    </div>
-
-    <div class="row">
-        <img src="assets/brca2-header.png" />
     </div>
 
     <div class="row">
@@ -79,10 +54,10 @@
     </tbody>
   </table>
 
-    </div>
+    <div  class="question">
+        Note: Intensity is on the evidence.... Which one should be taken?
+     </div>
 
-    <div class="row">
-        <div id="nx-detailedPeptide" class="col-lg-12 col-md-12 col-xs-12" style="display:none;height:auto;background:#fff;padding:0px 20px;margin-top:10px;border-top:4px solid #E7EAEC;border-bottom:1px solid #eee;"></div>
     </div>
 
 </body>
