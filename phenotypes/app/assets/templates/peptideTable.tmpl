@@ -1,0 +1,33 @@
+<div id="peptideTableTitle" style="border-bottom: 1px solid #E7EAEC;padding-bottom:5px;;margin-bottom: 15px;">
+    <div style="display:inline-block;">
+            <span class="badge"
+                  style="background:#C50063;color:white;padding:8px;border-radius:70%;margin-right:10px;vertical-align:middle;">{{PeptideLength}}</span>
+    </div>
+    <h4 id="test" style="display:inline-block;vertical-align:middle;">Peptides</h4></div>
+<div style="height:200px;overflow: auto">
+    <table id= "pepTableSorted" class="table table-striped table-fixed" style="font-size:12px;">
+        <thead>
+        <tr>
+            <th class="col-md-1">Select</th>
+            <th data-sort="string" class="col-md-2" style="text-align:justify;">Peptide sequence <span class="caret"></span></th>
+            <th data-sort="positions" class="col-md-2" style="text-align:center;white-space: nowrap;">Position <span class="caret"></span></th>
+            <th data-sort="int" class="col-md-2" style="text-align:center;white-space: nowrap;">Length <span class="caret"></span></th>
+            <th data-sort="string" class="col-md-2">Category <span class="caret"></span></th>
+            <th data-sort="string" class="col-md-2" style="white-space: nowrap;">Proteotypicity <span class="caret"></span></th>
+        </tr>
+        </thead>
+        <tbody>
+        {{#Peptides}}
+        <tr class={{nextprotName}}>
+            <td><input class="PepSelected" type="checkbox"></td>
+            <td style="text-align:justify;">{{identifier}}</td>
+            <td style="text-align:center;"><a class="pepPos" style="cursor:pointer;">{{position.first}} - {{position.second}}</a></td>
+            <td style="text-align:center;">{{length}}</td>
+            {{#properties}}
+            {{#if natural}}{{#if synthetic}}<td>natural+synthetic</td>
+            {{else}}<td>natural</td>{{/if}}{{else}}<td>synthetic</td>{{/if}}
+            {{#if proteotypic}}<td>proteotypic</td>
+            {{else}}<td>non-proteotypic</td>{{/if}}{{/properties}}
+        </tr>{{/Peptides}}</tbody>
+    </table>
+</div>

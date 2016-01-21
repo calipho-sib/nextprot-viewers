@@ -1,0 +1,22 @@
+<div role="tabpanel">
+    <div class="navbar-brand " style="padding:10px 15px;color:#C50063;height:auto;font-size:20px;">Isoforms</div>
+    <ul class="nav nav-tabs" role="tablist" style="border:none">
+        {{#isoforms.visible}}
+        <li role="presentation"><a class="isoformNames" href="#" role="tab" data-toggle="tab" title="{{mainEntityName.value}}">{{uniqueName}}</a></li>
+        {{/isoforms.visible}}
+        {{#if isoforms.more}}
+        <li role="presentation" class="dropdown">
+            <a class="dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-expanded="false"><span
+                    id="extendIsoformChoice">More</span><span style="margin-left:5px;" class="caret"></span></a>
+            <ul id="moreIsoforms" class="dropdown-menu" role="menu">
+                <li role="presentation"><p href="#" role="tab" data-toggle="tab"
+                                           style="pointer-events:none;cursor:default;padding: 3px 20px;">Others
+                    Isoforms</p></li>
+                {{#isoforms.more}}
+                <li role="presentation"><a class="isoformNames" href="#" role="tab" data-toggle="tab" title="{{mainEntityName.value}}">{{uniqueName}}</a>
+                </li>
+                {{/isoforms.more}}
+            </ul>
+            {{/if}}
+    </ul>
+</div>

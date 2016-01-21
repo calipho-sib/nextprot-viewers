@@ -1,0 +1,190 @@
+html {
+    overflow-y: scroll;
+}
+#nx-overview {
+    height:auto;
+    background:#fff;
+    border-top: 4px solid #E7EAEC;
+    margin-top:10px;
+    border-bottom: 1px solid #E7EAEC;
+}
+
+#visuContainer {
+background:#fff;
+    border-top:4px solid #E7EAEC;
+    border-bottom: 1px solid #e7eaec;
+}
+/*TOFIX*/
+#featureViewer{
+    /*padding-top: 15px !important;*/
+}
+#buttonRightFV{
+    /*margin-right:20px;*/
+    /*z-index:1000;*/
+    position: relative;
+    height:5px;
+}
+#showFV{
+    /*margin-right:20px;*/
+    position: relative;
+    margin-top:15px;
+    margin-bottom:-20px;
+
+    z-index:1000;
+}
+#nx-isoformChoice {
+    margin-top:10px;
+    margin-bottom: -5px;
+}
+#nx-overviewSeq {
+    background:#fff;
+    vertical-align:top;
+    border-top:4px solid #E7EAEC;
+    border-bottom:1px solid #eee;
+    padding:10px 0px 0px 20px;
+    height:inherit;
+}
+#nx-histogram {
+    vertical-align:top;
+    height:inherit;
+    padding-right:0px;
+}
+#nx-overview dd {
+    padding-left: 15px;
+    font-size: 12px;
+}
+#container {
+    height:300px;
+    width:auto;
+    vertical-align: middle;
+    background:#fff;
+    border-top:4px solid #E7EAEC;
+    border-bottom:1px solid #eee;
+    border-left:1px solid #eee;
+}
+#nx-overviewPeptide {
+    height:300px;
+    background:#fff;
+    padding:5px 20px 20px;
+    margin-top:10px;
+    border-top:4px solid #E7EAEC;
+    border-bottom:1px solid #eee;
+}
+#nx-detailedPeptide {
+    display:none;
+    height:auto;
+    background:#fff;
+    padding:0px 20px;
+    margin-top:10px;
+    border-top:4px solid #E7EAEC;
+    border-bottom:1px solid #eee;
+}
+.name:hover {
+    color: white !important;
+    background:#066B78 !important;
+    -moz-transition: color,background 500ms ease;
+    -webkit-transition: color,background 500ms ease;
+    transition: color,background 500ms ease;
+}
+.nameActive {
+    color: white !important;
+    background:#066B78 !important;
+    border-left: 7px solid #C50063 !important;
+    -moz-transition: border-left 200ms linear !important;
+    -webkit-transition: border-left 200ms linear !important;
+    transition: border-left 200ms linear !important;
+}
+#peptideInfos dl {
+    margin-bottom: 10px;
+    vertical-align: top;
+}
+.active {
+    z-index:1 !important;
+}
+#pepTableSorted th{
+    cursor:pointer;
+}
+.badge {
+    background-color: #C50063;
+    /*background-image: -moz-radial-gradient(center 45deg, circle cover, #0F8292 0%, #066B78 100%) !important;*/
+    /*background-image: -webkit-radial-gradient(center, circle cover, #0F8292, #066B78) !important;*/
+    /*background-image: radial-gradient(center 45deg, circle cover, #0F8292 0%, #066B78 100%) !important;*/
+}
+.detailedInfosFields dt{
+    margin-bottom:5px;
+}
+.detailedInfosFields dd{
+    font-size: 12px;
+}
+#ptmInfos dt{
+    margin-top: 0px;
+}
+#peptideSpecificity {
+    overflow:auto;
+}
+.ignoreShift {
+    padding-right:15px !important;
+}
+#ptmInfos dl {
+    display:inline-block;
+}
+
+.entry-alert{
+    transition: height 1s;
+    -moz-transition: height 1s; /* Firefox 4 */
+    -webkit-transition: height 1s; /* Safari and Chrome */
+    -o-transition: height 1s; /* Opera */
+}
+a, a:active, a:focus,
+button, button:focus, button:active,
+.btn, .btn:focus, .btn:active:focus, .btn.active:focus, .btn.focus, .btn.focus:active, .btn.active.focus {
+    outline: 0;
+}
+
+input::-moz-focus-inner {
+    border: 0;
+}
+
+.row-full-height {
+    height: 100%;
+}
+.col-full-height {
+    height: 100%;
+    vertical-align: middle;
+}
+.row-same-height {
+    display: table;
+    width: 100%;
+    /* fix overflow */
+    table-layout: fixed;
+}
+.col-xs-height {
+    display: table-cell;
+    float: none !important;
+}
+
+@media (min-width: 768px) {
+    .col-sm-height {
+        display: table-cell;
+        float: none !important;
+    }
+}
+@media (min-width: 992px) {
+    .col-md-height {
+        display: table-cell;
+        float: none !important;
+    }
+}
+@media (min-width: 1200px) {
+    .col-lg-height {
+        display: table-cell;
+        float: none !important;
+    }
+}
+
+.spinner-center{
+     position:relative;
+     margin: auto;
+     width:40px;
+     height:40px;
+}

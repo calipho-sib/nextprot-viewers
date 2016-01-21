@@ -1,0 +1,13 @@
+{
+  "name": "petide-viewer",
+  "dependencies": {
+    "css-spinners": "~2.2.0",
+    "nextprot": "~0.0.41",
+    "iframe-resizer": "~3.2.0",
+    "feature-viewer": "x.x.x",
+    "sequence-viewer": "~0.2.6"
+  },
+  "resolutions": {
+    "handlebars": "3.0.3"
+  }
+}
