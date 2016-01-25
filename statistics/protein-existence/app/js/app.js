@@ -22,9 +22,11 @@ var ePe1 = "Evidence_at_protein_level",
     ePe5 = "Uncertain";
 var evidences = [ePe1, ePe2, ePe3, ePe4, ePe5];
 
-var env = "http://dev-";
-var nXSearch = env + "search.nextprot.org/proteins/search?mode=advanced";
-var snorql = env + "snorql.nextprot.org/";
+
+var env = location.search.split('env=')[1];
+var endpoint = env ? "http://dev-" : "http://";
+var nXSearch = endpoint + "search.nextprot.org/proteins/search?mode=advanced";
+var snorql = endpoint + "snorql.nextprot.org/";
 
 function getSparqlQuery(chr, pe) {
     var base = snorql;
@@ -69,7 +71,6 @@ function filterPerEv(data, filters) {
             })
         }
     }
-    console.log(data);
     return data;
 }
 
@@ -123,8 +124,6 @@ var alternatingColorScale = function () {
 }
 var colorScale = alternatingColorScale()
     .range(["#bbb", "#ddd"]);
-console.log(colorList);
-console.log(color);
 var maxSize = 0;
 var maxLevel = 0;
 var evLevelColor1 = {
@@ -343,7 +342,6 @@ nx.executeSparql(sparqlQuery).then(function (response) {
                     cntHtml += "<td><a href=\"" + getSparqlQuery(chrs, eName) + "\" target=\"_blank\">" + eVal + "</a></td>";
                 })
             }
-            //            console.log("<tr>" + chrHtml + cntHtml + "</tr>");
             //            $("#tableBody").append("<tr>  <td> " + chrs + "</td>   <td> " + pe + "</td>  <td> " + cnt +  "</td></tr>");
             $("#tableBody").append(chrId + chrHtml + cntHtml + "<td><a href=\"" + getSparqlQuery(chrs, "all") + "\" target=\"_blank\">" + pTotal + "</a></td></tr>");
         }
@@ -384,10 +382,8 @@ nx.executeSparql(sparqlQuery).then(function (response) {
     //        }
     //    });
     //
-    //    console.log(children);
     //    dataResult.children = children;
     //    dataResult.name = dataResult.name.charAt(0).toUpperCase() + dataResult.name.slice(1);
-    //    console.log(dataResult);
 
 
     function dataStats(data) {
@@ -403,7 +399,6 @@ nx.executeSparql(sparqlQuery).then(function (response) {
 
     //    nodes = partition.nodes(dataResult);
     nodes = getStructuredData(seriesData, dataResult);
-    console.log(nodes);
     var path = vis.selectAll("path").data(nodes);
     maxSize = nodes[0].value;
 
@@ -534,8 +529,6 @@ nx.executeSparql(sparqlQuery).then(function (response) {
     function click(d) {
         if (d.depth === 2 || d.value === 0) return false;
         lastClickDepth = d.depth;
-        console.log(d);
-        console.log("test");
         if (d.depth !== 0) {
             var t0 = evInfoGroup
                 .transition().duration(500)
@@ -609,10 +602,8 @@ nx.executeSparql(sparqlQuery).then(function (response) {
                 $("#path0").d3Click();
             }
             var elem = this;
-            console.log(elem);
 
             setTimeout(function () {
-                console.log(elem);
                 if ($(elem).hasClass("unselected")) $(elem).removeClass("unselected");
                 else if ($(".unselected").length < 4) $(elem).addClass("unselected");
                 var idx2 = $(".legendIcon").index($(elem));
@@ -623,14 +614,11 @@ nx.executeSparql(sparqlQuery).then(function (response) {
                 });
                 var newList = {};
                 $.extend(true, newList, seriesData);
-                //            console.log(newList);
                 var filteredList = filterPerEv(newList, filterList);
 
                 newNodes = getStructuredData(filteredList, dataResult);
 
                 var test = vis.selectAll("path").data(newNodes);
-                console.log(newNodes);
-                //                console.log(test);
                 test.exit().remove();
                 test.transition().duration(500).attr("d", arc);
                 test.style("fill", function (d) {
@@ -659,9 +647,6 @@ nx.executeSparql(sparqlQuery).then(function (response) {
 });
 
 function showText(a, step) {
-
-    //    console.log(a);
-    //    console.log("maxSize : " + maxSize + "; value : " + a.value);
     if (a.depth > maxLevel + 1) return false;
     else if (maxLevel === 1 && a.depth === 1 && step === "end") return false;
     else if (a.name.split("_").length < 3 && a.value < 1 / 100 * maxSize || a.name.split("_").length > 2 && a.value < 2 / 100 * maxSize) return false;
@@ -700,7 +685,6 @@ function arcTween(d) {
         xd = d3.interpolate(x.domain(), [d.x, d.x + d.dx]),
         yd = d3.interpolate(y.domain(), [d.y, my]),
         yr = d3.interpolate(y.range(), [d.y ? 120 : 60, r]);
-    console.log(my);
     return function (d) {
         return function (t) {
             x.domain(xd(t));
