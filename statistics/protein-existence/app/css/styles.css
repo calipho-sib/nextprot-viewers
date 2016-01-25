@@ -165,12 +165,6 @@ td.chrNumber {
     overflow-y: scroll;
     margin-bottom: 0px;
 }
-/*
-#total{
-    text-align: center;
-    padding-left:20px;
-}
-*/
 #total button{
     text-align: center;
     padding: 6px 19px;
@@ -212,4 +206,10 @@ td.chrNumber {
 }
 .perc{
     font-size:8px;
+}
+.unselected{
+    box-shadow: inset 0px 0px 15px black;
+}
+.legendIcon{
+    cursor:pointer;
 }
