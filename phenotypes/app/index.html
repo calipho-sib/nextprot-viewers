@@ -1,0 +1,134 @@
+<html>
+<head>
+  <title>neXtProt phenotypes</title>
+  <link rel="stylesheet" href="style.css"/>
+</head>
+</head>
+<body>
+    <h2>BRCA1 phenotypes</h2>
+
+    <div class="row">
+        Iso Selection (ISO 1,2,...)
+    </div>
+
+    <div class="row">
+          <table>
+    <thead>
+      <tr>
+        <th data-sort="string">Variants</th>
+        <th data-sort="string">Relation</th>
+        <th data-sort="string">Phenotype</th>
+        <th data-sort="string">Intensity</th>
+        <th data-sort="float">Evidence</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a target="_parent" href="/entry/NX_P38398/view/variants"> BRCA1-p.Ser1598Ala + BRCA1-p.Ser1200Ala</a></td>
+        <td>decreases</td>
+        <td>homologous recombination</td>
+        <td>(most severe)</td>
+        <td>[4]</td>
+      </tr>
+      <tr>
+        <td>BRCA1-p.Ser1598Ala</td>
+        <td>increases</td>
+        <td>homologous recombination</td>
+        <td>(most severe)</td>
+        <td>[4]</td>
+      </tr>
+      <tr>
+        <td>BRCA1-p.Ser1598Ala</td>
+        <td>normal</td>
+        <td>homologous recombination</td>
+        <td>(most severe)</td>
+        <td>[4]</td>
+      </tr>
+      <tr>
+        <td>...</td>
+        <td>...</td>
+        <td>...</td>
+        <td>...</td>
+        <td>...</td>
+      </tr>
+    </tbody>
+  </table>
+
+    <div  class="question">
+        Note: Intensity is on the evidence.... Which one should be taken?
+        <br>
+        Note: How to deal with double / triple / quadruple mutants?
+     </div>
+
+
+<br>
+Another possibilty would be to express all annotations with up,down,equals,+,- and 
+<br>
+
+      <table>
+    <thead>
+      <tr>
+        <th data-sort="string">Variants</th>
+        <th data-sort="string">Relation</th>
+        <th data-sort="string">Phenotype</th>
+        <th data-sort="string">Intensity</th>
+        <th data-sort="float">Evidence</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a target="_parent" href="/entry/NX_P38398/view/variants"> BRCA1-p.Ser1598Ala + BRCA1-p.Ser1200Ala</a></td>
+        <td>&uarr;</td>
+        <td>homologous recombination</td>
+        <td>(most severe)</td>
+        <td>[4]</td>
+      </tr>
+      <tr>
+        <td>BRCA1-p.Ser1598Ala</td>
+        <td>&darr;</td>
+        <td>homologous recombination</td>
+        <td>(most severe)</td>
+        <td>[4]</td>
+      </tr>
+      <tr>
+        <td>BRCA1-p.Ser1598Ala</td>
+        <td>=</td>
+        <td>homologous recombination</td>
+        <td>(most severe)</td>
+        <td>[4]</td>
+      </tr>
+      <tr>
+        <td>BRCA1-p.Ser1598Ala</td>
+        <td>+</td>
+        <td>homologous recombination</td>
+        <td>(most severe)</td>
+        <td>[4]</td>
+      </tr>
+      <tr>
+        <td>BRCA1-p.Ser1598Ala</td>
+        <td>-</td>
+        <td>homologous recombination</td>
+        <td>(most severe)</td>
+        <td>[4]</td>
+      </tr>
+      <tr>
+        <td>BRCA1-p.Ser1598Ala</td>
+        <td>~</td>
+        <td>homologous recombination</td>
+        <td>(most severe)</td>
+        <td>[4]</td>
+      </tr>
+      <tr>
+        <td>...</td>
+        <td>...</td>
+        <td>...</td>
+        <td>...</td>
+        <td>...</td>
+      </tr>
+    </tbody>
+  </table>
+    </div>
+
+</body>
+
+</html>
