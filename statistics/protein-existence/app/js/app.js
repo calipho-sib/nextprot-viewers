@@ -193,15 +193,17 @@ var gradient = defs.append("linearGradient")
 //hsl(194, 70%, 62%) || hsl(194, 70%, 24%)
 // grey gradient
 //hsl(12, 1%, 65%) || hsl(12, 1%, 30%)
+// light grey gradient
+//hsl(12, 1%, 65%) || hsl(12, 1%, 30%)
 gradient.append("stop")
     .attr("offset", "0")
-    .attr("stop-color", "hsl(215, 100%, 64%)")
+    .attr("stop-color", "hsl(12, 1%, 70%)")
 //    .attr("stop-color", "#98908e")
     .attr("stop-opacity", 1);
 
 gradient.append("stop")
     .attr("offset", "1")
-    .attr("stop-color", "hsl(215, 100%, 23%)")
+    .attr("stop-color", "hsl(12, 1%, 40%)")
 //    .attr("stop-color", "#272524")
     .attr("stop-opacity", 1);
 
@@ -242,10 +244,10 @@ var evBack = evInfoGroup
     .append("svg:image")
     .attr("text-anchor", "middle")
     .attr("class", "evBack")
-    .attr("x", 35)
-    .attr("y", 90)
-    .attr("height", 20)
-    .attr("width", 20)
+    .attr("x", 30)
+    .attr("y", 85)
+    .attr("height", 30)
+    .attr("width", 30)
     .style("fill", "yellow")
     .on("click", "");
 
@@ -460,7 +462,7 @@ nx.executeSparql(sparqlQuery).then(function (response) {
             return showText(e) ? "visible" : "hidden";
         })
         .style("fill", function (d) {
-            return d.depth === 0 ? "#eee" : brightness(d3.rgb(colour(d))) < 125 ? "#eee" : "#000";
+            return d.depth === 0 ? "#f4f4f4" : brightness(d3.rgb(colour(d))) < 125 ? "#eee" : "#000";
         })
         .attr("class", function (d) {
             return d.depth === 0 ? "description title" : d.depth === 1 ? "description subtitle" : "description"
