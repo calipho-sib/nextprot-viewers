@@ -210,6 +210,8 @@ td.chrNumber {
 .unselected{
     box-shadow: inset 0px 0px 15px black;
 }
+/*If filter available add :*/
+/*
 .legendIcon{
     cursor:pointer;
-}
+}*/

@@ -29,7 +29,7 @@ var nXSearch = endpoint + "search.nextprot.org/proteins/search?mode=advanced";
 var snorql = endpoint + "snorql.nextprot.org/";
 
 function getSparqlQuery(chr, pe) {
-    var base = snorql;
+    var base = nXSearch;
     var selectPe = pe !== "all" ? "?entry :existence :" + pe + ".\n" : "";
     var selectChr = chr !== "all" ? "?entry :gene / :chromosome '" + chr + "'^^xsd:string\n" : "";
     var selectAll = chr === "all" && pe === "all" ? "?entry a :Entry" : "";
@@ -42,7 +42,7 @@ function getSparqlQuery(chr, pe) {
 }
 
 function getTotal(pe) {
-    var base = snorql;
+    var base = nXSearch;
     var selectPe = "?entry :existence ?pe .\n";
     var query = "select distinct count(?entry) ?pe where {\n" + selectPe +
         "}order by (?pe) \n";
@@ -181,14 +181,28 @@ var gradient = defs.append("linearGradient")
     .attr("spreadMethod", "pad")
     .attr("gradientUnits", "userSpaceOnUse");
 
+// blue gradient
+//hsl(215, 100%, 64%) || hsl(215, 100%, 23%)
+// green gradient
+//hsl(122, 100%, 41%) || hsl(122, 100%, 19%)
+// orange gradient
+//hsl(30, 100%, 60%) || hsl(30, 100%, 24%)
+// orange mate gradient
+//hsl(30, 75%, 62%) || hsl(30, 75%, 24%)
+// blue mate gradient
+//hsl(194, 70%, 62%) || hsl(194, 70%, 24%)
+// grey gradient
+//hsl(12, 1%, 65%) || hsl(12, 1%, 30%)
 gradient.append("stop")
     .attr("offset", "0")
-    .attr("stop-color", "#98908e")
+    .attr("stop-color", "hsl(215, 100%, 64%)")
+//    .attr("stop-color", "#98908e")
     .attr("stop-opacity", 1);
 
 gradient.append("stop")
     .attr("offset", "1")
-    .attr("stop-color", "#272524")
+    .attr("stop-color", "hsl(215, 100%, 23%)")
+//    .attr("stop-color", "#272524")
     .attr("stop-opacity", 1);
 
 
@@ -436,6 +450,7 @@ nx.executeSparql(sparqlQuery).then(function (response) {
             return d.depth === 0 ? "url(#mainCircleGrd)" : d.depth === 2 ? evLevelColorDarker[d.name] : colorScale(d.name);
             //            return d.depth === 0 ? "url(#mainCircleGrd)" : d.depth === 2 ? evLevelColor[d.name] : color((d.children ? d : d.parent).name);
         })
+        .style("cursor", function(d){return d.depth === 2 ? "default" : "pointer"})
         .on("click", click);
 
     text = vis.selectAll(".description").data(nodes);
@@ -445,7 +460,7 @@ nx.executeSparql(sparqlQuery).then(function (response) {
             return showText(e) ? "visible" : "hidden";
         })
         .style("fill", function (d) {
-            return d.depth === 0 ? "#ddd" : brightness(d3.rgb(colour(d))) < 125 ? "#eee" : "#000";
+            return d.depth === 0 ? "#eee" : brightness(d3.rgb(colour(d))) < 125 ? "#eee" : "#000";
         })
         .attr("class", function (d) {
             return d.depth === 0 ? "description title" : d.depth === 1 ? "description subtitle" : "description"
@@ -454,6 +469,7 @@ nx.executeSparql(sparqlQuery).then(function (response) {
             return d.depth === 0 ? "middle" : x(d.x + d.dx / 2) > Math.PI ? "end" : "start";
         })
         .attr("dy", ".2em")
+        .style("cursor", function(d){return d.depth === 2 ? "default" : "pointer"})
         .attr("transform", function (d) {
             var multiline = (d.name || "").split(" ").length > 1,
                 angle = d.depth <= 0 ? 0 : x(d.x + d.dx / 2) * 180 / Math.PI - 90.5,
@@ -541,11 +557,16 @@ nx.executeSparql(sparqlQuery).then(function (response) {
             var evPercent = (d.value / d.parent.value * 100).toFixed(2);
 
             evInfoTitle.transition().delay(500).text(d.depth === 1 ? "chr " + d.name : d.name.split("_").join(" "));
-            evInfoTitle.transition().delay(500).style("font-size", function (f) {
-                return d.depth === 2 ? "1.1em" : d.name.length > 6 ? "2.4em" : "3.2em"
-            });
-            evInfoNb.transition().delay(500).text(d.value + " proteins");
-            evInfoUnit.transition().delay(500).text("( " + evPercent + "% )");
+            evInfoTitle.transition()
+                .delay(500).style("font-size", function (f) {
+                return d.depth === 2 ? "1.1em" : d.name.length > 6 ? "2.4em" : "3.2em"})
+                .style("cursor","default");
+            evInfoNb.transition()
+                .delay(500).text(d.value + " proteins")
+                .style("cursor","default");
+            evInfoUnit.transition().delay(500)
+                .text("( " + evPercent + "% )")
+                .style("cursor","default");
             evBack.transition().delay(500).attr("xlink:href", "Arrow2.png")
                 .style("cursor", "pointer");
             evBack.on("click", function (d) {
@@ -643,7 +664,8 @@ nx.executeSparql(sparqlQuery).then(function (response) {
             }, delay);
         })
     }
-    getData();
+// To activate the filters on the marguerite by PE, uncomment the next line :
+//    getData();
 });
 
 function showText(a, step) {
