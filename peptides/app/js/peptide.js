@@ -770,7 +770,8 @@ function initNXDivs() {
                         "?map :end ?mapend ." +
                         "filter (?ptmstart >= ?mapstart && ?ptmstart <= ?mapend || ?ptmend >= ?mapstart && ?ptmend <= ?mapend) " +
                         "filter not exists {?map a :PdbMapping}" +
-                        "}";
+                        "}" +
+                        "order by ?ptmstart";
                     if (pmidFound === true) {
                         //Promise.all(nx.executeSparql(query),nx.executeSparql(queryRegion)).then(function (data) {
                         //    if (data[0].results.bindings.length > 0) {
