@@ -29,6 +29,24 @@ function initNXDivs() {
             return this.get(0) ? this.get(0).scrollHeight > this.innerHeight() : false;
         }
     })(jQuery);
+    
+    function getSources(evidences){
+        var sources = {};
+        evidences.forEach(function(e){
+            if (sources[e.assignedBy]) {
+                if (e.resourceDb === "PubMed") {
+                    if (sources[e.assignedBy].indexOf(e.resourceAccession) < 0) {
+                    sources[e.assignedBy].push(e.resourceAccession);
+                }
+                }
+            }
+            else if (e.resourceDb === "PubMed"){
+                sources[e.assignedBy] = [e.resourceAccession];
+            }
+            else sources[e.assignedBy] = [];
+        })
+        return sources;
+    }
 
 
     var getInfoForIsoform = {
@@ -86,7 +104,8 @@ function initNXDivs() {
                             "isoformProteotypicity": "No",
                             "tissueSpecificity": o.evidences.map(function (p) {
                                 return p.assignedBy
-                            }).sort(),
+                            }).sort(), 
+                            "tissueSpecificity2": getSources(o.evidences),
                             "sequence": "",
                             "prePeptide": "",
                             "postPeptide": "",
@@ -95,6 +114,7 @@ function initNXDivs() {
                             "sources": dict,
                             "peptideAtlasID": peptideAtlasID
                         };
+                        
                         //if (o.natural === true) peptide.properties.push("natural");
                         //else peptide.properties.push("-");
                         if (peptide.properties.proteotypic === true) {
@@ -338,12 +358,19 @@ function initNXDivs() {
         nx.getEntryforPeptide(sequence).then(function (data) {
 
             function entryWithVariant(entry) {
-                var withVariant = false;
-                entry.annotations.forEach(function (o) {
-                    if (o.variant) withVariant = true;
-                });
-                return withVariant;
-            }
+                    var withVariant = false;
+                    entry.annotations.forEach(function (o) {
+                        if (o.variant) withVariant = true;
+                    });
+                    return withVariant;
+                }
+                function entryWithoutVariant(entry) {
+                    var withoutVariant = false;
+                    entry.annotations.forEach(function (o) {
+                        if (!o.variant) withoutVariant = true;
+                    });
+                    return withoutVariant;
+                }
 
 
             var isoformsLength = 0;
@@ -354,6 +381,7 @@ function initNXDivs() {
                 return {
                     name: o.uniqueName,
                     withVariant: entryWithVariant(o),
+                    withoutVariant:entryWithoutVariant(o),
                     geneName: o.overview.mainGeneName
                 };
             });
@@ -627,17 +655,40 @@ function initNXDivs() {
                     //    if (o !== "PubMed") $("#pepSources").append("<li>" + o + " (" + peptide.sources[o] + ")" + "</li>");
                     //    else $("#pepSources").append("<li>" + o + " </li>");
                     //});
-                    peptide.tissueSpecificity.forEach(function (o) {
-                        var sourceTemp = o;
-                        if (o.match("MDATA")) {
-                            sourceTemp = "neXtProt - " + o;
+                    
+                    /*** TO DO ***///
+//                    peptide.tissueSpecificity.forEach(function (o) {
+//                        console.log(o);
+//                        var sourceTemp = o;
+//                        if (o.match("MDATA")) {
+//                            sourceTemp = "neXtProt - " + o;
+//                        }
+//                        if (o.match("PMID")) {
+//                            sourceTemp = "neXtProt - " + o.replace("PMID_", "PubMed:");
+//                            pmidFound = true;
+//                        }
+//                        $('#pepSources').append("<li>" + sourceTemp + "</li>")
+//                    });
+                    for (var t in peptide.tissueSpecificity2) {
+                        var sourceTemp = t;
+                        if (t.match("MDATA")) {
+                            sourceTemp = "neXtProt - " + t;
                         }
-                        if (o.match("PMID")) {
-                            sourceTemp = "neXtProt - " + o.replace("PMID_", "PubMed:");
+                        else if (t.match("PMID")) {
+                            sourceTemp = "neXtProt - <em>" + t.replace("PMID_", "<strong>PubMed</strong> : ") + "</em>";
                             pmidFound = true;
                         }
+                        else if (peptide.tissueSpecificity2[t].length > 0) {
+                            pmidFound = true;
+                            var pmids = "";
+                            peptide.tissueSpecificity2[t].forEach(function(d,i, array){
+                                pmids += d;
+                                if (i < array.length -1) pmids += ", ";
+                            })
+                            sourceTemp = t + ". <em><strong>PubMed</strong> : " + pmids + "</em>";
+                        }
                         $('#pepSources').append("<li>" + sourceTemp + "</li>")
-                    });
+                    };
 
                     var query = "SELECT distinct ?ptmterm ?ptmtype ?ptmstart ?ptmend ?mapstart ?mapend ?ptmlabel ?ptmcomment WHERE {" +
                         "values (?pepName ?iso) {(\"" + peptide.nextprotName + "\"^^xsd:string isoform:" + isoName + ") }" +
@@ -665,6 +716,43 @@ function initNXDivs() {
                         "filter (contains(str(?mapsrc), \"PMID\"))" +
                         "filter (?ptmtype  in (:CrossLink , :ModifiedResidue , :GlycosylationSite)) ." +
                         "filter (str(?ptmpubid) = str(?mappubid))" +
+                        "}" +
+                        "order by ?ptmstart";
+                    
+                    var query2 = "SELECT distinct ?ptmterm ?ptmtype ?ptmstart ?ptmend ?mapstart ?mapend ?ptmlabel ?ptmcomment WHERE {" +
+                        "values (?pepName ?iso) {(\"" + peptide.nextprotName + "\"^^xsd:string isoform:" + isoName + ") }" +
+                        "?iso :ptm ?ptm ." +
+                        "?ptm rdf:type ?ptmtype ." +
+                        "?ptm :start ?ptmstart ." +
+                        "?ptm :end ?ptmend ." +
+                        "optional { ?ptm :term ?ptmterm ." +
+                        "?ptmterm rdfs:label ?ptmlabel } ." +
+                        "optional { ?ptm rdfs:comment ?ptmcomment } ." +
+                        "?ptm :evidence ?ptmevi ." +
+                        "?ptmevi :reference ?ptmref ." +
+                        "?ptmref :from ?ptmpub." +
+                        "bind (substr(str(?ptmpub),8) as ?ptmpubid)" +
+                        "filter (contains(?ptmpub, \"PubMed\"))" +
+                        "filter (?ptmtype  in (:CrossLink , :ModifiedResidue , :GlycosylationSite)) ." +
+                        "?iso :peptideMapping ?map ." +
+                        "?map :peptideName ?pepName ." +
+                        "?map :evidence ?mapevi ." +
+                        "?map :start ?mapstart ." +
+                        "?map :end ?mapend ." +
+                        "filter (?ptmstart >= ?mapstart && ?ptmend <= ?mapend)" +
+                        "{?mapevi :fromXref ?mapsrc ." +
+                            "?mapevi :reference / :accession ?mapacc ." +
+                            "bind (substr(str(?mapacc),1,8) as ?mappubid)" +
+                            "filter (contains(str(?mapsrc), \"PubMed\"))" +
+                            "filter (str(?ptmpubid) = str(?mappubid))" +
+                          "}" +
+                        "UNION {" +
+                        "?mapevi :assignedBy ?mapsrc2 ." +
+                        "filter(strlen(str(?mapsrc2))>=44) ." +
+                        "bind (substr(str(?mapsrc2),37,8) as ?mappubid2)" +
+                        "filter (contains(str(?mapsrc2), \"PMID\"))" +
+                        "filter (str(?ptmpubid) = str(?mappubid2))" +
+                        "}" +
                         "}" +
                         "order by ?ptmstart";
 
@@ -695,7 +783,8 @@ function initNXDivs() {
                         //    } else $('#ptmByPeptide').html("No PTM found");
                         //
                         //}
-                        nx.executeSparql(query).then(function (data) {
+                        nx.executeSparql(query2).then(function (data) {
+                            console.log(data);
                             $('#ptmByPeptide').html("");
                             if (data.results.bindings.length > 0) {
                                 data.results.bindings.forEach(function (o) {

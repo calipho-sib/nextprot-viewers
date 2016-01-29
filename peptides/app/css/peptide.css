@@ -158,11 +158,12 @@ input::-moz-focus-inner {
     /* fix overflow */
     table-layout: fixed;
 }
-.col-xs-height {
-    display: table-cell;
-    float: none !important;
+@media (min-width: 480px) {
+    .col-xs-height {
+        display: table-cell;
+        float: none !important;
+    }
 }
-
 @media (min-width: 768px) {
     .col-sm-height {
         display: table-cell;

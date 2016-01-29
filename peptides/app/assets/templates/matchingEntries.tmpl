@@ -17,9 +17,9 @@
                 <div class="showEntry" style="display:block">
                     <ul>
                         {{#entries}}
-                        {{#unless withVariant}}
+                        {{#if withoutVariant}}
                         <li>{{name}} <em> ( Gene Name : {{geneName}} )</em></li>
-                        {{/unless}}
+                        {{/if}}
                         {{/entries}}
                     </ul>
                 </div>
