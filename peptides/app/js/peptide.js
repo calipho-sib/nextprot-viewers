@@ -35,15 +35,36 @@ function initNXDivs() {
         evidences.forEach(function(e){
             if (sources[e.assignedBy]) {
                 if (e.resourceDb === "PubMed") {
-                    if (sources[e.assignedBy].indexOf(e.resourceAccession) < 0) {
-                    sources[e.assignedBy].push(e.resourceAccession);
+                    if (sources[e.assignedBy].pubmed !== []) {
+                    sources[e.assignedBy].pubmed.push(e.resourceAccession);
+                    }
+                    else sources[e.assignedBy].pubmed = [e.resourceAccession];
                 }
+                else if (e.resourceDb === "neXtProtSubmission") {
+                    if (sources[e.assignedBy].mdata !== []) {
+                    sources[e.assignedBy].mdata.push(e.resourceAccession);
+                    }
+                    else sources[e.assignedBy].mdata = [e.resourceAccession];
                 }
             }
             else if (e.resourceDb === "PubMed"){
-                sources[e.assignedBy] = [e.resourceAccession];
+                sources[e.assignedBy] = {
+                "pubmed" : [e.resourceAccession],
+                "mdata" : []
+                };
             }
-            else sources[e.assignedBy] = [];
+            else if (e.resourceDb === "neXtProtSubmission"){
+                sources[e.assignedBy] = {
+                "pubmed" : [],
+                "mdata" : [e.resourceAccession]
+                };
+            }
+            else {
+                sources[e.assignedBy] = {
+                    "pubmed" : [],
+                    "mdata" : []
+                };
+            }
         })
         return sources;
     }
@@ -669,27 +690,43 @@ function initNXDivs() {
 //                        }
 //                        $('#pepSources').append("<li>" + sourceTemp + "</li>")
 //                    });
+                    console.log(peptide.tissueSpecificity2);
                     for (var t in peptide.tissueSpecificity2) {
-                        var sourceTemp = t;
+                        var sourceTemp = "<li>" + t + "</li>";
                         if (t.match("MDATA")) {
-                            sourceTemp = "neXtProt - " + t;
+                            sourceTemp = "<li>neXtProt - " + t + "</li>";
                         }
                         else if (t.match("PMID")) {
-                            sourceTemp = "neXtProt - <em>" + t.replace("PMID_", "<strong>PubMed</strong> : ") + "</em>";
+                            sourceTemp = "<li>neXtProt - <em>" + t.replace("PMID_", "<strong>PubMed</strong> : ") + "</em></li>";
                             pmidFound = true;
                         }
-                        else if (peptide.tissueSpecificity2[t].length > 0) {
+                        else if (peptide.tissueSpecificity2[t].mdata.length > 0 || peptide.tissueSpecificity2[t].pubmed.length > 0) {
+                            console.log("test32");
                             pmidFound = true;
                             var pmids = "";
-                            peptide.tissueSpecificity2[t].forEach(function(d,i, array){
+                            var mdatas = "";
+                            peptide.tissueSpecificity2[t].pubmed.forEach(function(d,i, array){
                                 pmids += d;
                                 if (i < array.length -1) pmids += ", ";
                             })
-                            sourceTemp = t + ". <em><strong>PubMed</strong> : " + pmids + "</em>";
+                            peptide.tissueSpecificity2[t].mdata.forEach(function(d,i, array){
+                                mdatas += d;
+                                if (i < array.length -1) mdatas += ", ";
+                            })
+                            sourceTemp = "<li>" + t + ". <em><strong>PubMed</strong> : " + pmids + "</em></li>" +
+                                "<li>" + t + ". <em><strong>neXtProt</strong> : " + mdatas + "</em></li>";
                         }
-                        $('#pepSources').append("<li>" + sourceTemp + "</li>")
+                        $('#pepSources').append(sourceTemp);
+                        
                     };
-
+                    
+                    $("#pepSources").html(
+                        $("#pepSources").children("li").sort(function (a, b) {
+                            return $(a).text().toUpperCase().localeCompare(
+                                $(b).text().toUpperCase());
+                        })
+                    )
+                
                     var query = "SELECT distinct ?ptmterm ?ptmtype ?ptmstart ?ptmend ?mapstart ?mapend ?ptmlabel ?ptmcomment WHERE {" +
                         "values (?pepName ?iso) {(\"" + peptide.nextprotName + "\"^^xsd:string isoform:" + isoName + ") }" +
                         "?iso :ptm ?ptm ." +
