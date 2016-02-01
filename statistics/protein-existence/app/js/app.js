@@ -23,8 +23,9 @@ var ePe1 = "Evidence_at_protein_level",
 var evidences = [ePe1, ePe2, ePe3, ePe4, ePe5];
 
 
-var env = location.search.split('env=')[1];
+var env = location.search.split('env=')[1] || "prod";
 var envList = ["dev","alpha"];
+console.log("env : " + env);
 var endpoint = envList.indexOf(env) >= 0 ? "http://" + env + "-" : "http://";
 var nXSearch = endpoint + "search.nextprot.org/proteins/search?mode=advanced";
 var snorql = endpoint + "snorql.nextprot.org/";
