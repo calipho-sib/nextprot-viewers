@@ -24,7 +24,8 @@ var evidences = [ePe1, ePe2, ePe3, ePe4, ePe5];
 
 
 var env = location.search.split('env=')[1];
-var endpoint = env ? "http://dev-" : "http://";
+var envList = ["dev","alpha"];
+var endpoint = envList.indexOf(env) >= 0 ? "http://" + env + "-" : "http://";
 var nXSearch = endpoint + "search.nextprot.org/proteins/search?mode=advanced";
 var snorql = endpoint + "snorql.nextprot.org/";
 
