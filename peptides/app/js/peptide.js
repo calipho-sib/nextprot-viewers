@@ -33,28 +33,30 @@ function initNXDivs() {
     function getSources(evidences){
         var sources = {};
         evidences.forEach(function(e){
-            if (sources[e.assignedBy]) {
+            var sourceKey = e.assignedBy.match("PMID") || e.assignedBy.match("MDATA") ? "neXtProt - " :  e.assignedBy;
+            if (sources[sourceKey]) {
                 if (e.resourceDb === "PubMed") {
-                    if (sources[e.assignedBy].pubmed !== []) {
-                    sources[e.assignedBy].pubmed.push(e.resourceAccession);
+                    if (sources[sourceKey].pubmed !== []) {
+                    sources[sourceKey].pubmed.push(e.resourceAccession);
                     }
-                    else sources[e.assignedBy].pubmed = [e.resourceAccession];
+                    else sources[sourceKey].pubmed = [e.resourceAccession];
                 }
                 else if (e.resourceDb === "neXtProtSubmission") {
-                    if (sources[e.assignedBy].mdata !== []) {
-                    sources[e.assignedBy].mdata.push(e.resourceAccession);
+                    if (sources[sourceKey].mdata !== []) {
+                    sources[sourceKey].mdata.push(e.resourceAccession);
                     }
-                    else sources[e.assignedBy].mdata = [e.resourceAccession];
+                    else sources[sourceKey].mdata = [e.resourceAccession];
                 }
             }
             else if (e.resourceDb === "PubMed"){
-                sources[e.assignedBy] = {
+                var sourceKey = e.assignedBy.match("PMID") ? "neXtProt - " :  e.assignedBy;
+                sources[sourceKey] = {
                 "pubmed" : [e.resourceAccession],
                 "mdata" : []
                 };
             }
             else if (e.resourceDb === "neXtProtSubmission"){
-                sources[e.assignedBy] = {
+                sources[sourceKey] = {
                 "pubmed" : [],
                 "mdata" : [e.resourceAccession]
                 };
@@ -713,8 +715,9 @@ function initNXDivs() {
                                 mdatas += d;
                                 if (i < array.length -1) mdatas += ", ";
                             })
-                            sourceTemp = "<li>" + t + ". <em><strong>PubMed</strong> : " + pmids + "</em></li>" +
-                                "<li>" + t + ". <em><strong>neXtProt</strong> : " + mdatas + "</em></li>";
+                            var pmidTemp = pmids ? "<li>" + t + ". <em><strong>PubMed</strong> : " + pmids + "</em></li>" : "";
+                            var mdataTemp = mdatas ? "<li>" + t + ". <em><strong>Submission</strong> : " + mdatas + "</em></li>" : "";
+                            sourceTemp = pmidTemp + mdataTemp;
                         }
                         $('#pepSources').append(sourceTemp);
                         
