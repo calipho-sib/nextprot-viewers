@@ -355,7 +355,7 @@ nx.executeSparql(sparqlQuery).then(function (response) {
                 })[0]);
                 partChr.forEach(function (d, i) {
                     var eVal = d ? d.size : 0;
-                    var eName = d ? d.name : evidences[i + 1];
+                    var eName = d ? d.name : evidences[i];
                     pTotal += eVal;
                     cntHtml += "<td><a href=\"" + getSparqlQuery(chrs, eName) + "\" target=\"_blank\">" + eVal + "</a></td>";
                 })
