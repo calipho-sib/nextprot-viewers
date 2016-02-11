@@ -33,7 +33,7 @@ function initNXDivs() {
     function getSources(evidences){
         var sources = {};
         evidences.forEach(function(e){
-            var sourceKey = e.assignedBy.match("PMID") || e.assignedBy.match("MDATA") ? "neXtProt - " :  e.assignedBy;
+            var sourceKey = e.assignedBy.match("PMID") || e.assignedBy.match("MDATA") ? "neXtProt" :  e.assignedBy;
             if (sources[sourceKey]) {
                 if (e.resourceDb === "PubMed") {
                     if (sources[sourceKey].pubmed !== []) {
@@ -49,7 +49,7 @@ function initNXDivs() {
                 }
             }
             else if (e.resourceDb === "PubMed"){
-                var sourceKey = e.assignedBy.match("PMID") ? "neXtProt - " :  e.assignedBy;
+                var sourceKey = e.assignedBy.match("PMID") ? "neXtProt" :  e.assignedBy;
                 sources[sourceKey] = {
                 "pubmed" : [e.resourceAccession],
                 "mdata" : []
@@ -692,7 +692,6 @@ function initNXDivs() {
 //                        }
 //                        $('#pepSources').append("<li>" + sourceTemp + "</li>")
 //                    });
-                    console.log(peptide.tissueSpecificity2);
                     for (var t in peptide.tissueSpecificity2) {
                         var sourceTemp = "<li>" + t + "</li>";
                         if (t.match("MDATA")) {
@@ -703,7 +702,6 @@ function initNXDivs() {
                             pmidFound = true;
                         }
                         else if (peptide.tissueSpecificity2[t].mdata.length > 0 || peptide.tissueSpecificity2[t].pubmed.length > 0) {
-                            console.log("test32");
                             pmidFound = true;
                             var pmids = "";
                             var mdatas = "";
