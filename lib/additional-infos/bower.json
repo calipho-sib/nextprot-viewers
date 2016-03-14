@@ -1,0 +1,11 @@
+{
+  "name": "additional-infos",
+  "dependencies": {
+    "nextprot": "~0.0.41",
+    "bootstrap": "x.x.x",
+    "jquery": "x.x.x"
+  },
+  "resolutions": {
+    "handlebars": "3.0.3"
+  }
+}

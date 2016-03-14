@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.min.css">
+    <script src="dist/additional-infos.bundle.js"></script>
+</head>
+
+<body>
+    <div id="KW"></div>
+</body>
+<script>
+    ($(function () {
+        var nx = new Nextprot.Client("neXtProt proteomics view", "Calipho-Team");
+        var entry = "NX_P01308";
+        var aI = new AdditionalInfos();
+        aI.compileKeyword(entry, nx, "sequence", "#KW");
+    }));
+</script>
+
+</html>

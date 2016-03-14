@@ -170,10 +170,6 @@
       "Polymorphism and mutation databases":["BioMuta"],
       "Sequence databases":["CCDS", "EMBL", "PIR", "RefSeq", "UniProtKB"],
       "Protocols and materials databases":["DNASU"]
-    },
-    "keywords": {
-        "type" : [],
-        "exceptions": []
     }
   },
   "sequence": {
@@ -774,11 +770,7 @@
         "metadata": {}
       }
     ],
-    "crossRef": [],
-    "keywords": {
-        "type" : ["Technical term"],
-        "exceptions": ["KW-0021", "KW-0181", "KW-0903", "KW-0895", "KW-0374", "KW-0511", "KW-0582", "KW-0814"]
-    }
+    "crossRef": []
   },
   "peptide": {
     "features": [
