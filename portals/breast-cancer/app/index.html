@@ -3,11 +3,30 @@
     <title>Breast Cancer Portals</title>
     <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/t/bs-3.3.6/jqc-1.12.0,jszip-2.5.0,pdfmake-0.1.18,dt-1.10.11,af-2.1.1,b-1.1.2,b-colvis-1.1.2,b-flash-1.1.2,b-html5-1.1.2,b-print-1.1.2,cr-1.3.1,r-2.0.2,sc-1.4.1/datatables.min.css"/>
     <script type="text/javascript" src="https://cdn.datatables.net/t/bs-3.3.6/jqc-1.12.0,jszip-2.5.0,pdfmake-0.1.18,dt-1.10.11,af-2.1.1,b-1.1.2,b-colvis-1.1.2,b-flash-1.1.2,b-html5-1.1.2,b-print-1.1.2,cr-1.3.1,r-2.0.2,sc-1.4.1/datatables.min.js"></script>
+    
+    
+    <script src="../../js/datatables.min.js"></script>
+    
+    <link rel="stylesheet" type="text/css" href="../../css/datatables.min.css">
+    <link rel="stylesheet" href="../../css/style.css" />
 </head>
 
-<body class="data">
-
-        <table id="portalTable" class="table table-striped table-hover table-bordered portalTable" cellspacing="0" width="100%">
+<body class="data phenotypeData">
+<!--
+        <div>
+            <div class="row header">
+                <div id="bioeditorLogo" class="col-md-3">
+                    <a href="../../home/app/index.html" class="animsition-link">
+                        <div id='BEIcon'><img src="../../images/BioEditorIcon.png" alt="BE" /></div>
+                        <h1 id="gaussTitle">B<span class="smallBE">IO</span>E<span class="smallBE">DITOR</span></h1></a>
+                </div>
+                <div class="col-lg-4 col-md-3" style="padding-right:0px;">
+                    <h1 id=gaussSubtitle><span id="title2"><span class="hidden-md">Breast </span>Cancer <span class="hidden-md">data</span></span></h1>
+                </div>
+            </div>
+        </div>
+-->
+        <table id="portalTable" class="table table-striped table-hover table-bordered portalTable gaussDataTable" cellspacing="0" width="100%">
             <thead>
                 <tr>
                     <th>Position</th>
@@ -51,13 +70,85 @@
 
 <script>
     $(document).ready(function() {
-    $('#portalTable').DataTable( {
-        dom: 'Bfrtip',
-        ajax: 'data/brcaportal.json',
-        buttons: [
-            'copy', 'csv', 'excel', 'pdf', 'print'
-        ]
-    } );
+    $('#portalTable tfoot th').each(function () {
+            var title = $(this).text();
+            //        $(this).html( '<input type="text" placeholder="Search '+title+'" />' );
+            $(this).html('<div class="form-group has-feedback">' +
+                '<input type="text" class="form-control" placeholder="Search ' + title + '" style="font-weight:500"/>' +
+                '<i class="glyphicon glyphicon-search form-control-feedback"></i>' +
+                '</div>');
+        });
+        var gaussAnnotTable = $('#portalTable').DataTable({
+            "ajax": 'data/brcaportal.json',
+            "pageLength": 20,
+            //                dom: '<"table_overflow"t>'
+            dom: "<'row firstHeadTable'<'col-sm-5'B><'col-sm-7'f>>" +
+                "<'row secondHeadTable'<'col-sm-3 col-md-2'l><'col-sm-3 col-md-4'i><'col-sm-6 pageTable'p>>" +
+                "<'row no_overmargin'<'col-sm-12 table_overflow'tr>>",
+            "lengthMenu": [[10, 20, 100, 1000, 10000, -1], [10, 20, 100, 1000, 10000, "All"]],
+            buttons: [
+                {
+                    extend: 'copyFlash',
+                    className: 'tableButton',
+                    text: '<span><i class="glyphicon glyphicon-copy"></i></span><span style="margin-left:5px;">Copy</span>'
+                    },
+                {
+                    extend: 'csvFlash',
+                    fieldSeparator: '\t',
+                    extension: '.tsv',
+                    text: '<span><i class="glyphicon glyphicon-floppy-save"></i></span><span style="margin-left:5px;">CSV</span>',
+                    className: 'tableButton'
+                }, 
+                {
+                    extend: 'excel',
+                    fieldSeparator: '\t',
+                    text: '<span><i class="glyphicon glyphicon-list-alt"></i></span><span style="margin-left:5px;">Excel</span>',
+                    className: 'tableButton'
+                }, 
+                {
+                    extend: 'pdf',
+                    fieldSeparator: '\t',
+                    text: '<span><i class="glyphicon glyphicon-blackboard"></i></span><span style="margin-left:5px;">PDF</span>',
+                    className: 'tableButton'
+                }, 
+                {
+                    extend: 'print',
+                    fieldSeparator: '\t',
+                    text: '<span><i class="glyphicon glyphicon-print"></i></span><span style="margin-left:5px;">Print</span>',
+                    className: 'tableButton'
+                }
+            ],
+            language: {
+                search: "_INPUT_",
+                searchPlaceholder: "Search..."
+            },
+            "processing": true,
+            "deferRender": true,
+            "order": [[ 0, "asc" ]]
+        });
+        $("#portalTable_filter label").append('<i class="glyphicon glyphicon-search form-control-feedback"></i>');
+        $("#portalTable_filter label").addClass('form-group');
+
+        // Apply the search
+        gaussAnnotTable.columns().every(function () {
+            var that = this;
+
+            $('input', this.footer()).on('keyup change', function () {
+                if (that.search() !== this.value) {
+                    that
+                        .search(this.value)
+                        .draw();
+                }
+            });
+        });
+    
+//    $('#portalTable').DataTable( {
+//        dom: 'Bfrtip',
+//        ajax: 'data/brcaportal.json',
+//        buttons: [
+//            'copy', 'csv', 'excel', 'pdf', 'print'
+//        ]
+//    } );
     } );
 
 </script>
