@@ -15,7 +15,11 @@
         var nx = new Nextprot.Client("neXtProt proteomics view", "Calipho-Team");
         var entry = "NX_P01308";
         var aI = new AdditionalInfos();
-        aI.compileKeyword(entry, nx, "sequence", "#KW");
+        
+        $.getJSON("vendor/featureConfig.json", function (config) {
+            var keywords = config.sequence.keywords;
+            aI.compileKeyword(entry, nx, keywords, "#KW");
+        });
     }));
 </script>
 
