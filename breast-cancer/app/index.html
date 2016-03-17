@@ -1,0 +1,64 @@
+<html>
+<head>
+    <title>Breast Cancer Portals</title>
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/t/bs-3.3.6/jqc-1.12.0,jszip-2.5.0,pdfmake-0.1.18,dt-1.10.11,af-2.1.1,b-1.1.2,b-colvis-1.1.2,b-flash-1.1.2,b-html5-1.1.2,b-print-1.1.2,cr-1.3.1,r-2.0.2,sc-1.4.1/datatables.min.css"/>
+    <script type="text/javascript" src="https://cdn.datatables.net/t/bs-3.3.6/jqc-1.12.0,jszip-2.5.0,pdfmake-0.1.18,dt-1.10.11,af-2.1.1,b-1.1.2,b-colvis-1.1.2,b-flash-1.1.2,b-html5-1.1.2,b-print-1.1.2,cr-1.3.1,r-2.0.2,sc-1.4.1/datatables.min.js"></script>
+</head>
+
+<body class="data">
+
+        <table id="portalTable" class="table table-striped table-hover table-bordered portalTable" cellspacing="0" width="100%">
+            <thead>
+                <tr>
+                    <th>Position</th>
+                    <th>Subject</th>
+                    <th>Subject composed</th>
+                    <th>Mutation type</th>
+                    <th>Mutation origin</th>
+                    <th>Intensity</th>
+                    <th>Relation</th>
+                    <th>Object</th>
+                    <th>Quality</th>
+                    <th>Negative</th>
+                    <th>ECOs</th>
+                    <th>PMID</th>
+                    <th>Protein Origin</th>
+                    <th>Biological Model</th>
+                </tr>
+            </thead>
+            <tfoot>
+                <tr>
+                    <th>Position</th>
+                    <th>Subject</th>
+                    <th>Subject composed</th>
+                    <th>Mutation type</th>
+                    <th>Mutation origin</th>
+                    <th>Intensity</th>
+                    <th>Relation</th>
+                    <th>Object</th>
+                    <th>Quality</th>
+                    <th>Negative</th>
+                    <th>ECOs</th>
+                    <th>PMID</th>
+                    <th>Protein Origin</th>
+                    <th>Biological Model</th>
+                </tr>
+            </tfoot>
+        </table>
+    </div>
+</body>
+
+
+<script>
+    $(document).ready(function() {
+    $('#portalTable').DataTable( {
+        dom: 'Bfrtip',
+        ajax: 'data/brcaportal.json',
+        buttons: [
+            'copy', 'csv', 'excel', 'pdf', 'print'
+        ]
+    } );
+    } );
+
+</script>
+</html>
