@@ -1,17 +1,731 @@
-table {
-    border-collapse: collapse;
+/*http://paletton.com/#uid=72Z0p0koQuCiPOBm6Dlq+oxswfv*/
+
+body {
+    background-color: #f1f1f1;
+    width: 100%;
 }
-th, td {
-    padding: 5px 10px;
-    border: 1px solid #999;
+
+.variantData>div>.header {
+    background-color: #27AE62;
+    /*    border-bottom: 1px solid hsl(145, 63%, 32%);*/
 }
-th {
-    background-color: #eee;
+
+.phenotypeData>div>.header {
+    background-color: #258197;
+    /*    border-bottom: 1px solid hsl(145, 63%, 32%);*/
 }
+
+.evidenceData>div>.header {
+    background-color: #F49537;
+}
+
+.viewerData>div>.header {
+    background-color: #F45E37;
+}
+
+#bioeditorLogo {
+    background-color: #34373B;
+    z-index: 800;
+    height: 50px;
+}
+
+@media (min-width: 992px) {
+    #bioeditorLogo:after,
+    #bioeditorLogo:before {
+        content: " ";
+    }
+}
+
+#bioeditorLogo:after,
+#bioeditorLogo:before {
+    left: 100%;
+    top: 50%;
+    border: solid transparent;
+    /*	content: " ";*/
+    height: 0;
+    width: 0;
+    position: absolute;
+    pointer-events: none;
+}
+
+#bioeditorLogo:after {
+    border-color: rgba(22, 139, 73, 0);
+    border-left-color: #34373B;
+    border-width: 25px;
+    margin-top: -25px;
+}
+
+#bioeditorLogo:before {
+    border-color: rgba(22, 139, 73, 0);
+    border-left-color: #34373B;
+    border-width: 25px;
+    margin-top: -25px;
+}
+
+
+/*
+.col-sm-12#bioeditorLogo:after, .col-sm-12#bioeditorLogo:before {
+    content:none;
+}
+*/
+
+#BEIcon {
+    display: inline-block;
+    background: radial-gradient(ellipse at center, rgba(255, 255, 255, 1) 0%, rgba(209, 209, 209, 1) 100%);
+    padding: 5px;
+    border-radius: 50%;
+    border: 4px solid #C50063;
+    margin-bottom: -30px;
+    /*    margin-top: -10px;*/
+    float: none;
+    vertical-align: top;
+    box-shadow: 0x 0px 1px black;
+    /*    cursor:pointer;*/
+}
+
+#BEIcon img {
+    width: 30px;
+    -webkit-transition: width 300ms;
+    /* Safari */
+    transition: width 300ms;
+}
+
+#BEIcon img:hover {
+    width: 40px;
+}
+
+.smallBE {
+    font-size: 28px;
+}
+
+#bioeditorLogo h1 {
+    font-family: "Helvetica Neue";
+    float: none;
+    vertical-align: middle;
+    color: white;
+    font-weight: 300;
+    text-shadow: 0px -1px 1px rgba(255, 255, 255, 0.5);
+}
+
+.header h1 {
+    display: inline-block;
+    margin: 0px;
+    padding: 5px;
+    color: white;
+    font-weight: 200;
+}
+
+.header2 h3 {
+    margin: 0px;
+    padding: 15px 5px 0px;
+    color: white;
+    font-weight: 200;
+}
+
+@keyframes example {
+    0% {
+        margin-left: -400px;
+    }
+    30% {
+        margin-left: -400px;
+    }
+    100% {
+        margin-left: -0px;
+    }
+}
+
+#gaussSubtitle {
+    z-index: -2;
+    animation-name: example;
+    animation-duration: 2s;
+    animation-fill-mode: forwards;
+}
+
+
+/*
+#gaussTitle{
+    z-index:-2;
+    animation-name: example;
+    animation-duration: 1.5s;
+    animation-fill-mode: forwards;
+}
+*/
+
+#title2 {
+    padding-left: 20px;
+    color: rgba(255, 255, 255, 0.8);
+    font-weight: 100;
+}
+
+.header2 a {
+    text-decoration: none;
+    color: rgba(255, 255, 255, 0.80);
+}
+
+.header2 i {
+    text-decoration: none;
+    color: rgba(255, 255, 255, 0.80);
+}
+
+.header2 span {
+    color: rgba(255, 255, 255, 0.70);
+    padding: 5x 10px 0px;
+}
+
+h1 {
+    /*    font-family: Helvetica;*/
+    text-align: center;
+    font-weight: 300;
+    margin: .5em 0;
+}
+
+#colnav {
+    z-index: 1000;
+}
+
+.navbar {
+    margin: 0px;
+    background-color: rgba(0, 0, 0, 0);
+    border: none;
+    text-align: right;
+    width: auto;
+}
+
+#bioMenu {
+    padding: 0px;
+}
+
+#bioMenu li a {
+    font-family: sans-serif;
+    font-weight: 600;
+    /*    text-shadow: 0px 0px 1px black;*/
+    font-size: 14px;
+    color: rgba(255, 255, 255, 0.75);
+    text-shadow: 0px 1px 0px rgba(0, 0, 0, 0.2);
+}
+
+#bioMenu li>a:hover {
+    background-color: rgba(0, 0, 0, 0.2);
+    color: white;
+    font-family: sans-serif;
+    font-weight: 600;
+    /*    text-shadow: 0px 0px 1px black;*/
+    font-size: 14px;
+}
+
+@media (max-width: 770px) {
+    #bioMenu li>a:hover {
+        background-color: transparent;
+    }
+}
+
+#bioMenu li.active a {
+    color: white;
+    text-shadow: 0px -1px 0px rgba(0, 0, 0, 0.2);
+    background-color: transparent;
+}
+
+.inBlock {
+    display: inline-block;
+}
+
+#tableContainer {
+    margin: 0px 15px;
+}
+
+.dataTables_wrapper {
+    margin-top: 20px;
+}
+
+.gaussDataTable {
+    padding-right: 0px;
+}
+
+.variantData thead th {
+    background-color: #4BB777;
+    font-weight: 500;
+    color: white;
+    box-shadow: inset -1px 0px 0px rgba(0, 0, 0, 0.1);
+    border-left: 1px solid hsl(144, 43%, 56%) !important;
+    border-right: 0px !important;
+}
+
+.phenotypeData thead th {
+    background-color: #3CA0B7;
+    font-weight: 500;
+    color: white;
+    box-shadow: inset -1px 0px 0px rgba(0, 0, 0, 0.1);
+    border-left: 1px solid hsl(191, 51%, 53%) !important;
+    border-right: 0px !important;
+}
+
+.evidenceData thead th {
+    background-color: hsl(30, 100%, 65%);
+    font-weight: 500;
+    color: white;
+    box-shadow: inset -1px 0px 0px rgba(0, 0, 0, 0.1);
+    border-left: 1px solid hsl(30, 100%, 71%) !important;
+    border-right: 0px !important;
+}
+
+.variantData .gaussDataTable tbody td:first-child {
+    background-color: #3EC97A;
+    color: white;
+    font-size: 16px;
+    font-weight: 300;
+    box-shadow: inset 0px -1px 0px rgba(0, 0, 0, 0.15);
+    border-top: 1px solid hsl(146, 56%, 63%) !important;
+    /*    border-right: 0px !important;*/
+}
+
+.phenotypeData .gaussDataTable tbody td:first-child {
+    background-color: #5DC1D9;
+    color: white;
+    font-size: 16px;
+    font-weight: 300;
+    box-shadow: inset 0px -1px 0px rgba(0, 0, 0, 0.15);
+    border-top: 1px solid hsl(192, 62%, 70%) !important;
+}
+
+.evidenceData .gaussDataTable tbody td:first-child {
+    background-color: #FFB369;
+    color: white;
+    font-size: 16px;
+    font-weight: 300;
+    box-shadow: inset 0px -1px 0px rgba(0, 0, 0, 0.10);
+    border-top: 1px solid hsl(30, 100%, 78%) !important;
+}
+
+tfoot input {
+    border: none !important;
+}
+
+.gaussDataTable td {
+    font-size: 12px;
+}
+
+.gaussDataTable th {
+    font-size: 14px;
+}
+
+trHover {
+    background-color: rgba(0, 0, 0, 0.5) !important;
+}
+
+.table-hover>tbody>tr:hover {
+    background-color: #ddd !important;
+}
+
+.table>thead>tr>th {
+    border-bottom: none;
+}
+
+.gaussDataTable thead th {
+    width: auto !important;
+}
+
+.table_overflow {
+    overflow: scroll;
+}
+
+.col-sm-12.table_overflow {
+    padding-left: 0px;
+}
+
+.row {
+    margin-left: 0px !important;
+    margin-right: 0px !important;
+}
+
+
+/*
 th[data-sort]{
     cursor:pointer;
 }
+*/
 
 .question {
     color: orange
+}
+
+.firstHeadTable label {
+    font-weight: 500 !important;
+}
+
+.firstHeadTable {
+    margin-bottom: 10px;
+}
+
+.secondHeadTable label {
+    margin-bottom: 0px;
+    padding-top: 3px;
+}
+
+
+/*
+.secondHeadTable > * {
+    vertical-align: bottom;
+}
+*/
+
+
+/*
+.secondHeadTable > div {
+    display: inline-block;
+    vertical-align: bottom;
+    float: none;
+}
+*/
+
+.dataTables_length {
+    margin-top: 1px;
+}
+
+.dataTables_filter input {
+    min-width: 300px;
+}
+
+.dataTables_filter label {
+    position: relative;
+}
+
+.variantData .tableButton {
+    background-color: #27AE62;
+    color: white;
+    text-shadow: 0px -1px rgba(255, 255, 255, 0.15);
+}
+
+.variantData .tableButton:hover,
+.variantData .tableButton.active:hover {
+    background-color: hsl(144, 78%, 30%) !important;
+    color: white !important;
+    text-shadow: 0px -1px rgba(255, 255, 255, 0.15);
+}
+
+.variantData .tableButton:active,
+.variantData .tableButton.active:active {
+    background-color: hsl(144, 78%, 25%) !important;
+    color: white !important;
+    text-shadow: 0px -1px rgba(255, 255, 255, 0.15);
+}
+
+.phenotypeData .tableButton {
+    background-color: #258197;
+    color: white;
+    text-shadow: 0px -1px rgba(255, 255, 255, 0.15);
+}
+
+.phenotypeData .tableButton:hover,
+.phenotypeData .tableButton.active:hover {
+    background-color: hsl(192, 61%, 33%) !important;
+    color: white !important;
+    text-shadow: 0px -1px rgba(255, 255, 255, 0.15);
+}
+
+.phenotypeData .tableButton:active,
+.phenotypeData .tableButton.active:active {
+    background-color: hsl(192, 61%, 28%) !important;
+    color: white !important;
+    text-shadow: 0px -1px rgba(255, 255, 255, 0.15);
+}
+
+.evidenceData .tableButton {
+    background-color: #F49537;
+    color: white;
+    text-shadow: 0px -1px rgba(255, 255, 255, 0.15);
+}
+
+.evidenceData .tableButton:hover,
+.evidenceData .tableButton.active:hover {
+    background-color: hsl(30, 90%, 53%) !important;
+    color: white !important;
+    text-shadow: 0px -1px rgba(255, 255, 255, 0.15);
+}
+
+.evidenceData .tableButton:active,
+.evidenceData .tableButton.active:active {
+    background-color: hsl(30, 90%, 45%) !important;
+    color: white !important;
+    text-shadow: 0px -1px rgba(255, 255, 255, 0.15);
+}
+
+a:focus,
+input:focus,
+button:focus {
+    outline: none !important;
+}
+
+.phenotypeData .pagination>.active>a,
+.phenotypeData .pagination>.active>a:focus,
+.phenotypeData .pagination>.active>a:hover,
+.phenotypeData .pagination>.active>span,
+.phenotypeData .pagination>.active>span:focus,
+.phenotypeData .pagination>.active>span:hover {
+    background-color: #258197;
+    border-color: #258197;
+    color: white;
+}
+
+.phenotypeData .pagination>li>a {
+    color: #258197;
+}
+
+.variantData .pagination>.active>a,
+.variantData .pagination>.active>a:focus,
+.variantData .pagination>.active>a:hover,
+.variantData .pagination>.active>span,
+.variantData .pagination>.active>span:focus,
+.variantData .pagination>.active>span:hover {
+    background-color: #27AE62;
+    border-color: #27AE62;
+    color: white;
+}
+
+.variantData .pagination>li>a {
+    color: #27AE62;
+}
+
+.evidenceData .pagination>.active>a,
+.evidenceData .pagination>.active>a:focus,
+.evidenceData .pagination>.active>a:hover,
+.evidenceData .pagination>.active>span,
+.evidenceData .pagination>.active>span:focus,
+.evidenceData .pagination>.active>span:hover {
+    background-color: #F49537;
+    border-color: #F49537;
+    color: white;
+}
+
+.evidenceData .pagination>li>a {
+    color: #F49537;
+}
+
+.variantData .pageTable a:active {
+    text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.15);
+    background-color: hsl(144, 78%, 25%) !important;
+    border-color: hsl(144, 78%, 31%);
+    color: white !important;
+}
+
+.phenotypeData .pageTable a:active {
+    text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.15);
+    background-color: hsl(192, 61%, 33%) !important;
+    border-color: hsl(144, 78%, 31%);
+    color: white !important;
+}
+
+.evidenceData .pageTable a:active {
+    text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.15);
+    background-color: hsl(30, 90%, 45%) !important;
+    border-color: hsl(30, 90%, 42%);
+    color: white !important;
+}
+
+.gaussDataTable tfoot {
+    display: table-header-group;
+}
+
+.gaussDataTable>tfoot>tr>th {
+    padding: 0px;
+    font-weight: 500;
+}
+
+.label-as-badge {
+    background-color: #F45E37 !important;
+}
+
+#submitProt {
+    background-color: #F45E37;
+    border-color: #F45E37;
+    color: white;
+}
+
+#submitProt:active {
+    background-color: hsl(12, 90%, 50%);
+}
+
+
+/*
+body {
+  padding: 1em;
+  margin: 1em;
+  font-size: 1.5em;
+}
+*/
+
+.loading * {
+    display: none;
+}
+
+.dots-loader:not(:required) {
+    opacity: 1;
+    overflow: hidden;
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    margin-left: -4px;
+    margin-top: -4px;
+    text-indent: -9999px;
+    display: inline-block;
+    width: 8px;
+    height: 8px;
+    background: transparent;
+    border-radius: 100%;
+    box-shadow: #f86 -14px -14px 0 7px, #fc6 14px -14px 0 7px, #6d7 14px 14px 0 7px, #4ae -14px 14px 0 7px;
+    animation: dots-loader 5s infinite ease-in-out;
+    transform-origin: 50% 50%;
+    transform: scale(1);
+    transition: .3s all;
+}
+
+@keyframes dots-loader {
+    0% {
+        box-shadow: #f86 -14px -14px 0 7px, #fc6 14px -14px 0 7px, #6d7 14px 14px 0 7px, #4ae -14px 14px 0 7px;
+    }
+    8.33% {
+        box-shadow: #f86 14px -14px 0 7px, #fc6 14px -14px 0 7px, #6d7 14px 14px 0 7px, #4ae -14px 14px 0 7px;
+    }
+    16.67% {
+        box-shadow: #f86 14px 14px 0 7px, #fc6 14px 14px 0 7px, #6d7 14px 14px 0 7px, #4ae -14px 14px 0 7px;
+    }
+    25% {
+        box-shadow: #f86 -14px 14px 0 7px, #fc6 -14px 14px 0 7px, #6d7 -14px 14px 0 7px, #4ae -14px 14px 0 7px;
+    }
+    33.33% {
+        box-shadow: #f86 -14px -14px 0 7px, #fc6 -14px 14px 0 7px, #6d7 -14px -14px 0 7px, #4ae -14px -14px 0 7px;
+    }
+    41.67% {
+        box-shadow: #f86 14px -14px 0 7px, #fc6 -14px 14px 0 7px, #6d7 -14px -14px 0 7px, #4ae 14px -14px 0 7px;
+    }
+    50% {
+        box-shadow: #f86 14px 14px 0 7px, #fc6 -14px 14px 0 7px, #6d7 -14px -14px 0 7px, #4ae 14px -14px 0 7px;
+    }
+    58.33% {
+        box-shadow: #f86 -14px 14px 0 7px, #fc6 -14px 14px 0 7px, #6d7 -14px -14px 0 7px, #4ae 14px -14px 0 7px;
+    }
+    66.67% {
+        box-shadow: #f86 -14px -14px 0 7px, #fc6 -14px -14px 0 7px, #6d7 -14px -14px 0 7px, #4ae 14px -14px 0 7px;
+    }
+    75% {
+        box-shadow: #f86 14px -14px 0 7px, #fc6 14px -14px 0 7px, #6d7 14px -14px 0 7px, #4ae 14px -14px 0 7px;
+    }
+    83.33% {
+        box-shadow: #f86 14px 14px 0 7px, #fc6 14px -14px 0 7px, #6d7 14px 14px 0 7px, #4ae 14px 14px 0 7px;
+    }
+    91.67% {
+        box-shadow: #f86 -14px 14px 0 7px, #fc6 14px -14px 0 7px, #6d7 14px 14px 0 7px, #4ae -14px 14px 0 7px;
+    }
+    100% {
+        box-shadow: #f86 -14px -14px 0 7px, #fc6 14px -14px 0 7px, #6d7 14px 14px 0 7px, #4ae -14px 14px 0 7px;
+    }
+}
+
+.loaded .dots-loader {
+    opacity: 0;
+    z-index: -1;
+    pointer-events: none;
+    transform: scale(0);
+}
+
+.viewerData .popover-title {
+    background-color: rgba(244, 94, 55, 0.2) !important;
+}
+
+.title {
+    font-family: "Helvetica Neue";
+    font-weight: 500;
+    text-align: center;
+}
+
+#chartDiv {
+    border: none;
+    background-color: #F1F1F1;
+}
+
+#variantName {
+    font-family: "Helvetica Neue";
+    font-weight: 400;
+}
+
+.closePanel {
+    cursor: pointer;
+}
+
+.label-VA {
+    background-color: rgb(167, 51, 21);
+}
+
+.label-VP {
+    background-color: rgb(255, 118, 83);
+}
+
+.label-VE {
+    background-color: rgb(4, 167, 116);
+}
+
+#accordion .label {
+    margin-top: -2px;
+    margin-right: 5px;
+    /* line-height: 1em; */
+    padding-top: 5px;
+    display: inline-block;
+    vertical-align: middle;
+}
+
+#accordion a:hover,
+#accordion a:focus {
+    text-decoration: none !important;
+}
+
+#accordion {
+    height: 300px;
+    overflow-y: scroll;
+    margin-bottom: 0px;
+}
+
+#accordionWrapper {
+    position: relative;
+}
+
+#accordionWrapper:after {
+    content: '';
+    position: absolute;
+    left: 0;
+    right: 0;
+    height: 30px;
+}
+
+
+/*
+#accordionWrapper:before {
+    top: 0;
+    background-image: linear-gradient(to bottom, rgba(241, 241, 241,1), rgba(241, 241, 241,0));
+}
+*/
+
+#accordionWrapper:after {
+    bottom: 0;
+    background-image: linear-gradient(to top, rgba(241, 241, 241, 1), rgba(241, 241, 241, 0));
+}
+
+
+/*
+#specificInfos{
+    z-index:1000;
+    box-shadow: inset 0px 15px 5px black;
+}*/
+
+.annotHisto {
+    fill: rgba(244, 94, 55, 0.5);
+}
+
+@media (min-width: 768px) {
+    .dl-horizontal dt {
+        width: 100px;
+    }
+}
+@media (min-width: 768px) {
+    .dl-horizontal dd {
+        margin-left: 120px;
+    }
 }
