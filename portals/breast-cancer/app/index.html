@@ -74,6 +74,7 @@
                 '</div>');
         });
         var gaussAnnotTable = $('#portalTable').DataTable({
+            colReorder: true,
             "ajax": 'data/brcaportal.json',
             "pageLength": 20,
             //                dom: '<"table_overflow"t>'
