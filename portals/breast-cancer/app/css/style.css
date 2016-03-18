@@ -5,22 +5,10 @@ body {
     width: 100%;
 }
 
-.variantData>div>.header {
-    background-color: #27AE62;
-    /*    border-bottom: 1px solid hsl(145, 63%, 32%);*/
-}
 
 .phenotypeData>div>.header {
     background-color: #258197;
     /*    border-bottom: 1px solid hsl(145, 63%, 32%);*/
-}
-
-.evidenceData>div>.header {
-    background-color: #F49537;
-}
-
-.viewerData>div>.header {
-    background-color: #F45E37;
 }
 
 #bioeditorLogo {
@@ -241,14 +229,6 @@ h1 {
     padding-right: 0px;
 }
 
-.variantData thead th {
-    background-color: #4BB777;
-    font-weight: 500;
-    color: white;
-    box-shadow: inset -1px 0px 0px rgba(0, 0, 0, 0.1);
-    border-left: 1px solid hsl(144, 43%, 56%) !important;
-    border-right: 0px !important;
-}
 
 .phenotypeData thead th {
     background-color: #3CA0B7;
@@ -259,42 +239,7 @@ h1 {
     border-right: 0px !important;
 }
 
-.evidenceData thead th {
-    background-color: hsl(30, 100%, 65%);
-    font-weight: 500;
-    color: white;
-    box-shadow: inset -1px 0px 0px rgba(0, 0, 0, 0.1);
-    border-left: 1px solid hsl(30, 100%, 71%) !important;
-    border-right: 0px !important;
-}
 
-.variantData .gaussDataTable tbody td:first-child {
-    background-color: #3EC97A;
-    color: white;
-    font-size: 16px;
-    font-weight: 300;
-    box-shadow: inset 0px -1px 0px rgba(0, 0, 0, 0.15);
-    border-top: 1px solid hsl(146, 56%, 63%) !important;
-    /*    border-right: 0px !important;*/
-}
-
-.phenotypeData .gaussDataTable tbody td:first-child {
-    background-color: #5DC1D9;
-    color: white;
-    font-size: 16px;
-    font-weight: 300;
-    box-shadow: inset 0px -1px 0px rgba(0, 0, 0, 0.15);
-    border-top: 1px solid hsl(192, 62%, 70%) !important;
-}
-
-.evidenceData .gaussDataTable tbody td:first-child {
-    background-color: #FFB369;
-    color: white;
-    font-size: 16px;
-    font-weight: 300;
-    box-shadow: inset 0px -1px 0px rgba(0, 0, 0, 0.10);
-    border-top: 1px solid hsl(30, 100%, 78%) !important;
-}
 
 tfoot input {
     border: none !important;
