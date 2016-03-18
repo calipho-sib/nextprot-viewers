@@ -25,37 +25,35 @@
             <thead>
                 <tr>
                     <th>Position</th>
-                    <th>Subject</th>
-                    <th>Subject composed</th>
+                    <th>Protein Variant</th>
                     <th>Mutation type</th>
                     <th>Mutation origin</th>
-                    <th>Intensity</th>
                     <th>Relation</th>
-                    <th>Object</th>
-                    <th>Quality</th>
-                    <th>Negative</th>
-                    <th>ECOs</th>
-                    <th>PMID</th>
+                    <th>Phenotype intensity</th>
+                    <th>Function</th>
+                    <th>Data confidence</th>
+                    <th>Conflicting evidence</th>
+                    <th>Evidence codes</th>
+                    <th>Reference</th>
                     <th>Protein Origin</th>
-                    <th>Biological Model</th>
+                    <th>Experimental system</th>
                 </tr>
             </thead>
             <tfoot>
                 <tr>
                     <th>Position</th>
-                    <th>Subject</th>
-                    <th>Subject composed</th>
+                    <th>Protein Variant</th>
                     <th>Mutation type</th>
                     <th>Mutation origin</th>
-                    <th>Intensity</th>
                     <th>Relation</th>
-                    <th>Object</th>
-                    <th>Quality</th>
-                    <th>Negative</th>
-                    <th>ECOs</th>
-                    <th>PMID</th>
+                    <th>Phenotype intensity</th>
+                    <th>Function</th>
+                    <th>Data confidence</th>
+                    <th>Conflicting evidence</th>
+                    <th>Evidence codes</th>
+                    <th>Reference</th>
                     <th>Protein Origin</th>
-                    <th>Biological Model</th>
+                    <th>Experimental system</th>
                 </tr>
             </tfoot>
         </table>
@@ -74,7 +72,7 @@
                 '</div>');
         });
         var gaussAnnotTable = $('#portalTable').DataTable({
-            "ajax": 'data/brcaportal.json',
+            "ajax": '/brcaportal.json',
             "pageLength": 20,
             //                dom: '<"table_overflow"t>'
             dom: "<'row firstHeadTable'<'col-sm-5'B><'col-sm-7'f>>" +
