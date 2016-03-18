@@ -30,7 +30,7 @@
                     <th>Data confidence</th>
                     <th>Conflicting evidence</th>
                     <th>Evidence codes</th>
-                    <th>Reference</th>
+                    <th class="pubmed-link">Reference</th>
                     <th>Protein Origin</th>
                     <th>Experimental system</th>
                 </tr>
@@ -114,7 +114,13 @@
             },
             "processing": true,
             "deferRender": true,
-            "order": [[ 0, "asc" ]]
+            "order": [[ 0, "asc" ]],
+            "columnDefs": [ {
+                        "targets": "pubmed-link",
+                        "render": function ( data, type, full, row ) {
+                            return '<a href="http://www.ncbi.nlm.nih.gov/pubmed/' + data.replace(/\s+/g, '').split(":")[1] + '" target="_blank">' + data + '</a>';
+                            }
+                        } ]
         });
         $("#portalTable_filter label").append('<i class="glyphicon glyphicon-search form-control-feedback"></i>');
         $("#portalTable_filter label").addClass('form-group');
