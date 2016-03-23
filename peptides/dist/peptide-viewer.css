@@ -336,6 +336,9 @@ a:focus {
     border-radius: 1em;
     font-size:0.7em;
     background-color: #C50063;
+}
+path{
+    fill:none;
 };
 @-moz-keyframes throbber-loader {
   0% {
