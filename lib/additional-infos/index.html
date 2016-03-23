@@ -7,18 +7,24 @@
     <script src="dist/additional-infos.bundle.js"></script>
 </head>
 
-<body>
+<body class="container">
+    <div id="caution"></div>
     <div id="KW"></div>
+    <div id="xref"></div>
 </body>
 <script>
     ($(function () {
         var nx = new Nextprot.Client("neXtProt proteomics view", "Calipho-Team");
-        var entry = "NX_P01308";
+        var entry = nx.getEntryName();
         var aI = new AdditionalInfos();
         
         $.getJSON("vendor/featureConfig.json", function (config) {
             var keywords = config.sequence.keywords;
+            var xrefs = config.sequence.xrefs;
+            var extra = config.sequence.extra;
             aI.compileKeyword(entry, nx, keywords, "#KW");
+            aI.compileXref(entry, nx, xrefs, "#xref");
+            aI.compileExtra(entry, nx, extra, "#caution");
         });
     }));
 </script>

@@ -20,13 +20,19 @@
     </div>
 </div>
 <div class="row" style="margin:0px 20px;">
-    <div id="featuresTable" class="col-md-6" style="margin-bottom:10px;margin-top:10px;"></div>
-    <div class="col-md-6 right-block" style="padding-right:0px;margin-bottom:10px;margin-top:10px;">
+    <div id="featuresTable" class="col-md-6" style="margin-bottom:15px;margin-top:15px;"></div>
+    <div class="col-md-6 right-block" style="padding-right:0px;margin-bottom:15px;margin-top:15px;">
         <div id="seqViewer"></div>
     </div>
 </div>
-<div class="row" style="margin: 0px 20px 10px;background-color:white;">
-    <div id="nx-keywords" class="col-md-12"></div>
+<div class="row" style="margin: 0px 20px 15px;">
+    <div id="nx-caution" class="col-md-12" style="background-color:white;"></div>
+</div>
+<div class="row" style="margin: 0px 20px 15px;">
+    <div id="nx-keywords" class="col-md-12" style="background-color:white;"></div>
+</div>
+<div class="row" style="margin: 0px 20px 15px;">
+    <div id="nx-xrefs" class="col-md-12" style="background-color:white;"></div>
 </div> 
 </body>
 <script>
@@ -76,8 +82,11 @@
                             var metaData = getMetadataByView(config.sequence.features);
                             var tv = new TripleViewer(entry);
                             tv.init(oneData, metaData);
-                            var keywords = config.sequence.keywords;
+                            var keywords = config.sequence.keywords;var xrefs = config.sequence.xrefs;
+                            var extra = config.sequence.extra;
                             aI.compileKeyword(entry, nx, keywords, "#nx-keywords");
+                            aI.compileXref(entry, nx, xrefs, "#nx-xrefs");
+                            aI.compileExtra(entry, nx, extra, "#nx-caution");
                             
 
                         }).catch(function (err) {

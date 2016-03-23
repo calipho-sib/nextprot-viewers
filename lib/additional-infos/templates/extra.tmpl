@@ -1,0 +1,57 @@
+<div id="xrefs-header" style="border-bottom: 1px solid #E7EAEC;margin-bottom: 15px;padding-bottom: 5px;">
+    <div style="display:inline-block;">
+            <span class="badge" style="border-radius:70%;border: 2px solid black;color:#C50063;background-color:white;padding:8px 8px;margin-right:10px;vertical-align:middle;min-width:32px;">{{count}}</span>
+    </div>
+    <h4 id="keywords-title" style="display:inline-block;vertical-align:middle;">Sequence</h4>
+</div>
+<div style="margin-top:20px;">
+{{#data}}{{#each this}}
+    <div class="row">
+        <div class="col-lg-4 col-md-2 col-sm-2 col-xs-3">
+            <h4 class="hidden-sm hidden-xs" style="font-weight:200;text-align:right;margin-top:2px;"> {{@key}} </h4>
+            <h4 class="hidden-lg hidden-md" style="font-weight:200;text-align:left;margin-top:2px;"> {{@key}} </h4>
+        </div>
+        <div class="col-lg-8 col-md-10 col-sm-10 col-xs-9">
+        {{#each this}}
+            <div class="row" style="margin-bottom:5px;margin-left:0px;">
+                <div class="col-md-10 col-sm-10 col-xs-9" style="padding:0px;">
+                    <p style="font-size:1em;overflow:hidden;display:block;text-overflow:ellipsis;">{{description}}</p>
+                    <div class="collapse hidden-xs {{id}}">
+                        {{#each evidences}}
+                        <div class="">
+                            <div class="evidenceArrow" style=";transform:rotate(180deg);display:inline-block;font-weight: 900;">&#10549;</div>  Evidence {{math @index 1}}
+                            <span class="evidenceCodeName" style="background-color:#7cba0f;color:white;padding:2px 6px;border-radius:2px 0px 0px 2px;margin-left:5px">{{codeName}}</span>
+                            <span class="evidenceSource" style="background-color:#dedede;color:#999;padding: 2px 6px;border-radius:0px 2px 2px 0px;">{{db}}</span>
+                        </div>
+                        <div style="padding-left:10px;border-left:1px solid darkgray;margin:10px 0px;">
+                            <a href={{url}}>{{accession}}</a>
+                        </div>
+                        {{/each}}
+                    </div>
+                </div>
+                <div class="col-md-2 col-sm-2 col-xs-3">
+                    <a class="btn" style="padding:5px 10px;background-color:#dedede;" type="button" data-toggle="collapse" data-target=".{{id}}" aria-expanded="false" aria-controls="{{id}}">
+                        <p style="color:#999;padding:0px;margin:0px;font-size:1.5em;font-weight:700;line-height:1em">{{evidences.length}}</p>
+                        <p style="color:#999;padding:0px 5px 0px;margin:0px;font-size:0.9em;line-height:1em;">ref</p>
+                    </a>
+                </div>
+            </div>
+            <div class="collapse hidden-lg hidden-md hidden-sm {{id}}">
+                {{#each evidences}}
+                <div class="" style="font-size:12px">
+                    <div class="evidenceArrow" style=";transform:rotate(180deg);display:inline-block;font-weight: 900;">&#10549;</div>  Evidence {{math @index 1}}
+                    <div class="evidenceCodeName" style="display:inline-block;background-color:#7cba0f;color:white;padding:2px 6px;border-radius:2px;margin-bottom:3px;">{{codeName}}</div>
+                    <span class="evidenceSource" style="background-color:#dedede;color:#999;padding: 2px 6px;border-radius:2px;">{{db}}</span>
+                </div>
+                <div style="padding-left:10px;border-left:1px solid darkgray;margin:10px 0px;">
+                    <a href={{url}}>{{accession}}</a>
+                </div>
+                {{/each}}
+            </div>
+        
+        {{/each}} 
+        </div>
+    </div>
+{{/each }}
+{{/data}}
+</div>

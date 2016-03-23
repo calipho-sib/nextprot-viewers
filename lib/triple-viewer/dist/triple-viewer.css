@@ -39,6 +39,18 @@
     border: 1px solid #cfd9db;
     border-radius:4px;
 }
+#nx-xrefs {
+    background:#fff;
+    padding:5px 15px;
+    border: 1px solid #cfd9db;
+    border-radius:4px;
+}
+#nx-caution {
+    background:#fff;
+    padding:5px 15px;
+    border: 1px solid #cfd9db;
+    border-radius:4px;
+}
 @media (max-width: 768px) {
     .right-block {
         padding-left: 0px;

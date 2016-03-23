@@ -160,8 +160,7 @@
         "metadata": {}
       }
     ],
-    "crossRef": {
-      "Family and domain databases":["Gene3D","InterPro","Pfam","PRINTS","PROSITE","SMART","SUPFAM"],
+    "crossRef": { "Family and domain databases":["Gene3D","InterPro","Pfam","PRINTS","PROSITE","SMART","SUPFAM"],
       "Genome annotation databases":["Ensembl", "KEGG", "UCSC"],
       "Organism-specific databases":["MGI"],
       "Other":["EvolutionaryTrace", "PMAP-CutDB"],
@@ -170,6 +169,10 @@
       "Polymorphism and mutation databases":["BioMuta"],
       "Sequence databases":["CCDS", "EMBL", "PIR", "RefSeq", "UniProtKB"],
       "Protocols and materials databases":["DNASU"]
+    },
+    "keywords": {
+        "type" : [],
+        "exceptions": []
     }
   },
   "sequence": {
@@ -517,7 +520,16 @@
     "keywords": {
         "type" : ["Coding sequence diversity", "Domain", "PTM", "Technical term"],
         "exceptions": ["KW-0002", "KW-0021", "KW-0181", "KW-0895", "KW-0374", "KW-0511", "KW-0582", "KW-0814"]
-    }
+        },
+    "xrefs": ["CCDS", "eggNOG", "EMBL","Ensembl", "Gene3D", "GlycoSuiteDB", "HOGENOM", "HOVERGEN", 
+	                  "InParanoid", "InterPro", "KEGG", "MGI",
+	                  "OMA", "OrthoDB", "PANTHER", "Pfam", "PhosphoSite", "PhylomeDB", 
+	                  "PIR", "PIRSF", "PMAP-CutDB", "PRINTS", "ProDom", "ProtClustDB", "PROSITE",
+	                  "RefSeq", "SMART", "SUPFAM", "TIGRFAMS","UCSC", "UniProt",
+                      "DNASU", "EvolutionaryTrace", "KO", "UniCarbKB", "ChiTaRS", "HAMAP", "TIGRFAMs", 
+					  "TreeFam","DEPOD","GeneTree","BioMuta"
+	                  ],
+      "extra":["caution","domain-info","ptm-info","sequence-caution"]
   },
   "structures": {
     "features": [
@@ -770,7 +782,11 @@
         "metadata": {}
       }
     ],
-    "crossRef": []
+    "crossRef": [],
+    "keywords": {
+        "type" : ["Technical term"],
+        "exceptions": ["KW-0021", "KW-0181", "KW-0903", "KW-0895", "KW-0374", "KW-0511", "KW-0582", "KW-0814"]
+    }
   },
   "peptide": {
     "features": [

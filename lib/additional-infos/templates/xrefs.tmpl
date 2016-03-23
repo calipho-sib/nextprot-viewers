@@ -1,0 +1,42 @@
+
+<div id="xrefs-header" style="border-bottom: 1px solid #E7EAEC;margin-bottom: 15px;padding-bottom: 5px;">
+<div style="display:inline-block;">
+        <span class="badge" style="border-radius:70%;border: 2px solid black;color:#C50063;background-color:white;padding:8px 8px;margin-right:10px;vertical-align:middle;">{{count}}</span>
+</div>
+<h4 id="keywords-title" style="display:inline-block;vertical-align:middle;">External links</h4></div>
+<div style="margin-top:20px;">
+
+{{#data}}{{#each this}}
+    <div class="row">
+        <div class="col-lg-4 col-md-2 col-sm-12 col-xs-12">
+            <h4 class="hidden-sm hidden-xs" style="font-weight:200;text-align:right;margin-top:2px;"> {{@key}} </h4>
+            <h4 class="hidden-lg hidden-md" style="font-weight:200;text-align:left;margin-top:2px; margin-left:15px;"> {{@key}} </h4>
+        </div>
+        <div class="col-lg-8 col-md-10 col-sm-12 col-xs-12">
+            {{#each this}}
+            <div class="row" style="margin-bottom:5px;">
+                <div class="col-md-3 col-sm-3 col-xs-4" style="padding:0px;">
+                    <p style="font-size:1em;padding:2px 12px 0px 20px; margin-bottom:0px;text-align:right;overflow: hidden;display: block;text-overflow:ellipsis;">{{name}}</p>
+                </div>
+                <div class="col-md-9 col-sm-9 col-xs-8">
+                {{#xrefs}}
+                        <div class="btn-group hidden-xs" role="group">
+                            {{#if prefix}}<label class="btn btn-xs" style="margin:0px;color:white;border:1px solid #C50063;background-color:rgba(197, 0, 99, 0.75)">{{prefix}}</label>{{/if}}
+                            <a class="btn btn-xs" href="{{url}}" style="color:#C50063;border:1px solid #C50063;text-align:left;">{{accession}}</a>
+                                {{#if suffix}}<label style="margin:0px;font-weight:300;margin-left:5px;padding:1px 5px;border-radius:0px 3px 3px 0px;background-color:#f4f4f4; color:#999;border:1px solid #999;font-size:12px;line-height:18px;"> {{suffix}} </label>{{/if}}
+                        </div>
+                        <div class="row hidden-lg hidden-md hidden-sm">
+                            <div class="btn-group col-xs-12" role="group" style="padding:0px;">
+                                {{#if prefix}}<label class="btn btn-xs" style="margin:0px;color:white;border:1px solid #C50063;background-color:rgba(197, 0, 99, 0.75)">{{prefix}}</label>{{/if}}
+                                <a class="btn btn-xs" href="{{url}}" style="color:#C50063;border:1px solid #C50063;text-align:left;">{{accession}}</a>
+                                {{#if suffix}}<label style="margin:0px;font-weight:300;margin-left:5px;padding:1px 5px;border-radius:0px 3px 3px 0px;background-color:#f4f4f4; color:#999;border:1px solid #999;font-size:12px;line-height:18px;"> {{suffix}} </label>{{/if}}
+                            </div>
+                        </div>
+                {{/xrefs}}
+                </div>
+            </div>
+            {{/each}}
+        </div>
+        </div>
+<hr style="margin:0px 50px 5px">{{/each}}{{/data}}
+</div>
