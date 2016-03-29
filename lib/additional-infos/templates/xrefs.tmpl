@@ -21,14 +21,14 @@
                 <div class="col-md-9 col-sm-9 col-xs-8">
                 {{#xrefs}}
                         <div class="btn-group hidden-xs" role="group">
-                            {{#if prefix}}<label class="btn btn-xs" style="margin:0px;color:white;border:1px solid #C50063;background-color:rgba(197, 0, 99, 0.75)">{{prefix}}</label>{{/if}}
-                            <a class="btn btn-xs" href="{{url}}" style="color:#C50063;border:1px solid #C50063;text-align:left;">{{accession}}</a>
+                            {{#if prefix}}<label class="btn btn-xs" style="margin:0px;color:white;border:1px solid #C50063;background-color:rgba(197, 0, 99, 0.75)">{{prefix}} </label>{{/if}}
+                            <a class="btn btn-xs selectable" href="{{url}}"  target="_blank" style="color:#C50063;border:1px solid #C50063;text-align:left;">{{accession}}</a>
                                 {{#if suffix}}<label style="margin:0px;font-weight:300;margin-left:5px;padding:1px 5px;border-radius:0px 3px 3px 0px;background-color:#f4f4f4; color:#999;border:1px solid #999;font-size:12px;line-height:18px;"> {{suffix}} </label>{{/if}}
                         </div>
                         <div class="row hidden-lg hidden-md hidden-sm">
                             <div class="btn-group col-xs-12" role="group" style="padding:0px;">
-                                {{#if prefix}}<label class="btn btn-xs" style="margin:0px;color:white;border:1px solid #C50063;background-color:rgba(197, 0, 99, 0.75)">{{prefix}}</label>{{/if}}
-                                <a class="btn btn-xs" href="{{url}}" style="color:#C50063;border:1px solid #C50063;text-align:left;">{{accession}}</a>
+                                {{#if prefix}}<label class="btn btn-xs" style="margin:0px;color:white;border:1px solid #C50063;background-color:rgba(197, 0, 99, 0.75)">{{prefix}} </label>{{/if}}
+                                <a class="btn btn-xs selectable" href="{{url}}"  target="_blank" style="color:#C50063;border:1px solid #C50063;text-align:left;">{{accession}}</a>
                                 {{#if suffix}}<label style="margin:0px;font-weight:300;margin-left:5px;padding:1px 5px;border-radius:0px 3px 3px 0px;background-color:#f4f4f4; color:#999;border:1px solid #999;font-size:12px;line-height:18px;"> {{suffix}} </label>{{/if}}
                             </div>
                         </div>

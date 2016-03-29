@@ -3,8 +3,9 @@
 <head>
     <meta charset="utf-8">
     <link rel="stylesheet" href="../../lib/triple-viewer/dist/triple-viewer.css">
+    <link rel="stylesheet" href="../../lib/additional-infos/dist/additional-infos.min.css">
     <script src="../../lib/triple-viewer/dist/triple-viewer.bundle.js"></script>
-<!--    <script src="../../lib/additional-infos/dist/additional-infos.min.js"></script>-->
+    <script src="../../lib/additional-infos/dist/additional-infos.min.js"></script>
 </head>
 <body>
 <div class="row" style="margin: 0px 20px;">
@@ -25,7 +26,6 @@
         <div id="seqViewer"></div>
     </div>
 </div>
-<!--
 <div class="row" style="margin: 0px 20px 15px;">
     <div id="nx-caution" class="col-md-12" style="background-color:white;"></div>
 </div>
@@ -35,7 +35,6 @@
 <div class="row" style="margin: 0px 20px 15px;">
     <div id="nx-xrefs" class="col-md-12" style="background-color:white;"></div>
 </div> 
--->
 </body>
 <script>
 
@@ -43,7 +42,7 @@
 
         var nx = new Nextprot.Client("neXtProt proteomics view", "Calipho-Team");
         var entry = nx.getEntryName();
-//        var aI = new AdditionalInfos();
+        var aI = new AdditionalInfos();
 
         $(function () {
 
@@ -84,11 +83,12 @@
                             var metaData = getMetadataByView(config.sequence.features);
                             var tv = new TripleViewer(entry);
                             tv.init(oneData, metaData);
-//                            var keywords = config.sequence.keywords;var xrefs = config.sequence.xrefs;
-//                            var extra = config.sequence.extra;
-//                            aI.compileKeyword(entry, nx, keywords, "#nx-keywords");
-//                            aI.compileXref(entry, nx, xrefs, "#nx-xrefs");
-//                            aI.compileExtra(entry, nx, extra, "#nx-caution");
+                            var keywords = config.sequence.keywords;
+                            var xrefs = config.sequence.xrefs;
+                            var extra = config.sequence.extra;
+                            aI.compileKeyword(entry, nx, keywords, "#nx-keywords");
+                            aI.compileXref(entry, nx, xrefs, "#nx-xrefs");
+                            aI.compileExtra(entry, nx, extra, "#nx-caution");
                             
 
                         }).catch(function (err) {
