@@ -56,6 +56,26 @@
         }
       },
       {
+        "APIRef": "topological-domain",
+        "metadata": {
+          "name": "Topo. domain",
+          "className": "topodomain",
+          "color": "#A5DBA5",
+          "type": "rect",
+          "filter": "Topology"
+        }
+      },
+      {
+        "APIRef": "transmembrane-region",
+        "metadata": {
+          "name": "Membrane",
+          "className": "membrane",
+          "color": "#A5DBB7",
+          "type": "rect",
+          "filter": "Topology"
+        }
+      },
+      {
         "APIRef": "disulfide-bond",
         "metadata": {
           "name": "Disulfide bond",

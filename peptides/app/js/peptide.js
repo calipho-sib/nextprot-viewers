@@ -1041,11 +1041,24 @@ function initNXDivs() {
     function renderFeatureViewer(data, isoName) {
 
         var metaData = [
-            {name: "Sequence"},
-            {name: "Propeptide", className: "pro", color: "#B3B3B3", type: "rect", filter: "Processing"},
-            {name: "Mature protein", className: "mat", color: "#B3B3C2", type: "rect", filter: "Processing"},
-            {name: "Peptide", className: "pep2", color: "#B3E1D1", type: "multipleRect", filter: "Peptide"},
-            {name: "SRM Peptide", className: "srmPep", color: "#B3E1F0", type: "multipleRect", filter: "none"}
+            {name: "Sequence"}, //1
+            {name: "Propeptide",className: "pro",color: "#B3B3B3",type: "rect",filter:"Processing"}, //2
+            {name: "Mature protein",className: "mat",color: "#B3B3C2",type: "rect",filter:"Processing"}, // 3
+            {name: "Signal peptide",className: "sign",color: "#B3B3E1",type: "rect",filter:"Processing"}, //4
+            {name: "Transit peptide",className: "pero",color: "#B3B3F0",type: "rect",filter:"Processing"}, //5
+            {name: "Transit peptide",className: "mito",color: "#B3B3F0",type: "rect",filter:"Processing"}, //6
+            {name: "Disulfide bond",className: "dsB",color: "#B3B3E1",type: "path",filter:"Modified Residue"}, //7
+            {name: "Topo. domain","className": "topodomain","color": "#A5DBA5","type": "rect","filter": "Topology"}, //8
+            {"name": "Membrane","className": "membrane","color": "#A5DBB7","type": "rect","filter": "Topology"}, //9
+            {name: "Antibody",className: "anti",color: "#B3C2F0",type: "rect",filter:"none"}, //10
+            {name: "Initiator meth",className: "initMeth",color: "#B3B3D1",type: "unique",filter:"Processing"}, //11
+            {name: "Modified residue",className: "modifRes",color: "#B3C2B3",type: "unique",filter:"Modified Residue"}, //12
+            {name: "Cross-link",className: "crossLink",color: "#B3C2C2",type: "unique",filter:"Modified Residue"}, //13
+            {name: "Glycosylation",className: "glycoSite",color: "#B3C2D1",type: "unique",filter:"Modified Residue"}, //14
+            {name: "Lipidation",className: "lipidation",color: "#A3B5DB",type: "unique",filter:"Modified Residue"}, //15
+            {name: "Non standart AA",className: "seleno",color: "#859DE7",type: "unique",filter:"Modified Residue"}, //16
+            {name: "Peptide",className: "pep",color: "#B3E1D1",type: "multipleRect",filter:"Peptide"}, //17
+            {name: "SRM Peptide",className: "srmPep",color: "#B3E1F0",type: "multipleRect",filter:"none"} //18
         ];
 
         for (var i = 1; i < data.length; i++) {
@@ -1066,8 +1079,21 @@ function initNXDivs() {
             nx.getProteinSequence(nxEntryName), //1
             nx.getAnnotationsByCategory(nxEntryName, "propeptide"), //2
             nx.getAnnotationsByCategory(nxEntryName, "mature-protein"), //3
-            nx.getAnnotationsByCategory(nxEntryName, "peptide-mapping"), //4
-            nx.getAnnotationsByCategory(nxEntryName, "srm-peptide-mapping") //5
+            nx.getAnnotationsByCategory(nxEntryName, "signal-peptide"), //4
+            nx.getAnnotationsByCategory(nxEntryName, "peroxisome-transit-peptide"), //5
+            nx.getAnnotationsByCategory(nxEntryName, "mitochondrial-transit-peptide"), //6
+            nx.getAnnotationsByCategory(nxEntryName, "disulfide-bond"), //7
+            nx.getAnnotationsByCategory(nxEntryName, "topological-domain"), //7
+            nx.getAnnotationsByCategory(nxEntryName, "transmembrane-region"), //7
+            nx.getAnnotationsByCategory(nxEntryName, "antibody-mapping"), //8
+            nx.getAnnotationsByCategory(nxEntryName, "initiator-methionine "), //9
+            nx.getAnnotationsByCategory(nxEntryName, "modified-residue"), //10
+            nx.getAnnotationsByCategory(nxEntryName, "cross-link"), //11
+            nx.getAnnotationsByCategory(nxEntryName, "glycosylation-site "), //12
+            nx.getAnnotationsByCategory(nxEntryName, "lipidation-site"), //13
+            nx.getAnnotationsByCategory(nxEntryName, "selenocysteine"), //14
+            nx.getAnnotationsByCategory(nxEntryName, "peptide-mapping"), //15
+            nx.getAnnotationsByCategory(nxEntryName, "srm-peptide-mapping") //16
         ].reduce(function (sequence, dataPromise) {
                 return sequence.then(function () {
                     return dataPromise;
@@ -1090,12 +1116,12 @@ function initNXDivs() {
                             matureProtein = oneData.annot;
                             allFeatures.push(oneData.annot);
                             break;
-                        case 4:
+                        case 17:
                             pepMap = jQuery.merge([], oneData.annot);
                             //adding a copy for the feature viewer, because peptides will be added to peptideMappings
-                            allFeatures.push(jQuery.extend({}, oneData));
+                            allFeatures.push(jQuery.extend({}, oneData.annot));
                             break;
-                        case 5:
+                        case 18:
                             var pepSynthetic = jQuery.merge([], oneData.annot);
                             pepSynthetic.forEach(function(ps) {
                                 var psFirstIso = Object.keys(ps.targetingIsoformsMap)[0];
@@ -1117,15 +1143,19 @@ function initNXDivs() {
                                 }
                             });
                             //adding a copy for the feature viewer, because pepetides will be added to peptideMappings
-                            allFeatures.push(jQuery.extend({}, oneData));
-                            renderPeptidesForIsoform(pepMap, firstIso);
-                            renderFeatureViewer(allFeatures, firstIso);
-                            showFeatureViewer();
+                            allFeatures.push(jQuery.extend({}, oneData.annot));
+                            
                             break;
+                        default:
+                            allFeatures.push(jQuery.extend({}, oneData.annot));
                     }
                 });
             }, Promise.resolve())
             .then(function () {
+                renderPeptidesForIsoform(pepMap, firstIso);
+                renderFeatureViewer(allFeatures, firstIso);
+                showFeatureViewer();
+                console.log("test1é3")
             })
             .catch(function (err) {
                 // catch any error that happened along the way
