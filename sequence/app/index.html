@@ -3,7 +3,9 @@
 <head>
     <meta charset="utf-8">
     <link rel="stylesheet" href="../../lib/triple-viewer/dist/triple-viewer.css">
+    <link rel="stylesheet" href="../../lib/additional-infos/dist/additional-infos.min.css">
     <script src="../../lib/triple-viewer/dist/triple-viewer.bundle.js"></script>
+    <script src="../../lib/additional-infos/dist/additional-infos.min.js"></script>
 </head>
 <body>
 <div class="row" style="margin: 0px 20px;">
@@ -15,105 +17,86 @@
 <div class="row" style="margin: 0px 20px;">
     <div id="visuContainer" class="col-md-12">
         <div id="isoformDisplayed"></div>
-        <div class="chart"></div>
+        <div id="chart"></div>
     </div>
 </div>
-<div class="row" style="margin: 10px 20px;">
-    <div id="featuresTable" class="col-md-6"></div>
-    <div class="col-md-6" style="padding-right:0px;">
+<div class="row" style="margin:0px 20px;">
+    <div id="featuresTable" class="col-md-6" style="margin-bottom:15px;margin-top:15px;"></div>
+    <div class="col-md-6 right-block" style="padding-right:0px;margin-bottom:15px;margin-top:15px;">
         <div id="seqViewer"></div>
     </div>
 </div>
+<div class="row" style="margin: 0px 20px 15px;">
+    <div id="nx-caution" class="col-md-12" style="background-color:white;"></div>
+</div>
+<div class="row" style="margin: 0px 20px 15px;">
+    <div id="nx-keywords" class="col-md-12" style="background-color:white;"></div>
+</div>
+<div class="row" style="margin: 0px 20px 15px;">
+    <div id="nx-xrefs" class="col-md-12" style="background-color:white;"></div>
+</div> 
 </body>
 <script>
+
     ($(function () {
 
-        var nx = new Nextprot.Client("neXtProt sequence view", "Calipho-Team");
+        var nx = new Nextprot.Client("neXtProt proteomics view", "Calipho-Team");
         var entry = nx.getEntryName();
+        var aI = new AdditionalInfos();
 
         $(function () {
 
-            Promise.all([nx.getProteinSequence(entry),
-                nx.getAnnotationsByCategory(entry, "propeptide"),
-                nx.getAnnotationsByCategory(entry, "mature-protein"),
-                nx.getAnnotationsByCategory(entry, "signal-peptide"),
-                nx.getAnnotationsByCategory(entry ,"peroxisome-transit-peptide"),
-                nx.getAnnotationsByCategory(entry, "mitochondrial-transit-peptide"),
-                nx.getAnnotationsByCategory(entry, "miscellaneous"),
-                nx.getAnnotationsByCategory(entry, "domain"),
-                nx.getAnnotationsByCategory(entry, "repeat"),
-                nx.getAnnotationsByCategory(entry, "calcium-binding-region"),
-                nx.getAnnotationsByCategory(entry, "zinc-finger-region"),
-                nx.getAnnotationsByCategory(entry, "dna-binding-region"),
-                nx.getAnnotationsByCategory(entry, "nucleotide-phosphate-binding-region"),
-                nx.getAnnotationsByCategory(entry, "coiled-coil-region"),
-                nx.getAnnotationsByCategory(entry, "short-sequence-motif"),
-                nx.getAnnotationsByCategory(entry, "compositionally-biased-region"),
-                nx.getAnnotationsByCategory(entry, "topological-domain"),
-                nx.getAnnotationsByCategory(entry, "transmembrane-region"),
-                nx.getAnnotationsByCategory(entry, "disulfide-bond"),
-                nx.getAnnotationsByCategory(entry, "initiator-methionine"),
-                nx.getAnnotationsByCategory(entry, "interacting-region"),
-                nx.getAnnotationsByCategory(entry, "modified-residue"),
-                nx.getAnnotationsByCategory(entry, "cross-link"),
-                nx.getAnnotationsByCategory(entry, "glycosylation-site"),
-                nx.getAnnotationsByCategory(entry, "miscellaneous-site"),
-                nx.getAnnotationsByCategory(entry, "active-site"),
-                nx.getAnnotationsByCategory(entry, "binding-site"),
-                nx.getAnnotationsByCategory(entry, "cleavage-site"),
-                nx.getAnnotationsByCategory(entry, "metal-binding-site"),
-                nx.getAnnotationsByCategory(entry, "lipidation-site"),
-                nx.getAnnotationsByCategory(entry, "selenocysteine"),
-                nx.getAnnotationsByCategory(entry, "variant"),
-                nx.getAnnotationsByCategory(entry, "mutagenesis"),
-                nx.getAnnotationsByCategory(entry, "sequence-conflict"),
-                nx.getIsoformMapping(entry)]).then(function (oneData) {
 
-                var metaData = [
-                    {name: "Sequence"},
-                    {name: "Propeptide",className: "pro",color: "#B3B3B3",type: "rect",filter:"Processing"},
-                    {name: "Mature protein",className: "mat",color: "#B3B3C2",type: "rect",filter:"Processing"},
-                    {name: "Signal peptide",className: "sign",color: "#B3B3E1",type: "rect",filter:"Processing"},
-                    {name: "Transit peptide",className: "pero",color: "#B3B3F0",type: "rect",filter:"Processing"},
-                    {name: "Transit peptide",className: "mito",color: "#B3B3F0",type: "rect",filter:"Processing"},
-                    {name: "Region",className: "miscregion",color: "#B3C2B3",type: "rect",filter:"Region"},
-                    {name: "Domain",className: "domain",color: "#B3C2C2",type: "rect",filter:"Region"},
-                    {name: "Repeat",className: "repeat",color: "#98B7D5",type: "rect",filter:"Region"},
-                    {name: "Calcium binding",className: "calcium",color: "#B3C2E1",type: "rect",filter:"Region"},
-                    {name: "Zinc finger",className: "calcium",color: "#B3C2E1",type: "rect",filter:"Region"},
-                    {name: "DNA binding",className: "dnabind",color: "#B3C2FF",type: "rect",filter:"Region"},
-                    {name: "Nucleotide binding",className: "nucleobind",color: "#B3D1B3",type: "rect",filter:"Region"},
-                    {name: "Coiled-coil",className: "coiledcoil",color: "#B3D1C2",type: "rect",filter:"Region"},
-                    {name: "Sequence motif",className: "motif",color: "#B3D1D1",type: "rect",filter:"Region"},
-                    {name: "Composition bias",className: "biased",color: "#B3D1E1",type: "rect",filter:"Region"},
-                    {name: "Top domain",className: "topodomain",color: "#A5DBA5",type: "rect",filter:"Topology"},
-                    {name: "Membrane",className: "membrane",color: "#A5DBB7",type: "rect",filter:"Topology"},
-                    {name: "Disulfide bond",className: "dsB",color: "#B3B3E1",type: "path",filter:"Modified Residue"},
-                    {name: "Initiator meth",className: "initMeth",color: "#B3B3D1",type: "unique",filter:"Processing"},
-                    {name: "Interacting region",className: "intReg",color: "#B3D1F0",type: "rect",filter:"Region"},
-                    {name: "Modified residue",className: "modifRes",color: "#B3C2B3",type: "unique",filter:"Modified Residue"},
-                    {name: "Cross-link",className: "crossLink",color: "#B3C2C2",type: "unique",filter:"Modified Residue"},
-                    {name: "Glycosylation",className: "glycoSite",color: "#74E374",type: "unique",filter:"Modified Residue"},
-                    {name: "Site",className: "site",color: "#B3F0E1",type: "unique",filter:"Site"},
-                    {name: "Active site",className: "actSite",color: "#B3F0F0",type: "unique",filter:"Site"},
-                    {name: "Binding site",className: "bindsite",color: "#82E6FF",type: "unique",filter:"Site"},
-                    {name: "Cleavage site",className: "cleavsite",color: "#B3FFB3",type: "unique",filter:"Site"},
-                    {name: "Metal binding",className: "metal",color: "#B3FFC2",type: "unique",filter:"Site"},
-                    {name: "Lipidation",className: "lipidation",color: "#A3B5DB",type: "unique",filter:"Modified Residue"},
-                    {name: "Non standart AA",className: "seleno",color: "#859DE7",type: "unique",filter:"Modified Residue"},
-                    {name: "Variant",className: "variant",color: "rgba(0,255,154,0.3)",type: "unique",filter:"Variant"},
-                    {name: "Mutagenesis",className: "mutagenesis",color: "#73FFE3",type: "unique",filter:"Variant"},
-                    {name: "Conflict",className: "seqconflict",color: "#6FFFFF",type: "unique",filter:"Conflict"}
+            function getFeaturesByview(list, entry) {
+                var data = [];
+                for (var feat in list) {
+                    switch (list[feat].APIRef) {
+                        case "sequence":
+                            data.push(nx.getProteinSequence(entry));
+                            break;
+                        case "antibody":
+                            data.push(nx.getAntibody(entry));
+                            break;
+                        case "isoform-mapping":
+                            data.push(nx.getIsoformMapping(entry));
+                            break;
+                        default:
+                            data.push(nx.getAnnotationsByCategory(entry, list[feat].APIRef));
+                            break;
+                    }
+                }
+                return data;
+            }
 
-                ];
+            function getMetadataByView(list) {
+                var mdata = [];
+                for (var i = 0; i < list.length - 1; i++) {
+                    mdata.push(list[i].metadata);
+                }
+                return mdata;
+            }
 
-                var tv = new TripleViewer(entry);
-                tv.init(oneData,metaData);
+            $.getJSON("../../lib/featureConfig.json", function (config) {
+                Promise.all(getFeaturesByview(config.sequence.features, entry))
+                        .then(function (oneData) {
 
-            }).catch(function (err) {
-                // catch any error that happened so far
-                console.error("Argh, broken: " + err.message);
-                console.error("Error at line : " + err.stack);
+                            var metaData = getMetadataByView(config.sequence.features);
+                            var tv = new TripleViewer(entry);
+                            tv.init(oneData, metaData);
+                            var keywords = config.sequence.keywords;
+                            var xrefs = config.sequence.xrefs;
+                            var extra = config.sequence.extra;
+                            aI.compileKeyword(entry, nx, keywords, "#nx-keywords");
+                            aI.compileXref(entry, nx, xrefs, "#nx-xrefs");
+                            aI.compileExtra(entry, nx, extra, "#nx-caution");
+                            
+
+                        }).catch(function (err) {
+                            // catch any error that happened so far
+                            console.log("Argh, broken: " + err.message);
+                            console.log("Error at line : " + err.stack);
+                        });
+
             });
         });
     }));

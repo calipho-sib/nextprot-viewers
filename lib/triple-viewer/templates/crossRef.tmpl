@@ -1,0 +1,19 @@
+<div id="crossRefTitle">
+    <h2>Further external links</h2>
+</div>
+
+<div id="crossRefLinks">
+    <div class="row">
+        <div class="col-md-7 col-xs-6">
+            {{#each type}}
+            <dl>
+                <dt>{{@key}}</dt>
+                {{#each this}}
+                <dd>{{dBName}} : {{#crossLink}}{{#if preLink}} {{preLink}} : {{/if}}{{{link_to}}}{{/crossLink}}{{#if additionalInfos}}{{#additionalInfos}} [ {{value}} ]{{/additionalInfos}}{{/if}}</dd>
+
+                {{/each}}
+            </dl>
+            {{/each}}
+        </div>
+    </div>
+</div>

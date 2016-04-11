@@ -1,147 +1,63 @@
 
 /* Overview */
 #nx-overview {
-    background:#fff;margin-top:10px;margin-bottom:10px;border-top:4px solid #E7EAEC;border-bottom: 1px solid #e7eaec;
+    background:#fff;
+    margin-top:10px;
+    margin-bottom:10px;
+    border: 1px solid #cfd9db;
+    border-radius:4px;
 }
 #visuContainer {
     background:#fff;
     padding:0px;
-    border-top:4px solid #E7EAEC;
-    border-bottom: 1px solid #e7eaec;
+    border: 1px solid #cfd9db;
+    border-radius:4px;
 }
 #featuresTable {
     background:#fff;
     padding:5px 15px;
     height:600px;
-    border-top:4px solid #E7EAEC;
-    border-bottom: 1px solid #e7eaec;
+    border: 1px solid #cfd9db;
+    border-radius:4px;
 }
 #seqViewer {
     background:#fff;
     padding:5px 15px;
     height:600px;
-    border-top:4px solid #E7EAEC;
-    border-bottom: 1px solid #e7eaec;
+    border: 1px solid #cfd9db;
+    border-radius:4px;
+}
+#nx-keywords {
+    background:#fff;
+    padding:5px 15px;
+    border: 1px solid #cfd9db;
+    border-radius:4px;
+}
+#nx-xrefs {
+    background:#fff;
+    padding:5px 15px;
+    border: 1px solid #cfd9db;
+    border-radius:4px;
+}
+#nx-caution {
+    background:#fff;
+    padding:5px 15px;
+    border: 1px solid #cfd9db;
+    border-radius:4px;
+}
+@media (max-width: 768px) {
+    .right-block {
+        padding-left: 0px;
+    }
 }
 
-/*
-.pep{fill:#B3E1D1;}
-.linepep{stroke:#B3E1D1;stroke-width:1px;z-index:0}
-
-.srmPep{fill:#B3E1F0}
-.linesrmPep{stroke:#B3E1F0;stroke-width:1px;z-index:0}
-
-.mature{fill:#B3B3C2;}
-.linemature{stroke:#B3B3C2;stroke-width:1px;}
-
-.signal{fill:#B3B3E1;}
-.linesignal{stroke:#B3B3E1;stroke-width:1px;}
-
-.pro{fill:#B3B3B3;}
-.linepro{stroke:#B3B3B3;stroke-width:1px;}
-
-.antiB{fill:#B3C2F0;}
-.lineantiB{stroke:#B3C2F0;stroke-width:1px;}
-
-.initMeth{fill:#B3B3D1;}
-.lineinitMeth{stroke:#B3B3D1;stroke-width:1px;z-index:0}
-
-.modifRes{fill:#B3C2B3;}
-.linemodifRes{stroke:#B3C2B3;stroke-width:1px;z-index:0}
-
-.crossLink{fill:#B3C2C2;}
-.linecrossLink{stroke:#B3C2C2;stroke-width:1px;}
-
-.glycoSite{fill:#B3C2D1;}
-.lineglycoSite{stroke:#B3C2D1;stroke-width:1px;}
-*/
-.variant{
-    stroke:rgba(0,255,154,0.6);
-    stroke-width:1px;
+#nx-isoformChoice>div>.nav-tabs>li{
+    margin-bottom:3px;
 }
+
 body{
-    background:#F4F3F3 !important;
+    background:#ECF0F1;
     overflow-y: auto;
-}
-a:focus {
-    outline:0 !important;
-}
-
-.active {
-    z-index: 1;
-}
-.brush .extent{
-    stroke: #fff;
-    fill-opacity: .125;
-    shape-rendering: crispEdges;
-}
-
-
-.point {
-    fill: #2f225d;
-    stroke: #afa2dc;
-}
-
-.selected {
-    fill: #afa2dc;
-    stroke: #2f225d;
-}
-
-.clear-button {
-    font: 14px sans-serif;
-    cursor: pointer;
-}
-
-.axis path,
-.axis line {
-    fill: none;
-    stroke: #000;
-    shape-rendering: crispEdges;
-}
-
-.axis {
-    font: 10px sans-serif;
-}
-.d3-tip {
-  line-height: 1;
-  font-weight: bold;
-  padding: 12px;
-  background: rgba(0, 0, 0, 0.8);
-  color: #fff;
-  border-radius: 2px;
-}
-
- /*Creates a small triangle extender for the tooltip */
-.tooltip2:after {
-  box-sizing: border-box;
-  display: inline;
-  font-size: 10px;
-  width: 100%;
-  line-height: 1;
-  color: rgba(0, 0, 0, 0.8);
-  content: "\25BC";
-  position: absolute;
-  text-align: left;
-  margin: -1px 0 0 0;
-  top: 98%;
-  left: 10px;
-}
-.tooltip3:after {
-    box-sizing: border-box;
-    display: inline;
-    font-size: 10px;
-    width: 100%;
-    line-height: 1;
-    color: rgba(0, 0, 0, 0.8);
-    content: "\25BC";
-    position: absolute;
-    text-align: right;
-    margin: -1px 0 0 0;
-    top: 98%;
-    right: 10px;
-}
-.yaxis{
-    background-color:green;
 }
 .tableHighlight {
     background-color:rgba(197, 0, 99, 0.2) !important;
@@ -300,4 +216,13 @@ a:focus {
     background-color: #dedede;
     color:#999;
     padding:2px 6px;
+}
+.nonProteotypic{
+    border: #ebeffa 1px solid;
+    background-color: white;
+    border-radius: 5px;
+    color: #666;
+    font-size: 1em;
+    padding-left: 5px;
+    padding-right: 5px;
 }

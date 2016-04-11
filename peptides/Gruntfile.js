@@ -15,8 +15,8 @@ module.exports = function (grunt) {
                     'bower_components/bootstrap/dist/js/bootstrap.min.js',
                     'bower_components/d3/d3.min.js',
                     'vendor/highcharts.js',
-                    'bower_components/sequence-viewer/dist/sequence-viewer.min.js',
-                    'bower_components/feature-viewer/dist/feature-viewer.js',
+                    'bower_components/sequence-viewer/src/sequence-viewer.js',
+                    'bower_components/feature-viewer/src/feature-viewer.js',
                     'bower_components/iframe-resizer/js/iframeResizer.contentWindow.min.js',
                     'app/js/peptide-computation.js',
                     'app/build/compiled_peptide_templates.js',
@@ -28,7 +28,6 @@ module.exports = function (grunt) {
             },
             extras: {
                 src: ['app/css/*.css',
-                      'bower_components/bootstrap/dist/css/bootstrap.min.css',
                       'bower_components/feature-viewer/css/style.css',
                       'bower_components/css-spinners/css/spinner/throbber.css'],
                 dest: 'dist/peptide-viewer.css'

@@ -8,11 +8,10 @@ function initNXDivs() {
     var isoforms;
     var firstIso;
     var currentIso;
-    var peptideMappings;
-    var srmPeptideMappings;
     var matureProtein;
     var proPeptide;
     var seq1 = null;
+    var pepMap;
 
     var pepComp = new PeptideComputation();
 
@@ -30,12 +29,53 @@ function initNXDivs() {
             return this.get(0) ? this.get(0).scrollHeight > this.innerHeight() : false;
         }
     })(jQuery);
+    
+    function getSources(evidences){
+        var sources = {};
+        evidences.forEach(function(e){
+            var sourceKey = e.assignedBy.match("PMID") || e.assignedBy.match("MDATA") ? "neXtProt" :  e.assignedBy;
+            if (sources[sourceKey]) {
+                if (e.resourceDb === "PubMed") {
+                    if (sources[sourceKey].pubmed !== []) {
+                    sources[sourceKey].pubmed.push(e.resourceAccession);
+                    }
+                    else sources[sourceKey].pubmed = [e.resourceAccession];
+                }
+                else if (e.resourceDb === "neXtProtSubmission") {
+                    if (sources[sourceKey].mdata !== []) {
+                    sources[sourceKey].mdata.push(e.resourceAccession);
+                    }
+                    else sources[sourceKey].mdata = [e.resourceAccession];
+                }
+            }
+            else if (e.resourceDb === "PubMed"){
+                var sourceKey = e.assignedBy.match("PMID") ? "neXtProt" :  e.assignedBy;
+                sources[sourceKey] = {
+                "pubmed" : [e.resourceAccession],
+                "mdata" : []
+                };
+            }
+            else if (e.resourceDb === "neXtProtSubmission"){
+                sources[sourceKey] = {
+                "pubmed" : [],
+                "mdata" : [e.resourceAccession]
+                };
+            }
+            else {
+                sources[e.assignedBy] = {
+                    "pubmed" : [],
+                    "mdata" : []
+                };
+            }
+        })
+        return sources;
+    }
 
 
     var getInfoForIsoform = {
         firstLoad: function () {
             renderSequenceForIsoform(isoforms, nxEntryName + "-1");
-            renderPeptidesForIsoform(peptideMappings, nxEntryName + "-1");
+            renderPeptidesForIsoform(pepMap, nxEntryName + "-1");
         },
         Isoform: function () {
             $(".isoformNames").click(getInfoForIsoform.reload);
@@ -49,12 +89,91 @@ function initNXDivs() {
             $("#nx-detailedPeptide").html("");
             $("#nx-detailedPeptide").hide("slow");
             renderSequenceForIsoform(isoforms, isoID);
-            renderPeptidesForIsoform(peptideMappings, isoID);
+            renderPeptidesForIsoform(pepMap, isoID);
             $("#featureViewer").html("");
             currentIso = isoID;
             createSVG(isoforms, isoID);
             addFeatures(isoID);
 
+        },
+        parsePepMapping: function (o,isoName) {
+                        var dict = {};
+                        var peptideAtlasID = "";
+                        o.evidences.forEach(function (q) {
+                            if (peptideAtlasID === "" && q.resourceDb === "PeptideAtlas") peptideAtlasID = q.resourceAccession;
+                            dict[q.resourceDb] = q.resourceAccession;
+                        });
+                        var npName = "";
+                        var proteo = false;
+                        o.properties.forEach(function (p) {
+                            if (p.name === "peptide name") npName = p.value;
+                            if (p.name === "is proteotypic") proteo = p.value === "Y";
+                        });
+
+                        var peptide = {
+                            "name": o.uniqueName,
+                            "nextprotName": npName,
+                            "identifier": "",
+                            "position": {
+                                "first":o.targetingIsoformsMap[isoName].firstPosition,
+                                "second":o.targetingIsoformsMap[isoName].lastPosition
+                            },
+                            "length": 0,
+                            "properties": {
+                                "natural": o.category === "peptide mapping" || o.category === "natAndSynth",
+                                "synthetic": o.category === "SRM peptide mapping" || o.category === "natAndSynth",
+                                "proteotypic": proteo
+                            },
+                            "isoformProteotypicity": "No",
+                            "tissueSpecificity": o.evidences.map(function (p) {
+                                return p.assignedBy
+                            }).sort(), 
+                            "tissueSpecificity2": getSources(o.evidences),
+                            "sequence": "",
+                            "prePeptide": "",
+                            "postPeptide": "",
+                            "include": [],
+                            "includedIn": [],
+                            "sources": dict,
+                            "peptideAtlasID": peptideAtlasID
+                        };
+                        
+                        //if (o.natural === true) peptide.properties.push("natural");
+                        //else peptide.properties.push("-");
+                        if (peptide.properties.proteotypic === true) {
+                            //peptide.properties.push("proteotypic");
+                            if (Object.keys(o.targetingIsoformsMap).length === 1) peptide.isoformProteotypicity = "Yes";
+                        }
+                        //else peptide.properties.push("-");
+                        //if (o.synthetic === true) peptide.properties.push("synthetic");
+                        //else peptide.properties.push("-");
+
+                        peptide.length = peptide.position.second - peptide.position.first + 1;
+
+                        peptide.sequence = getInfoForIsoform.Sequence(isoforms, isoName).slice(peptide.position.first - 1, peptide.position.second);
+                        peptide.identifier = (peptide.sequence.length > 22) ? peptide.sequence.substring(0, 10) + ".." + peptide.sequence.substring(peptide.sequence.length - 10) : peptide.sequence;
+
+                        peptide.prePeptide = getInfoForIsoform.Sequence(isoforms, isoName)[peptide.position.first - 2];
+                        peptide.postPeptide = getInfoForIsoform.Sequence(isoforms, isoName)[peptide.position.second + 1];
+                    
+            return peptide;
+        },
+        mergeSyntheticWithNatural: function (array) {
+            for (var i = 0; i < array.length; i++) {
+                var isPurelySynthetic = true;
+                for (var j = i; j < array.length; j++) {
+                    if (array[i].nextprotName === array[j].nextprotName && array[i].position === array[j].position) {
+                        if (array[i].properties.natural === array[j].nextprotName && array[i].properties !== array[j].properties) {
+                            peptideMappings[i].evidences = peptideMappings[i].evidences.concat(srmPeptideMapping.evidences);
+                            isPurelySynthetic = false;
+                            break;
+                        }
+                    }
+                }
+                if (isPurelySynthetic) {
+                    peptideMappings.push(srmPeptideMapping); //TODO fix this! This is referenced in allFeatures[1] so it should not be pushed like this
+                }
+            };
         },
         Peptides: function (peptideMappings, isoName) {
             var peptideList = [];
@@ -123,6 +242,23 @@ function initNXDivs() {
             pepComp.computeInterPeptideInclusions(peptideList);
 
             return peptideList;
+        },
+        Peptides2: function (pepMap, isoName) {
+            var peptideList2 = [];
+            pepMap.forEach(function (o) {
+                if (o.targetingIsoformsMap[isoName]) {
+                    peptideList2.push(getInfoForIsoform.parsePepMapping(o,isoName));
+                }
+            });
+            peptideList2.sort(function (a, b) {
+                return a.length - b.length;
+            });
+            peptideList2.sort(function (a, b) {
+                return a.position.first - b.position.first;
+            });
+            pepComp.computeInterPeptideInclusions(peptideList2);
+
+            return peptideList2;
         },
         Sequence: function (isoforms, isoName) {
             var isoSeq = "";
@@ -203,8 +339,8 @@ function initNXDivs() {
                     showAxis: true,
                     showSequence: true,
                     brushActive: true,
-                    verticalLine: false,
-                    toolbar: true
+                    toolbar: true,
+                    bubbleHelp: true
                 });
             }
         });
@@ -230,7 +366,8 @@ function initNXDivs() {
                 'showLineNumbers': true,
                 'wrapAminoAcids': true,
                 'charsPerLine': 50,
-                'maxLines' : 10
+                'sequenceMaxHeight': "220px"
+
             });
             $("#sequenceHeader").append("<div class=\"pull-right\" style=\"margin-right:20px;font-style:italic;text-align: center;\"><span id=\"pepCover\" style=\"font-size:18px;color:#C50063;\"></span><br><span style=\"font-size:10px;font-weight:bold;\">Peptide coverage</span></div>");
             $("#sequenceHeader").append("<div class=\"pull-right\" style=\"margin-right:20px;font-style:italic;text-align: center;\"><span id=\"proteoCover\" style=\"font-size:18px;color:#69CC33;\"></span><br><span style=\"font-size:10px;font-weight:bold;\">Proteotypic coverage</span></div>");
@@ -244,12 +381,19 @@ function initNXDivs() {
         nx.getEntryforPeptide(sequence).then(function (data) {
 
             function entryWithVariant(entry) {
-                var withVariant = false;
-                entry.annotations.forEach(function (o) {
-                    if (o.variant) withVariant = true;
-                });
-                return withVariant;
-            }
+                    var withVariant = false;
+                    entry.annotations.forEach(function (o) {
+                        if (o.variant) withVariant = true;
+                    });
+                    return withVariant;
+                }
+                function entryWithoutVariant(entry) {
+                    var withoutVariant = false;
+                    entry.annotations.forEach(function (o) {
+                        if (!o.variant) withoutVariant = true;
+                    });
+                    return withoutVariant;
+                }
 
 
             var isoformsLength = 0;
@@ -260,6 +404,7 @@ function initNXDivs() {
                 return {
                     name: o.uniqueName,
                     withVariant: entryWithVariant(o),
+                    withoutVariant:entryWithoutVariant(o),
                     geneName: o.overview.mainGeneName
                 };
             });
@@ -279,15 +424,18 @@ function initNXDivs() {
                         return {
                             entryName: o.uniqueName,
                             variant: p.variant,
-                            isoform: Object.keys(p.targetIsoformsMap)[0],
-                            positions: p.targetIsoformsMap[Object.keys(p.targetIsoformsMap)[0]].positions
+                            isoform: Object.keys(p.targetingIsoformsMap)[0],
+                            positions: {
+                                first:p.targetingIsoformsMap[Object.keys(p.targetingIsoformsMap)[0]].firstPosition,
+                                last:p.targetingIsoformsMap[Object.keys(p.targetingIsoformsMap)[0]].lastPosition
+                            }
                         };
                     });
                 })
             };
             var template = HBtemplates['app/assets/templates/matchingEntries.tmpl'];
             var results = template(entryMatching);
-            $("#proteoBlock").html(results);
+            $("#proteoBody").html(results);
 
             function toggleIsoforms() {
                 $('#showIsoforms').text("Show isoforms");
@@ -341,15 +489,27 @@ function initNXDivs() {
                     selection.filter(function (elem, pos, a) {
                         return a.indexOf(elem) == pos;
                     }).forEach(function (o) {
-                        for (i = 0; i < listPeptides.length; i++) {
+                        for (var i = 0; i < listPeptides.length; i++) {
                             var founded = false;
-                            if (listPeptides[i].name === o) {
+                            if (listPeptides[i].nextprotName === o) {
                                 for (var item in found) {
-                                    if (listPeptides[i].name === found[item].name) {
+                                    if (listPeptides[i].nextprotName === found[item].nextprotName) {
                                         founded = true;
                                         found[item].position.push(listPeptides[i].position);
                                         found[item].prePeptide.push(listPeptides[i].prePeptide);
                                         found[item].postPeptide.push(listPeptides[i].postPeptide);
+                                        if (listPeptides[i].include.length){
+                                            found[item].include.concat(listPeptides[i].include);
+                                            found[item].include.filter(function(item, pos, self) {
+                                                return self.indexOf(item) == pos;
+                                            });
+                                        }
+                                        if (listPeptides[i].includedIn.length){
+                                            found[item].includedIn.concat(listPeptides[i].includeIn);
+                                            found[item].includedIn.filter(function(item, pos, self) {
+                                                return self.indexOf(item) == pos;
+                                            });
+                                        }
                                         break;
                                     }
                                 }
@@ -373,6 +533,9 @@ function initNXDivs() {
 
             var template = HBtemplates['app/assets/templates/detailedPeptide.tmpl'];
             $("#nx-detailedPeptide").html(template);
+
+            var loader="<div class='spinner-center' style='margin-top: 50px;'>" +
+            "<div class='throbber-loader'></div></div>";
 
             var fillPeptideInfo = {
                 fillNames: function () {
@@ -401,7 +564,9 @@ function initNXDivs() {
                     $('#pepIncludedIn').html("");
                     $('#isoProteo').html("");
                     $("#pepSources").html("");
-                    $('#ptmInfos').html("");
+                    $('#ptmByPeptide').html(loader);
+                    $('#ptmByRegion').html(loader);
+                    $('#proteoBody').html(loader);
                     for (i = 0; i < data.Peptides.length; i++) {
                         if (data.Peptides[i].name === peptide) {
                             peptide = data.Peptides[i];
@@ -513,20 +678,58 @@ function initNXDivs() {
                     //    if (o !== "PubMed") $("#pepSources").append("<li>" + o + " (" + peptide.sources[o] + ")" + "</li>");
                     //    else $("#pepSources").append("<li>" + o + " </li>");
                     //});
-                    peptide.tissueSpecificity.forEach(function (o) {
-                        var sourceTemp = o;
-                        if (o.match("MDATA")) {
-                            sourceTemp = "neXtProt - " + o;
+                    
+                    /*** TO DO ***///
+//                    peptide.tissueSpecificity.forEach(function (o) {
+//                        console.log(o);
+//                        var sourceTemp = o;
+//                        if (o.match("MDATA")) {
+//                            sourceTemp = "neXtProt - " + o;
+//                        }
+//                        if (o.match("PMID")) {
+//                            sourceTemp = "neXtProt - " + o.replace("PMID_", "PubMed:");
+//                            pmidFound = true;
+//                        }
+//                        $('#pepSources').append("<li>" + sourceTemp + "</li>")
+//                    });
+                    for (var t in peptide.tissueSpecificity2) {
+                        var sourceTemp = "<li>" + t + "</li>";
+                        if (t.match("MDATA")) {
+                            sourceTemp = "<li>neXtProt - " + t + "</li>";
                         }
-                        if (o.match("PMID")) {
-                            sourceTemp = "neXtProt - " + o.replace("PMID_", "PubMed:");
+                        else if (t.match("PMID")) {
+                            sourceTemp = "<li>neXtProt - <em>" + t.replace("PMID_", "<strong>PubMed</strong> : ") + "</em></li>";
                             pmidFound = true;
                         }
-                        $('#pepSources').append("<li>" + sourceTemp + "</li>")
-                    });
-
+                        else if (peptide.tissueSpecificity2[t].mdata.length > 0 || peptide.tissueSpecificity2[t].pubmed.length > 0) {
+                            pmidFound = true;
+                            var pmids = "";
+                            var mdatas = "";
+                            peptide.tissueSpecificity2[t].pubmed.forEach(function(d,i, array){
+                                pmids += d;
+                                if (i < array.length -1) pmids += ", ";
+                            })
+                            peptide.tissueSpecificity2[t].mdata.forEach(function(d,i, array){
+                                mdatas += d;
+                                if (i < array.length -1) mdatas += ", ";
+                            })
+                            var pmidTemp = pmids ? "<li>" + t + ". <em><strong>PubMed</strong> : " + pmids + "</em></li>" : "";
+                            var mdataTemp = mdatas ? "<li>" + t + ". <em><strong>Submission</strong> : " + mdatas + "</em></li>" : "";
+                            sourceTemp = pmidTemp + mdataTemp;
+                        }
+                        $('#pepSources').append(sourceTemp);
+                        
+                    };
+                    
+                    $("#pepSources").html(
+                        $("#pepSources").children("li").sort(function (a, b) {
+                            return $(a).text().toUpperCase().localeCompare(
+                                $(b).text().toUpperCase());
+                        })
+                    )
+                
                     var query = "SELECT distinct ?ptmterm ?ptmtype ?ptmstart ?ptmend ?mapstart ?mapend ?ptmlabel ?ptmcomment WHERE {" +
-                        "values (?pepName ?iso) {(\"" + peptide.name + "\"^^xsd:string isoform:" + isoName + ") }" +
+                        "values (?pepName ?iso) {(\"" + peptide.nextprotName + "\"^^xsd:string isoform:" + isoName + ") }" +
                         "?iso :ptm ?ptm ." +
                         "?ptm rdf:type ?ptmtype ." +
                         "?ptm :start ?ptmstart ." +
@@ -553,9 +756,46 @@ function initNXDivs() {
                         "filter (str(?ptmpubid) = str(?mappubid))" +
                         "}" +
                         "order by ?ptmstart";
+                    
+                    var query2 = "SELECT distinct ?ptmterm ?ptmtype ?ptmstart ?ptmend ?mapstart ?mapend ?ptmlabel ?ptmcomment WHERE {" +
+                        "values (?pepName ?iso) {(\"" + peptide.nextprotName + "\"^^xsd:string isoform:" + isoName + ") }" +
+                        "?iso :ptm ?ptm ." +
+                        "?ptm rdf:type ?ptmtype ." +
+                        "?ptm :start ?ptmstart ." +
+                        "?ptm :end ?ptmend ." +
+                        "optional { ?ptm :term ?ptmterm ." +
+                        "?ptmterm rdfs:label ?ptmlabel } ." +
+                        "optional { ?ptm rdfs:comment ?ptmcomment } ." +
+                        "?ptm :evidence ?ptmevi ." +
+                        "?ptmevi :reference ?ptmref ." +
+                        "?ptmref :from ?ptmpub." +
+                        "bind (substr(str(?ptmpub),8) as ?ptmpubid)" +
+                        "filter (contains(?ptmpub, \"PubMed\"))" +
+                        "filter (?ptmtype  in (:CrossLink , :ModifiedResidue , :GlycosylationSite)) ." +
+                        "?iso :peptideMapping ?map ." +
+                        "?map :peptideName ?pepName ." +
+                        "?map :evidence ?mapevi ." +
+                        "?map :start ?mapstart ." +
+                        "?map :end ?mapend ." +
+                        "filter (?ptmstart >= ?mapstart && ?ptmend <= ?mapend)" +
+                        "{?mapevi :fromXref ?mapsrc ." +
+                            "?mapevi :reference / :accession ?mapacc ." +
+                            "bind (substr(str(?mapacc),1,8) as ?mappubid)" +
+                            "filter (contains(str(?mapsrc), \"PubMed\"))" +
+                            "filter (str(?ptmpubid) = str(?mappubid))" +
+                          "}" +
+                        "UNION {" +
+                        "?mapevi :assignedBy ?mapsrc2 ." +
+                        "filter(strlen(str(?mapsrc2))>=44) ." +
+                        "bind (substr(str(?mapsrc2),37,8) as ?mappubid2)" +
+                        "filter (contains(str(?mapsrc2), \"PMID\"))" +
+                        "filter (str(?ptmpubid) = str(?mappubid2))" +
+                        "}" +
+                        "}" +
+                        "order by ?ptmstart";
 
                     var queryRegion = "SELECT ?ptmtype ?ptmstart ?ptmend ?mapstart ?mapend ?ptmterm ?ptmcomment WHERE {" +
-                        "values (?pepName ?iso) {(\"" + peptide.name + "\"^^xsd:string isoform:" + isoName + ") }" +
+                        "values (?pepName ?iso) {(\"" + peptide.nextprotName + "\"^^xsd:string isoform:" + isoName + ") }" +
                         "?iso :ptm ?ptm ." +
                         "?ptm rdf:type ?ptmtype ." +
                         "?ptm :start ?ptmstart ." +
@@ -568,35 +808,51 @@ function initNXDivs() {
                         "?map :end ?mapend ." +
                         "filter (?ptmstart >= ?mapstart && ?ptmstart <= ?mapend || ?ptmend >= ?mapstart && ?ptmend <= ?mapend) " +
                         "filter not exists {?map a :PdbMapping}" +
-                        "}";
+                        "}" +
+                        "order by ?ptmstart";
                     if (pmidFound === true) {
-                        nx.executeSparql(query).then(function (data) {
-                            $('#ptmInfos').append("<div class=\"panel-heading\" style=\"background-color: #F5F5F5;border-bottom: 1px solid #DDD;border-top:1px solid #DDD;font-weight: 500;\">PTM justified by this peptide :</div>" +
-                                "<div id=\"ptmByPeptide\" class=\"panel-body\"></div>");
+                        //Promise.all(nx.executeSparql(query),nx.executeSparql(queryRegion)).then(function (data) {
+                        //    if (data[0].results.bindings.length > 0) {
+                        //        data[0].results.bindings.forEach(function (o) {
+                        //            $('#ptmByPeptide').append("<div class=\"row\"style=\"border-bottom:1px solid #E7EAEC;margin-bottom:5px;\"><dl class=\"col-md-6\"><dt>PTM ID</dt><dd>" + o.ptmterm.value.toString().match(/[^\/]*$/)[0] + "</dd></dl>" +
+                        //            "<dl class=\"col-md-6\"><dt>Position</dt><dd>" + o.ptmstart.value + "</dd></dl>" +
+                        //            "<dl class=\"col-md-6\"><dt>Type</dt><dd>" + o.ptmtype.value.toString().match(/[^#]*$/)[0].slice() + "</dd></dl>" +
+                        //            "<dl class=\"col-md-6\"><dt>Description</dt><dd>" + o.ptmcomment.value + "</dd></dl></div>");
+                        //        });
+                        //    } else $('#ptmByPeptide').html("No PTM found");
+                        //
+                        //}
+                        nx.executeSparql(query2).then(function (data) {
+                            console.log(data);
+                            $('#ptmByPeptide').html("");
                             if (data.results.bindings.length > 0) {
                                 data.results.bindings.forEach(function (o) {
-                                    $('#ptmByPeptide').append("<div class=\"row\"style=\"border-bottom:1px solid #E7EAEC;margin-bottom:5px;\"><dl class=\"col-md-6\"><dt>PTM ID</dt><dd>" + o.ptmterm.value.toString().match(/[^\/]*$/)[0] + "</dd></dl>" +
+                                    var tempID = o.ptmterm ? o.ptmterm.value.toString().match(/[^\/]*$/)[0] : "-";
+                                    var tempDesc = o.ptmcomment ? o.ptmcomment.value : "-";
+
+                                    $('#ptmByPeptide').append("<div class=\"row\"style=\"border-bottom:1px solid #E7EAEC;margin-bottom:5px;\"><dl class=\"col-md-6\"><dt>PTM ID</dt><dd>" +   tempID + "</dd></dl>" +
                                         "<dl class=\"col-md-6\"><dt>Position</dt><dd>" + o.ptmstart.value + "</dd></dl>" +
                                         "<dl class=\"col-md-6\"><dt>Type</dt><dd>" + o.ptmtype.value.toString().match(/[^#]*$/)[0].slice() + "</dd></dl>" +
-                                        "<dl class=\"col-md-6\"><dt>Description</dt><dd>" + o.ptmcomment.value + "</dd></dl></div>");
+                                        "<dl class=\"col-md-6\"><dt>Description</dt><dd>" +  tempDesc + "</dd></dl></div>");
                                 });
                             } else $('#ptmByPeptide').html("No PTM found");
                         }, function (error) {
                             console.log(error.responseText);
                         });
                     } else {
-                        $('#ptmInfos').append("<div class=\"panel-heading\" style=\"background-color: #F5F5F5;border-bottom: 1px solid #DDD;border-top:1px solid #DDD;font-weight: 500;\">PTM justified by this peptide :</div>" +
-                            "<div id=\"ptmByPeptide\" class=\"panel-body\">No PTM found</div>");
+                        $('#ptmByPeptide').html("No PTM found");
                     }
                     nx.executeSparql(queryRegion).then(function (data) {
-                        $('#ptmInfos').append("<div class=\"panel-heading\" style=\"background-color: #F5F5F5;border-bottom: 1px solid #DDD;border-top:1px solid #DDD;font-weight: 500;\">PTM present in this region :</div>" +
-                            "<div id=\"ptmByRegion\" class=\"panel-body\"></div>");
+                        $('#ptmByRegion').html("");
                         if (data.results.bindings.length > 0) {
                             data.results.bindings.forEach(function (o) {
-                                $('#ptmByRegion').append("<div class=\"row\"style=\"border-bottom:1px solid #E7EAEC;margin-bottom:5px;\"><dl class=\"col-md-6\"><dt>PTM ID</dt><dd>" + o.ptmterm.value.toString().match(/[^\/]*$/)[0] + "</dd></dl>" +
+                                var tempID = o.ptmterm ? o.ptmterm.value.toString().match(/[^\/]*$/)[0] : "-";
+                                var tempDesc = o.ptmcomment ? o.ptmcomment.value : "-";
+
+                                $('#ptmByRegion').append("<div class=\"row\"style=\"border-bottom:1px solid #E7EAEC;margin-bottom:5px;\"><dl class=\"col-md-6\"><dt>PTM ID</dt><dd>" + tempID + "</dd></dl>" +
                                     "<dl class=\"col-md-6\"><dt>Position</dt><dd>" + o.ptmstart.value + "</dd></dl>" +
                                     "<dl class=\"col-md-6\"><dt>Type</dt><dd>" + o.ptmtype.value.toString().match(/[^#]*$/)[0].slice() + "</dd></dl>" +
-                                    "<dl class=\"col-md-6\"><dt>Description</dt><dd>" + o.ptmcomment.value + "</dd></dl></div>");
+                                    "<dl class=\"col-md-6\"><dt>Description</dt><dd>" + tempDesc + "</dd></dl></div>");
                             });
                         } else $('#ptmByRegion').html("No PTM found");
                     }, function (error) {
@@ -628,7 +884,7 @@ function initNXDivs() {
         if ($("#nx-overviewPeptide").length > 0) {
             var datas = {
                 "PeptideLength": 0,
-                "Peptides": getInfoForIsoform.Peptides(peptideMappings, isoName)
+                "Peptides": getInfoForIsoform.Peptides2(peptideMappings, isoName)
             };
             datas.PeptideLength = datas.Peptides.length;
 
@@ -703,7 +959,7 @@ function initNXDivs() {
                     case 10 :
                         return singProtColor; //'green';
                     default :
-                        return sevProtColor // 20 or
+                        return sevProtColor; // 20 or
                 }
             }
 
@@ -765,7 +1021,7 @@ function initNXDivs() {
                     var selection = [];
                     $(".PepSelected").each(function (o) {
                         if ($(this).prop("checked")) {
-                            selection.push($(this).parent().parent().attr("id"));
+                            selection.push($(this).parent().parent().attr("class"));
                         }
                     });
                     addPeptidesInfos(selection, datas.Peptides, isoName);
@@ -785,14 +1041,27 @@ function initNXDivs() {
     function renderFeatureViewer(data, isoName) {
 
         var metaData = [
-            {name: "Sequence"},
-            {name: "Peptide", className: "pep", color: "#B3E1D1", type: "multipleRect", filter: "Peptide"},
-            {name: "SRM Peptide", className: "srmPep", color: "#B3E1F0", type: "multipleRect", filter: "none"},
-            {name: "Mature protein", className: "mat", color: "#B3B3C2", type: "rect", filter: "Processing"},
-            {name: "Propeptide", className: "pro", color: "#B3B3B3", type: "rect", filter: "Processing"}
+            {name: "Sequence"}, //1
+            {name: "Propeptide",className: "pro",color: "#B3B3B3",type: "rect",filter:"Processing"}, //2
+            {name: "Mature protein",className: "mat",color: "#B3B3C2",type: "rect",filter:"Processing"}, // 3
+            {name: "Signal peptide",className: "sign",color: "#B3B3E1",type: "rect",filter:"Processing"}, //4
+            {name: "Transit peptide",className: "pero",color: "#B3B3F0",type: "rect",filter:"Processing"}, //5
+            {name: "Transit peptide",className: "mito",color: "#B3B3F0",type: "rect",filter:"Processing"}, //6
+            {name: "Disulfide bond",className: "dsB",color: "#B3B3E1",type: "path",filter:"Modified Residue"}, //7
+            {name: "Topo. domain","className": "topodomain","color": "#A5DBA5","type": "rect","filter": "Topology"}, //8
+            {"name": "Membrane","className": "membrane","color": "#A5DBB7","type": "rect","filter": "Topology"}, //9
+            {name: "Antibody",className: "anti",color: "#B3C2F0",type: "rect",filter:"none"}, //10
+            {name: "Initiator meth",className: "initMeth",color: "#B3B3D1",type: "unique",filter:"Processing"}, //11
+            {name: "Modified residue",className: "modifRes",color: "#B3C2B3",type: "unique",filter:"Modified Residue"}, //12
+            {name: "Cross-link",className: "crossLink",color: "#B3C2C2",type: "unique",filter:"Modified Residue"}, //13
+            {name: "Glycosylation",className: "glycoSite",color: "#B3C2D1",type: "unique",filter:"Modified Residue"}, //14
+            {name: "Lipidation",className: "lipidation",color: "#A3B5DB",type: "unique",filter:"Modified Residue"}, //15
+            {name: "Non standart AA",className: "seleno",color: "#859DE7",type: "unique",filter:"Modified Residue"}, //16
+            {name: "Peptide",className: "pep",color: "#B3E1D1",type: "multipleRect",filter:"Peptide"}, //17
+            {name: "SRM Peptide",className: "srmPep",color: "#B3E1F0",type: "multipleRect",filter:"none"} //18
         ];
 
-        for (var i = 1; i < data.length - 1; i++) {
+        for (var i = 1; i < data.length; i++) {
 
             var feat = NXUtils.convertMappingsToIsoformMap(data[i], metaData[i].name, metaData[i].filter);
             var featForViewer = NXViewerUtils.convertNXAnnotations(feat, metaData[i]);
@@ -806,11 +1075,25 @@ function initNXDivs() {
     var featuresForViewer = [];
 
     $(function () {
-        [nx.getProteinSequence(nxEntryName), //1
-            nx.getPeptide(nxEntryName), //2
-            nx.getSrmPeptide(nxEntryName), //3
-            nx.getAnnotationsByCategory(nxEntryName, "mature-protein"), //4
-            nx.getAnnotationsByCategory(nxEntryName, "propeptide") //5
+        [
+            nx.getProteinSequence(nxEntryName), //1
+            nx.getAnnotationsByCategory(nxEntryName, "propeptide"), //2
+            nx.getAnnotationsByCategory(nxEntryName, "mature-protein"), //3
+            nx.getAnnotationsByCategory(nxEntryName, "signal-peptide"), //4
+            nx.getAnnotationsByCategory(nxEntryName, "peroxisome-transit-peptide"), //5
+            nx.getAnnotationsByCategory(nxEntryName, "mitochondrial-transit-peptide"), //6
+            nx.getAnnotationsByCategory(nxEntryName, "disulfide-bond"), //7
+            nx.getAnnotationsByCategory(nxEntryName, "topological-domain"), //7
+            nx.getAnnotationsByCategory(nxEntryName, "transmembrane-region"), //7
+            nx.getAnnotationsByCategory(nxEntryName, "antibody-mapping"), //8
+            nx.getAnnotationsByCategory(nxEntryName, "initiator-methionine "), //9
+            nx.getAnnotationsByCategory(nxEntryName, "modified-residue"), //10
+            nx.getAnnotationsByCategory(nxEntryName, "cross-link"), //11
+            nx.getAnnotationsByCategory(nxEntryName, "glycosylation-site "), //12
+            nx.getAnnotationsByCategory(nxEntryName, "lipidation-site"), //13
+            nx.getAnnotationsByCategory(nxEntryName, "selenocysteine"), //14
+            nx.getAnnotationsByCategory(nxEntryName, "peptide-mapping"), //15
+            nx.getAnnotationsByCategory(nxEntryName, "srm-peptide-mapping") //16
         ].reduce(function (sequence, dataPromise) {
                 return sequence.then(function () {
                     return dataPromise;
@@ -826,45 +1109,53 @@ function initNXDivs() {
                             nxIsoformChoice(isoforms);
                             break;
                         case 2:
-                            peptideMappings = oneData;
-                            //adding a copy for the feature viewer, because pepetides will be added to peptideMappings
-                            allFeatures.push(jQuery.merge([], oneData));
+                            proPeptide = oneData.annot;
+                            allFeatures.push(oneData.annot);
                             break;
                         case 3:
-                            srmPeptideMappings = oneData;
-                            allFeatures.push(oneData);
-                            // Hack: add srm peptide mapping evidences into peptide mapping evidences of natural/synthetic peptides
-                            srmPeptideMappings.forEach(function (srmPeptideMapping) {
-                                var isPurelySynthetic = true;
-                                for (var i = 0; i < peptideMappings.length; i++) {
-                                    if (srmPeptideMapping.peptideUniqueName === peptideMappings[i].peptideUniqueName) {
-                                        peptideMappings[i].evidences = peptideMappings[i].evidences.concat(srmPeptideMapping.evidences);
-                                        isPurelySynthetic = false;
-                                        break;
-                                    }
-                                }
-                                if (isPurelySynthetic) {
-                                    peptideMappings.push(srmPeptideMapping); //TODO fix this! This is referenced in allFeatures[1] so it should not be pushed like this
-                                }
-                            });
-                            break;
-                        case 4:
                             matureProtein = oneData.annot;
                             allFeatures.push(oneData.annot);
                             break;
-                        case 5:
-                            proPeptide = oneData.annot;
-                            allFeatures.push(oneData.annot);
-
-                            renderPeptidesForIsoform(peptideMappings, firstIso);
-                            renderFeatureViewer(allFeatures, firstIso);
-                            showFeatureViewer();
-
+                        case 17:
+                            pepMap = jQuery.merge([], oneData.annot);
+                            //adding a copy for the feature viewer, because peptides will be added to peptideMappings
+                            allFeatures.push(jQuery.extend({}, oneData.annot));
                             break;
+                        case 18:
+                            var pepSynthetic = jQuery.merge([], oneData.annot);
+                            pepSynthetic.forEach(function(ps) {
+                                var psFirstIso = Object.keys(ps.targetingIsoformsMap)[0];
+                                var psStart = ps.targetingIsoformsMap[psFirstIso].firstPosition;
+                                var psLast = ps.targetingIsoformsMap[psFirstIso].lastPosition;
+
+                                var isPurelySynthetic = true;
+                                for (var i = 0; i < pepMap.length; i++) {
+                                    if (pepMap[i].targetingIsoformsMap.hasOwnProperty(psFirstIso)){
+                                        if (pepMap[i].targetingIsoformsMap[psFirstIso].firstPosition === psStart && pepMap[i].targetingIsoformsMap[psFirstIso].lastPosition === psLast) {
+                                            pepMap[i].evidences = pepMap[i].evidences.concat(ps.evidences);
+                                            pepMap[i].category ="natAndSynth";
+                                            isPurelySynthetic = false;
+                                        }
+                                    }
+                                }
+                                if (isPurelySynthetic) {
+                                    pepMap.push(ps); //TODO fix this! This is referenced in allFeatures[1] so it should not be pushed like this
+                                }
+                            });
+                            //adding a copy for the feature viewer, because pepetides will be added to peptideMappings
+                            allFeatures.push(jQuery.extend({}, oneData.annot));
+                            
+                            break;
+                        default:
+                            allFeatures.push(jQuery.extend({}, oneData.annot));
                     }
                 });
             }, Promise.resolve())
             .then(function () {
+                renderPeptidesForIsoform(pepMap, firstIso);
+                renderFeatureViewer(allFeatures, firstIso);
+                showFeatureViewer();
+                console.log("test1é3")
             })
             .catch(function (err) {
                 // catch any error that happened along the way

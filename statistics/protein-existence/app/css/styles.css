@@ -1,0 +1,217 @@
+body{
+    background-color: #F7F6F6;
+}
+.header{
+    background-color: #eee  ;
+    border-bottom: 1px solid #ddd;
+}
+.header h1{
+    margin:0px;
+    padding:5px;
+}
+#vis{
+    text-align: center;
+}
+#visContainer{
+/*    padding-left: 30px;*/
+    padding-right: 30px;
+/*
+    margin-left:10px;
+    margin-right:10px;
+*/
+}
+#legendContainer{
+    padding-left: 30px;
+/*    padding-right: 30px;*/
+/*
+    margin-left:10px;
+    margin-right:10px;
+*/
+}
+
+
+path {
+    stroke: #fff;
+    stroke-width: 1;
+    cursor: pointer;
+}
+
+text {
+    font: 11px sans-serif;
+    cursor: pointer;
+}
+
+.title {
+    font:28px Helvetica;
+    font-weight: 100;
+}
+.title .proteinsNb {
+    font:22px Helvetica;
+    font-weight: 100;
+}
+.subtitle {
+    font:18px Helvetica;
+    font-weight: 900;
+}
+.evTitle {
+    font:50px Helvetica;
+    font-weight: 900;
+}
+.evNb {
+    font:18px Helvetica;
+    font-weight: 900;
+}
+.evBack {
+    font:18px Helvetica;
+    color:#eee;
+    font-weight: 900;
+}
+body {
+    width: 100%;
+}
+
+h1 {
+    font-family: Helvetica;
+    text-align: center;
+    font-weight:300;
+    margin: .5em 0;
+}
+
+p#intro {
+    text-align: center;
+    margin: 1em 0;
+}
+
+#breadcrumbs {
+    display: none;
+}
+
+.d3-tip {
+line-height: 1;
+font-weight: bold;
+padding: 12px;
+background: rgba(0, 0, 0, 0.8);
+color: #fff;
+border-radius: 2px;
+}
+
+/* Creates a small triangle extender for the tooltip */
+.d3-tip:after {
+box-sizing: border-box;
+display: inline;
+font-size: 10px;
+width: 100%;
+line-height: 1;
+color: rgba(0, 0, 0, 0.8);
+content: "\25BC";
+position: absolute;
+text-align: center;
+}
+
+/* Style northward tooltips differently */
+.d3-tip.n:after {
+margin: -1px 0 0 0;
+top: 100%;
+left: 0;
+}
+th[data-sort]{
+  cursor:pointer;
+}
+tr.awesome{
+  color: red;
+}
+.chrTable{
+    overflow-y: scroll;
+    overflow-x: auto;
+    border-bottom: 1px solid #ccc;
+    border-top: 1px solid #eee;
+    margin-top:0px;
+}
+.chrTableTotal{
+    overflow-y: auto;
+    overflow-x:auto;
+    border-bottom: 1px solid #eee;
+    border-top: 1px solid #eee;
+    margin-top:0px;
+}
+.chrTableTotal td{
+    font-size:12px;
+}
+#tableBodyTotal{
+    margin-right:110px;
+}
+#legendBody th{
+    text-align: center;
+}
+.chrNumber button{
+    width:100%;
+}
+td.chrNumber {
+    padding: 2px 0px !important;
+}
+.chrNumber button{
+    text-align: center;
+    padding:6px 0px;
+}
+#totalTable tr:first-child td:first-child {
+    padding-top:2px;
+    padding-bottom:2px;
+}
+#tableLegend{
+    padding:10px 10px 10px;
+}
+#totalTable{  
+    height: 60px;
+    overflow-y: scroll;
+    margin-bottom: 0px;
+}
+#total button{
+    text-align: center;
+    padding: 6px 19px;
+}
+.chrSelected{
+    background-color:#DE9C5B !important;
+}
+.legendIcon{
+    display:inline-block;
+    width:20px;
+    height:20px;
+    vertical-align:middle;
+    margin:0px 5px 0px 10px;
+    border-radius:50%; 
+    border: 1px solid grey;
+    text-align:center; 
+    line-height:0.8;
+}
+.legendText{
+    display:inline-block;
+    font-weight:bold;
+    font-size:1em;
+    font-style:italic;
+    margin:0;
+    padding-top:3px;
+    vertical-align:top;
+}
+.legendText em{
+    font-weight: 500;
+}
+#legendBody{
+    background-color: #eee;
+}
+#chromosomePETable tbody{
+    text-align: right;
+}
+#totalTable tbody{
+    text-align: center;
+}
+.perc{
+    font-size:8px;
+}
+.unselected{
+    box-shadow: inset 0px 0px 15px black;
+}
+/*If filter available add :*/
+/*
+.legendIcon{
+    cursor:pointer;
+}*/

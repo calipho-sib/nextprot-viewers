@@ -15,7 +15,7 @@
 <div class="row" style="margin: 0px 20px;">
     <div id="visuContainer" class="col-md-12" style="background:#fff;padding:0px;border-top:4px solid #E7EAEC;border-bottom: 1px solid #e7eaec;">
         <div id="isoformDisplayed"></div>
-        <div class="chart"></div>
+        <div id="chart"></div>
     </div>
 </div>
 <div class="row" style="margin: 10px 20px;">
@@ -762,15 +762,15 @@
                 nx.getAnnotationsByCategory(entry, "peroxisome-transit-peptide"), //5
                 nx.getAnnotationsByCategory(entry, "mitochondrial-transit-peptide"), //6
                 nx.getAnnotationsByCategory(entry, "disulfide-bond"), //7
-                nx.getAntibody(entry), //8
+                nx.getAnnotationsByCategory(entry, "antibody-mapping"), //7
                 nx.getAnnotationsByCategory(entry, "initiator-methionine "), //9
                 nx.getAnnotationsByCategory(entry, "modified-residue"), //10
                 nx.getAnnotationsByCategory(entry, "cross-link"), //11
                 nx.getAnnotationsByCategory(entry, "glycosylation-site "), //12
                 nx.getAnnotationsByCategory(entry, "lipidation-site"), //13
                 nx.getAnnotationsByCategory(entry, "selenocysteine"), //14
-                nx.getPeptide(entry), //15
-                nx.getSrmPeptide(entry), //16
+                nx.getAnnotationsByCategory(entry, "peptide-mapping"), //14
+                nx.getAnnotationsByCategory(entry, "srm-peptide-mapping"), //14
                 nx.getIsoformMapping(entry) //17
             ]).then(function (oneData) {
 
@@ -791,10 +791,11 @@
                     {name: "Lipidation",className: "lipidation",color: "#A3B5DB",type: "unique",filter:"Modified Residue"}, //13
                     {name: "Non standart AA",className: "seleno",color: "#859DE7",type: "unique",filter:"Modified Residue"}, //14
                     {name: "Peptide",className: "pep",color: "#B3E1D1",type: "multipleRect",filter:"Peptide"}, //15
-                    {name: "SRM Peptide",className: "srmPep",color: "#B3E1F0",type: "multipleRect",filter:"none"} //16
+                    {name: "SRM Peptide",className: "srmPep",color: "#B3E1F0",type: "multipleRect",filter:"Peptide"} //16
                 ];
 
                 console.log(oneData[14]);
+                console.log(oneData[0]);
                 var tv = new TripleViewer(entry);
                 tv.init(oneData,metaData);
 

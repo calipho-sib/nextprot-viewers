@@ -30,7 +30,7 @@
     "handlebars": "~4.0.2",
     "feature-viewer": "~0.1.7",
     "sequence-viewer": "~0.2.6",
-    "nextprot": "~0.0.45",
+    "nextprot": "~0.0.x",
     "iframe-resizer": "x.x.x"
   },
   "resolutions": {
