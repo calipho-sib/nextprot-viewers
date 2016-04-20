@@ -1,6 +1,6 @@
 <html>
 <head>
-    <title>Breast Cancer Portal</title>
+    <title>NavMut Portal</title>
     <script src="js/datatables.min.js"></script>
     <link rel="stylesheet" type="text/css" href="css/datatables.min.css">
     <link rel="stylesheet" href="css/style.css" />
@@ -10,7 +10,7 @@
         <div>
             <div class="row header">
                 <div class="col-lg-4 col-md-3" style="padding-right:0px;">
-                    <h1 id=gaussSubtitle><span id="title2"><span class="hidden-md">Breast </span>Cancer <span class="hidden-md"> portal</span></span></h1>
+                    <h1 id=gaussSubtitle><span id="title2"><span class="hidden-md"></span>NavMut <span class="hidden-md"> portal</span></span></h1>
                 </div>
             </div>
         </div>
@@ -73,7 +73,7 @@
         });
         var gaussAnnotTable = $('#portalTable').DataTable({
             colReorder: true,
-            "ajax": './brcaportal.json',
+            "ajax": '/scnportal.json',
             "pageLength": 20,
             //                dom: '<"table_overflow"t>'
             dom: "<'row firstHeadTable'<'col-sm-5'B><'col-sm-7'f>>" +
