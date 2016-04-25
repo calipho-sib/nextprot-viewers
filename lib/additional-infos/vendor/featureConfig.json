@@ -252,7 +252,7 @@
         }
       },
       {
-        "APIRef": "miscellaneous",
+        "APIRef": "miscellaneous-region",
         "metadata": {
           "name": "Region",
           "className": "miscregion",
