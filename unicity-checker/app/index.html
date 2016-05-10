@@ -1,0 +1,71 @@
+<html>
+
+<head>
+    <title>Unicity checker</title>
+    <link rel="stylesheet" type="text/css" href="../dist/app.css">
+    <script src="../dist/app.js"></script>
+    <!--
+    <link rel="stylesheet" type="text/css" href="bootstrap.min.css">
+    <script src="jquery.min.js"></script>
+    <script src="handlebars.min.js"></script>
+    <script src="nextprot.js"></script>
+    <script src="compiled_peptide_templates.js"></script>
+    <script src="proteotypicity.js"></script>
+-->
+</head>
+
+<body style="background:#F5F4F4;text-align:center;padding:0px 15px;">
+    <div class="row">
+        <h1 style="margin-bottom:50px;">Unicity Checker</h1>
+    </div>
+    <div class="row" style="text-align:center;">
+        <div class="col-md-10 col-md-offset-1">
+            <form>
+                <div class="form-group">
+                    <label style="display:block;">Enter your peptide(s) : </label>
+                    <textarea id="variantList" class="form-control" rows="5"></textarea>
+                </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-10 col-md-offset-1">
+            <div class="alert alert-info pull-left" role="alert" style="padding:10px 15px;margin:0px 0px 5px;">
+                <span class="glyphicon glyphicon-exclamation-sign"></span> The unicity checker is currently limited to a maximum of <strong>50 peptides</strong>.</div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-10 col-md-offset-1">
+            <div id="legend" class="pull-left">
+                <div class="legend-elem">
+                    <div class="legendIcon" style="background:#DFF0D8;"> </div>
+                    <p class="legendText">Entry-specific</p>
+                </div>
+                <div class="legend-elem">
+                    <div class="legendIcon" style="background:#D9EDF7;"> </div>
+                    <p class="legendText">Found in other entries</p>
+                </div>
+            </div>
+            <button id="submitList" type="button" class="btn btn-primary pull-right">Submit</button>
+            </form>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-10 col-md-offset-1">
+            <hr id="separationLine">
+        </div>
+
+        <div class="row">
+            <div class="col-md-10 col-md-offset-1">
+                <div id="peptideResult"></div>
+            </div>
+        </div>
+
+        <script class="example">
+        </script>
+        <style>
+
+        </style>
+
+</body>
+
+</html>
