@@ -1,9 +1,9 @@
 $(document).ready(function () {
     var Nextprot = window.Nextprot;
     var nx = new Nextprot.Client("PeptideViewer", "nextprotTeam");
-    var exemples = "LQELFLQEVR, AATDFVQEMR, TKMGLYYSYFK, \nCVSNTPGYCR, TTETLIILSR, IGTTVIDLENR"
+//    var exemples = "LQELFLQEVR, AATDFVQEMR, TKMGLYYSYFK, \nCVSNTPGYCR, TTETLIILSR, IGTTVIDLENR"
     
-    $("#variantList").text(exemples);
+//    $("#variantList").text(exemples);
 
     function toggleIsoforms(id) {
         $("#" + id + ' #showIsoforms').text("Show isoforms");
@@ -20,14 +20,14 @@ $(document).ready(function () {
         var peptide = {
             name: pep
         }
-        var template2 = HBtemplates['templates/notFound.tmpl'];
+        var template2 = HBtemplates['app/templates/notFound.tmpl'];
         var results2 = template2(peptide);
         $("#peptideResult").prepend(results2);
         
     }
     
     function throwNbError(pep) {
-        var template3 = HBtemplates['templates/limitExceeded.tmpl'];
+        var template3 = HBtemplates['app/templates/limitExceeded.tmpl'];
         $("#peptideResult").prepend(template3);
     }
     
@@ -91,7 +91,7 @@ $(document).ready(function () {
                         });
                     })
                 };
-                var template = HBtemplates['templates/matchingEntries.tmpl'];
+                var template = HBtemplates['app/templates/matchingEntries.tmpl'];
                 var results = template(entryMatching);
                 $("#peptideResult").append(results);
 

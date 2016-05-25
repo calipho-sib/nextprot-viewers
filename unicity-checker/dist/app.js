@@ -5389,11 +5389,11 @@ this["HBtemplates"]["templates/overviewProtein.tmpl"] = Handlebars.template({"1"
 },"useData":true});
 this["HBtemplates"] = this["HBtemplates"] || {};
 
-this["HBtemplates"]["templates/limitExceeded.tmpl"] = Handlebars.template({"compiler":[6,">= 2.0.0-beta.1"],"main":function(depth0,helpers,partials,data) {
+this["HBtemplates"]["app/templates/limitExceeded.tmpl"] = Handlebars.template({"compiler":[6,">= 2.0.0-beta.1"],"main":function(depth0,helpers,partials,data) {
     return "<div class=\"col-md-10 col-md-offset-1\">\n    <div class=\"panel panel-danger\">\n        <div class=\"panel-heading\">\n            Limit exceeded !\n        </div>\n        <div class=\"panel-body\">\n            You have exceeded the maximum number of peptides (<strong>50</strong>).\n        </div>\n    </div>\n</div>";
 },"useData":true});
 
-this["HBtemplates"]["templates/matchingEntries.tmpl"] = Handlebars.template({"1":function(depth0,helpers,partials,data) {
+this["HBtemplates"]["app/templates/matchingEntries.tmpl"] = Handlebars.template({"1":function(depth0,helpers,partials,data) {
     var stack1;
 
   return "        "
@@ -5507,7 +5507,7 @@ this["HBtemplates"]["templates/matchingEntries.tmpl"] = Handlebars.template({"1"
   return buffer + "                    </ul>\n                </div>\n            </div>\n        </div>\n    </div>\n    </div>\n    </div>\n    </div>";
 },"useData":true});
 
-this["HBtemplates"]["templates/notFound.tmpl"] = Handlebars.template({"compiler":[6,">= 2.0.0-beta.1"],"main":function(depth0,helpers,partials,data) {
+this["HBtemplates"]["app/templates/notFound.tmpl"] = Handlebars.template({"compiler":[6,">= 2.0.0-beta.1"],"main":function(depth0,helpers,partials,data) {
     var helper;
 
   return "<div class=\"col-md-10 col-md-offset-1\">\n    <div class=\"panel panel-danger\">\n        <div class=\"panel-heading\">\n            Peptide not found !\n        </div>\n        <div class=\"panel-body\">\n            The peptide <strong>"
@@ -5517,9 +5517,9 @@ this["HBtemplates"]["templates/notFound.tmpl"] = Handlebars.template({"compiler"
 $(document).ready(function () {
     var Nextprot = window.Nextprot;
     var nx = new Nextprot.Client("PeptideViewer", "nextprotTeam");
-    var exemples = "LQELFLQEVR, AATDFVQEMR, TKMGLYYSYFK, \nCVSNTPGYCR, TTETLIILSR, IGTTVIDLENR"
+//    var exemples = "LQELFLQEVR, AATDFVQEMR, TKMGLYYSYFK, \nCVSNTPGYCR, TTETLIILSR, IGTTVIDLENR"
     
-    $("#variantList").text(exemples);
+//    $("#variantList").text(exemples);
 
     function toggleIsoforms(id) {
         $("#" + id + ' #showIsoforms').text("Show isoforms");
@@ -5536,14 +5536,14 @@ $(document).ready(function () {
         var peptide = {
             name: pep
         }
-        var template2 = HBtemplates['templates/notFound.tmpl'];
+        var template2 = HBtemplates['app/templates/notFound.tmpl'];
         var results2 = template2(peptide);
         $("#peptideResult").prepend(results2);
         
     }
     
     function throwNbError(pep) {
-        var template3 = HBtemplates['templates/limitExceeded.tmpl'];
+        var template3 = HBtemplates['app/templates/limitExceeded.tmpl'];
         $("#peptideResult").prepend(template3);
     }
     
@@ -5607,7 +5607,7 @@ $(document).ready(function () {
                         });
                     })
                 };
-                var template = HBtemplates['templates/matchingEntries.tmpl'];
+                var template = HBtemplates['app/templates/matchingEntries.tmpl'];
                 var results = template(entryMatching);
                 $("#peptideResult").append(results);
 
