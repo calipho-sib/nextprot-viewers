@@ -1,0 +1,36 @@
+{
+  "name": "proteotypicity-checker",
+  "version": "0.0.1",
+  "main": "app.js",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components"
+  ],
+  "dependencies": {
+    "jquery": "x.x.x",
+    "bootstrap": "3.x.x",
+    "handlebars" : "x.x.x",
+    "nextprot": "x.x.x",
+    "iframe-resizer": "~3.2.0"
+  },
+  "keywords": [
+    "peptide",
+    "proteotypicity",
+    "protein",
+    "sib",
+    "isb",
+    "nextprot",
+    "uniprot",
+    "viewer"
+  ],
+  "license": "GNU GPL v2",
+  "authors": [
+    "Mathieu Schaeffer <mat.schaeff@gmail.com>",
+    "Calipho Team <ndu@isb-sib.ch>"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/MatSchaeff/proteotypicity-checker.git"
+  }
+}

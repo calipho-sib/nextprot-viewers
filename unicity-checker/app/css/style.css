@@ -1,0 +1,36 @@
+.legendIcon{
+    display:inline-block;
+    width:20px;
+    height:20px;
+    vertical-align:middle;
+    margin:0px 5px 0px 10px;
+    border-radius:50%; 
+    border: 1px solid grey;
+    text-align:center; 
+    line-height:0.8;
+}
+.legendText{
+    display:inline-block;
+    font-weight:bold;
+    font-size:1em;
+    font-style:italic;
+    margin:0;
+    padding-top:3px;
+    vertical-align:top;
+}
+#submitList{
+    display:inline-block;
+}
+#legend{
+    display:inline-block;
+    text-align: left;
+    margin-top:5px;
+    margin-bottom:15px;
+}
+.legend-elem{
+    display: inline-block;
+}
+#separationLine{
+    margin-bottom:25px;
+    border-top:1px solid #ccc;
+}
