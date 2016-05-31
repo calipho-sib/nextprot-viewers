@@ -1057,8 +1057,8 @@ function initNXDivs() {
             {name: "Glycosylation",className: "glycoSite",color: "#B3C2D1",type: "unique",filter:"Modified Residue"}, //14
             {name: "Lipidation",className: "lipidation",color: "#A3B5DB",type: "unique",filter:"Modified Residue"}, //15
             {name: "Non standart AA",className: "seleno",color: "#859DE7",type: "unique",filter:"Modified Residue"}, //16
-            {name: "Peptide",className: "pep",color: "#B3E1D1",type: "multipleRect",filter:"Peptide"}, //17
-            {name: "SRM Peptide",className: "srmPep",color: "#B3E1F0",type: "multipleRect",filter:"none"} //18
+            {name: "Peptide",className: "pep",color: "#B3E1D1",type: "rect",filter:"Peptide", height:8}, //17
+            {name: "SRM Peptide",className: "srmPep",color: "#B3E1F0",type: "rect",filter:"none", height:8} //18
         ];
 
         for (var i = 1; i < data.length; i++) {

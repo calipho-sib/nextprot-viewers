@@ -5,7 +5,7 @@
     "nextprot": "~0.0.x",
     "iframe-resizer": "~3.2.0",
     "feature-viewer": "x.x.x",
-    "sequence-viewer": "~0.2.6"
+    "sequence-viewer": "x.x.x"
   },
   "resolutions": {
     "handlebars": "3.0.3"
