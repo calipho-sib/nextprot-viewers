@@ -15,3 +15,8 @@ th[data-sort]{
 .question {
     color: orange
 }
+
+.heatmap-collapseAll-btn, .heatmap-expandAll-btn {
+    display: none;
+}
+
