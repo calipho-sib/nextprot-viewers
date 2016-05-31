@@ -16,7 +16,10 @@ th[data-sort]{
     color: orange
 }
 
-.heatmap-collapseAll-btn, .heatmap-expandAll-btn {
+.heatmap-expandAll-btn {
     display: none;
 }
 
+.heatmap-collapseAll-btn {
+    display: none;
+}
