@@ -2,133 +2,108 @@
 <head>
   <title>neXtProt phenotypes</title>
   <link rel="stylesheet" href="style.css"/>
+  <script type="text/javascript" src="https://rawgit.com/calipho-sib/protein-expression/gh-pages/dist/heatmap-table-vendor.js"></script>
+  <script type="text/javascript" src="https://rawgit.com/calipho-sib/protein-expression/gh-pages/dist/heatmap-table.js"></script>
+  <link rel="stylesheet" href="https://rawgit.com/calipho-sib/protein-expression/gh-pages/dist/heatmap-table.css" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
 </head>
-</head>
+
 <body>
+
     <h2>BRCA1 phenotypes</h2>
-
-    <div class="row">
-        Iso Selection (ISO 1,2,...)
+    <div class="panel panel-default col-lg-12 col-md-12">
+      <div id="heatmap-table" style="width:100%;margin: 50px auto 50px auto; height:auto;"></div>
     </div>
+    
+  <script defer>
+  var heatmapTableOptions = {
+    valuesColorMapping: [
+        { value: 'impact', color: 'red'},
+        { value: 'increase', color: 'red'},
+        { value: 'decrease', color: 'red'},
+        { value: 'no-impact', color: 'green'},
+        { value: 'gain', color: 'red'}
+    ],
+    columnWidth: "120px",
+}
 
-    <div class="row">
-          <table>
-    <thead>
-      <tr>
-        <th data-sort="string">Variants</th>
-        <th data-sort="string">Relation</th>
-        <th data-sort="string">Phenotype</th>
-        <th data-sort="string">Intensity</th>
-        <th data-sort="float">Evidence</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td><a target="_parent" href="/entry/NX_P38398/view/variants"> BRCA1-p.Ser1598Ala + BRCA1-p.Ser1200Ala</a></td>
-        <td>decreases</td>
-        <td>homologous recombination</td>
-        <td>(most severe)</td>
-        <td>[4]</td>
-      </tr>
-      <tr>
-        <td>BRCA1-p.Ser1598Ala</td>
-        <td>increases</td>
-        <td>homologous recombination</td>
-        <td>(most severe)</td>
-        <td>[4]</td>
-      </tr>
-      <tr>
-        <td>BRCA1-p.Ser1598Ala</td>
-        <td>normal</td>
-        <td>homologous recombination</td>
-        <td>(most severe)</td>
-        <td>[4]</td>
-      </tr>
-      <tr>
-        <td>...</td>
-        <td>...</td>
-        <td>...</td>
-        <td>...</td>
-        <td>...</td>
-      </tr>
-    </tbody>
-  </table>
+var heatMapTable = new HeatMapTable({
+  header:['no-impact','impact','increase', 'decrease', 'gain'],
+                tableID: "heatmap-table",
+                options: heatmapTableOptions
+            });
+            
 
-    <div  class="question">
-        Note: Intensity is on the evidence.... Which one should be taken?
-        <br>
-        Note: How to deal with double / triple / quadruple mutants?
-     </div>
+var data = {
+  "data": [
+    {
+      "rowLabel": "BRCA1-p.Val8Tyr",
+      "linkLabel": "[BRCA1]",
+      "linkURL": "http://www.nextprot.org/db/entry/NX_P38398", 
+      "values": ["no-impact", "", "", "decrease", ""],
+      "children": [
+        {
+          "rowLabel": "go-molecular-function (3)",
+          "linkLabel": "[ubiquitin-protein transferase activity]",
+          "linkURL": "http://www.nextprot.org/db/term/GO:0004842",
+          "values": ["", "", "", "decrease", ""],
+          "children": [ ]
+        },
+        {
+          "rowLabel": "binary-interaction",
+          "linkLabel": "[BARD1]",
+          "linkURL": "http://www.nextprot.org/db/entry/NX_Q99728",
+          "values": ["no-impact", "", "", "", ""],
+          "children": [ ]
+        }
+      ], 
+    },
+    {
+      "rowLabel": "BRCA1-p.Ser1423Ala + BRCA1-p.Ser1524Ala",
+      "linkLabel": "[BRCA1]",
+      "linkURL": "http://www.nextprot.org/db/entry/NX_P38398", 
+      "values": ["", "impact", "", "", ""],
+      "children": [
+        {
+          "rowLabel": "go biological process (2)",
+          "linkLabel": "[cellular response to gamma radiation]",
+          "linkURL": "http://www.nextprot.org/db/term/GO:0071480",
+          "values": ["", "impact", "", "", ""],
+          "children": [ ]
+        }
+      ], 
+    },
+    {
+      "rowLabel": "BRCA1-p.Arg1751*	",
+      "linkLabel": "[BRCA1]",
+      "linkURL": "http://www.nextprot.org/db/entry/NX_P38398", 
+      "values": ["", "", "increase", "", ""],
+      "children": [
+        {
+          "rowLabel": "go-cellular-location (1)",
+          "linkLabel": "[cytoplasm]",
+          "linkURL": "http://www.nextprot.org/db/term/GO:0005737",
+          "values": ["", "", "increase", "", ""],
+          "children": [ ]
+        }
+      ], 
+    },
+    {
+      "rowLabel": "...",
+      "linkLabel": "",
+      "linkURL": "", 
+      "values": ["", "", "", "", ""],
+      "children": [], 
+    }
+  ]
+}
 
+        
+heatMapTable.loadJSONData(data);
+heatMapTable.show(); 
 
-<br>
-Another possibilty would be to express all annotations with up,down,equals,+,- and 
-<br>
-
-      <table>
-    <thead>
-      <tr>
-        <th data-sort="string">Variants</th>
-        <th data-sort="string">Relation</th>
-        <th data-sort="string">Phenotype</th>
-        <th data-sort="string">Intensity</th>
-        <th data-sort="float">Evidence</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td><a target="_parent" href="/entry/NX_P38398/view/variants"> BRCA1-p.Ser1598Ala + BRCA1-p.Ser1200Ala</a></td>
-        <td>&uarr;</td>
-        <td>homologous recombination</td>
-        <td>(most severe)</td>
-        <td>[4]</td>
-      </tr>
-      <tr>
-        <td>BRCA1-p.Ser1598Ala</td>
-        <td>&darr;</td>
-        <td>homologous recombination</td>
-        <td>(most severe)</td>
-        <td>[4]</td>
-      </tr>
-      <tr>
-        <td>BRCA1-p.Ser1598Ala</td>
-        <td>=</td>
-        <td>homologous recombination</td>
-        <td>(most severe)</td>
-        <td>[4]</td>
-      </tr>
-      <tr>
-        <td>BRCA1-p.Ser1598Ala</td>
-        <td>+</td>
-        <td>homologous recombination</td>
-        <td>(most severe)</td>
-        <td>[4]</td>
-      </tr>
-      <tr>
-        <td>BRCA1-p.Ser1598Ala</td>
-        <td>-</td>
-        <td>homologous recombination</td>
-        <td>(most severe)</td>
-        <td>[4]</td>
-      </tr>
-      <tr>
-        <td>BRCA1-p.Ser1598Ala</td>
-        <td>~</td>
-        <td>homologous recombination</td>
-        <td>(most severe)</td>
-        <td>[4]</td>
-      </tr>
-      <tr>
-        <td>...</td>
-        <td>...</td>
-        <td>...</td>
-        <td>...</td>
-        <td>...</td>
-      </tr>
-    </tbody>
-  </table>
-    </div>
-
+  </script>
+        
 </body>
 
 </html>
