@@ -28,7 +28,7 @@
 }
 
 var heatMapTable = new HeatMapTable({
-  header:['no-impact','impact','increase', 'decrease', 'gain'],
+  header:['no-impact','impact','increase', 'decrease'],
                 tableID: "heatmap-table",
                 options: heatmapTableOptions
             });
@@ -40,20 +40,20 @@ var data = {
       "rowLabel": "BRCA1-p.Val8Tyr",
       "linkLabel": "[BRCA1]",
       "linkURL": "http://www.nextprot.org/db/entry/NX_P38398", 
-      "values": ["no-impact", "", "", "decrease", ""],
+      "values": ["no-impact", "", "", "decrease"],
       "children": [
         {
           "rowLabel": "go-molecular-function (3)",
           "linkLabel": "[ubiquitin-protein transferase activity]",
           "linkURL": "http://www.nextprot.org/db/term/GO:0004842",
-          "values": ["", "", "", "decrease", ""],
+          "values": ["", "", "", "decrease"],
           "children": [ ]
         },
         {
           "rowLabel": "binary-interaction",
           "linkLabel": "[BARD1]",
           "linkURL": "http://www.nextprot.org/db/entry/NX_Q99728",
-          "values": ["no-impact", "", "", "", ""],
+          "values": ["no-impact", "", "", ""],
           "children": [ ]
         }
       ], 
