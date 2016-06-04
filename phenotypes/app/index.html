@@ -1,114 +1,1153 @@
+<!DOCTYPE html>
 <html>
+
 <head>
-  <title>neXtProt phenotypes</title>
-  <script type="text/javascript" src="https://rawgit.com/calipho-sib/protein-expression/gh-pages/dist/heatmap-table-vendor.js"></script>
-  <script type="text/javascript" src="https://rawgit.com/calipho-sib/protein-expression/gh-pages/dist/heatmap-table.js"></script>
-  <link rel="stylesheet" href="https://rawgit.com/calipho-sib/protein-expression/gh-pages/dist/heatmap-table.css" crossorigin="anonymous">
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
-  <link rel="stylesheet" href="style.css"/>
+    <title>neXtProt phenotypes</title>
+    <meta charset="UTF-8">
+    <script type="text/javascript" src="https://use.fontawesome.com/aeec643a8b.js"></script>
+    <link href='https://fonts.googleapis.com/css?family=Lato:100,300,400,700,900' rel='stylesheet' type='text/css'>
+    <script type="text/javascript" src="handlebars.min.js"></script>
+    <script type="text/javascript" src="jquery.min.js"></script>
+    <script type="text/javascript" src="nextprot-core.js"></script>
+    <script type="text/javascript" src="heatmap-table.js"></script>
+    <script type="text/javascript" src="bootstrap.min.js"></script>
+    <link rel="stylesheet" href="heatmap-table.css" crossorigin="anonymous">
+    <!--    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">-->
+    <link rel="stylesheet" href="bootstrap.min.css">
+    <link rel="stylesheet" href="style.css" />
 </head>
 
-<body>
-
-    <h2>BRCA1 phenotypes</h2>
-    <div class="panel panel-default col-lg-12 col-md-12">
-      <div class="row">
-        <img src="ftvariant.png" style="width:600px; margin: 0 auto; margin: 20px">
-      </div>
-      <div class="row">
-        <div id="heatmap-table" style="width:100%;margin: 20px auto 50px auto; height:auto;"></div>
-      </div>
-    </div>
+<style>
+    body {
+        /*        background-color: #eee;*/
+        background-color: #fdfdfd;
+        font-family: "Lato", "Helvetica Neue", Helvetica;
+    }
     
-  <script defer>
-  var heatmapTableOptions = {
-    valuesColorMapping: [
-        { value: 'impact', color: 'red'},
-        { value: 'increase', color: 'red'},
-        { value: 'decrease', color: 'red'},
-        { value: 'no-impact', color: 'green'},
-        { value: 'gain', color: 'red'}
-    ],
-    columnWidth: "120px",
-}
+    h1 {
+        text-align: center;
+        margin: 30px 0px 20px;
+    }
+    
+    button:focus,
+    .btn:focus,
+    .btn:active:focus {
+        outline: none;
+    }
+    
+    .btn:focus {
+        background-color: #fff;
+        border-color: #ccc;
+    }
+    
+    .btn:focus:hover {
+        background-color: #e6e6e6;
+        border-color: #adadad;
+    }
+    
+    a:hover,
+    a:focus {
+        text-decoration: none;
+    }
+    
+    a.active {
+        background-color: #eee;
+    }
+    
+    .legends {
+        margin: 0px 0px 10px;
+        background-color: #f7f7f7;
+        /*        color:#555;*/
+        color: black;
+        border: 1px solid #ddd;
+        border-bottom-left-radius: 5px;
+        border-bottom-right-radius: 5px;
+/*        border-top: 0px;*/
+        display: inline-block;
+    }
+    
+    .legends p {
+        display: inline-block;
+        padding: 0px 10px 0px 5px;
+        margin: 0px;
+        font-weight: 500;
+        font-size: 12px;
+        font-style: italic;
+    }
+    
+    .legends i {
+        width: 15px;
+        height: 15px;
+        border-radius: 10px;
+        vertical-align: middle;
+        margin-bottom: 2px;
+    }
+    
+    .legends h3 {
+        background-color: white;
+        font-weight: 700;
+        font-size: 14px;
+        /*        font-style: italic;*/
+        display: inline-block;
+        margin: 0px;
+        padding: 10px;
+/*        border-right: 1px solid #ccc;*/
+        border-left: 1px solid #ccc;
+/*        border-bottom-left-radius: 5px;*/
+        border-bottom-right-radius: 5px;
+        line-height: 14px;
+        vertical-align: middle;
+    }
+    .legends.legends-count h3{
+        border-left:0px;
+        border-bottom-right-radius: 0px;
+        border-right: 1px solid #ccc;
+        border-bottom-left-radius: 5px;
+    }
+    
+    .legends.legends-count p{
+        font-size: 14px;
+        font-style: normal;
+    }
+    
+    .legends-count #count-pheno{
+        font-style: normal;
+        font-weight: 900;
+        font-size: 14px;
+        vertical-align: middle;
+    }
+    
+    hr {
+        border-top: 1px solid #ddd;
+        margin-bottom: 0px;
+    }
+    
+    .second-title {
+        font-weight: 300;
+        padding-bottom: 5px;
+        border-bottom: 1px solid #bbb;
+        margin-bottom: 15px;
+    }
+    
+    .panel-group {
+        margin-bottom: 10px;
+    }
+    
+    .panel-title {
+        font-weight: 300;
+        line-height: 1;
+        color: black;
+        display: inline-block;
+    }
+    
+    .collapse-title .chevron>i {
+        width: 20px;
+        color: black;
+    }
+    
+    .collapse-title .chevron>i:before {
+        font-family: FontAwesome;
+        content: "\f078";
+    }
+    
+    .collapse-title.collapsed .chevron>i:before {
+        font-family: FontAwesome;
+        content: "\f054";
+    }
+    /*
+    a .panel-title:before {
+        font-family: FontAwesome;
+        content:"\f078";
+        padding-right: 10px;
+    }
+    a.collapsed .panel-title:before {
+        content:"\f054";
+        padding-right: 10px;   
+    }
+*/
+    
+    .select-all {
+        cursor: pointer;
+        z-index: 2;
+    }
+    
+    .subtypes .phenAnnot {
+        vertical-align: middle;
+    }
+    
+    .phenoCount {
+        margin-left: 5px;
+    }
+    
+    .subtypes .badge.phenoCount {
+        vertical-align: middle;
+    }
+    
+    .subtypes li {
+        padding: 0px;
+    }
+    
+    .subtypes a {
+        width: 100%;
+        height: 100%;
+        padding: 10px 15px;
+        display: block;
+        cursor: pointer;
+    }
+    
+    .subtypes i {
+        color: black;
+        margin-right: 20px;
+    }
+    
+    #phenotypeViewer .badge {
+        border-radius: 3px;
+        font-weight: 300;
+    }
+    
+    .filters .badge {
+        padding: 3px 7px;
+        font-size: 11px;
+        vertical-align: top;
+        margin-right: 5px;
+    }
+    /*    Custom treeTable css for current use*/
+    
+    #heatmap-table0 .heatmap-rowLabel .glyphicon {
+        margin-right: 10px;
+        font-size: 18px;
+        top: 2px
+    }
+    
+    #heatmap-table0 .glyphicon {
+        font-weight: 500;
+        font-size: 12px;
+        line-height: 14px;
+    }
+    
+    #heatmap-table0 .badge {
+        padding: 3px 4px;
+        font-size: 10px;
+        margin-left: 5px;
+    }
+    
+    #heatmap-table0 .heatmap-row {
+        padding: 5px;
+    }
+    
+    .tree .glyphicon-plus:before {
+        font-family: FontAwesome;
+        content: "\f00e";
+    }
+    .tree .glyphicon-minus:before {
+        font-family: FontAwesome;
+        content: "\f010";
+    }
+    
+    .tree .tree .glyphicon-plus:before {
+        font-family: FontAwesome;
+        content: "\f06c";
+    }
+    .tree .tree .glyphicon-minus:before {
+        font-family: FontAwesome;
+        content: "\f06c";
+    }
+    
+    .tree .tree .glyphicon-zoom-in:before {
+        font-family: FontAwesome;
+        font-size:16px;
+        content: "\f06e" !important;
+    }
+    .tree .tree .glyphicon-zoom-out:before {
+        font-family: FontAwesome;
+        font-size:16px;
+        content: "\f070" !important;
+    }
+    
+    .treeBtn {
+        margin-right: 10px;
+    }
+    
+    .varDisplay {
+        line-height: 20px;
+        padding: 10px 0px;
+    }
+    
+    .varDisplay>span {
+        padding: 0px 5px;
+        display: table-cell;
+    }
+    
+    .varPos {
+        border: 1px solid #ccc;
+        background-color: #eee;
+        border-top-left-radius: 5px;
+        border-bottom-left-radius: 5px;
+        font-size: 11px;
+        font-weight: 700;
+    }
+    
+    .varSeq {
+        border: 1px solid #ccc;
+        border-top-right-radius: 5px;
+        border-bottom-right-radius: 5px;
+        color: #00C500;
+        font-weight: 500;
+        font-size: 11px;
+        border-left: 0px;
+    }
+    
+    #phenotypeViewer .badge.gcc {
+        background-color: #2B4372;
+    }
+    
+    #phenotypeViewer .badge.gmf {
+        background-color: #AC6935;
+    }
+    
+    #phenotypeViewer .badge.gbp {
+        background-color: #AC9635;
+    }
+    .evidence-block{
+        margin-left:15px;
+        font-weight: 500;
+        font-size: 12px;
+    }
+    
+    .evidence-line {
+        margin: 10px;
+    }
+    
+    .evidenceArrow {
+        -ms-transform: rotate(180deg);
+        -webkit-transform: rotate(180deg);
+        transform: rotate(180deg);
+        display: inline-block;
+        font-weight: 900;
+    }
+    
+    .evidence-index {
+        padding: 2px 5px;
+    }
+    
+    .evidence-code {
+        background-color: #7cba0f;
+        color: white;
+        padding: 2px 6px;
+        border-radius: 2px;
+        margin-left: 5px;
+    }
+    
+    .evidence-source {
+        background-color: #dedede;
+        color: #999;
+        padding: 2px 6px;
+    }
+    
+    .evidence-link {
+        padding-left: 10px;
+        border-left: 1px solid darkgray;
+        margin-right: 10px;
+        margin-left: 10px;
+    }
+</style>
 
-var heatMapTable = new HeatMapTable({
-  header:['no-impact','impact','increase', 'decrease'],
-                tableID: "heatmap-table",
-                options: heatmapTableOptions
+<script id="detailTemplate" type="text/x-handlebars-template">
+    <div class="evidence-block">
+        <div class="evidence-line">
+            <div class="evidenceArrow">⤵</div>
+            <span class="evidence-index">Evidence {{@index}}</span>
+            <span class="evidence-code">{{evidenceCodeName}}</span> 
+            <span class="evidence-source">{{resourceDb}}</span>
+        </div>
+        <div class="evidence-link"><a href="https://search.nextprot.org">{{resourceAccession}}</a></div>
+    </div>
+</script>
+
+<script id="form-template" type="text/x-handlebars-template">
+
+    <div>
+        <h3 class="filter-title second-title">PHENOTYPES</h3> {{#each this}}
+        <div id="panel{{@index}}" class="panel-group">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <a class="collapse-title collapsed" data-toggle="collapse" href="#collapse{{@index}}">
+                        <span class="chevron"><i class="fa"></i></span>
+                        <h4 class="panel-title"> {{{badge}}} <span>{{@key}}</span> <span class="badge phenoCount">{{count}}</span>
+                        </h4>
+                    </a>
+                    <a class="select-all pull-right" referTo="#collapse{{@index}}">All <i class="fa fa-check" aria-hidden="true"></i></a>
+                </div>
+                <div id="collapse{{@index}}" class="panel-collapse collapse">
+                    <ul class="list-group subtypes">
+                        {{#each data}}
+                        <li class="list-group-item"><a class="active"><i class="fa fa-check" aria-hidden="true"></i><span class="phenAnnot">{{@key}}</span> <span class="badge phenoCount">{{this}}</span></a></li>
+                        {{/each}}
+                    </ul>
+                </div>
+            </div>
+        </div>
+        {{/each}}
+    </div>
+
+</script>
+
+<body id="phenotypeViewer">
+
+    <h1>BRCA1 <span style="font-weight:300;">phenotypes</span></h1>
+    <div class="row" style="margin:0px;">
+        <div class="col-lg-10 col-lg-offset-1 col-md-offset-1 col-md-10">
+            <!--
+        <div class="row">
+            <img src="ftvariant.png" style="width:600px; margin: 0 auto; margin: 20px">
+        </div>
+-->
+            <div class="row">
+                <div class="col-md-10 col-md-offset-1">
+                    <div class="filters"></div>
+                </div>
+            </div>
+<!--            <hr>-->
+            <div class="row">
+                <div class="col-md-12">
+                    <h3 class="variant-title second-title">VARIANTS</h3>
+                </div>
+                <div class="col-md-12">
+                    <div class="legends pull-right">
+                        <p><i class="heatmap-circle " style="background-color: #2D882D"></i> No impact</p>
+                        <p><i class="heatmap-circle " style="background-color: #AA3939"></i> Impact</p>
+                        <p><i class="heatmap-circle " style="background-color: #226666"></i> Gain</p>
+                        <p><i class="heatmap-circle " style="background-color: #D49A6A"></i> Increase</p>
+                        <p><i class="heatmap-circle " style="background-color: #F7D492"></i> Decrease</p>
+                        <h3>
+                            CAPTION
+                        </h3>
+                    </div>
+                    <div class="legends legends-count pull-left">
+                        <h3>
+                            DISPLAYED
+                        </h3>
+                        <p><span id="count-pheno"></span> phenotypes</p>
+                    </div>
+                </div>
+            </div>
+
+
+            <div class="row">
+                <div id="heatmap-table0" style="width:100%;margin: 20px auto 50px auto; height:auto;"></div>
+            </div>
+<!--
+            <div class="row">
+                <div id="heatmap-table2" style="width:100%;margin: 20px auto 50px auto; height:auto;"></div>
+            </div>
+            <div class="row">
+                <div id="heatmap-table3" style="width:100%;margin: 20px auto 50px auto; height:auto;"></div>
+            </div>
+            <div class="row">
+                <div id="heatmap-table" style="width:100%;margin: 20px auto 50px auto; height:auto;"></div>
+            </div>
+-->
+        </div>
+    </div>
+
+    <script defer>
+        //NX DATA PARSING UTILS
+
+
+        function hashingNormalAnnotations(annotations) {
+            var hashNormalAnnotation = {};
+            annotations.forEach(function (a) {
+                hashNormalAnnotation[a.annotationId] = a;
+            })
+            return hashNormalAnnotation;
+        }
+
+        function getMinPos(subjects) {
+            var min = 100000;
+            subjects.forEach(function (s) {
+                var pos = s.targetingIsoformsMap[Object.keys(s.targetingIsoformsMap)[0]].firstPosition;
+                if (min > pos) min = pos;
+            })
+            return min;
+        }
+
+        function sortPhenotypesByPosition(a, b) {
+            var minPosA = getMinPos(a.subjectComponents);
+            var minPosB = getMinPos(b.subjectComponents);
+            return minPosA - minPosB;
+        }
+
+        function getListAnnotRef(phenotypes){
+            var list = [];
+            phenotypes.forEach(function(p){
+                p.annotations.forEach(function(a){
+                    list.push(a.normalAnnotationReferenceId);
+                })
             });
-            
+            return list;
+        }
+        function getAllAnnotationTypes(annots, phenotypes) {
+            var listAnnotRef = getListAnnotRef(phenotypes);
+            var listingPhenotype = {};
+            //            console.log(annots);
+            listAnnotRef.forEach(function(a){
+                if (annots.hasOwnProperty(a)){
+                    if (!listingPhenotype.hasOwnProperty(annots[a].apicategory)) {
+                        listingPhenotype[annots[a].apicategory] = {
+                            badge: annotTypeTemplate[annots[a].apicategory],
+                            count: 0,
+                            data: {}
+                        };
+                    }
+                    if (listingPhenotype[annots[a].apicategory].data.hasOwnProperty(annots[a].cvTermName)) {
+                        listingPhenotype[annots[a].apicategory].data[annots[a].cvTermName] += 1;
+                        listingPhenotype[annots[a].apicategory].count += 1;
+                    } else {
+                        listingPhenotype[annots[a].apicategory].data[annots[a].cvTermName] = 1;
+                        listingPhenotype[annots[a].apicategory].count += 1;
+                    }
+                }
+            });
+            console.log("listingPhenotype");
+            console.log(listingPhenotype);
+            return listingPhenotype;
+        }
 
-var data = {
-  "data": [
-    {
-      "rowLabel": "BRCA1-p.Val8Tyr",
-      "linkLabel": "[BRCA1]",
-      "linkURL": "http://www.nextprot.org/db/entry/NX_P38398", 
-      "values": ["no-impact", "", "", "decrease"],
-      "children": [
-        {
-          "rowLabel": "go-molecular-function (3)",
-          "linkLabel": "[ubiquitin-protein transferase activity]",
-          "linkURL": "http://www.nextprot.org/db/term/GO:0004842",
-          "values": ["", "", "", "decrease"],
-          "children": [ ]
+
+        function getVariantInfos(variants) {
+            var variantInfos = {
+                fullName: "",
+                evidences: []
+            };
+            var subjectName = "";
+            var varList = variants.map(function (v, i, array) {
+                //Only get the first position, dont check if there is others isoforms
+                var pos = v.targetingIsoformsMap[Object.keys(v.targetingIsoformsMap)[0]].firstPosition;
+                var original = v.variant.original;
+                var variant = v.variant.variant;
+                //                var evidences = v.evidences.map(function(e){
+                //                    return {
+                //                        evidenceCodeName : e.evidenceCodeName,
+                //                        resourceDb : e.resourceDb,
+                //                        resourceAccession : e.resourceAccession
+                //                    }
+                //                })
+                return {
+                    pos: pos,
+                    original: original,
+                    variant: variant
+                        //                    evidences: evidences
+                };
+            });
+            varList.sort(function (a, b) {
+                return a.pos - b.pos
+            });
+
+            varList.forEach(function (v, i, array) {
+                var name = "<span class='varDisplay'><span class='varPos'>" + v.pos + "</span><span class='varSeq'>" + v.original + " → " + v.variant + "</span></span>";
+                if (i < array.length - 1) name += " + ";
+                variantInfos.fullName += name;
+                //                variantInfos.evidences = variantInfos.evidences.concat(v.evidences);
+            })
+            return variantInfos;
+        }
+
+        function getAnnotationById(annotations, id) {
+            if (annotations.hasOwnProperty(id)) {
+                return {
+                    category: annotations[id].apicategory,
+                    cvTermName: annotations[id].cvTermName
+                }
+            } else console.warn("couldn't find normal annotation " + id);
+        }
+
+        function generateFakeEvidence() {
+            var evidences = [];
+            var count = Math.floor((Math.random() * 3));
+            for (var i = 0; i < count; i++) {
+                var ev = {
+                    evidenceCodeName: "This is a fake evidence",
+                    resourceDb: "neXtProt",
+                    resourceAccession: "123456789"
+                }
+                evidences.push(ev);
+            }
+            return evidences;
+        }
+
+        function getImpact(impacts, annots, template, filters) {
+            var listPhenotypes = [];
+            var fakeEvidences = []
+            impacts.forEach(function (i) {
+                var category = i.category;
+                var cvTermName = i.cvTermName.toLowerCase();
+                var annotationAffected = getAnnotationById(annots, i.normalAnnotationReferenceId);
+                if (!filters || filters.indexOf(annotationAffected.cvTermName) !== -1) {
+                    var customTemplate = jQuery.extend(true, {}, template);
+                    customTemplate.rowLabel = "<strong>" + cvTermToSentence[cvTermName] + "</strong> " + annotationAffected.cvTermName + " " + annotTypeTemplate[annotationAffected.category];
+                    customTemplate.values[0] = cvTermName !== "noimpact" ? "" : "no-impact";
+                    customTemplate.values[1] = cvTermName !== "noimpact" ? cvTermName : "";
+                    customTemplate.detailData = generateFakeEvidence();
+                    listPhenotypes.push(customTemplate);
+                }
+            })
+            return listPhenotypes;
+        }
+
+        function propagateImpact(children) {
+            var values = ["", ""];
+            for (var c in children) {
+                if (children[c].values[1] !== "") {
+                    values[1] = "impact";
+                    return values;
+                }
+            }
+            values[0] = "no-impact";
+            return values;
+        }
+
+
+        function parseNxDataForTreeTable(phenotypes, annotations, template, filters) {
+            var treeTable = {
+                data: []
+            };
+
+            phenotypes.forEach(function (p) {
+                var varTemplate = jQuery.extend(true, {}, template);
+                varTemplate.children = getImpact(p.annotations, annotations, template, filters);
+                if (varTemplate.children.length) {
+                    var varInfos = getVariantInfos(p.subjectComponents);
+                    varTemplate.rowLabel = varInfos.fullName;
+                    varTemplate.detailData = varInfos.evidences;
+                    varTemplate.values = propagateImpact(varTemplate.children);
+                    treeTable.data.push(varTemplate);
+                }
+            })
+
+            return treeTable;
+        }
+
+        function addSelectAll() {
+            $(".select-all").click(function () {
+                $("i", this).toggleClass("fa-circle-thin fa-check");
+                var matchingList = $(this).attr("referTo");
+                if ($("i", this).hasClass("fa-check")) {
+                    $(matchingList + " a").each(function () {
+                        if (!$(this).hasClass("active")) {
+                            $(this).addClass("active");
+                            $("i", this).toggleClass("fa-circle-thin fa-check");
+                        }
+
+                    })
+                } else {
+                    $(matchingList + " a").each(function () {
+                        if ($(this).hasClass("active")) {
+                            $(this).removeClass("active");
+                            $("i", this).toggleClass("fa-circle-thin fa-check");
+                        }
+
+                    })
+                }
+            })
+        }
+
+        function fillFilters(data) {
+            var source = $("#form-template").html();
+            var template = Handlebars.compile(source);
+            var html = template(data);
+            $(".filters").html(html);
+            $(".subtypes a").click(function () {
+                $(this).toggleClass("active");
+                $("i", this).toggleClass("fa-circle-thin fa-check");
+            })
+            addSelectAll();
+        }
+
+        function getFilters() {
+            var filters = [];
+            $(".filters .subtypes a").each(function () {
+                //                console.log("one");
+                if ($(this).hasClass("active")) {
+                    var uniqueFilter = $(this).find(".phenAnnot").text();
+                    filters.push(uniqueFilter);
+                }
+            });
+            return filters;
+
+        }
+        
+        function autoCheckAll(elem){
+            var panel = $(elem).closest(".panel-group");
+            var all = panel.find(".select-all i");
+            var activeFilters = panel.find(".subtypes a.active");
+            if (!activeFilters.length && all.hasClass("fa-check")) {
+                all.toggleClass("fa-circle-thin fa-check");
+            }
+            else if (activeFilters.length === panel.find(".subtypes a").length){
+                if (all.hasClass("fa-circle-thin")) {
+                    all.toggleClass("fa-circle-thin fa-check");
+                }
+            }
+        }
+
+        function activateFilters(data, annots) {
+            $(".filters a:not(.collapse-title)").click(function () {
+                var filters = getFilters();
+                autoCheckAll($(this)) ;
+                resetTreeViewer(data, annots, filters);
+            })
+        }
+        
+        function countPhenotypes(data){
+            var count = 0;
+            data.forEach(function(d){
+                count+= d.children.length;
+            })
+            $("#count-pheno").text(count);
+        }
+
+        var nx = new Nextprot.Client("neXtProt proteomics view", "Calipho-Team");
+        if (nx.getEnvironment() !== "bed") {
+            nx.setApiBaseUrl("http://bed-api.nextprot.org");
+        }
+        var entry = nx.getEntryName();
+        console.log(entry);
+
+        var heatmapTableOptions0 = {
+            valuesColorMapping: [
+                {
+                    value: 'impact',
+                    color: '#AA3939'
+                },
+                {
+                    value: 'increase',
+                    color: '#D49A6A'
+                },
+                {
+                    value: 'decrease',
+                    color: '#F7D492'
+                },
+                {
+                    value: 'no-impact',
+                    color: '#2D882D'
+                },
+                {
+                    value: 'gain',
+                    color: '#226666'
+                }
+            ],
+            columnWidth: "120px",
+            detailTemplate: "detailTemplate"
+        }
+
+        var cvTermToSentence = {
+            "impact": "has impact on",
+            "noimpact": "has no impact on",
+            "decrease": "decreases",
+            "increase": "increases",
+            "gain": "gains"
+        }
+
+        var annotTypeTemplate = {
+            "GO_MOLECULAR_FUNCTION": "<span class='badge gmf'>GMF</span>",
+            "GO_CELLULAR_COMPONENT": "<span class='badge gcc'>GCC</span>",
+            "GO_BIOLOGICAL_PROCESS": "<span class='badge gbp'>GBP</span>"
+        }
+
+
+        var template = {
+            "rowLabel": "",
+            "linkLabel": "",
+            "linkURL": "",
+            "values": ["", ""],
+            "children": []
+        };
+
+        function resetTreeViewer(data, annots, filters) {
+            $("#heatmap-table0").html("");
+            // parse Data to fit the template of treeData - WITH FILTERS
+            var treeDataFiltered = parseNxDataForTreeTable(data, annots, template, filters);
+            
+            // add count box - WITH FILTERS ON
+            countPhenotypes(treeDataFiltered.data);
+            
+            var heatMapTable0 = new HeatMapTable({
+                header: ['no-impact', 'impact'],
+                tableID: "heatmap-table0",
+                options: heatmapTableOptions0
+            });
+
+            heatMapTable0.loadJSONData(treeDataFiltered);
+            heatMapTable0.show();
+            //            addIconToButton();
+        }
+
+        //        function addIconToButton(){
+        //            
+        //            var wait = setInterval(function(){ searchElem() }, 50);
+        //            
+        //            function searchElem(){
+        //                var elem = $("#heatmap-table0 .heatmap-reset-btn");
+        //                if ($(elem).length>0) {
+        //                    $(".heatmap-filterByRowName-search").prepend('<span class="fa fa-search treeBtn" aria-hidden="true"></span>');
+        //                    $(".heatmap-reset-btn").prepend('<span class="fa fa-refresh treeBtn" aria-hidden="true"></span>');
+        //                    $(".heatmap-collapseAll-btn").prepend('<span class="fa fa-compress treeBtn" aria-hidden="true"></span>');
+        //                    $(".heatmap-expandAll-btn").prepend('<span class="fa fa-expand treeBtn" aria-hidden="true"></span>');
+        //                    console.log("clearInterval");
+        //                    clearInterval(wait);
+        //                }
+        //            }
+        //        }
+
+        nx.getFullAnnotationsByCategory(entry, "modified-entry-annotation").then(function (data) {
+            console.log(data);
+
+            // Transform annotations into hashMap to ease the access by id
+            var normalAnnotations = hashingNormalAnnotations(data.annotations);
+
+            // Sort phenotypes by smallest position
+            var phenotypes = data.modifiedEntryAnnotations.sort(sortPhenotypesByPosition);
+
+            // Get all phenotypes by type in order to add them into the filter block
+            var listingPhenotypes = getAllAnnotationTypes(normalAnnotations, phenotypes);
+            fillFilters(listingPhenotypes);
+
+            // parse Data to fit the template of treeData
+            var treeData = parseNxDataForTreeTable(phenotypes, normalAnnotations, template);
+
+            // add count box
+            countPhenotypes(treeData.data);
+
+            activateFilters(phenotypes, normalAnnotations);
+
+            console.log("treeData");
+            console.log(treeData);
+
+            var heatMapTable0 = new HeatMapTable({
+                header: ['no-impact', 'impact'],
+                tableID: "heatmap-table0",
+                options: heatmapTableOptions0
+            });
+
+            heatMapTable0.loadJSONData(treeData);
+            heatMapTable0.show();
+
+        })
+
+
+
+
+        //END
+
+        //OTHER TESTS :
+
+
+        var heatmapTableOptions3 = {
+            valuesColorMapping: [
+                {
+                    value: 'impact',
+                    color: 'red'
+                },
+                {
+                    value: 'increase',
+                    color: 'orange'
+                },
+                {
+                    value: 'decrease',
+                    color: 'yellow'
+                },
+                {
+                    value: 'no-impact',
+                    color: 'green'
+                },
+                {
+                    value: 'gain',
+                    color: 'blue'
+                }
+    ],
+            columnWidth: "120px",
+        }
+
+        //        var heatMapTable3 = new HeatMapTable({
+        //            header: ['no-impact', 'impact', 'detail'],
+        //            tableID: "heatmap-table3",
+        //            options: heatmapTableOptions3
+        //        });
+
+
+        var data3 = {
+            "data": [
+                {
+                    "rowLabel": "8 : V → Y",
+                    "linkLabel": "[BRCA1]",
+                    "linkURL": "http://www.nextprot.org/db/entry/NX_P38398",
+                    "values": ["no-impact", "impact", ""],
+                    "children": [
+                        {
+                            //          "rowLabel": "go-molecular-function (3)",
+                            "rowLabel": "decrease ubiquitin-protein transferase activity",
+                            "linkLabel": "[ubiquitin-protein transferase activity (go-molecular-function)]",
+                            "linkURL": "http://www.nextprot.org/db/term/GO:0004842",
+                            "values": ["", "impact", "decrease"],
+                            "children": []
         },
-        {
-          "rowLabel": "binary-interaction",
-          "linkLabel": "[BARD1]",
-          "linkURL": "http://www.nextprot.org/db/entry/NX_Q99728",
-          "values": ["no-impact", "", "", ""],
-          "children": [ ]
+                        {
+                            "rowLabel": "has no impact on BARD1",
+                            "linkLabel": "[BARD1 (binary-interaction)]",
+                            "linkURL": "http://www.nextprot.org/db/entry/NX_Q99728",
+                            "values": ["no-impact", "", ""],
+                            "children": []
         }
-      ], 
+      ],
     },
-    {
-      "rowLabel": "BRCA1-p.Ser1423Ala + BRCA1-p.Ser1524Ala",
-      "linkLabel": "[BRCA1]",
-      "linkURL": "http://www.nextprot.org/db/entry/NX_P38398", 
-      "values": ["", "impact", "", "", ""],
-      "children": [
-        {
-          "rowLabel": "go biological process (2)",
-          "linkLabel": "[cellular response to gamma radiation]",
-          "linkURL": "http://www.nextprot.org/db/term/GO:0071480",
-          "values": ["", "impact", "", "", ""],
-          "children": [ ]
+                {
+                    "rowLabel": "1423 : S → A + 1524 : S → A",
+                    "linkLabel": "[BRCA1]",
+                    "linkURL": "http://www.nextprot.org/db/entry/NX_P38398",
+                    "values": ["", "impact", ""],
+                    "children": [
+                        {
+                            "rowLabel": "impact cellular response to gamma radiation",
+                            "linkLabel": "[cellular response to gamma radiation (go biological process)]",
+                            "linkURL": "http://www.nextprot.org/db/term/GO:0071480",
+                            "values": ["", "impact", ""],
+                            "children": []
         }
-      ], 
+      ],
     },
-    {
-      "rowLabel": "BRCA1-p.Arg1751*	",
-      "linkLabel": "[BRCA1]",
-      "linkURL": "http://www.nextprot.org/db/entry/NX_P38398", 
-      "values": ["", "", "increase", "", ""],
-      "children": [
-        {
-          "rowLabel": "go-cellular-location (1)",
-          "linkLabel": "[cytoplasm]",
-          "linkURL": "http://www.nextprot.org/db/term/GO:0005737",
-          "values": ["", "", "increase", "", ""],
-          "children": [ ]
+                {
+                    "rowLabel": "1751 : R → *",
+                    "linkLabel": "[BRCA1]",
+                    "linkURL": "http://www.nextprot.org/db/entry/NX_P38398",
+                    "values": ["", "impact", ""],
+                    "children": [
+                        {
+                            "rowLabel": "increase localisation on cytoplasme",
+                            "linkLabel": "[cytoplasm (go-cellular-location (1))]",
+                            "linkURL": "http://www.nextprot.org/db/term/GO:0005737",
+                            "values": ["", "impact", "increase"],
+                            "children": []
         }
-      ], 
+      ],
     },
-    {
-      "rowLabel": "...",
-      "linkLabel": "",
-      "linkURL": "", 
-      "values": ["", "", "", "", ""],
-      "children": [], 
+                {
+                    "rowLabel": "...",
+                    "linkLabel": "",
+                    "linkURL": "",
+                    "values": ["", ""],
+                    "children": [],
     }
   ]
-}
+        }
 
-        
-heatMapTable.loadJSONData(data);
-heatMapTable.show(); 
 
-  </script>
-        
+        //        heatMapTable3.loadJSONData(data3);
+        //        heatMapTable3.show();
+
+        var heatmapTableOptions2 = {
+            valuesColorMapping: [
+                {
+                    value: 'impact',
+                    color: 'red'
+                },
+                {
+                    value: 'increase',
+                    color: 'orange'
+                },
+                {
+                    value: 'decrease',
+                    color: 'yellow'
+                },
+                {
+                    value: 'no-impact',
+                    color: 'green'
+                },
+                {
+                    value: 'gain',
+                    color: 'blue'
+                }
+    ],
+            columnWidth: "120px",
+        }
+
+        //        var heatMapTable2 = new HeatMapTable({
+        //            header: ['no-impact', 'impact'],
+        //            tableID: "heatmap-table2",
+        //            options: heatmapTableOptions2
+        //        });
+
+
+        var data2 = {
+            "data": [
+                {
+                    "rowLabel": "8 : V → Y",
+                    "linkLabel": "[BRCA1]",
+                    "linkURL": "http://www.nextprot.org/db/entry/NX_P38398",
+                    "values": ["no-impact", "impact"],
+                    "children": [
+                        {
+                            //          "rowLabel": "go-molecular-function (3)",
+                            "rowLabel": "<strong<decrease</strong> ubiquitin-protein transferase activity",
+                            "linkLabel": "[ubiquitin-protein transferase activity (go-molecular-function)]",
+                            "linkURL": "http://www.nextprot.org/db/term/GO:0004842",
+                            "values": ["", "decrease"],
+                            "children": []
+        },
+                        {
+                            "rowLabel": "has no impact on BARD1",
+                            "linkLabel": "[BARD1 (binary-interaction)]",
+                            "linkURL": "http://www.nextprot.org/db/entry/NX_Q99728",
+                            "values": ["no-impact", ""],
+                            "children": []
+        }
+      ],
+    },
+                {
+                    "rowLabel": "1423 : S → A + 1524 : S → A",
+                    "linkLabel": "[BRCA1]",
+                    "linkURL": "http://www.nextprot.org/db/entry/NX_P38398",
+                    "values": ["", "impact"],
+                    "children": [
+                        {
+                            "rowLabel": "impact cellular response to gamma radiation",
+                            "linkLabel": "[cellular response to gamma radiation (go biological process)]",
+                            "linkURL": "http://www.nextprot.org/db/term/GO:0071480",
+                            "values": ["", "impact"],
+                            "children": []
+        }
+      ],
+    },
+                {
+                    "rowLabel": "1751 : R → *",
+                    "linkLabel": "[BRCA1]",
+                    "linkURL": "http://www.nextprot.org/db/entry/NX_P38398",
+                    "values": ["", "impact"],
+                    "children": [
+                        {
+                            "rowLabel": "increase localisation on cytoplasme",
+                            "linkLabel": "[cytoplasm (go-cellular-location (1))]",
+                            "linkURL": "http://www.nextprot.org/db/term/GO:0005737",
+                            "values": ["", "increase"],
+                            "children": []
+        }
+      ],
+    },
+                {
+                    "rowLabel": "...",
+                    "linkLabel": "",
+                    "linkURL": "",
+                    "values": ["", ""],
+                    "children": [],
+    }
+  ]
+        }
+
+
+        //        heatMapTable2.loadJSONData(data2);
+        //        heatMapTable2.show();
+
+        var heatmapTableOptions = {
+            valuesColorMapping: [
+                {
+                    value: 'impact',
+                    color: 'red'
+                },
+                {
+                    value: 'increase',
+                    color: 'red'
+                },
+                {
+                    value: 'decrease',
+                    color: 'red'
+                },
+                {
+                    value: 'no-impact',
+                    color: 'green'
+                },
+                {
+                    value: 'gain',
+                    color: 'red'
+                }
+    ],
+            columnWidth: "120px",
+        }
+
+        //        var heatMapTable = new HeatMapTable({
+        //            header: ['no-impact', 'impact', 'increase', 'decrease'],
+        //            tableID: "heatmap-table",
+        //            options: heatmapTableOptions
+        //        });
+
+
+        var data = {
+            "data": [
+                {
+                    "rowLabel": "BRCA1-p.Val8Tyr",
+                    "linkLabel": "[BRCA1]",
+                    "linkURL": "http://www.nextprot.org/db/entry/NX_P38398",
+                    "values": ["no-impact", "", "", "decrease"],
+                    "children": [
+                        {
+                            "rowLabel": "go-molecular-function (3)",
+                            "linkLabel": "[ubiquitin-protein transferase activity]",
+                            "linkURL": "http://www.nextprot.org/db/term/GO:0004842",
+                            "values": ["", "", "", "decrease"],
+                            "children": []
+        },
+                        {
+                            "rowLabel": "binary-interaction",
+                            "linkLabel": "[BARD1]",
+                            "linkURL": "http://www.nextprot.org/db/entry/NX_Q99728",
+                            "values": ["no-impact", "", "", ""],
+                            "children": []
+        }
+      ],
+    },
+                {
+                    "rowLabel": "BRCA1-p.Ser1423Ala + BRCA1-p.Ser1524Ala",
+                    "linkLabel": "[BRCA1]",
+                    "linkURL": "http://www.nextprot.org/db/entry/NX_P38398",
+                    "values": ["", "impact", "", "", ""],
+                    "children": [
+                        {
+                            "rowLabel": "go biological process (2)",
+                            "linkLabel": "[cellular response to gamma radiation]",
+                            "linkURL": "http://www.nextprot.org/db/term/GO:0071480",
+                            "values": ["", "impact", "", "", ""],
+                            "children": []
+        }
+      ],
+    },
+                {
+                    "rowLabel": "BRCA1-p.Arg1751*	",
+                    "linkLabel": "[BRCA1]",
+                    "linkURL": "http://www.nextprot.org/db/entry/NX_P38398",
+                    "values": ["", "", "increase", "", ""],
+                    "children": [
+                        {
+                            "rowLabel": "go-cellular-location (1)",
+                            "linkLabel": "[cytoplasm]",
+                            "linkURL": "http://www.nextprot.org/db/term/GO:0005737",
+                            "values": ["", "", "increase", "", ""],
+                            "children": []
+        }
+      ],
+    },
+                {
+                    "rowLabel": "...",
+                    "linkLabel": "",
+                    "linkURL": "",
+                    "values": ["", "", "", "", ""],
+                    "children": [],
+    }
+  ]
+        }
+
+
+        //        heatMapTable.loadJSONData(data);
+        //        heatMapTable.show();
+    </script>
+
 </body>
 
 </html>
