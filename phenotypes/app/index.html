@@ -458,7 +458,7 @@
         function hashingNormalAnnotations(annotations) {
             var hashNormalAnnotation = {};
             annotations.forEach(function (a) {
-                hashNormalAnnotation[a.annotationId] = a;
+                hashNormalAnnotation[a.annotationHash] = a;
             })
             return hashNormalAnnotation;
         }
@@ -466,7 +466,7 @@
         function getMinPos(subjects) {
             var min = 100000;
             subjects.forEach(function (s) {
-                var pos = s.targetingIsoformsMap[Object.keys(s.targetingIsoformsMap)[0]].firstPosition;
+                var pos = s.locationCanonicalBegin;
                 if (min > pos) min = pos;
             })
             return min;
@@ -523,7 +523,7 @@
             var subjectName = "";
             var varList = variants.map(function (v, i, array) {
                 //Only get the first position, dont check if there is others isoforms
-                var pos = v.targetingIsoformsMap[Object.keys(v.targetingIsoformsMap)[0]].firstPosition;
+                var pos = v.locationCanonicalBegin;
                 var original = v.variant.original;
                 var variant = v.variant.variant;
                 //                var evidences = v.evidences.map(function(e){
@@ -582,7 +582,7 @@
             impacts.forEach(function (i) {
                 var category = i.category;
                 var cvTermName = i.cvTermName.toLowerCase();
-                var annotationAffected = getAnnotationById(annots, i.normalAnnotationReferenceId);
+                var annotationAffected = getAnnotationById(annots, i.bioObject.annotationHash);
                 if (!filters || filters.indexOf(annotationAffected.cvTermName) !== -1) {
                     var customTemplate = jQuery.extend(true, {}, template);
                     customTemplate.rowLabel = "<strong>" + cvTermToSentence[cvTermName] + "</strong> " + annotationAffected.cvTermName + " " + annotTypeTemplate[annotationAffected.category];
@@ -804,7 +804,7 @@
             console.log(data);
 
             // Transform annotations into hashMap to ease the access by id
-            var normalAnnotations = hashingNormalAnnotations(data.annotations);
+            var normalAnnotations = hashingNormalAnnotations(data.isoformAnnotations["NX_Q9BX63-1"]);
 
             // Sort phenotypes by smallest position
             var phenotypes = data.modifiedEntryAnnotations.sort(sortPhenotypesByPosition);
