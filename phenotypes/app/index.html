@@ -493,19 +493,19 @@
             //            console.log(annots);
             listAnnotRef.forEach(function(a){
                 if (annots.hasOwnProperty(a)){
-                    if (!listingPhenotype.hasOwnProperty(annots[a].apicategory)) {
-                        listingPhenotype[annots[a].apicategory] = {
-                            badge: annotTypeTemplate[annots[a].apicategory],
+                    if (!listingPhenotype.hasOwnProperty(annots[a].category)) {
+                        listingPhenotype[annots[a].category] = {
+                            badge: annotTypeTemplate[annots[a].category],
                             count: 0,
                             data: {}
                         };
                     }
-                    if (listingPhenotype[annots[a].apicategory].data.hasOwnProperty(annots[a].cvTermName)) {
-                        listingPhenotype[annots[a].apicategory].data[annots[a].cvTermName] += 1;
-                        listingPhenotype[annots[a].apicategory].count += 1;
+                    if (listingPhenotype[annots[a].category].data.hasOwnProperty(annots[a].cvTermName)) {
+                        listingPhenotype[annots[a].category].data[annots[a].cvTermName] += 1;
+                        listingPhenotype[annots[a].category].count += 1;
                     } else {
-                        listingPhenotype[annots[a].apicategory].data[annots[a].cvTermName] = 1;
-                        listingPhenotype[annots[a].apicategory].count += 1;
+                        listingPhenotype[annots[a].category].data[annots[a].cvTermName] = 1;
+                        listingPhenotype[annots[a].category].count += 1;
                     }
                 }
             });
@@ -556,7 +556,7 @@
         function getAnnotationById(annotations, id) {
             if (annotations.hasOwnProperty(id)) {
                 return {
-                    category: annotations[id].apicategory,
+                    category: annotations[id].category,
                     cvTermName: annotations[id].cvTermName
                 }
             } else console.warn("couldn't find normal annotation " + id);
@@ -804,7 +804,7 @@
             console.log(data);
 
             // Transform annotations into hashMap to ease the access by id
-            var normalAnnotations = hashingNormalAnnotations(data.isoformAnnotations["NX_Q9BX63-1"]);
+            var normalAnnotations = hashingNormalAnnotations(data.isoformAnnotations[entry + "-1"]);
 
             // Sort phenotypes by smallest position
             var phenotypes = data.modifiedEntryAnnotations.sort(sortPhenotypesByPosition);
