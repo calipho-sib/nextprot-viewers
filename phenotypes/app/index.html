@@ -420,15 +420,19 @@
                         <p><i class="heatmap-circle " style="background-color: #226666"></i> Gain</p>
                         <p><i class="heatmap-circle " style="background-color: #D49A6A"></i> Increase</p>
                         <p><i class="heatmap-circle " style="background-color: #F7D492"></i> Decrease</p>
+<!--
                         <h3>
                             CAPTION
                         </h3>
+-->
                     </div>
                     <div class="legends legends-count pull-left">
+<!--
                         <h3>
                             DISPLAYED
                         </h3>
-                        <p><span id="count-pheno"></span> phenotypes</p>
+-->
+                        <p><span id="count-pheno"></span> annotations</p>
                     </div>
                 </div>
             </div>
@@ -546,7 +550,7 @@
 
             varList.forEach(function (v, i, array) {
                 var name = "<span class='varDisplay'><span class='varPos'>" + v.pos + "</span><span class='varSeq'>" + v.original + " → " + v.variant + "</span></span>";
-                if (i < array.length - 1) name += " + ";
+                if (i < array.length - 1) name += " ";
                 variantInfos.fullName += name;
                 //                variantInfos.evidences = variantInfos.evidences.concat(v.evidences);
             })
@@ -750,9 +754,9 @@
         }
 
         var annotTypeTemplate = {
-            "GO_MOLECULAR_FUNCTION": "<span class='badge gmf'>GMF</span>",
-            "GO_CELLULAR_COMPONENT": "<span class='badge gcc'>GCC</span>",
-            "GO_BIOLOGICAL_PROCESS": "<span class='badge gbp'>GBP</span>"
+            "GO_MOLECULAR_FUNCTION": "<span class='badge gmf'>GO-MF</span>",
+            "GO_CELLULAR_COMPONENT": "<span class='badge gcc'>GO-CC</span>",
+            "GO_BIOLOGICAL_PROCESS": "<span class='badge gbp'>GO-BP</span>"
         }
 
 
