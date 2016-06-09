@@ -69,7 +69,7 @@
     
     .legends p {
         display: inline-block;
-        padding: 0px 10px 0px 5px;
+        padding: 5px 10px 5px 10px;
         margin: 0px;
         font-weight: 500;
         font-size: 12px;
@@ -406,7 +406,7 @@
         </div>
 -->
             <div class="row">
-                <div class="col-md-10 col-md-offset-1">
+                <div class="col-md-12">
                     <div class="filters"></div>
                 </div>
             </div>
@@ -568,7 +568,7 @@
         function getAnnotationById(annotations, id) {
             if (annotations.hasOwnProperty(id)) {
                 return {
-                    category: annotations[id].category,
+                    category: annotations[id].apicategory,
                     cvTermName: annotations[id].cvTermName
                 }
             } else console.warn("couldn't find normal annotation " + id);
@@ -598,8 +598,8 @@
                 if (!filters || filters.indexOf(annotationAffected.cvTermName) !== -1) {
                     var customTemplate = jQuery.extend(true, {}, template);
                     customTemplate.rowLabel = "<strong>" + cvTermToSentence[cvTermName] + "</strong> " + annotationAffected.cvTermName + " " + annotTypeTemplate[annotationAffected.category];
-                    customTemplate.values[0] = cvTermName !== "noimpact" ? "" : "no-impact";
-                    customTemplate.values[1] = cvTermName !== "noimpact" ? cvTermName : "";
+                    customTemplate.values[0] = cvTermName !== "no-impact" ? "" : "no-impact";
+                    customTemplate.values[1] = cvTermName !== "no-impact" ? cvTermName : "";
                     customTemplate.detailData = generateFakeEvidence();
                     listPhenotypes.push(customTemplate);
                 }
@@ -621,6 +621,8 @@
 
 
         function parseNxDataForTreeTable(phenotypes, annotations, template, filters) {
+            console.log('phenotypes');
+            console.log(phenotypes);
             var treeTable = {
                 data: []
             };
@@ -755,7 +757,7 @@
 
         var cvTermToSentence = {
             "impact": "has impact on",
-            "noimpact": "has no impact on",
+            "no-impact": "has no impact on",
             "decrease": "decreases",
             "increase": "increases",
             "gain": "gains"
