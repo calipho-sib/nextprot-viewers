@@ -488,30 +488,36 @@
             var list = [];
             phenotypes.forEach(function(p){
                 p.annotations.forEach(function(a){
-                    list.push(a.normalAnnotationReferenceId);
+                    list.push(a.bioObject.annotationHash);
                 })
             });
             return list;
         }
         function getAllAnnotationTypes(annots, phenotypes) {
+//            console.log("phenotypes");
+//            console.log(phenotypes);
             var listAnnotRef = getListAnnotRef(phenotypes);
+//            console.log("listAnnotRef");
+//            console.log(listAnnotRef);
+//            console.log("annots");
+//            console.log(annots);
             var listingPhenotype = {};
             //            console.log(annots);
             listAnnotRef.forEach(function(a){
                 if (annots.hasOwnProperty(a)){
-                    if (!listingPhenotype.hasOwnProperty(annots[a].category)) {
-                        listingPhenotype[annots[a].category] = {
-                            badge: annotTypeTemplate[annots[a].category],
+                    if (!listingPhenotype.hasOwnProperty(annots[a].apicategory)) {
+                        listingPhenotype[annots[a].apicategory] = {
+                            badge: annotTypeTemplate[annots[a].apicategory],
                             count: 0,
                             data: {}
                         };
                     }
-                    if (listingPhenotype[annots[a].category].data.hasOwnProperty(annots[a].cvTermName)) {
-                        listingPhenotype[annots[a].category].data[annots[a].cvTermName] += 1;
-                        listingPhenotype[annots[a].category].count += 1;
+                    if (listingPhenotype[annots[a].apicategory].data.hasOwnProperty(annots[a].cvTermName)) {
+                        listingPhenotype[annots[a].apicategory].data[annots[a].cvTermName] += 1;
+                        listingPhenotype[annots[a].apicategory].count += 1;
                     } else {
-                        listingPhenotype[annots[a].category].data[annots[a].cvTermName] = 1;
-                        listingPhenotype[annots[a].category].count += 1;
+                        listingPhenotype[annots[a].apicategory].data[annots[a].cvTermName] = 1;
+                        listingPhenotype[annots[a].apicategory].count += 1;
                     }
                 }
             });
