@@ -353,6 +353,8 @@
     }
 </style>
 
+<div id="nx-overview"></div>
+
 <script id="detailTemplate" type="text/x-handlebars-template">
     <div class="evidence-block">
         <div class="evidence-line">
@@ -395,7 +397,7 @@
 
 <body id="phenotypeViewer">
 
-    <h1>BRCA1 <span style="font-weight:300;">phenotypes</span></h1>
+    <h1><span style="font-weight:300;">phenotypes</span></h1>
     <div class="row" style="margin:0px;">
         <div class="col-lg-10 col-lg-offset-1 col-md-offset-1 col-md-10">
             <!--
@@ -462,7 +464,7 @@
         function hashingNormalAnnotations(annotations) {
             var hashNormalAnnotation = {};
             annotations.forEach(function (a) {
-                hashNormalAnnotation[a.annotationId] = a;
+                hashNormalAnnotation[a.annotationHash] = a;
             })
             return hashNormalAnnotation;
         }
@@ -470,7 +472,7 @@
         function getMinPos(subjects) {
             var min = 100000;
             subjects.forEach(function (s) {
-                var pos = s.targetingIsoformsMap[Object.keys(s.targetingIsoformsMap)[0]].firstPosition;
+                var pos = s.locationCanonicalBegin;
                 if (min > pos) min = pos;
             })
             return min;
@@ -497,19 +499,19 @@
             //            console.log(annots);
             listAnnotRef.forEach(function(a){
                 if (annots.hasOwnProperty(a)){
-                    if (!listingPhenotype.hasOwnProperty(annots[a].apicategory)) {
-                        listingPhenotype[annots[a].apicategory] = {
-                            badge: annotTypeTemplate[annots[a].apicategory],
+                    if (!listingPhenotype.hasOwnProperty(annots[a].category)) {
+                        listingPhenotype[annots[a].category] = {
+                            badge: annotTypeTemplate[annots[a].category],
                             count: 0,
                             data: {}
                         };
                     }
-                    if (listingPhenotype[annots[a].apicategory].data.hasOwnProperty(annots[a].cvTermName)) {
-                        listingPhenotype[annots[a].apicategory].data[annots[a].cvTermName] += 1;
-                        listingPhenotype[annots[a].apicategory].count += 1;
+                    if (listingPhenotype[annots[a].category].data.hasOwnProperty(annots[a].cvTermName)) {
+                        listingPhenotype[annots[a].category].data[annots[a].cvTermName] += 1;
+                        listingPhenotype[annots[a].category].count += 1;
                     } else {
-                        listingPhenotype[annots[a].apicategory].data[annots[a].cvTermName] = 1;
-                        listingPhenotype[annots[a].apicategory].count += 1;
+                        listingPhenotype[annots[a].category].data[annots[a].cvTermName] = 1;
+                        listingPhenotype[annots[a].category].count += 1;
                     }
                 }
             });
@@ -527,7 +529,7 @@
             var subjectName = "";
             var varList = variants.map(function (v, i, array) {
                 //Only get the first position, dont check if there is others isoforms
-                var pos = v.targetingIsoformsMap[Object.keys(v.targetingIsoformsMap)[0]].firstPosition;
+                var pos = v.locationCanonicalBegin;
                 var original = v.variant.original;
                 var variant = v.variant.variant;
                 //                var evidences = v.evidences.map(function(e){
@@ -560,7 +562,7 @@
         function getAnnotationById(annotations, id) {
             if (annotations.hasOwnProperty(id)) {
                 return {
-                    category: annotations[id].apicategory,
+                    category: annotations[id].category,
                     cvTermName: annotations[id].cvTermName
                 }
             } else console.warn("couldn't find normal annotation " + id);
@@ -586,7 +588,7 @@
             impacts.forEach(function (i) {
                 var category = i.category;
                 var cvTermName = i.cvTermName.toLowerCase();
-                var annotationAffected = getAnnotationById(annots, i.normalAnnotationReferenceId);
+                var annotationAffected = getAnnotationById(annots, i.bioObject.annotationHash);
                 if (!filters || filters.indexOf(annotationAffected.cvTermName) !== -1) {
                     var customTemplate = jQuery.extend(true, {}, template);
                     customTemplate.rowLabel = "<strong>" + cvTermToSentence[cvTermName] + "</strong> " + annotationAffected.cvTermName + " " + annotTypeTemplate[annotationAffected.category];
@@ -808,7 +810,7 @@
             console.log(data);
 
             // Transform annotations into hashMap to ease the access by id
-            var normalAnnotations = hashingNormalAnnotations(data.annotations);
+            var normalAnnotations = hashingNormalAnnotations(data.isoformAnnotations[entry + "-1"]);
 
             // Sort phenotypes by smallest position
             var phenotypes = data.modifiedEntryAnnotations.sort(sortPhenotypesByPosition);
