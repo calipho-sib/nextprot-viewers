@@ -28,10 +28,12 @@
                     <th>Phenotype intensity</th>
                     <th>Relation</th>
                     <th>Function</th>
+<!--
                     <th>Prec Relation</th>
                     <th>Prec Mol Ent Obj</th>
+-->
                     <th>Data confidence</th>
-                    <th>Conflicting evidence</th>
+<!--                    <th>Conflicting evidence</th>-->
                     <th>Evidence codes</th>
                     <th class="pubmed-link">Reference</th>
                     <th>Protein Origin</th>
@@ -47,10 +49,12 @@
                     <th>Phenotype intensity</th>
                     <th>Relation</th>
                     <th>Function</th>
+<!--
                     <th>Prec Relation</th>
                     <th>Prec Mol Ent Obj</th>
+-->
                     <th>Data confidence</th>
-                    <th>Conflicting evidence</th>
+<!--                    <th>Conflicting evidence</th>-->
                     <th>Evidence codes</th>
                     <th>Reference</th>
                     <th>Protein Origin</th>
@@ -73,8 +77,9 @@
                 '</div>');
         });
         var gaussAnnotTable = $('#portalTable').DataTable({
-            colReorder: true,
-            "ajax": './scnportal.json',
+//            colReorder: true,
+//            "ajax": './scnportal.json',
+            "ajax": '../../../../../data/scnportal.json',
             "pageLength": 20,
             //                dom: '<"table_overflow"t>'
             dom: "<'row firstHeadTable'<'col-sm-5'B><'col-sm-7'f>>" +
