@@ -28,10 +28,12 @@
                     <th>Phenotype intensity</th>
                     <th>Relation</th>
                     <th>Function</th>
+<!--
                     <th>Prec Relation</th>
                     <th>Prec Mol Ent Obj</th>
+-->
                     <th>Data confidence</th>
-                    <th>Conflicting evidence</th>
+<!--                    <th>Conflicting evidence</th>-->
                     <th>Evidence codes</th>
                     <th class="pubmed-link">Reference</th>
                     <th>Protein Origin</th>
@@ -47,10 +49,12 @@
                     <th>Phenotype intensity</th>
                     <th>Relation</th>
                     <th>Function</th>
+<!--
                     <th>Prec Relation</th>
                     <th>Prec Mol Ent Obj</th>
+-->
                     <th>Data confidence</th>
-                    <th>Conflicting evidence</th>
+<!--                    <th>Conflicting evidence</th>-->
                     <th>Evidence codes</th>
                     <th>Reference</th>
                     <th>Protein Origin</th>
@@ -73,8 +77,8 @@
                 '</div>');
         });
         var gaussAnnotTable = $('#portalTable').DataTable({
-            colReorder: true,
-            "ajax": './brcaportal.json',
+//            colReorder: true,
+            "ajax": '../../../../../data/brcaportal.json',
             "pageLength": 20,
             //                dom: '<"table_overflow"t>'
             dom: "<'row firstHeadTable'<'col-sm-5'B><'col-sm-7'f>>" +
@@ -93,13 +97,7 @@
                     extension: '.tsv',
                     text: '<span><i class="glyphicon glyphicon-floppy-save"></i></span><span style="margin-left:5px;">CSV</span>',
                     className: 'tableButton'
-                }, 
-                {
-                    extend: 'excel',
-                    fieldSeparator: '\t',
-                    text: '<span><i class="glyphicon glyphicon-list-alt"></i></span><span style="margin-left:5px;">Excel</span>',
-                    className: 'tableButton'
-                }, 
+                },
                 {
                     extend: 'pdf',
                     fieldSeparator: '\t',
