@@ -15,13 +15,337 @@ th[data-sort]{
 .question {
     color: orange
 }
-/*
 
-.heatmap-expandAll-btn {
-    display: none;
-}
 
-.heatmap-collapseAll-btn {
-    display: none;
-}
+ body {
+        /*        background-color: #eee;*/
+        background-color: #fdfdfd;
+        font-family: "Lato", "Helvetica Neue", Helvetica;
+    }
+    
+    h1 {
+        text-align: center;
+        margin: 30px 0px 20px;
+    }
+    
+    button:focus,
+    .btn:focus,
+    .btn:active:focus {
+        outline: none;
+    }
+    
+    .btn:focus {
+        background-color: #fff;
+        border-color: #ccc;
+    }
+    
+    .btn:focus:hover {
+        background-color: #e6e6e6;
+        border-color: #adadad;
+    }
+    
+    a:hover,
+    a:focus {
+        text-decoration: none;
+    }
+    
+    a.active {
+        background-color: #eee;
+    }
+    
+    .legends {
+        margin: 0px 0px 10px;
+        background-color: #f7f7f7;
+        /*        color:#555;*/
+        color: black;
+        border: 1px solid #ddd;
+        border-bottom-left-radius: 5px;
+        border-bottom-right-radius: 5px;
+/*        border-top: 0px;*/
+        display: inline-block;
+    }
+    
+    .legends p {
+        display: inline-block;
+        padding: 5px 10px 5px 10px;
+        margin: 0px;
+        font-weight: 500;
+        font-size: 12px;
+        font-style: italic;
+    }
+    
+    .legends i {
+        width: 15px;
+        height: 15px;
+        border-radius: 10px;
+        vertical-align: middle;
+        margin-bottom: 2px;
+    }
+    
+    .legends h3 {
+        background-color: white;
+        font-weight: 700;
+        font-size: 14px;
+        /*        font-style: italic;*/
+        display: inline-block;
+        margin: 0px;
+        padding: 10px;
+/*        border-right: 1px solid #ccc;*/py
+        border-left: 1px solid #ccc;
+/*        border-bottom-left-radius: 5px;*/
+        border-bottom-right-radius: 5px;
+        line-height: 14px;
+        vertical-align: middle;
+    }
+    .legends.legends-count h3{
+        border-left:0px;
+        border-bottom-right-radius: 0px;
+        border-right: 1px solid #ccc;
+        border-bottom-left-radius: 5px;
+    }
+    
+    .legends.legends-count p{
+        font-size: 14px;
+        font-style: normal;
+    }
+    
+    .legends-count #count-pheno{
+        font-style: normal;
+        font-weight: 900;
+        font-size: 14px;
+        vertical-align: middle;
+    }
+    
+    hr {
+        border-top: 1px solid #ddd;
+        margin-bottom: 0px;
+    }
+    
+    .second-title {
+        font-weight: 300;
+        padding-bottom: 5px;
+        border-bottom: 1px solid #bbb;
+        margin-bottom: 15px;
+    }
+    
+    .panel-group {
+        margin-bottom: 10px;
+    }
+    
+    .panel-title {
+        font-weight: 300;
+        line-height: 1;
+        color: black;
+        display: inline-block;
+    }
+    
+    .collapse-title .chevron>i {
+        width: 20px;
+        color: black;
+    }
+    
+    .collapse-title .chevron>i:before {
+        font-family: FontAwesome;
+        content: "\f078";
+    }
+    
+    .collapse-title.collapsed .chevron>i:before {
+        font-family: FontAwesome;
+        content: "\f054";
+    }
+    /*
+    a .panel-title:before {
+        font-family: FontAwesome;
+        content:"\f078";
+        padding-right: 10px;
+    }
+    a.collapsed .panel-title:before {
+        content:"\f054";
+        padding-right: 10px;   
+    }
 */
+    
+    .select-all {
+        cursor: pointer;
+        z-index: 2;
+    }
+    
+    .subtypes .phenAnnot {
+        vertical-align: middle;
+    }
+    
+    .phenoCount {
+        margin-left: 5px;
+    }
+    
+    .subtypes .badge.phenoCount {
+        vertical-align: middle;
+    }
+    
+    .subtypes li {
+        padding: 0px;
+    }
+    
+    .subtypes a {
+        width: 100%;
+        height: 100%;
+        padding: 10px 15px;
+        display: block;
+        cursor: pointer;
+    }
+    
+    .subtypes i {
+        color: black;
+        margin-right: 20px;
+    }
+    
+    #phenotypeViewer .badge {
+        border-radius: 3px;
+        font-weight: 300;
+    }
+    
+    .filters .badge {
+        padding: 3px 7px;
+        font-size: 11px;
+        vertical-align: top;
+        margin-right: 5px;
+    }
+    /*    Custom treeTable css for current use*/
+    
+    #heatmap-table0 .heatmap-rowLabel .glyphicon {
+        margin-right: 10px;
+        font-size: 18px;
+        top: 2px
+    }
+    
+    #heatmap-table0 .glyphicon {
+        font-weight: 500;
+        font-size: 12px;
+        line-height: 14px;
+    }
+    
+    #heatmap-table0 .badge {
+        padding: 3px 4px;
+        font-size: 10px;
+        margin-left: 5px;
+    }
+    
+    #heatmap-table0 .heatmap-row {
+        padding: 5px;
+    }
+    
+    .tree .glyphicon-plus:before {
+        font-family: FontAwesome;
+        content: "\f00e";
+    }
+    .tree .glyphicon-minus:before {
+        font-family: FontAwesome;
+        content: "\f010";
+    }
+    
+    .tree .tree .glyphicon-plus:before {
+        font-family: FontAwesome;
+        content: "\f06c";
+    }
+    .tree .tree .glyphicon-minus:before {
+        font-family: FontAwesome;
+        content: "\f06c";
+    }
+    
+    .tree .tree .glyphicon-zoom-in:before {
+        font-family: FontAwesome;
+        font-size:16px;
+        content: "\f06e" !important;
+    }
+    .tree .tree .glyphicon-zoom-out:before {
+        font-family: FontAwesome;
+        font-size:16px;
+        content: "\f070" !important;
+    }
+    
+    .treeBtn {
+        margin-right: 10px;
+    }
+    
+    .varDisplay {
+        line-height: 20px;
+        padding: 10px 0px;
+    }
+    
+    .varDisplay>span {
+        padding: 0px 5px;
+        display: table-cell;
+    }
+    
+    .varPos {
+        border: 1px solid #ccc;
+        background-color: #eee;
+        border-top-left-radius: 5px;
+        border-bottom-left-radius: 5px;
+        font-size: 11px;
+        font-weight: 700;
+    }
+    
+    .varSeq {
+        border: 1px solid #ccc;
+        border-top-right-radius: 5px;
+        border-bottom-right-radius: 5px;
+        color: #00C500;
+        font-weight: 500;
+        font-size: 11px;
+        border-left: 0px;
+    }
+    
+    #phenotypeViewer .badge.gcc {
+        background-color: #2B4372;
+    }
+    
+    #phenotypeViewer .badge.gmf {
+        background-color: #AC6935;
+    }
+    
+    #phenotypeViewer .badge.gbp {
+        background-color: #AC9635;
+    }
+    .evidence-block{
+        margin-left:15px;
+        font-weight: 500;
+        font-size: 12px;
+    }
+    
+    .evidence-line {
+        margin: 10px;
+    }
+    
+    .evidenceArrow {
+        -ms-transform: rotate(180deg);
+        -webkit-transform: rotate(180deg);
+        transform: rotate(180deg);
+        display: inline-block;
+        font-weight: 900;
+    }
+    
+    .evidence-index {
+        padding: 2px 5px;
+    }
+    
+    .evidence-code {
+        background-color: #7cba0f;
+        color: white;
+        padding: 2px 6px;
+        border-radius: 2px;
+        margin-left: 5px;
+    }
+    
+    .evidence-source {
+        background-color: #dedede;
+        color: #999;
+        padding: 2px 6px;
+    }
+    
+    .evidence-link {
+        padding-left: 10px;
+        border-left: 1px solid darkgray;
+        margin-right: 10px;
+        margin-left: 10px;
+    }
