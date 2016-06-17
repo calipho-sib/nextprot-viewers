@@ -181,13 +181,14 @@
                             data: {}
                         };
                     }
-                    if(annots[a].category != 'BinaryInteraction'){
-                        var pheno = annots[a].cvTermName;
-                    }else {
+                    if(annots[a].category === 'BinaryInteraction'){
                         var pheno = annots[a].bioObject.accession;
+//                        console.log(annots[a]);
+                    }else {
+                        var pheno = annots[a].cvTermName;
                     }
                     if (listingPhenotype[annots[a].apicategory].data.hasOwnProperty(pheno)) {
-                        listingPhenotype[annots[a].apicategory].data[annots[a].cvTermName] += 1;
+                        listingPhenotype[annots[a].apicategory].data[pheno] += 1;
                         listingPhenotype[annots[a].apicategory].count += 1;
                     } else {
                         listingPhenotype[annots[a].apicategory].data[pheno] = 1;
@@ -243,7 +244,7 @@
             if (annotations.hasOwnProperty(id)) {
                 return {
                     category: annotations[id].apicategory,
-                    cvTermName: annotations[id].cvTermName
+                    cvTermName: annotations[id].apicategory === "BINARY_INTERACTION" ? annotations[id].bioObject.accession : annotations[id].cvTermName
                 }
             } else console.warn("couldn't find normal annotation " + id);
         }
@@ -444,7 +445,8 @@
         var annotTypeTemplate = {
             "GO_MOLECULAR_FUNCTION": "<span class='badge gmf'>GO-MF</span>",
             "GO_CELLULAR_COMPONENT": "<span class='badge gcc'>GO-CC</span>",
-            "GO_BIOLOGICAL_PROCESS": "<span class='badge gbp'>GO-BP</span>"
+            "GO_BIOLOGICAL_PROCESS": "<span class='badge gbp'>GO-BP</span>",
+            "BINARY_INTERACTION": "<span class='badge bi'>BI</span>"
         }
 
 
@@ -493,6 +495,7 @@
         //        }
 
         nx.getFullAnnotationsByCategory(entry, "modified-entry-annotation").then(function (data) {
+            console.log("data");
             console.log(data);
 
             // Transform annotations into hashMap to ease the access by id
