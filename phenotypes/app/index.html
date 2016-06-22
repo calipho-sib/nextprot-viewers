@@ -6,9 +6,12 @@
     <meta charset="UTF-8">
     <script type="text/javascript" src="https://use.fontawesome.com/aeec643a8b.js"></script>
     <link href='https://fonts.googleapis.com/css?family=Lato:100,300,400,700,900' rel='stylesheet' type='text/css'>
+    <script type="text/javascript" src="nextprot.bundle.js"></script>
+    <!--
     <script type="text/javascript" src="handlebars.min.js"></script>
     <script type="text/javascript" src="jquery.min.js"></script>
     <script type="text/javascript" src="nextprot-core.js"></script>
+-->
     <script type="text/javascript" src="heatmap-table.js"></script>
     <script type="text/javascript" src="bootstrap.min.js"></script>
     <script type="text/javascript" src="iframeResizer.contentWindow.min.js"></script>
@@ -19,17 +22,20 @@
 </head>
 
 <style>
-   
-</style>
 
-<div id="nx-overview"></div>
+</style>
+<div class="row">
+    <div class="col-md-10 col-md-offset-1">
+        <div id="nx-overview"></div>
+    </div>
+</div>
 
 <script id="detailTemplate" type="text/x-handlebars-template">
     <div class="evidence-block">
         <div class="evidence-line">
             <div class="evidenceArrow">⤵</div>
             <span class="evidence-index">Evidence {{@index}}</span>
-            <span class="evidence-code">{{evidenceCodeName}}</span> 
+            <span class="evidence-code">{{evidenceCodeName}}</span>
             <span class="evidence-source">{{resourceDb}}</span>
         </div>
         <div class="evidence-link"><a href="https://search.nextprot.org">{{resourceAccession}}</a></div>
@@ -39,26 +45,32 @@
 <script id="form-template" type="text/x-handlebars-template">
 
     <div>
-        <h3 class="filter-title second-title">PHENOTYPES</h3> {{#each this}}
+        <h3 class="filter-title second-title">{{total}} PHENOTYPES <span id="count-phenotype-selected">({{total}} selected)</span></h3> {{#each annotations}}
+        {{#if name}}
         <div id="panel{{@index}}" class="panel-group">
             <div class="panel panel-default">
                 <div class="panel-heading">
+                    <a class="select-all pull-left" referTo="#collapse{{@index}}">All <i class="fa fa-check" aria-hidden="true"></i></a>
                     <a class="collapse-title collapsed" data-toggle="collapse" href="#collapse{{@index}}">
-                        <span class="chevron"><i class="fa"></i></span>
-                        <h4 class="panel-title"> {{{badge}}} <span>{{@key}}</span> <span class="badge phenoCount">{{count}}</span>
-                        </h4>
+                        
+                        <div class="panel-title"> 
+                            <span class="chevron pull-right"><i class="fa"></i></span>
+                            {{{badge}}} 
+                            <span class="typeName">{{name}}</span> 
+                            <span class="badge phenoCount pull-right">{{count}} phenotypes</span>
+                        </div>
                     </a>
-                    <a class="select-all pull-right" referTo="#collapse{{@index}}">All <i class="fa fa-check" aria-hidden="true"></i></a>
                 </div>
                 <div id="collapse{{@index}}" class="panel-collapse collapse">
                     <ul class="list-group subtypes">
-                        {{#each data}}
-                        <li class="list-group-item"><a class="active"><i class="fa fa-check" aria-hidden="true"></i><span class="phenAnnot">{{@key}}</span> <span class="badge phenoCount">{{this}}</span></a></li>
-                        {{/each}}
+                        {{#data}}
+                        <li class="list-group-item"><a class="active"><i class="fa fa-check" aria-hidden="true"></i><span class="phenAnnot">{{phenotype}}</span> <span class="badge phenoCount pull-right">{{count}} variants</span></a></li>
+                        {{/data}}
                     </ul>
                 </div>
             </div>
         </div>
+        {{/if}}
         {{/each}}
     </div>
 
@@ -66,7 +78,7 @@
 
 <body id="phenotypeViewer">
 
-    <h1><span style="font-weight:300;">phenotypes</span></h1>
+    <!--    <h1><span style="font-weight:300;">phenotypes</span></h1>-->
     <div class="row" style="margin:0px;">
         <div class="col-lg-10 col-lg-offset-1 col-md-offset-1 col-md-10">
             <!--
@@ -79,26 +91,54 @@
                     <div class="filters"></div>
                 </div>
             </div>
-<!--            <hr>-->
+            <!--            <hr>-->
             <div class="row">
                 <div class="col-md-12">
-                    <h3 class="variant-title second-title">VARIANTS</h3>
+                    <h3 class="variant-title second-title"><span id="count-variant"></span> VARIANTS (<span id="count-variant-selected"></span> displayed)</h3>
                 </div>
                 <div class="col-md-12">
                     <div class="legends pull-right">
+                        <!--
                         <p><i class="heatmap-circle " style="background-color: #2D882D"></i> No impact</p>
                         <p><i class="heatmap-circle " style="background-color: #AA3939"></i> Impact</p>
                         <p><i class="heatmap-circle " style="background-color: #226666"></i> Gain</p>
                         <p><i class="heatmap-circle " style="background-color: #D49A6A"></i> Increase</p>
                         <p><i class="heatmap-circle " style="background-color: #F7D492"></i> Decrease</p>
-<!--
+-->
+                        <p>
+                            <img style="width:15px;padding-bottom:5px;" src="http://www.downtowntomsriver.com/chili/images/chili_icon.gif">
+                            <img style="width:15px;padding-bottom:5px;" src="http://www.downtowntomsriver.com/chili/images/chili_icon.gif">
+                            <img style="width:15px;padding-bottom:5px;" src="http://www.downtowntomsriver.com/chili/images/chili_icon.gif">
+                            <img style="width:15px;padding-bottom:5px;" src="http://www.downtowntomsriver.com/chili/images/chili_icon.gif">
+                            <span>Severe</span>
+                        </p>
+                        <p>
+                            <img style="width:15px;padding-bottom:5px;" src="http://www.downtowntomsriver.com/chili/images/chili_icon.gif">
+                            <img style="width:15px;padding-bottom:5px;" src="http://www.downtowntomsriver.com/chili/images/chili_icon.gif">
+                            <img style="width:15px;padding-bottom:5px;" src="http://www.downtowntomsriver.com/chili/images/chili_icon.gif">
+                            <span>Moderate</span>
+                        </p>
+                        <p>
+                            <img style="width:15px;padding-bottom:5px;" src="http://www.downtowntomsriver.com/chili/images/chili_icon.gif">
+                            <img style="width:15px;padding-bottom:5px;" src="http://www.downtowntomsriver.com/chili/images/chili_icon.gif">
+                            <span>Mild</span>
+                        </p>
+                        <p>
+                            <img style="width:15px;padding-bottom:5px;" src="http://www.downtowntomsriver.com/chili/images/chili_icon.gif">
+                            <span>Normal</span>
+                        </p>
+                        <p>
+                            <img style="width:15px;padding-bottom:5px;" src="http://www.urdu-english.com/images/lessons/beginner/vegetables/vegetable-pics/chilli.png">
+                            <span>No Impact</span>
+                        </p>
+                        <!--
                         <h3>
                             CAPTION
                         </h3>
 -->
                     </div>
                     <div class="legends legends-count pull-left">
-<!--
+                        <!--
                         <h3>
                             DISPLAYED
                         </h3>
@@ -112,7 +152,7 @@
             <div class="row">
                 <div id="heatmap-table0" style="width:100%;margin: 20px auto 50px auto; height:auto;"></div>
             </div>
-<!--
+            <!--
             <div class="row">
                 <div id="heatmap-table2" style="width:100%;margin: 20px auto 50px auto; height:auto;"></div>
             </div>
@@ -130,11 +170,16 @@
         //NX DATA PARSING UTILS
 
 
-        function hashingNormalAnnotations(annotations) {
+        function hashingNormalAnnotations(type) {
             var hashNormalAnnotation = {};
-            annotations.forEach(function (a) {
-                hashNormalAnnotation[a.annotationHash] = a;
-            })
+            for (var a in type) {
+                //                if (a !== "phenotype"){
+                var annotations = type[a];
+                annotations.forEach(function (a) {
+                        hashNormalAnnotation[a.annotationHash] = a;
+                    })
+                    //                }
+            }
             return hashNormalAnnotation;
         }
 
@@ -153,63 +198,117 @@
             return minPosA - minPosB;
         }
 
-        function getListAnnotRef(phenotypes){
+        function getListAnnotRef(phenotypes) {
             var list = [];
-            phenotypes.forEach(function(p){
-                p.annotations.forEach(function(a){
-                    list.push(a.bioObject.annotationHash);
+            for (var p in phenotypes) {
+                var distincts = [];
+                phenotypes[p].phenotype.forEach(function (a) {
+                    if (distincts.indexOf(a.bioObject.annotationHash) === -1) {
+                        distincts.push(a.bioObject.annotationHash);
+                        list.push(a.bioObject.annotationHash);
+                    }
                 })
-            });
+            };
             return list;
         }
+
         function getAllAnnotationTypes(annots, phenotypes) {
-//            console.log("phenotypes");
-//            console.log(phenotypes);
+            //            console.log("phenotypes");
+            //            console.log(phenotypes);
             var listAnnotRef = getListAnnotRef(phenotypes);
-//            console.log("listAnnotRef");
-//            console.log(listAnnotRef);
-//            console.log("annots");
-//            console.log(annots);
-            var listingPhenotype = {};
+            //            console.log("listAnnotRef");
+            //            console.log(listAnnotRef);
+            //            console.log("annots");
             //            console.log(annots);
-            listAnnotRef.forEach(function(a){
-                if (annots.hasOwnProperty(a)){
-                    if (!listingPhenotype.hasOwnProperty(annots[a].apicategory)) {
-                        listingPhenotype[annots[a].apicategory] = {
+            var listingPhenotype = {
+                "annotations": {
+                    "GO_MOLECULAR_FUNCTION": {},
+                    "GO_BIOLOGICAL_PROCESS": {},
+                    "GO_CELLULAR_COMPONENT": {},
+                    "BINARY_INTERACTION": {},
+                    "SMALL_MOLECULE_INTERACTION": {}
+                },
+                "total":0
+            };
+            //            var listingPhenotype = {};
+            console.log("JON SNOW");
+            console.log(annots);
+            console.log(phenotypes);
+            //            console.log(annots);
+            listAnnotRef.forEach(function (a) {
+                if (annots.hasOwnProperty(a)) {
+                    if (!listingPhenotype.annotations.hasOwnProperty(annots[a].apicategory)) {
+                        console.warn("couldn't find the api category : " + annots[a].apicategory);
+                    }
+                    if (jQuery.isEmptyObject(listingPhenotype.annotations[annots[a].apicategory])) {
+                        listingPhenotype.annotations[annots[a].apicategory] = {
                             badge: annotTypeTemplate[annots[a].apicategory],
+                            name: annotTypeDescription[annots[a].apicategory],
                             count: 0,
                             data: {}
                         };
                     }
-                    if(annots[a].category === 'BinaryInteraction'){
+                    if (annots[a].category === 'BinaryInteraction' || annots[a].category === "SmallMoleculeInteraction") {
+                        if (annots[a].category === "SmallMoleculeInteraction") {
+                            console.log("HODOR");
+                            console.log(annots[a]);
+                        }
+
                         var pheno = annots[a].bioObject.accession;
-//                        console.log(annots[a]);
-                    }else {
+                        //                        console.log(annots[a]);
+                    } else {
                         var pheno = annots[a].cvTermName;
                     }
-                    if (listingPhenotype[annots[a].apicategory].data.hasOwnProperty(pheno)) {
-                        listingPhenotype[annots[a].apicategory].data[pheno] += 1;
-                        listingPhenotype[annots[a].apicategory].count += 1;
+                    if (listingPhenotype.annotations[annots[a].apicategory].data.hasOwnProperty(pheno)) {
+                        listingPhenotype.annotations[annots[a].apicategory].data[pheno].count += 1;
+//                        listingPhenotype.total += 1;
                     } else {
-                        listingPhenotype[annots[a].apicategory].data[pheno] = 1;
-                        listingPhenotype[annots[a].apicategory].count += 1;
+                        listingPhenotype.annotations[annots[a].apicategory].data[pheno] = {
+                            "phenotype" : pheno,
+                            "count": 1
+                        };
+//                        listingPhenotype.total += 1;
                     }
                 }
             });
+            for (var type in listingPhenotype.annotations) {
+                if (!jQuery.isEmptyObject(listingPhenotype.annotations[type])) {
+                    listingPhenotype.annotations[type].count = Object.keys(listingPhenotype.annotations[type].data).length;
+                    listingPhenotype.total += Object.keys(listingPhenotype.annotations[type].data).length;
+                }
+                var sortedData = [];
+                for (var a in listingPhenotype.annotations[type].data){
+                    sortedData.push(listingPhenotype.annotations[type].data[a]);
+                }
+                console.log("Daenerys");
+                console.log(sortedData);
+                sortedData.sort(function(a,b){
+                    if (a.count < b.count) return 1; 
+                    if (a.count > b.count) return -1; 
+                    if(a.phenotype < b.phenotype) return -1;
+                    if(a.phenotype > b.phenotype) return 1;
+                    return 0;
+                })
+                listingPhenotype.annotations[type].data = sortedData;
+            }
+//            var secArr = listingPhenotype.annotations.map(function(a){return a});
+//            console.log("Daenerys");
+//            console.log(secArr);
             console.log("listingPhenotype");
             console.log(listingPhenotype);
             return listingPhenotype;
         }
 
 
-        function getVariantInfos(variants) {
+        function getVariantInfos(annots, variants) {
             var variantInfos = {
                 fullName: "",
                 evidences: []
             };
             var subjectName = "";
-            var varList = variants.map(function (v, i, array) {
+            var varList = variants.map(function (id, i, array) {
                 //Only get the first position, dont check if there is others isoforms
+                var v = annots[id];
                 var pos = v.locationCanonicalBegin;
                 var original = v.variant.original;
                 var variant = v.variant.variant;
@@ -232,7 +331,8 @@
             });
 
             varList.forEach(function (v, i, array) {
-                var name = "<span class='varDisplay'><span class='varPos'>" + v.pos + "</span><span class='varSeq'>" + v.original + " → " + v.variant + "</span></span>";
+                var variantAA = v.variant === "-" ? "del" : v.variant;
+                var name = "<span class='varDisplay'><span class='varPos'>" + v.pos + "</span><span class='varSeq'>" + v.original + " → " + variantAA + "</span></span>";
                 if (i < array.length - 1) name += " ";
                 variantInfos.fullName += name;
                 //                variantInfos.evidences = variantInfos.evidences.concat(v.evidences);
@@ -244,7 +344,7 @@
             if (annotations.hasOwnProperty(id)) {
                 return {
                     category: annotations[id].apicategory,
-                    cvTermName: annotations[id].apicategory === "BINARY_INTERACTION" ? annotations[id].bioObject.accession : annotations[id].cvTermName
+                    cvTermName: annotations[id].apicategory === "BINARY_INTERACTION" || annotations[id].apicategory === "SMALL_MOLECULE_INTERACTION" ? annotations[id].bioObject.accession : annotations[id].cvTermName
                 }
             } else console.warn("couldn't find normal annotation " + id);
         }
@@ -263,18 +363,34 @@
             return evidences;
         }
 
+        function getWorstIntensity(list) {
+            var worst = "";
+            var intensityRange = ["", "no-impact", "NA", "normal", "mild", "moderate", "severe"];
+            list.forEach(function (i) {
+                if (intensityRange.indexOf(i.toLowerCase()) > intensityRange.indexOf(worst)) {
+                    worst = i.toLowerCase();
+                }
+            })
+            return worst;
+        }
+
         function getImpact(impacts, annots, template, filters) {
             var listPhenotypes = [];
             var fakeEvidences = []
             impacts.forEach(function (i) {
                 var category = i.category;
                 var cvTermName = i.cvTermName.toLowerCase();
+                var intensityList = i.evidences.map(function (e) {
+                    return e.intensity
+                });
+                var worstIntensity = getWorstIntensity(intensityList);
                 var annotationAffected = getAnnotationById(annots, i.bioObject.annotationHash);
                 if (!filters || filters.indexOf(annotationAffected.cvTermName) !== -1) {
                     var customTemplate = jQuery.extend(true, {}, template);
-                    customTemplate.rowLabel = "<strong>" + cvTermToSentence[cvTermName] + "</strong> " + annotationAffected.cvTermName + " " + annotTypeTemplate[annotationAffected.category];
-                    customTemplate.values[0] = cvTermName !== "no-impact" ? "" : "no-impact";
-                    customTemplate.values[1] = cvTermName !== "no-impact" ? cvTermName : "";
+                    //                    DEPRECATED
+                    //                    customTemplate.rowLabel = "<strong>" + cvTermToSentence[cvTermName] + "</strong> " + annotationAffected.cvTermName + " " + annotTypeTemplate[annotationAffected.category];
+                    customTemplate.rowLabel = "<strong>" + i.description + "</strong> " + annotTypeTemplate[annotationAffected.category];
+                    customTemplate.values[0] = cvTermName !== "no-impact" ? worstIntensity : "no-impact";
                     customTemplate.detailData = generateFakeEvidence();
                     listPhenotypes.push(customTemplate);
                 }
@@ -301,18 +417,23 @@
             var treeTable = {
                 data: []
             };
-
-            phenotypes.forEach(function (p) {
+            for (var a in phenotypes) {
+                var p = phenotypes[a];
+                //                phenotypes[a].phenotype.forEach(function (p) {
                 var varTemplate = jQuery.extend(true, {}, template);
-                varTemplate.children = getImpact(p.annotations, annotations, template, filters);
+                varTemplate.children = getImpact(p.phenotype, annotations, template, filters);
                 if (varTemplate.children.length) {
-                    var varInfos = getVariantInfos(p.subjectComponents);
+                    var varInfos = getVariantInfos(annotations, p.phenotype[0].subjectComponents);
+                    var intensityList = varTemplate.children.map(function (c) {
+                        return c.values[0]
+                    });
                     varTemplate.rowLabel = varInfos.fullName;
                     varTemplate.detailData = varInfos.evidences;
-                    varTemplate.values = propagateImpact(varTemplate.children);
+                    varTemplate.values[0] = getWorstIntensity(intensityList);
                     treeTable.data.push(varTemplate);
                 }
-            })
+                //                })
+            }
 
             return treeTable;
         }
@@ -365,41 +486,63 @@
             return filters;
 
         }
-        
-        function autoCheckAll(elem){
+
+        function autoCheckAll(elem) {
             var panel = $(elem).closest(".panel-group");
             var all = panel.find(".select-all i");
             var activeFilters = panel.find(".subtypes a.active");
             if (!activeFilters.length && all.hasClass("fa-check")) {
                 all.toggleClass("fa-circle-thin fa-check");
-            }
-            else if (activeFilters.length === panel.find(".subtypes a").length){
+            } else if (activeFilters.length === panel.find(".subtypes a").length) {
                 if (all.hasClass("fa-circle-thin")) {
                     all.toggleClass("fa-circle-thin fa-check");
                 }
             }
         }
 
-        function activateFilters(data, annots) {
+        function activateFilters(data, annots, listingPhenotypes) {
             $(".filters a:not(.collapse-title)").click(function () {
                 var filters = getFilters();
-                autoCheckAll($(this)) ;
-                resetTreeViewer(data, annots, filters);
+                console.log("Tyrion");
+//                console.log(filters);
+                $("#count-phenotype-selected").text("(" + filters.length + " selected)");
+                
+                autoCheckAll($(this));
+                
+                resetTreeViewer(data, annots, listingPhenotypes, filters);
             })
         }
-        
-        function countPhenotypes(data){
+
+        function countVariants(data) {
             var count = 0;
-            data.forEach(function(d){
-                count+= d.children.length;
+            console.log("LANNISTER");
+//            console.log(data);
+            data.forEach(function (d) {
+                count += d.children.length;
             })
             $("#count-pheno").text(count);
+            $("#count-variant-selected").text(data.length);
+        }
+        
+        function countPhenotypes(phenotypeList, filters){
+            var count = 0;
+            console.log("Sir Davos");
+//            console.log(phenotypeList);
+            for (var type in phenotypeList.annotations) {
+                for (var phen in phenotypeList.annotations[type].data){
+                    if (filters.indexOf(phen) !== -1){
+                        count += phenotypeList.annotations[type].data[phen];
+                    }
+                }
+            }
+            
+            $("#count-phenotype-selected").text("(" + count + " selected)");
         }
 
         var nx = new Nextprot.Client("neXtProt proteomics view", "Calipho-Team");
         if (nx.getEnvironment() !== "bed") {
-        //    nx.setApiBaseUrl("http://bed-api.nextprot.org");
-            nx.setApiBaseUrl("http://localhost:8080/nextprot-api-web");
+            nx.setApiBaseUrl("http://bed-api.nextprot.org");
+            //            nx.setApiBaseUrl("http://localhost:8080/nextprot-api-web");
 
         }
 
@@ -409,29 +552,54 @@
 
         var heatmapTableOptions0 = {
             valuesColorMapping: [
+
                 {
-                    value: 'impact',
-                    color: '#AA3939'
+                    value: 'severe',
+                    html: '<div>\
+                              <img style="width:15px" src="http://www.downtowntomsriver.com/chili/images/chili_icon.gif">\
+                              <img style="width:15px" src="http://www.downtowntomsriver.com/chili/images/chili_icon.gif">\
+                              <img style="width:15px" src="http://www.downtowntomsriver.com/chili/images/chili_icon.gif">\
+                              <img style="width:15px" src="http://www.downtowntomsriver.com/chili/images/chili_icon.gif">\
+                          </div>'
                 },
                 {
-                    value: 'increase',
-                    color: '#D49A6A'
+                    value: 'moderate',
+                    html: '<div>\
+                              <img style="width:15px" src="http://www.downtowntomsriver.com/chili/images/chili_icon.gif">\
+                              <img style="width:15px" src="http://www.downtowntomsriver.com/chili/images/chili_icon.gif">\
+                              <img style="width:15px" src="http://www.downtowntomsriver.com/chili/images/chili_icon.gif">\
+                          </div>'
                 },
                 {
-                    value: 'decrease',
-                    color: '#F7D492'
+                    value: 'mild',
+                    html: '<div>\
+                              <img style="width:15px" src="http://www.downtowntomsriver.com/chili/images/chili_icon.gif">\
+                              <img style="width:15px" src="http://www.downtowntomsriver.com/chili/images/chili_icon.gif">\
+                          </div>'
+                },
+                {
+                    value: 'normal',
+                    html: '<div>\
+                              <img style="width:15px" src="http://www.downtowntomsriver.com/chili/images/chili_icon.gif">\
+                          </div>'
                 },
                 {
                     value: 'no-impact',
-                    color: '#2D882D'
+                    html: '<div>\
+                              <img style="width:15px" src="http://www.urdu-english.com/images/lessons/beginner/vegetables/vegetable-pics/chilli.png">\
+                          </div>'
                 },
                 {
-                    value: 'gain',
-                    color: '#226666'
+                    value: 'NA',
+                    color: '#1effff'
                 }
             ],
             columnWidth: "120px",
-            detailTemplate: "detailTemplate"
+            detailTemplate: "detailTemplate",
+            headerTemplate: "headerTemplate",
+            headerTemplateData: {
+                header: ['IMPACT']
+            }
         }
 
         var cvTermToSentence = {
@@ -443,10 +611,18 @@
         }
 
         var annotTypeTemplate = {
-            "GO_MOLECULAR_FUNCTION": "<span class='badge gmf'>GO-MF</span>",
-            "GO_CELLULAR_COMPONENT": "<span class='badge gcc'>GO-CC</span>",
-            "GO_BIOLOGICAL_PROCESS": "<span class='badge gbp'>GO-BP</span>",
-            "BINARY_INTERACTION": "<span class='badge bi'>BI</span>"
+            "GO_MOLECULAR_FUNCTION": "<span class='badge gmf' data-toggle='tooltip' data-placement='top' title='Go Molecular Function'>GO-MF</span>",
+            "GO_CELLULAR_COMPONENT": "<span class='badge gcc' data-toggle='tooltip' data-placement='top' title='Go Cellular Component'>GO-CC</span>",
+            "GO_BIOLOGICAL_PROCESS": "<span class='badge gbp' data-toggle='tooltip' data-placement='top' title='Go Biological process'>GO-BP</span>",
+            "BINARY_INTERACTION": "<span class='badge bi' data-toggle='tooltip' data-placement='top' title='Binary Interaction' style='z-index:30'>BI</span>",
+            "SMALL_MOLECULE_INTERACTION": "<span class='badge smi' data-toggle='tooltip' data-placement='top' title='Small Molecule Interaction'>SMI</span>"
+        }
+        var annotTypeDescription = {
+            "GO_MOLECULAR_FUNCTION": "Impact on molecular function",
+            "GO_CELLULAR_COMPONENT": "Impact on cellular component",
+            "GO_BIOLOGICAL_PROCESS": "Impact on biological process",
+            "BINARY_INTERACTION": "Impact on binary interaction",
+            "SMALL_MOLECULE_INTERACTION": "Impact on small molecule interaction"
         }
 
 
@@ -454,26 +630,28 @@
             "rowLabel": "",
             "linkLabel": "",
             "linkURL": "",
-            "values": ["", ""],
+            "values": [""],
             "children": []
         };
 
-        function resetTreeViewer(data, annots, filters) {
+        function resetTreeViewer(data, annots, listingPhenotypes, filters) {
             $("#heatmap-table0").html("");
             // parse Data to fit the template of treeData - WITH FILTERS
             var treeDataFiltered = parseNxDataForTreeTable(data, annots, template, filters);
-            
+
             // add count box - WITH FILTERS ON
-            countPhenotypes(treeDataFiltered.data);
-            
+//            countPhenotypes(listingPhenotypes, filters);
+            countVariants(treeDataFiltered.data);
+
             var heatMapTable0 = new HeatMapTable({
-                header: ['no-impact', 'impact'],
                 tableID: "heatmap-table0",
                 options: heatmapTableOptions0
             });
 
             heatMapTable0.loadJSONData(treeDataFiltered);
             heatMapTable0.show();
+            
+            $('[data-toggle="tooltip"]').tooltip();
             //            addIconToButton();
         }
 
@@ -495,15 +673,39 @@
         //        }
 
         nx.getFullAnnotationsByCategory(entry, "modified-entry-annotation").then(function (data) {
+            //        jQuery.getJSON("../modified-entry-annotation.json", function(temp){
+            //            var data = temp.entry;
             console.log("data");
             console.log(data);
 
             // Transform annotations into hashMap to ease the access by id
-            var normalAnnotations = hashingNormalAnnotations(data.isoformAnnotations[entry + "-1"]);
+            var normalAnnotations = hashingNormalAnnotations(data.annotationsByIsoformAndCategory[entry + "-1"]);
 
             // Sort phenotypes by smallest position
-            var phenotypes = data.modifiedEntryAnnotations.sort(sortPhenotypesByPosition);
-
+            //            var filterPhenotypes = 
+                      
+            //REPLACE MODIFIED ISOFORM ANNOTATIONS OBJECT WITH ARRAY !!!!!!!! T_T
+            
+            var phenoArray = [];
+            for (var v in data.modifiedIsoformAnnotations){
+                phenoArray.push(data.modifiedIsoformAnnotations[v]);
+            }
+            
+            phenoArray.sort(function (a, b) {
+                var sbjA = a.phenotype[0].subjectComponents.map(function(s){return normalAnnotations[s]});
+                var sbjB = b.phenotype[0].subjectComponents.map(function(s){return normalAnnotations[s]});
+                var minPosA = getMinPos(sbjA);
+                var minPosB = getMinPos(sbjB);
+                return minPosA - minPosB;
+            });
+            console.log("Arya");
+            console.log(phenoArray);
+            var phenotypes = {};
+            
+            phenoArray.forEach(function(p){phenotypes[p.phenotype[0].subjectName] = p;});
+            
+            console.log("Brann");
+            console.log(phenotypes);
             // Get all phenotypes by type in order to add them into the filter block
             var listingPhenotypes = getAllAnnotationTypes(normalAnnotations, phenotypes);
             fillFilters(listingPhenotypes);
@@ -512,27 +714,42 @@
             var treeData = parseNxDataForTreeTable(phenotypes, normalAnnotations, template);
 
             // add count box
-            countPhenotypes(treeData.data);
+            
+            $("#count-variant").text(treeData.data.length);
+            countVariants(treeData.data);
 
-            activateFilters(phenotypes, normalAnnotations);
+            activateFilters(phenotypes, normalAnnotations, listingPhenotypes);
 
             console.log("treeData");
             console.log(treeData);
 
             var heatMapTable0 = new HeatMapTable({
-                header: ['no-impact', 'impact'],
                 tableID: "heatmap-table0",
                 options: heatmapTableOptions0
             });
 
             heatMapTable0.loadJSONData(treeData);
             heatMapTable0.show();
+            
+            $('[data-toggle="tooltip"]').tooltip();
 
         })
-
-
     </script>
-
+    <script type="text/javascript">
+        Handlebars.registerHelper('createHeader', function (columnName, block) {
+            var result = {};
+            result.columnWidth = "120px";
+            result.columnName = columnName;
+            return block.fn(result);
+        });
+    </script>
+    <script id="headerTemplate" type="text/x-handlebars-template">
+        {{#each header}} {{#createHeader this}}
+        <div class="heatmap-column {{columnClass}}" style="width: {{columnWidth}};text-align:left;font-weight:600;font-size:1.2em;">
+            {{columnName}}
+        </div>
+        {{/createHeader}} {{/each}}
+    </script>
 </body>
 
 </html>

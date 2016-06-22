@@ -131,14 +131,19 @@ th[data-sort]{
     .panel-group {
         margin-bottom: 10px;
     }
-    
-    .panel-title {
-        font-weight: 300;
-        line-height: 1;
-        color: black;
-        display: inline-block;
+
+    .panel-heading{
+        padding:0px;
     }
     
+    .collapse-title {
+        display: block;
+        padding: 10px 15px;
+    }
+    
+    .collapse-title .chevron {
+        margin-left:10px;
+    }
     .collapse-title .chevron>i {
         width: 20px;
         color: black;
@@ -153,6 +158,17 @@ th[data-sort]{
         font-family: FontAwesome;
         content: "\f054";
     }
+
+    .panel-title {
+        font-weight: 300;
+        line-height: 1;
+        color: black;
+        padding-left:60px;
+    }
+    .typeName{
+        font-weight:500;
+
+    }
     /*
     a .panel-title:before {
         font-family: FontAwesome;
@@ -166,8 +182,17 @@ th[data-sort]{
 */
     
     .select-all {
+        display: block;
+        padding: 10px 15px;
         cursor: pointer;
         z-index: 2;
+        height:37px;
+        width:65px;
+        border-right: 1px solid #ddd;
+    }
+
+    .panel-collapse{
+        width:100%;
     }
     
     .subtypes .phenAnnot {
@@ -193,10 +218,15 @@ th[data-sort]{
         display: block;
         cursor: pointer;
     }
+
+    .subtypes a:hover {
+        background-color:#ddd;
+    }
     
     .subtypes i {
         color: black;
-        margin-right: 20px;
+        margin-left: 5px;
+        margin-right: 40px;
     }
     
     #phenotypeViewer .badge {
@@ -217,11 +247,16 @@ th[data-sort]{
         font-size: 18px;
         top: 2px
     }
+.heatmap-rowLabel span {
+    display: inline-block;
+    vertical-align: middle;
+}
     
     #heatmap-table0 .glyphicon {
         font-weight: 500;
         font-size: 12px;
         line-height: 14px;
+        width:15px;
     }
     
     #heatmap-table0 .badge {
@@ -236,11 +271,11 @@ th[data-sort]{
     
     .tree .glyphicon-plus:before {
         font-family: FontAwesome;
-        content: "\f00e";
+        content: "\f054";
     }
     .tree .glyphicon-minus:before {
         font-family: FontAwesome;
-        content: "\f010";
+        content: "\f078";
     }
     
     .tree .tree .glyphicon-plus:before {
@@ -262,6 +297,14 @@ th[data-sort]{
         font-size:16px;
         content: "\f070" !important;
     }
+.tree .glyphicon-record:before{
+        font-family: FontAwesome;
+        content: "\f192";
+    }
+
+    .heatmap-column>div{
+        text-align: left;
+    }
     
     .treeBtn {
         margin-right: 10px;
@@ -269,7 +312,7 @@ th[data-sort]{
     
     .varDisplay {
         line-height: 20px;
-        padding: 10px 0px;
+        padding: 0px 0px;
     }
     
     .varDisplay>span {
@@ -284,6 +327,8 @@ th[data-sort]{
         border-bottom-left-radius: 5px;
         font-size: 11px;
         font-weight: 700;
+        width:40px;
+        text-align: right;
     }
     
     .varSeq {
