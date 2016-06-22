@@ -30,7 +30,7 @@
     </div>
 </div>
 
-<script id="detailTemplate" type="text/x-handlebars-template">
+<script id="detailTemp" type="text/x-handlebars-template">
     <div class="evidence-block">
         <div class="evidence-line">
             <div class="evidenceArrow">⤵</div>
@@ -38,6 +38,7 @@
             <span class="evidence-code">{{evidenceCodeName}}</span>
             <span class="evidence-source">{{resourceDb}}</span>
         </div>
+        <div><span class="evidence-intensity">Intensity : </span> <strong>{{intensity}}</strong></div>
         <div class="evidence-link"><a href="https://search.nextprot.org">{{resourceAccession}}</a></div>
     </div>
 </script>
@@ -349,16 +350,22 @@
             } else console.warn("couldn't find normal annotation " + id);
         }
 
-        function generateFakeEvidence() {
+        function generateEvidence(evList) {
             var evidences = [];
-            var count = Math.floor((Math.random() * 3));
-            for (var i = 0; i < count; i++) {
-                var ev = {
-                    evidenceCodeName: "This is a fake evidence",
-                    resourceDb: "neXtProt",
-                    resourceAccession: "123456789"
+//            var count = Math.floor((Math.random() * 3));
+//            for (var i = 0; i < count; i++) {
+            for (ev in evList){
+                console.log("Baratheon");
+                console.log(evList[ev].intensity);
+                if (evList[ev].intensity !== "NA"){
+                    var ev = {
+                        evidenceCodeName: "This is an uncompleted evidence",
+                        resourceDb: "neXtProt",
+                        resourceAccession: "123456789",
+                        intensity: evList[ev].intensity
+                    }
+                    evidences.push(ev);
                 }
-                evidences.push(ev);
             }
             return evidences;
         }
@@ -383,6 +390,8 @@
                 var intensityList = i.evidences.map(function (e) {
                     return e.intensity
                 });
+//                console.log("Sansa");
+//                console.log(i);
                 var worstIntensity = getWorstIntensity(intensityList);
                 var annotationAffected = getAnnotationById(annots, i.bioObject.annotationHash);
                 if (!filters || filters.indexOf(annotationAffected.cvTermName) !== -1) {
@@ -391,7 +400,7 @@
                     //                    customTemplate.rowLabel = "<strong>" + cvTermToSentence[cvTermName] + "</strong> " + annotationAffected.cvTermName + " " + annotTypeTemplate[annotationAffected.category];
                     customTemplate.rowLabel = "<strong>" + i.description + "</strong> " + annotTypeTemplate[annotationAffected.category];
                     customTemplate.values[0] = cvTermName !== "no-impact" ? worstIntensity : "no-impact";
-                    customTemplate.detailData = generateFakeEvidence();
+                    customTemplate.detailData = generateEvidence(i.evidences);
                     listPhenotypes.push(customTemplate);
                 }
             })
@@ -595,7 +604,7 @@
                 }
             ],
             columnWidth: "120px",
-            detailTemplate: "detailTemplate",
+            detailTemplate: "detailTemp",
             headerTemplate: "headerTemplate",
             headerTemplateData: {
                 header: ['IMPACT']

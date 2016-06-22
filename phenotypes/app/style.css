@@ -278,6 +278,7 @@ th[data-sort]{
         content: "\f078";
     }
     
+/*
     .tree .tree .glyphicon-plus:before {
         font-family: FontAwesome;
         content: "\f06c";
@@ -286,6 +287,7 @@ th[data-sort]{
         font-family: FontAwesome;
         content: "\f06c";
     }
+*/
     
     .tree .tree .glyphicon-zoom-in:before {
         font-family: FontAwesome;
@@ -304,6 +306,9 @@ th[data-sort]{
 
     .heatmap-column>div{
         text-align: left;
+    }
+    .heatmap-detail{
+        display:block;
     }
     
     .treeBtn {
@@ -359,7 +364,7 @@ th[data-sort]{
     }
     
     .evidence-line {
-        margin: 10px;
+        margin: 10px 10px 5px;
     }
     
     .evidenceArrow {
@@ -379,8 +384,18 @@ th[data-sort]{
         color: white;
         padding: 2px 6px;
         border-radius: 2px;
-        margin-left: 5px;
+        margin: 5px;
     }
+
+    .evidence-intensity {
+        background-color: #ba570f;
+        color: white;
+        padding: 2px 6px;
+        border-radius: 2px;
+        margin-left: 88px;
+        margin-right: 5px;
+    }
+
     
     .evidence-source {
         background-color: #dedede;
@@ -393,4 +408,5 @@ th[data-sort]{
         border-left: 1px solid darkgray;
         margin-right: 10px;
         margin-left: 10px;
+        margin-top:5px;
     }
