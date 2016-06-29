@@ -4,3 +4,5 @@ bower_components
 node_modules
 npm-debug.log
 /peptides/app/build
+phenotypes/brca1.json
+phenotypes/modified-entry-annotation.json
