@@ -388,10 +388,12 @@
                 var category = i.category;
                 var cvTermName = i.cvTermName.toLowerCase();
                 var intensityList = i.evidences.map(function (e) {
+                    if (!e.intensity) return "NA";
                     return e.intensity
-                });
+                }); 
 //                console.log("Sansa");
 //                console.log(i);
+                
                 var worstIntensity = getWorstIntensity(intensityList);
                 var annotationAffected = getAnnotationById(annots, i.bioObject.annotationHash);
                 if (!filters || filters.indexOf(annotationAffected.cvTermName) !== -1) {
