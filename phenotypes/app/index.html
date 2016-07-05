@@ -6,11 +6,13 @@
     <meta charset="UTF-8">
     <script type="text/javascript" src="https://use.fontawesome.com/aeec643a8b.js"></script>
     <link href='https://fonts.googleapis.com/css?family=Lato:100,300,400,700,900' rel='stylesheet' type='text/css'>
-<!--    <script type="text/javascript" src="nextprot.bundle.js"></script>-->
+    <script type="text/javascript" src="nextprot.bundle.js"></script>
     
+<!--
     <script type="text/javascript" src="handlebars.min.js"></script>
     <script type="text/javascript" src="jquery.min.js"></script>
     <script type="text/javascript" src="nextprot-core.js"></script>
+-->
 
     <script type="text/javascript" src="heatmap-table.js"></script>
     <script type="text/javascript" src="bootstrap.min.js"></script>
@@ -25,7 +27,7 @@
 </style>
 <div class="row">
     <div class="col-md-10 col-md-offset-1">
-<!--        <div id="nx-overview"></div>-->
+        <div id="nx-overview"></div>
     </div>
 </div>
 
@@ -567,42 +569,42 @@
         
         
         
-        function changeGoldParam(gold){
-            var url = window.location.href;
-            
-            // If key exists updates the value
-            if (url.indexOf('goldOnly=') > -1) {
-                url = url.replace('goldOnly='+!gold, 'goldOnly='+gold);
-
-            // If not, append
-            } else {
-                if (url.indexOf('?') > -1) url = url + '&goldOnly='+gold;
-                else url = url + '?goldOnly='+gold;
-            }
-            
-            return url;
-        }
-
-        
-        $("body").prepend('<div class="qualityToggle pull-right">\
-            <ul class="nav nav-pills">\
-                <li role="presentation" id="quality-gold"><a href=' + changeGoldParam(true) + '>GOLD</a></li>\
-                <li role="presentation" id="quality-goldAndSilver"><a href=' + changeGoldParam(false) +'>GOLD & SILVER</a></li>\
-            </ul>\
-        </div>');
-        
-        var goldOnly = nx.getQualityParam();
-        console.log("goldOnly");
-        console.log(goldOnly);
-        
-        if (goldOnly === "true") {
-            $("#quality-gold").addClass("active");
-            $("#quality-goldAndSilver").removeClass("active");
-        }
-        else{
-            $("#quality-goldAndSilver").addClass("active");
-            $("#quality-gold").removeClass("active");
-        }
+//        function changeGoldParam(gold){
+//            var url = window.location.href;
+//            
+//            // If key exists updates the value
+//            if (url.indexOf('goldOnly=') > -1) {
+//                url = url.replace('goldOnly='+!gold, 'goldOnly='+gold);
+//
+//            // If not, append
+//            } else {
+//                if (url.indexOf('?') > -1) url = url + '&goldOnly='+gold;
+//                else url = url + '?goldOnly='+gold;
+//            }
+//            
+//            return url;
+//        }
+//
+//        
+//        $("body").prepend('<div class="qualityToggle pull-right">\
+//            <ul class="nav nav-pills">\
+//                <li role="presentation" id="quality-gold"><a href=' + changeGoldParam(true) + '>GOLD</a></li>\
+//                <li role="presentation" id="quality-goldAndSilver"><a href=' + changeGoldParam(false) +'>GOLD & SILVER</a></li>\
+//            </ul>\
+//        </div>');
+//        
+//        var goldOnly = nx.getQualityParam();
+//        console.log("goldOnly");
+//        console.log(goldOnly);
+//        
+//        if (goldOnly === "true") {
+//            $("#quality-gold").addClass("active");
+//            $("#quality-goldAndSilver").removeClass("active");
+//        }
+//        else{
+//            $("#quality-goldAndSilver").addClass("active");
+//            $("#quality-gold").removeClass("active");
+//        }
 
 
         var entry = nx.getEntryName();
