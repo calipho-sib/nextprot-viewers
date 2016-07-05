@@ -6,12 +6,12 @@
     <meta charset="UTF-8">
     <script type="text/javascript" src="https://use.fontawesome.com/aeec643a8b.js"></script>
     <link href='https://fonts.googleapis.com/css?family=Lato:100,300,400,700,900' rel='stylesheet' type='text/css'>
-    <script type="text/javascript" src="nextprot.bundle.js"></script>
-    <!--
+<!--    <script type="text/javascript" src="nextprot.bundle.js"></script>-->
+    
     <script type="text/javascript" src="handlebars.min.js"></script>
     <script type="text/javascript" src="jquery.min.js"></script>
     <script type="text/javascript" src="nextprot-core.js"></script>
--->
+
     <script type="text/javascript" src="heatmap-table.js"></script>
     <script type="text/javascript" src="bootstrap.min.js"></script>
     <script type="text/javascript" src="iframeResizer.contentWindow.min.js"></script>
@@ -25,7 +25,7 @@
 </style>
 <div class="row">
     <div class="col-md-10 col-md-offset-1">
-        <div id="nx-overview"></div>
+<!--        <div id="nx-overview"></div>-->
     </div>
 </div>
 
@@ -37,9 +37,11 @@
             <span class="evidence-code">{{evidenceCodeName}}</span>
             <span class="evidence-source">{{resourceDb}}</span>
         </div>
-        <div><span class="evidence-intensity">Intensity : </span> <strong>{{intensity}}</strong>
-        </div>
-        <div class="evidence-link"><a href="https://search.nextprot.org">{{resourceAccession}}</a>
+        <div class="evidence-detail"><span class="evidence-intensity">INTENSITY</span> <strong>{{intensity}}</strong></div>
+        <div class="evidence-detail"><span class="evidence-origin">ORIGIN</span> <strong>{{origin}}</strong></div>
+        <div class="evidence-detail"><span class="evidence-quality">QUALITY</span> <strong>{{quality}}</strong></div>
+        
+        <div class="evidence-link"><a href="{{resourceLink}}">{{resourceAccession}}</a>
         </div>
     </div>
 </script>
@@ -313,6 +315,7 @@
                 var pos = v.locationCanonicalBegin;
                 var original = v.variant.original;
                 var variant = v.variant.variant;
+                var hgvs = v.annotationUniqueName;
                 //                var evidences = v.evidences.map(function(e){
                 //                    return {
                 //                        evidenceCodeName : e.evidenceCodeName,
@@ -323,7 +326,8 @@
                 return {
                     pos: pos,
                     original: original,
-                    variant: variant
+                    variant: variant,
+                    hgvs : hgvs
                         //                    evidences: evidences
                 };
             });
@@ -333,7 +337,7 @@
 
             varList.forEach(function (v, i, array) {
                 var variantAA = v.variant === "-" ? "del" : v.variant;
-                var name = "<span class='varDisplay'><span class='varPos'>" + v.pos + "</span><span class='varSeq'>" + v.original + " → " + variantAA + "</span></span>";
+                var name = "<span class='varDisplay'><span class='varPos'>" + v.pos + "</span><span class='varSeq'>" + v.original + " → " + variantAA + "</span><a href='#' class='varHGVS'>" + v.hgvs + "</a></span>";
                 if (i < array.length - 1) name += " ";
                 variantInfos.fullName += name;
                 //                variantInfos.evidences = variantInfos.evidences.concat(v.evidences);
@@ -357,15 +361,20 @@
             for (ev in evList) {
                 //console.log("Baratheon");
                 //console.log(evList[ev].intensity);
-                if (evList[ev].intensity !== "NA") {
+//                if (evList[ev].intensity !== "NA") {
                     var ev = {
                         evidenceCodeName: "This is an uncompleted evidence",
                         resourceDb: "neXtProt",
-                        resourceAccession: "123456789",
-                        intensity: evList[ev].intensity
+                        resourceAccession: evList[ev].sourceAccession_TODEBUG,
+                        resourceLink: "https://gauss.isb-sib.ch/bioeditor/annotations#query="+evList[ev].sourceAccession_TODEBUG,
+                        intensity: evList[ev].intensity,
+                        quality: evList[ev].qualityQualifier,
+                        origin: evList[ev].proteinOrigin_TODEBUG,
+                        
+                        
                     }
                     evidences.push(ev);
-                }
+//                }
             }
             return evidences;
         }
@@ -425,9 +434,8 @@
         function parseNxDataForTreeTable(phenotypes, annotations, template, filters) {
             //            console.log('phenotypes');
             //            console.log(phenotypes);
-            var treeTable = {
-                data: []
-            };
+            var treeTable = [];
+            
             for (var a in phenotypes) {
                 var p = phenotypes[a];
                 //                phenotypes[a].phenotype.forEach(function (p) {
@@ -442,7 +450,7 @@
                     varTemplate.rowLabel = varInfos.fullName;
                     varTemplate.detailData = varInfos.evidences;
                     varTemplate.values[0] = getWorstIntensity(intensityList);
-                    treeTable.data.push(varTemplate);
+                    treeTable.push(varTemplate);
                 }
                 //                })
             }
@@ -556,53 +564,123 @@
             nx.setApiBaseUrl("http://bed-api.nextprot.org");
             //nx.setApiBaseUrl("http://localhost:8080/nextprot-api-web");
         }
+        
+        
+        
+        function changeGoldParam(gold){
+            var url = window.location.href;
+            
+            // If key exists updates the value
+            if (url.indexOf('goldOnly=') > -1) {
+                url = url.replace('goldOnly='+!gold, 'goldOnly='+gold);
+
+            // If not, append
+            } else {
+                if (url.indexOf('?') > -1) url = url + '&goldOnly='+gold;
+                else url = url + '?goldOnly='+gold;
+            }
+            
+            return url;
+        }
+
+        
+        $("body").prepend('<div class="qualityToggle pull-right">\
+            <ul class="nav nav-pills">\
+                <li role="presentation" id="quality-gold"><a href=' + changeGoldParam(true) + '>GOLD</a></li>\
+                <li role="presentation" id="quality-goldAndSilver"><a href=' + changeGoldParam(false) +'>GOLD & SILVER</a></li>\
+            </ul>\
+        </div>');
+        
+        var goldOnly = nx.getQualityParam();
+        console.log("goldOnly");
+        console.log(goldOnly);
+        
+        if (goldOnly === "true") {
+            $("#quality-gold").addClass("active");
+            $("#quality-goldAndSilver").removeClass("active");
+        }
+        else{
+            $("#quality-goldAndSilver").addClass("active");
+            $("#quality-gold").removeClass("active");
+        }
 
 
         var entry = nx.getEntryName();
         console.log(entry);
 
         var heatmapTableOptions0 = {
-            valuesColorMapping: [
+            valuesSetting: [
 
                 {
                     value: 'severe',
-                    html: '<div>\
-                              <img style="width:15px" src="http://www.downtowntomsriver.com/chili/images/chili_icon.gif">\
-                              <img style="width:15px" src="http://www.downtowntomsriver.com/chili/images/chili_icon.gif">\
-                              <img style="width:15px" src="http://www.downtowntomsriver.com/chili/images/chili_icon.gif">\
-                              <img style="width:15px" src="http://www.downtowntomsriver.com/chili/images/chili_icon.gif">\
-                          </div>'
+//                    html: '<div>\
+//                              <img style="width:15px" src="http://www.downtowntomsriver.com/chili/images/chili_icon.gif">\
+//                              <img style="width:15px" src="http://www.downtowntomsriver.com/chili/images/chili_icon.gif">\
+//                              <img style="width:15px" src="http://www.downtowntomsriver.com/chili/images/chili_icon.gif">\
+//                              <img style="width:15px" src="http://www.downtowntomsriver.com/chili/images/chili_icon.gif">\
+//                          </div>',
+                    html: '<div class="progress">\
+                      <div class="progress-bar progress-bar-danger" role="progressbar" aria-valuenow="20" aria-valuemin="0" aria-valuemax="100"\ style="width: 100%"> Severe\
+                        <span class="sr-only">20% Complete</span>\
+                      </div>\
+                    </div>',
+                    filterID: ["positiveFilter"]
                 },
                 {
                     value: 'moderate',
-                    html: '<div>\
-                              <img style="width:15px" src="http://www.downtowntomsriver.com/chili/images/chili_icon.gif">\
-                              <img style="width:15px" src="http://www.downtowntomsriver.com/chili/images/chili_icon.gif">\
-                              <img style="width:15px" src="http://www.downtowntomsriver.com/chili/images/chili_icon.gif">\
-                          </div>'
+//                    html: '<div>\
+//                              <img style="width:15px" src="http://www.downtowntomsriver.com/chili/images/chili_icon.gif">\
+//                              <img style="width:15px" src="http://www.downtowntomsriver.com/chili/images/chili_icon.gif">\
+//                              <img style="width:15px" src="http://www.downtowntomsriver.com/chili/images/chili_icon.gif">\
+//                          </div>',
+                    html: '<div class="progress">\
+                      <div class="progress-bar progress-bar-warning" role="progressbar" aria-valuenow="20" aria-valuemin="0" aria-valuemax="100"\ style="width: 70%"> Moderate\
+                        <span class="sr-only">20% Complete</span>\
+                      </div>\
+                    </div>',
+                    filterID: ["positiveFilter"]
                 },
                 {
                     value: 'mild',
-                    html: '<div>\
-                              <img style="width:15px" src="http://www.downtowntomsriver.com/chili/images/chili_icon.gif">\
-                              <img style="width:15px" src="http://www.downtowntomsriver.com/chili/images/chili_icon.gif">\
-                          </div>'
+//                    html: '<div>\
+//                              <img style="width:15px" src="http://www.downtowntomsriver.com/chili/images/chili_icon.gif">\
+//                              <img style="width:15px" src="http://www.downtowntomsriver.com/chili/images/chili_icon.gif">\
+//                          </div>',
+                    html: '<div class="progress">\
+                      <div class="progress-bar progress-bar-info" role="progressbar" aria-valuenow="20" aria-valuemin="0" aria-valuemax="100"\ style="width: 40%"> Mild\
+                        <span class="sr-only">20% Complete</span>\
+                      </div>\
+                    </div>',
+                    filterID: ["positiveFilter"]
                 },
                 {
                     value: 'normal',
-                    html: '<div>\
-                              <img style="width:15px" src="http://www.downtowntomsriver.com/chili/images/chili_icon.gif">\
-                          </div>'
+//                    html: '<div>\
+//                              <img style="width:15px" src="http://www.downtowntomsriver.com/chili/images/chili_icon.gif">\
+//                          </div>',
+                    html: '<div class="progress">\
+                      <div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="20" aria-valuemin="0" aria-valuemax="100"\ style="width: 10%"> Normal\
+                        <span class="sr-only">20% Complete</span>\
+                      </div>\
+                    </div>',
+                    filterID: ["positiveFilter"]
                 },
                 {
                     value: 'no-impact',
-                    html: '<div>\
-                              <img style="width:15px" src="http://www.urdu-english.com/images/lessons/beginner/vegetables/vegetable-pics/chilli.png">\
-                          </div>'
+//                    html: '<div>\
+//                              <img style="width:15px" src="http://www.urdu-english.com/images/lessons/beginner/vegetables/vegetable-pics/chilli.png">\
+//                          </div>',
+                    html: '<div class="progress">\
+                      <div class="progress-bar" role="progressbar" aria-valuenow="20" aria-valuemin="0" aria-valuemax="100"\ style="width: 100%;background-color:transparent;box-shadow:none;color:#aaa"> No impact\
+                        <span class="sr-only">20% Complete</span>\
+                      </div>\
+                    </div>',
+                    filterID: ["positiveFilter"]
                 },
                 {
                     value: 'NA',
-                    color: '#1effff'
+                    color: '#1effff',
+                    filterID: ["positiveFilter"]
                 }
             ],
             columnWidth: "120px",
@@ -652,7 +730,7 @@
 
             // add count box - WITH FILTERS ON
             //            countPhenotypes(listingPhenotypes, filters);
-            countVariants(treeDataFiltered.data);
+            countVariants(treeDataFiltered);
 
             var heatMapTable0 = new HeatMapTable({
                 tableID: "heatmap-table0",
@@ -699,6 +777,15 @@
 
             var phenoArray = [];
             for (var v in data.modifiedIsoformAnnotations) {
+                
+                var newArrayElem = data.modifiedIsoformAnnotations[v];
+//                var newArrayElem;
+//                if (onlyGold){
+//                    newArrayElem = nx.filterGoldOnlyAnnotations(data.modifiedIsoformAnnotations[v]);
+//                }
+//                else {
+//                    newArrayElem = data.modifiedIsoformAnnotations[v];
+//                }
                 phenoArray.push(data.modifiedIsoformAnnotations[v]);
             }
 
@@ -732,8 +819,8 @@
 
             // add count box
 
-            $("#count-variant").text(treeData.data.length);
-            countVariants(treeData.data);
+            $("#count-variant").text(treeData.length);
+            countVariants(treeData);
 
             activateFilters(phenotypes, normalAnnotations, listingPhenotypes);
 
@@ -745,6 +832,11 @@
                 options: heatmapTableOptions0
             });
 
+            
+            console.log("treeData");
+            console.log(treeData);
+            console.log(heatmapTableOptions0);
+            console.log(heatMapTable0);
             heatMapTable0.loadJSONData(treeData);
             heatMapTable0.show();
 

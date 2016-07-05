@@ -8,7 +8,11 @@
 #heatmap-body {
     margin-left: auto;
     margin-right: auto;
-} 
+}
+
+.heatmap-tree {
+    display: none;
+}
 
 .heatmap-row {
     border-bottom: solid 1px #d4d4d4;
@@ -20,6 +24,10 @@
 	margin-bottom:0px;
 	word-break:break-all;
 	cursor:pointer;
+}
+
+.heatmap-no-cursor {
+    cursor: auto !important;
 }
 
 .heatmap-rowLabel a {
@@ -64,10 +72,31 @@
     display: inline-block;
 }
 
-.heatmap-detail {
+/*.heatmap-detail {
     display: none;
-}
+}*/
 
 .heatmap-zoom:hover {
     cursor:pointer;
+}
+
+/* sandbox */
+
+.heatmap-info {
+    display: none;
+    text-align: center;
+}
+.glyphicon-refresh-animate {
+    -animation: spin .7s infinite linear;
+    -webkit-animation: spin2 .7s infinite linear;
+}
+
+@-webkit-keyframes spin2 {
+    from { -webkit-transform: rotate(0deg);}
+    to { -webkit-transform: rotate(360deg);}
+}
+
+@keyframes spin {
+    from { transform: scale(1) rotate(0deg);}
+    to { transform: scale(1) rotate(360deg);}
 }

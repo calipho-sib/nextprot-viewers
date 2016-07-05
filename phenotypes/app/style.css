@@ -1,3 +1,6 @@
+.qualityToggle{
+    width:300px;
+}
 table {
     border-collapse: collapse;
 }
@@ -247,10 +250,10 @@ th[data-sort]{
         font-size: 18px;
         top: 2px
     }
-.heatmap-rowLabel span {
-    display: inline-block;
-    vertical-align: middle;
-}
+    .heatmap-rowLabel span {
+        display: inline-block;
+        vertical-align: middle;
+    }
     
     #heatmap-table0 .glyphicon {
         font-weight: 500;
@@ -268,6 +271,19 @@ th[data-sort]{
     #heatmap-table0 .heatmap-row {
         padding: 5px;
     }
+
+    .tree li{
+        border-bottom:1px solid #ddd;
+    /*    padding-bottom:5px;*/
+    }
+    .tree li:last-child{
+        border-bottom:none;
+    /*    padding-bottom:5px;*/
+    }
+    .heatmap-row{
+        border-bottom: none;
+
+    } 
     
     .tree .glyphicon-plus:before {
         font-family: FontAwesome;
@@ -299,16 +315,21 @@ th[data-sort]{
         font-size:16px;
         content: "\f070" !important;
     }
-.tree .glyphicon-record:before{
-        font-family: FontAwesome;
-        content: "\f192";
+    .tree .glyphicon-record:before{
+            font-family: FontAwesome;
+            content: "\f192";
     }
+
+.progress{
+    margin:0px;
+}
 
     .heatmap-column>div{
         text-align: left;
     }
     .heatmap-detail{
         display:block;
+        padding-bottom:10px;
     }
     
     .treeBtn {
@@ -320,7 +341,7 @@ th[data-sort]{
         padding: 0px 0px;
     }
     
-    .varDisplay>span {
+    .varDisplay>span, .varDisplay>a {
         padding: 0px 5px;
         display: table-cell;
     }
@@ -338,9 +359,19 @@ th[data-sort]{
     
     .varSeq {
         border: 1px solid #ccc;
+/*
         border-top-right-radius: 5px;
         border-bottom-right-radius: 5px;
+*/
         color: #00C500;
+        font-weight: 500;
+        font-size: 11px;
+        border-left: 0px;
+    }
+    .varHGVS {
+        border: 1px solid #ccc;
+        border-top-right-radius: 5px;
+        border-bottom-right-radius: 5px;
         font-weight: 500;
         font-size: 11px;
         border-left: 0px;
@@ -386,10 +417,32 @@ th[data-sort]{
         border-radius: 2px;
         margin: 5px;
     }
+    .evidence-detail{
+        margin:5px 10px 5px;
+    }
 
     .evidence-intensity {
         background-color: #ba570f;
         color: white;
+        font-size:11px;
+        padding: 2px 6px;
+        border-radius: 2px;
+        margin-left: 88px;
+        margin-right: 5px;
+    }
+    .evidence-quality {
+        background-color: #BA7E0F;
+        color: white;
+        font-size:11px;
+        padding: 2px 6px;
+        border-radius: 2px;
+        margin-left: 88px;
+        margin-right: 5px;
+    }
+    .evidence-origin {
+        background-color: #097469;
+        color: white;
+        font-size:11px;
         padding: 2px 6px;
         border-radius: 2px;
         margin-left: 88px;
