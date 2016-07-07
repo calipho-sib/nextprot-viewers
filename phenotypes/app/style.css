@@ -243,6 +243,62 @@ th[data-sort]{
         vertical-align: top;
         margin-right: 5px;
     }
+.heatmap-filterByRowName-search{
+    padding-left:30px;
+}
+
+.heatmap-filterByRowName-search::before{
+    /*Using a Bootstrap glyphicon as the bullet point*/
+    font-family: FontAwesome;
+    content: "\f002";
+    font-size: 14px;
+    float: left;
+/*    padding-top: 2px;*/
+    margin-left: -20px;
+    color: black;
+}
+.heatmap-reset-btn{
+    padding-left:30px;
+}
+
+.heatmap-reset-btn::before{
+    /*Using a Bootstrap glyphicon as the bullet point*/
+    font-family: FontAwesome;
+    content: "\f0e2";
+    font-size: 14px;
+    float: left;
+/*    padding-top: 2px;*/
+    margin-left: -20px;
+    color: black;
+}
+.heatmap-collapseAll-btn{
+    padding-left:30px;
+}
+
+.heatmap-collapseAll-btn::before{
+    /*Using a Bootstrap glyphicon as the bullet point*/
+    font-family: FontAwesome;
+    content: "\f066";
+    font-size: 14px;
+    float: left;
+/*    padding-top: 2px;*/
+    margin-left: -20px;
+    color: black;
+}
+.heatmap-expandAll-btn{
+    padding-left:30px;
+}
+
+.heatmap-expandAll-btn::before{
+    /*Using a Bootstrap glyphicon as the bullet point*/
+    font-family: FontAwesome;
+    content: "\f065";
+    font-size: 14px;
+    float: left;
+/*    padding-top: 2px;*/
+    margin-left: -20px;
+    color: black;
+}
     /*    Custom treeTable css for current use*/
     
     #heatmap-table0 .heatmap-rowLabel .glyphicon {
