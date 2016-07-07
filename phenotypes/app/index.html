@@ -670,7 +670,7 @@
                     filterID: ["positiveFilter"]
                 }
             ],
-            columnWidth: "120px",
+            columnWidth: "160px",
             detailTemplate: "detailTemp",
             headerTemplate: "headerTemplate",
             headerTemplateData: {
@@ -834,14 +834,14 @@
     <script type="text/javascript">
         Handlebars.registerHelper('createHeader', function (columnName, block) {
             var result = {};
-            result.columnWidth = "120px";
+            result.columnWidth = "160px";
             result.columnName = columnName;
             return block.fn(result);
         });
     </script>
     <script id="headerTemplate" type="text/x-handlebars-template">
         {{#each header}} {{#createHeader this}}
-        <div class="heatmap-column {{columnClass}}" style="width: {{columnWidth}};text-align:left;font-weight:600;font-size:1.2em;">
+        <div class="heatmap-column {{columnClass}}" style="width: {{columnWidth}};text-align:center;font-weight:600;font-size:1.2em;">
             {{columnName}}
         </div>
         {{/createHeader}} {{/each}}

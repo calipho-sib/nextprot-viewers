@@ -376,8 +376,12 @@ th[data-sort]{
             content: "\f192";
     }
 
+
 .progress{
     margin:0px;
+}
+.tree .tree .progress{
+    margin-left:40px;
 }
 
     .heatmap-column>div{
