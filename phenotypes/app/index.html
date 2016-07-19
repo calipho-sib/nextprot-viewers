@@ -7,7 +7,7 @@
     <script type="text/javascript" src="https://use.fontawesome.com/aeec643a8b.js"></script>
     <link href='https://fonts.googleapis.com/css?family=Lato:100,300,400,700,900' rel='stylesheet' type='text/css'>
     <script type="text/javascript" src="nextprot.bundle.js"></script>
-    
+
 <!--
     <script type="text/javascript" src="handlebars.min.js"></script>
     <script type="text/javascript" src="jquery.min.js"></script>
@@ -215,6 +215,7 @@
                     "GO_BIOLOGICAL_PROCESS": {},
                     "GO_CELLULAR_COMPONENT": {},
                     "BINARY_INTERACTION": {},
+                    "PROTEIN_PROPERTY": {},
                     "SMALL_MOLECULE_INTERACTION": {}
                 },
                 "total": 0
@@ -548,8 +549,8 @@
 
         var nx = new Nextprot.Client("neXtProt proteomics view", "Calipho-Team");
         if (nx.getEnvironment() !== "bed") {
-            nx.setApiBaseUrl("http://bed-api.nextprot.org");
-            //nx.setApiBaseUrl("http://localhost:8080/nextprot-api-web");
+            //nx.setApiBaseUrl("http://bed-api.nextprot.org");
+            nx.setApiBaseUrl("http://localhost:8080/nextprot-api-web");
         }
         
         
@@ -689,13 +690,15 @@
         var annotTypeTemplate = {
             "GO_MOLECULAR_FUNCTION": "<span class='badge gmf' data-toggle='tooltip' data-placement='top' title='Go Molecular Function'>GO-MF</span>",
             "GO_CELLULAR_COMPONENT": "<span class='badge gcc' data-toggle='tooltip' data-placement='top' title='Go Cellular Component'>GO-CC</span>",
+            "PROTEIN_PROPERTY": "<span class='badge gcc' data-toggle='tooltip' data-placement='top' title='Protein Property'>PP</span>",
             "GO_BIOLOGICAL_PROCESS": "<span class='badge gbp' data-toggle='tooltip' data-placement='top' title='Go Biological process'>GO-BP</span>",
-            "BINARY_INTERACTION": "<span class='badge bi' data-toggle='tooltip' data-placement='top' title='Binary Interaction' style='z-index:30'>BI</span>",
+            "BINARY_INTERACTION": "<span class='badge pp' data-toggle='tooltip' data-placement='top' title='Binary Interaction' style='z-index:30'>BI</span>",
             "SMALL_MOLECULE_INTERACTION": "<span class='badge smi' data-toggle='tooltip' data-placement='top' title='Small Molecule Interaction'>SMI</span>"
         }
         var annotTypeDescription = {
             "GO_MOLECULAR_FUNCTION": "Impact on molecular function",
             "GO_CELLULAR_COMPONENT": "Impact on cellular component",
+            "PROTEIN_PROPERTY":  "Impact on protein property",
             "GO_BIOLOGICAL_PROCESS": "Impact on biological process",
             "BINARY_INTERACTION": "Impact on binary interaction",
             "SMALL_MOLECULE_INTERACTION": "Impact on small molecule interaction"
