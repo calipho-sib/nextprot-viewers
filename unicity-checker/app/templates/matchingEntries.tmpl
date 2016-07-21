@@ -1,4 +1,4 @@
-<div id={{id}} class="col-md-4">
+<div id={{id}} class="col-md-4 peptide {{#if proteotypicity.withVariant}}proteoWithVariant{{/if}} {{#if proteotypicity.withoutVariant}}{{#unless proteotypicity.onlyWithVariant}}proteoWithoutVariant{{/unless}}{{/if}}">
 <div id="proteoBlock" class="panel panel-default">
     <div class="panel-heading">
         <h5 class="text-center" style="margin:0px;">{{peptide}}</h5>
@@ -22,6 +22,9 @@
             <div class="panel-body">
                 <div class="showEntry" style="display:block">
                     <ul>
+                        {{#if proteotypicity.onlyWithVariant}}
+                        <li>No entries found</li>
+                        {{/if}}
                         {{#entries}}
                         {{#if withoutVariant}}
                         <li>{{name}} <em> ( Gene Name : {{geneName}} )</em></li>
@@ -31,6 +34,9 @@
                 </div>
                 <div class="showIsoform" style="display:none">
                     <ul>
+                        {{#if proteotypicity.onlyWithVariant}}
+                        <li>No entries found</li>
+                        {{/if}}
                         {{#isoforms}}{{#each this}}
 
                         {{#unless variant}}
@@ -52,7 +58,7 @@
             <div class="panel-body">
                 <div class="showEntry" style="display:block">
                     <ul>
-                        {{#if proteotypicity.onlyVariant}}
+                        {{#if proteotypicity.onlyWithoutVariant}}
                         <li>No other entries found</li>
                         {{/if}}
                         {{#entries}}
@@ -64,7 +70,7 @@
                 </div>
                 <div class="showIsoform" style="display:none">
                     <ul>
-                        {{#if proteotypicity.onlyVariant}}
+                        {{#if proteotypicity.onlyWithoutVariant}}
                         <li>No other entries found</li>
                         {{/if}}
                         {{#isoforms}}{{#each this}}
