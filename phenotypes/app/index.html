@@ -175,7 +175,7 @@
         function getMinPos(subjects) {
             var min = 100000;
             subjects.forEach(function (s) {
-                var pos = s.locationCanonicalBegin;
+                var pos = s.locationBegin;
                 if (min > pos) min = pos;
             })
             return min;
@@ -191,7 +191,7 @@
             var list = [];
             for (var p in phenotypes) {
                 var distincts = [];
-                phenotypes[p].phenotype.forEach(function (a) {
+                phenotypes[p]["modification-effect"].forEach(function (a) {
                     if (distincts.indexOf(a.bioObject.annotationHash) === -1) {
                         distincts.push(a.bioObject.annotationHash);
                         list.push(a.bioObject.annotationHash);
@@ -275,8 +275,8 @@
                 sortedData.sort(function (a, b) {
                     if (a.count < b.count) return 1;
                     if (a.count > b.count) return -1;
-                    if (a.phenotype < b.phenotype) return -1;
-                    if (a.phenotype > b.phenotype) return 1;
+                    if (a["modification-effect"] < b["modification-effect"]) return -1;
+                    if (a["modification-effect"] > b["modification-effect"]) return 1;
                     return 0;
                 })
                 listingPhenotype.annotations[type].data = sortedData;
@@ -300,10 +300,10 @@
             var varList = variants.map(function (id, i, array) {
                 //Only get the first position, dont check if there is others isoforms
                 var v = annots[id];
-                var pos = v.locationCanonicalBegin;
+                var pos = v.locationBegin;
                 var original = v.variant.original;
                 var variant = v.variant.variant;
-                var hgvs = v.annotationUniqueName;
+                var hgvs = v.annotationName;
                 //                var evidences = v.evidences.map(function(e){
                 //                    return {
                 //                        evidenceCodeName : e.evidenceCodeName,
@@ -428,10 +428,10 @@
                 var p = phenotypes[a];
                 //                phenotypes[a].phenotype.forEach(function (p) {
                 var varTemplate = jQuery.extend(true, {}, template);
-                varTemplate.children = getImpact(p.phenotype, annotations, template, filters);
+                varTemplate.children = getImpact(p["modification-effect"], annotations, template, filters);
                 if (varTemplate.children.length) {
                     //Since phenotypes are grouped by subject, simply take the first one
-                    var varInfos = getVariantInfos(annotations, p.phenotype[0].subjectComponents);
+                    var varInfos = getVariantInfos(annotations, p["modification-effect"][0].subjectComponents);
                     var intensityList = varTemplate.children.map(function (c) {
                         return c.values[0]
                     });
@@ -693,7 +693,8 @@
             "PROTEIN_PROPERTY": "<span class='badge gcc' data-toggle='tooltip' data-placement='top' title='Protein Property'>PP</span>",
             "GO_BIOLOGICAL_PROCESS": "<span class='badge gbp' data-toggle='tooltip' data-placement='top' title='Go Biological process'>GO-BP</span>",
             "BINARY_INTERACTION": "<span class='badge pp' data-toggle='tooltip' data-placement='top' title='Binary Interaction' style='z-index:30'>BI</span>",
-            "SMALL_MOLECULE_INTERACTION": "<span class='badge smi' data-toggle='tooltip' data-placement='top' title='Small Molecule Interaction'>SMI</span>"
+            "SMALL_MOLECULE_INTERACTION": "<span class='badge smi' data-toggle='tooltip' data-placement='top' title='Small Molecule Interaction'>SMI</span>",
+            "MAMMALIAN_PHENOTYPE": "<span class='badge smi' data-toggle='tooltip' data-placement='top' title='Mammalian Phenotype'>MP</span>"
         }
         var annotTypeDescription = {
             "GO_MOLECULAR_FUNCTION": "Impact on molecular function",
@@ -701,7 +702,8 @@
             "PROTEIN_PROPERTY":  "Impact on protein property",
             "GO_BIOLOGICAL_PROCESS": "Impact on biological process",
             "BINARY_INTERACTION": "Impact on binary interaction",
-            "SMALL_MOLECULE_INTERACTION": "Impact on small molecule interaction"
+            "SMALL_MOLECULE_INTERACTION": "Impact on small molecule interaction",
+            "MAMMALIAN_PHENOTYPE": "Associated with mammlian phenotype"
         }
 
 
@@ -751,14 +753,14 @@
         //            }
         //        }
 
-        nx.getFullAnnotationsByCategory(entry, "modified-entry-annotation").then(function (data) {
+        nx.getFullAnnotationsByCategory(entry, "proteoform").then(function (data) {
             //        jQuery.getJSON("../modified-entry-annotation.json", function(temp){
             //            var data = temp.entry;
             console.log("data");
             console.log(data);
 
             // Transform annotations into hashMap to ease the access by id
-            var normalAnnotations = hashingNormalAnnotations(data.annotationsByIsoformAndCategory[entry + "-1"]);
+            var normalAnnotations = hashingNormalAnnotations(data.annotationsByIsoformAndCategory[entry]);
 
             // Sort phenotypes by smallest position
             //            var filterPhenotypes = 
@@ -766,9 +768,9 @@
             //REPLACE MODIFIED ISOFORM ANNOTATIONS OBJECT WITH ARRAY !!!!!!!! T_T
 
             var phenoArray = [];
-            for (var v in data.modifiedIsoformAnnotations) {
+            for (var v in data.proteoformAnnotations) {
                 
-                var newArrayElem = data.modifiedIsoformAnnotations[v];
+                var newArrayElem = data.proteoformAnnotations[v];
 //                var newArrayElem;
 //                if (onlyGold){
 //                    newArrayElem = nx.filterGoldOnlyAnnotations(data.modifiedIsoformAnnotations[v]);
@@ -776,14 +778,14 @@
 //                else {
 //                    newArrayElem = data.modifiedIsoformAnnotations[v];
 //                }
-                phenoArray.push(data.modifiedIsoformAnnotations[v]);
+                phenoArray.push(data.proteoformAnnotations[v]);
             }
 
             phenoArray.sort(function (a, b) {
-                var sbjA = a.phenotype[0].subjectComponents.map(function (s) {
+                var sbjA = a["modification-effect"][0].subjectComponents.map(function (s) {
                     return normalAnnotations[s]
                 });
-                var sbjB = b.phenotype[0].subjectComponents.map(function (s) {
+                var sbjB = b["modification-effect"][0].subjectComponents.map(function (s) {
                     return normalAnnotations[s]
                 });
                 var minPosA = getMinPos(sbjA);
@@ -795,7 +797,7 @@
             var phenotypes = {};
 
             phenoArray.forEach(function (p) {
-                phenotypes[p.phenotype[0].subjectName] = p;
+                phenotypes[p["modification-effect"][0].subjectName] = p;
             });
 
             //console.log("Brann");
