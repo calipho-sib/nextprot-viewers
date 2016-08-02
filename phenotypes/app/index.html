@@ -42,7 +42,7 @@
         <div class="evidence-detail"><span class="evidence-intensity">INTENSITY</span> <strong>{{intensity}}</strong></div>
         <div class="evidence-detail"><span class="evidence-origin">PROTEIN ORIGIN</span> <strong>{{origin}}</strong></div>
         <div class="evidence-detail"><span class="evidence-quality">QUALITY</span> <strong>{{quality}}</strong></div>
-        
+        <div class="evidence-detail"><span class="evidence-note">Note</span> <strong>{{note}}</strong></div>
         <div class="evidence-link"><a href="{{resourceLink}}">{{resourceAccession}}</a>
         </div>
     </div>
@@ -351,14 +351,14 @@
                 //console.log(evList[ev].intensity);
 //                if (evList[ev].intensity !== "NA") {
                     var ev = {
-                        evidenceCodeName: "This is an uncompleted evidence",
+                        evidenceCodeName: evList[ev].evidenceCodeName,
                         resourceDb: "neXtProt",
                         resourceAccession: evList[ev].sourceAccession_TODEBUG,
                         resourceLink: "https://gauss.isb-sib.ch/bioeditor/annotations#query="+evList[ev].sourceAccession_TODEBUG,
                         intensity: evList[ev].intensity,
+                        note: evList[ev].note,
                         quality: evList[ev].qualityQualifier,
                         origin: evList[ev].proteinOrigin_TODEBUG,
-                        
                         
                     }
                     evidences.push(ev);
