@@ -40,7 +40,7 @@
             <span class="evidence-source">{{resourceDb}}</span>
         </div>
         <div class="evidence-detail"><span class="evidence-intensity">INTENSITY</span> <strong>{{intensity}}</strong></div>
-        <div class="evidence-detail"><span class="evidence-origin">PROTEIN ORIGIN</span> <strong>{{origin}}</strong></div>
+        <div class="evidence-detail"><span class="evidence-origin">Subject Protein Origin</span> <strong>{{origin}}</strong></div>
         <div class="evidence-detail"><span class="evidence-quality">QUALITY</span> <strong>{{quality}}</strong></div>
         <div class="evidence-detail"><span class="evidence-note">Note</span> <strong>{{note}}</strong></div>
         <div class="evidence-link"><a href="{{resourceLink}}">{{resourceAccession}}</a>
@@ -358,7 +358,7 @@
                         intensity: evList[ev].intensity,
                         note: evList[ev].note,
                         quality: evList[ev].qualityQualifier,
-                        origin: evList[ev].proteinOrigin_TODEBUG,
+                        origin: evList[ev].subjectProteinOrigin,
                         
                     }
                     evidences.push(ev);
