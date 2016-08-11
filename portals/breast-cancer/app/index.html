@@ -9,14 +9,14 @@
 
 <body class="data phenotypeData">
         <div>
-            <div class="row header">
+            <div class="row header" style="display:none">
                 <div class="col-lg-4 col-md-3" style="padding-right:0px;">
-                    <h1 id=gaussSubtitle><span id="title2"><span class="hidden-md">Breast </span>Cancer <span class="hidden-md"> portal</span></span></h1>
+                    <h1 id="gaussSubtitle"><span id="title2"><span class="hidden-md">Breast </span>Cancer <span class="hidden-md"> portal</span></span></h1>
                 </div>
             </div>
         </div>
-        <div>
-            <a href="/portals" target="_parent"> See Documentation</a>
+        <div id="docLink">
+            <a class="btn btn-default btn-sm" href="/portals" target="_parent"><i class="glyphicon glyphicon-list-alt" aria-hidden="true"></i> See Documentation</a>
         </div>
         <table id="portalTable" class="table table-striped table-hover table-bordered portalTable gaussDataTable" cellspacing="0" width="100%">
             <thead>
@@ -150,5 +150,17 @@
 //    } );
     } );
 
+</script>
+<script defer>
+    var queries = {};
+    $.each(document.location.search.substr(1).split('&'), function (c, q) {
+        var i = q.split('=');
+        queries[i[0].toString()] = i[1].toString();
+    });
+    if (queries.hasOwnProperty("title")){
+        if (queries.title === "true"){
+            $(".row.header").show();
+        }
+    }
 </script>
 </html>

@@ -6831,10 +6831,12 @@ html *:after {
     color:black;
 }
 */
+#titleRow{
+    margin-bottom: 50px;
+}
 .mainTitle{
     font-weight:500;
     font-size:50px;
-    margin-bottom:50px;
     color:#222232;
 }
 

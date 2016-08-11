@@ -8,7 +8,8 @@ module.exports = function (grunt) {
                 separator: '\n'
             },
             basic: {
-                src: ['bower_components/jquery/dist/jquery.min.js',
+                src: ['app/js/promise-6.1.0.js',
+                    'bower_components/jquery/dist/jquery.min.js',
                     'bower_components/handlebars/handlebars.js',
                     'bower_components/nextprot/dist/nextprot.js',
                     'app/js/compiled-templates.js',
