@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bioviz JavaScript</title>
+
+    <link href='https://fonts.googleapis.com/css?family=Lato:400,700,400italic,700italic|Roboto+Slab:400,700|Inconsolata:400,700&subset=latin,cyrillic'
+          rel='stylesheet' type='text/css'>
+
+    <link rel="stylesheet" href="./css/theme.css" type="text/css"/>
+    <link rel="stylesheet" href="./css/theme-fixes.css" type="text/css"/>
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.4/styles/github.min.css">
+</head>
+<body class="wy-body-for-nav">
+
+    <div class="wy-grid-for-nav">
+
+        <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+            <div class="wy-side-nav-search">
+                <a href="./" class="fa fa-home"> Bioviz JavaScript</a>
+            </div>
+
+            <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+                <ul>
+                                            <li class="toctree-l1 ">
+                            <a class="reference internal "
+                               href="./embedding.html">
+                                Deploy BiovizJS
+                            </a>
+                        </li>
+                                            <li class="toctree-l1 ">
+                            <a class="reference internal "
+                               href="./api.html">
+                                BiovizJS API
+                            </a>
+                        </li>
+                                            <li class="toctree-l1 ">
+                            <a class="reference internal "
+                               href="./widgetsettings.html">
+                                Widget Settings
+                            </a>
+                        </li>
+                                            <li class="toctree-l1 ">
+                            <a class="reference internal "
+                               href="./script.html">
+                                Script Documentation
+                            </a>
+                        </li>
+                                            <li class="toctree-l1 ">
+                            <a class="reference internal "
+                               href="./controls.html">
+                                Control BiovizJS
+                            </a>
+                        </li>
+                                            <li class="toctree-l1 ">
+                            <a class="reference internal "
+                               href="./about.html">
+                                About BiovizJS
+                            </a>
+                        </li>
+                                            <li class="toctree-l1 ">
+                            <a class="reference internal "
+                               href="./toolbar.html">
+                                Toolbar Widget Example
+                            </a>
+                        </li>
+                                            <li class="toctree-l1 current">
+                            <a class="reference internal current"
+                               href="./scriptwidget.html">
+                                Script Widget Example
+                            </a>
+                        </li>
+                                    </ul>
+            </div>
+            &nbsp;
+        </nav>
+
+        <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+                        <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+                <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+                <a href="./">Bioviz JavaScript</a>
+            </nav>
+
+
+                        <div class="wy-nav-content">
+                <div class="rst-content">
+                    <div role="main" class="document">
+                        <h1 id="external-script-widget-example">External script widget example</h1>
+<pre><code class="language-javascript">/**
+ * Widget to manage scripts sent to Bioviz
+ * @namespace bionext.biovizscriptwidget
+ */
+(function($) {
+    $.widget('bionext.biovizscriptwidget', {
+        /**
+         * @name bionext.biovizscriptwidget#bioviz
+         * @description Bioviz API access
+         */
+        options: {
+            bioviz: null
+        },
+        _cmd: undefined,
+
+        /**
+         * @name bionext.biovizscriptwidget#_create
+         * @function
+         * @private
+         * @description Create this widget
+         */
+        _create: function() {
+            this.bioviz = this.options.bioviz;
+            this.element.addClass( "bionext.biovizscriptwidget" );
+
+            if (this.bioviz == null) {
+                throw new Error('Some parameters are null');
+                return;
+            }
+
+            this.init();
+        },
+        /**
+         * @name bionext.biovizscriptwidget#_destroy
+         * @function
+         * @private
+         * @description Destroy this widget
+         */
+        _destroy: function() {
+            this.element.removeClass( "bionext.biovizscriptwidget" );
+        },
+        /**
+         * @name bionext.biovizscriptwidget#init
+         * @function
+         * @description Initialize this widget
+         */
+        init: function() {
+            if (!this._cmd) {
+                var that = this;
+                var commands = [];
+                var cmdIndex;
+                var saved;
+                this._cmd = $("&lt;div&gt;")
+                    .addClass("bionext-bioviz-cmd").css({
+                        width: '100%',
+                        margin: 0,
+                        padding: 0
+                        })
+                    .append(
+                        $('&lt;input type="text"&gt;').css({
+                            width: '100%',
+                            margin: 0,
+                            padding: 0
+                            })
+                        .bind("keypress", function(event) {
+                            if (event.which == 13) { // enter
+                                event.preventDefault(); 
+                                var $this = $(this);
+                                var value = $this.val();
+                                $this.val('');
+                                commands.push(value);
+                                cmdIndex = commands.length;
+                                saved = undefined;
+                                that.execute(value);
+                                // return false;
+                            }
+                        })
+                        .bind("keydown", function(event) {
+                            if (event.which == 38 || event.which == 40) { // up or down arrows
+                                event.preventDefault();
+                                var $this = $(this);
+                                if (typeof saved !== "string") {
+                                    saved = $this.val();
+                                }
+                                if (event.which == 38) { // up
+                                    if (cmdIndex &gt; 0)
+                                        cmdIndex--;
+                                } else { // down
+                                    if (cmdIndex &lt; commands.length)
+                                        cmdIndex++;
+                                }
+                                if (commands[cmdIndex]) {
+                                    $this.val(commands[cmdIndex]);
+                                } else if (cmdIndex == commands.length) {
+                                    $this.val(saved);
+                                    saved = undefined;
+                                }
+                            // return false;
+                            }
+                        })
+                    );
+                this.element.empty();
+                this.element.append(this._cmd);
+            }
+        },
+        /**
+         * @name bionext.biovizscriptwidget#execute
+         * @function
+         * @description Execute a command on this script widget bioviz app
+         * @param  {Command} command The command to execute
+         */
+        execute: function(command) {
+            this.bioviz.bioviz('executeScript', command);
+        }
+    });
+}(jQuery));</code></pre>
+                    </div>
+
+                    <footer>
+                        <hr/>
+                                                Built with <a href="http://couscous.io/">Couscous</a> using a <a href="https://github.com/CouscousPHP/Template-ReadTheDocs">theme</a> based on <a href="https://readthedocs.org/">Read the Docs</a>.
+                    </footer>
+
+                </div>
+            </div>
+
+        </section>
+
+    </div>
+
+    <script src="//code.jquery.com/jquery-1.11.0.min.js"></script>
+    <script src="//netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.4/highlight.min.js"></script>
+    <script src="./js/theme.js"></script>
+
+    <script>
+        $(function() {
+            // Syntax highlighting
+            hljs.initHighlightingOnLoad();
+        });
+    </script>
+
+</body>
+</html>

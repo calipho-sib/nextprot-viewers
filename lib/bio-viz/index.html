@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <link rel="stylesheet" href="dist/bio-viz.bundle.css">
+    <script src="bower_components/jquery/dist/jquery.min.js"></script>
+<!--    <script src="bower_components/handlebars/handlebars.min.js"></script>-->
+    <script src="bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
+    <script src="bower_components/nextprot/src/nextprot-core.js"></script>
+    <script src="dist/bio-viz.min.js"></script>
+<!--    <script src="dist/bio-viz.bundle.js"></script>-->
+    
+<!--
+    <link rel="stylesheet" href="../../lib/triple-viewer/dist/triple-viewer.css">
+    <link rel="stylesheet" href="../../lib/bio-viz/dist/bio-viz.min.css">
+    <script src="../../lib/triple-viewer/dist/triple-viewer.bundle.js"></script>
+    <script src="../../lib/bio-viz/dist/bio-viz.min.js"></script>
+-->
+
+</head>
+
+<body>
+    <h1>Test BioViz Implementation</h1>
+    <div class="row">
+        <!--        <div class="pdbTable col-md-8 col-md-offset-2"></div>-->
+    </div>
+
+
+    <div id="bioviz-container"></div>
+<!--
+    <div class="row">
+        <div class="col-md-5 col-md-offset-1">
+            <div id="bioviz"></div>
+        </div>
+        <div class="col-md-5">
+            <div class="panel panel-default params">
+                <div class="panel-heading">
+                    <h3 id="currentStructure">Params</h3>
+                </div>
+                <div class="panel-body">
+                    <div id="pdbForm">
+                        <h4>OPTIONS</h4>
+                        <div>
+                            <label for="#pdbList">Choose PDB Id : </label>
+                            <select id="pdbList" class="form-control input-sm"></select>
+                        </div>
+                        <div>
+                            <label for="#molList">Choose molecule : </label>
+                            <select id="molList" class="form-control input-sm"></select>
+                            <div class="checkbox-inline">
+                                <label>
+                                    <input id="showContext" type="checkbox"> SHOW CONTEXT (ALL)
+                                </label>
+                            </div>
+
+                        </div>
+                    </div>
+                    <div class="clickLog">
+                        <h4>3D STRUCTURES </h4>
+                        <div>
+                            <table id="pdbTable" class="table-striped">
+                                <thead>
+                                    <tr>
+                                        <th class="pdbName">Name</th>
+                                        <th>Method</th>
+                                        <th>Resolution</th>
+                                        <th>Chain</th>
+                                        <th>Position</th>
+                                        <th class="pdbLinks">Links</th>
+                                    </tr>
+                                </thead>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+-->
+</body>
+<script>
+    //    ($(function () {
+    //
+    //        var findElemByProperty = function (list, property) {
+    //            for (var i = 0, len = list.length; i < len; i++) {
+    //                if (list[i].name === property)
+    //                    return list[i].value; // Return as soon as the object is found
+    //            }
+    //            return null; // The object was not found
+    //        }
+    //
+    //        var nx = new Nextprot.Client("neXtProt bioViz test", "Calipho-Team");
+    //        var entry = nx.getEntryName();
+    //
+    //        nx.getAnnotationsByCategory(entry, "pdb-mapping").then(function (data) {
+    //            console.log("data");
+    //            console.log(data.annot);
+    //            var list3Delems = data.annot;
+    //
+    //            var listChain = list3Delems.map(function (d) {
+    //                return {
+    //                    chain: findElemByProperty(d.properties, "chain"),
+    //                    method: findElemByProperty(d.properties, "method"),
+    //                    name: findElemByProperty(d.properties, "name"),
+    //                    resolution: findElemByProperty(d.properties, "resolution"),
+    //                    position: d.targetingIsoformsMap
+    //                }
+    //            });
+    //            listChain.sort(function (a, b) {
+    //                if (a.name < b.name) return -1;
+    //                if (a.name > b.name) return 1;
+    //                return 0;
+    //            })
+    //
+    //            var template = HBtemplates['templates/table.tmpl'];
+    //            var html = template(listChain);
+    //            $(".pdbTable").html(html);
+    //        })
+    //    }));
+</script>
+    <script>
+        var bv = new nxBioViz();
+        bv.init("#bioviz-container");
+    </script>
+
+</html>
