@@ -143,3 +143,16 @@ body {
     position: relative;
     margin-right: 5px;
 }
+
+.noPdb{
+    margin:10px 20px;
+}
+.noPdb .glyphicon{
+    margin-right:10px;
+    font-size:18px;
+    vertical-align: middle;
+    top: -1px;
+}
+.noPdb .alert-text{
+    vertical-align: middle;
+}
