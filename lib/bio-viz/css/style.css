@@ -22,6 +22,16 @@ table.dataTable thead .sorting:after, table.dataTable thead .sorting_asc:after, 
     top:0px;
 }
 
+.pdbTableContainer{
+    border-bottom:1px solid #ccc;
+    margin-bottom:5px;
+}
+
+.pdbPosException:before{
+    font-size:8px;
+    vertical-align: top;
+}
+
 .btn-label {
     position: relative;
     left: -4px;
@@ -53,7 +63,7 @@ body {
 }
 
 #bioviz {
-    height: 550px;
+    height: 580px;
     width: 100%;
 }
 
