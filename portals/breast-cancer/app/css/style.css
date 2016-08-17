@@ -121,9 +121,12 @@ body {
         margin-left: -0px;
     }
 }
-
+.row.header, .row.header>div{
+    min-height: 0px;
+}
 #gaussSubtitle {
     z-index: -2;
+    min-height: 0px;
     animation-name: example;
     animation-duration: 2s;
     animation-fill-mode: forwards;
@@ -221,8 +224,14 @@ h1 {
     margin: 0px 15px;
 }
 
+#docLink a {
+    margin:10px 15px 0px;
+}
+#docLink i {
+    padding-right:5px;
+}
 .dataTables_wrapper {
-    margin-top: 20px;
+    margin-top: 10px;
 }
 
 .gaussDataTable {

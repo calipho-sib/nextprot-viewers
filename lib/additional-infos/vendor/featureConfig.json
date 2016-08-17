@@ -161,8 +161,9 @@
           "name": "Peptide",
           "className": "pep",
           "color": "#B3E1D1",
-          "type": "multipleRect",
-          "filter": "Peptide"
+          "type": "rect",
+          "filter": "Peptide",
+          "height": 8
         }
       },
       {
@@ -171,8 +172,9 @@
           "name": "SRM Peptide",
           "className": "srmPep",
           "color": "#B3E1F0",
-          "type": "multipleRect",
-          "filter": "Peptide"
+          "type": "rect",
+          "filter": "Peptide",
+          "height": 8
         }
       },
       {
@@ -252,7 +254,7 @@
         }
       },
       {
-        "APIRef": "miscellaneous",
+        "APIRef": "miscellaneous-region",
         "metadata": {
           "name": "Region",
           "className": "miscregion",
@@ -840,8 +842,9 @@
           "name": "Peptide",
           "className": "pep",
           "color": "#B3E1D1",
-          "type": "multipleRect",
-          "filter": "Peptide"
+          "type": "rect",
+          "filter": "Peptide",
+          "height": 8
         }
       },
       {
@@ -850,8 +853,9 @@
           "name": "SRM Peptide",
           "className": "srmPep",
           "color": "#B3E1F0",
-          "type": "multipleRect",
-          "filter": "none"
+          "type": "rect",
+          "filter": "none",
+          "height": 8
         }
       }
     ],

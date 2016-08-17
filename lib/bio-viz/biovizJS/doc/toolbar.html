@@ -1,0 +1,731 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bioviz JavaScript</title>
+
+    <link href='https://fonts.googleapis.com/css?family=Lato:400,700,400italic,700italic|Roboto+Slab:400,700|Inconsolata:400,700&subset=latin,cyrillic'
+          rel='stylesheet' type='text/css'>
+
+    <link rel="stylesheet" href="./css/theme.css" type="text/css"/>
+    <link rel="stylesheet" href="./css/theme-fixes.css" type="text/css"/>
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.4/styles/github.min.css">
+</head>
+<body class="wy-body-for-nav">
+
+    <div class="wy-grid-for-nav">
+
+        <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+            <div class="wy-side-nav-search">
+                <a href="./" class="fa fa-home"> Bioviz JavaScript</a>
+            </div>
+
+            <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+                <ul>
+                                            <li class="toctree-l1 ">
+                            <a class="reference internal "
+                               href="./embedding.html">
+                                Deploy BiovizJS
+                            </a>
+                        </li>
+                                            <li class="toctree-l1 ">
+                            <a class="reference internal "
+                               href="./api.html">
+                                BiovizJS API
+                            </a>
+                        </li>
+                                            <li class="toctree-l1 ">
+                            <a class="reference internal "
+                               href="./widgetsettings.html">
+                                Widget Settings
+                            </a>
+                        </li>
+                                            <li class="toctree-l1 ">
+                            <a class="reference internal "
+                               href="./script.html">
+                                Script Documentation
+                            </a>
+                        </li>
+                                            <li class="toctree-l1 ">
+                            <a class="reference internal "
+                               href="./controls.html">
+                                Control BiovizJS
+                            </a>
+                        </li>
+                                            <li class="toctree-l1 ">
+                            <a class="reference internal "
+                               href="./about.html">
+                                About BiovizJS
+                            </a>
+                        </li>
+                                            <li class="toctree-l1 current">
+                            <a class="reference internal current"
+                               href="./toolbar.html">
+                                Toolbar Widget Example
+                            </a>
+                        </li>
+                                            <li class="toctree-l1 ">
+                            <a class="reference internal "
+                               href="./scriptwidget.html">
+                                Script Widget Example
+                            </a>
+                        </li>
+                                    </ul>
+            </div>
+            &nbsp;
+        </nav>
+
+        <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+                        <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+                <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+                <a href="./">Bioviz JavaScript</a>
+            </nav>
+
+
+                        <div class="wy-nav-content">
+                <div class="rst-content">
+                    <div role="main" class="document">
+                        <h1 id="external-toolbar-widget-example">External toolbar widget example</h1>
+<pre><code class="language-javascript">/**
+ * Toolbar to manage representation of structures
+ * @namespace bionext.bioviztoolbar
+ */
+(function($) {
+    $.widget('bionext.bioviztoolbar', {
+        /**
+         * @name bionext.bioviztoolbar#bioviz
+         * @description Bioviz API access
+         */
+        /**
+         * @name bionext.bioviztoolbar#pdbCustomUrl
+         * @description Set a custom URL for pdb access
+         */
+        /**
+         * @name bionext.bioviztoolbar#pdbxCustomUrl
+         * @description Set a custom URL for pdbx/mmcif access
+         */
+        /**
+         * @name bionext.bioviztoolbar#debug
+         * @description Show debug features
+         */
+        options: {
+            bioviz: null,
+            imgsURL : null,
+            pdbCustomUrl: null,
+            pdbxCustomUrl: null,
+            debug: false
+        },
+        pdbUrl: 'http://ftp.rcsb.org/view/${id}.pdb',
+        pdbxUrl: 'http://ftp.rcsb.org/view/${id}.cif',
+        // Update url of bioviz when user click on RCSB and PDBX checkbox on toolbarWidget
+        isPdbx: false,
+        //Here are all representationButton
+        repMoleculeButton: [],
+        repButton: [],
+
+        /**
+         * @name bionext.bioviztoolbar#_create
+         * @function
+         * @private
+         * @description Create this widget
+         */
+        _create: function() {
+            this.bioviz = this.options.bioviz;
+            this.imgsURL = this.options.imgsURL;
+            this.pdbCustomUrl = this.options.pdbCustomUrl;
+            this.pdbxCustomUrl = this.options.pdbxCustomUrl;
+            this.debug = this.options.debug;
+
+            this.element.addClass('bionext.bioviztoolbar');
+
+            if (this.bioviz == null ||
+                this.debug == null) {
+                throw new Error('Some toolbar parameters are null');
+            }
+
+            if (this.pdbCustomUrl == null ||
+                this.pdbxCustomUrl == null) {
+                console.warn('You have not specified any custom URL, use the RCSB default database');
+            }
+
+            this.url = this.pdbUrl;
+
+            this.init();
+            this._updateUrlTemplate();
+        },
+        /**
+         * @name bionext.bioviztoolbar#_destroy
+         * @function
+         * @private
+         * @description Destroy this widget
+         */
+        _destroy: function() {
+            this.element.removeClass('bionext.bioviztoolbar');
+        },
+        _getSelectionChain: function(structureID, moleculeID, residueID) {
+            var chain = structureID + ':' + moleculeID;
+            if (residueID != null) {
+                chain += ':' + residueID;
+            }
+            return chain;
+        },
+        /**
+         * @name bionext.bioviztoolbar#_updateUrlTemplate
+         * @function
+         * @private
+         * @description Update the URL used for asking database and load a structure
+         */
+        _updateUrlTemplate: function() {
+            if ($('#RCSB').is(':checked')) {
+                if ($('#PDBX').is(':checked')) {
+                    this.url = this.pdbxUrl;
+                    this.isPdbx = true;
+                } else {
+                    this.url = this.pdbUrl;
+                    this.isPdbx = false;
+                }
+            } else {
+                if ($('#PDBX').is(':checked')) {
+                    this.url = this.pdbxCustomUrl;
+                    this.isPdbx = true;
+                } else {
+                    this.url = this.pdbCustomUrl;
+                    this.isPdbx = false;
+                }
+            }
+
+            this.bioviz.bioviz('setOption', 'urlTemplate', this.url);
+            this.bioviz.bioviz('setOption', 'loadPDBX', this.isPdbx);
+        },
+        /**
+         * @name bionext.bioviztoolbar#updateSelection
+         * @function
+         * @description Update selected representation depending on the current selected structure
+         */
+        updateSelection: function() {
+            var structureID = $('#listStructures').val();
+            var moleculeID = $('#listMolecules').val();
+            var residueID = $('#listResidues').val();
+            if (residueID === 'All') {
+                residueID = undefined;
+            }
+            var selectionChain = this._getSelectionChain(structureID, moleculeID, residueID);
+            var selection = this.bioviz.bioviz('getObjects3DFromSelection', selectionChain);
+            for (var i in this.repButton) {
+                this.repButton[i][0].checked = this.bioviz.bioviz('isRepresentationActive',
+                                                                    selection,
+                                                                    this.repButton[i].attr('title'));
+            }
+            $('#toolbarShowHide')[0].checked = this.bioviz.bioviz('isShowed', selection);
+            $('#toolbarLabels')[0].checked = this.bioviz.bioviz('hasLabels', selection);
+            $('#toolbarShowHide').button('refresh');
+            $('#toolbarLabels').button('refresh');
+
+            var structSelection = this.bioviz.bioviz('getObjects3DFromSelection', selectionChain, 1);
+            this.bioviz.bioviz('anchorOnSelection', structSelection);
+
+            for (var i in this.repButton) {
+                this.repButton[i].button('refresh');
+            }
+
+        },
+        /**
+         * @name bionext.bioviztoolbar#updateToolbarSelection
+         * @function
+         * @private
+         * @description Update list of structures and selection
+         * @param  {String} selectedStructureName The structure to update, if no structure is set, select the first available
+         */
+        updateToolbarSelection: function(selectedStructureName) {
+            $('#listStructures').html('');
+            $('#listMolecules').html('');
+            $('#listResidues').html('');
+
+            if (!this.bioviz.bioviz('hasObject3D')) {
+                $('#listStructures').html('&lt;option selected disabled&gt;Structure&lt;/option&gt;');
+                $('#listMolecules').html('&lt;option selected disabled&gt;Molecule&lt;/option&gt;');
+                $('#listResidues').html('&lt;option selected disabled&gt;Residue&lt;/option&gt;');
+            }
+
+            var structuresByID = this.bioviz.bioviz('getStructuresByPDBID');
+            var nbStructures = structuresByID.length;
+            for (var i = 0; i &lt; nbStructures; i++) {
+                var structureName = structuresByID[i];
+                // If we got a selected structure (new structure loaded) or no structure selection (then we pick the first one)
+                if (selectedStructureName === structureName) {
+                    // Then we fill the molecule list associated to this structure
+                    $('#listStructures').html(
+                        $('#listStructures').html() + '&lt;option selected&gt; ' + structureName + ' &lt;/option&gt;'
+                   );
+                } else {
+                    $('#listStructures').html(
+                        $('#listStructures').html() + '&lt;option&gt; ' + structureName + ' &lt;/option&gt;'
+                   );
+                }
+            }
+            if (nbStructures &gt; 0) {
+                this.updateMoleculeList();
+                this.updateResidueList();
+                this.updateSelection();
+            } else {
+                $('#listStructures').html(
+                    '&lt;option selected disabled&gt;Structure&lt;/option&gt;&lt;/select&gt;'
+                );
+                $('#listMolecules').html(
+                    '&lt;option selected disabled&gt;Molecule&lt;/option&gt;&lt;/select&gt;'
+                );
+                $('#listResidues').html(
+                    '&lt;option selected disabled&gt;Residue&lt;/option&gt;&lt;/select&gt;'
+                );
+            }
+        },
+        /**
+         * @name bionext.bioviztoolbar#updateMoleculeList
+         * @function
+         * @private
+         * @description Update list of structures
+         */
+        updateMoleculeList: function() {
+            if ($('#listStructures').val() !== null) {
+                $('#listMolecules').html('');
+                var text = '';
+                var tab = this.bioviz.bioviz('getMoleculesFromStructure', $('#listStructures').val());
+                for (var k in tab) {
+                    var key = tab[k];
+                    var moleculeName = key.toString();
+                    text += '&lt;option&gt; ' + moleculeName + ' &lt;/option&gt;';
+                }
+                $('#listMolecules').html(text);
+            }
+        },
+        /**
+         * @name bionext.bioviztoolbar#updateResidueList
+         * @function
+         * @private
+         * @description Update list of residues
+         */
+        updateResidueList: function() {
+            if ($('#listStructures').val() !== null &amp;&amp; $('#listMolecules').val() !== null) {
+                $('#listResidues').html('');
+                var text = '&lt;option selected&gt;All&lt;/option&gt;';
+                var tab = this.bioviz.bioviz('getResiduesFromMolecule', $('#listStructures').val(), $('#listMolecules').val());
+                for (var k in tab) {
+                    var key = tab[k];
+                    var residueName = key.toString();
+                    text += '&lt;option value=' + residueName + '&gt; ' + residueName + ' &lt;/option&gt;';
+                }
+                $('#listResidues').html(text);
+            }
+        },
+        changeMouseSelection: function(string) {
+            if (string != null) {
+                $('#mouseSelection').text(string);
+            } else {
+                $('#mouseSelection').text('');
+            }
+        },
+        /**
+         * @name bionext.bioviztoolbar#_getButton
+         * @function
+         * @private
+         * @description Get the structure of an activable button
+         * @param  {String} id    Id of the button
+         * @param  {String} title Title of the button
+         * @param  {String} image Path of the image to show on the button
+         * @return {String}       Html description of the button
+         */
+        _getButton: function(id, title, image, hasMenu) {
+            var res = '';
+            res += '&lt;input type="checkbox" id="toolbar' + id + '" title="' + title + '"&gt;';
+            if (hasMenu) {
+                res += '&lt;label class="hasMenu" for="toolbar' + id + '" title="' + title + '"&gt;';
+            } else {
+                res += '&lt;label for="toolbar' + id + '" title="' + title + '"&gt;';
+            }
+            res += '&lt;img class="imageLabels" src="' + image + '" alt="" title="' + title + '" \/&gt;';
+            res += '&lt;\/label&gt;';
+            return res;
+        },
+        /**
+         * @name bionext.bioviztoolbar#init
+         * @function
+         * @description Initialize UI
+         */
+        init: function() {
+            var that = this;
+
+            var str = '';
+            str += '&lt;select id="listStructures"&gt;&lt;option selected disabled&gt;Structure&lt;/option&gt;&lt;/select&gt;';
+            str += '&lt;select id="listMolecules"&gt;&lt;option selected disabled&gt;Molecule&lt;/option&gt;&lt;/select&gt;';
+            str += '&lt;select id="listResidues"&gt;&lt;option selected disabled&gt;Residue&lt;/option&gt;&lt;/select&gt;';
+            str += this._getButton('Center', 'Center', this.imgsURL + 'target16_2.png');
+            str += this._getButton('Delete', 'Remove Structure', this.imgsURL + 'delete16.png');
+            str += this._getButton('ShowHide', 'Show\/Hide', this.imgsURL + 'target16_2.png');
+            str += this._getButton('Atoms', $.bionext.RepresentationTypeID.SPHERES, this.imgsURL + 'atoms.png', true);
+            str += this._getButton('BSticks', $.bionext.RepresentationTypeID.BALL_AND_STICKS, this.imgsURL + 'ball_sticks.png', true);
+            str += this._getButton('Sticks', $.bionext.RepresentationTypeID.STICKS, this.imgsURL + 'sticks.png', true);
+            str += this._getButton('LINE', $.bionext.RepresentationTypeID.LINES, this.imgsURL + 'wireframe.png', true);
+            str += this._getButton('STAR', $.bionext.RepresentationTypeID.ATOMS, this.imgsURL + 'stars.png', true);
+            str += this._getButton('MS', $.bionext.RepresentationTypeID.MOLECULAR_SURFACE, this.imgsURL + 'molecular_surface.png', true);
+            str += this._getButton('MSM', $.bionext.RepresentationTypeID.MOLECULAR_SURFACE_WIREFRAME, this.imgsURL + 'mesh_molecular_surface.png', true);
+            str += this._getButton('AS', $.bionext.RepresentationTypeID.ACCESSIBLE_SURFACE, this.imgsURL + 'accessible_surface.png', true);
+            str += this._getButton('ASM', $.bionext.RepresentationTypeID.ACCESSIBLE_SURFACE_WIREFRAME, this.imgsURL + 'mesh_accessible_surface.png', true);
+            str += this._getButton('SSE', $.bionext.RepresentationTypeID.CARTOON, this.imgsURL + 'secondary_structure.png', true);
+            str += this._getButton('CYL', $.bionext.RepresentationTypeID.CYLINDER, this.imgsURL + 'cylinder.png', true);
+            str += this._getButton('AlphaShape', $.bionext.RepresentationTypeID.ALPHA_SHAPE, this.imgsURL + 'alpha_shape.png', true);
+            str += this._getButton('AlphaShapeMesh', $.bionext.RepresentationTypeID.ALPHA_SHAPE_WIREFRAME, this.imgsURL + 'mesh_alpha_shape.png', true);
+            str += this._getButton('Labels', 'Labels', this.imgsURL + 'labels.png');
+            str += '&lt;br&gt;';
+            str += this._getButton('ResetScene', 'Reset scene', this.imgsURL + 'target16_2.png');
+            str += this._getButton('ResetRepr', 'Reset Representations', this.imgsURL + 'target16_2.png');
+            str += this._getButton('ResetHighlight', 'Reset Highlight', this.imgsURL + 'target16_2.png');
+            str += '&lt;input id="strToLoad" placeholder="PDB ID"&gt;';
+            str += '&lt;input type="checkbox" id="RCSB"&gt;';
+            str += '&lt;label for="RCSB" title="Load on RCSB"&gt; RCSB &lt;/label&gt;';
+            str += '&lt;input type="checkbox" id="PDBX" checked="checked"&gt;';
+            str += '&lt;label for="PDBX" title="Load the PDBX format" &gt; PDBX &lt;/label&gt;';
+            str += '&lt;button id="loadButton" title="Load a structure"&gt;';
+            str += '&lt;label for="loadButton"&gt; Load &lt;/label&gt;';
+            str += '&lt;/button&gt;';
+            str += '&lt;span id="mouseSelection"&gt;&lt;/span&gt;';
+            /*
+             * DEBUG FOR CAPTURE
+             */
+            if (this.debug) {
+                str += '&lt;button id="CAPTURE" title="CAPTURE"&gt;';
+                str += '&lt;label for="CAPTURE"&gt; CAPTURE';
+                str += '&lt;/label&gt;';
+                str += '&lt;/button&gt;';
+            }
+            /*
+             * END DEBUG FOR CAPTURE
+             */
+        // /*script :*/    str += "&lt;input type=\"text\" id=\"script\" value=\"say (duration=10) &amp;quot;yop&amp;quot;\"&gt;&lt;/input&gt;"
+            var toolbar = $('&lt;div id="biovizJSToolbar" class="ui-widget-header ui-corner-all"&gt;' + str + '&lt;/div&gt;');
+
+            this.element.empty();
+            toolbar.appendTo(this.element);
+
+            this.repButton.push($('#toolbarAtoms'));
+            this.repButton.push($('#toolbarBSticks'));
+            this.repButton.push($('#toolbarSticks'));
+            this.repButton.push($('#toolbarLINE'));
+            this.repButton.push($('#toolbarSTAR'));
+
+            this.repButton.push($('#toolbarMS'));
+            this.repButton.push($('#toolbarMSM'));
+            this.repButton.push($('#toolbarAS'));
+            this.repButton.push($('#toolbarASM'));
+            this.repButton.push($('#toolbarSSE'));
+            this.repButton.push($('#toolbarCYL'));
+            this.repButton.push($('#toolbarAlphaShape'));
+            this.repButton.push($('#toolbarAlphaShapeMesh'));
+
+            this.repMoleculeButton.push($('#toolbarMS'));
+            this.repMoleculeButton.push($('#toolbarMSM'));
+            this.repMoleculeButton.push($('#toolbarAS'));
+            this.repMoleculeButton.push($('#toolbarASM'));
+            this.repMoleculeButton.push($('#toolbarSSE'));
+            this.repMoleculeButton.push($('#toolbarCYL'));
+            this.repMoleculeButton.push($('#toolbarAlphaShape'));
+            this.repMoleculeButton.push($('#toolbarAlphaShapeMesh'));
+
+            $('#loadButton').button();
+
+            for (var i in this.repButton) {
+                this.repButton[i].button();
+                this.repButton[i].focus(function() {});
+            }
+
+            $('#toolbarLabels').button();
+            $('#toolbarLabels').focus(function() {});
+
+            $('#toolbarShowHide').button();
+            $('#toolbarShowHide').focus(function() {});
+
+            $('#toolbarDelete').button();
+            $('#toolbarDelete').focus(function() {});
+
+            $('#toolbarCenter').button();
+            $('#toolbarCenter').focus(function() {});
+
+            $('#toolbarResetScene').button();
+            $('#toolbarResetScene').focus(function() {});
+
+            $('#toolbarResetRepr').button();
+            $('#toolbarResetRepr').focus(function() {});
+
+            $('#toolbarResetHighlight').button();
+            $('#toolbarResetHighlight').focus(function() {});
+
+            // TODO : Better fix of overriden color and weight by css framework
+            $('#listStructures').css('color', 'black').css('font-weight', 'normal');
+            $('#listMolecules').css('color', 'black').css('font-weight', 'normal');
+            $('#listResidues').css('color', 'black').css('font-weight', 'normal');
+            $('#strToLoad').css('color', 'black').css('font-weight', 'normal');
+
+            // Action with the context menu - change color representation
+            $('#biovizJSToolbar').contextmenu({
+                delegate: '.hasMenu',
+                menu: [
+                    {title: 'Color option', cmd: 'color', children: [
+                        {title: 'By&amp;nbspMol', cmd: 'color', data: {name: $.bionext.ColorMappingID.Molecule}},
+                        {title: 'By&amp;nbspRes', cmd: 'color', data: {name: $.bionext.ColorMappingID.Residue}},
+                        {title: 'By&amp;nbspAtom', cmd: 'color', data: {name: $.bionext.ColorMappingID.Atom}},
+                        {title: 'By&amp;nbspCarbon&amp;nbspAtom', cmd: 'color', data: {name: $.bionext.ColorMappingID.CarbonAtom}},
+                        {title: 'By&amp;nbspSecondary&amp;nbspStructure', cmd: 'color', data: {name: $.bionext.ColorMappingID.SST}},
+                        {title: 'By&amp;nbspRes&amp;nbspRainbow', cmd: 'color', data: {name: $.bionext.ColorMappingID.Rainbow}},
+                        {title: 'By&amp;nbspRes&amp;nbspHydrophibicity', cmd: 'color', data: {name: $.bionext.ColorMappingID.Hydrophobicity}}
+                    ]}, {title: 'Opacity', cmd: 'alpha', children: [
+                        {title: '1', cmd: 'alpha', data: {value: 1.0}},
+                        {title: '0.75', cmd: 'alpha', data: {value: 0.75}},
+                        {title: '0.5', cmd: 'alpha', data: {value: 0.5}},
+                        {title: '0.25', cmd: 'alpha', data: {value: 0.25}},
+                        {title: '0', cmd: 'alpha', data: {value: 0}}
+                    ]}
+                ],
+                select: function(event, ui) {
+                    var data = ui.item.data();
+                    var cmd = ui.cmd;
+
+                    var residueName = $('#listResidues').val();
+                    if (residueName === 'All') {
+                        residueName = undefined;
+                    }
+                    var selectionChain = that._getSelectionChain($('#listStructures').val(), $('#listMolecules').val(), residueName);
+                    var selection = that.bioviz.bioviz('getObjects3DFromSelection', selectionChain);
+
+                    if (cmd === 'color') {
+                        data = data.name;
+                        that.bioviz.bioviz('colorBy', data, selection, ui.target[0].offsetParent.title);
+                    } else if (cmd === 'alpha') {
+                        data = data.value;
+                        that.bioviz.bioviz('setAlpha', data, selection, ui.target[0].offsetParent.title);
+                    }
+                }
+            });
+
+            /*
+             * Actions when clicking on buttons
+             */
+            $('#listMolecules').change(
+                function() {
+                    for (var i in that.repMoleculeButton) {
+                        that.repMoleculeButton[i].button('option', 'disabled', false);
+                    }
+                    that.updateResidueList();
+                    that.updateSelection();
+                }
+            );
+            $('#listStructures').change(
+                function() {
+                    that.updateSelection();
+                    that.updateMoleculeList();
+                    that.updateResidueList();
+                }
+            );
+            $('#listResidues').change(
+                function() {
+                    var buttonState = ($('#listResidues').val() !== 'All');
+                    for (var i in that.repMoleculeButton) {
+                        that.repMoleculeButton[i].button('option', 'disabled', buttonState);
+                    }
+                    that.updateSelection();
+                }
+            );
+            $('#listStructures').click(function() {
+                that.updateSelection();
+            });
+            $('#toolbarLabels').click(
+                function() {
+                    if ($('#listStructures').val() === null) {
+                        that.bioviz.bioviz('say', 'ERROR : there is no structure loaded');
+                    } else {
+                        var residueName = $('#listResidues').val();
+                        if (residueName === 'All')
+                            residueName = undefined;
+                        var selectionChain = that._getSelectionChain($('#listStructures').val(), $('#listMolecules').val(), residueName);
+                        var selection = that.bioviz.bioviz('getObjects3DFromSelection', selectionChain);
+                        if ($('#toolbarLabels').is(':checked')) {
+                            that.bioviz.bioviz('showLabel', selection, $.bionext.LabelTypeID.Residue);
+                        } else {
+                            that.bioviz.bioviz('hideLabel', selection, $.bionext.LabelTypeID.Residue);
+                        }
+
+                    }
+                }
+            );
+            $('#toolbarLINE, #toolbarSTAR, #toolbarMS, #toolbarMSM, ' +
+                '#toolbarAS, #toolbarASM, ' +
+                '#toolbarAtoms, #toolbarBSticks, ' +
+                '#toolbarSticks, #toolbarSSE, #toolbarCYL, #toolbarAlphaShape, #toolbarAlphaShapeMesh').click(
+                function() {
+                    if ($('#listStructures').val() === null) {
+                        that.bioviz.bioviz('say', 'ERROR : there is no structure loaded');
+                    } else {
+                        var residueName = $('#listResidues').val();
+
+                        if (residueName === 'All') {
+                            residueName = undefined;
+                        }
+
+                        var selectionChain = that._getSelectionChain($('#listStructures').val(), $('#listMolecules').val(), residueName);
+                        var selection = that.bioviz.bioviz('getObjects3DFromSelection', selectionChain);
+
+                        if (this.checked) {
+                            that.bioviz.bioviz('showRepresentation', selection, this.title);
+                        } else {
+                            that.bioviz.bioviz('hideRepresentation', selection, this.title);
+                        }
+                    }
+                }
+            );
+            $('#toolbarDelete').click(
+                function() {
+                    $('#toolbarDelete')[0].checked = false;
+                    if ($('#listStructures').val() === null) {
+                        that.bioviz.bioviz('say', 'ERROR : there is no structure loaded');
+                    } else {
+                        that.bioviz.bioviz('deleteStructure', $('#listStructures').val());
+                        that.updateToolbarSelection();
+                    }
+                }
+            );
+            $('#toolbarShowHide').click(
+                function() {
+                    if ($('#listStructures').val() === null) {
+                        that.bioviz.bioviz('say', 'ERROR : there is no structure loaded');
+                    } else {
+                        var residueName = $('#listResidues').val();
+
+                        if (residueName === 'All') {
+                            residueName = undefined;
+                        }
+
+                        var selectionChain = that._getSelectionChain($('#listStructures').val(), $('#listMolecules').val(), residueName);
+                        var selection = that.bioviz.bioviz('getObjects3DFromSelection', selectionChain);
+                        if (this.checked) {
+                            that.bioviz.bioviz('show', selection);
+                        } else {
+                            that.bioviz.bioviz('hide', selection);
+                        }
+                    }
+                });
+            $('#toolbarCenter').click(
+                function() {
+                    $('#toolbarCenter')[0].checked = false;
+                    if ($('#listStructures').val() === null) {
+                        that.bioviz.bioviz('say', 'ERROR : there is no structure loaded');
+                    } else {
+                        var selection = that.bioviz.bioviz('getObjects3DFromSelection', $('#listStructures').val());
+                        that.bioviz.bioviz('centerOnSelection', selection);
+                    }
+                });
+            $('#toolbarResetScene').click(
+                function() {
+                    $('#toolbarResetScene')[0].checked = false;
+                    that.bioviz.bioviz('resetScene');
+                });
+            $('#toolbarResetRepr').click(
+                function() {
+                    $('#toolbarResetRepr')[0].checked = false;
+                    that.bioviz.bioviz('resetRepresentations');
+                });
+            $('#toolbarResetHighlight').click(
+                function() {
+                    $('#toolbarResetHighlight')[0].checked = false;
+                    that.bioviz.bioviz('resetHighlights');
+                });
+            $('#loadButton').click(
+                function() {
+                    that.bioviz.bioviz('loadStructure', $('#strToLoad').val());
+                });
+            $('#strToLoad').bind('keypress', function(event) {
+                if (event.which == 13) { // enter
+                    that.bioviz.bioviz('loadStructure', $('#strToLoad').val());
+                }
+            });
+            $('#RCSB').on('click', function() {
+                if ((that.pdbCustomUrl != null &amp;&amp; !$('#PDBX').prop('checked')) ||
+                    (that.pdbxCustomUrl != null &amp;&amp; $('#PDBX').prop('checked'))) {
+                    that._updateUrlTemplate();
+                }
+            });
+
+            $('#PDBX').click(
+                function() {
+                    if ($('#PDBX').is(':checked')) {
+                        $('#RCSB').prop('disabled', that.pdbxCustomUrl == null);
+                    } else {
+                        $('#RCSB').prop('disabled', that.pdbCustomUrl == null);
+                    }
+                    that._updateUrlTemplate();
+                }
+            );
+
+            // Check and enable/disable RCSB checkbox depending on customUrl for PDBX
+            var hasCustomUrl = (this.pdbxCustomUrl == null &amp;&amp; $('#PDBX').is(':checked')) ||
+                                (this.pdbCustomUrl == null &amp;&amp; !$('#PDBX').is(':checked'));
+            $('#RCSB').prop('checked', hasCustomUrl);
+            $('#RCSB').prop('disabled', hasCustomUrl);
+
+            this._updateUrlTemplate();
+
+            // Callback to update external widgets when bioviz notify a requestWidgetUpdate
+            this.bioviz.bioviz('addListener', 'requestWidgetUpdate', function(event) {
+                that.updateToolbarSelection(event.data);
+            });
+            this.bioviz.bioviz('addListener', 'atomMouseOver', function(event) {
+                that.changeMouseSelection(event.data);
+            });
+
+            /*
+             * DEBUG FOR CAPTURE
+             */
+            if (that.debug) {
+                $('#CAPTURE').click(
+                    function() {
+                        if ($('#listStructures').val() === null) {
+                            that.bioviz.bioviz('say', 'ERROR : there is no structure loaded');
+                        } else {
+                            that.bioviz.bioviz('capturePosition', $('#listStructures').val());
+                        }
+                    }
+                );
+            }
+            /*
+             * END DEBUG FOR CAPTURE
+             */
+        }
+    });
+}(jQuery));</code></pre>
+                    </div>
+
+                    <footer>
+                        <hr/>
+                                                Built with <a href="http://couscous.io/">Couscous</a> using a <a href="https://github.com/CouscousPHP/Template-ReadTheDocs">theme</a> based on <a href="https://readthedocs.org/">Read the Docs</a>.
+                    </footer>
+
+                </div>
+            </div>
+
+        </section>
+
+    </div>
+
+    <script src="//code.jquery.com/jquery-1.11.0.min.js"></script>
+    <script src="//netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.4/highlight.min.js"></script>
+    <script src="./js/theme.js"></script>
+
+    <script>
+        $(function() {
+            // Syntax highlighting
+            hljs.initHighlightingOnLoad();
+        });
+    </script>
+
+</body>
+</html>

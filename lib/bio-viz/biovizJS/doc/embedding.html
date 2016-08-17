@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bioviz JavaScript</title>
+
+    <link href='https://fonts.googleapis.com/css?family=Lato:400,700,400italic,700italic|Roboto+Slab:400,700|Inconsolata:400,700&subset=latin,cyrillic'
+          rel='stylesheet' type='text/css'>
+
+    <link rel="stylesheet" href="./css/theme.css" type="text/css"/>
+    <link rel="stylesheet" href="./css/theme-fixes.css" type="text/css"/>
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.4/styles/github.min.css">
+</head>
+<body class="wy-body-for-nav">
+
+    <div class="wy-grid-for-nav">
+
+        <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+            <div class="wy-side-nav-search">
+                <a href="./" class="fa fa-home"> Bioviz JavaScript</a>
+            </div>
+
+            <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+                <ul>
+                                            <li class="toctree-l1 current">
+                            <a class="reference internal current"
+                               href="./embedding.html">
+                                Deploy BiovizJS
+                            </a>
+                        </li>
+                                            <li class="toctree-l1 ">
+                            <a class="reference internal "
+                               href="./api.html">
+                                BiovizJS API
+                            </a>
+                        </li>
+                                            <li class="toctree-l1 ">
+                            <a class="reference internal "
+                               href="./widgetsettings.html">
+                                Widget Settings
+                            </a>
+                        </li>
+                                            <li class="toctree-l1 ">
+                            <a class="reference internal "
+                               href="./script.html">
+                                Script Documentation
+                            </a>
+                        </li>
+                                            <li class="toctree-l1 ">
+                            <a class="reference internal "
+                               href="./controls.html">
+                                Control BiovizJS
+                            </a>
+                        </li>
+                                            <li class="toctree-l1 ">
+                            <a class="reference internal "
+                               href="./about.html">
+                                About BiovizJS
+                            </a>
+                        </li>
+                                            <li class="toctree-l1 ">
+                            <a class="reference internal "
+                               href="./toolbar.html">
+                                Toolbar Widget Example
+                            </a>
+                        </li>
+                                            <li class="toctree-l1 ">
+                            <a class="reference internal "
+                               href="./scriptwidget.html">
+                                Script Widget Example
+                            </a>
+                        </li>
+                                    </ul>
+            </div>
+            &nbsp;
+        </nav>
+
+        <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+                        <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+                <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+                <a href="./">Bioviz JavaScript</a>
+            </nav>
+
+
+                        <div class="wy-nav-content">
+                <div class="rst-content">
+                    <div role="main" class="document">
+                        <h1 id="deploy-biovizjs">Deploy BiovizJS</h1>
+<h2 id="requirements">Requirements</h2>
+<p>BiovizJS requires JQuery 1.9 or above and JQuery-UI 1.11.4 or above on your website distribution folder.</p>
+<h2 id="installation">Installation</h2>
+<p>Install the provided BiovizJS distribution folder in a folder accessible from the website root folder. We will name it's
+path on the system as following : <strong><em>BIOVIZ_PATH</em></strong>.
+<a name="deploy"></a></p>
+<p>Please note it's important that BiovizJS distribution folder must be placed on the same domain as your website. Indeed,
+BiovizJS is using an <a href="https://developer.mozilla.org/fr/docs/Web/HTML/Element/iframe">IFrame</a> to be deployed into your
+website, and you want to avoid <a href="https://developer.mozilla.org/en-US/docs/Web/Security/Same-origin_policy">Origin Policy</a>
+errors.</p>
+<h2 id="deploy-to-your-website">Deploy to your Website</h2>
+<p>The following example shows you how you can deploy BiovizJS into a simple website : <a href="../example">BiovizJS Simple Example</a>.</p>
+<p>First, you must declare a specific container for BiovizJS into your web page as on the following example :</p>
+<pre><code class="language-html">&lt;!DOCTYPE html&gt;
+&lt;html lang="en"&gt;
+  &lt;head&gt;
+    ...
+    &lt;title&gt;Bioviz App&lt;/title&gt;
+    ...
+  &lt;/head&gt;
+  &lt;body&gt;
+    ...
+    &lt;div id="bioviz"&gt;
+    &lt;/div&gt;
+    ...
+  &lt;/body&gt;
+  &lt;script type="text/javascript" src="BIOVIZ_PATH/BiovizJS.js"&gt;&lt;/script&gt;
+&lt;/html&gt;</code></pre>
+<p>As you can see, at the end of the page you must include the BiovizJS script located in <strong><em>BIOVIZ_PATH</em></strong> that allows to use the library.</p>
+<p>Then, you have to initialize BiovizJS with <a href="../doc/widgetsettings.html">custom settings</a> in order to deploy it into your website :</p>
+<pre><code class="language-html">&lt;script type="text/javascript"&gt;
+    var biovizWidget;
+
+    // Set bioviz options
+    var options = {
+      structureToLoad: '4MMA'
+    };
+
+    $(document).ready(function() {
+        // Launch bioviz app
+        biovizWidget = $("#bioviz").bioviz(options);
+    });
+&lt;/script&gt;</code></pre>
+<p>In this example, BiovizJS will directly load the PDB structure 4MMA, when the 3D context of the application is ready.</p>
+<p>BiovizJS widgets are based of JQuery-UI Widgets Factory, please look <a href="https://api.jqueryui.com/jquery.widget/">here</a> for further information.</p>
+<p>Finally, if you're using BiovizJS for testing purpose on a local machine, you will have to start a simple HTTP server to be able to load the
+application. Please call this shell command on the root folder of your website (or on the <strong><em>BIOVIZ_PATH</em></strong>/example folder of BiovizJS to load
+the demo page) :</p>
+<pre><code class="language-bash">python -m SimpleHTTPServer</code></pre>
+<p>To access to the application, you have to look at localhost:8000 in your web browser. You will then be able to visualize
+the 4MMA structure from the PDB provided by RCSB into your screen.</p>
+<h1 id="advanced-deployment">Advanced Deployment</h1>
+<p>You may want to use external widgets to interact with BiovizJS. That's why we provide you an <a href="./api.html">API</a>, allowing a read /
+write access to the application. In order to be able to interact with BiovizJS, you must add :</p>
+<ul>
+<li>A function that setup your environment</li>
+<li>A binding to the &quot;ready&quot; event of Bioviz to start this function</li>
+</ul>
+<pre><code class="language-html">&lt;script type="text/javascript"&gt;
+    var biovizWidget;
+
+    // Setup onReady function (create external widgets)
+    var onReady = function() {
+      // For instance, add an external tool bar that allows
+      // to modify representations of the objects of the scene
+      var toolbarWidget = $("#bioviztoolbar").bioviztoolbar({bioviz: biovizWidget});
+
+      // Callback to update this widget when Bioviz notifies a requestWidgetUpdate
+      biovizWidget.bioviz({
+        requestWidgetUpdate: function(event) {
+          toolbarWidget.bioviztoolbar("instance").updateHTML(event.data);
+        }
+      });
+    };
+
+    $(document).ready(function() {
+        // Launch Bioviz application with options
+        ...
+
+        // Bind to application ready, allowing to start external widgets
+        biovizWidget.bioviz({
+          ready: function(event) {
+            onReady();
+          }
+        });
+    });
+&lt;/script&gt;</code></pre>
+<p>For further information, please look at external widgets code examples provided on the <a href="../example">BiovizJS Simple Example</a>.</p>
+                    </div>
+
+                    <footer>
+                        <hr/>
+                                                Built with <a href="http://couscous.io/">Couscous</a> using a <a href="https://github.com/CouscousPHP/Template-ReadTheDocs">theme</a> based on <a href="https://readthedocs.org/">Read the Docs</a>.
+                    </footer>
+
+                </div>
+            </div>
+
+        </section>
+
+    </div>
+
+    <script src="//code.jquery.com/jquery-1.11.0.min.js"></script>
+    <script src="//netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.4/highlight.min.js"></script>
+    <script src="./js/theme.js"></script>
+
+    <script>
+        $(function() {
+            // Syntax highlighting
+            hljs.initHighlightingOnLoad();
+        });
+    </script>
+
+</body>
+</html>

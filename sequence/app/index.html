@@ -37,6 +37,17 @@
 </div> 
 </body>
 <script>
+    //Workaround for iframes
+    var url = (window.location != window.parent.location) ? document.referrer: document.location.href;
+    if (url.startsWith("http://") || url.startsWith("https://")) {
+        var domain = url.split("/");
+        url = domain[0] + domain[1] + domain[2];
+    }
+    else url = url.split("/")[0];
+    
+    $('head').append('<base target="_parent" href="' + url + '" />');
+    console.log(url);
+    
 
     ($(function () {
 

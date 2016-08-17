@@ -1,0 +1,54 @@
+{
+  "name": "proteotypicity-checker",
+  "description": "A simple interface to analyse peptide proteotypicity",
+  "version": "0.0.1",
+  "homepage": "https://github.com/MatSchaeff/proteotypicity-checker",
+  "authors": [
+    "Mathieu Schaeffer <mat.schaeff@gmail.com>",
+    "Calipho Team <ndu@isb-sib.ch>"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/MatSchaeff/proteotypicity-checker.git"
+  },
+  "licenses": [
+    {
+      "type": "GNU GPL v2"
+    }
+  ],
+  "main": "app.js",
+  "style": "app.css",
+  "scripts": {},
+  "dependencies": {
+    "bower": "x.x.x",
+    "grunt-cli": "x.x.x",
+    "jquery": "x.x.x",
+    "handlebars": "x.x.x",
+    "bootstrap": "x.x.x"
+  },
+  "devDependencies": {
+    "mkdirp": "^0.5.0",
+    "grunt": "x.x.x",
+    "grunt-bump": "^0.3.0",
+    "grunt-connect": "^0.2.0",
+    "grunt-contrib-concat": "~0.3.0",
+    "grunt-contrib-connect": "~0.5.0",
+    "grunt-contrib-jshint": "~0.10.0",
+    "grunt-contrib-handlebars": "^0.10.1",
+    "grunt-contrib-uglify": "~0.5.0",
+    "grunt-contrib-watch": "~0.5.3",
+    "grunt-serve": "^0.1.6",
+    "load-grunt-tasks": "^0.6.0"
+  },
+  "keywords": [
+    "sib",
+    "isb",
+    "calipho",
+    "protein",
+    "nextprot",
+    "uniprot",
+    "peptide",
+    "biojs"
+  ],
+  "readmeFilename": "README.md"
+}

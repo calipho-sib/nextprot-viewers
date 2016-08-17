@@ -1,0 +1,408 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bioviz JavaScript</title>
+
+    <link href='https://fonts.googleapis.com/css?family=Lato:400,700,400italic,700italic|Roboto+Slab:400,700|Inconsolata:400,700&subset=latin,cyrillic'
+          rel='stylesheet' type='text/css'>
+
+    <link rel="stylesheet" href="./css/theme.css" type="text/css"/>
+    <link rel="stylesheet" href="./css/theme-fixes.css" type="text/css"/>
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.4/styles/github.min.css">
+</head>
+<body class="wy-body-for-nav">
+
+    <div class="wy-grid-for-nav">
+
+        <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+            <div class="wy-side-nav-search">
+                <a href="./" class="fa fa-home"> Bioviz JavaScript</a>
+            </div>
+
+            <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+                <ul>
+                                            <li class="toctree-l1 ">
+                            <a class="reference internal "
+                               href="./embedding.html">
+                                Deploy BiovizJS
+                            </a>
+                        </li>
+                                            <li class="toctree-l1 ">
+                            <a class="reference internal "
+                               href="./api.html">
+                                BiovizJS API
+                            </a>
+                        </li>
+                                            <li class="toctree-l1 ">
+                            <a class="reference internal "
+                               href="./widgetsettings.html">
+                                Widget Settings
+                            </a>
+                        </li>
+                                            <li class="toctree-l1 current">
+                            <a class="reference internal current"
+                               href="./script.html">
+                                Script Documentation
+                            </a>
+                        </li>
+                                            <li class="toctree-l1 ">
+                            <a class="reference internal "
+                               href="./controls.html">
+                                Control BiovizJS
+                            </a>
+                        </li>
+                                            <li class="toctree-l1 ">
+                            <a class="reference internal "
+                               href="./about.html">
+                                About BiovizJS
+                            </a>
+                        </li>
+                                            <li class="toctree-l1 ">
+                            <a class="reference internal "
+                               href="./toolbar.html">
+                                Toolbar Widget Example
+                            </a>
+                        </li>
+                                            <li class="toctree-l1 ">
+                            <a class="reference internal "
+                               href="./scriptwidget.html">
+                                Script Widget Example
+                            </a>
+                        </li>
+                                    </ul>
+            </div>
+            &nbsp;
+        </nav>
+
+        <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+                        <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+                <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+                <a href="./">Bioviz JavaScript</a>
+            </nav>
+
+
+                        <div class="wy-nav-content">
+                <div class="rst-content">
+                    <div role="main" class="document">
+                        <h1 id="biovizjs-script-documentation">BiovizJS Script Documentation</h1>
+<p>BiovizJS script langage is defined with a specific grammar, allowing to send commands to the application.
+This grammar contains different information as the command you want to start, it's target and parameters and also
+optional parameters. This part shows the different commands and also the data you can put into.</p>
+<h2 id="build-a-script">Build a script</h2>
+<p>Before launching a command, we need to describe how a script file is constructed. A script contains different commands,
+each separated with semi-colons. Each command line is built as following :</p>
+<pre><code>&lt;CommandName&gt; (&lt;Option1&gt;=value1, &lt;Option2&gt;=value2) &lt;ParametersValues&gt;;</code></pre>
+<h2 id="commands">Commands</h2>
+<ul>
+<li>
+<p><strong> Display some text on the scene </strong> :</p>
+<ul>
+<li>Command : display (options) text</li>
+<li>Parameters :
+<ul>
+<li>text : the text to show on the scene</li>
+</ul></li>
+<li>Options :
+<ul>
+<li>location : Location of the text (CENTER / TOP / BOTTOM / LEFT / RIGHT / TOP_LEFT / BOTTOM_LEFT / BOTTOM_RIGHT / TOP_RIGHT)</li>
+<li>size : Size in pixels or percent of the viewport height</li>
+<li>color : Color of the text</li>
+<li>duration : Duration of the animation in milliseconds</li>
+</ul></li>
+</ul>
+</li>
+<li>
+<p><strong> Load a structure on the scene </strong> :</p>
+<ul>
+<li>Command : load identifier alias</li>
+<li>Parameters :
+<ul>
+<li>identifier : Identifier of the structure to load</li>
+<li>alias : Alias to give to the structure on BiovizJS</li>
+</ul></li>
+</ul>
+</li>
+<li>
+<p><strong> Remove a structure from the scene </strong> :</p>
+<ul>
+<li>Command : remove alias</li>
+<li>Parameters :
+<ul>
+<li>alias : Alias of the structure to remove (or identifier if not specified)</li>
+</ul></li>
+</ul>
+</li>
+<li>
+<p><strong> Set the background of the scene </strong> :</p>
+<ul>
+<li>Command : set background (options) value</li>
+<li>Parameters :
+<ul>
+<li>value : Color of the background</li>
+</ul></li>
+<li>Options :
+<ul>
+<li>duration : Duration of the animation in milliseconds</li>
+</ul></li>
+</ul>
+</li>
+<li>
+<p><strong> Set the global quality of the scene </strong> :</p>
+<ul>
+<li>Command : set quality value</li>
+<li>Parameters :
+<ul>
+<li>value : Quality value (LOW / MEDIUM / HIGH)</li>
+</ul></li>
+</ul>
+</li>
+<li>
+<p><strong> Center the camera on a target </strong> :</p>
+<ul>
+<li>Command : center (options) target</li>
+<li>Parameters :
+<ul>
+<li>target : Target of the command</li>
+</ul></li>
+<li>Options :
+<ul>
+<li>duration : Duration of the animation in milliseconds</li>
+</ul></li>
+</ul>
+</li>
+<li>
+<p><strong> Zoom the camera on a target </strong> :</p>
+<ul>
+<li>Command : zoom (options) target</li>
+<li>Parameters :
+<ul>
+<li>target : Target of the command</li>
+</ul></li>
+<li>Options :
+<ul>
+<li>duration : Duration of the animation in milliseconds</li>
+</ul></li>
+</ul>
+</li>
+<li>
+<p><strong> Show / Hide a target </strong> :</p>
+<ul>
+<li>Command : show/hide target</li>
+<li>Parameters :
+<ul>
+<li>target : Target of the command</li>
+</ul></li>
+</ul>
+</li>
+<li>
+<p><strong> Show / Hide a representation on a target </strong> :</p>
+<ul>
+<li>Command : repr target representation activate</li>
+<li>Parameters :
+<ul>
+<li>target : Target of the command</li>
+<li>representation : Representation of the command</li>
+<li>activate : True / False to show / hide the representation</li>
+</ul></li>
+</ul>
+</li>
+<li>
+<p><strong> Color a representation of a target </strong> :</p>
+<ul>
+<li>Command : color (options) target representation color</li>
+<li>Parameters :
+<ul>
+<li>target : Target of the command</li>
+<li>representation : Representation of the command</li>
+<li>color : Color to set</li>
+</ul></li>
+<li>Options :
+<ul>
+<li>duration : Duration of the animation in milliseconds</li>
+</ul></li>
+</ul>
+</li>
+<li>
+<p><strong> Move a target on the scene </strong> :</p>
+<ul>
+<li>Command : move (options) target matrix</li>
+<li>Parameters :
+<ul>
+<li>target : Target of the command</li>
+<li>matrix : A matrix to set the position, orientation and scale</li>
+</ul></li>
+<li>Options :
+<ul>
+<li>duration : Duration of the animation in milliseconds</li>
+</ul></li>
+</ul>
+</li>
+<li>
+<p><strong> Align two targets on the scene </strong> :</p>
+<ul>
+<li>Command : align (options) mobile target</li>
+<li>Parameters :
+<ul>
+<li>mobile : Mobile target of the command</li>
+<li>target : Target of the command</li>
+</ul></li>
+<li>Options :
+<ul>
+<li>full : Compute full alignment (true / false)</li>
+<li>duration : Duration of the animation in milliseconds</li>
+</ul></li>
+</ul>
+</li>
+<li>
+<p><strong> Highlight a target on the scene </strong> :</p>
+<ul>
+<li>Command : highlight target representation activate</li>
+<li>Parameters :
+<ul>
+<li>target : Target of the command</li>
+<li>representation : Representation of the command</li>
+<li>activate : True / False to enable / disable highlight</li>
+</ul></li>
+</ul>
+</li>
+<li>
+<p><strong> Set the opacity of a representation of a target on the scene </strong> :</p>
+<ul>
+<li>Command : alpha (options) target representation value</li>
+<li>Parameters :
+<ul>
+<li>target : Target of the command</li>
+<li>representation : Representation of the command</li>
+<li>value : Alpha value between 0.0 and 1.0</li>
+</ul></li>
+<li>Options :
+<ul>
+<li>duration : Duration of the animation in milliseconds</li>
+</ul></li>
+</ul>
+</li>
+<li>
+<p><strong> Wait some time </strong> :</p>
+<ul>
+<li>Command : wait duration</li>
+<li>Parameters :
+<ul>
+<li>duration : Waiting time in milliseconds</li>
+</ul></li>
+</ul>
+</li>
+<li>
+<p><strong> Reset the whole scene (position and representations) </strong> :</p>
+<ul>
+<li>Command : reset</li>
+</ul>
+</li>
+<li><strong> Finish script </strong> :
+<ul>
+<li>Command : finish</li>
+</ul></li>
+</ul>
+<h2 id="parameters-types">Parameters types</h2>
+<ul>
+<li>
+<p><strong>Color</strong> :</p>
+<ul>
+<li>Hexadecimal format : #FFFFFF or 0xFFFFFF</li>
+<li>String format : rgb(255, 0, 0)</li>
+</ul>
+</li>
+<li>
+<p><strong>Percent</strong> :</p>
+<ul>
+<li>Integer value : 100%</li>
+<li>Float value : 99.9%</li>
+</ul>
+</li>
+<li>
+<p><strong>Number</strong> :</p>
+<ul>
+<li>Integer value : 100</li>
+<li>Float value : 100.0</li>
+</ul>
+</li>
+<li>
+<p><strong>Matrix4</strong> :</p>
+<ul>
+<li>One dimensional array : [1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0]</li>
+<li>Identity matrix : origin</li>
+</ul>
+</li>
+<li>
+<p><strong>String</strong> :</p>
+<ul>
+<li>String chain : &quot;Hello world&quot;</li>
+</ul>
+</li>
+<li>
+<p><strong>Boolean</strong> :</p>
+<ul>
+<li>String chain : true / on / false / off</li>
+</ul>
+</li>
+<li>
+<p><strong>Identifier</strong> :</p>
+<ul>
+<li>Representation types</li>
+<li>Target types</li>
+</ul>
+<h3 id="representation-types">Representation types</h3>
+</li>
+<li>Sphere : SPHERES</li>
+<li>Lines : LINES</li>
+<li>Balls &amp; Sticks : BSTICKS</li>
+<li>Sticks : STICKS</li>
+<li>Point cloud : ATOMS</li>
+<li>Cartoon : CARTOON</li>
+<li>Cylinder : CYLINDER</li>
+<li>Molecular Surface (wireframe) : MS / MSM</li>
+<li>Accessible Surface (wireframe) : AS / ASM</li>
+<li>
+<p>Alpha Shape (wireframe) : ASHAPE / ASHAPEM</p>
+<h3 id="target-types">Target types</h3>
+</li>
+<li>scene</li>
+<li>structure structId</li>
+<li>moltype structId:molType</li>
+<li>molecule structId:molType:chainId</li>
+<li>residue structId:molType:chainId:resId</li>
+<li>
+<p>atom structId:molType:chainId:atomId</p>
+</li>
+<li>molType : PROTEIN / PEPTIDE / SPEPTIDE / RNA / DNA / LIGAND / ION / SOLVENT</li>
+</ul>
+                    </div>
+
+                    <footer>
+                        <hr/>
+                                                Built with <a href="http://couscous.io/">Couscous</a> using a <a href="https://github.com/CouscousPHP/Template-ReadTheDocs">theme</a> based on <a href="https://readthedocs.org/">Read the Docs</a>.
+                    </footer>
+
+                </div>
+            </div>
+
+        </section>
+
+    </div>
+
+    <script src="//code.jquery.com/jquery-1.11.0.min.js"></script>
+    <script src="//netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.4/highlight.min.js"></script>
+    <script src="./js/theme.js"></script>
+
+    <script>
+        $(function() {
+            // Syntax highlighting
+            hljs.initHighlightingOnLoad();
+        });
+    </script>
+
+</body>
+</html>

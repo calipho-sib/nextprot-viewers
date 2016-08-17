@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bioviz JavaScript</title>
+
+    <link href='https://fonts.googleapis.com/css?family=Lato:400,700,400italic,700italic|Roboto+Slab:400,700|Inconsolata:400,700&subset=latin,cyrillic'
+          rel='stylesheet' type='text/css'>
+
+    <link rel="stylesheet" href="./css/theme.css" type="text/css"/>
+    <link rel="stylesheet" href="./css/theme-fixes.css" type="text/css"/>
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.4/styles/github.min.css">
+</head>
+<body class="wy-body-for-nav">
+
+    <div class="wy-grid-for-nav">
+
+        <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+            <div class="wy-side-nav-search">
+                <a href="./" class="fa fa-home"> Bioviz JavaScript</a>
+            </div>
+
+            <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+                <ul>
+                                            <li class="toctree-l1 ">
+                            <a class="reference internal "
+                               href="./embedding.html">
+                                Deploy BiovizJS
+                            </a>
+                        </li>
+                                            <li class="toctree-l1 ">
+                            <a class="reference internal "
+                               href="./api.html">
+                                BiovizJS API
+                            </a>
+                        </li>
+                                            <li class="toctree-l1 ">
+                            <a class="reference internal "
+                               href="./widgetsettings.html">
+                                Widget Settings
+                            </a>
+                        </li>
+                                            <li class="toctree-l1 ">
+                            <a class="reference internal "
+                               href="./script.html">
+                                Script Documentation
+                            </a>
+                        </li>
+                                            <li class="toctree-l1 current">
+                            <a class="reference internal current"
+                               href="./controls.html">
+                                Control BiovizJS
+                            </a>
+                        </li>
+                                            <li class="toctree-l1 ">
+                            <a class="reference internal "
+                               href="./about.html">
+                                About BiovizJS
+                            </a>
+                        </li>
+                                            <li class="toctree-l1 ">
+                            <a class="reference internal "
+                               href="./toolbar.html">
+                                Toolbar Widget Example
+                            </a>
+                        </li>
+                                            <li class="toctree-l1 ">
+                            <a class="reference internal "
+                               href="./scriptwidget.html">
+                                Script Widget Example
+                            </a>
+                        </li>
+                                    </ul>
+            </div>
+            &nbsp;
+        </nav>
+
+        <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+                        <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+                <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+                <a href="./">Bioviz JavaScript</a>
+            </nav>
+
+
+                        <div class="wy-nav-content">
+                <div class="rst-content">
+                    <div role="main" class="document">
+                        <h1 id="biovizjs-mouse-and-keyboard-controls">BiovizJS Mouse and Keyboard Controls</h1>
+<p>In order to move objects on the scene, we provide mouse and keyboard controls in BiovizJS. You must know that controls
+are moving objects like a full scene, a molecular structure or a molecule and are not moving the camera. This enables
+to use 3D mouses to interact with BiovizJS (feature coming soon).</p>
+<p>Here are the different mouse and keyboard bindings :</p>
+<h2 id="mouse-controls">Mouse Controls</h2>
+<ul>
+<li>
+<p><strong>Double Left Click</strong> :<br />
+Object selection, allowing to move the selected object<br />
+<em>Note : When double clicking on no object, you select the whole scene</em></p>
+</li>
+<li>
+<p><strong>Left Mouse Press</strong> :<br />
+Rotate the selected object</p>
+</li>
+<li>
+<p><strong>Right Mouse Press</strong> :<br />
+Translate the selected object</p>
+</li>
+<li>
+<p><strong>Right Click</strong> :<br />
+Open BiovizJS context menu</p>
+</li>
+<li>
+<p><strong>Wheel Up/Down</strong> :<br />
+Move selected object backward / forward</p>
+</li>
+<li><strong>Ctrl + Wheel Up/Down</strong> :<br />
+Increase / decrease eye separation for 3D effects (stereoscopy / anaglyph)</li>
+</ul>
+<h2 id="keyboard-controls">Keyboard Controls</h2>
+<ul>
+<li>
+<p><strong>F</strong> :<br />
+Enable / Disable BiovizJS full-screen</p>
+</li>
+<li>
+<p><strong>L</strong> :<br />
+Show / Hide color mapping legend</p>
+</li>
+<li>
+<p><strong>M</strong> :<br />
+Show / Hide measure management tool</p>
+</li>
+<li><strong>R</strong> :<br />
+Show / Hide representation management tool</li>
+</ul>
+                    </div>
+
+                    <footer>
+                        <hr/>
+                                                Built with <a href="http://couscous.io/">Couscous</a> using a <a href="https://github.com/CouscousPHP/Template-ReadTheDocs">theme</a> based on <a href="https://readthedocs.org/">Read the Docs</a>.
+                    </footer>
+
+                </div>
+            </div>
+
+        </section>
+
+    </div>
+
+    <script src="//code.jquery.com/jquery-1.11.0.min.js"></script>
+    <script src="//netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.4/highlight.min.js"></script>
+    <script src="./js/theme.js"></script>
+
+    <script>
+        $(function() {
+            // Syntax highlighting
+            hljs.initHighlightingOnLoad();
+        });
+    </script>
+
+</body>
+</html>
