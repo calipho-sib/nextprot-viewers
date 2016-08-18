@@ -106,10 +106,15 @@
 
                         // link TV with BV
                         tv.onSelection(function (d) {
-                            console.log("method of TV");
-                            console.log(d);
+                            console.log("Feature selection : " + d.start + "-" + d.end);
                             bv.highlightFromRange([d.start, d.end]);
                         })
+                        
+                        // link SV in TV with BV
+                        tv.onSequenceSelected(function(d){
+                            console.log("Mouse selection : " + d.start + "-" + d.end);
+                            bv.highlightFromRange([d.start, d.end]);
+                        });
                         
                         // if isoform change, reload bv table and tv-bv interactions
                         tv.onIsoChange(function(isoName){
