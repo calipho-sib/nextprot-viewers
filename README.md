@@ -1,4 +1,10 @@
-# neXtProt viewers (nextprot-viewers)
+# neXtProt - The knowledge resource on human proteins
+
+This is a code repository for the SIB - Swiss Institute of Bioinformatics CALIPHO group neXtProt project
+
+See: http://www.nextprot.org/
+
+# neXtProt viewers
 
 [![Build Status](https://travis-ci.org/calipho-sib/nextprot-viewers.svg?branch=master)](https://travis-ci.org/calipho-sib/nextprot-viewers)
 
