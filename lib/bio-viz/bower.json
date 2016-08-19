@@ -1,0 +1,12 @@
+{
+  "name": "nextprot-bioViz",
+  "dependencies": {
+    "nextprot": "~0.0.41",
+    "bootstrap": "x.x.x",
+    "jquery": "x.x.x",
+    "handlebars": "~4.0.2"
+  },
+  "resolutions": {
+    "handlebars": "3.0.3"
+  }
+}

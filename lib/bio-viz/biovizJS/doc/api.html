@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bioviz JavaScript</title>
+
+    <link href='https://fonts.googleapis.com/css?family=Lato:400,700,400italic,700italic|Roboto+Slab:400,700|Inconsolata:400,700&subset=latin,cyrillic'
+          rel='stylesheet' type='text/css'>
+
+    <link rel="stylesheet" href="./css/theme.css" type="text/css"/>
+    <link rel="stylesheet" href="./css/theme-fixes.css" type="text/css"/>
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.4/styles/github.min.css">
+</head>
+<body class="wy-body-for-nav">
+
+    <div class="wy-grid-for-nav">
+
+        <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+            <div class="wy-side-nav-search">
+                <a href="./" class="fa fa-home"> Bioviz JavaScript</a>
+            </div>
+
+            <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+                <ul>
+                                            <li class="toctree-l1 ">
+                            <a class="reference internal "
+                               href="./embedding.html">
+                                Deploy BiovizJS
+                            </a>
+                        </li>
+                                            <li class="toctree-l1 current">
+                            <a class="reference internal current"
+                               href="./api.html">
+                                BiovizJS API
+                            </a>
+                        </li>
+                                            <li class="toctree-l1 ">
+                            <a class="reference internal "
+                               href="./widgetsettings.html">
+                                Widget Settings
+                            </a>
+                        </li>
+                                            <li class="toctree-l1 ">
+                            <a class="reference internal "
+                               href="./script.html">
+                                Script Documentation
+                            </a>
+                        </li>
+                                            <li class="toctree-l1 ">
+                            <a class="reference internal "
+                               href="./controls.html">
+                                Control BiovizJS
+                            </a>
+                        </li>
+                                            <li class="toctree-l1 ">
+                            <a class="reference internal "
+                               href="./about.html">
+                                About BiovizJS
+                            </a>
+                        </li>
+                                            <li class="toctree-l1 ">
+                            <a class="reference internal "
+                               href="./toolbar.html">
+                                Toolbar Widget Example
+                            </a>
+                        </li>
+                                            <li class="toctree-l1 ">
+                            <a class="reference internal "
+                               href="./scriptwidget.html">
+                                Script Widget Example
+                            </a>
+                        </li>
+                                    </ul>
+            </div>
+            &nbsp;
+        </nav>
+
+        <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+                        <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+                <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+                <a href="./">Bioviz JavaScript</a>
+            </nav>
+
+
+                        <div class="wy-nav-content">
+                <div class="rst-content">
+                    <div role="main" class="document">
+                        <h1 id="biovizjs-api-documentation">BiovizJS API Documentation</h1>
+<p>The API documentation is accessible <a href="../doc/api/BiovizAPI.html">here</a></p>
+<h2 id="overview">Overview</h2>
+<p>In order to communicate with BiovizJS, we provided you an API that you can call directly from the deployed BiovizJS
+widget. To do so, you just have to call a method of the API as following :</p>
+<pre><code class="language-javascript">biovizWidget.bioviz('apiMethodName', [param1, ...]);</code></pre>
+<p>If you prefer to call instance methods, you also can proceed like this :</p>
+<pre><code class="language-javascript">var biovizInstance  = biovizWidget.bioviz('instance');
+biovizInstance.apiMethodName([param1, ...]);</code></pre>
+<p>You may also want to interact with Bioviz when an event is triggered. To catch event fired from Bioviz, you can use the
+addListener method provided by the API, allowing you to connect callbacks depending on the event :</p>
+<pre><code class="language-javascript">biovizWidget.bioviz('addListener', eventType, callback);</code></pre>
+<p>The API is also providing constants, to make easier for you to call API methods. Constants access is done by calling :</p>
+<pre><code class="language-javascript">$.bionext.nameOfTheConstant</code></pre>
+<p>Some API methods are using array of selection in order to interact with BiovizJS (for instance, showRepresentation or
+colorBy methods). We provide a simple selection grammar, allowing you to easily access to molecule items. For instance,
+in order to acces to a specific atom of 4MQT, you will select it like this :</p>
+<pre><code class="language-javascript">biovizWidget.bioviz('getObjects3DFromSelection', '4MQT:Protein:A:SER:64:C:343');</code></pre>
+<p>Please note this grammar is case sensitive.</p>
+<p>You must know that this API is beta for now, and will probably be slightly modified before the stable release. Please
+refer to future changelogs in order to facilitate your migrations. You can refer to the documentation
+<a href="../doc/api/BiovizAPI.html">here</a> to get more details about input and output of each methods.</p>
+<h2 id="events">Events</h2>
+<ul>
+<li>
+<p><strong>'requestWidgetUpdate'</strong> : Sent when Bioviz makes a change on the scene</p>
+</li>
+<li><strong>'atomMouseOver'</strong> : Sent when the mouse is over an atom of the scene  </li>
+</ul>
+<h2 id="constants">Constants</h2>
+<ul>
+<li>
+<p><strong>'RepresentationTypeId'</strong> : Enumerator for representation types  </p>
+<ul>
+<li>Values - NONE, SPHERES, LINES, BALL_AND_STICKS, STICKS, ATOMS, MOLECULAR_SURFACE_WIREFRAME, MOLECULAR_SURFACE,
+ACCESSIBLE_SURFACE_WIREFRAME, ACCESSIBLE_SURFACE, CARTOON, ALPHA_SHAPE, ALPHA_SHAPE_WIREFRAME</li>
+</ul>
+</li>
+<li>
+<p><strong>'LabelTypeID'</strong> : Enumerator for label type by ID</p>
+<ul>
+<li>Values - Structure, Molecule, Residue, Atom, Vdw</li>
+</ul>
+</li>
+<li><strong>'ColorMappingID'</strong> : Enumerator for color mapping names
+<ul>
+<li>Values - Molecule, Residue, Atom, CarbonAtom, HeteroAtom, SST, Rainbow, Hydrophobicity</li>
+</ul></li>
+</ul>
+<h2 id="methods">Methods</h2>
+<p>Here we will present you a summary of the main functions of BiovizAPI.</p>
+<h3 id="biovizjs-configuration">BiovizJS Configuration</h3>
+<ul>
+<li><strong>'setOption'</strong>, <em>optionName</em>, <em>optionValue</em> : Change an option of the Bioviz Widget</li>
+<li><strong>'setBackground'</strong>, <em>color</em> : Set background color of the scene</li>
+</ul>
+<h3 id="scene-management">Scene Management</h3>
+<ul>
+<li><strong>'loadStructure'</strong>, <em>structureID</em> : Load a structure</li>
+<li><strong>'deleteStructure'</strong>, <em>structureID</em> : Delete a structure</li>
+<li><strong>'hasObject3D'</strong> &rarr; <em>boolean</em> : Check if the scene contains objects</li>
+<li><strong>'focusAnimation'</strong>, <em>structureID</em> : Launch a focus animation  </li>
+<li><strong>'focusOnStructure'</strong>, <em>structureID</em> : Focus on a structure  </li>
+<li><strong>'getStructuresByPDBID'</strong> : Get each structure contained by the scene by PDB identifier</li>
+<li><strong>'getMoleculesFromStructure'</strong>, <em>structureID</em> : Get each molecules contained by a structure by identifier</li>
+</ul>
+<h3 id="representations"> Representations</h3>
+<ul>
+<li><strong>'isRepresentationActive'</strong>, <em>selection</em> &rarr; <em>boolean</em> : Test if a representation mode is active</li>
+<li><strong>'showRepresentation'</strong>, <em>selection</em> : Show a representation of a selection</li>
+<li><strong>'hideRepresentation'</strong>, <em>selection</em> : Hide a representation of a selection</li>
+<li><strong>'show'</strong>, <em>selection</em>, <em>recursive</em> : Show a selection</li>
+<li><strong>'hide'</strong>, <em>selection</em> : Hide a selection</li>
+<li><strong>'isShowed'</strong>, <em>selection</em> &rarr; <em>boolean</em> : Get whether a selection is showed or not</li>
+<li><strong>'showLabel'</strong>, <em>selection</em>, <em>labelType</em> : Show labels of a selection</li>
+<li><strong>'hideLabel'</strong>, <em>selection</em>, <em>labelType</em> : Hide labels of a selection</li>
+<li><strong>'colorBy'</strong>, <em>color</em>, <em>selection</em>, <em>representationTypeID</em> : Color a selection representation</li>
+<li><strong>'hasLabels'</strong>, <em>selection</em> &rarr; <em>boolean</em> : Check if a selection has labels</li>
+</ul>
+<h3 id="scripts-execution">Scripts Execution</h3>
+<ul>
+<li><strong>'executeScript'</strong>, <em>cmd</em> : Execute a script command</li>
+<li><strong>'startScript'</strong> : Start executing the script</li>
+<li><strong>'stopScript'</strong> : Stop executing the script</li>
+<li><strong>'pauseScript'</strong> : Pause executing the script</li>
+</ul>
+<h3 id="various">Various</h3>
+<ul>
+<li><strong>'say'</strong>, <em>msg</em> : Print a text on the scene</li>
+<li><strong>'highlight'</strong>, <em>slection</em>, <em>doHighlight</em>, <em>representationTypeID</em>, <em>range</em>, <em>withExternalSequence</em> : Highlight a selection</li>
+<li><strong>'resetRepresentations'</strong> : Reset representation of the scene to default</li>
+<li><strong>'resetHighlights'</strong> : Reset highlights of the scene</li>
+<li><strong>'resetScene'</strong> : Reset the whole scene</li>
+<li><strong>'linkWithExternalSequence'</strong>, <em>structureID</em>, <em>moleculeID</em>, <em>externalSequence</em> : Link Bioviz model sequence with an external one</li>
+</ul>
+                    </div>
+
+                    <footer>
+                        <hr/>
+                                                Built with <a href="http://couscous.io/">Couscous</a> using a <a href="https://github.com/CouscousPHP/Template-ReadTheDocs">theme</a> based on <a href="https://readthedocs.org/">Read the Docs</a>.
+                    </footer>
+
+                </div>
+            </div>
+
+        </section>
+
+    </div>
+
+    <script src="//code.jquery.com/jquery-1.11.0.min.js"></script>
+    <script src="//netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.4/highlight.min.js"></script>
+    <script src="./js/theme.js"></script>
+
+    <script>
+        $(function() {
+            // Syntax highlighting
+            hljs.initHighlightingOnLoad();
+        });
+    </script>
+
+</body>
+</html>

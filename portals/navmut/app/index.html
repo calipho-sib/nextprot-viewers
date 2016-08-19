@@ -1,0 +1,167 @@
+<html>
+<head>
+    <title>NavMut Portal</title>
+    <script src="js/datatables.min.js"></script>
+    <script src="js/iframeResizer.js"></script>
+    <link rel="stylesheet" type="text/css" href="css/datatables.min.css">
+    <link rel="stylesheet" href="css/style.css" />
+</head>
+
+<body class="data phenotypeData">
+        <div>
+            <div class="row header" style="display:none">
+                <div class="col-lg-4 col-md-3" style="padding-right:0px;">
+                    <h1 id="gaussSubtitle"><span id="title2"><span class="hidden-md"></span>NavMut <span class="hidden-md"> portal</span></span></h1>
+                </div>
+            </div>
+        </div>
+        <div id="docLink">
+            <a class="btn btn-default btn-sm" href="/portals" target="_parent"><i class="glyphicon glyphicon-list-alt" aria-hidden="true"></i> See Documentation</a>
+        </div>
+        <table id="portalTable" class="table table-striped table-hover table-bordered portalTable gaussDataTable" cellspacing="0" width="100%">
+            <thead>
+                <tr>
+                    <th>Position</th>
+                    <th>Protein Variant</th>
+                    <th>Mutation type</th>
+                    <th>Mutation origin</th>
+                    <th>Phenotype intensity</th>
+                    <th>Relation</th>
+                    <th>Function</th>
+<!--
+                    <th>Prec Relation</th>
+                    <th>Prec Mol Ent Obj</th>
+-->
+                    <th>Data confidence</th>
+<!--                    <th>Conflicting evidence</th>-->
+                    <th>Evidence codes</th>
+                    <th class="pubmed-link">Reference</th>
+                    <th>Protein Origin</th>
+                    <th>Experimental system</th>
+                </tr>
+            </thead>
+            <tfoot>
+                <tr>
+                    <th>Position</th>
+                    <th>Protein Variant</th>
+                    <th>Mutation type</th>
+                    <th>Mutation origin</th>
+                    <th>Phenotype intensity</th>
+                    <th>Relation</th>
+                    <th>Function</th>
+<!--
+                    <th>Prec Relation</th>
+                    <th>Prec Mol Ent Obj</th>
+-->
+                    <th>Data confidence</th>
+<!--                    <th>Conflicting evidence</th>-->
+                    <th>Evidence codes</th>
+                    <th>Reference</th>
+                    <th>Protein Origin</th>
+                    <th>Experimental system</th>
+                </tr>
+            </tfoot>
+        </table>
+    </div>
+</body>
+
+
+<script>
+    $(document).ready(function() {
+    $('#portalTable tfoot th').each(function () {
+            var title = $(this).text();
+            //        $(this).html( '<input type="text" placeholder="Search '+title+'" />' );
+            $(this).html('<div class="form-group has-feedback">' +
+                '<input type="text" class="form-control" placeholder="Search ' + title + '" style="font-weight:500"/>' +
+                '<i class="glyphicon glyphicon-search form-control-feedback"></i>' +
+                '</div>');
+        });
+        var gaussAnnotTable = $('#portalTable').DataTable({
+//            colReorder: true,
+//            "ajax": './scnportal.json',
+            "ajax": '../../../../../data/scnportal.json',
+            "pageLength": 20,
+            //                dom: '<"table_overflow"t>'
+            dom: "<'row firstHeadTable'<'col-sm-5'B><'col-sm-7'f>>" +
+                "<'row secondHeadTable'<'col-sm-3 col-md-2'l><'col-sm-3 col-md-4'i><'col-sm-6 pageTable'p>>" +
+                "<'row no_overmargin'<'col-sm-12 table_overflow'tr>>",
+            "lengthMenu": [[10, 20, 100, 1000, 10000, -1], [10, 20, 100, 1000, 10000, "All"]],
+            buttons: [
+                {
+                    extend: 'copyFlash',
+                    className: 'tableButton',
+                    text: '<span><i class="glyphicon glyphicon-copy"></i></span><span style="margin-left:5px;">Copy</span>'
+                    },
+                {
+                    extend: 'csvFlash',
+                    fieldSeparator: '\t',
+                    extension: '.tsv',
+                    text: '<span><i class="glyphicon glyphicon-floppy-save"></i></span><span style="margin-left:5px;">CSV</span>',
+                    className: 'tableButton'
+                }, 
+                {
+                    extend: 'pdf',
+                    fieldSeparator: '\t',
+                    text: '<span><i class="glyphicon glyphicon-blackboard"></i></span><span style="margin-left:5px;">PDF</span>',
+                    className: 'tableButton'
+                }, 
+                {
+                    extend: 'print',
+                    fieldSeparator: '\t',
+                    text: '<span><i class="glyphicon glyphicon-print"></i></span><span style="margin-left:5px;">Print</span>',
+                    className: 'tableButton'
+                }
+            ],
+            language: {
+                search: "_INPUT_",
+                searchPlaceholder: "Search..."
+            },
+            "processing": true,
+            "deferRender": true,
+            "order": [[ 0, "asc" ]],
+            "columnDefs": [ {
+                        "targets": "pubmed-link",
+                        "render": function ( data, type, full, row ) {
+                            return '<a href="http://www.ncbi.nlm.nih.gov/pubmed/' + data.replace(/\s+/g, '').split(":")[1] + '" target="_blank">' + data + '</a>';
+                            }
+                        } ]
+        });
+        $("#portalTable_filter label").append('<i class="glyphicon glyphicon-search form-control-feedback"></i>');
+        $("#portalTable_filter label").addClass('form-group');
+
+        // Apply the search
+        gaussAnnotTable.columns().every(function () {
+            var that = this;
+
+            $('input', this.footer()).on('keyup change', function () {
+                if (that.search() !== this.value) {
+                    that
+                        .search(this.value)
+                        .draw();
+                }
+            });
+        });
+    
+//    $('#portalTable').DataTable( {
+//        dom: 'Bfrtip',
+//        ajax: 'data/brcaportal.json',
+//        buttons: [
+//            'copy', 'csv', 'excel', 'pdf', 'print'
+//        ]
+//    } );
+    } );
+
+</script>
+<script defer>
+    var queries = {};
+    $.each(document.location.search.substr(1).split('&'), function (c, q) {
+        var i = q.split('=');
+        queries[i[0].toString()] = i[1].toString();
+    });
+    if (queries.hasOwnProperty("title")){
+        if (queries.title === "true"){
+            $(".row.header").show();
+        }
+    }
+</script>
+</html>

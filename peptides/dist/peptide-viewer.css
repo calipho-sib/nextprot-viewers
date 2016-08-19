@@ -339,6 +339,9 @@ a:focus {
 }
 path{
     fill:none;
+}
+rect{
+    rx:2;
 };
 @-moz-keyframes throbber-loader {
   0% {

@@ -1,0 +1,173 @@
+h1 {
+    margin: 20px auto 30px;
+    text-align: center;
+}
+
+table.dataTable td {
+    height: 37px;
+}
+
+.table-striped>tbody>tr:nth-of-type(odd) td {
+    background-color: #f9f9f9;
+}
+
+
+/*Table fixed css */
+
+table.dataTable{
+    padding:5px 0px;
+}
+
+table.dataTable thead .sorting:after, table.dataTable thead .sorting_asc:after, table.dataTable thead .sorting_desc:after, table.dataTable thead .sorting_asc_disabled:after, table.dataTable thead .sorting_desc_disabled:after{
+    top:0px;
+}
+
+.pdbTableContainer{
+    border-bottom:1px solid #ccc;
+    margin-bottom:5px;
+}
+
+.pdbPosException:before{
+    font-size:8px;
+    vertical-align: top;
+}
+
+.btn-label {
+    position: relative;
+    left: -4px;
+    display: inline-block;
+    padding: 2px 4px 2px 8px;
+    background: rgba(0,0,0,0.15);
+    border-radius: 3px 0 0 3px;
+    color:rgba(255, 255, 255, 0.8);
+    font-weight: 300;
+}
+.btn-labeled {
+    padding-top: 0;
+    padding-bottom: 0;
+    padding-left:0px;
+    padding-right:3px;
+}
+
+table.dataTable tr td:last-child{
+    white-space:nowrap;
+    overflow:hidden;
+}
+table.dataTable tr td:last-child a:last-child{
+    margin-left:3px;
+}
+
+/* BioViz viewer */
+body {
+/*    text-align: center;*/
+}
+
+#bioviz {
+    height: 580px;
+    width: 100%;
+}
+
+#fv {
+    text-align: left;
+}
+
+#pdbForm {
+    margin-bottom: 30px;
+}
+
+.panel-heading h3 {
+    margin: 0px;
+}
+
+#pdbForm select {
+    display: inline-block;
+    width: 100px;
+}
+
+#pdbForm label {
+    display: inline-block;
+    width: 130px;
+    text-align: right;
+    margin: 15px 10px 0px 0px;
+}
+
+.params {
+    text-align: left;
+}
+
+.params h4 {
+    font-weight: 300;
+    border-bottom: 1px solid #ccc;
+    padding-bottom: 5px;
+}
+
+.clickLog li {
+    text-decoration: none;
+    list-style: none;
+}
+
+#eventTriggered {
+    max-height: 150px;
+    overflow-y: scroll;
+}
+
+.date {
+    font-style: italic;
+    font-size: 13px;
+    width: 50px;
+    display: inline-block;
+}
+
+/*
+.badge {
+    margin: 0px 10px;
+    border-radius: 3px;
+}
+*/
+
+.fv-badge {
+    background-color: #1bce97;
+}
+
+.checkbox-inline {
+    display: inline-block;
+    vertical-align: baseline;
+}
+
+.checkbox-inline label {
+    font-size: 11px;
+    font-weight: 900;
+}
+
+.checkbox-inline input[type=checkbox] {
+    position: relative;
+    margin-right: 5px;
+}
+
+.noPdb{
+    margin:10px 20px;
+}
+.noPdb .glyphicon{
+    margin-right:10px;
+    font-size:18px;
+    vertical-align: middle;
+    top: -1px;
+}
+.noPdb .alert-text{
+    vertical-align: middle;
+}
+
+#currentStructure{
+    display: inline-block;
+    vertical-align: middle;
+}
+#structureCount{
+    border-radius:70%;
+    border: 2px solid black;
+    color:#C50063;
+    background-color:transparent;
+    padding:8px 8px;
+    margin-right:10px;
+    vertical-align:middle;
+    min-width:32px;
+}

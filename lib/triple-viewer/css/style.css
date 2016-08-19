@@ -1,4 +1,8 @@
 
+body {
+    font-family: "Lato", "Helvetica Neue", "Helvetica", sans-serif;
+}
+
 /* Overview */
 #nx-overview {
     background:#fff;

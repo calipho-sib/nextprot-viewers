@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>BioVizJS</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <link href="css/bioviz-theme/jquery-ui.min.css" rel="stylesheet" type="text/css"/>
+
+        <link href="css/style.css" rel="stylesheet" type="text/css"/>
+
+        <link rel="stylesheet" href="library/farbtastic/farbtastic.css" type="text/css" />
+    </head>
+
+    <body>
+        <div id='biovizjs' style="width: 100%; height: 100%;"></div>
+    </body>
+
+    <!-- You must include these dependencies scripts when deploying a bioviz app -->
+    <script type="text/javascript" src="library/jquery.min.js"></script>
+    <script type="text/javascript" src="library/jquery-ui.min.js"></script>
+    <script type="text/javascript" src="library/jquery.ui.touch-punch.min.js"></script>
+    <script type="text/javascript" src="library/jquery.ui-contextmenu.min.js"></script>
+    <script type="text/javascript" src="library/jquery.mousewheel.js"></script>
+
+    <script type="text/javascript" src="library/hammer.min.js"></script>
+    <script type="text/javascript" src="library/jquery.hammer.js"></script>
+
+    <script type="text/javascript" src="library/farbtastic/farbtastic.js"></script>
+
+    <script type="text/javascript" src="library/three.min.js"></script>
+    <script type="text/javascript" src="library/three/Detector.js"></script>
+
+    <script type="text/javascript" src="library/ssao.min.js"></script>
+    <script type="text/javascript" src="library/stats.min.js"></script>
+    <script type="text/javascript" src="library/numeric-1.2.6.min.js"></script>
+
+    <!-- Includes ThreeJS EffectComposer from ThreeJS example to allow using multiple effects -->
+    <script type="text/javascript" src="library/three/postprocessing/EffectComposer.js"></script>
+
+    <!-- EffectComposer dependencies -->
+    <script type="text/javascript" src="library/three/postprocessing/MaskPass.js"></script>
+    <script type="text/javascript" src="library/three/postprocessing/RenderPass.js"></script>
+    <script type="text/javascript" src="library/three/postprocessing/ShaderPass.js"></script>
+    <script type="text/javascript" src="library/three/shaders/CopyShader.js"></script>
+
+    <!-- ParrallaxBarrierEffect for stereoscopy provided with ThreeJS example -->
+    <script type="text/javascript" src="library/three/effects/StereoEffect.js"></script>
+
+    <script type="text/javascript" src="bioviz.min.js"></script>
+
+    <!-- Example code with an external toolbar -->
+    <script type="text/javascript">
+        var biovizAPI;
+
+        $(document).ready(function() {
+            // Create API access instance
+            biovizAPI = new BiovizAPI();
+
+            // Create Bioviz App
+            biovizAPI.createBioviz();
+
+            // Append app's canvas to the page
+            $('#biovizjs').append(biovizAPI.getCanvas());
+
+            // Initialize bioviz WebGL context
+            biovizAPI.initBioviz();
+
+            // Add global variable bioviz to document
+            document.biovizAPI = biovizAPI;
+
+            // If app not embedded, create debug context
+            if (self == top && biovizAPI.isAvailable()) {
+                biovizAPI.loadStructure('4MQT');
+            }
+        });
+    </script>
+</html>

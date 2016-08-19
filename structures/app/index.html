@@ -1,37 +1,60 @@
 <!DOCTYPE html>
 <html>
+
 <head>
     <meta charset="utf-8">
     <link rel="stylesheet" href="../../lib/triple-viewer/dist/triple-viewer.css">
+    <link rel="stylesheet" href="../../lib/bio-viz/dist/bio-viz.min.css">
+    <link rel="stylesheet" href="../../lib/additional-infos/dist/additional-infos.min.css">
+<!--    <link href="https://fonts.googleapis.com/css?family=Lato:100,100i,300,300i,400,400i,700,700i,900,900i" rel="stylesheet">-->
     <script src="../../lib/triple-viewer/dist/triple-viewer.bundle.js"></script>
+    <script src="../../lib/bio-viz/dist/bio-viz.min.js"></script>
+    <script src="../../lib/additional-infos/dist/additional-infos.min.js"></script>
 </head>
 
 <body>
-<div class="row" style="margin: 0px 20px;">
-    <div id="nx-overview" class="col-md-12"></div>
-</div>
-<div class="row" style="margin: 0px 20px;">
-    <div id="nx-isoformChoice" class="col-md-12" style="margin-bottom: -5px;"></div>
-</div>
-<div class="row" style="margin: 0px 20px;">
-    <div id="visuContainer" class="col-md-12">
-        <div id="isoformDisplayed"></div>
-        <div id="chart"></div>
+    <div class="row" style="margin: 0px 20px;">
+        <div id="nx-overview" class="col-md-12"></div>
     </div>
-</div>
-<div class="row" style="margin: 10px 20px;">
-    <div id="featuresTable" class="col-md-6"></div>
-    <div class="col-md-6" style="padding-right:0px;">
-        <div id="seqViewer"></div>
+    <div class="row" style="margin: 0px 20px;">
+        <div id="nx-isoformChoice" class="col-md-12" style="margin-bottom: -5px;"></div>
     </div>
-</div>
+    <div class="row" style="margin: 0px 20px;">
+        <div id="visuContainer" class="col-md-12">
+            <div id="isoformDisplayed"></div>
+            <div id="chart"></div>
+        </div>
+    </div>
+    <div class="row" style="margin: 10px 20px;">
+        <div id="featuresTable" class="col-md-6"></div>
+        <div class="col-md-6" style="padding-right:0px;">
+            <div id="seqViewer"></div>
+        </div>
+    </div>
+    <div id="bioviz-container"></div>
+    <div class="row" style="margin: 0px 20px 15px;">
+        <div id="nx-keywords" class="col-md-12" style="background-color:white;"></div>
+    </div>
+    <div class="row" style="margin: 0px 20px 15px;">
+        <div id="nx-xrefs" class="col-md-12" style="background-color:white;"></div>
+    </div>
 </body>
 <script>
+    //Workaround for iframes
+    var url = (window.location != window.parent.location) ? document.referrer : document.location.href;
+    if (url.startsWith("http://") || url.startsWith("https://")) {
+        var domain = url.split("/");
+        url = domain[0] + domain[1] + domain[2];
+    } else url = url.split("/")[0];
+
+    $('head').append('<base target="_parent" href="' + url + '" />');
+    console.log(url);
 
     ($(function () {
 
         var nx = new Nextprot.Client("neXtProt proteomics view", "Calipho-Team");
         var entry = nx.getEntryName();
+        var aI = new AdditionalInfos();
 
         $(function () {
 
@@ -40,18 +63,18 @@
                 var data = [];
                 for (var feat in list) {
                     switch (list[feat].APIRef) {
-                        case "sequence":
-                            data.push(nx.getProteinSequence(entry));
-                            break;
-                        case "antibody":
-                            data.push(nx.getAntibody(entry));
-                            break;
-                        case "isoform-mapping":
-                            data.push(nx.getIsoformMapping(entry));
-                            break;
-                        default:
-                            data.push(nx.getAnnotationsByCategory(entry, list[feat].APIRef));
-                            break;
+                    case "sequence":
+                        data.push(nx.getProteinSequence(entry));
+                        break;
+                    case "antibody":
+                        data.push(nx.getAntibody(entry));
+                        break;
+                    case "isoform-mapping":
+                        data.push(nx.getIsoformMapping(entry));
+                        break;
+                    default:
+                        data.push(nx.getAnnotationsByCategory(entry, list[feat].APIRef));
+                        break;
                     }
                 }
                 return data;
@@ -65,22 +88,59 @@
                 return mdata;
             }
 
+            //            Get list of api call for the structure view from the json config file 
             $.getJSON("../../lib/featureConfig.json", function (config) {
                 Promise.all(getFeaturesByview(config.structures.features, entry))
-                        .then(function (oneData) {
+                    .then(function (oneData) {
 
-                            var metaData = getMetadataByView(config.structures.features);
-                            var tv = new TripleViewer(entry);
-                            tv.init(oneData, metaData);
+                        var metaData = getMetadataByView(config.structures.features);
 
-                        }).catch(function (err) {
-                            // catch any error that happened so far
-                            console.log("Argh, broken: " + err.message);
-                            console.log("Error at line : " + err.stack);
+                        // init Triple viewer
+                        var tv = new TripleViewer(entry);
+                        tv.init(oneData, metaData);
+                        var current_isoform = tv.getCurrentIsoform();
+
+                        // init Bioviz viewer
+                        var bv = new nxBioViz();
+                        bv.init("#bioviz-container", current_isoform);
+
+                        // link TV with BV
+                        tv.onSelection(function (d) {
+                            console.log("Feature selection : " + d.start + "-" + d.end);
+                            bv.highlightFromRange([d.start, d.end]);
+                        })
+                        
+                        // link SV in TV with BV
+                        tv.onSequenceSelected(function(d){
+                            console.log("Mouse selection : " + d.start + "-" + d.end);
+                            bv.highlightFromRange([d.start, d.end]);
                         });
+                        
+                        // if isoform change, reload bv table and tv-bv interactions
+                        tv.onIsoChange(function(isoName){
+                            bv.reloadTable(isoName);
+                            tv.onSelection(function (d){
+                                bv.highlightFromRange([d.start, d.end]);
+                            })
+                        })
+                        
+                        
+
+                        // init additional infos
+                        var keywords = config.structures.keywords;
+                        var xrefs = config.structures.xrefs;
+                        aI.compileKeyword(entry, nx, keywords, "#nx-keywords");
+                        aI.compileXref(entry, nx, xrefs, "#nx-xrefs");
+
+                    }).catch(function (err) {
+                        // catch any error that happened so far
+                        console.log("Argh, broken: " + err.message);
+                        console.log("Error at line : " + err.stack);
+                    });
 
             });
         });
     }));
 </script>
+
 </html>

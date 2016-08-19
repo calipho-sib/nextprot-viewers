@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+
+<head>
+    <title>neXtProt Unicity checker</title>
+    <link rel="stylesheet" type="text/css" href="../dist/app.css">
+    <link href='https://fonts.googleapis.com/css?family=Lato:100,300,400,700,900' rel='stylesheet' type='text/css'>
+    <script src="../dist/app.js"></script>
+    <script id="loader-template" type="text/x-handlebars-template">
+        <div class="shaft-load3">
+            <div class="shaft1"></div>
+            <div class="shaft2"></div>
+            <div class="shaft3"></div>
+            <div class="shaft4"></div>
+            <div class="shaft5"></div>
+            <div class="shaft6"></div>
+            <div class="shaft7"></div>
+            <div class="shaft8"></div>
+            <div class="shaft9"></div>
+            <div class="shaft10"></div>
+        </div>
+    </script>
+    <!--
+    <link rel="stylesheet" type="text/css" href="bootstrap.min.css">
+    <script src="jquery.min.js"></script>
+    <script src="handlebars.min.js"></script>
+    <script src="nextprot.js"></script>
+    <script src="compiled_peptide_templates.js"></script>
+    <script src="proteotypicity.js"></script>
+-->
+</head>
+
+<body style="background:#F5F4F4;text-align:center;padding:0px 15px;">
+
+    <div class="row" id="titleRow">
+        <h1 class="mainTitle" style="display:none;">Unicity Checker</h1>
+    </div>
+    <div class="row" style="text-align:center;">
+        <div class="col-md-10 col-md-offset-1">
+            <form>
+                <div class="form-group">
+                    <label style="display:block;">Enter your peptide(s) : </label>
+                    <textarea id="variantList" class="form-control" rows="5" placeholder="LQELFLQEVR, AATDFVQEMR, TKMGLYYSYFK, ..."></textarea>
+                </div>
+                <div id="limitInfos" class="alert alert-warning pull-left" role="alert">
+                    <span class="glyphicon glyphicon-exclamation-sign"></span> The unicity checker is currently limited to a maximum of <strong>1000 peptides</strong>. Peptides must be <strong>minimum 6 aa</strong> in length.</div>
+                <!--
+                <div class="pull-left">
+                    <p class="bg-warning"></p>
+                </div>
+-->
+                <button id="submitList" type="button" class="btn btn-primary pull-right">
+                    <span class="glyphicon glyphicon-screenshot"></span> Check
+                </button>
+            </form>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-8 col-md-offset-1">
+            <div id="errorMessages"></div>
+        </div>
+        <div class="col-md-2">
+            <div id="countSubmitted"></div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-10 col-md-offset-1">
+            <hr id="separationLine">
+            <div id="legend" class="pull-left">
+                <div class="legend-elem">
+                    <div class="legendIcon" style="background:#DFF0D8;"> </div>
+                    <p class="legendText">Entry-specific</p>
+                </div>
+                <div class="legend-elem">
+                    <div class="legendIcon" style="background:#D9EDF7;"> </div>
+                    <p class="legendText">Found in other entries</p>
+                </div>
+            </div>
+            <div class="pull-right filters" style="margin-bottom:30px;">
+                <label style="margin:0px 10px;padding-top:2px;vertical-align:middle;font-style:italic;">FILTERS </label>
+                <label class="checkbox-inline" style="font-style:italic;">
+                    <input type="checkbox" id="onlyProteoWithV" value="option1"> Entry-specific taking into account variants
+                </label>
+                <label class="checkbox-inline" style="font-style:italic;">
+                    <input type="checkbox" id="onlyProteoWithoutV" value="option2"> Entry-specific without variants
+                </label>
+                <div>
+                    <div class="btn-group pepShowed pull-right" role="group" style="margin-top:10px;">
+
+                        <!--                        FOR NEXT VERSION-->
+                        <!--
+                        <button type="button" class="btn btn-default">
+                            <a id="downloadList" href="#" download="peptideList.txt">
+                                <span class="glyphicon glyphicon-download" style="vertical-align:middle;font-size:16px;margin-right:5px;"></span>
+                            </a>
+                        </button>
+-->
+                        <button id="peptideCount" type="button" class="btn btn-default">
+                            <span class="glyphicon glyphicon-eye-open" style="vertical-align:middle;font-size:16px;margin-right:5px;"></span>
+                            <span id="countPepShowed">0</span>/<span id="countPepTotal">0</span> peptides
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-10 col-md-offset-1">
+            <div id="peptideResult"></div>
+        </div>
+    </div>
+
+    <script class="example">
+    </script>
+    <style>
+
+    </style>
+
+</body>
+
+<script defer>
+    var queries = {};
+    $.each(document.location.search.substr(1).split('&'), function (c, q) {
+        var i = q.split('=');
+        queries[i[0].toString()] = i[1].toString();
+    });
+    if (queries.hasOwnProperty("title")){
+        if (queries.title === "true"){
+            $(".mainTitle").show();
+        }
+    }
+</script>
+
+</html>

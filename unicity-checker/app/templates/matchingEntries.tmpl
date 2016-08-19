@@ -1,0 +1,92 @@
+<div id={{id}} class="col-md-4 peptide {{#if proteotypicity.withVariant}}proteoWithVariant{{/if}} {{#if proteotypicity.withoutVariant}}{{#unless proteotypicity.onlyWithVariant}}proteoWithoutVariant{{/unless}}{{/if}}">
+<div id="proteoBlock" class="panel panel-default">
+    <div class="panel-heading">
+        <h5 class="text-center" style="margin:0px;">{{peptide}}</h5>
+    </div>
+<div id="proteoBody" class="panel-body" style="padding:0px;height:240px;overflow:auto;">
+                        
+    <div class="pull-right" style="margin-top:8px;margin-right: 15px;">
+        <button id="showIsoforms" type="button" class="btn btn-default btn-xs">Show isoforms</button>
+    </div>
+    <div id="proteomeProperties">
+        <!--<div style="border-bottom:1px solid #E7EAEC;margin-top: -10px;margin-bottom:5px;">-->
+        <!--<h5 id="proteotypicitySentence"></h5>-->
+        <!--</div>-->
+        {{#proteotypicity}}
+        {{#if withoutVariant}}<div  class="panel panel-success" style="margin:0px;min-height: 120px;">
+        {{else}}<div class="panel panel-info" style="margin:0px;min-height: 120px;">{{/if}}
+        {{/proteotypicity}}
+            <div class="panel-heading" style="padding:1px 15px">
+                <h5>Entry mapping</h5>
+            </div>
+            <div class="panel-body">
+                <div class="showEntry" style="display:block">
+                    <ul>
+                        {{#if proteotypicity.onlyWithVariant}}
+                        <li>No entries found</li>
+                        {{/if}}
+                        {{#entries}}
+                        {{#if withoutVariant}}
+                        <li>{{name}} <em> ( Gene Name : {{geneName}} )</em></li>
+                        {{/if}}
+                        {{/entries}}
+                    </ul>
+                </div>
+                <div class="showIsoform" style="display:none">
+                    <ul>
+                        {{#if proteotypicity.onlyWithVariant}}
+                        <li>No entries found</li>
+                        {{/if}}
+                        {{#isoforms}}{{#each this}}
+
+                        {{#unless variant}}
+                        <li>{{isoform}}</li>
+                        {{/unless}}
+                        {{/each}}
+                        {{/isoforms}}
+                    </ul>
+                </div>
+            </div>
+        </div>
+        {{#proteotypicity}}
+        {{#if withVariant}}<div  class="panel panel-success" style="margin:0px;min-height: 120px;">
+        {{else}}<div class="panel panel-info" style="margin:0px;min-height: 120px;">{{/if}}
+        {{/proteotypicity}}
+            <div class="panel-heading" style="padding:1px 15px">
+                <h5>Additional mappings with known variants</h5>
+            </div>
+            <div class="panel-body">
+                <div class="showEntry" style="display:block">
+                    <ul>
+                        {{#if proteotypicity.onlyWithoutVariant}}
+                        <li>No other entries found</li>
+                        {{/if}}
+                        {{#entries}}
+                        {{#if withVariant}}
+                        <li class="variantIntoAccount">{{name}} <em> ( Gene Name : {{geneName}} )</em></li>
+                        {{/if}}
+                        {{/entries}}
+                    </ul>
+                </div>
+                <div class="showIsoform" style="display:none">
+                    <ul>
+                        {{#if proteotypicity.onlyWithoutVariant}}
+                        <li>No other entries found</li>
+                        {{/if}}
+                        {{#isoforms}}{{#each this}}
+
+                        {{#if variant}}
+                        <li class="variantIntoAccount">{{isoform}} ({{positions.first}} : {{variant.original}} →
+                            {{variant.variant}})
+                        </li>
+                        {{/if}}
+                        {{/each}}
+                        {{/isoforms}}
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+    </div>
+    </div>
+    </div>
