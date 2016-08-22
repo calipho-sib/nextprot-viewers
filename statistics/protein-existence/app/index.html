@@ -10,7 +10,7 @@
 <meta name="description" content="Protein existence by chromosome.">
 <link rel="stylesheet" href="css/bootstrap.min.css">
 <link rel="stylesheet" type="text/css" href="css/styles.css">
-<div class="header">
+<div class="header" style="display:none">
     <h1>Protein existence by chromosome</h1>
 </div>
 <div>
@@ -70,3 +70,15 @@
 </div>
 
 <script src="js/app.js"></script>
+<script defer>
+    var queries = {};
+    $.each(document.location.search.substr(1).split('&'), function (c, q) {
+        var i = q.split('=');
+        queries[i[0].toString()] = i[1].toString();
+    });
+    if (queries.hasOwnProperty("title")){
+        if (queries.title === "true"){
+            $("div.header").show();
+        }
+    }
+</script>
