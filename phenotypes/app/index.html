@@ -191,7 +191,7 @@
             var list = [];
             for (var p in phenotypes) {
                 var distincts = [];
-                phenotypes[p]["modification-effect"].forEach(function (a) {
+                phenotypes[p]["phenotypic-variation"].forEach(function (a) {
                     if (distincts.indexOf(a.bioObject.annotationHash) === -1) {
                         distincts.push(a.bioObject.annotationHash);
                         list.push(a.bioObject.annotationHash);
@@ -275,8 +275,8 @@
                 sortedData.sort(function (a, b) {
                     if (a.count < b.count) return 1;
                     if (a.count > b.count) return -1;
-                    if (a["modification-effect"] < b["modification-effect"]) return -1;
-                    if (a["modification-effect"] > b["modification-effect"]) return 1;
+                    if (a["phenotypic-variation"] < b["phenotypic-variation"]) return -1;
+                    if (a["phenotypic-variation"] > b["phenotypic-variation"]) return 1;
                     return 0;
                 })
                 listingPhenotype.annotations[type].data = sortedData;
@@ -428,10 +428,10 @@
                 var p = phenotypes[a];
                 //                phenotypes[a].phenotype.forEach(function (p) {
                 var varTemplate = jQuery.extend(true, {}, template);
-                varTemplate.children = getImpact(p["modification-effect"], annotations, template, filters);
+                varTemplate.children = getImpact(p["phenotypic-variation"], annotations, template, filters);
                 if (varTemplate.children.length) {
                     //Since phenotypes are grouped by subject, simply take the first one
-                    var varInfos = getVariantInfos(annotations, p["modification-effect"][0].subjectComponents);
+                    var varInfos = getVariantInfos(annotations, p["phenotypic-variation"][0].subjectComponents);
                     var intensityList = varTemplate.children.map(function (c) {
                         return c.values[0]
                     });
@@ -782,10 +782,10 @@
             }
 
             phenoArray.sort(function (a, b) {
-                var sbjA = a["modification-effect"][0].subjectComponents.map(function (s) {
+                var sbjA = a["phenotypic-variation"][0].subjectComponents.map(function (s) {
                     return normalAnnotations[s]
                 });
-                var sbjB = b["modification-effect"][0].subjectComponents.map(function (s) {
+                var sbjB = b["phenotypic-variation"][0].subjectComponents.map(function (s) {
                     return normalAnnotations[s]
                 });
                 var minPosA = getMinPos(sbjA);
@@ -797,7 +797,7 @@
             var phenotypes = {};
 
             phenoArray.forEach(function (p) {
-                phenotypes[p["modification-effect"][0].subjectName] = p;
+                phenotypes[p["phenotypic-variation"][0].subjectName] = p;
             });
 
             //console.log("Brann");
