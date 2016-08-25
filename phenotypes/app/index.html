@@ -56,7 +56,7 @@
                     {{/isoforms.more}}
                 </ul>
                 {{/if}}
-                <li><a id="isoformMap" href="#" style="color:#007800;font-size:16px;padding-top: 8px;">See isoforms</a></li>
+                <li><a id="isoformMap" href="#" style="color:#007800;font-size:16px;padding-top: 8px;">View isoforms</a></li>
         </ul>
     </div>
 </script>
@@ -67,10 +67,10 @@
             <span class="evidence-index">Evidence {{@index}}</span>
             <span class="evidence-code">{{evidenceCodeName}}</span>
             <span class="evidence-source">{{resourceDb}}</span>
+            <span class="evidence-quality"><span class="qualityLabel">Quality</span>{{#if qualityGold}}<span class="gold">GOLD</span>{{else}}<span class="silver">SILVER</span>{{/if}}</span>
         </div>
-        <div class="evidence-detail"><span class="evidence-intensity">INTENSITY</span> <strong>{{intensity}}</strong></div>
-        <div class="evidence-detail"><span class="evidence-origin">Subject Protein Origin</span> <strong>{{origin}}</strong></div>
-        <div class="evidence-detail"><span class="evidence-quality">QUALITY</span> <strong>{{quality}}</strong></div>
+        <div class="evidence-detail"><span class="evidence-intensity">Intensity</span> <strong>{{intensity}}</strong></div>
+        <div class="evidence-detail"><span class="evidence-origin">Subject protein origin</span> <strong>{{origin}}</strong></div>
         <div class="evidence-detail"><span class="evidence-note">Note :</span> <strong>{{note}}</strong></div>
         <div class="evidence-link"><a href="{{resourceLink}}">{{resourceAccession}}</a>
         </div>
@@ -400,6 +400,10 @@
 
         function getAnnotationById(annotations, id) {
             if (annotations.hasOwnProperty(id)) {
+//                if (annotations[id].apicategory === "BINARY_INTERACTION"){
+//                    console.log("White walkers");
+//                    console.log(annotations[id]);
+//                }
                 return {
                     category: annotations[id].apicategory,
                     cvTermName: annotations[id].apicategory === "BINARY_INTERACTION" || annotations[id].apicategory === "SMALL_MOLECULE_INTERACTION" ? annotations[id].bioObject.accession : annotations[id].cvTermName
@@ -421,9 +425,9 @@
                     resourceDb: "neXtProt",
                     resourceAccession: evList[ev].sourceAccession_TODEBUG,
                     resourceLink: "https://gauss.isb-sib.ch/bioeditor/annotations#query=" + evList[ev].sourceAccession_TODEBUG,
-                    intensity: evList[ev].intensity,
+                    intensity: evList[ev].intensity === "NA" ? "Not applicable" : evList[ev].intensity,
                     note: evList[ev].note,
-                    quality: evList[ev].qualityQualifier,
+                    qualityGold: evList[ev].qualityQualifier === "GOLD",
                     origin: evList[ev].subjectProteinOrigin,
                     publication: publications[evList[ev].resourceId],
                     annotId: annotHash
@@ -437,12 +441,13 @@
 
         function getWorstIntensity(list) {
             var worst = "";
-            var intensityRange = ["", "no impact", "NA", "normal", "mild", "moderate", "severe"];
+            var intensityRange = ["", "no impact", "na", "normal", "mild", "moderate", "severe"];
             list.forEach(function (i) {
                 if (intensityRange.indexOf(i.toLowerCase()) > intensityRange.indexOf(worst)) {
                     worst = i.toLowerCase();
                 }
             })
+            if (worst === "na") worst = "Not applicable";
             return worst;
         }
 
@@ -453,13 +458,12 @@
                 var category = i.category;
                 var cvTermName = i.cvTermName.toLowerCase();
                 var intensityList = i.evidences.map(function (e) {
-                    if (!e.intensity) return "NA";
+                    if (!e.intensity) return "Not applicable";
                     return e.intensity
                 });
-//                console.log("Sansa");
-//                console.log(i);
 
                 var worstIntensity = getWorstIntensity(intensityList);
+                
                 var annotationAffected = getAnnotationById(annots, i.bioObject.annotationHash);
                 if (!filters || filters.indexOf(annotationAffected.cvTermName) !== -1) {
                     var customTemplate = jQuery.extend(true, {}, template);
@@ -830,8 +834,8 @@
             // Get all phenotypes by type in order to add them into the filter block
             var listingPhenotypes = getAllAnnotationTypes(normalAnnotations, phenotypes);
 
-            console.log("Arya");
-            console.log(listingPhenotypes);
+//            console.log("Arya");
+//            console.log(listingPhenotypes);
 
             fillFilters(listingPhenotypes);
             
@@ -839,6 +843,9 @@
 
             // parse Data to fit the template of treeData
             var treeData = parseNxDataForTreeTable(phenotypes, normalAnnotations, template);
+            
+            
+            displayIsoform(isoformMapping,"#isoformDisplayed",iso, iFrameWidth);
 //
 //            // add count box
 //
@@ -950,7 +957,6 @@
                 $(".isoformNames").click(function () {
                     isoform = $(this).text();
                     reloadPhenotypeView(isoform);
-                    displayIsoform(isoformMapping,"#isoformDisplayed",isoform, iFrameWidth);
 //                    getInfoForIsoform.reload(isoName);
                 });
                 $("#moreIsoforms a").click(function () {
@@ -1149,7 +1155,9 @@
                     .style("z-index", "13")
                     .style("cursor", "pointer")
                     .on("click", function () {
-                        getInfoForIsoform.reload(data.isoformAc);
+//                        getInfoForIsoform.reload(data.isoformAc);
+                        $(".tooltip").remove();
+                        reloadPhenotypeView(data.isoformAc);
                         var isoSelection = $('#nx-isoformChoice a[href=#' + data.isoformAc +']').tab('show');
                         if (isoSelection.parent().parent().is("#moreIsoforms")) $("#extendIsoformChoice").text(data.isoformAc);
 
