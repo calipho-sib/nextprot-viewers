@@ -421,7 +421,7 @@
                 //console.log(evList[ev].intensity);
                 //                if (evList[ev].intensity !== "NA") {
                 var ev = {
-                    evidenceCodeName: evList[ev].evidenceCodeName,
+                    evidenceCodeName: evList[ev].evidenceCodeName.charAt(0).toUpperCase() + evList[ev].evidenceCodeName.slice(1),
                     resourceDb: "neXtProt",
                     resourceAccession: evList[ev].sourceAccession_TODEBUG,
                     resourceLink: "https://gauss.isb-sib.ch/bioeditor/annotations#query=" + evList[ev].sourceAccession_TODEBUG,
