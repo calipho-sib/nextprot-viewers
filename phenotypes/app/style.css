@@ -68,9 +68,11 @@ a.active {
 }
 
 #nx-isoformChoice{
-    margin:20px 0px;
+    margin:20px 0px 0px;
 }
-
+.isoSelected{
+    fill:#74EB78 !important;
+}
 .legends {
     margin: 0px 0px 10px;
     background-color: #f7f7f7;

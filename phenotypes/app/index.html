@@ -7,6 +7,7 @@
     <script type="text/javascript" src="https://use.fontawesome.com/aeec643a8b.js"></script>
     <link href='https://fonts.googleapis.com/css?family=Lato:100,300,400,700,900' rel='stylesheet' type='text/css'>
     <script type="text/javascript" src="nextprot.bundle.js"></script>
+    <script type="text/javascript" src="d3.min.js"></script>
 
     <!--
     <script type="text/javascript" src="handlebars.min.js"></script>
@@ -135,6 +136,11 @@
     <div class="row" style="margin:0px;">
         <div class="col-lg-10 col-lg-offset-1 col-md-offset-1 col-md-10">
             <div id="nx-isoformChoice"></div>
+        </div>
+    </div>
+    <div class="row" style="margin: 0px 20px;">
+        <div id="visuContainer" class="col-lg-10 col-lg-offset-1 col-md-offset-1 col-md-10">
+            <div id="isoformDisplayed"></div>
         </div>
     </div>
 
@@ -661,6 +667,9 @@
         var publications = {};
         var normalAnnotations = {};
         var phenotypes_entry = {};
+        
+        var isoformMapping;
+        var iFrameWidth = 0;
 
         console.log(entry);
         console.log(isoform);
@@ -941,6 +950,7 @@
                 $(".isoformNames").click(function () {
                     isoform = $(this).text();
                     reloadPhenotypeView(isoform);
+                    displayIsoform(isoformMapping,"#isoformDisplayed",isoform, iFrameWidth);
 //                    getInfoForIsoform.reload(isoName);
                 });
                 $("#moreIsoforms a").click(function () {
@@ -955,7 +965,232 @@
                 });
 
                 $("#nx-isoformChoice li:first-child").addClass("active");
+                
+                addIsoformViewer();
             }
+        }
+        
+        function addIsoformViewer(){
+            nx.getIsoformMapping(entry).then(function(data){
+                
+                iFrameWidth =$("#visuContainer").width();
+                isoformMapping = testAlgoObject(data, isoformList);
+                displayIsoform(isoformMapping,"#isoformDisplayed",isoform, iFrameWidth);
+                toggleIsoformMap();
+            })
+        }
+        
+        function testAlgoObject(isoformsMapping, isoforms) {
+            var positions=[];
+            var decalage=[];
+            // GET All positions x & y into new array positions
+            for (var iso in isoformsMapping) {
+                isoformsMapping[iso].positions.forEach(function (o) {
+                    positions.push(o.first, o.second);
+                })
+            }
+            //delete double in list of positions
+            positions = positions.filter(function(elem, index, self) {
+                return index == self.indexOf(elem);});
+            // sort positions
+            positions.sort(function(a,b) {return a-b});
+
+            //for each interval between position, check if there is something in isoforms
+            //if not, add the empty interval to array decalage
+            for (var i=0;i<positions.length-1;i++) {
+                var presence = false;
+                for (var j in isoforms) {
+                    for (var k in isoformsMapping[j].positions) {
+                        if (isoformsMapping[j].positions[k].first > positions[i+1]) break;
+                        else if (isoformsMapping[j].positions[k].first<= positions[i] && isoformsMapping[j].positions[k].second >= positions[i+1]) {
+                            presence=true;
+                            break;
+                        }
+                    }
+                    if (presence === true) break;
+                }
+                if (presence === false) decalage.push({x:positions[i],length:positions[i+1]-positions[i]});
+            }
+            ////For each "hole", apply a shift by adding the length of the hole to the values after the hole
+            ////In the same time, if i[y] == i+1[x] merge those two
+            for (var i=decalage.length-1;i>=0;i--) {
+                for (var j in isoformsMapping) {
+                    for (var k=isoformsMapping[j].positions.length-1;k>=0;k--) {
+                        if (isoformsMapping[j].positions[k].first < decalage[i].x) {
+                            if (k !=isoformsMapping[j].positions.length-1 && i===0 && isoformsMapping[j].positions[k+1].first === isoformsMapping[j].positions[k].second) {
+                                isoformsMapping[j].positions[k].second = isoformsMapping[j].positions[k+1].second;
+                                isoformsMapping[j].positions.splice(k+1,1);
+                            }
+                            break;
+                        }
+                        else {
+                            isoformsMapping[j].positions[k].first -= decalage[i].length;
+                            isoformsMapping[j].positions[k].second -= decalage[i].length;
+                        }
+                        if (k !=isoformsMapping[j].positions.length-1 && isoformsMapping[j].positions[k+1].first === isoformsMapping[j].positions[k].second) {
+                            isoformsMapping[j].positions[k].second = isoformsMapping[j].positions[k+1].second;
+                            isoformsMapping[j].positions.splice(k+1,1);
+                        }
+                    }
+                }
+            }
+            return isoformsMapping;
+        }
+        
+        function displayIsoform(array,divIsoform,isoIdentifier, iFrameWidth) {
+            $(divIsoform + " #isoContainer").html("");
+            if (!$('#isoContainer').length > 0 ) {
+                $(divIsoform).append("<div id=\"isoContainer\"></div>");
+            }
+
+            //ft2 = new FeatureViewer(33000, "#isoformDisplayed", {
+            //    showAxis: true,
+            //    showSequence: false,
+            //    brushActive: false,
+            //    verticalLine: false
+            //});
+
+            function getMax(array) {
+                var max = 0;
+                for (name in array) {
+                    for (var pos in array[name].positions) {
+                        if (array[name].positions[pos].second > max) max = array[name].positions[pos].second;
+                    }
+                }
+                return max;
+            }
+            function getMin(array) {
+                var min = 100000000;
+                for (name in array) {
+                    for (var pos in array[name].positions) {
+                        if (array[name].positions[pos].first < min) min = array[name].positions[pos].first;
+                    }
+                }
+                return min;
+            }
+            var max = getMax(array);
+            var min = getMin(array);
+            //var max = Math.max($.merge(array.map(function (o) {
+            //    return o.positions.map(function (p) {
+            //        return p.second;
+            //    })
+            //})));
+            //console.log($(divIsoform).width());
+            var position = 20;
+
+            //$(divIsoform).width()
+            var margin = {top: 10, right: 50, bottom: 0, left: 50},
+                width =  iFrameWidth - margin.left - margin.right - 17,
+                height = 200 - margin.top - margin.bottom;
+            var coverageLength = 33000;
+            var scaling = d3.scale.linear()
+                .domain([min, max])
+                .range([0, width]);
+
+            var line = d3.svg.line()
+                .interpolate("linear")
+                .x(function (d) {
+                    return scaling(d.x);
+                })
+                .y(function (d) {
+                    return d.y + 6;
+                });
+
+            var svgIso = d3.select(divIsoform+" #isoContainer").append("svg")
+                .attr("width", width + margin.left + margin.right)
+                .attr("height", height + margin.top + margin.bottom)
+                .style("z-index","2");
+            var svgIsoform = svgIso
+                .append("g")
+                .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+
+            var selectIsoform = function(iso) {
+
+            };
+
+            function fillSVGIsoform(data) {
+                //rectangle: function (object, sequence, position) {
+                var rectHeight = 12;
+                var rectShift = 20;
+                var rectsPro = svgIsoform.append("g")
+                    .attr("class", "rectangle")
+                    .attr("transform", "translate(0," + position + ")");
+
+                rectsPro.append("path")
+                    .attr("d", line([{x: min, y: 0}, {x: max, y: 0}]))
+                    .attr("class", function () {
+                        return "line"
+                    })
+                    .style("z-index", "0")
+                    .style("stroke", "#C2DEC8")
+                    .style("stroke-width", "1px");
+
+                var rectsProGroup = rectsPro.selectAll("." + data.isoformAc + "Group")
+                    .data(data.positions)
+                    .enter()
+                    .append("g")
+                    .attr("class",  data.isoformAc +"Group")
+                    .attr("transform", function(d) { return "translate(" + scaling(d.first) + ",0)"});
+
+                rectsProGroup
+                    .append("rect")
+                    .attr("class", function () {
+                        if (data.isoformAc === isoIdentifier) return "element "+ data.isoformAc +"Rect isoSelected";
+                        else return "element "+ data.isoformAc +"Rect";
+                    })
+                    //.attr("y", function (d) {
+                    //    return position
+                    //})
+                    .attr("width", function (d) {
+                        return (scaling(d.second) - scaling(d.first))})
+                    .attr("height", 12)
+                    .attr("title", data.isoformAc)
+                    .style("fill", "#C2DEC8")
+                    .style("z-index", "13")
+                    .style("cursor", "pointer")
+                    .on("click", function () {
+                        getInfoForIsoform.reload(data.isoformAc);
+                        var isoSelection = $('#nx-isoformChoice a[href=#' + data.isoformAc +']').tab('show');
+                        if (isoSelection.parent().parent().is("#moreIsoforms")) $("#extendIsoformChoice").text(data.isoformAc);
+
+                    });
+
+                rectsProGroup
+                    .append("text")
+                    .attr("class", "element "+ data.isoformAc +"Text")
+                    .attr("y", 6)
+                    .attr("dy", "0.35em")
+                    .style("font-size", "10px")
+                    .text(function(d) { return data.isoformMainName})
+                    .style("fill", "black")
+                    .style("z-index", "15")
+                    .style("visibility", function(d) {
+                        if (data.isoformMainName) {
+                            return (scaling(d.second) - scaling(d.first)) > data.isoformMainName.length * 8 ? "visible" : "hidden";
+                        }
+                        else return "hidden";
+                    });
+                position += 20;
+            }
+            for (var name in array) {
+                fillSVGIsoform(array[name],name);
+            }
+            svgIso.attr("height", position+10 +"px");
+            
+            $("svg rect").tooltip({
+                'container': 'body',
+                'placement': 'top'
+            });
+        }
+        
+        function toggleIsoformMap() {
+            $(function () {
+                $("#isoformMap").click(function () {
+                    $("#isoformDisplayed #isoContainer").toggle("slow");
+                });
+
+                $("#isoformDisplayed #isoContainer").hide();
+            });
         }
 
         //        nx.getFullAnnotationsByCategory(entry, "proteoform").then(function (data) {
