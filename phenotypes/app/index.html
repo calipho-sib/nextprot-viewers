@@ -328,7 +328,10 @@
                         //                            console.log(annots[a]);
                         //                        }
 
-                        var pheno = annots[a].bioObject.accession;
+                        var pheno = annots[a].bioObject.properties.geneName;
+                        console.log("Lord Varys");
+//                        console.log(pheno);
+                        console.log(annots[a].bioObject);
                         //                        console.log(annots[a]);
                     } else {
                         var pheno = annots[a].cvTermName;
