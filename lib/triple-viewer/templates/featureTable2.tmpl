@@ -9,8 +9,8 @@
         <thead>
         <tr>
             <th class="featName" class="col-md-2">Name</th>
-            <th class="col-md-1"  style="text-align:right">Length</th>
             <th style="text-align:center" class="col-md-2">Position</th>
+            <th class="col-md-1"  style="text-align:right">Length</th>
             <th class="col-md-5">Description</th>
             <th style="text-align:center" colspan="2" class="col-md-2">Evidence</th>
         </tr>
@@ -20,8 +20,8 @@
         {{#each this}}
         <tr id={{id}} class="{{{className category}}} general-info" >
             <td>{{category}}</td>
-            <td style="text-align:right">{{length}}</td>
             <td style="text-align:center"><a class="featPosition" href="javascript:;">{{{position length}}}</a></td>
+            <td style="text-align:right">{{length}}</td>
             <td>{{{link}}}{{#if variant}}{{#each source}}{{#if externalDb}}{{#if crossRef}}{{#crossRef}} ; {{dbName}} : {{{linkTo name url}}} {{/crossRef}}{{/if}}{{/if}}{{/each}}{{/if}}{{#unless proteotypicity}} <span class="nonProteotypic">found in other entries</span>{{/unless}}
                 {{#if quality}}<span style="background:#B6BCC5;color:#fff;padding: 0px 5px;">•</span><span style="background:#DEDEDE;color:#999;padding: 0px 5px;">{{quality}}</span>{{/if}}</td>
             {{#if source}}
