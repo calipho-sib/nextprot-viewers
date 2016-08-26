@@ -21,19 +21,23 @@
     <script type="text/javascript" src="iframeResizer.contentWindow.min.js"></script>
     <link rel="stylesheet" href="heatmap-table.css" crossorigin="anonymous">
     <link rel="stylesheet" href="jquery.typeahead.min.css">
-    <!--    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">-->
     <link rel="stylesheet" href="bootstrap.min.css">
     <link rel="stylesheet" href="style.css" />
 </head>
 
-<style>
 
-</style>
-<div class="row">
-    <div class="col-md-10 col-md-offset-1">
-        <div id="nx-overview"></div>
-    </div>
-</div>
+<script type="text/javascript">
+    Handlebars.registerHelper('createHeader', function (columnName, block) {
+        var result = {};
+        result.columnWidth = "160px";
+        result.columnName = columnName;
+        return block.fn(result);
+    });
+    Handlebars.registerHelper("linkTo", function (name, link, options) {
+        if (name === "DOI") name = "Full Text"
+        return "<a href=\"" + link + "\">" + name + "</a>";
+    });
+</script>
 
 <script id="isoformChoice" type="text/x-handlebars-template">
     <div role="tabpanel">
@@ -60,6 +64,7 @@
         </ul>
     </div>
 </script>
+
 <script id="detailTemp" type="text/x-handlebars-template">
     <div class="evidence-block">
         <div class="evidence-line">
@@ -101,7 +106,7 @@
 <script id="form-template" type="text/x-handlebars-template">
 
     <div class="filter-block">
-        <h3 class="filter-title second-title">{{total}} PHENOTYPES <span id="count-phenotype-selected">({{total}} selected)</span></h3> {{#each annotations}} {{#if name}}
+        <h3 class="filter-title second-title">{{total}} PHENOTYPE{{plural total "uppercase"}} <span id="count-phenotype-selected">({{total}} selected)</span></h3> {{#each annotations}} {{#if name}}
         <div id="panel{{@index}}" class="panel-group">
             <div class="panel panel-default">
                 <div class="panel-heading">
@@ -111,14 +116,14 @@
                         <div class="panel-title">
                             <span class="chevron pull-right"><i class="fa"></i></span> {{{badge}}}
                             <span class="typeName">{{name}}</span>
-                            <span class="badge phenoCount pull-right">{{count}} phenotypes</span>
+                            <span class="badge phenoCount pull-right">{{count}} phenotype{{plural count}}</span>
                         </div>
                     </a>
                 </div>
                 <div id="collapse{{@index}}" class="panel-collapse collapse">
                     <ul class="list-group subtypes">
                         {{#data}}
-                        <li class="list-group-item"><a class="active"><i class="fa fa-check" aria-hidden="true"></i><span class="phenAnnot">{{phenotype}}</span> <span class="badge phenoCount pull-right">{{count}} variants</span></a>
+                        <li class="list-group-item"><a class="active"><i class="fa fa-check" aria-hidden="true"></i><span class="phenAnnot">{{phenotype}}</span> <span class="badge phenoCount pull-right">{{count}} variant{{plural count}}</span></a>
                         </li>
                         {{/data}}
                     </ul>
@@ -129,10 +134,26 @@
     </div>
 
 </script>
+    
+<script  id="no-data-template" type="text/x-handlebars-template">
+    <div id="no-data-message">
+        <h2>Sorry !</h2>
+        <h3>No phenotypic variation data available for this protein.</h3>
+        <p>If you want to see an example of a working Phenotype view, please look at the <a href="/NX_P38398/phenotypes">BRCA1 protein</a>. </p>
+    </div>
+    </script>
 
 <body id="phenotypeViewer">
 
     <!--    <h1><span style="font-weight:300;">phenotypes</span></h1>-->
+
+
+    <div class="row">
+        <div class="col-md-10 col-md-offset-1">
+            <div id="nx-overview"></div>
+        </div>
+    </div>
+
     <div class="row" style="margin:0px;">
         <div class="col-lg-10 col-lg-offset-1 col-md-offset-1 col-md-10">
             <div id="nx-isoformChoice"></div>
@@ -302,10 +323,10 @@
                         };
                     }
                     if (annots[a].category === 'BinaryInteraction' || annots[a].category === "SmallMoleculeInteraction") {
-//                        if (annots[a].category === "SmallMoleculeInteraction") {
-//                            console.log("HODOR");
-//                            console.log(annots[a]);
-//                        }
+                        //                        if (annots[a].category === "SmallMoleculeInteraction") {
+                        //                            console.log("HODOR");
+                        //                            console.log(annots[a]);
+                        //                        }
 
                         var pheno = annots[a].bioObject.accession;
                         //                        console.log(annots[a]);
@@ -352,7 +373,6 @@
             return listingPhenotype;
         }
 
-
         function getVariantInfos(annots, variants) {
 
             var variantInfos = {
@@ -368,7 +388,7 @@
                 //                var pos = v.locationBegin;
                 var original = v.variant.original;
                 var variant = v.variant.variant;
-                var hgvs = v.annotationName;
+                var hgvs = v.targetingIsoformsMap[isoform].name;
                 //                var evidences = v.evidences.map(function(e){
                 //                    return {
                 //                        evidenceCodeName : e.evidenceCodeName,
@@ -400,10 +420,10 @@
 
         function getAnnotationById(annotations, id) {
             if (annotations.hasOwnProperty(id)) {
-//                if (annotations[id].apicategory === "BINARY_INTERACTION"){
-//                    console.log("White walkers");
-//                    console.log(annotations[id]);
-//                }
+                //                if (annotations[id].apicategory === "BINARY_INTERACTION"){
+                //                    console.log("White walkers");
+                //                    console.log(annotations[id]);
+                //                }
                 return {
                     category: annotations[id].apicategory,
                     cvTermName: annotations[id].apicategory === "BINARY_INTERACTION" || annotations[id].apicategory === "SMALL_MOLECULE_INTERACTION" ? annotations[id].bioObject.accession : annotations[id].cvTermName
@@ -463,7 +483,7 @@
                 });
 
                 var worstIntensity = getWorstIntensity(intensityList);
-                
+
                 var annotationAffected = getAnnotationById(annots, i.bioObject.annotationHash);
                 if (!filters || filters.indexOf(annotationAffected.cvTermName) !== -1) {
                     var customTemplate = jQuery.extend(true, {}, template);
@@ -489,7 +509,6 @@
             values[0] = "no impact";
             return values;
         }
-
 
         function parseNxDataForTreeTable(phenotypes, annotations, template, filters) {
             //            console.log('phenotypes');
@@ -543,6 +562,12 @@
         }
 
         function fillFilters(data) {
+
+            Handlebars.registerHelper('plural', function (array, charCase, options) {
+                var plural = charCase === "uppercase" ? "S" : "s";
+                var value = parseInt(array) ? parseInt(array) : array.length;
+                return value > 1 ? plural : "";
+            });
             var source = $("#form-template").html();
             var template = Handlebars.compile(source);
             var html = template(data);
@@ -624,46 +649,45 @@
             nx.setApiBaseUrl("http://bed-api.nextprot.org");
             //            nx.setApiBaseUrl("http://localhost:8080/nextprot-api-web");
         }
+        /*
+            function changeGoldParam(gold){
+                    var url = window.location.href;
+                    
+                    // If key exists updates the value
+                    if (url.indexOf('goldOnly=') > -1) {
+                        url = url.replace('goldOnly='+!gold, 'goldOnly='+gold);
+        
+                    // If not, append
+                    } else {
+                        if (url.indexOf('?') > -1) url = url + '&goldOnly='+gold;
+                        else url = url + '?goldOnly='+gold;
+                    }
+                    
+                    return url;
+                }
+        
+                
+                $("body").prepend('<div class="qualityToggle pull-right">\
+                    <ul class="nav nav-pills">\
+                        <li role="presentation" id="quality-gold"><a href=' + changeGoldParam(true) + '>GOLD</a></li>\
+                        <li role="presentation" id="quality-goldAndSilver"><a href=' + changeGoldParam(false) +'>GOLD & SILVER</a></li>\
+                    </ul>\
+                </div>');
+                
+                var goldOnly = nx.getQualityParam();
+                console.log("goldOnly");
+                console.log(goldOnly);
+                
+                if (goldOnly === "true") {
+                    $("#quality-gold").addClass("active");
+                    $("#quality-goldAndSilver").removeClass("active");
+                }
+                else{
+                    $("#quality-goldAndSilver").addClass("active");
+                    $("#quality-gold").removeClass("active");
+                }
 
-
-
-        //        function changeGoldParam(gold){
-        //            var url = window.location.href;
-        //            
-        //            // If key exists updates the value
-        //            if (url.indexOf('goldOnly=') > -1) {
-        //                url = url.replace('goldOnly='+!gold, 'goldOnly='+gold);
-        //
-        //            // If not, append
-        //            } else {
-        //                if (url.indexOf('?') > -1) url = url + '&goldOnly='+gold;
-        //                else url = url + '?goldOnly='+gold;
-        //            }
-        //            
-        //            return url;
-        //        }
-        //
-        //        
-        //        $("body").prepend('<div class="qualityToggle pull-right">\
-        //            <ul class="nav nav-pills">\
-        //                <li role="presentation" id="quality-gold"><a href=' + changeGoldParam(true) + '>GOLD</a></li>\
-        //                <li role="presentation" id="quality-goldAndSilver"><a href=' + changeGoldParam(false) +'>GOLD & SILVER</a></li>\
-        //            </ul>\
-        //        </div>');
-        //        
-        //        var goldOnly = nx.getQualityParam();
-        //        console.log("goldOnly");
-        //        console.log(goldOnly);
-        //        
-        //        if (goldOnly === "true") {
-        //            $("#quality-gold").addClass("active");
-        //            $("#quality-goldAndSilver").removeClass("active");
-        //        }
-        //        else{
-        //            $("#quality-goldAndSilver").addClass("active");
-        //            $("#quality-gold").removeClass("active");
-        //        }
-
+*/
 
         var entry = nx.getEntryName();
         var isoform = entry + "-1";
@@ -671,7 +695,7 @@
         var publications = {};
         var normalAnnotations = {};
         var phenotypes_entry = {};
-        
+
         var isoformMapping;
         var iFrameWidth = 0;
 
@@ -809,7 +833,7 @@
             //            countPhenotypes(listingPhenotypes, filters);
             $("#count-variant").text(treeDataFiltered.length);
             countVariants(treeDataFiltered);
-            
+
             activateFilters(phenotypes, normalAnnots, listingPhenotypes);
 
             var heatMapTable0 = new HeatMapTable({
@@ -823,8 +847,8 @@
             $('[data-toggle="tooltip"]').tooltip();
             //            addIconToButton();
         }
-        
-        function reloadPhenotypeView(iso){
+
+        function reloadPhenotypeView(iso) {
             // filter phenotypes for the current isoform
             var phenotypes = parseDataByIsoform(iso, normalAnnotations, phenotypes_entry);
             console.log("Brann");
@@ -834,61 +858,44 @@
             // Get all phenotypes by type in order to add them into the filter block
             var listingPhenotypes = getAllAnnotationTypes(normalAnnotations, phenotypes);
 
-//            console.log("Arya");
-//            console.log(listingPhenotypes);
+            //            console.log("Arya");
+            //            console.log(listingPhenotypes);
 
             fillFilters(listingPhenotypes);
-            
+
             resetTreeViewer(phenotypes, normalAnnotations, listingPhenotypes);
 
             // parse Data to fit the template of treeData
             var treeData = parseNxDataForTreeTable(phenotypes, normalAnnotations, template);
-            
-            
-            displayIsoform(isoformMapping,"#isoformDisplayed",iso, iFrameWidth);
-//
-//            // add count box
-//
-//            $("#count-variant").text(treeData.length);
-//            countVariants(treeData);
-//
-//            activateFilters(phenotypes, normalAnnotations, listingPhenotypes);
-//
-//            //console.log("treeData");
-//            //console.log(treeData);
-//
-//            var heatMapTable0 = new HeatMapTable({
-//                tableID: "heatmap-table0",
-//                options: heatmapTableOptions0
-//            });
-//
-//
-//            console.log("treeData");
-//            console.log(treeData);
-//            console.log(heatmapTableOptions0);
-//            console.log(heatMapTable0);
-//            heatMapTable0.loadJSONData(treeData);
-//            heatMapTable0.show();
-//
-//            $('[data-toggle="tooltip"]').tooltip();
-        }
 
-//        function addIconToButton(){
-        //            
-        //            var wait = setInterval(function(){ searchElem() }, 50);
-        //            
-        //            function searchElem(){
-        //                var elem = $("#heatmap-table0 .heatmap-reset-btn");
-        //                if ($(elem).length>0) {
-        //                    $(".heatmap-filterByRowName-search").prepend('<span class="fa fa-search treeBtn" aria-hidden="true"></span>');
-        //                    $(".heatmap-reset-btn").prepend('<span class="fa fa-refresh treeBtn" aria-hidden="true"></span>');
-        //                    $(".heatmap-collapseAll-btn").prepend('<span class="fa fa-compress treeBtn" aria-hidden="true"></span>');
-        //                    $(".heatmap-expandAll-btn").prepend('<span class="fa fa-expand treeBtn" aria-hidden="true"></span>');
-        //                    console.log("clearInterval");
-        //                    clearInterval(wait);
-        //                }
-        //            }
-        //        }
+
+            displayIsoform(isoformMapping, "#isoformDisplayed", iso, iFrameWidth);
+            //
+            //            // add count box
+            //
+            //            $("#count-variant").text(treeData.length);
+            //            countVariants(treeData);
+            //
+            //            activateFilters(phenotypes, normalAnnotations, listingPhenotypes);
+            //
+            //            //console.log("treeData");
+            //            //console.log(treeData);
+            //
+            //            var heatMapTable0 = new HeatMapTable({
+            //                tableID: "heatmap-table0",
+            //                options: heatmapTableOptions0
+            //            });
+            //
+            //
+            //            console.log("treeData");
+            //            console.log(treeData);
+            //            console.log(heatmapTableOptions0);
+            //            console.log(heatMapTable0);
+            //            heatMapTable0.loadJSONData(treeData);
+            //            heatMapTable0.show();
+            //
+            //            $('[data-toggle="tooltip"]').tooltip();
+        }
 
         function parseDataByIsoform(iso, normalAnnots, phenoAnnots) {
 
@@ -957,7 +964,7 @@
                 $(".isoformNames").click(function () {
                     isoform = $(this).text();
                     reloadPhenotypeView(isoform);
-//                    getInfoForIsoform.reload(isoName);
+                    //                    getInfoForIsoform.reload(isoName);
                 });
                 $("#moreIsoforms a").click(function () {
                     var parentThis = $(this).text();
@@ -971,24 +978,24 @@
                 });
 
                 $("#nx-isoformChoice li:first-child").addClass("active");
-                
+
                 addIsoformViewer();
             }
         }
-        
-        function addIsoformViewer(){
-            nx.getIsoformMapping(entry).then(function(data){
-                
-                iFrameWidth =$("#visuContainer").width();
+
+        function addIsoformViewer() {
+            nx.getIsoformMapping(entry).then(function (data) {
+
+                iFrameWidth = $("#visuContainer").width();
                 isoformMapping = testAlgoObject(data, isoformList);
-                displayIsoform(isoformMapping,"#isoformDisplayed",isoform, iFrameWidth);
+                displayIsoform(isoformMapping, "#isoformDisplayed", isoform, iFrameWidth);
                 toggleIsoformMap();
             })
         }
-        
+
         function testAlgoObject(isoformsMapping, isoforms) {
-            var positions=[];
-            var decalage=[];
+            var positions = [];
+            var decalage = [];
             // GET All positions x & y into new array positions
             for (var iso in isoformsMapping) {
                 isoformsMapping[iso].positions.forEach(function (o) {
@@ -996,56 +1003,61 @@
                 })
             }
             //delete double in list of positions
-            positions = positions.filter(function(elem, index, self) {
-                return index == self.indexOf(elem);});
+            positions = positions.filter(function (elem, index, self) {
+                return index == self.indexOf(elem);
+            });
             // sort positions
-            positions.sort(function(a,b) {return a-b});
+            positions.sort(function (a, b) {
+                return a - b
+            });
 
             //for each interval between position, check if there is something in isoforms
             //if not, add the empty interval to array decalage
-            for (var i=0;i<positions.length-1;i++) {
+            for (var i = 0; i < positions.length - 1; i++) {
                 var presence = false;
                 for (var j in isoforms) {
                     for (var k in isoformsMapping[j].positions) {
-                        if (isoformsMapping[j].positions[k].first > positions[i+1]) break;
-                        else if (isoformsMapping[j].positions[k].first<= positions[i] && isoformsMapping[j].positions[k].second >= positions[i+1]) {
-                            presence=true;
+                        if (isoformsMapping[j].positions[k].first > positions[i + 1]) break;
+                        else if (isoformsMapping[j].positions[k].first <= positions[i] && isoformsMapping[j].positions[k].second >= positions[i + 1]) {
+                            presence = true;
                             break;
                         }
                     }
                     if (presence === true) break;
                 }
-                if (presence === false) decalage.push({x:positions[i],length:positions[i+1]-positions[i]});
+                if (presence === false) decalage.push({
+                    x: positions[i],
+                    length: positions[i + 1] - positions[i]
+                });
             }
             ////For each "hole", apply a shift by adding the length of the hole to the values after the hole
             ////In the same time, if i[y] == i+1[x] merge those two
-            for (var i=decalage.length-1;i>=0;i--) {
+            for (var i = decalage.length - 1; i >= 0; i--) {
                 for (var j in isoformsMapping) {
-                    for (var k=isoformsMapping[j].positions.length-1;k>=0;k--) {
+                    for (var k = isoformsMapping[j].positions.length - 1; k >= 0; k--) {
                         if (isoformsMapping[j].positions[k].first < decalage[i].x) {
-                            if (k !=isoformsMapping[j].positions.length-1 && i===0 && isoformsMapping[j].positions[k+1].first === isoformsMapping[j].positions[k].second) {
-                                isoformsMapping[j].positions[k].second = isoformsMapping[j].positions[k+1].second;
-                                isoformsMapping[j].positions.splice(k+1,1);
+                            if (k != isoformsMapping[j].positions.length - 1 && i === 0 && isoformsMapping[j].positions[k + 1].first === isoformsMapping[j].positions[k].second) {
+                                isoformsMapping[j].positions[k].second = isoformsMapping[j].positions[k + 1].second;
+                                isoformsMapping[j].positions.splice(k + 1, 1);
                             }
                             break;
-                        }
-                        else {
+                        } else {
                             isoformsMapping[j].positions[k].first -= decalage[i].length;
                             isoformsMapping[j].positions[k].second -= decalage[i].length;
                         }
-                        if (k !=isoformsMapping[j].positions.length-1 && isoformsMapping[j].positions[k+1].first === isoformsMapping[j].positions[k].second) {
-                            isoformsMapping[j].positions[k].second = isoformsMapping[j].positions[k+1].second;
-                            isoformsMapping[j].positions.splice(k+1,1);
+                        if (k != isoformsMapping[j].positions.length - 1 && isoformsMapping[j].positions[k + 1].first === isoformsMapping[j].positions[k].second) {
+                            isoformsMapping[j].positions[k].second = isoformsMapping[j].positions[k + 1].second;
+                            isoformsMapping[j].positions.splice(k + 1, 1);
                         }
                     }
                 }
             }
             return isoformsMapping;
         }
-        
-        function displayIsoform(array,divIsoform,isoIdentifier, iFrameWidth) {
+
+        function displayIsoform(array, divIsoform, isoIdentifier, iFrameWidth) {
             $(divIsoform + " #isoContainer").html("");
-            if (!$('#isoContainer').length > 0 ) {
+            if (!$('#isoContainer').length > 0) {
                 $(divIsoform).append("<div id=\"isoContainer\"></div>");
             }
 
@@ -1065,6 +1077,7 @@
                 }
                 return max;
             }
+
             function getMin(array) {
                 var min = 100000000;
                 for (name in array) {
@@ -1085,8 +1098,13 @@
             var position = 20;
 
             //$(divIsoform).width()
-            var margin = {top: 10, right: 50, bottom: 0, left: 50},
-                width =  iFrameWidth - margin.left - margin.right - 17,
+            var margin = {
+                    top: 10,
+                    right: 50,
+                    bottom: 0,
+                    left: 50
+                },
+                width = iFrameWidth - margin.left - margin.right - 17,
                 height = 200 - margin.top - margin.bottom;
             var coverageLength = 33000;
             var scaling = d3.scale.linear()
@@ -1102,15 +1120,15 @@
                     return d.y + 6;
                 });
 
-            var svgIso = d3.select(divIsoform+" #isoContainer").append("svg")
+            var svgIso = d3.select(divIsoform + " #isoContainer").append("svg")
                 .attr("width", width + margin.left + margin.right)
                 .attr("height", height + margin.top + margin.bottom)
-                .style("z-index","2");
+                .style("z-index", "2");
             var svgIsoform = svgIso
                 .append("g")
                 .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
-            var selectIsoform = function(iso) {
+            var selectIsoform = function (iso) {
 
             };
 
@@ -1123,7 +1141,13 @@
                     .attr("transform", "translate(0," + position + ")");
 
                 rectsPro.append("path")
-                    .attr("d", line([{x: min, y: 0}, {x: max, y: 0}]))
+                    .attr("d", line([{
+                        x: min,
+                        y: 0
+                    }, {
+                        x: max,
+                        y: 0
+                    }]))
                     .attr("class", function () {
                         return "line"
                     })
@@ -1135,62 +1159,66 @@
                     .data(data.positions)
                     .enter()
                     .append("g")
-                    .attr("class",  data.isoformAc +"Group")
-                    .attr("transform", function(d) { return "translate(" + scaling(d.first) + ",0)"});
+                    .attr("class", data.isoformAc + "Group")
+                    .attr("transform", function (d) {
+                        return "translate(" + scaling(d.first) + ",0)"
+                    });
 
                 rectsProGroup
                     .append("rect")
                     .attr("class", function () {
-                        if (data.isoformAc === isoIdentifier) return "element "+ data.isoformAc +"Rect isoSelected";
-                        else return "element "+ data.isoformAc +"Rect";
+                        if (data.isoformAc === isoIdentifier) return "element " + data.isoformAc + "Rect isoSelected";
+                        else return "element " + data.isoformAc + "Rect";
                     })
                     //.attr("y", function (d) {
                     //    return position
                     //})
                     .attr("width", function (d) {
-                        return (scaling(d.second) - scaling(d.first))})
+                        return (scaling(d.second) - scaling(d.first))
+                    })
                     .attr("height", 12)
                     .attr("title", data.isoformAc)
                     .style("fill", "#C2DEC8")
                     .style("z-index", "13")
                     .style("cursor", "pointer")
                     .on("click", function () {
-//                        getInfoForIsoform.reload(data.isoformAc);
+                        //                        getInfoForIsoform.reload(data.isoformAc);
                         $(".tooltip").remove();
                         reloadPhenotypeView(data.isoformAc);
-                        var isoSelection = $('#nx-isoformChoice a[href=#' + data.isoformAc +']').tab('show');
+                        var isoSelection = $('#nx-isoformChoice a[href=#' + data.isoformAc + ']').tab('show');
                         if (isoSelection.parent().parent().is("#moreIsoforms")) $("#extendIsoformChoice").text(data.isoformAc);
 
                     });
 
                 rectsProGroup
                     .append("text")
-                    .attr("class", "element "+ data.isoformAc +"Text")
+                    .attr("class", "element " + data.isoformAc + "Text")
                     .attr("y", 6)
                     .attr("dy", "0.35em")
                     .style("font-size", "10px")
-                    .text(function(d) { return data.isoformMainName})
+                    .text(function (d) {
+                        return data.isoformMainName
+                    })
                     .style("fill", "black")
                     .style("z-index", "15")
-                    .style("visibility", function(d) {
+                    .style("visibility", function (d) {
                         if (data.isoformMainName) {
                             return (scaling(d.second) - scaling(d.first)) > data.isoformMainName.length * 8 ? "visible" : "hidden";
-                        }
-                        else return "hidden";
+                        } else return "hidden";
                     });
                 position += 20;
             }
             for (var name in array) {
-                fillSVGIsoform(array[name],name);
+                fillSVGIsoform(array[name], name);
             }
-            svgIso.attr("height", position+10 +"px");
-            
+            svgIso.attr("height", position + 10 + "px");
+
             $("svg rect").tooltip({
                 'container': 'body',
                 'placement': 'top'
             });
         }
-        
+
         function toggleIsoformMap() {
             $(function () {
                 $("#isoformMap").click(function () {
@@ -1200,6 +1228,11 @@
                 $("#isoformDisplayed #isoContainer").hide();
             });
         }
+        
+        function noDataAlert(){
+            var html = $("#no-data-template").html();
+            $("body").html(html);
+        }
 
         //        nx.getFullAnnotationsByCategory(entry, "proteoform").then(function (data) {
         $.getJSON("http://bed-api.nextprot.org/entry/" + entry + "/phenotypic-variation.json", function (temp) {
@@ -1207,127 +1240,122 @@
             console.log("data");
             console.log(data);
 
-            console.log("entry or isoform ??");
-            console.log(entry);
-
             // Init isoform menu
-            isoformList = data.isoforms;
-            nxIsoformChoice(isoformList);
+            if (jQuery.isEmptyObject(data.annotationsByCategory)) {
+                noDataAlert();
+            }
+            else {
+                isoformList = data.isoforms;
+                nxIsoformChoice(isoformList);
 
-            // Generate publication hash
-            data.publications.forEach(function (p) {
-                publications[p.publicationId] = p;
-            })
-            console.log("Petyr Baelish");
-            console.log(publications);
-            
-            phenotypes_entry = data.annotationsByCategory["phenotypic-variation"];
+                // Generate publication hash
+                data.publications.forEach(function (p) {
+                    publications[p.publicationId] = p;
+                })
+    //            console.log("Petyr Baelish");
+    //            console.log(publications);
 
-
-            // Transform annotations into hashMap to ease the access by id
-            // For old json :
-            //            var normalAnnotations = hashingNormalAnnotations(data.annotationsByIsoformAndCategory[entry]);
-
-            normalAnnotations = hashingNormalAnnotations(data.annotationsByCategory);
-
-            // Sort phenotypes by smallest position
-            //            var filterPhenotypes = 
-
-            //REPLACE MODIFIED ISOFORM ANNOTATIONS OBJECT WITH ARRAY !
-
-            //            function parseDataByIsoform(isoform, normalAnnotations, data.annotationsByCategory["phenotypic-variation"])
-
-            // Parsing of the old JSON : 
-            //            var phenoArray = [];
-            //            for (var v in data.proteoformAnnotations) {
-            //                
-            //                var newArrayElem = data.proteoformAnnotations[v];
-            //                phenoArray.push(data.proteoformAnnotations[v]);
-            //            }
-
-            // Commented code :     
-            //                var newArrayElem;
-            //                if (onlyGold){
-            //                    newArrayElem = nx.filterGoldOnlyAnnotations(data.modifiedIsoformAnnotations[v]);
-            //                }
-            //                else {
-            //                    newArrayElem = data.modifiedIsoformAnnotations[v];
-            //                }
-
-            // Parsing of the old JSON : 
-            //            phenoArray.sort(function (a, b) {
-            //                var sbjA = a["phenotypic-variation"][0].subjectComponents.map(function (s) {
-            //                    return normalAnnotations[s]
-            //                });
-            //                var sbjB = b["phenotypic-variation"][0].subjectComponents.map(function (s) {
-            //                    return normalAnnotations[s]
-            //                });
-            //                var minPosA = getMinPos(sbjA);
-            //                var minPosB = getMinPos(sbjB);
-            //                return minPosA - minPosB;
-            //            });
-            //            var phenotypes = {};
-            //
-            //            phenoArray.forEach(function (p) {
-            //                phenotypes[p["phenotypic-variation"][0].subjectName] = p;
-            //            });
+                phenotypes_entry = data.annotationsByCategory["phenotypic-variation"];
 
 
-            // filter phenotypes for the current isoform
-            var phenotypes = parseDataByIsoform(isoform, normalAnnotations, phenotypes_entry);
-            console.log("Brann");
-            console.log(phenotypes);
+                // Transform annotations into hashMap to ease the access by id
+                // For old json :
+                //            var normalAnnotations = hashingNormalAnnotations(data.annotationsByIsoformAndCategory[entry]);
+
+                normalAnnotations = hashingNormalAnnotations(data.annotationsByCategory);
+
+                reloadPhenotypeView(isoform);
+
+                /*
+    //             Sort phenotypes by smallest position
+                            var filterPhenotypes = 
+
+    //            REPLACE MODIFIED ISOFORM ANNOTATIONS OBJECT WITH ARRAY !
+
+                            function parseDataByIsoform(isoform, normalAnnotations, data.annotationsByCategory["phenotypic-variation"])
+
+    //             Parsing of the old JSON : 
+                            var phenoArray = [];
+                            for (var v in data.proteoformAnnotations) {
+
+                                var newArrayElem = data.proteoformAnnotations[v];
+                                phenoArray.push(data.proteoformAnnotations[v]);
+                            }
+
+    //             Commented code :     
+                                var newArrayElem;
+                                if (onlyGold){
+                                    newArrayElem = nx.filterGoldOnlyAnnotations(data.modifiedIsoformAnnotations[v]);
+                                }
+                                else {
+                                    newArrayElem = data.modifiedIsoformAnnotations[v];
+                                }
+
+    //             Parsing of the old JSON : 
+                            phenoArray.sort(function (a, b) {
+                                var sbjA = a["phenotypic-variation"][0].subjectComponents.map(function (s) {
+                                    return normalAnnotations[s]
+                                });
+                                var sbjB = b["phenotypic-variation"][0].subjectComponents.map(function (s) {
+                                    return normalAnnotations[s]
+                                });
+                                var minPosA = getMinPos(sbjA);
+                                var minPosB = getMinPos(sbjB);
+                                return minPosA - minPosB;
+                            });
+                            var phenotypes = {};
+
+                            phenoArray.forEach(function (p) {
+                                phenotypes[p["phenotypic-variation"][0].subjectName] = p;
+                            });
+                */
+
+                /*
+                // filter phenotypes for the current isoform
+                var phenotypes = parseDataByIsoform(isoform, normalAnnotations, phenotypes_entry);
+                console.log("Brann");
+                console.log(phenotypes);
 
 
-            // Get all phenotypes by type in order to add them into the filter block
-            var listingPhenotypes = getAllAnnotationTypes(normalAnnotations, phenotypes);
+                // Get all phenotypes by type in order to add them into the filter block
+                var listingPhenotypes = getAllAnnotationTypes(normalAnnotations, phenotypes);
 
-            console.log("Arya");
-            console.log(listingPhenotypes);
+                console.log("Arya");
+                console.log(listingPhenotypes);
 
-            fillFilters(listingPhenotypes);
+                fillFilters(listingPhenotypes);
 
-            // parse Data to fit the template of treeData
-            var treeData = parseNxDataForTreeTable(phenotypes, normalAnnotations, template);
+                // parse Data to fit the template of treeData
+                var treeData = parseNxDataForTreeTable(phenotypes, normalAnnotations, template);
 
-            // add count box
+                // add count box
 
-            $("#count-variant").text(treeData.length);
-            countVariants(treeData);
+                $("#count-variant").text(treeData.length);
+                countVariants(treeData);
 
-            activateFilters(phenotypes, normalAnnotations, listingPhenotypes);
+                activateFilters(phenotypes, normalAnnotations, listingPhenotypes);
 
-            //console.log("treeData");
-            //console.log(treeData);
+                //console.log("treeData");
+                //console.log(treeData);
 
-            var heatMapTable0 = new HeatMapTable({
-                tableID: "heatmap-table0",
-                options: heatmapTableOptions0
-            });
+                var heatMapTable0 = new HeatMapTable({
+                    tableID: "heatmap-table0",
+                    options: heatmapTableOptions0
+                });
 
 
-            console.log("treeData");
-            console.log(treeData);
-            console.log(heatmapTableOptions0);
-            console.log(heatMapTable0);
-            heatMapTable0.loadJSONData(treeData);
-            heatMapTable0.show();
+                console.log("treeData");
+                console.log(treeData);
+                console.log(heatmapTableOptions0);
+                console.log(heatMapTable0);
+                heatMapTable0.loadJSONData(treeData);
+                heatMapTable0.show();
 
-            $('[data-toggle="tooltip"]').tooltip();
+                $('[data-toggle="tooltip"]').tooltip();
+                */
+            }
 
         })
-    </script>
-    <script type="text/javascript">
-        Handlebars.registerHelper('createHeader', function (columnName, block) {
-            var result = {};
-            result.columnWidth = "160px";
-            result.columnName = columnName;
-            return block.fn(result);
-        });
-        Handlebars.registerHelper("linkTo", function (name, link, options) {
-            if (name === "DOI") name = "Full Text"
-            return "<a href=\"" + link + "\">" + name + "</a>";
-        });
     </script>
     <script id="headerTemplate" type="text/x-handlebars-template">
         <div style="overflow:hidden">

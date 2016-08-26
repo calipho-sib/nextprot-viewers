@@ -610,3 +610,13 @@ hr {
 /*    box-shadow: 0px 3px 12px -5px rgba(0,0,0,0.5);*/
     box-shadow: inset 0px -8px 16px -10px rgba(0,0,0,0.25)
 }
+
+/* No data alert message CSS */
+
+#no-data-message{
+    text-align:center;
+    padding-top: 100px;
+}
+#no-data-message h2{
+    font-size:3em;
+}
