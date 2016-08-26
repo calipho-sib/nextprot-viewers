@@ -157,10 +157,17 @@ body {
     vertical-align: middle;
 }
 
-#currentStructure{
+.params .panel-heading h4{
     display: inline-block;
     vertical-align: middle;
+    font-weight: 500;
+    border:none;
+    padding:0px;
 }
+.params .panel-heading{
+    padding:5px 15px;
+}
+
 #structureCount{
     border-radius:70%;
     border: 2px solid black;

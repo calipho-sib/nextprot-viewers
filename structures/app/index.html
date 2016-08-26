@@ -49,6 +49,17 @@
 
     $('head').append('<base target="_parent" href="' + url + '" />');
     console.log(url);
+    
+    function fixClipPaths(svg, restore) {
+        Array.prototype.forEach.call(svg.querySelectorAll('*[clip-path]'), function (el) {
+            var clipUrl = el.getAttribute('clip-path');
+            if(!el.getAttribute('data-original-clip-path')) {
+                el.setAttribute('data-original-clip-path', clipUrl);
+            }
+
+            el.setAttribute('clip-path', 'url('+ (!restore ? document.location.href : '') + el.getAttribute('data-original-clip-path').substr(4));
+        });
+    }
 
     ($(function () {
 
@@ -124,6 +135,8 @@
                             })
                         })
                         
+                        // Fix clippath on FV when base change
+                        fixClipPaths($("#chart svg")[0]);
                         
 
                         // init additional infos
