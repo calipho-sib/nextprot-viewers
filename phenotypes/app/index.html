@@ -154,6 +154,7 @@
             <div id="nx-overview"></div>
         </div>
     </div>
+    <div class="loader">Loading...</div>
 
     <div class="row" style="margin:0px;">
         <div class="col-lg-10 col-lg-offset-1 col-md-offset-1 col-md-10">
@@ -855,6 +856,8 @@
 
             heatMapTable0.loadJSONData(treeDataFiltered);
             heatMapTable0.show();
+            
+            $(".loader").remove();
 
             $('[data-toggle="tooltip"]').tooltip();
             //            addIconToButton();
@@ -878,7 +881,7 @@
             resetTreeViewer(phenotypes, normalAnnotations, listingPhenotypes);
 
             // parse Data to fit the template of treeData
-            var treeData = parseNxDataForTreeTable(phenotypes, normalAnnotations, template);
+//            var treeData = parseNxDataForTreeTable(phenotypes, normalAnnotations, template);
 
 
             displayIsoform(isoformMapping, "#isoformDisplayed", iso, iFrameWidth);
@@ -998,13 +1001,18 @@
 //                console.log(getIsoformFromUrl);
 //                console.log(getIsoformFromUrl["isoform"]);
                 
+                // Get current isoform
                 if (getIsoformFromParentUrl["isoform"]){
                     isoform = getIsoformFromParentUrl["isoform"];
                 }
                 else if (getIsoformFromUrl["isoform"]){
                     isoform = getIsoformFromUrl["isoform"];
                 }
-                else isoform = datas.isoforms.visible[0].uniqueName;
+                else {
+                    var canonical = $.grep(isoforms, function(e){ return e.canonicalIsoform == true; });
+                    if (canonical[0]) isoform = canonical[0].uniqueName;
+                    else isoform = datas.isoforms.visible[0].uniqueName;
+                }
                 
                 
                 //                var template = HBtemplates['templates/isoformChoice.tmpl'];
@@ -1290,8 +1298,6 @@
         }
 
         function noDataAlert() {
-            console.log("HOLD THE DOOOOOOOR");
-            console.log(window.location.origin);
             var source = $("#no-data-template").html();
             var data = {
                 env:window.location.origin

@@ -620,3 +620,51 @@ hr {
 #no-data-message h2{
     font-size:3em;
 }
+
+/* Loader css */
+
+.loader {
+  margin: 0px;
+    margin-left:-30px;
+  font-size: 10px;
+  position: absolute;
+    top:350px;
+    left:50%;
+    z-index:100;
+  text-indent: -9999em;
+  border-top: 0.8em solid rgba(210,37,118, 0.2);
+  border-right: 0.8em solid rgba(210,37,118, 0.2);
+  border-bottom: 0.8em solid rgba(210,37,118, 0.2);
+  border-left: 0.8em solid #d22576;
+  -webkit-transform: translateZ(0);
+  -ms-transform: translateZ(0);
+  transform: translateZ(0);
+  -webkit-animation: load8 0.8s infinite linear;
+  animation: load8 0.8s infinite linear;
+}
+.loader,
+.loader:after {
+  border-radius: 50%;
+  width: 5em;
+  height: 5em;
+}
+@-webkit-keyframes load8 {
+  0% {
+    -webkit-transform: rotate(0deg);
+    transform: rotate(0deg);
+  }
+  100% {
+    -webkit-transform: rotate(360deg);
+    transform: rotate(360deg);
+  }
+}
+@keyframes load8 {
+  0% {
+    -webkit-transform: rotate(0deg);
+    transform: rotate(0deg);
+  }
+  100% {
+    -webkit-transform: rotate(360deg);
+    transform: rotate(360deg);
+  }
+}
