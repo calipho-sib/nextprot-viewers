@@ -1036,7 +1036,8 @@
                 });
 //                $("#nx-isoformChoice li:first-child").addClass("active");
                 
-                $("#" + isoform).addClass("active");
+//                $("#" + isoform).addClass("active");
+                $('#nx-isoformChoice a[href="#' + isoform + '"]').tab('show');
 
                 addIsoformViewer();
             }
