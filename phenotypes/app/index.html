@@ -140,7 +140,7 @@
     <div id="no-data-message">
         <h2>Sorry !</h2>
         <h3>No phenotypic variation data available for this protein.</h3>
-        <p>If you want to see an example of a working Phenotype view, please look at the <a href="entry/NX_P38398/phenotypes" target="_parent">BRCA1 protein</a>. </p>
+        <p>If you want to see an example of a working Phenotype view, please look at the <a href="{{base}}/entry/NX_P38398/phenotypes" target="_parent">BRCA1 protein</a>. </p>
     </div>
 </script>
 
@@ -696,7 +696,7 @@
 */
 
         var entry = nx.getEntryName();
-        var isoform = entry + "-1";
+//        var isoform = entry + "-1";
         
         var url = window.location.href;
         var current_url = new URI(url);
@@ -713,7 +713,6 @@
         var iFrameWidth = 0;
 
         console.log(entry);
-        console.log(isoform);
 
         var heatmapTableOptions0 = {
             valuesSetting: [
@@ -993,12 +992,16 @@
                         return listIsoforms;
                     }())
                 };
+                var getIsoformFromParentUrl = parent_current_url.query(true);
                 var getIsoformFromUrl = current_url.query(true);
-                console.log("WINTER IS COMING !");
-                console.log(getIsoformFromUrl);
-                console.log(getIsoformFromUrl["isoform"]);
+//                console.log("WINTER IS COMING !");
+//                console.log(getIsoformFromUrl);
+//                console.log(getIsoformFromUrl["isoform"]);
                 
-                if (getIsoformFromUrl["isoform"]){
+                if (getIsoformFromParentUrl["isoform"]){
+                    isoform = getIsoformFromParentUrl["isoform"];
+                }
+                else if (getIsoformFromUrl["isoform"]){
                     isoform = getIsoformFromUrl["isoform"];
                 }
                 else isoform = datas.isoforms.visible[0].uniqueName;
@@ -1286,7 +1289,14 @@
         }
 
         function noDataAlert() {
-            var html = $("#no-data-template").html();
+            console.log("HOLD THE DOOOOOOOR");
+            console.log(window.location.origin);
+            var source = $("#no-data-template").html();
+            var data = {
+                env:window.location.origin
+            }
+            var template = Handlebars.compile(source);
+            var html = template(data);
             $("body").html(html);
         }
 
