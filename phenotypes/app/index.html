@@ -19,6 +19,7 @@
     <script type="text/javascript" src="heatmap-table.js"></script>
     <script type="text/javascript" src="bootstrap.min.js"></script>
     <script type="text/javascript" src="iframeResizer.contentWindow.min.js"></script>
+    <script type="text/javascript" src="URI.min.js"></script>
     <link rel="stylesheet" href="heatmap-table.css" crossorigin="anonymous">
     <link rel="stylesheet" href="jquery.typeahead.min.css">
     <link rel="stylesheet" href="bootstrap.min.css">
@@ -44,7 +45,7 @@
         <div class="navbar-brand " style="padding:10px 15px;color:#C50063;height:auto;font-size:20px;">Isoforms</div>
         <ul class="nav nav-tabs" role="tablist">
             {{#isoforms.visible}}
-            <li role="presentation"><a class="isoformNames" href="#{{uniqueName}}" role="tab" data-toggle="tab" title="{{mainEntityName.value}}">{{uniqueName}}</a></li>
+            <li id="{{uniqueName}}" role="presentation"><a class="isoformNames" href="#{{uniqueName}}" role="tab" data-toggle="tab" title="{{mainEntityName.value}}">{{uniqueName}}</a></li>
             {{/isoforms.visible}} {{#if isoforms.more}}
             <li role="presentation" class="dropdown" style="z-index:20">
                 <a class="dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-expanded="false"><span
@@ -55,7 +56,7 @@
                         </p>
                     </li>
                     {{#isoforms.more}}
-                    <li role="presentation"><a class="isoformNames" href="#{{uniqueName}}" role="tab" data-toggle="tab" title="{{mainEntityName.value}}">{{uniqueName}}</a>
+                    <li id="{{uniqueName}}" role="presentation"><a class="isoformNames" href="#{{uniqueName}}" role="tab" data-toggle="tab" title="{{mainEntityName.value}}">{{uniqueName}}</a>
                     </li>
                     {{/isoforms.more}}
                 </ul>
@@ -83,7 +84,7 @@
             {{#publication}} {{#if title}}
             <p><a href="/publication/{{publicationId}}">{{title}}</a></p>{{/if}}
             <p style="color:#337ab7;">{{#each authors}}{{lastName}} {{initials}}. , {{/each}}</p>
-            <p>{{journal}} <strong>{{volume}}</strong>, {{firstPage}} - {{lastPage}} ({{publicationYear}}) {{#each dbXrefs}}[{{databaseName}} : {{{linkTo accession url}}}] {{/each}}
+            <p>{{journal}} <strong>{{volume}}</strong>, {{firstPage}} - {{lastPage}} ({{publicationYear}}) {{#each dbXrefs}}[{{databaseName}} : {{{linkTo accession resolvedUrl}}}] {{/each}}
             </p>
             {{#if abstractText}}
             <button class="btn btn-primary btn-xs" type="button" style="margin-left:5px" data-toggle="collapse" data-target="#collapse{{publicationId}}{{../annotId}}" aria-expanded="false" aria-controls="collapse{{publicationId}}{{../annotId}}">
@@ -134,14 +135,14 @@
     </div>
 
 </script>
-    
-<script  id="no-data-template" type="text/x-handlebars-template">
+
+<script id="no-data-template" type="text/x-handlebars-template">
     <div id="no-data-message">
         <h2>Sorry !</h2>
         <h3>No phenotypic variation data available for this protein.</h3>
         <p>If you want to see an example of a working Phenotype view, please look at the <a href="entry/NX_P38398/phenotypes" target="_parent">BRCA1 protein</a>. </p>
     </div>
-    </script>
+</script>
 
 <body id="phenotypeViewer">
 
@@ -300,14 +301,15 @@
                     "GO_CELLULAR_COMPONENT": {},
                     "BINARY_INTERACTION": {},
                     "PROTEIN_PROPERTY": {},
-                    "SMALL_MOLECULE_INTERACTION": {}
+                    "SMALL_MOLECULE_INTERACTION": {},
+                    "MAMMALIAN_PHENOTYPE": {}
                 },
                 "total": 0
             };
             //            var listingPhenotype = {};
-            console.log("JON SNOW");
-            console.log(annots);
-            console.log(phenotypes);
+//            console.log("JON SNOW");
+//            console.log(annots);
+//            console.log(phenotypes);
             //            console.log(annots);
             listAnnotRef.forEach(function (a) {
                 if (annots.hasOwnProperty(a)) {
@@ -329,9 +331,9 @@
                         //                        }
 
                         var pheno = annots[a].bioObject.properties.geneName;
-                        console.log("Lord Varys");
-//                        console.log(pheno);
-                        console.log(annots[a].bioObject);
+//                        console.log("Lord Varys");
+                        //                        console.log(pheno);
+//                        console.log(annots[a].bioObject);
                         //                        console.log(annots[a]);
                     } else {
                         var pheno = annots[a].cvTermName;
@@ -648,11 +650,11 @@
         }
 
         var nx = new Nextprot.Client("neXtProt proteomics view", "Calipho-Team");
-//        if (nx.getEnvironment() !== "bed") {
-//            nx.setApiBaseUrl("http://bed-api.nextprot.org");
-//            //nx.setApiBaseUrl("http://localhost:8080/nextprot-api-web");
-//        }
-        
+        //        if (nx.getEnvironment() !== "bed") {
+        //            nx.setApiBaseUrl("http://bed-api.nextprot.org");
+        //            //nx.setApiBaseUrl("http://localhost:8080/nextprot-api-web");
+        //        }
+
         /*
             function changeGoldParam(gold){
                     var url = window.location.href;
@@ -695,6 +697,13 @@
 
         var entry = nx.getEntryName();
         var isoform = entry + "-1";
+        
+        var url = window.location.href;
+        var current_url = new URI(url);
+        
+        var parent_url = window.parent.location.href;
+        var parent_current_url = new URI(parent_url);
+        
 
         var publications = {};
         var normalAnnotations = {};
@@ -816,7 +825,7 @@
             "GO_BIOLOGICAL_PROCESS": "Impact on biological process",
             "BINARY_INTERACTION": "Impact on binary interaction",
             "SMALL_MOLECULE_INTERACTION": "Impact on small molecule interaction",
-            "MAMMALIAN_PHENOTYPE": "Associated with mammlian phenotype"
+            "MAMMALIAN_PHENOTYPE": "Impact on mammalian phenotype"
         }
 
 
@@ -937,6 +946,36 @@
             return phenotypes;
         }
 
+        function updateURL(value) {
+            if (history.pushState) {
+                //              var newurl = window.location.protocol + "//" + window.location.host + window.location.pathname + '?para=hello';
+//                var newurl = window.location.href + "&" + param + "=" + value;
+//                console.log("update Url : ");
+//                console.log(newurl);
+////                var parsedUrl = $.url(currentUrl);
+//                var parsedUrl = currentUrl;
+//                
+//                var params = parsedUrl.param();
+//                params[param] = value;
+//
+//                var newUrl = "?" + $.param(params);
+//                
+                current_url.setSearch('isoform', value);
+                
+                console.log(current_url);
+                window.history.pushState({
+                    path: current_url
+                }, '', current_url);
+                
+                parent_current_url.setSearch('isoform', value);
+                console.log(parent_current_url);
+                window.parent.history.pushState({
+                    path: parent_current_url
+                }, '', parent_current_url);
+                
+            }
+        }
+
         function nxIsoformChoice(isoforms) {
             if ($("#nx-isoformChoice").length > 0) {
                 var datas = {
@@ -954,7 +993,17 @@
                         return listIsoforms;
                     }())
                 };
-                isoform = datas.isoforms.visible[0].uniqueName;
+                var getIsoformFromUrl = current_url.query(true);
+                console.log("WINTER IS COMING !");
+                console.log(getIsoformFromUrl);
+                console.log(getIsoformFromUrl["isoform"]);
+                
+                if (getIsoformFromUrl["isoform"]){
+                    isoform = getIsoformFromUrl["isoform"];
+                }
+                else isoform = datas.isoforms.visible[0].uniqueName;
+                
+                
                 //                var template = HBtemplates['templates/isoformChoice.tmpl'];
                 //                var results = template(datas);
                 //                $("#nx-isoformChoice").append(results);
@@ -967,6 +1016,8 @@
                 /////////// EventListener to change isoform
                 $(".isoformNames").click(function () {
                     isoform = $(this).text();
+                    updateURL(isoform);
+
                     reloadPhenotypeView(isoform);
                     //                    getInfoForIsoform.reload(isoName);
                 });
@@ -980,8 +1031,9 @@
                         trigger: "hover"
                     });
                 });
-
-                $("#nx-isoformChoice li:first-child").addClass("active");
+//                $("#nx-isoformChoice li:first-child").addClass("active");
+                
+                $("#" + isoform).addClass("active");
 
                 addIsoformViewer();
             }
@@ -1232,32 +1284,36 @@
                 $("#isoformDisplayed #isoContainer").hide();
             });
         }
-        
-        function noDataAlert(){
+
+        function noDataAlert() {
             var html = $("#no-data-template").html();
             $("body").html(html);
         }
 
         //        nx.getFullAnnotationsByCategory(entry, "proteoform").then(function (data) {
-        $.getJSON("http://dev-api.nextprot.org/entry/" + entry + "/phenotypic-variation.json", function (temp) {
-            var data = temp.entry;
+        nx.getFullAnnotationsByCategory(entry, "phenotypic-variation").then(function (data) {
+            //        $.getJSON("http://dev-api.nextprot.org/entry/" + entry + "/phenotypic-variation.json", function (temp) {
+            //            var data = temp.entry;
+            //            console.log("temp");
+            //            console.log(temp);
             console.log("data");
             console.log(data);
 
             // Init isoform menu
             if (jQuery.isEmptyObject(data.annotationsByCategory)) {
                 noDataAlert();
-            }
-            else {
+            } else {
                 isoformList = data.isoforms;
                 nxIsoformChoice(isoformList);
 
                 // Generate publication hash
                 data.publications.forEach(function (p) {
-                    publications[p.publicationId] = p;
-                })
-    //            console.log("Petyr Baelish");
-    //            console.log(publications);
+                        publications[p.publicationId] = p;
+                    })
+                console.log("publications");
+                console.log(publications);
+                    //            console.log("Petyr Baelish");
+                    //            console.log(publications);
 
                 phenotypes_entry = data.annotationsByCategory["phenotypic-variation"];
 
