@@ -450,7 +450,7 @@
                 //                }
                 return {
                     category: annotations[id].apicategory,
-                    cvTermName: annotations[id].apicategory === "BINARY_INTERACTION" || annotations[id].apicategory === "SMALL_MOLECULE_INTERACTION" ? annotations[id].bioObject.accession : annotations[id].cvTermName
+                    cvTermName: annotations[id].apicategory === "BINARY_INTERACTION" || annotations[id].apicategory === "SMALL_MOLECULE_INTERACTION" ? annotations[id].bioObject.properties.geneName : annotations[id].cvTermName
                 }
             } else console.warn("couldn't find normal annotation " + id);
         }
@@ -632,8 +632,8 @@
         function activateFilters(data, annots, listingPhenotypes) {
             $(".filters a:not(.collapse-title)").click(function () {
                 var filters = getFilters();
-                //console.log("Tyrion");
-                //                console.log(filters);
+//                console.log("Tyrion");
+//                console.log(filters);
                 $("#count-phenotype-selected").text("(" + filters.length + " selected)");
 
                 autoCheckAll($(this));
