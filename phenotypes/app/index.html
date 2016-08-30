@@ -139,8 +139,9 @@
 <script id="no-data-template" type="text/x-handlebars-template">
     <div id="no-data-message">
         <h2>Sorry !</h2>
-        <h3>No phenotypic variation data available for this protein.</h3>
-        <p>If you want to see an example of a working Phenotype view, please look at the <a href="{{base}}/entry/NX_P38398/phenotypes" target="_parent">BRCA1 protein</a>. </p>
+        <h3>No phenotype annotation is available in neXtProt for this protein.</h3>
+        <p>To see example of our recent efforts to capture phenotype data, please look at the <a href="{{base}}/entry/NX_P52701/phenotypes" target="_parent">MSH6 protein</a>. </p>
+        <p>See also our <a href="{{base}}/portals/breast-cancer" target="_parent">Cancer</a> and <a href="{{base}}/portals/navmut" target="_parent">Ion Channels</a> Variant Portals.</p>
     </div>
 </script>
 <script id="api-call-fail" type="text/x-handlebars-template">
@@ -508,6 +509,10 @@
 
                 var worstIntensity = getWorstIntensity(intensityList);
 
+                if (!annots.hasOwnProperty(i.bioObject.annotationHash)) {
+                    console.log("Khal Drogo");
+                    console.log(i);
+                }
                 var annotationAffected = getAnnotationById(annots, i.bioObject.annotationHash);
                 if (!filters || filters.indexOf(annotationAffected.cvTermName) !== -1) {
                     var customTemplate = jQuery.extend(true, {}, template);
