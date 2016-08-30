@@ -143,6 +143,18 @@
         <p>If you want to see an example of a working Phenotype view, please look at the <a href="{{base}}/entry/NX_P38398/phenotypes" target="_parent">BRCA1 protein</a>. </p>
     </div>
 </script>
+<script id="api-call-fail" type="text/x-handlebars-template">
+    <div class="col-md-10 col-md-offset-1 col-sm-12">
+        <div class="panel panel-danger">
+            <div class="panel-heading">
+                Impossible to get the data !
+            </div>
+            <div class="panel-body">
+                {{{this}}}
+            </div>
+        </div>
+    </div>
+</script>
 
 <body id="phenotypeViewer">
 
@@ -238,6 +250,8 @@
 -->
         </div>
     </div>
+    
+    <div id="apiCallFail"></div>
 
     <script defer>
         //NX DATA PARSING UTILS
@@ -259,6 +273,10 @@
         function getMinPos(subjects, iso) {
             var min = 100000;
             subjects.forEach(function (s) {
+//                if (!s){
+//                    console.log("ERRRRRRRRRRRRGHHH OOOOOOR");
+//                    console.log(subjects);
+//                }
                 var pos = s.targetingIsoformsMap[iso].firstPosition;
                 if (min > pos) min = pos;
             })
@@ -921,9 +939,19 @@
 
             dataByIsoform.sort(function (a, b) {
                 var sbjA = a.subjectComponents.map(function (s) {
+//                    if (!normalAnnots[s]) {
+//                        console.log("ERRAAAAAAAOOOOR");
+//                        console.log(s);
+//                        console.log(a);
+//                    }
                     return normalAnnots[s]
                 });
                 var sbjB = b.subjectComponents.map(function (s) {
+//                    if (!normalAnnots[s]) {
+//                        console.log("ERRAAAAAAAOOOOR");
+//                        console.log(s);
+//                        console.log(b);
+//                    }
                     return normalAnnots[s]
                 });
 
@@ -1306,6 +1334,14 @@
             var html = template(data);
             $("body").html(html);
         }
+        
+        function throwAPIError(message) {
+            var source = $("#api-call-fail").html();
+            var template = Handlebars.compile(source);
+            var fillTemplate = template(message);
+            $("#apiCallFail").append(fillTemplate);
+            $(".loader").remove();
+        }
 
         //        nx.getFullAnnotationsByCategory(entry, "proteoform").then(function (data) {
         nx.getFullAnnotationsByCategory(entry, "phenotypic-variation").then(function (data) {
@@ -1433,6 +1469,12 @@
             }
 
         })
+            .catch(function(error) {
+            console.log(error);
+            console.log(error.responseText);
+            var errorMessage = error.responseText ? JSON.parse(error.responseText) : error;
+            throwAPIError(errorMessage.message);
+        });
     </script>
     <script id="headerTemplate" type="text/x-handlebars-template">
         <div style="overflow:hidden">
