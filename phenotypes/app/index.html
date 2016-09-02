@@ -87,8 +87,8 @@
             <p>{{journal}} <strong>{{#journalResourceLocator}}{{medAbbrev}} {{/journalResourceLocator}}</strong>, {{firstPage}} - {{lastPage}} ({{publicationYear}}) {{#each dbXrefs}}[{{databaseName}} : {{{linkTo accession resolvedUrl}}}] {{/each}}
             </p>
             {{#if abstractText}}
-            <button class="btn btn-primary btn-xs" type="button" style="margin-left:5px" data-toggle="collapse" data-target="#collapse{{publicationId}}{{../annotId}}" aria-expanded="false" aria-controls="collapse{{publicationId}}{{../annotId}}">
-                abstract
+            <button class="btn btn-primary btn-xs collapsed" type="button" style="margin-left:5px" data-toggle="collapse" data-target="#collapse{{publicationId}}{{../annotId}}" aria-expanded="false" aria-controls="collapse{{publicationId}}{{../annotId}}">
+                <span class="pubDisplayStatus"></span> abstract
             </button>
             <div class="collapse" id="collapse{{publicationId}}{{../annotId}}" style="margin-top:5px;">
                 <div class="panel panel-info">
