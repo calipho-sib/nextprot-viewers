@@ -36,7 +36,7 @@
     });
     Handlebars.registerHelper("linkTo", function (name, link, options) {
         if (name === "DOI") name = "Full Text"
-        return "<a href=\"" + link + "\">" + name + "</a>";
+        return "<a href=\"" + link + "\"  target='_blank'>" + name + "</a>";
     });
 </script>
 
@@ -82,9 +82,9 @@
         </div>
         <div class="evidence-publication">
             {{#publication}} {{#if title}}
-            <p><a href="/publication/{{publicationId}}">{{title}}</a></p>{{/if}}
+            <p><a href="/publication/{{publicationId}}" target="_parent">{{title}}</a></p>{{/if}}
             <p style="color:#337ab7;">{{#each authors}}{{lastName}} {{initials}}. , {{/each}}</p>
-            <p>{{journal}} <strong>{{volume}}</strong>, {{firstPage}} - {{lastPage}} ({{publicationYear}}) {{#each dbXrefs}}[{{databaseName}} : {{{linkTo accession resolvedUrl}}}] {{/each}}
+            <p>{{journal}} <strong>{{#journalResourceLocator}}{{medAbbrev}} {{/journalResourceLocator}}</strong>, {{firstPage}} - {{lastPage}} ({{publicationYear}}) {{#each dbXrefs}}[{{databaseName}} : {{{linkTo accession resolvedUrl}}}] {{/each}}
             </p>
             {{#if abstractText}}
             <button class="btn btn-primary btn-xs" type="button" style="margin-left:5px" data-toggle="collapse" data-target="#collapse{{publicationId}}{{../annotId}}" aria-expanded="false" aria-controls="collapse{{publicationId}}{{../annotId}}">
@@ -97,8 +97,14 @@
                     </div>
                     <div class="panel-body">{{abstractText}}</div>
                 </div>
-            </div>{{else}}No Abstract available{{/if}} {{else}} {{#if crossRef}}{{#crossRef}}
-            <p>{{{linkTo name url}}}</p>{{/crossRef}}{{/if}} {{/publication}}
+            </div>{{else}}No Abstract available{{/if}} 
+            {{else}}
+                {{#if crossRef}}
+                    {{#crossRef}}
+                    <p>{{{linkTo name url}}}</p>
+                    {{/crossRef}}
+                {{/if}} 
+            {{/publication}}
 
         </div>
     </div>
