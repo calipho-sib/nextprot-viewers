@@ -239,6 +239,16 @@ body{
     padding-left: 5px;
     padding-right: 5px;
 }
+
+
+.evidence-publication button .pubDisplayStatus:before {
+    content:"Hide";
+    display:inline-block;
+    width:31px;
+}
+.evidence-publication button.collapsed .pubDisplayStatus:before {
+    content:"Show";
+}
 /* latin-ext */
 @font-face {
   font-family: 'Lato';

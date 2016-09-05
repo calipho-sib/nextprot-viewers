@@ -34,15 +34,17 @@
         </tr>
         <tr class="{{{className category}}} detailed-info">
             <td colspan="6" style="word-break: break-all">{{#each source}}<div class="evidenceLine"><div class="evidenceArrow">&#10549;</div>  Evidence {{math @index 1}}<span class="evidenceCodeName">{{evidenceCodeName}}</span>
-            <span class="evidenceSource">{{assignedBy}}</span>{{#if publicationMD5}}{{#if abstract}}<button class="btn btn-primary btn-xs" type="button" style="margin-left:5px" data-toggle="collapse" data-target="#collapse{{pubId}}{{../../../id}}"  aria-expanded="false" aria-controls="collapse{{pubId}}{{../../../id}}">
-                    abstract
-                </button>{{/if}}{{/if}}</div>
-                <div style="padding-left:10px;border-left:1px solid darkgray;margin-right:10px;">
+            <span class="evidenceSource">{{assignedBy}}</span></div>
+                <div {{#if publicationMD5}}class="evidence-publication"{{/if}} style="padding-left:10px;border-left:1px solid darkgray;margin-right:10px;">
                     {{#if publicationMD5}}
                     {{#if title}}<p>{{{title}}}</p>{{/if}}
                     <p style="color:#6a90d9;">{{#each authors}}{{lastName}} {{initials}}. , {{/each}}</p>
                     <p>{{journal}} <strong>{{volume}}</strong>, {{firstPage}} - {{lastPage}} ({{year}}) {{#each dbXrefs}}[{{name}} : {{{linkTo accession url}}}] {{/each}}</p>
-                    {{#if abstract}}<div class="collapse" id="collapse{{pubId}}{{../../../id}}" style="margin-top:5px;">
+                    {{#if abstract}}
+                    <button class="btn btn-primary btn-xs collapsed" type="button" data-toggle="collapse" data-target="#collapse{{pubId}}{{../../../id}}"  aria-expanded="false" aria-controls="collapse{{pubId}}{{../../../id}}">
+                        <span class="pubDisplayStatus"></span> abstract
+                    </button>
+                <div class="collapse" id="collapse{{pubId}}{{../../../id}}" style="margin-top:5px;">
                         <div class="panel panel-info"><div class="panel-heading">
                             <h3 class="panel-title">Abstract</h3>
                         </div><div class="panel-body">{{abstract}}</div></div>
