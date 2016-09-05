@@ -1,7 +1,7 @@
 
 <div id="xrefs-header" style="border-bottom: 1px solid #E7EAEC;margin-bottom: 15px;padding-bottom: 5px;">
 <div style="display:inline-block;">
-        <span class="badge" style="border-radius:70%;border: 2px solid black;color:#C50063;background-color:white;padding:8px 8px;margin-right:10px;vertical-align:middle;">{{count}}</span>
+        <span class="badge" style="border-radius:70%;border: 2px solid black;color:#C50063;background-color:white;padding:8px 8px;margin-right:10px;vertical-align:middle;min-width:32px;">{{count}}</span>
 </div>
 <h4 id="keywords-title" style="display:inline-block;vertical-align:middle;">Further external links</h4></div>
 <div style="margin-top:20px;">
@@ -38,5 +38,9 @@
             {{/each}}
         </div>
         </div>
-<hr style="margin:0px 50px 5px">{{/each}}{{/data}}
+{{/each}}
+{{#unless @last}}
+<hr style="margin:0px 50px 5px">
+{{/unless}}
+{{/data}}
 </div>

@@ -72,6 +72,9 @@ body{
 .tableHighlight {
     background-color:rgba(197, 0, 99, 0.2) !important;
 }
+.tableHighlight td{
+    background-color:rgba(197, 0, 99, 0.2) !important;
+}
 
 #navAside a{
   color:#D0D0D0 !important;
