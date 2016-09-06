@@ -252,7 +252,7 @@
 
                 self.expandByFilterString($(self.heatmapTable).find(".heatmap-rows"), filterString, true);
                 if (self.data.length === 0) {
-                    $(self.heatmapTable).find(".heatmap-rows").append("<p>No result be found.</p>");
+                    $(self.heatmapTable).find(".heatmap-rows").append("<p>No results found</p>");
                 }
 
             });
