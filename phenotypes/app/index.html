@@ -633,12 +633,13 @@
             var panel = $(elem).closest(".panel-group");
             var all = panel.find(".select-all i");
             var activeFilters = panel.find(".subtypes a.active");
-            if (!activeFilters.length && all.hasClass("fa-check")) {
-                all.toggleClass("fa-circle-thin fa-check");
-            } else if (activeFilters.length === panel.find(".subtypes a").length) {
+            if (activeFilters.length === panel.find(".subtypes a").length) {
                 if (all.hasClass("fa-circle-thin")) {
                     all.toggleClass("fa-circle-thin fa-check");
                 }
+            }
+            else if (all.hasClass("fa-check")) {
+                all.toggleClass("fa-circle-thin fa-check");
             }
         }
 

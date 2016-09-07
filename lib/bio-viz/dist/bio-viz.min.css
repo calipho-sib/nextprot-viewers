@@ -142,6 +142,9 @@ table.dataTable{
 table.dataTable thead .sorting:after, table.dataTable thead .sorting_asc:after, table.dataTable thead .sorting_desc:after, table.dataTable thead .sorting_asc_disabled:after, table.dataTable thead .sorting_desc_disabled:after{
     top:0px;
 }
+table.dataTable th{
+    white-space: nowrap;
+}
 
 .pdbTableContainer{
     border-bottom:1px solid #ccc;
