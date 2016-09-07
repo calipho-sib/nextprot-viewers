@@ -113,7 +113,9 @@
 <script id="form-template" type="text/x-handlebars-template">
 
     <div class="filter-block">
-        <h3 class="filter-title second-title">{{total}} PHENOTYPE{{plural total "uppercase"}} <span id="count-phenotype-selected">({{total}} selected)</span></h3> {{#each annotations}} {{#if name}}
+        <button class="btn btn-default pull-right filter-submit" type="button"><i class="fa fa-filter" aria-hidden="true"></i> <span class="filter-submit-text">Apply filters</span></button>
+        <h3 class="filter-title second-title">{{total}} PHENOTYPE{{plural total "uppercase"}} <span id="count-phenotype-selected">({{total}} selected)</span></h3>
+        {{#each annotations}} {{#if name}}
         <div id="panel{{@index}}" class="panel-group">
             <div class="panel panel-default">
                 <div class="panel-heading">
@@ -138,6 +140,7 @@
             </div>
         </div>
         {{/if}} {{/each}}
+        <button class="btn btn-default pull-right filter-submit" type="button"><i class="fa fa-filter" aria-hidden="true"></i> <span class="filter-submit-text">Apply filters</span></button>
     </div>
 
 </script>
@@ -639,16 +642,26 @@
             }
         }
 
-        function activateFilters(data, annots, listingPhenotypes) {
+        function activateFilters() {
             $(".filters a:not(.collapse-title)").click(function () {
+                
                 var filters = getFilters();
-//                console.log("Tyrion");
-//                console.log(filters);
                 $("#count-phenotype-selected").text("(" + filters.length + " selected)");
 
                 autoCheckAll($(this));
-
-                resetTreeViewer(data, annots, listingPhenotypes, filters);
+            })
+        }
+        
+        function submitFilters(data, annots, listingPhenotypes) {
+            $(".filter-submit").click(function(){
+                $(".filter-submit-text").text("Processing...");
+                $(".filter-submit").addClass("disabled");
+                setTimeout(function(){
+                    var filters = getFilters();
+                    resetTreeViewer(data, annots, listingPhenotypes, filters);
+                    $(".filter-submit").removeClass("disabled");
+                    $(".filter-submit-text").text("Apply filters");
+                }, 200);
             })
         }
 
@@ -875,7 +888,8 @@
             $("#count-variant").text(treeDataFiltered.length);
             countVariants(treeDataFiltered);
 
-            activateFilters(phenotypes, normalAnnots, listingPhenotypes);
+            activateFilters();
+            submitFilters(phenotypes, normalAnnots, listingPhenotypes);
 
             var heatMapTable0 = new HeatMapTable({
                 tableID: "heatmap-table0",
