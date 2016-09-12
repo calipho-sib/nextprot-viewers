@@ -315,8 +315,8 @@
         function getAllAnnotationTypes(annots, phenotypes) {
             //            console.log("phenotypes");
             //            console.log(phenotypes);
-            console.log("A girl has no name");
-            console.log(phenotypes);
+//            console.log("A girl has no name");
+//            console.log(phenotypes);
             var listAnnotRef = getListAnnotRef(phenotypes);
             //            console.log("listAnnotRef");
             //            console.log(listAnnotRef);
@@ -517,10 +517,10 @@
 
                 var worstIntensity = getWorstIntensity(intensityList);
 
-                if (!annots.hasOwnProperty(i.bioObject.annotationHash)) {
-                    console.log("Khal Drogo");
-                    console.log(i);
-                }
+//                if (!annots.hasOwnProperty(i.bioObject.annotationHash)) {
+//                    console.log("Khal Drogo");
+//                    console.log(i);
+//                }
                 var annotationAffected = getAnnotationById(annots, i.bioObject.annotationHash);
                 if (!filters || filters.indexOf(annotationAffected.cvTermName) !== -1) {
                     var customTemplate = jQuery.extend(true, {}, template);
@@ -679,7 +679,7 @@
 
         function countPhenotypes(phenotypeList, filters) {
             var count = 0;
-            console.log("Sir Davos");
+//            console.log("Sir Davos");
             //            console.log(phenotypeList);
             for (var type in phenotypeList.annotations) {
                 for (var phen in phenotypeList.annotations[type].data) {
@@ -839,11 +839,7 @@
                 header: ['IMPACT']
             },
             extractTypeaheadStrCallBack: function (node) {
-                console.log("test typeahead");
-                console.log(node);
-                console.log($(node));
                 if ($(node).find(".varhgvs").length != 0){
-                    console.log("found varHGVS !!");
                     return $(node).find(".varhgvs").text();
                 }
                 else return $(node).text();
@@ -916,8 +912,8 @@
         function reloadPhenotypeView(iso) {
             // filter phenotypes for the current isoform
             var phenotypes = parseDataByIsoform(iso, normalAnnotations, phenotypes_entry);
-            console.log("Brann");
-            console.log(phenotypes);
+//            console.log("Brann");
+//            console.log(phenotypes);
 
 
             // Get all phenotypes by type in order to add them into the filter block
@@ -1024,13 +1020,13 @@
 //                
                 current_url.setSearch('isoform', value);
                 
-                console.log(current_url);
+//                console.log(current_url);
                 window.history.pushState({
                     path: current_url
                 }, '', current_url);
                 
                 parent_current_url.setSearch('isoform', value);
-                console.log(parent_current_url);
+//                console.log(parent_current_url);
                 window.parent.history.pushState({
                     path: parent_current_url
                 }, '', parent_current_url);
@@ -1381,8 +1377,8 @@
             //            var data = temp.entry;
             //            console.log("temp");
             //            console.log(temp);
-            console.log("data");
-            console.log(data);
+//            console.log("data");
+//            console.log(data);
 
             // Init isoform menu
             if (jQuery.isEmptyObject(data.annotationsByCategory)) {
@@ -1395,8 +1391,8 @@
                 data.publications.forEach(function (p) {
                         publications[p.publicationId] = p;
                     })
-                console.log("publications");
-                console.log(publications);
+//                console.log("publications");
+//                console.log(publications);
                     //            console.log("Petyr Baelish");
                     //            console.log(publications);
 
