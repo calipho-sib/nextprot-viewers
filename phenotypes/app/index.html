@@ -839,7 +839,14 @@
                 header: ['IMPACT']
             },
             extractTypeaheadStrCallBack: function (node) {
-                return $(node).text();
+                console.log("test typeahead");
+                console.log(node);
+                console.log($(node));
+                if ($(node).find(".varhgvs").length != 0){
+                    console.log("found varHGVS !!");
+                    return $(node).find(".varhgvs").text();
+                }
+                else return $(node).text();
             }
         }
 
