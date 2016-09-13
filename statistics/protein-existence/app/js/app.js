@@ -26,9 +26,13 @@ var evidences = [ePe1, ePe2, ePe3, ePe4, ePe5];
 var env = location.search.split('env=')[1] || "prod";
 var envList = ["dev","alpha"];
 console.log("env : " + env);
-var endpoint = envList.indexOf(env) >= 0 ? "http://" + env + "-" : "http://";
-var nXSearch = endpoint + "search.nextprot.org/proteins/search?mode=advanced";
-var snorql = endpoint + "snorql.nextprot.org/";
+var nXSearch = "https://www.nextprot.org/proteins/search?mode=advanced";
+var snorql = "http://snorql.nextprot.org/";
+if (envList.indexOf(env) > -1) {
+    var endpoint = "http://" + env + "-";
+    nXSearch = endpoint + "search.nextprot.org/proteins/search?mode=advanced";
+    snorql = endpoint + "snorql.nextprot.org/";
+}
 
 function getSparqlQuery(chr, pe) {
     var base = nXSearch;
