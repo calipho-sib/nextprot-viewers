@@ -55,7 +55,7 @@
                     {{/isoforms.more}}
                 </ul>
                 {{/if}}
-                <li><a id="isoformMap" href="#" style="color:#007800;font-size:16px;padding-top: 8px;">View isoforms</a></li>
+                <li><a id="isoformMap" href="javascript:void(0)" style="color:#007800;font-size:16px;padding-top: 8px;">View isoforms</a></li>
         </ul>
     </div>
 </script>
@@ -733,7 +733,7 @@
 */
 
         var entry = nx.getEntryName();
-//        var isoform = entry + "-1";
+        var isoform = entry + "-1";
         
         var url = window.location.href;
         var current_url = new URI(url);
@@ -1301,12 +1301,14 @@
                     .style("z-index", "13")
                     .style("cursor", "pointer")
                     .on("click", function () {
-                        //                        getInfoForIsoform.reload(data.isoformAc);
                         $(".tooltip").remove();
-                        reloadPhenotypeView(data.isoformAc);
-                        var isoSelection = $('#nx-isoformChoice a[href=#' + data.isoformAc + ']').tab('show');
-                        if (isoSelection.parent().parent().is("#moreIsoforms")) $("#extendIsoformChoice").text(data.isoformAc);
-
+                        isoform = data.isoformAc;
+                        reloadPhenotypeView(isoform);
+                        var isoSelection = $('#nx-isoformChoice a[href=#' + isoform + ']').tab('show');
+                        if (isoSelection.parent().parent().is("#moreIsoforms")){
+                            $("#extendIsoformChoice").text(isoform);
+                        }
+                        updateURL(isoform);
                     });
 
                 rectsProGroup
