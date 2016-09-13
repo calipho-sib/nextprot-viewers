@@ -260,44 +260,47 @@ $(document).ready(function () {
         if (pepListTotal.length < 1000) {
 //            console.log("total peplist length : "+pepListString.length);
             var apiCallList = getApiCallList(pepListTotal);
-            console.log("nb of api calls : "+apiCallList.length);
-            console.log("apiCallList");
-            console.log(apiCallList);
-            var countApiCalls = apiCallList.length;
-            var countCallFinished = 0;
-//            var lastCall = false;
-            apiCallList.forEach(function(pepList){
-//                console.log("string length : "+ac.length);
-                var pepListString = pepList.join(",");
-                console.log("pep count : "+pepList.length);
-//                if (callIndex === apiCallList.length-1) lastCall=true;
-                
-                nx.getEntryforPeptide(pepListString).then(function (data) {
-                    pepList.forEach(function (sequence) {
-                        var id = sequence;
-                        var new_data = $.extend(true,[],data);
-                        new_data.forEach(function(d,i){
-                            new_data[i].annotations = d.annotations.filter(function(f){return f.cvTermName === sequence});
-                        })
-                        new_data = new_data.filter(function(d){return d.annotations.length > 0});
-                        if (new_data.length < 1) throwPeptideError(sequence);
-                        else addPeptideBox(new_data, sequence, id, pepListTotal.length);
-                    });
-                    var pepShowed = $("#peptideResult>div:visible:not(.shaft-load3)").length;
-                    $("#countPepShowed").text(pepShowed);
-                    $("#countPepTotal").text(pepShowed);
-                    countCallFinished += 1;
-                    if (countCallFinished === countApiCalls) $(".shaft-load3").remove();
-                    
-                }).catch(function(error) {
-                    countCallFinished += 1;
-                    if (countCallFinished === countApiCalls) $(".shaft-load3").remove();
-                    console.log(error.responseText);
-                    var errorMessage = JSON.parse(error.responseText);
-                    throwAPIError(errorMessage.message);
-                })
-            });
-            toggleProteo();
+            
+            if (apiCallList[0].length) {
+                console.log("nb of api calls : "+apiCallList.length);
+                console.log("apiCallList");
+                console.log(apiCallList);
+                var countApiCalls = apiCallList.length;
+                var countCallFinished = 0;
+    //            var lastCall = false;
+                apiCallList.forEach(function(pepList){
+    //                console.log("string length : "+ac.length);
+                    var pepListString = pepList.join(",");
+                    console.log("pep count : "+pepList.length);
+    //                if (callIndex === apiCallList.length-1) lastCall=true;
+
+                    nx.getEntryforPeptide(pepListString).then(function (data) {
+                        pepList.forEach(function (sequence) {
+                            var id = sequence;
+                            var new_data = $.extend(true,[],data);
+                            new_data.forEach(function(d,i){
+                                new_data[i].annotations = d.annotations.filter(function(f){return f.cvTermName === sequence});
+                            })
+                            new_data = new_data.filter(function(d){return d.annotations.length > 0});
+                            if (new_data.length < 1) throwPeptideError(sequence);
+                            else addPeptideBox(new_data, sequence, id, pepListTotal.length);
+                        });
+                        var pepShowed = $("#peptideResult>div:visible:not(.shaft-load3)").length;
+                        $("#countPepShowed").text(pepShowed);
+                        $("#countPepTotal").text(pepShowed);
+                        countCallFinished += 1;
+                        if (countCallFinished === countApiCalls) $(".shaft-load3").remove();
+
+                    }).catch(function(error) {
+                        countCallFinished += 1;
+                        if (countCallFinished === countApiCalls) $(".shaft-load3").remove();
+                        console.log(error.responseText);
+                        var errorMessage = JSON.parse(error.responseText);
+                        throwAPIError(errorMessage.message);
+                    })
+                });
+                toggleProteo();
+            }
         }
         else throwNbError();
     }
