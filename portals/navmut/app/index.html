@@ -23,7 +23,7 @@
             <thead>
                 <tr>
                     <th>Position</th>
-                    <th>Protein Variant</th>
+                    <th>Protein variant</th>
                     <th>Mutation type</th>
                     <th>Mutation origin</th>
                     <th>Phenotype intensity</th>
@@ -37,14 +37,14 @@
 <!--                    <th>Conflicting evidence</th>-->
                     <th>Evidence codes</th>
                     <th class="pubmed-link">Reference</th>
-                    <th>Protein Origin</th>
+                    <th>Protein origin</th>
                     <th>Experimental system</th>
                 </tr>
             </thead>
             <tfoot>
                 <tr>
                     <th>Position</th>
-                    <th>Protein Variant</th>
+                    <th>Protein variant</th>
                     <th>Mutation type</th>
                     <th>Mutation origin</th>
                     <th>Phenotype intensity</th>
@@ -58,7 +58,7 @@
 <!--                    <th>Conflicting evidence</th>-->
                     <th>Evidence codes</th>
                     <th>Reference</th>
-                    <th>Protein Origin</th>
+                    <th>Protein origin</th>
                     <th>Experimental system</th>
                 </tr>
             </tfoot>
@@ -117,7 +117,7 @@
             "columnDefs": [ {
                         "targets": "pubmed-link",
                         "render": function ( data, type, full, row ) {
-                            return '<a href="http://www.ncbi.nlm.nih.gov/pubmed/' + data.replace(/\s+/g, '').split(":")[1] + '" target="_blank">' + data + '</a>';
+                            return '<a href="http://www.ncbi.nlm.nih.gov/pubmed/' + data.replace(/\s+/g, '').split(":")[1] + '" target="_blank">PubMed: ' + data.replace(/\s+/g, '').split(":")[1] + '</a>';
                             }
                         } ]
         });
