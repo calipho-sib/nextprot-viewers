@@ -78,7 +78,7 @@
             {{#publication}} {{#if title}}
             <p><a href="/publication/{{publicationId}}" target="_parent">{{title}}</a></p>{{/if}}
             <p style="color:#337ab7;">{{#each authors}}{{lastName}} {{initials}}. , {{/each}}</p>
-            <p>{{journal}} <strong>{{#journalResourceLocator}}{{medAbbrev}} {{/journalResourceLocator}}</strong>, {{firstPage}} - {{lastPage}} ({{publicationYear}}) {{#each dbXrefs}}[{{databaseName}} : {{{linkTo accession resolvedUrl}}}] {{/each}}
+            <p>{{journal}} {{#journalResourceLocator}}{{medAbbrev}} {{/journalResourceLocator}} <strong>{{volume}}</strong>, {{firstPage}} - {{#if lastPage}}{{lastPage}}{{else}}{{firstPage}}{{/if}} ({{publicationYear}}) {{#each dbXrefs}}[{{databaseName}} : {{{linkTo accession resolvedUrl}}}] {{/each}}
             </p>
             {{#if abstractText}}
             <button class="btn btn-primary btn-xs collapsed" type="button" style="margin-left:5px" data-toggle="collapse" data-target="#collapse{{publicationId}}{{../annotId}}" aria-expanded="false" aria-controls="collapse{{publicationId}}{{../annotId}}">
@@ -849,10 +849,10 @@
         }
 
         var annotTypeTemplate = {
-            "GO_MOLECULAR_FUNCTION": "<span class='badge gmf' data-toggle='tooltip' data-placement='top' title='Go Molecular Function'>GO-MF</span>",
-            "GO_CELLULAR_COMPONENT": "<span class='badge gcc' data-toggle='tooltip' data-placement='top' title='Go Cellular Component'>GO-CC</span>",
+            "GO_MOLECULAR_FUNCTION": "<span class='badge gmf' data-toggle='tooltip' data-placement='top' title='GO Molecular Function'>GO-MF</span>",
+            "GO_CELLULAR_COMPONENT": "<span class='badge gcc' data-toggle='tooltip' data-placement='top' title='GO Cellular Component'>GO-CC</span>",
             "PROTEIN_PROPERTY": "<span class='badge gcc' data-toggle='tooltip' data-placement='top' title='Protein Property'>PP</span>",
-            "GO_BIOLOGICAL_PROCESS": "<span class='badge gbp' data-toggle='tooltip' data-placement='top' title='Go Biological process'>GO-BP</span>",
+            "GO_BIOLOGICAL_PROCESS": "<span class='badge gbp' data-toggle='tooltip' data-placement='top' title='GO Biological process'>GO-BP</span>",
             "BINARY_INTERACTION": "<span class='badge pp' data-toggle='tooltip' data-placement='top' title='Binary Interaction' style='z-index:30'>BI</span>",
             "SMALL_MOLECULE_INTERACTION": "<span class='badge smi' data-toggle='tooltip' data-placement='top' title='Small Molecule Interaction'>SMI</span>",
             "MAMMALIAN_PHENOTYPE": "<span class='badge smi' data-toggle='tooltip' data-placement='top' title='Mammalian Phenotype'>MP</span>"
