@@ -64,10 +64,10 @@ body{
     overflow-y: auto;
 }
 .tableHighlight {
-    background-color:rgba(197, 0, 99, 0.2) !important;
+    background-color:rgba(197, 0, 99, 0.1) !important;
 }
 .tableHighlight td{
-    background-color:rgba(197, 0, 99, 0.2) !important;
+    background-color:rgba(197, 0, 99, 0.1) !important;
 }
 
 #navAside a{
