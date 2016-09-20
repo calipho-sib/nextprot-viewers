@@ -21,7 +21,7 @@
                 <button class="btn btn-sm btn-info" type="button" data-toggle="collapse" data-target="#{{cvTermAccessionCode}}" aria-expanded="false" aria-controls="{{cvTermAccessionCode}}">Definition</button>
             </div>
             <div class="col-md-3 col-sm-2 col-sm-offset-1 col-xs-1 col-xs-offset-1">
-                <a class="btn btn-sm" href="/db/term/{{cvTermAccessionCode}}" style="color:#C50063;border:1px solid #C50063;margin-left:30px;">{{cvTermAccessionCode}}</a>
+                <a class="btn btn-sm selectable" href="/db/term/{{cvTermAccessionCode}}" style="color:#C50063;border:1px solid #C50063;margin-left:30px;">{{cvTermAccessionCode}}</a>
             </div>
         </div>
         <div class="collapse" id="{{cvTermAccessionCode}}">
@@ -31,6 +31,8 @@
         </div>
         {{/each}}
     </div>
-</div>
-<hr style="margin:0px 50px 5px"> {{/each}}{{/data}}
+</div> 
+{{/each}}{{#unless @last}}
+<hr style="margin:0px 50px 5px">
+{{/unless}}{{/data}}
 </div>

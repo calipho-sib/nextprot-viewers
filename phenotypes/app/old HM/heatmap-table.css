@@ -1,0 +1,102 @@
+/*
+* @Author: linjinjin
+* @Date:   2016-03-23 18:24:39
+* @Last Modified by:   linjinjin123
+* @Last Modified time: 2016-05-08 20:42:20
+*/
+
+#heatmap-body {
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.heatmap-tree {
+    display: none;
+}
+
+.heatmap-row {
+    border-bottom: solid 1px #d4d4d4;
+    overflow:hidden
+}
+
+.heatmap-rowLabel {
+	display:inline-block;
+	margin-bottom:0px;
+	word-break:break-all;
+	cursor:pointer;
+}
+
+.heatmap-no-cursor {
+    cursor: auto !important;
+}
+
+.heatmap-rowLabel a {
+	margin-left:5px;
+	font-size:12px;
+}
+
+.heatmap-rowLabel .glyphicon{
+    margin-right:5px;
+    font-size:12px;
+}
+
+.heatmap-column {
+    display: inline-block;
+    text-align: center;
+    margin-right: 5px;
+    margin-left: 5px;
+}
+
+.heatmap-group {
+    display: inline-block;
+    text-align: center;
+    margin-right: 5px;
+    margin-left: 5px; 
+}
+
+.heatmap-circle {
+    text-align: center;
+    display: inline-block;
+    width: 10px;
+    height: 10px;
+    -webkit-border-radius: 5px;
+    -moz-border-radius: 5px;
+    border-radius: 5px;
+}
+
+.heatmap-ul {
+    list-style-type: none;
+}
+
+.heatmap-inline {
+    display: inline-block;
+}
+
+/*.heatmap-detail {
+    display: none;
+}*/
+
+.heatmap-zoom:hover {
+    cursor:pointer;
+}
+
+/* sandbox */
+
+.heatmap-info {
+    display: none;
+    text-align: center;
+}
+.glyphicon-refresh-animate {
+    -animation: spin .7s infinite linear;
+    -webkit-animation: spin2 .7s infinite linear;
+}
+
+@-webkit-keyframes spin2 {
+    from { -webkit-transform: rotate(0deg);}
+    to { -webkit-transform: rotate(360deg);}
+}
+
+@keyframes spin {
+    from { transform: scale(1) rotate(0deg);}
+    to { transform: scale(1) rotate(360deg);}
+}

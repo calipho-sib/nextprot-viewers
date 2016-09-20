@@ -1,4 +1,4 @@
-<div id="peptideTableTitle" style="border-bottom: 1px solid #E7EAEC;margin-bottom: 15px;padding-bottom: 5px;">
+<div id="featuresTableTitle" style="border-bottom: 1px solid #E7EAEC;margin-bottom: 15px;padding-bottom: 5px;">
     <div style="display:inline-block;">
             <span class="badge"
                   style="border-radius:70%;border: 2px solid black;color:#C50063;background-color:white;padding:8px 8px;margin-right:10px;vertical-align:middle;">{{featuresLength}}</span>
@@ -9,8 +9,8 @@
         <thead>
         <tr>
             <th class="featName" class="col-md-2">Name</th>
-            <th class="col-md-1"  style="text-align:right">Length</th>
             <th style="text-align:center" class="col-md-2">Position</th>
+            <th class="col-md-1"  style="text-align:right">Length</th>
             <th class="col-md-5">Description</th>
             <th style="text-align:center" colspan="2" class="col-md-2">Evidence</th>
         </tr>
@@ -20,8 +20,8 @@
         {{#each this}}
         <tr id={{id}} class="{{{className category}}} general-info" >
             <td>{{category}}</td>
-            <td style="text-align:right">{{length}}</td>
             <td style="text-align:center"><a class="featPosition" href="javascript:;">{{{position length}}}</a></td>
+            <td style="text-align:right">{{length}}</td>
             <td>{{{link}}}{{#if variant}}{{#each source}}{{#if externalDb}}{{#if crossRef}}{{#crossRef}} ; {{dbName}} : {{{linkTo name url}}} {{/crossRef}}{{/if}}{{/if}}{{/each}}{{/if}}{{#unless proteotypicity}} <span class="nonProteotypic">found in other entries</span>{{/unless}}
                 {{#if quality}}<span style="background:#B6BCC5;color:#fff;padding: 0px 5px;">•</span><span style="background:#DEDEDE;color:#999;padding: 0px 5px;">{{quality}}</span>{{/if}}</td>
             {{#if source}}
@@ -34,15 +34,17 @@
         </tr>
         <tr class="{{{className category}}} detailed-info">
             <td colspan="6" style="word-break: break-all">{{#each source}}<div class="evidenceLine"><div class="evidenceArrow">&#10549;</div>  Evidence {{math @index 1}}<span class="evidenceCodeName">{{evidenceCodeName}}</span>
-            <span class="evidenceSource">{{assignedBy}}</span>{{#if publicationMD5}}{{#if abstract}}<button class="btn btn-primary btn-xs" type="button" style="margin-left:5px" data-toggle="collapse" data-target="#collapse{{pubId}}{{../../../id}}"  aria-expanded="false" aria-controls="collapse{{pubId}}{{../../../id}}">
-                    abstract
-                </button>{{/if}}{{/if}}</div>
-                <div style="padding-left:10px;border-left:1px solid darkgray;margin-right:10px;">
+            <span class="evidenceSource">{{assignedBy}}</span></div>
+                <div {{#if publicationMD5}}class="evidence-publication"{{/if}} style="padding-left:10px;border-left:1px solid darkgray;margin-right:10px;">
                     {{#if publicationMD5}}
                     {{#if title}}<p>{{{title}}}</p>{{/if}}
                     <p style="color:#6a90d9;">{{#each authors}}{{lastName}} {{initials}}. , {{/each}}</p>
                     <p>{{journal}} <strong>{{volume}}</strong>, {{firstPage}} - {{lastPage}} ({{year}}) {{#each dbXrefs}}[{{name}} : {{{linkTo accession url}}}] {{/each}}</p>
-                    {{#if abstract}}<div class="collapse" id="collapse{{pubId}}{{../../../id}}" style="margin-top:5px;">
+                    {{#if abstract}}
+                    <button class="btn btn-primary btn-xs collapsed" type="button" data-toggle="collapse" data-target="#collapse{{pubId}}{{../../../id}}"  aria-expanded="false" aria-controls="collapse{{pubId}}{{../../../id}}">
+                        <span class="pubDisplayStatus"></span> abstract
+                    </button>
+                <div class="collapse" id="collapse{{pubId}}{{../../../id}}" style="margin-top:5px;">
                         <div class="panel panel-info"><div class="panel-heading">
                             <h3 class="panel-title">Abstract</h3>
                         </div><div class="panel-body">{{abstract}}</div></div>

@@ -5,7 +5,10 @@
     <div class="col-md-6" style="padding-right:0px;">
         <div class="panel panel-default params">
             <div class="panel-heading">
-                <h3 id="currentStructure">Params</h3>
+                <div style="display:inline-block;">
+                    <span id="structureCount" class="badge"></span>
+                </div>
+                <h4>3D Structures</h4>
             </div>
             <div class="panel-body">
                 <div id="pdbForm">
@@ -26,19 +29,19 @@
                     </div>
                 </div>
                 <div class="clickLog">
-                    <h4>3D STRUCTURES </h4>
+                    <h4>3D STRUCTURES</h4>
                     <!--                        <ul id="eventTriggered"></ul>-->
                     <div>
                         <div class="pdbTableContainer">
                             <table id="pdbTable" class="table-striped" style="width:100%;">
                                 <thead>
                                     <tr>
-                                        <th class="pdbName">Name</th>
+                                        <th class="pdbName">PDB</th>
                                         <th>Method</th>
-                                        <th>Resolution</th>
-                                        <th>Chain</th>
+                                        <th>Resolution (&#8491;)</th>
+                                        <th>Chain(s)</th>
                                         <th>Position</th>
-                                        <th class="pdbLinks">Links</th>
+                                        <th class="pdbLinks">Further links</th>
                                     </tr>
                                 </thead>
                             </table>

@@ -560,26 +560,6 @@
         "metadata": {"name": "Sequence"}
       },
       {
-        "APIRef": "interacting-region",
-        "metadata": {
-          "name": "Interacting region",
-          "className": "intregion",
-          "color": "#B3C2F0",
-          "type": "rect",
-          "filter": "Region"
-        }
-      },
-      {
-        "APIRef": "miscellaneous-region",
-        "metadata": {
-          "name": "Region",
-          "className": "miscregion",
-          "color": "#B3C2B3",
-          "type": "rect",
-          "filter": "Region"
-        }
-      },
-      {
         "APIRef": "domain",
         "metadata": {
           "name": "Domain",
@@ -665,6 +645,26 @@
           "name": "Composition bias",
           "className": "biased",
           "color": "#B3D1E1",
+          "type": "rect",
+          "filter": "Region"
+        }
+      },
+      {
+        "APIRef": "interacting-region",
+        "metadata": {
+          "name": "Interacting region",
+          "className": "intregion",
+          "color": "#B3C2F0",
+          "type": "rect",
+          "filter": "Region"
+        }
+      },
+      {
+        "APIRef": "miscellaneous-region",
+        "metadata": {
+          "name": "Region",
+          "className": "miscregion",
+          "color": "#B3C2B3",
           "type": "rect",
           "filter": "Region"
         }

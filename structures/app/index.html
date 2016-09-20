@@ -10,6 +10,7 @@
     <script src="../../lib/triple-viewer/dist/triple-viewer.bundle.js"></script>
     <script src="../../lib/bio-viz/dist/bio-viz.min.js"></script>
     <script src="../../lib/additional-infos/dist/additional-infos.min.js"></script>
+    <!-- Google Analytics --> <script type="text/javascript" src="../../lib/ga.js"></script>
 </head>
 
 <body>
@@ -36,7 +37,7 @@
         <div id="nx-keywords" class="col-md-12" style="background-color:white;"></div>
     </div>
     <div class="row" style="margin: 0px 20px 15px;">
-        <div id="nx-xrefs" class="col-md-12" style="background-color:white;"></div>
+        <div id="nx-xrefs" class="col-md-12" style="background-color:white;margin-bottom:20px;"></div>
     </div>
 </body>
 <script>
@@ -49,6 +50,17 @@
 
     $('head').append('<base target="_parent" href="' + url + '" />');
     console.log(url);
+    
+    function fixClipPaths(svg, restore) {
+        Array.prototype.forEach.call(svg.querySelectorAll('*[clip-path]'), function (el) {
+            var clipUrl = el.getAttribute('clip-path');
+            if(!el.getAttribute('data-original-clip-path')) {
+                el.setAttribute('data-original-clip-path', clipUrl);
+            }
+
+            el.setAttribute('clip-path', 'url('+ (!restore ? document.location.href : '') + el.getAttribute('data-original-clip-path').substr(4));
+        });
+    }
 
     ($(function () {
 
@@ -106,10 +118,15 @@
 
                         // link TV with BV
                         tv.onSelection(function (d) {
-                            console.log("method of TV");
-                            console.log(d);
+                            console.log("Feature selection : " + d.start + "-" + d.end);
                             bv.highlightFromRange([d.start, d.end]);
                         })
+                        
+                        // link SV in TV with BV
+                        tv.onSequenceSelected(function(d){
+                            console.log("Mouse selection : " + d.start + "-" + d.end);
+                            bv.highlightFromRange([d.start, d.end]);
+                        });
                         
                         // if isoform change, reload bv table and tv-bv interactions
                         tv.onIsoChange(function(isoName){
@@ -119,6 +136,8 @@
                             })
                         })
                         
+                        // Fix clippath on FV when base change
+                        fixClipPaths($("#chart svg")[0]);
                         
 
                         // init additional infos

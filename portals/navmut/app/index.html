@@ -5,13 +5,14 @@
     <script src="js/iframeResizer.js"></script>
     <link rel="stylesheet" type="text/css" href="css/datatables.min.css">
     <link rel="stylesheet" href="css/style.css" />
+    <!-- Google Analytics --> <script type="text/javascript" src="../../lib/ga.js"></script>
 </head>
 
 <body class="data phenotypeData">
         <div>
             <div class="row header" style="display:none">
                 <div class="col-lg-4 col-md-3" style="padding-right:0px;">
-                    <h1 id="gaussSubtitle"><span id="title2"><span class="hidden-md"></span>NavMut <span class="hidden-md"> portal</span></span></h1>
+                    <h1 id="gaussSubtitle"><span id="title2"><span class="hidden-md"></span>Ion channels variants <span class="hidden-md"> portal</span></span></h1>
                 </div>
             </div>
         </div>
@@ -22,7 +23,7 @@
             <thead>
                 <tr>
                     <th>Position</th>
-                    <th>Protein Variant</th>
+                    <th>Protein variant</th>
                     <th>Mutation type</th>
                     <th>Mutation origin</th>
                     <th>Phenotype intensity</th>
@@ -36,14 +37,14 @@
 <!--                    <th>Conflicting evidence</th>-->
                     <th>Evidence codes</th>
                     <th class="pubmed-link">Reference</th>
-                    <th>Protein Origin</th>
+                    <th>Protein origin</th>
                     <th>Experimental system</th>
                 </tr>
             </thead>
             <tfoot>
                 <tr>
                     <th>Position</th>
-                    <th>Protein Variant</th>
+                    <th>Protein variant</th>
                     <th>Mutation type</th>
                     <th>Mutation origin</th>
                     <th>Phenotype intensity</th>
@@ -57,7 +58,7 @@
 <!--                    <th>Conflicting evidence</th>-->
                     <th>Evidence codes</th>
                     <th>Reference</th>
-                    <th>Protein Origin</th>
+                    <th>Protein origin</th>
                     <th>Experimental system</th>
                 </tr>
             </tfoot>
@@ -94,15 +95,9 @@
                     },
                 {
                     extend: 'csvFlash',
-                    fieldSeparator: '\t',
-                    extension: '.tsv',
+                    fieldSeparator: ',',
+                    extension: '.csv',
                     text: '<span><i class="glyphicon glyphicon-floppy-save"></i></span><span style="margin-left:5px;">CSV</span>',
-                    className: 'tableButton'
-                }, 
-                {
-                    extend: 'pdf',
-                    fieldSeparator: '\t',
-                    text: '<span><i class="glyphicon glyphicon-blackboard"></i></span><span style="margin-left:5px;">PDF</span>',
                     className: 'tableButton'
                 }, 
                 {
@@ -122,7 +117,7 @@
             "columnDefs": [ {
                         "targets": "pubmed-link",
                         "render": function ( data, type, full, row ) {
-                            return '<a href="http://www.ncbi.nlm.nih.gov/pubmed/' + data.replace(/\s+/g, '').split(":")[1] + '" target="_blank">' + data + '</a>';
+                            return '<a href="http://www.ncbi.nlm.nih.gov/pubmed/' + data.replace(/\s+/g, '').split(":")[1] + '" target="_blank">PubMed: ' + data.replace(/\s+/g, '').split(":")[1] + '</a>';
                             }
                         } ]
         });
