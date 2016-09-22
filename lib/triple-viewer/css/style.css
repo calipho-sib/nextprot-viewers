@@ -31,6 +31,35 @@ body {
     border: 1px solid #cfd9db;
     border-radius:4px;
 }
+#seqViewer .seqInfos{
+    display: inline-block;
+    vertical-align: middle;
+    font-size:11px;
+    text-align: center;
+    float:right;
+    margin: 10px 5px 0px;
+}
+#seqViewer .seqInfos>.seqLabel{
+    font-weight: 900;
+    color:#777;
+}
+#seqViewer .seqMass>.seqValue{
+    color:white;
+    background-color:#f8ac59;
+    padding:3px 5px;
+    text-align: center;
+    border-radius:3px;
+    float:right;
+}
+#seqViewer .seqPl>.seqValue{
+    color:white;
+    background-color:#23c6c8;
+    padding:3px 5px;
+    text-align: center;
+    border-radius:3px;
+    float:right;
+}
+
 #nx-keywords {
     background:#fff;
     padding:5px 15px;

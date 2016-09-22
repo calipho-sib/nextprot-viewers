@@ -1,3 +1,76 @@
+/* COMMON NP2 TEMPLATE FOR EXTERNAL LINKS : N°1 */
+/* ---------------------------------------------*/
+/*
+.extLink{
+    border:1px solid #ddd;
+    border-radius: 3px;
+    color:#333;
+}
+*/
+/*
+.extLink{
+    border: 1px solid #1194A6;
+    text-shadow: 0px 1px #1194A6;
+    box-shadow: inset 0px 1px rgba(250,250,250,0.15);
+    border-radius: 3px;
+    font-weight: 500;
+    color: #ffffff;
+    background-color: #12A4B8;
+    border-radius: 2px;
+}
+.extLink{
+    border: 1px solid #26C542;
+    text-shadow: 0px 1px #26C542;
+    box-shadow: inset 0px 1px rgba(250,250,250,0.15);
+    border-radius: 3px;
+    font-weight: 500;
+    color: #ffffff;
+    background-color: #4CCF63;
+    border-radius: 2px;
+}
+.extLink {
+    border: 1px solid #00B720;
+    text-shadow: 0px 1px #00B720;
+    box-shadow: inset 0px 1px rgba(250,250,250,0.15);
+    border-radius: 3px;
+    font-weight: 500;
+    color: #ffffff;
+    background-color: #4CCF63;
+    border-radius: 2px;
+}
+.extLink {
+    border: 1px solid #71079F;
+    text-shadow: 0px 1px #71079F;
+    box-shadow: inset 0px 1px rgba(250,250,250,0.15);
+    border-radius: 3px;
+    font-weight: 500;
+    color: #ffffff;
+    background-color: #994ABB;
+    border-radius: 2px;
+}
+.extLink:hover{
+    background-color: #8428AC;
+}
+.extLink:active{
+    background-color: #71079F;
+}
+
+
+.extLink:focus, .extLink:hover, .extLink:active{
+    color:white;
+}
+*/
+.extLink:before {
+    content: "\f08e";
+    font-family: "FontAwesome";
+    font-size: 11px;
+    margin-right: 5px;
+    vertical-align: middle;
+}
+
+/* ---------------------------------------------*/
+/* END COMMON NP2 TEMPLATE */
+
 h1 {
     margin: 20px auto 30px;
     text-align: center;
