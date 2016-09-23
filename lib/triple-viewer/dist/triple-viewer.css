@@ -37,6 +37,7 @@ body {
     border: 1px solid #cfd9db;
     border-radius:4px;
 }
+
 #seqViewer .seqInfos{
     display: inline-block;
     vertical-align: middle;
@@ -66,6 +67,12 @@ body {
     float:right;
 }
 
+#nx-annotations {
+    background:#fff;
+    padding:5px 15px;
+    border: 1px solid #cfd9db;
+    border-radius:4px;
+}
 #nx-keywords {
     background:#fff;
     padding:5px 15px;

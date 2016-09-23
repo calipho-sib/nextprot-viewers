@@ -1,4 +1,41 @@
 {
+  "function": {
+    "annotations":[
+      "FUNCTION-INFO",
+      "CATALYTIC-ACTIVITY",
+      "COFACTOR",
+      "ENZYME-REGULATION",
+      "GO-MOLECULAR-FUNCTION",
+      "GO-BIOLOGICAL-PROCESS",
+      "PATHWAY",
+      "ALLERGEN",
+      "CAUTION",
+      "MISCELLANEOUS"
+    ],
+    "keywords": {
+      "type" : ["Biological process","Molecular function", "Technical term"],
+      "exceptions": ["KW-0002", "KW-0181", "KW-0903", "KW-0374", "KW-0582"]
+    },
+    "xrefs": ["BRENDA", "CAZy", "KEGGPathway", "MEROPS", "PeroxiBase",
+      "BioCyc", "Reactome","Pathway_Interaction_DB", "REBASE", "TCDB",
+      "GeneWiki", "SABIO-RK", "GenomeRNAi", "GuidetoPHARMACOLOGY", "PRO","MoonProt","ESTHER"]
+  },
+  "medical": {
+    "annotations":[
+      "DISEASE",
+      "PHARMACEUTICAL",
+      "MISCELLANEOUS"
+    ],
+    "keywords": ["Disease", "Technical term"],
+    "features":[
+      {
+        "APIRef": "sequence-variant",
+        "metadata": {"name": "Sequence variant"}
+      }
+    ],
+    "xrefs":["GeneReviews", "CTD", "MIM", "DrugBank", "PharmGKB", "Orphanet",
+      "Allergome", "DMDM", "BioMuta"]
+  },
   "proteomics": {
     "features": [
       {

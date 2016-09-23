@@ -1,0 +1,71 @@
+<div id="function-header" class="category-header">
+    <div class="badge-container">
+        <span class="badge counter-badge">{{count}}</span>
+    </div>
+    <h4 id="function-title" class="category-title">Function</h4>
+</div>
+<div class="category-main">
+    {{#data}}{{#each this}}
+    <div class="row category-row">
+        <div class="col-lg-1 col-md-12 col-sm-12 col-xs-12">
+            <h4 class="hidden-sm hidden-xs annotation-category-title text-align-right"> {{@key}}</h4>
+            <h4 class="hidden-lg hidden-md annotation-category-title text-align-left"> {{@key}}</h4>
+        </div>
+        <div class="col-lg-11 col-md-10 col-sm-12 col-xs-12">
+            {{#each this}}
+            <div class="row annotation-row">
+                <div class="col-lg-10 col-md-10 col-sm-9 col-xs-9">
+                    <div class="annotation-title-container">
+                        {{#if cvTermAccessionCode}}
+                        <p class="annotation-title col-lg-9 col-sm-7 col-xs-6">{{{boldPattern description "Contributes to"}}}</p>
+                        <div class="annotation-labels col-lg-3 col-md-4 col-sm-5 col-xs-6">
+                            <button class="btn btn-sm btn-info" type="button" data-toggle="collapse" data-target="#collapse{{substring cvTermAccessionCode 3}}" aria-expanded="false" aria-controls="collapse{{substring cvTermAccessionCode 3}}">Definition</button>
+                            <a class="accession-code-link btn btn-sm selectable" href="/term/{{cvTermAccessionCode}}">{{cvTermAccessionCode}}</a>
+                        </div>
+                        {{/if}}
+                        {{#if parentXref}}
+                            <p class="annotation-title col-lg-9 col-sm-7 col-xs-6">{{description}}</p>
+                            <div class="col-lg-3 col-md-4 col-sm-5 col-xs-6 right">
+                                <a class="accession-code-link btn btn-sm selectable" href="{{parentXref.resolvedUrl}}">{{parentXref.accession}}</a>
+                            </div>
+                        {{/if}}
+                        {{#unlessCond cvTermAccessionCode '||' parentXref}}
+                            <p class="annotation-title">{{description}}</p>
+                        {{/unlessCond}}
+                    </div>
+                    <div class="collapse" id="collapse{{substring cvTermAccessionCode 3}}">
+                        <div class="well blue-well">
+                            {{cvTermDescription}}
+                        </div>
+                    </div>
+                    <div class="collapse hidden-xs {{id}} evidence-container">
+                        {{#each evidences}}
+                            {{> evidence source=assignedBy}}
+                            {{> publication parentId=../id}}
+                        {{/each}}
+                    </div>
+                </div>
+                <div class="col-lg-2 col-md-3 col-sm-3 col-xs-3">
+                <div class="show-references-button">
+                    <a class="btn" type="button" data-toggle="collapse" data-target=".{{id}}" aria-expanded="false" aria-controls="{{id}}">
+                        <p class="show-references-button-counter">{{evidences.length}}</p>
+                        <p class="show-references-button-label">ref</p>
+                    </a><div class="reference-label-container">
+                        {{#each evidenceSources}}
+                        <div class="reference-label">{{this}}</div>
+                        {{/each}}
+                    </div>
+                </div>
+                </div>
+            </div>
+            <div class="collapse hidden-lg hidden-md hidden-sm {{id}} evidence-container">
+                {{#each evidences}}
+                    {{> evidence source=db}}
+                {{/each}}
+            </div>
+            {{/each}}
+        </div>
+    </div>
+    {{/each }}
+    {{/data}}
+</div>
