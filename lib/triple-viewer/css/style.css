@@ -92,6 +92,66 @@ body {
     }
 }
 
+.filter-block>div{
+    box-shadow: 0px 2px 3px -1px rgba(0,0,0,0.15);
+    margin-top:15px;
+    display: inline-block;
+}
+.filter-heading{
+    display:inline-block;
+    background:#F8F8F8;
+    padding:0px 15px;
+    height:100%;
+    border-color:#F8F8F8;
+    border:1px #ddd solid;
+    vertical-align: middle;
+}
+.filter-heading .fa{
+    margin-right:3px;
+}
+.filter-heading h5{
+    display: inline-block;
+    color: #777;
+    padding: 0px;
+    height: 30px;
+    margin: 0px;
+    line-height: 30px;
+}
+.filter-body{
+    display:inline-block;
+    background:#F8F8F8;
+    padding:0px 15px 0px 0px;
+    height:32px;
+    border-color:#F8F8F8;
+    border:1px #ddd solid;
+    margin-left:-1px;
+    vertical-align: middle;
+}
+#filtering{
+    margin-right:10px;
+    font-size:12px;
+}
+#allFilters{
+    border:0px;
+    height:30px;
+    border-right:1px solid #ddd;
+    border-radius:0px;
+    color: #337ab7;
+    text-decoration: underline;
+}
+.filter-box{
+    position: relative;
+    display: inline-block;
+    padding-left: 10px;
+    margin-bottom: 0;
+    font-weight: 400;
+    vertical-align: middle;
+    cursor: pointer;
+}
+.filter-box input{
+    margin-right:5px;
+}
+
 #nx-isoformChoice>div>.nav-tabs>li{
     margin-bottom:3px;
 }
