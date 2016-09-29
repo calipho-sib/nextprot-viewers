@@ -44,7 +44,7 @@
                 {{#each source}}
                     {{> evidence codeName=evidenceCodeName source=assignedBy accession=crossRef.name url=crossRef.url}}
                     <div class="{{#if publicationMD5}}evidence-publication{{/if}}">
-                        {{> publication parentId=../../id}}
+                        {{> publication parentId=(concat id ../id)}}
                     </div>
                 {{/each}}
             </td>
