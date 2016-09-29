@@ -214,5 +214,6 @@ table#featTable>tbody>tr>td {
   border-top: 0;
   border-bottom: 1px solid #ddd;
 }
-table#featTable>th {
+table#featTable>tbody>tr>th {
+  padding: 0 8px;
 }
