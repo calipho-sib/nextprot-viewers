@@ -147,11 +147,11 @@
                         aI.compileKeyword(entry, nx, keywords, "#nx-keywords");
                         aI.compileXref(entry, nx, xrefs, "#nx-xrefs");
 
-                    }).catch(function (err) {
+                    });//.catch(function (err) {
                         // catch any error that happened so far
-                        console.log("Argh, broken: " + err.message);
-                        console.log("Error at line : " + err.stack);
-                    });
+                        //console.log("Argh, broken: " + err.message);
+                        //console.log("Error at line : " + err.stack);
+                    //});
 
             });
         });

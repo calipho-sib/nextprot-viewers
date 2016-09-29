@@ -1,7 +1,11 @@
-<div class="evidence-container">
-    <div class="evidence-arrow">&#10549;</div>  Evidence {{math @index 1}}
-    <span class="evidence-label evidence-code-name">{{codeName}}</span><span class="evidence-label evidence-source">{{source}}</span>
-</div>
-<div class="evidence-accession">
-    <a href={{url}}>{{accession}}</a>
-</div>
+{{#if codeName}}
+    <div class="evidence-container">
+        <div class="evidence-arrow">&#10549;</div>  Evidence {{math @index 1}}
+        <span class="prefix-label evidence-code-name">{{codeName}}</span><span class="prefix-label evidence-source">{{source}}</span>
+    </div>
+    {{#if accession}}
+        <div class="evidence-accession">
+            <p><a href="{{url}}" class="extLink" target='_blank'>{{accession}}</a></p>
+        </div>
+    {{/if}}
+{{/if}}

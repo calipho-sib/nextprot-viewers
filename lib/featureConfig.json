@@ -709,7 +709,7 @@
       {
         "APIRef": "topological-domain",
         "metadata": {
-          "name": "Top domain",
+          "name": "Topological domain",
           "className": "topodomain",
           "color": "#A5DBA5",
           "type": "rect",

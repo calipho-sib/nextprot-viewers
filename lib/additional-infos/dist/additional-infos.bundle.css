@@ -90,23 +90,24 @@
   border-radius: 2px;
 }
 .evidence-container {
+  margin: 15px 0 0 0;
   padding-left: 10px;
-  margin: 15px 0 15px 0;
 }
 .evidence-arrow {
   transform:rotate(180deg);
   display:inline-block;
   font-weight: 900;
 }
-.evidence-label {
+.prefix-label {
   display:inline-block;
   padding:2px 6px;
-  margin-bottom:3px;
+  margin-bottom: 3px;
 }
 .evidence-code-name {
   background-color:#7cba0f;
   color:white;
   border-radius:2px 0px 0px 2px;
+  margin-left: 5px;
 }
 .evidence-source {
   background-color: #dedede;
@@ -114,9 +115,9 @@
   border-radius: 0px 2px 2px 0px;
 }
 .evidence-accession {
-  padding-left:10px;
   border-left:1px solid darkgray;
-  margin:10px 0px;
+  padding: 0px 15px;
+  margin:0px 10px;
 }
 .blue-well {
   background-color:rgba(91, 192, 222, 0.2);
@@ -124,8 +125,8 @@
 }
 .publication-container {
   padding-left: 15px;
-  margin-top: 10px;
-  margin-bottom: 10px;
+  margin-bottom: 15px;
+  border-left:1px solid darkgray;
 }
 .hyperlink-blue {
   color:#337ab7;
@@ -158,6 +159,42 @@
 .collapse {
   margin-top: 5px;
 }
+.table-section-header {
+  background: white;
+  font-size: 120%;
+  padding: 0 8px;
+}
+.section-scroller {
+  height:500px;
+  overflow: auto;
+}
+.quality-pointer {
+  color:#fff;
+  border-radius: 2px 0px 0px 2px;
+  margin-left: 5px;
+}
+.pointer-gold {
+  background: #ba8604;
+}
+.pointer-silver {
+  background:#B6BCC5;
+}
+.quality-label {
+  text-transform: capitalize;
+  border-radius: 0px 2px 2px 0px;
+}
+.label-gold {
+  background:#DAA520;
+  color: #fff;
+}
+.label-silver {
+  background:#DEDEDE;
+  color:#999;
+}
+
+.grey-x {
+  color: #999;
+}
 .right {
   float: right;
 }
@@ -167,6 +204,15 @@
 .text-align-left {
   text-align: left;
 }
+.text-align-center {
+  text-align: center;
+ }
 #nx-annotations {
   min-width: 620px;
+}
+table#featTable>tbody>tr>td {
+  border-top: 0;
+  border-bottom: 1px solid #ddd;
+}
+table#featTable>th {
 }

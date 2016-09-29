@@ -24,6 +24,7 @@ body {
     border-radius:4px;
 }
 #featuresTable {
+    font-size:11px;
     background:#fff;
     padding:5px 15px;
     height:600px;
@@ -233,7 +234,8 @@ body{
 }
 .evidenceNumber{
     background:#7CBA0F;
-    padding:3px 7px;
+    padding:6px 10px;
+    border-radius: 2px;
     color:white;
     vertical-align:top;
     cursor: pointer;
@@ -276,7 +278,12 @@ body{
     padding-right: 5px;
 }
 
-
+.table-row-evidence {
+    word-break: break-all;
+}
+.evidence-publication{
+    padding-left: 10px;
+}
 .evidence-publication button .pubDisplayStatus:before {
     content:"Hide";
     display:inline-block;
