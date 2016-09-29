@@ -3,7 +3,7 @@
         {{#publication}}
         {{#if title}}<p><a href="{{localUrl}}"  target='_parent'>{{title}}</a></p>{{/if}}
         <p><span class="hyperlink-blue">{{#each authors}}{{lastName}} {{initials}}. , {{/each}}</span>
-        {{journal}} <strong>{{#journalResourceLocator}}{{medAbbrev}} {{/journalResourceLocator}}</strong>, {{firstPage}} - {{lastPage}} ({{publicationYear}}) {{#each dbXrefs}}[{{databaseName}} : <a href="{{resolvedUrl}}" class="extLink" target='_blank'>{{accession}}</a>] {{/each}}
+        {{journal}} <strong>{{#journalResourceLocator}}{{medAbbrev}} {{/journalResourceLocator}}</strong>, {{firstPage}} {{#if lastPage}}- {{lastPage}}{{/if}} ({{publicationYear}}) {{#each dbXrefs}}[{{databaseName}} : <a href="{{resolvedUrl}}" class="extLink" target='_blank'>{{accession}}</a>] {{/each}}
         </p>
         {{#if abstractText}}
         <button class="btn btn-primary btn-xs collapsed" type="button" data-toggle="collapse" data-target="#collapse{{publicationId}}{{../parentId}}" aria-expanded="false" aria-controls="collapse{{publicationId}}{{../parentId}}">
