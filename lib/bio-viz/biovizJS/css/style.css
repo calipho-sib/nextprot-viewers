@@ -4,6 +4,19 @@ html, body {
     margin:0;
 }
 
+.biovizApp {
+    display: flex;
+    display: -webkit-flex; /* Fix webkit based browser flex behavior */
+    flex-direction: column;
+    -webkit-flex-direction: column;
+}
+
+#biovizFrame {
+    flex: 1 1 auto;
+    -webkit-flex: 1 1 auto;
+    width: 100%;
+}
+
 .noselect {
   -webkit-touch-callout: none; /* iOS Safari */
   -webkit-user-select: none;   /* Chrome/Safari/Opera */
