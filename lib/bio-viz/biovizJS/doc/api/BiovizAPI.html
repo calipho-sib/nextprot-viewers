@@ -50,10 +50,6 @@
             </li>
             
             <li>
-              <a href="global.html#ObjectTypeID">ObjectTypeID</a>
-            </li>
-            
-            <li>
               <a href="global.html#RepresentationTypeID">RepresentationTypeID</a>
             </li>
             
@@ -1394,145 +1390,6 @@ Do not use when using a deployed BiovizJS App
   <dd>
     
 <span class="param-type">Array</span>
-
-
-  </dd>
-</dl>
-
-
-        
-    
-    
-</dd>
-
-        
-            
-<dt>
-    <h4 class="name" id="getMoleculeType"><span class="type-signature"></span>getMoleculeType<span class="signature">(selectionObject)</span><span class="type-signature"> &rarr; {String}</span></h4>
-    
-    
-</dt>
-<dd>
-    
-    
-    <div class="description">
-        Get the molecule type of an object from a selection
-    </div>
-    
-
-    
-    
-    
-    
-    
-        <h5>Parameters:</h5>
-        
-<div class="params-table-container">
-  <table class="params table table-striped">
-      <thead>
-    <tr>
-      
-      <th>Name</th>
-      
-  
-      <th>Type</th>
-  
-      
-  
-      
-  
-      <th class="last">Description</th>
-    </tr>
-    </thead>
-  
-    <tbody>
-    
-  
-          <tr>
-              
-                  <td class="name"><code>selectionObject</code></td>
-              
-  
-              <td class="type">
-              
-                  
-<span class="param-type">Object3D</span>
-
-
-              
-              </td>
-  
-              
-  
-              
-  
-              <td class="description last">The object to check</td>
-          </tr>
-  
-    
-    </tbody>
-  </table>
-</div>
-
-    
-    
-    
-<dl class="details">
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
-
-
-  
-
-  
-
-  
-
-  
-</dl>
-
-    
-    
-
-    
-
-    
-    
-    
-    
-    
-    <h5>Returns:</h5>
-    
-            
-<div class="param-desc">
-    The type of the object
-</div>
-
-
-
-<dl>
-  <dt>
-    Type
-  </dt>
-  <dd>
-    
-<span class="param-type">String</span>
 
 
   </dd>
@@ -3576,7 +3433,7 @@ TODO : delete a particular label</td>
         
             
 <dt>
-    <h4 class="name" id="loadLocalStructure"><span class="type-signature"></span>loadLocalStructure<span class="signature">(structureID, alias)</span><span class="type-signature"></span></h4>
+    <h4 class="name" id="loadLocalStructure"><span class="type-signature"></span>loadLocalStructure<span class="signature">(structureID)</span><span class="type-signature"></span></h4>
     
     
 </dt>
@@ -3606,8 +3463,6 @@ TODO : delete a particular label</td>
       <th>Type</th>
   
       
-      <th>Argument</th>
-      
   
       
   
@@ -3633,51 +3488,10 @@ TODO : delete a particular label</td>
               </td>
   
               
-                  <td class="attributes">
-                  
-  
-                  
-  
-                  
-                  </td>
-              
   
               
   
               <td class="description last">Identifier or URL of the structure we want load</td>
-          </tr>
-  
-    
-  
-          <tr>
-              
-                  <td class="name"><code>alias</code></td>
-              
-  
-              <td class="type">
-              
-                  
-<span class="param-type">String</span>
-
-
-              
-              </td>
-  
-              
-                  <td class="attributes">
-                  
-  
-                  
-                      &lt;nullable><br>
-                  
-  
-                  
-                  </td>
-              
-  
-              
-  
-              <td class="description last">Alias of the loaded structure</td>
           </tr>
   
     
@@ -3735,7 +3549,7 @@ TODO : delete a particular label</td>
         
             
 <dt>
-    <h4 class="name" id="loadStructure"><span class="type-signature"></span>loadStructure<span class="signature">(structureID, alias)</span><span class="type-signature"></span></h4>
+    <h4 class="name" id="loadStructure"><span class="type-signature"></span>loadStructure<span class="signature">(structureID)</span><span class="type-signature"></span></h4>
     
     
 </dt>
@@ -3765,8 +3579,6 @@ TODO : delete a particular label</td>
       <th>Type</th>
   
       
-      <th>Argument</th>
-      
   
       
   
@@ -3792,51 +3604,10 @@ TODO : delete a particular label</td>
               </td>
   
               
-                  <td class="attributes">
-                  
-  
-                  
-  
-                  
-                  </td>
-              
   
               
   
               <td class="description last">Identifier or URL of the structure we want load</td>
-          </tr>
-  
-    
-  
-          <tr>
-              
-                  <td class="name"><code>alias</code></td>
-              
-  
-              <td class="type">
-              
-                  
-<span class="param-type">String</span>
-
-
-              
-              </td>
-  
-              
-                  <td class="attributes">
-                  
-  
-                  
-                      &lt;nullable><br>
-                  
-  
-                  
-                  </td>
-              
-  
-              
-  
-              <td class="description last">Alias of the loaded structure</td>
           </tr>
   
     
@@ -4676,7 +4447,7 @@ TODO : delete a particular label</td>
   
               
   
-              <td class="description last">Identifier of the option. Option can be : 'urlTemplate' or 'loadPDBX'</td>
+              <td class="description last">Identifier of the option</td>
           </tr>
   
     
@@ -5536,138 +5307,6 @@ TODO : delete a particular label</td>
     
 </dd>
 
-        
-            
-<dt>
-    <h4 class="name" id="takeScreenshot"><span class="type-signature"></span>takeScreenshot<span class="signature">()</span><span class="type-signature"></span></h4>
-    
-    
-</dt>
-<dd>
-    
-    
-    <div class="description">
-        Take a screenshot of the scene and open a new window
-    </div>
-    
-
-    
-    
-    
-    
-    
-    
-    
-<dl class="details">
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
-
-
-  
-
-  
-
-  
-
-  
-</dl>
-
-    
-    
-
-    
-
-    
-    
-    
-    
-    
-    
-    
-</dd>
-
-        
-            
-<dt>
-    <h4 class="name" id="toggleFullscreen"><span class="type-signature"></span>toggleFullscreen<span class="signature">()</span><span class="type-signature"></span></h4>
-    
-    
-</dt>
-<dd>
-    
-    
-    <div class="description">
-        Toggle fullscreen
-    </div>
-    
-
-    
-    
-    
-    
-    
-    
-    
-<dl class="details">
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
-
-
-  
-
-  
-
-  
-
-  
-</dl>
-
-    
-    
-
-    
-
-    
-    
-    
-    
-    
-    
-    
-</dd>
-
         </dl>
     
 
@@ -5694,7 +5333,7 @@ TODO : delete a particular label</td>
           
     <span class="jsdoc-message">
     Documentation generated by <a href="https://github.com/jsdoc3/jsdoc" target="_blank">JSDoc 3.4.0</a>
-    on 2016-09-28T17:19:30+02:00
+    on 2016-07-04T17:55:18+02:00
     </span>
         </footer>
       </div>

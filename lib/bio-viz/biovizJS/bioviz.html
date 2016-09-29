@@ -3,7 +3,6 @@
     <head>
         <title>BioVizJS</title>
         <meta charset="UTF-8">
-        <meta http-equiv="X-UA-Compatible" content="IE=edge, IE=11, IE=10, IE=9, ie=8, ie=7">
         <meta name="viewport" content="width=device-width, initial-scale=1">
 
         <link href="css/bioviz-theme/jquery-ui.min.css" rel="stylesheet" type="text/css"/>
@@ -27,11 +26,7 @@
     <script type="text/javascript" src="library/hammer.min.js"></script>
     <script type="text/javascript" src="library/jquery.hammer.js"></script>
 
-    <script type="text/javascript" src="library/polyfill.js"></script>
-
     <script type="text/javascript" src="library/farbtastic/farbtastic.js"></script>
-
-    <script type="text/javascript" src="library/client.min.js"></script>
 
     <script type="text/javascript" src="library/three.min.js"></script>
     <script type="text/javascript" src="library/three/Detector.js"></script>
@@ -39,7 +34,6 @@
     <script type="text/javascript" src="library/ssao.min.js"></script>
     <script type="text/javascript" src="library/stats.min.js"></script>
     <script type="text/javascript" src="library/numeric-1.2.6.min.js"></script>
-    <script type="text/javascript" src="library/cif.js"></script>
 
     <!-- Includes ThreeJS EffectComposer from ThreeJS example to allow using multiple effects -->
     <script type="text/javascript" src="library/three/postprocessing/EffectComposer.js"></script>
@@ -48,16 +42,10 @@
     <script type="text/javascript" src="library/three/postprocessing/MaskPass.js"></script>
     <script type="text/javascript" src="library/three/postprocessing/RenderPass.js"></script>
     <script type="text/javascript" src="library/three/postprocessing/ShaderPass.js"></script>
-    <script type="text/javascript" src="library/three/postprocessing/SMAAPass.js"></script>
     <script type="text/javascript" src="library/three/shaders/CopyShader.js"></script>
-
-    <script type="text/javascript" src="library/three/shaders/CopyShader.js"></script>
-    <script type="text/javascript" src="library/three/shaders/SMAAShader.js"></script>
-    <script type="text/javascript" src="library/three/shaders/SSAOShader.js"></script>
 
     <!-- ParrallaxBarrierEffect for stereoscopy provided with ThreeJS example -->
-    <script type="text/javascript" src="library/three/effects/ParallaxBarrierEffect.js"></script>
-    <script type="text/javascript" src="library/three/effects/AnaglyphEffect.js"></script>
+    <script type="text/javascript" src="library/three/effects/StereoEffect.js"></script>
 
     <script type="text/javascript" src="bioviz.min.js"></script>
 
@@ -83,8 +71,7 @@
 
             // If app not embedded, create debug context
             if (self == top && biovizAPI.isAvailable()) {
-                biovizAPI.defaultRepresentations = true;
-                biovizAPI.loadStructure('100D');
+                biovizAPI.loadStructure('4MQT');
             }
         });
     </script>
