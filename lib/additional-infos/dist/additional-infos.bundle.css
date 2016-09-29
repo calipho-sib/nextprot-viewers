@@ -100,8 +100,8 @@
 }
 .prefix-label {
   display:inline-block;
-  padding:2px 6px;
-  margin-bottom: 3px;
+  padding:1px 3px;
+  margin-bottom: 1px;
 }
 .evidence-code-name {
   background-color:#7cba0f;
@@ -161,7 +161,7 @@
 }
 .table-section-header {
   background: white;
-  font-size: 120%;
+  font-size: 110%;
   padding: 0 8px;
 }
 .section-scroller {
@@ -210,10 +210,16 @@
 #nx-annotations {
   min-width: 620px;
 }
-table#featTable>tbody>tr>td {
-  border-top: 0;
-  border-bottom: 1px solid #ddd;
-}
 table#featTable>tbody>tr>th {
   padding: 0 8px;
+}
+table#featTable>tbody>tr:first-of-type + tr {
+  border-top: none;
+}
+table#featTable>tbody>tr {
+  border-top: 1px solid #ddd;
+  border-bottom: none;
+}
+table#featTable>tbody>tr>td {
+  border: none;
 }
