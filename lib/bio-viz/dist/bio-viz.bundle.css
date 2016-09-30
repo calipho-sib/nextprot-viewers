@@ -181,13 +181,6 @@ table.dataTable tbody>tr.selected,table.dataTable tbody>tr>.selected{background-
     color:white;
 }
 */
-.extLink:before {
-    content: "\f08e";
-    font-family: "FontAwesome";
-    font-size: 11px;
-    margin-right: 5px;
-    vertical-align: middle;
-}
 
 /* ---------------------------------------------*/
 /* END COMMON NP2 TEMPLATE */
