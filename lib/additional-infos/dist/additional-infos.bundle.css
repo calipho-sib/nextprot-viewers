@@ -117,7 +117,7 @@
 .evidence-accession {
   border-left:1px solid darkgray;
   padding: 0px 15px;
-  margin:0px 10px;
+  margin:5px 10px;
 }
 .blue-well {
   background-color:rgba(91, 192, 222, 0.2);
@@ -125,6 +125,7 @@
 }
 .publication-container {
   padding-left: 15px;
+  margin-top: 5px;
   margin-bottom: 15px;
   border-left:1px solid darkgray;
 }
@@ -167,6 +168,9 @@
 .section-scroller {
   height:500px;
   overflow: auto;
+}
+.quality-label-container {
+  display: inline-block;
 }
 .quality-pointer {
   color:#fff;

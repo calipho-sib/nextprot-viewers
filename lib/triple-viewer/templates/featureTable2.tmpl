@@ -24,7 +24,8 @@
             <td class="text-align-right"><a class="featPosition" href="javascript:;">{{{position length}}}</a></td>
             <td class="text-align-right">{{length}}</td>
             <td>{{{link}}}{{#if variant}}{{#each source}}{{#if externalDb}}{{#if crossRef}}{{#crossRef}} ; {{dbName}} : {{{linkTo name url}}} {{/crossRef}}{{/if}}{{/if}}{{/each}}{{/if}}{{#unless proteotypicity}} <span class="nonProteotypic">found in other entries</span>{{/unless}}
-                {{#if quality}}<div style="display: inline-block;"><span class="prefix-label quality-pointer pointer-{{quality}}">•</span><span class="prefix-label quality-label label-{{quality}}">{{quality}}</span></div>{{/if}}</td>
+                {{> quality-label qualityQualifier=quality}}
+            </td>
             {{#if source}}
             <td class="text-align-right"><span class="evidenceNumber">{{evidenceLength}}</span></td>
             <td>
