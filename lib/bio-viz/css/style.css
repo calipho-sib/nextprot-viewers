@@ -139,10 +139,10 @@ body {
 }
 
 #bioviz {
+    background:#333333;
     height: 600px;
     width: 100%;
 }
-
 #fv {
     text-align: left;
 }
