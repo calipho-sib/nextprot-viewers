@@ -221,3 +221,10 @@ table#featTable>tbody>tr {
 table#featTable>tbody>tr>td {
   border: none;
 }
+.extLink:after {
+   content: "\f08e";
+   font-family: "FontAwesome";
+   font-size: 11px;
+   margin-left: 5px;
+   vertical-align: middle;
+ }
