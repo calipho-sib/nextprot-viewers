@@ -106,15 +106,31 @@
                     .then(function (oneData) {
 
                         var metaData = getMetadataByView(config.structures.features);
-
+                    
                         // init Triple viewer
                         var tv = new TripleViewer(entry);
                         tv.init(oneData, metaData);
                         var current_isoform = tv.getCurrentIsoform();
-
+                    
                         // init Bioviz viewer
                         var bv = new nxBioViz();
                         bv.init("#bioviz-container", current_isoform);
+                    
+                        bv.ifPDBAvailable(function(d){
+                            console.log("detail");
+                            console.log("should say no PDB available");
+                            console.log(d);
+                            if (d.detail.pdb) {
+                                $("#featuresTable").show();
+                                $("#seqViewer").show();
+                                $("#chart *").show();
+                            }
+                            else {
+                                $("#featuresTable").hide();
+                                $("#seqViewer").hide();
+                                $("#chart *").hide();
+                            }
+                        })
 
                         // link TV with BV
                         tv.onSelection(function (d) {

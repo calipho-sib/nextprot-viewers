@@ -32,6 +32,15 @@ body {
     border: 1px solid #cfd9db;
     border-radius:4px;
 }
+.seqHeader{
+    margin-bottom:5px;
+    border-bottom:1px solid #E7EAEC;
+    height:45px;
+}
+.seqHeader>div{
+    display: inline-block;
+    margin:10px;
+}
 
 #seqViewer .seqInfos{
     display: inline-block;
@@ -45,21 +54,25 @@ body {
     font-weight: 900;
     color:#777;
 }
-#seqViewer .seqMass>.seqValue{
+#seqViewer .seqInfos>.seqValue{
     color:white;
-    background-color:#f8ac59;
     padding:3px 5px;
     text-align: center;
     border-radius:3px;
     float:right;
 }
-#seqViewer .seqPl>.seqValue{
-    color:white;
+#seqViewer .seqIso>.seqValue{
     background-color:#23c6c8;
-    padding:3px 5px;
-    text-align: center;
-    border-radius:3px;
-    float:right;
+}
+#seqViewer .seqAALength>.seqValue{
+    background-color:#33C59E;
+    font-weight:700;
+}
+#seqViewer .seqMass>.seqValue{
+    background-color:#f8ac59;
+}
+#seqViewer .seqPl>.seqValue{
+    background-color:#92896F;
 }
 
 #nx-annotations {
@@ -105,6 +118,8 @@ body {
     border-color:#F8F8F8;
     border:1px #ddd solid;
     vertical-align: middle;
+    border-top-left-radius: 2px;
+    border-bottom-left-radius: 2px;
 }
 .filter-heading .fa{
     margin-right:3px;
@@ -126,6 +141,8 @@ body {
     border:1px #ddd solid;
     margin-left:-1px;
     vertical-align: middle;
+    border-top-right-radius: 2px;
+    border-bottom-right-radius: 2px;
 }
 #filtering{
     margin-right:10px;

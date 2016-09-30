@@ -24,14 +24,16 @@ var evidences = [ePe1, ePe2, ePe3, ePe4, ePe5];
 
 
 var env = location.search.split('env=')[1] || "prod";
-var envList = ["dev","alpha"];
 console.log("env : " + env);
 var nXSearch = "https://www.nextprot.org/proteins/search?mode=advanced";
 var snorql = "http://snorql.nextprot.org/";
-if (envList.indexOf(env) > -1) {
-    var endpoint = "http://" + env + "-";
-    nXSearch = endpoint + "search.nextprot.org/proteins/search?mode=advanced";
-    snorql = endpoint + "snorql.nextprot.org/";
+if (env === "alpha") {
+    nXSearch = "http://alpha-search.nextprot.org/proteins/search?mode=advanced";
+    snorql = "http://alpha-snorql.nextprot.org/";
+}
+else if (env === "dev") {
+    nXSearch = "https://dev-search.nextprot.org/proteins/search?mode=advanced";
+    snorql = "https://dev-snorql.nextprot.org/";
 }
 
 function getSparqlQuery(chr, pe) {

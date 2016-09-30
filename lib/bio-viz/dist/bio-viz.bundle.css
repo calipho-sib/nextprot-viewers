@@ -261,8 +261,13 @@ body {
 
 #bioviz {
     background:#333333;
-    height: 600px;
+    height: 580px;
     width: 100%;
+    margin-bottom:20px;
+}
+#bioviz iframe {
+    height:100%;
+    width:100%;
 }
 #fv {
     text-align: left;
@@ -287,7 +292,13 @@ body {
     text-align: right;
     margin: 15px 10px 0px 0px;
 }
-
+#bioviz-container .params{
+    box-shadow:none;
+    border: 1px solid #cfd9db;
+}
+.params.panel-default>.panel-heading{
+    background-color:white;
+}
 .params {
     text-align: left;
 }
@@ -363,6 +374,9 @@ body {
 }
 .params .panel-heading{
     padding:5px 15px;
+}
+.params .panel-body{
+    min-height:528px;
 }
 
 #structureCount{
