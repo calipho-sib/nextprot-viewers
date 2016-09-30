@@ -71,7 +71,7 @@ body {
 #seqViewer .seqMass>.seqValue{
     background-color:#f8ac59;
 }
-#seqViewer .seqPl>.seqValue{
+#seqViewer .seqpI>.seqValue{
     background-color:#92896F;
 }
 
@@ -156,6 +156,36 @@ body {
     color: #337ab7;
     text-decoration: underline;
 }
+/*
+#allFilters {
+	position: relative;
+    padding-right:5px;
+    margin-right:10px;
+}
+#allFilters:after, #allFilters:before {
+	left: 100%;
+	top: 50%;
+	border: solid transparent;
+	content: " ";
+	height: 0;
+	width: 0;
+	position: absolute;
+	pointer-events: none;
+}
+
+#allFilters:after {
+	border-color: rgba(136, 183, 213, 0);
+	border-left-color: white;
+	border-width: 15px;
+	margin-top: -15px;
+}
+#allFilters:before {
+	border-color: rgba(194, 225, 245, 0);
+	border-left-color: #ddd;
+	border-width: 16px;
+	margin-top: -16px;
+}
+*/
 .filter-box{
     position: relative;
     display: inline-block;

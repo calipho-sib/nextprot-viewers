@@ -164,6 +164,7 @@
 
                     }).catch(function (err) {
                         // catch any error that happened so far
+                        console.log(err);
                         console.log("Argh, broken: " + err.message);
                         console.log("Error at line : " + err.stack);
                     });
