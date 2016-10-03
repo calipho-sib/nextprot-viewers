@@ -58,7 +58,6 @@
 }
 .annotation-title {
   float: left;
-  font-size:1em;
   padding:2px 20px 0px;
   margin-bottom:0px;
 }
@@ -228,3 +227,27 @@ table#featTable>tbody>tr>td {
    margin-left: 5px;
    vertical-align: middle;
  }
+hr.bottom-line {
+  margin:0px 50px 5px;
+}
+.prefix-label {
+  margin: 0px;
+  color: white;
+  border:1px solid #C50063;
+  background-color:rgba(197, 0, 99, 0.75);
+}
+.suffix-label {
+  margin: 0px;
+  font-weight: 300;
+  margin-left: 5px;
+  padding:1px 5px;
+  border-radius:0px 3px 3px 0px;
+  background-color: #f4f4f4;
+  color: #999;
+  border: 1px solid #999;
+  font-size: 12px;
+  line-height: 18px;
+}
+.no-padding {
+  padding: 0;
+}
