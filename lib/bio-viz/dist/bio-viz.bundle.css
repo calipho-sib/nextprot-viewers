@@ -252,7 +252,11 @@ table.dataTable tr td:last-child{
 table.dataTable tr td:last-child a:last-child{
     margin-left:3px;
 }
-
+table.dataTable td:nth-child(3),table.dataTable td:nth-child(5),
+table.dataTable th:nth-child(3),table.dataTable th:nth-child(5) {
+    text-align : right;
+    padding-right:20px;
+}
 /* BioViz viewer */
 body {
 /*    text-align: center;*/
@@ -273,7 +277,7 @@ body {
 }
 
 #pdbForm {
-    margin-bottom: 30px;
+    margin-bottom: 15px;
 }
 
 .panel-heading h3 {
@@ -376,6 +380,7 @@ body {
 }
 .params .panel-body{
     min-height:528px;
+    padding:10px 15px;
 }
 
 #structureCount{
@@ -387,4 +392,23 @@ body {
     margin-right:10px;
     vertical-align:middle;
     min-width:32px;
+}
+
+.bioviz-menu-info{
+    margin-bottom:0px;
+    margin-top:10px;
+    padding:5px 10px;
+    display:inline-block;
+}
+.bioviz-menu-info .fa{
+    vertical-align: text-top;
+    height: 17px;
+    margin-right: 7px;
+}
+.bioviz-menu-info .fa:before{
+    font-size:17px;
+}
+.bioviz-menu-info kbd{
+    padding:2px 6px;
+    margin:0px 2px;
 }
