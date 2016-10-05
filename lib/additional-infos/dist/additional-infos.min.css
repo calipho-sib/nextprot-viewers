@@ -38,14 +38,11 @@
   min-width:32px;
 }
 .annotation-category-title {
-  font-weight:200;
-  text-transform: uppercase;
-  margin-top:2px;
-}
-.annotation-category-title {
-  font-weight:200;
-  text-transform: uppercase;
-  margin-top:2px;
+    font-weight: 500;
+    text-transform: uppercase;
+    margin-top: 2px;
+    color: #888888;
+    font-size: 14px;
 }
 .annotation-row {
   margin-bottom:5px;
@@ -171,7 +168,8 @@
   margin-left: 5px;
 }
 .pointer-gold {
-  background: #ba8604;
+/*  background: #ba8604;*/
+  background: #e5c100;
 }
 .pointer-silver {
   background:#B6BCC5;
@@ -181,7 +179,7 @@
   border-radius: 0px 2px 2px 0px;
 }
 .label-gold {
-  background:#DAA520;
+  background:#ffd700;
   color: #fff;
 }
 .label-silver {
