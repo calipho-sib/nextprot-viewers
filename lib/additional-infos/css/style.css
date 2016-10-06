@@ -62,8 +62,10 @@
   float: right;
 }
 .accession-code-link {
+/*
   color: #C50063;
   border: 1px solid #C50063;
+*/
 }
 .reference-label-container {
   display: inline;

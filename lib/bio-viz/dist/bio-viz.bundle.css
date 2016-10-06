@@ -244,6 +244,12 @@ table.dataTable th{
     padding-left:0px;
     padding-right:3px;
 }
+table.dataTable td, table.dataTable th{
+    padding:0px 10px;
+}
+table.dataTable th{
+    border-right:1px solid #eee;
+}
 
 table.dataTable tr td:last-child{
     white-space:nowrap;
