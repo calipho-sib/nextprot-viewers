@@ -6,7 +6,7 @@
 </div>
 <div class="category-main">
 {{#data}}{{#each this}}
-<div class="row category-row">
+<div class="row category-row {{#if @last}}last-row{{/if}}">
     <div class="col-lg-2 col-md-2 col-sm-12 col-xs-12">
         <h4 class="hidden-sm hidden-xs annotation-category-title text-align-right"> {{@key}}</h4>
         <h4 class="hidden-lg hidden-md annotation-category-title text-align-left"> {{@key}}</h4>

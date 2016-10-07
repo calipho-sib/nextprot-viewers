@@ -24,6 +24,9 @@
   margin: 15px 8px;
   padding-bottom: 5px;
 }
+.category-row.last-row{
+    border-bottom:none;
+}
 .badge-container {
   display:inline-block;
 }
@@ -40,12 +43,12 @@
 .annotation-category-title {
     font-weight: 500;
     text-transform: uppercase;
-    margin-top: 2px;
+    margin-top: 8px;
     color: #888888;
     font-size: 14px;
 }
 .annotation-row {
-  margin-bottom:5px;
+  margin-top:5px;
   margin-left:0px;
 }
 .annotation-title-container {
@@ -149,8 +152,8 @@
   font-size:0.9em;
   line-height:1em;
 }
-.collapse {
-  margin-top: 5px;
+.btn-toggle {
+  margin-bottom: 5px;
 }
 .table-section-header {
   background: white;

@@ -3,10 +3,10 @@
         {{#publication}}
         {{#if title}}<p><a href="{{localUrl}}"  target='_parent'>{{title}}</a></p>{{/if}}
         <p><span class="hyperlink-blue">{{#each authors}}{{lastName}} {{initials}}. , {{/each}}</span></p>
-        <p>{{journal}} <strong>{{#journalResourceLocator}}{{medAbbrev}} {{/journalResourceLocator}}</strong>, {{firstPage}} {{#if lastPage}}- {{lastPage}}{{/if}} ({{publicationYear}}) {{#each dbXrefs}}[{{replace databaseName "DOI" "Full text"}} : <a href="{{resolvedUrl}}" class="extLink" target='_blank'>{{accession}}</a>] {{/each}}
+        <p>{{journal}} {{#journalResourceLocator}}{{medAbbrev}} {{/journalResourceLocator}}, <strong>{{volume}}</strong>, {{firstPage}} {{#if lastPage}}- {{lastPage}}{{/if}} ({{publicationYear}}) {{#each dbXrefs}}[{{replace databaseName "DOI" "Full text"}} : <a href="{{resolvedUrl}}" class="extLink" target='_blank'>{{accession}}</a>] {{/each}}
         </p>
         {{#if abstractText}}
-        <button class="btn btn-primary btn-xs collapsed" type="button" data-toggle="collapse" data-target="#collapse{{publicationId}}{{../parentId}}" aria-expanded="false" aria-controls="collapse{{publicationId}}{{../parentId}}">
+        <button class="btn btn-primary btn-xs collapsed btn-toggle" type="button" data-toggle="collapse" data-target="#collapse{{publicationId}}{{../parentId}}" aria-expanded="false" aria-controls="collapse{{publicationId}}{{../parentId}}">
             <span class="pubDisplayStatus"></span> abstract
         </button>
         <div class="collapse" id="collapse{{publicationId}}{{../parentId}}">
