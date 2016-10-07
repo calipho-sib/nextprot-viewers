@@ -25,6 +25,10 @@ body {
     border: 1px solid #cfd9db;
     border-radius:4px;
 }
+#featuresTable .variant-description{
+    color:#00C500;
+}
+
 #seqViewer {
     background:#fff;
     padding:5px 15px;
