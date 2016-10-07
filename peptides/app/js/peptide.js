@@ -581,7 +581,7 @@ function initNXDivs() {
                         else if (peptide.postPeptide[i] === undefined) semiTrypticEnd = "Term";
                         var semiTrypticStart = "-";
                         if (peptide.prePeptide[i] === "K" || peptide.prePeptide[i] === "R") semiTrypticStart = "Tryp";
-                        else if (peptide.prePeptide[i] === undefined) semiTrypticEnd = "Term";
+                        else if (peptide.prePeptide[i] === undefined) semiTrypticStart = "Term";
                         var trypticity = semiTrypticStart !== "-" && semiTrypticEnd !== "-" ? "Tryptic" : semiTrypticStart === "-" && semiTrypticEnd === "-" ? "Non-Tryptic" : "semi-Tryptic";
                         var miscleavage = "-";
                         if (trypticity !== "Non-Tryptic") {
