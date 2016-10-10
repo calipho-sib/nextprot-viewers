@@ -823,7 +823,6 @@ function initNXDivs() {
                         //
                         //}
                         nx.executeSparql(query2).then(function (data) {
-                            console.log(data);
                             $('#ptmByPeptide').html("");
                             if (data.results.bindings.length > 0) {
                                 data.results.bindings.forEach(function (o) {
@@ -1155,7 +1154,6 @@ function initNXDivs() {
                 renderPeptidesForIsoform(pepMap, firstIso);
                 renderFeatureViewer(allFeatures, firstIso);
                 showFeatureViewer();
-                console.log("test1é3")
             })
             .catch(function (err) {
                 // catch any error that happened along the way

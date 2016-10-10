@@ -148,6 +148,9 @@ table.dataTable{
 table.dataTable thead .sorting:after, table.dataTable thead .sorting_asc:after, table.dataTable thead .sorting_desc:after, table.dataTable thead .sorting_asc_disabled:after, table.dataTable thead .sorting_desc_disabled:after{
     top:0px;
 }
+table.dataTable th{
+    white-space: nowrap;
+}
 
 .pdbTableContainer{
     border-bottom:1px solid #ccc;
@@ -190,7 +193,7 @@ body {
 }
 
 #bioviz {
-    height: 580px;
+    height: 600px;
     width: 100%;
 }
 
@@ -284,10 +287,17 @@ body {
     vertical-align: middle;
 }
 
-#currentStructure{
+.params .panel-heading h4{
     display: inline-block;
     vertical-align: middle;
+    font-weight: 500;
+    border:none;
+    padding:0px;
 }
+.params .panel-heading{
+    padding:5px 15px;
+}
+
 #structureCount{
     border-radius:70%;
     border: 2px solid black;

@@ -64,7 +64,10 @@ body{
     overflow-y: auto;
 }
 .tableHighlight {
-    background-color:rgba(197, 0, 99, 0.2) !important;
+    background-color:rgba(197, 0, 99, 0.1) !important;
+}
+.tableHighlight td{
+    background-color:rgba(197, 0, 99, 0.1) !important;
 }
 
 #navAside a{
@@ -229,4 +232,14 @@ body{
     font-size: 1em;
     padding-left: 5px;
     padding-right: 5px;
+}
+
+
+.evidence-publication button .pubDisplayStatus:before {
+    content:"Hide";
+    display:inline-block;
+    width:31px;
+}
+.evidence-publication button.collapsed .pubDisplayStatus:before {
+    content:"Show";
 }
