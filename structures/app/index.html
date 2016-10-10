@@ -6,14 +6,14 @@
     <link rel="stylesheet" href="../../lib/triple-viewer/dist/triple-viewer.css">
     <link rel="stylesheet" href="../../lib/bio-viz/dist/bio-viz.min.css">
     <link rel="stylesheet" href="../../lib/additional-infos/dist/additional-infos.min.css">
-<!--    <link href="https://fonts.googleapis.com/css?family=Lato:100,100i,300,300i,400,400i,700,700i,900,900i" rel="stylesheet">-->
     <script src="../../lib/triple-viewer/dist/triple-viewer.bundle.js"></script>
-    <script src="../../lib/bio-viz/dist/bio-viz.min.js"></script>
     <script src="../../lib/additional-infos/dist/additional-infos.min.js"></script>
-    <!-- Google Analytics --> <script type="text/javascript" src="../../lib/ga.js"></script>
+    <script src="../../lib/bio-viz/dist/bio-viz.min.js" async></script>
+    <script src="https://use.fontawesome.com/f89bfe9747.js" async></script>
 </head>
 
 <body>
+<!-- Google Analytics --> <script type="text/javascript" src="../../lib/ga.js" async></script>
     <div class="row" style="margin: 0px 20px;">
         <div id="nx-overview" class="col-md-12"></div>
     </div>
@@ -26,9 +26,9 @@
             <div id="chart"></div>
         </div>
     </div>
-    <div class="row" style="margin: 10px 20px;">
-        <div id="featuresTable" class="col-md-6"></div>
-        <div class="col-md-6" style="padding-right:0px;">
+    <div class="row" style="margin:0px 20px;">
+        <div id="featuresTable" class="col-md-6" style="margin:10px 0px"></div>
+        <div class="col-md-6 right-block" style="margin:10px 0px;padding-right:0px;">
             <div id="seqViewer"></div>
         </div>
     </div>
@@ -37,7 +37,7 @@
         <div id="nx-keywords" class="col-md-12" style="background-color:white;"></div>
     </div>
     <div class="row" style="margin: 0px 20px 15px;">
-        <div id="nx-xrefs" class="col-md-12" style="background-color:white;margin-bottom:20px;"></div>
+        <div id="nx-xrefs" class="col-md-12" style="background-color:white;margin-bottom:20px;padding-bottom:15px;"></div>
     </div>
 </body>
 <script>
@@ -106,15 +106,31 @@
                     .then(function (oneData) {
 
                         var metaData = getMetadataByView(config.structures.features);
-
+                    
                         // init Triple viewer
                         var tv = new TripleViewer(entry);
                         tv.init(oneData, metaData);
                         var current_isoform = tv.getCurrentIsoform();
-
+                    
                         // init Bioviz viewer
                         var bv = new nxBioViz();
                         bv.init("#bioviz-container", current_isoform);
+                    
+                        bv.ifPDBAvailable(function(d){
+                            console.log("detail");
+                            console.log("should say no PDB available");
+                            console.log(d);
+                            if (d.detail.pdb) {
+                                $("#featuresTable").show();
+                                $("#seqViewer").show();
+                                $("#chart *").show();
+                            }
+                            else {
+                                $("#featuresTable").hide();
+                                $("#seqViewer").hide();
+                                $("#chart *").hide();
+                            }
+                        })
 
                         // link TV with BV
                         tv.onSelection(function (d) {
@@ -148,6 +164,7 @@
 
                     }).catch(function (err) {
                         // catch any error that happened so far
+                        console.log(err);
                         console.log("Argh, broken: " + err.message);
                         console.log("Error at line : " + err.stack);
                     });

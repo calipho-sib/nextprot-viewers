@@ -1,37 +1,35 @@
-
-    <div id="keywords-header" style="border-bottom: 1px solid #E7EAEC;margin-bottom: 15px;padding-bottom: 5px;">
-    <div style="display:inline-block;">
-            <span class="badge" style="border-radius:70%;border: 2px solid black;color:#C50063;background-color:white;padding:8px 8px;margin-right:10px;vertical-align:middle;min-width:32px;">{{count}}</span>
+<div id="keywords-header" class="category-header">
+    <div class="badge-container">
+        <span class="badge counter-badge">{{count}}</span>
     </div>
-    <h4 id="keywords-title" style="display:inline-block;vertical-align:middle;">Keywords</h4></div>
-<div style="margin-top:20px;">
+    <h4 id="keywords-title" class="category-title">Keywords</h4>
+</div>
+<div class="category-main">
 {{#data}}{{#each this}}
-<div class="row">
-    <div class="col-md-4 col-sm-4 col-xs-12">
-        <h4 class="hidden-xs" style="font-weight:200;text-align:right;margin-top:2px;"> {{@key}} </h4>
-        <h4 class="hidden-lg hidden-md hidden-sm" style="font-weight:200;text-align:left;margin-top:2px; margin-left:15px;"> {{@key}} </h4>
+<div class="row category-row {{#if @last}}last-row{{/if}}">
+    <div class="col-lg-2 col-md-2 col-sm-12 col-xs-12">
+        <h4 class="hidden-sm hidden-xs annotation-category-title text-align-right"> {{@key}}</h4>
+        <h4 class="hidden-lg hidden-md annotation-category-title text-align-left"> {{@key}}</h4>
     </div>
-    <div class="col-md-8 col-sm-8 col-xs-12">
+    <div class="col-lg-10 col-md-10 col-sm-12 col-xs-12">
         {{#each this}}
-        <div class="row" style="margin-bottom:5px;">
-            <div class="col-md-5 col-sm-5 col-xs-5">
-                <p style="font-size:1em;padding:2px 20px 0px; margin-bottom:0px;">{{cvTermName}}</p>
-            </div>
-            <div class="col-md-1 col-sm-2 col-xs-1">
-                <button class="btn btn-sm btn-info" type="button" data-toggle="collapse" data-target="#{{cvTermAccessionCode}}" aria-expanded="false" aria-controls="{{cvTermAccessionCode}}">Definition</button>
-            </div>
-            <div class="col-md-3 col-sm-2 col-sm-offset-1 col-xs-1 col-xs-offset-1">
-                <a class="btn btn-sm selectable" href="/db/term/{{cvTermAccessionCode}}" style="color:#C50063;border:1px solid #C50063;margin-left:30px;">{{cvTermAccessionCode}}</a>
+        <div class="row annotation-row">
+            <div class="annotation-title-container">
+                <p class="annotation-title">{{cvTermName}}</p>
+                <div class="annotation-labels col-md-6 col-sm-6 col-xs-6">
+                    <button class="btn btn-sm btn-info" type="button" data-toggle="collapse" data-target="#{{cvTermAccessionCode}}" aria-expanded="false" aria-controls="{{cvTermAccessionCode}}">Definition</button>
+                    <a class="accession-code-link btn btn-sm selectable" href="/db/term/{{cvTermAccessionCode}}">{{cvTermAccessionCode}}</a>
+                </div>
             </div>
         </div>
         <div class="collapse" id="{{cvTermAccessionCode}}">
-            <div class="well" style="background-color:rgba(91, 192, 222, 0.2);margin-right:50px;margin-left:10px;">
+            <div class="well blue-well">
                 {{cvTermDescription}}
             </div>
         </div>
         {{/each}}
     </div>
-</div> 
+</div>
 {{/each}}{{#unless @last}}
 <hr style="margin:0px 50px 5px">
 {{/unless}}{{/data}}

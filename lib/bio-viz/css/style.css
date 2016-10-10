@@ -1,3 +1,69 @@
+/* COMMON NP2 TEMPLATE FOR EXTERNAL LINKS : N°1 */
+/* ---------------------------------------------*/
+/*
+.extLink{
+    border:1px solid #ddd;
+    border-radius: 3px;
+    color:#333;
+}
+*/
+/*
+.extLink{
+    border: 1px solid #1194A6;
+    text-shadow: 0px 1px #1194A6;
+    box-shadow: inset 0px 1px rgba(250,250,250,0.15);
+    border-radius: 3px;
+    font-weight: 500;
+    color: #ffffff;
+    background-color: #12A4B8;
+    border-radius: 2px;
+}
+.extLink{
+    border: 1px solid #26C542;
+    text-shadow: 0px 1px #26C542;
+    box-shadow: inset 0px 1px rgba(250,250,250,0.15);
+    border-radius: 3px;
+    font-weight: 500;
+    color: #ffffff;
+    background-color: #4CCF63;
+    border-radius: 2px;
+}
+.extLink {
+    border: 1px solid #00B720;
+    text-shadow: 0px 1px #00B720;
+    box-shadow: inset 0px 1px rgba(250,250,250,0.15);
+    border-radius: 3px;
+    font-weight: 500;
+    color: #ffffff;
+    background-color: #4CCF63;
+    border-radius: 2px;
+}
+.extLink {
+    border: 1px solid #71079F;
+    text-shadow: 0px 1px #71079F;
+    box-shadow: inset 0px 1px rgba(250,250,250,0.15);
+    border-radius: 3px;
+    font-weight: 500;
+    color: #ffffff;
+    background-color: #994ABB;
+    border-radius: 2px;
+}
+.extLink:hover{
+    background-color: #8428AC;
+}
+.extLink:active{
+    background-color: #71079F;
+}
+
+
+.extLink:focus, .extLink:hover, .extLink:active{
+    color:white;
+}
+*/
+
+/* ---------------------------------------------*/
+/* END COMMON NP2 TEMPLATE */
+
 h1 {
     margin: 20px auto 30px;
     text-align: center;
@@ -51,6 +117,12 @@ table.dataTable th{
     padding-left:0px;
     padding-right:3px;
 }
+table.dataTable td, table.dataTable th{
+    padding:0px 10px;
+}
+table.dataTable th{
+    border-right:1px solid #eee;
+}
 
 table.dataTable tr td:last-child{
     white-space:nowrap;
@@ -59,23 +131,32 @@ table.dataTable tr td:last-child{
 table.dataTable tr td:last-child a:last-child{
     margin-left:3px;
 }
-
+table.dataTable td:nth-child(3),table.dataTable td:nth-child(5),
+table.dataTable th:nth-child(3),table.dataTable th:nth-child(5) {
+    text-align : right;
+    padding-right:20px;
+}
 /* BioViz viewer */
 body {
 /*    text-align: center;*/
 }
 
 #bioviz {
-    height: 600px;
+    background:#333333;
+    height: 580px;
     width: 100%;
+    margin-bottom:20px;
 }
-
+#bioviz iframe {
+    height:100%;
+    width:100%;
+}
 #fv {
     text-align: left;
 }
 
 #pdbForm {
-    margin-bottom: 30px;
+    margin-bottom: 15px;
 }
 
 .panel-heading h3 {
@@ -93,7 +174,13 @@ body {
     text-align: right;
     margin: 15px 10px 0px 0px;
 }
-
+#bioviz-container .params{
+    box-shadow:none;
+    border: 1px solid #cfd9db;
+}
+.params.panel-default>.panel-heading{
+    background-color:white;
+}
 .params {
     text-align: left;
 }
@@ -170,6 +257,10 @@ body {
 .params .panel-heading{
     padding:5px 15px;
 }
+.params .panel-body{
+    min-height:528px;
+    padding:10px 15px;
+}
 
 #structureCount{
     border-radius:70%;
@@ -180,4 +271,23 @@ body {
     margin-right:10px;
     vertical-align:middle;
     min-width:32px;
+}
+
+.bioviz-menu-info{
+    margin-bottom:0px;
+    margin-top:10px;
+    padding:5px 10px;
+    display:inline-block;
+}
+.bioviz-menu-info .fa{
+    vertical-align: text-top;
+    height: 17px;
+    margin-right: 7px;
+}
+.bioviz-menu-info .fa:before{
+    font-size:17px;
+}
+.bioviz-menu-info kbd{
+    padding:2px 6px;
+    margin:0px 2px;
 }

@@ -2,7 +2,7 @@
     <div class="col-md-6" style="padding:0px;">
         <div id="bioviz"></div>
     </div>
-    <div class="col-md-6" style="padding-right:0px;">
+    <div class="col-md-6 right-block" style="padding-right:0px;">
         <div class="panel panel-default params">
             <div class="panel-heading">
                 <div style="display:inline-block;">
@@ -14,11 +14,11 @@
                 <div id="pdbForm">
                     <h4>OPTIONS</h4>
                     <div>
-                        <label for="#pdbList">Choose PDB Id : </label>
+                        <label for="#pdbList">Choose PDB ID : </label>
                         <select id="pdbList" class="form-control input-sm"></select>
                     </div>
                     <div>
-                        <label for="#molList">Choose molecule : </label>
+                        <label for="#molList">Choose chain : </label>
                         <select id="molList" class="form-control input-sm"></select>
                         <div class="checkbox-inline">
                             <label>
@@ -26,6 +26,10 @@
                             </label>
                         </div>
 
+                    </div>
+                    <div class="alert alert-info bioviz-menu-info" role="alert">
+                        <span class="fa fa-info-circle"></span>
+                        <span>Click on the 3D viewer then press <kbd>i</kbd> to display help.</span>
                     </div>
                 </div>
                 <div class="clickLog">
@@ -40,13 +44,12 @@
                                         <th>Method</th>
                                         <th>Resolution (&#8491;)</th>
                                         <th>Chain(s)</th>
-                                        <th>Position</th>
+                                        <th>Positions</th>
                                         <th class="pdbLinks">Further links</th>
                                     </tr>
                                 </thead>
                             </table>
                         </div>
-                        <div class="pdbMappingException"><i class='glyphicon glyphicon-asterisk' aria-hidden='true'></i> : This structure couldn't be mapped on this isoform.</div>
                     </div>
                 </div>
             </div>

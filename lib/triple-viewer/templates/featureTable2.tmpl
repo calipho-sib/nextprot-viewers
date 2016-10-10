@@ -1,66 +1,52 @@
-<div id="featuresTableTitle" style="border-bottom: 1px solid #E7EAEC;margin-bottom: 15px;padding-bottom: 5px;">
-    <div style="display:inline-block;">
-            <span class="badge"
-                  style="border-radius:70%;border: 2px solid black;color:#C50063;background-color:white;padding:8px 8px;margin-right:10px;vertical-align:middle;">{{featuresLength}}</span>
-    </div>
-    <h4 id="test" style="display:inline-block;vertical-align:middle;">Features</h4></div>
-<div id="featTableScroller" style="height:500px;overflow: auto">
-    <table id= "featTable" class="table table-striped table-fixed" style="font-size:11px;">
+
+<div id="featTableScroller" class="section-scroller">
+    <table id="featTable" class="table table-striped table-fixed">
         <thead>
         <tr>
             <th class="featName" class="col-md-2">Name</th>
-            <th style="text-align:center" class="col-md-2">Position</th>
-            <th class="col-md-1"  style="text-align:right">Length</th>
+            <th class="col-md-2 text-align-right">Position</th>
+            <th class="col-md-1 text-align-right">Length</th>
             <th class="col-md-5">Description</th>
-            <th style="text-align:center" colspan="2" class="col-md-2">Evidence</th>
+            <th colspan="2" class="col-md-2 text-align-left">Evidence</th>
         </tr>
         </thead>
+        {{#each groupedFeatures}}
         <tbody>
+        <th colspan="6" class="{{{className group}}} general-info table-section-header"><div class="grey-x">{{group}}</div></th>
         {{#each features}}
         {{#each this}}
         <tr id={{id}} class="{{{className category}}} general-info" >
             <td>{{category}}</td>
-            <td style="text-align:center"><a class="featPosition" href="javascript:;">{{{position length}}}</a></td>
-            <td style="text-align:right">{{length}}</td>
+            <td class="text-align-right"><a class="featPosition" href="javascript:;">{{{position length}}}</a></td>
+            <td class="text-align-right">{{length}}</td>
             <td>{{{link}}}{{#if variant}}{{#each source}}{{#if externalDb}}{{#if crossRef}}{{#crossRef}} ; {{dbName}} : {{{linkTo name url}}} {{/crossRef}}{{/if}}{{/if}}{{/each}}{{/if}}{{#unless proteotypicity}} <span class="nonProteotypic">found in other entries</span>{{/unless}}
-                {{#if quality}}<span style="background:#B6BCC5;color:#fff;padding: 0px 5px;">•</span><span style="background:#DEDEDE;color:#999;padding: 0px 5px;">{{quality}}</span>{{/if}}</td>
+                {{> quality-label qualityQualifier=quality}}
+            </td>
             {{#if source}}
-            <td style="text-align:right"><span class="evidenceNumber">{{evidenceLength}}</span></td>
-            <td><span style="color:black;">Evidences</span></td>
+            <td class="text-align-right"><span class="evidenceNumber">{{evidenceLength}}</span></td>
+            <td>
+                <div class="reference-label-container">
+                    {{#each evidenceSources}}
+                        <div class="reference-label">{{this}}</div>
+                    {{/each}}
+            </div>
+            </td>
             {{else}}
             <td></td>
             <td></td>
             {{/if}}
         </tr>
         <tr class="{{{className category}}} detailed-info">
-            <td colspan="6" style="word-break: break-all">{{#each source}}<div class="evidenceLine"><div class="evidenceArrow">&#10549;</div>  Evidence {{math @index 1}}<span class="evidenceCodeName">{{evidenceCodeName}}</span>
-            <span class="evidenceSource">{{assignedBy}}</span></div>
-                <div {{#if publicationMD5}}class="evidence-publication"{{/if}} style="padding-left:10px;border-left:1px solid darkgray;margin-right:10px;">
-                    {{#if publicationMD5}}
-                    {{#if title}}<p>{{{title}}}</p>{{/if}}
-                    <p style="color:#6a90d9;">{{#each authors}}{{lastName}} {{initials}}. , {{/each}}</p>
-                    <p>{{journal}} <strong>{{volume}}</strong>, {{firstPage}} - {{lastPage}} ({{year}}) {{#each dbXrefs}}[{{name}} : {{{linkTo accession url}}}] {{/each}}</p>
-                    {{#if abstract}}
-                    <button class="btn btn-primary btn-xs collapsed" type="button" data-toggle="collapse" data-target="#collapse{{pubId}}{{../../../id}}"  aria-expanded="false" aria-controls="collapse{{pubId}}{{../../../id}}">
-                        <span class="pubDisplayStatus"></span> abstract
-                    </button>
-                <div class="collapse" id="collapse{{pubId}}{{../../../id}}" style="margin-top:5px;">
-                        <div class="panel panel-info"><div class="panel-heading">
-                            <h3 class="panel-title">Abstract</h3>
-                        </div><div class="panel-body">{{abstract}}</div></div>
-                    </div>{{else}}No Abstract available{{/if}}
-                    {{else}}
-                    {{#if crossRef}}{{#crossRef}}<p>{{{linkTo name url}}}</p>{{/crossRef}}{{/if}}
-                    {{/if}}
-
-                </div>{{/each}}</td>
-
-            <!--<td>-->
-             <!--{{#each evidence}}-->
-                <!--<div>{{this}}</div>-->
-                <!--{{/each}}-->
-            <!--</td>-->
+            <td colspan="6" class="table-row-evidence">
+                {{#each source}}
+                    {{> evidence codeName=evidenceCodeName source=assignedBy accession=crossRef.name url=crossRef.url}}
+                    <div class="{{#if publicationMD5}}evidence-publication{{/if}}">
+                        {{> publication parentId=(concat id ../id)}}
+                    </div>
+                {{/each}}
+            </td>
         </tr>
-        {{/each}}{{/each}}</tbody>
+        {{/each}}{{/each}}
+    </tbody>{{/each}}
     </table>
 </div>

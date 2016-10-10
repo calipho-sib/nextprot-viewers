@@ -2,7 +2,7 @@
 <html lang="en">
   <head>
     <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge, IE=11, IE=10, IE=9, ie=8, ie=7">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
     <meta name="description" content="">
@@ -106,7 +106,8 @@
     <script type="text/javascript" src="../library/jquery-ui.min.js"></script>
     <script type="text/javascript" src="../library/jquery.ui-contextmenu.min.js"></script>
 
-    <!-- <script type="text/javascript" src="../bioviz.min.js"></script> -->
+    <script type="text/javascript" src="../library/polyfill.js"></script>
+
     <script type="text/javascript" src="../BiovizJS.js"></script>
 
     <script type="text/javascript" src="../library/ScriptWidget.js"></script>
@@ -153,9 +154,8 @@
                     bioviz: biovizEmbedded,
                     isDebug: true,
                     imgsURL: '../img/',
-
-                    pdbCustomUrl:'http://ftp.rcsb.org/view/${id}.pdb',
-                    pdbxCustomUrl:'http://ftp.rcsb.org/view/${id}.cif'
+                    pdbCustomUrl:'//pdb.bionext.com/pdb/${id}',
+                    pdbxCustomUrl:'//pdb.bionext.com/pdbx/${id}'
                 });
 
                 var toolbarWidgetInstance = toolbarWidget.bioviztoolbar("instance");
@@ -167,7 +167,7 @@
             var promise = biovizEmbedded.bioviz('loadStructure', '4MQT');
             promise.then(function(val) {
                 var selection = biovizEmbedded.bioviz('getObjects3DFromSelection', '4MQT:Protein:A');
-                biovizEmbedded.bioviz('colorBy', [255,0,0], selection);
+                biovizEmbedded.bioviz('colorBy', $.bionext.ColorMappingID.Rainbow, selection);
             }).catch(function(val) {
                 console.log(val);
             });

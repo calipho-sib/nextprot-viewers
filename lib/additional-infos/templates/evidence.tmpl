@@ -1,0 +1,12 @@
+{{#if codeName}}
+    <div class="evidence-container">
+        <div class="evidence-arrow">&#10549;</div>  Evidence {{math @index 1}}
+        <span class="colored-label evidence-code-name">{{codeName}}</span><span class="colored-label evidence-source">{{source}}</span>
+        {{> quality-label}}
+    </div>
+    {{#if accession}}
+        <div class="evidence-accession">
+            <p><a href="{{url}}" class="extLink" target='_blank'>{{accession}}</a></p>
+        </div>
+    {{/if}}
+{{/if}}

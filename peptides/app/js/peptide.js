@@ -131,6 +131,7 @@ function initNXDivs() {
                             "tissueSpecificity2": getSources(o.evidences),
                             "sequence": "",
                             "prePeptide": "",
+                            "preprePeptide": "",
                             "postPeptide": "",
                             "include": [],
                             "includedIn": [],
@@ -154,6 +155,7 @@ function initNXDivs() {
                         peptide.identifier = (peptide.sequence.length > 22) ? peptide.sequence.substring(0, 10) + ".." + peptide.sequence.substring(peptide.sequence.length - 10) : peptide.sequence;
 
                         peptide.prePeptide = getInfoForIsoform.Sequence(isoforms, isoName)[peptide.position.first - 2];
+                        peptide.preprePeptide = getInfoForIsoform.Sequence(isoforms, isoName)[peptide.position.first - 3];
                         peptide.postPeptide = getInfoForIsoform.Sequence(isoforms, isoName)[peptide.position.second + 1];
                     
             return peptide;
@@ -205,6 +207,7 @@ function initNXDivs() {
                             }).sort(),
                             "sequence": "",
                             "prePeptide": "",
+                            "preprePeptide": "",
                             "postPeptide": "",
                             "include": [],
                             "includedIn": [],
@@ -227,6 +230,7 @@ function initNXDivs() {
                         peptide.identifier = (peptide.sequence.length > 22) ? peptide.sequence.substring(0, 10) + ".." + peptide.sequence.substring(peptide.sequence.length - 10) : peptide.sequence;
 
                         peptide.prePeptide = getInfoForIsoform.Sequence(isoforms, isoName)[peptide.position.first - 2];
+                        peptide.preprePeptide = getInfoForIsoform.Sequence(isoforms, isoName)[peptide.position.first - 3];
                         peptide.postPeptide = getInfoForIsoform.Sequence(isoforms, isoName)[peptide.position.second + 1];
                         peptideList.push(peptide);
                     }
@@ -497,6 +501,7 @@ function initNXDivs() {
                                         founded = true;
                                         found[item].position.push(listPeptides[i].position);
                                         found[item].prePeptide.push(listPeptides[i].prePeptide);
+                                        found[item].preprePeptide.push(listPeptides[i].preprePeptide);
                                         found[item].postPeptide.push(listPeptides[i].postPeptide);
                                         if (listPeptides[i].include.length){
                                             found[item].include.concat(listPeptides[i].include);
@@ -516,6 +521,7 @@ function initNXDivs() {
                                 if (founded === false) {
                                     var pepTemp = jQuery.extend({}, listPeptides[i]);
                                     pepTemp.prePeptide = [pepTemp.prePeptide];
+                                    pepTemp.preprePeptide = [pepTemp.preprePeptide];
                                     pepTemp.postPeptide = [pepTemp.postPeptide];
                                     pepTemp.position = [pepTemp.position];
                                     found.push(pepTemp);
@@ -577,11 +583,15 @@ function initNXDivs() {
                     $('#titlePepName').text(peptide.peptideAtlasID ? peptide.identifier + " (" + peptide.peptideAtlasID + ")" : peptide.identifier);
                     peptide.position.forEach(function (o, i) {
                         var semiTrypticEnd = "-";
-                        if (peptide.sequence[peptide.sequence.length - 1] === "K" || peptide.sequence[peptide.sequence.length - 1] === "R") semiTrypticEnd = "Tryp";
+                        if (peptide.sequence[peptide.sequence.length - 1] === "K" || peptide.sequence[peptide.sequence.length - 1] === "R") {
+                            if (peptide.sequence[peptide.sequence.length - 2] !== "P") semiTrypticEnd = "Tryp";
+                        }
                         else if (peptide.postPeptide[i] === undefined) semiTrypticEnd = "Term";
                         var semiTrypticStart = "-";
-                        if (peptide.prePeptide[i] === "K" || peptide.prePeptide[i] === "R") semiTrypticStart = "Tryp";
-                        else if (peptide.prePeptide[i] === undefined) semiTrypticEnd = "Term";
+                        if (peptide.prePeptide[i] === "K" || peptide.prePeptide[i] === "R") {
+                            if (peptide.preprePeptide[i] !== "P") semiTrypticStart = "Tryp";
+                        }
+                        else if (peptide.prePeptide[i] === undefined) semiTrypticStart = "Term";
                         var trypticity = semiTrypticStart !== "-" && semiTrypticEnd !== "-" ? "Tryptic" : semiTrypticStart === "-" && semiTrypticEnd === "-" ? "Non-Tryptic" : "semi-Tryptic";
                         var miscleavage = "-";
                         if (trypticity !== "Non-Tryptic") {
