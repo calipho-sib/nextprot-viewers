@@ -6239,7 +6239,7 @@ $(document).ready(function () {
                 //        if (pepListString.endsWith(",")) pepListString = pepListString.slice(0,-1);
                 //        console.log(pepListTotal.length);
 
-                countPeptideSubmitted(pepListTotal.length, strSplit);
+                countPeptideSubmitted(pepListTotal.length, strSplit.length);
                 //        var pepTotalCount = pepListString.split(",").length;
                 //        console.log(pepTotalCount);
                 if (pepListTotal.length < 1001) {
