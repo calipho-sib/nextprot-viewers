@@ -6160,24 +6160,30 @@ $(document).ready(function () {
                     $("#peptideResult>div:visible").each(function(){
                         var pep = {
                             peptide:"",
-                            countWithoutVariant:0,
-                            withoutVariant:"",
-                            countWithVariant:0,
-                            withVariant:""
+                            entrySpecificWithoutVariant:"",
+                            countIsoMatchedWithoutVariant:0,
+                            listIsoMatchedWithoutVariant:"",
+                            entrySpecificWithVariant: "",
+                            countIsoMatchedWithVariant:0,
+                            listIsoMatchedWithVariant:""
                         };
                         pep.peptide = $(this).attr("id");
-                        pep.withoutVariant = $(this).find(".panel-wo-variant .showIsoform li.foundIn").map(function() {
+                        pep.listIsoMatchedWithoutVariant = $(this).find(".panel-wo-variant .showIsoform li.foundIn").map(function() {
                             return $(this).text().split(" ")[0];
                         }).get();
-                        pep.countWithoutVariant = pep.withoutVariant.length;
-                        pep.withVariant = $(this).find(".panel-w-variant .showIsoform li.variantIntoAccount").map(function() {
-                            return $(this).text().split(" ")[0];
-                        }).get();
-                        pep.countWithVariant = pep.withVariant.length;
-                        console.log(pep);
+                        pep.entrySpecificWithoutVariant = $(this).find(".panel-wo-variant.panel-success").length ? "Y" : "N";
+                        pep.countIsoMatchedWithoutVariant = pep.listIsoMatchedWithoutVariant.length;
                         
-                        pep.withoutVariant = "\"" + pep.withoutVariant.join("\r") + "\"";
-                        pep.withVariant = "\"" + pep.withVariant.join("\r") + "\"";
+                        pep.listIsoMatchedWithVariant = $(this).find(".panel-w-variant .showIsoform li.variantIntoAccount").map(function() {
+                            return $(this).text().split(" ")[0];
+                        }).get();
+                        pep.countIsoMatchedWithVariant = pep.listIsoMatchedWithVariant.length;
+                        pep.entrySpecificWithVariant = $(this).find(".panel-w-variant.panel-success").length ?  "Y" : "N";
+                        
+//                        console.log(pep);
+                        
+                        pep.listIsoMatchedWithoutVariant = "\"" + pep.listIsoMatchedWithoutVariant.join(" ") + "\"";
+                        pep.listIsoMatchedWithVariant = "\"" + pep.listIsoMatchedWithVariant.join(" ") + "\"";
                         
                         listPeptides.push(pep);
 //                        peptide_list += $(this).attr("id") + "\n";
@@ -6206,11 +6212,16 @@ $(document).ready(function () {
                 //        }
                 //        else getProteotypicityInfos(str);
 
+                //Check if illegal char in string
                 var regex = /[^;,ACDEFGHIKLMNPQRSTVWY\s]/gi;
                 var matches = str.match(regex);
                 if (matches && matches.length > 0) {
                     var illegalChars = matches.join('", "');
                     var message = 'Your peptide list contains illegal characters : "' + illegalChars + '".';
+                    throwAPIError(message);
+                } 
+                else if (str.trim().length < 1){
+                    var message = 'The input field is empty, please provide some peptides. (e.g. : LQELFLQEVR, AATDFVQEMR, TKMGLYYSYFK, ..)';
                     throwAPIError(message);
                 } else getProteotypicityInfos(str);
             }
@@ -6218,8 +6229,8 @@ $(document).ready(function () {
             function countPeptideSubmitted(count, countTotal) {
                 var duplicates = countTotal - count;
                 var duplicateMessage = "";
-                if (duplicates) duplicateMessage = "<br>" + duplicates + " duplicate(s) removed.";
-                var countHtml = "<div id='pepSub' class='alert alert-info'><strong>" + count + " peptide(s) submitted." + duplicateMessage + "</strong></div>";
+                if (duplicates) duplicateMessage = "<br>" + duplicates + " duplicate(s) removed";
+                var countHtml = "<div id='pepSub' class='alert alert-info'><strong>" + count + " distinct peptide(s) submitted" + duplicateMessage + "</strong></div>";
                 $("#countSubmitted").html(countHtml);
                 //        $("#countSubmitted").fadeIn();
             }
@@ -6298,6 +6309,9 @@ $(document).ready(function () {
                 $("#variantList").val("");
                 $(".result-header").hide();
                 $("#peptideResult").html("");
+                $("#countSubmitted").html("");
+                $("#errorMessages").html("");
+                $("#files").val("");
             });
 
             //SUBMIT BUTTON CLICKED
