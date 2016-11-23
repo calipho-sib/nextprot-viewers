@@ -104,9 +104,9 @@ $(document).ready(function () {
                     peptide: sequence,
                     proteotypicity: {
                         withVariant: entriesLength <= 1,
-                        withoutVariant: entriesLengthWithoutVariant <= 1,
-                        onlyWithoutVariant: entriesLengthWithVariant < 1,
-                        onlyWithVariant: entriesLengthWithoutVariant < 1
+                        withoutVariant: entriesLengthWithoutVariant === 1,
+                        nullWithVariant: entriesLengthWithVariant < 1,
+                        nullWithoutVariant: entriesLengthWithoutVariant < 1
                     },
                     entries: entries,
                     isoforms: data.map(function (o) {
@@ -123,6 +123,8 @@ $(document).ready(function () {
                         });
                     })
                 };
+                console.log("entryMatching");
+                console.log(entryMatching);
                 //                console.log("entryMatching");
                 //                console.log(entryMatching);
                 var template = HBtemplates['app/templates/matchingEntries.tmpl'];
@@ -243,8 +245,8 @@ $(document).ready(function () {
                             countIsoMatchedWithoutVariant:0,
                             listIsoMatchedWithoutVariant:"",
                             entrySpecificWithVariant: "",
-                            countIsoMatchedWithVariant:0,
-                            listIsoMatchedWithVariant:""
+                            countAdditionalIsoMatchedWithVariant:0,
+                            listAdditionalIsoMatchedWithVariant:""
                         };
                         pep.peptide = $(this).attr("id");
                         pep.listIsoMatchedWithoutVariant = $(this).find(".panel-wo-variant .showIsoform li.foundIn").map(function() {
@@ -253,16 +255,16 @@ $(document).ready(function () {
                         pep.entrySpecificWithoutVariant = $(this).find(".panel-wo-variant.panel-success").length ? "Y" : "N";
                         pep.countIsoMatchedWithoutVariant = pep.listIsoMatchedWithoutVariant.length;
                         
-                        pep.listIsoMatchedWithVariant = $(this).find(".panel-w-variant .showIsoform li.variantIntoAccount").map(function() {
+                        pep.listAdditionalIsoMatchedWithVariant = $(this).find(".panel-w-variant .showIsoform li.variantIntoAccount").map(function() {
                             return $(this).text().split(" ")[0];
                         }).get();
-                        pep.countIsoMatchedWithVariant = pep.listIsoMatchedWithVariant.length;
+                        pep.countAdditionalIsoMatchedWithVariant = pep.listAdditionalIsoMatchedWithVariant.length;
                         pep.entrySpecificWithVariant = $(this).find(".panel-w-variant.panel-success").length ?  "Y" : "N";
                         
 //                        console.log(pep);
                         
                         pep.listIsoMatchedWithoutVariant = "\"" + pep.listIsoMatchedWithoutVariant.join(" ") + "\"";
-                        pep.listIsoMatchedWithVariant = "\"" + pep.listIsoMatchedWithVariant.join(" ") + "\"";
+                        pep.listAdditionalIsoMatchedWithVariant = "\"" + pep.listAdditionalIsoMatchedWithVariant.join(" ") + "\"";
                         
                         listPeptides.push(pep);
 //                        peptide_list += $(this).attr("id") + "\n";
