@@ -6163,7 +6163,7 @@ $(document).ready(function () {
     
             function exportPepList(){
                 $("#downloadList").click(function() {
-                    console.log("button clicked !!!!");
+//                    console.log("button clicked !!!!");
                     var listPeptides = [];
                     var peptide_list = "";
                     $("#peptideResult>div:visible").each(function(){
@@ -6198,16 +6198,16 @@ $(document).ready(function () {
 //                        peptide_list += $(this).attr("id") + "\n";
                     });
                     
-                    console.log("listPeptides");
-                    console.log(listPeptides);
+//                    console.log("listPeptides");
+//                    console.log(listPeptides);
                     
                     var csv = convertArrayOfObjectsToCSV({
                         data:listPeptides});
                     if (!csv.match(/^data:text\/csv/i)) {
                         csv = 'data:text/csv;charset=utf-8,' + csv;
                     }
-                    console.log("csv");
-                    console.log(csv);
+//                    console.log("csv");
+//                    console.log(csv);
                     
                     data = encodeURI(csv);
                     window.open(data);
