@@ -13,8 +13,13 @@
         <!--<h5 id="proteotypicitySentence"></h5>-->
         <!--</div>-->
         {{#proteotypicity}}
-        {{#if withoutVariant}}<div  class="panel panel-success" style="margin:0px;min-height: 120px;">
-        {{else}}<div class="panel panel-info" style="margin:0px;min-height: 120px;">{{/if}}
+        {{#if withoutVariant}}<div  class="panel panel-success panel-wo-variant" style="margin:0px;min-height: 120px;">
+        {{else}}
+            {{#if nullWithoutVariant}}<div class="panel panel-default panel-wo-variant" style="margin:0px;min-height: 120px;">
+            {{else}}
+                <div class="panel panel-info panel-wo-variant" style="margin:0px;min-height: 120px;">
+            {{/if}}
+        {{/if}}
         {{/proteotypicity}}
             <div class="panel-heading" style="padding:1px 15px">
                 <h5>Entry mapping</h5>
@@ -22,25 +27,25 @@
             <div class="panel-body">
                 <div class="showEntry" style="display:block">
                     <ul>
-                        {{#if proteotypicity.onlyWithVariant}}
+                        {{#if proteotypicity.nullWithoutVariant}}
                         <li>No entries found</li>
                         {{/if}}
                         {{#entries}}
                         {{#if withoutVariant}}
-                        <li>{{name}} <em> ( Gene Name : {{geneName}} )</em></li>
+                        <li class="foundIn">{{name}} <em> ( Gene Name : {{geneName}} )</em></li>
                         {{/if}}
                         {{/entries}}
                     </ul>
                 </div>
                 <div class="showIsoform" style="display:none">
                     <ul>
-                        {{#if proteotypicity.onlyWithVariant}}
+                        {{#if proteotypicity.nullWithoutVariant}}
                         <li>No entries found</li>
                         {{/if}}
                         {{#isoforms}}{{#each this}}
 
                         {{#unless variant}}
-                        <li>{{isoform}}</li>
+                        <li class="foundIn">{{isoform}}</li>
                         {{/unless}}
                         {{/each}}
                         {{/isoforms}}
@@ -49,8 +54,8 @@
             </div>
         </div>
         {{#proteotypicity}}
-        {{#if withVariant}}<div  class="panel panel-success" style="margin:0px;min-height: 120px;">
-        {{else}}<div class="panel panel-info" style="margin:0px;min-height: 120px;">{{/if}}
+        {{#if withVariant}}<div  class="panel panel-success panel-w-variant" style="margin:0px;min-height: 120px;">
+        {{else}}<div class="panel panel-info panel-w-variant" style="margin:0px;min-height: 120px;">{{/if}}
         {{/proteotypicity}}
             <div class="panel-heading" style="padding:1px 15px">
                 <h5>Additional mappings with known variants</h5>
@@ -58,7 +63,7 @@
             <div class="panel-body">
                 <div class="showEntry" style="display:block">
                     <ul>
-                        {{#if proteotypicity.onlyWithoutVariant}}
+                        {{#if proteotypicity.nullWithVariant}}
                         <li>No other entries found</li>
                         {{/if}}
                         {{#entries}}
@@ -70,7 +75,7 @@
                 </div>
                 <div class="showIsoform" style="display:none">
                     <ul>
-                        {{#if proteotypicity.onlyWithoutVariant}}
+                        {{#if proteotypicity.nullWithVariant}}
                         <li>No other entries found</li>
                         {{/if}}
                         {{#isoforms}}{{#each this}}

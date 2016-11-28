@@ -6799,31 +6799,56 @@ html *:after {
     padding-top:3px;
     vertical-align:top;
 }
+.unicity-form button {
+    margin:0px 5px 10px;
+}
+
 #submitList{
     display:inline-block;
 }
+
 #limitInfos{
     padding:7px 15px;
-    margin:0px 15px;
+    margin:0px 15px 10px;
 }
 #errorMessages .panel{
-    margin: 20px 0px 0px;
+    margin: 0px 0px 10px;
 }
 #pepSub{
-    margin: 20px 0px 0px;
+    margin: 0px 0px 10px;
     padding:7px 15px;
+}
+#filters{
+    transition:3s all ease;
 }
 #legend{
     display:inline-block;
     text-align: left;
+    transition:3s all ease;
 }
 .legend-elem{
     display: inline-block;
 }
 #separationLine{
+    width:100%;
     margin-bottom:25px;
     border-top:1px solid #ddd;
     border-bottom:1px solid #fff;
+    transition:3s all ease;
+}
+#separationLine.initial{
+    width:0%;
+    display:block;
+}
+#legend.initial{
+    display:none;
+}
+.initial{
+    display:none;
+}
+
+#peptideResult .panel, #peptideResult .panel-heading{
+    border-radius:0px;
 }
 /*
 #peptideCount{
@@ -6840,7 +6865,7 @@ html *:after {
     color:#222232;
 }
 
-a {
+#downloadList {
   color: #56D7C6;
   text-decoration: none;
 }

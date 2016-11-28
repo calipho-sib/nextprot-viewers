@@ -2,6 +2,7 @@
 
 <head>
     <title>neXtProt Unicity checker</title>
+    <meta charset="UTF-8">
     <link rel="stylesheet" type="text/css" href="../dist/app.css">
     <link href='https://fonts.googleapis.com/css?family=Lato:100,300,400,700,900' rel='stylesheet' type='text/css'>
     <script src="../dist/app.js"></script>
@@ -37,9 +38,19 @@
     </div>
     <div class="row" style="text-align:center;">
         <div class="col-md-10 col-md-offset-1">
-            <form>
+            <form class="unicity-form">
                 <div class="form-group">
-                    <label style="display:block;">Enter your peptide(s) : </label>
+<!--                    <label style="display:block;">Enter your peptide(s) : </label>-->
+                    <div>
+                        <p style="display:inline-block;"><span>Enter your peptide(s) below or load your list from a file : </p>
+                        <input style="display:inline-block;font-size:12px;font-style:italic;color:#C50063;" type="file" id="files" name="file" />
+<!--                        <button onclick="abortRead();">Cancel read</button>-->
+<!--
+                        <div class="progress" id="progress_bar" style="display:inline-block;width:100px">
+                            <div class="percent">0%</div>
+                        </div>
+-->
+                    </div>
                     <textarea id="variantList" class="form-control" rows="5" placeholder="LQELFLQEVR, AATDFVQEMR, TKMGLYYSYFK, ..."></textarea>
                 </div>
                 <div id="limitInfos" class="alert alert-warning pull-left" role="alert">
@@ -52,20 +63,23 @@
                 <button id="submitList" type="button" class="btn btn-primary pull-right">
                     <span class="glyphicon glyphicon-screenshot"></span> Check
                 </button>
+                <button id="resetList" type="button" class="btn btn-default pull-right">
+                    <span class="glyphicon glyphicon-refresh"></span> Reset
+                </button>
             </form>
         </div>
     </div>
     <div class="row">
-        <div class="col-md-8 col-md-offset-1">
+        <div class="col-md-7 col-md-offset-1">
             <div id="errorMessages"></div>
         </div>
-        <div class="col-md-2">
+        <div class="col-md-3">
             <div id="countSubmitted"></div>
         </div>
     </div>
-    <div class="row">
+    <div class="row result-header" style="display:none">
         <div class="col-md-10 col-md-offset-1">
-            <hr id="separationLine">
+            <hr id="separationLine" class="">
             <div id="legend" class="pull-left">
                 <div class="legend-elem">
                     <div class="legendIcon" style="background:#DFF0D8;"> </div>
@@ -76,7 +90,7 @@
                     <p class="legendText">Found in other entries</p>
                 </div>
             </div>
-            <div class="pull-right filters" style="margin-bottom:30px;">
+            <div class=" pull-right filters" style="margin-bottom:30px;">
                 <label style="margin:0px 10px;padding-top:2px;vertical-align:middle;font-style:italic;">FILTERS </label>
                 <label class="checkbox-inline" style="font-style:italic;">
                     <input type="checkbox" id="onlyProteoWithV" value="option1"> Entry-specific taking into account variants
@@ -88,15 +102,17 @@
                     <div class="btn-group pepShowed pull-right" role="group" style="margin-top:10px;">
 
                         <!--                        FOR NEXT VERSION-->
-                        <!--
-                        <button type="button" class="btn btn-default">
-                            <a id="downloadList" href="#" download="peptideList.txt">
+                        
+                        <button id="downloadList" type="button" class="btn btn-default">
+<!--                            <a id="downloadList" href="#" download="peptideList.txt">-->
+<!--                            <a  href="javascript:void(0)">-->
                                 <span class="glyphicon glyphicon-download" style="vertical-align:middle;font-size:16px;margin-right:5px;"></span>
-                            </a>
+                                <span>Download</span>
+<!--                            </a>-->
                         </button>
--->
+
                         <button id="peptideCount" type="button" class="btn btn-default">
-                            <span class="glyphicon glyphicon-eye-open" style="vertical-align:middle;font-size:16px;margin-right:5px;"></span>
+                            <span class="glyphicon glyphicon-eye-open" style="vertical-align:-2px;font-size:16px;margin-right:5px;"></span>
                             <span id="countPepShowed">0</span>/<span id="countPepTotal">0</span> peptides
                         </button>
                     </div>
