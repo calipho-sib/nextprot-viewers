@@ -235,7 +235,8 @@ $(document).ready(function () {
             }
     
             function exportPepList(){
-                $("a#downloadList").click(function() {
+                $("#downloadList").click(function() {
+                    console.log("button clicked !!!!");
                     var listPeptides = [];
                     var peptide_list = "";
                     $("#peptideResult>div:visible").each(function(){
@@ -270,16 +271,23 @@ $(document).ready(function () {
 //                        peptide_list += $(this).attr("id") + "\n";
                     });
                     
+                    console.log("listPeptides");
+                    console.log(listPeptides);
+                    
                     var csv = convertArrayOfObjectsToCSV({
                         data:listPeptides});
                     if (!csv.match(/^data:text\/csv/i)) {
                         csv = 'data:text/csv;charset=utf-8,' + csv;
                     }
+                    console.log("csv");
+                    console.log(csv);
                     
                     data = encodeURI(csv);
+                    window.open(data);
+                    
 //                    this.href = "data:text/plain;charset=UTF-8," + encodeURIComponent(peptide_list);
-                    this.href = data;
-                    this.download = "export.csv";
+//                    this.href = data;
+//                    this.download = "export.csv";
                 });
             }
 

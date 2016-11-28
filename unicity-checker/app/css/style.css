@@ -104,7 +104,7 @@ html *:after {
     color:#222232;
 }
 
-a {
+#downloadList {
   color: #56D7C6;
   text-decoration: none;
 }
