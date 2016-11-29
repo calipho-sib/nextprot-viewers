@@ -1,6 +1,7 @@
 <html>
 <head>
     <title>Ion channels variants portal</title>
+    <meta charset="UTF-8">
     <script src="js/datatables.min.js"></script>
     <script src="js/iframeResizer.js"></script>
     <link rel="stylesheet" type="text/css" href="css/datatables.min.css">
@@ -89,12 +90,12 @@
             "lengthMenu": [[10, 20, 100, 1000, 10000, -1], [10, 20, 100, 1000, 10000, "All"]],
             buttons: [
                 {
-                    extend: 'copyFlash',
+                    extend: 'copy',
                     className: 'tableButton',
                     text: '<span><i class="glyphicon glyphicon-copy"></i></span><span style="margin-left:5px;">Copy</span>'
                     },
                 {
-                    extend: 'csvFlash',
+                    extend: 'csv',
                     fieldSeparator: ',',
                     extension: '.csv',
                     text: '<span><i class="glyphicon glyphicon-floppy-save"></i></span><span style="margin-left:5px;">CSV</span>',

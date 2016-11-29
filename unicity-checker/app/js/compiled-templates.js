@@ -160,3 +160,11 @@ this["HBtemplates"]["app/templates/notFound.tmpl"] = Handlebars.template({"compi
     + this.escapeExpression(((helper = (helper = helpers.name || (depth0 != null ? depth0.name : depth0)) != null ? helper : helpers.helperMissing),(typeof helper === "function" ? helper.call(depth0,{"name":"name","hash":{},"data":data}) : helper)))
     + "</strong> has not been found in our database. Please check again the sequence or enter a new peptide.\n        </div>\n    </div>\n</div>";
 },"useData":true});
+
+this["HBtemplates"]["app/templates/warningPanel.tmpl"] = Handlebars.template({"compiler":[6,">= 2.0.0-beta.1"],"main":function(depth0,helpers,partials,data) {
+    var stack1;
+
+  return "<div class=\"col-md-12\">\n    <div class=\"alert alert-warning\" style=\"padding:7px 15px;\">\n            <strong>Warning! </strong> "
+    + ((stack1 = this.lambda(depth0, depth0)) != null ? stack1 : "")
+    + "\n    </div>\n</div>";
+},"useData":true});
