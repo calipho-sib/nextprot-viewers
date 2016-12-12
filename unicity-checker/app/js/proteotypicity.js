@@ -61,6 +61,13 @@ $(document).ready(function () {
                 $("#errorMessages").append(fillTemplate);
                 $(".shaft-load3").remove();
             }
+    
+            function throwWarning(message) {
+                var template5 = HBtemplates['app/templates/warningPanel.tmpl'];
+                var fillTemplate = template5(message);
+                $("#errorMessages").append(fillTemplate);
+                $(".shaft-load3").remove();
+            }
 
             function entryWithVariant(entry) {
                 var withVariant = false;
@@ -235,6 +242,11 @@ $(document).ready(function () {
             }
     
             function exportPepList(){
+                if (navigator.userAgent.indexOf('Safari') != -1 && navigator.userAgent.indexOf('Chrome') == -1) {
+                    var message = 'You are currently using Safari. The export button will give you a file without any extension. To read this file you will have to add ".csv" to the file.';
+                    throwWarning(message);
+                }
+                    
                 $("#downloadList").click(function() {
 //                    console.log("button clicked !!!!");
                     var listPeptides = [];
@@ -276,14 +288,39 @@ $(document).ready(function () {
                     
                     var csv = convertArrayOfObjectsToCSV({
                         data:listPeptides});
-                    if (!csv.match(/^data:text\/csv/i)) {
-                        csv = 'data:text/csv;charset=utf-8,' + csv;
-                    }
+//                    if (!csv.match(/^data:text\/csv/i)) {
+//                        csv = 'data:text/csv;charset=utf-8,' + csv;
+//                    }
 //                    console.log("csv");
 //                    console.log(csv);
+                    var exportFilename = "exportCSVVA.csv";
+                    var csvData = new Blob([csv], {type: 'text/csv;charset=utf-8;'});
+                    var csvDataSafari = 'data:application/csv;charset=utf-8,' + encodeURIComponent(csv);
+                    // Safari
+                    if (navigator.userAgent.indexOf('Safari') != -1 && navigator.userAgent.indexOf('Chrome') == -1) {
+                        var link = document.createElement('a');
+                        document.body.appendChild(link);
+                        link.href = csvDataSafari;
+                        link.setAttribute('download', exportFilename);
+                        link.click();
+                        document.body.removeChild(link);    
+                    }
+                    //IE11 & Edge
+                    else if (navigator.msSaveBlob) {
+                        navigator.msSaveBlob(csvData, exportFilename);
+                    } 
+                    else {
+                        //In FF link must be added to DOM to be clicked
+                        var link = document.createElement('a');
+                        link.href = window.URL.createObjectURL(csvData);
+                        document.body.appendChild(link);
+                        link.setAttribute('download', exportFilename);
+                        link.click();
+                        document.body.removeChild(link);    
+                    }
                     
-                    data = encodeURI(csv);
-                    window.open(data);
+//                    data = encodeURI(csv);
+//                    window.open(data);
                     
 //                    this.href = "data:text/plain;charset=UTF-8," + encodeURIComponent(peptide_list);
 //                    this.href = data;
