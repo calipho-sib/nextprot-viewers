@@ -1,0 +1,22 @@
+{
+  "name": "nextprot-js",
+  "main": "dist/nextprot.js",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "vendor",
+    "demo"
+  ],
+  "dependencies": {
+    "jquery": "~2.1.4",
+    "bootstrap": "~3.3.5",
+    "qunit": "1.19.0",
+    "handlebars": "~4.0.2"
+  },
+  "resolutions": {
+    "handlebars": "3.0.3",
+    "qunit": "1.19.0"
+  }
+}

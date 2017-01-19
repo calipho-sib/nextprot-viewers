@@ -1,0 +1,121 @@
+.unclickable {
+    background-color: #bfbfbf !important;
+}
+
+.clickable {
+    background-color: #eee !important;
+}
+
+.header {
+    background-color: #1634b9;
+    color: white;
+    margin: 0px 0px;
+}
+
+.methodology-header {
+    display: inline-block;
+    text-align: center;
+    color: white;
+}
+
+.MicroArray-header {
+    background-color: #7e92ec;
+    width: 60px;
+}
+
+.EST-header {
+    background-color: #95a7fb;
+    width: 30px;
+}
+
+.IHC-header {
+    background-color: #7e92ec;
+    width: 120px;
+}
+
+.detection-method {
+    background-color: #7cba0f;
+    color: white;
+}
+
+.dbSource {
+    background-color: #dedede;
+    color: #999;
+}
+
+.silver {
+    background-color: #dedede;
+    color: #999;
+}
+
+.Positive {
+    color: #FFA10A;
+}
+.NotDetected {
+    color: lightgray;
+}
+.Low {
+    color: #FFE6BD;
+}
+.High {
+    color: #FFA10A;
+}
+.Medium {
+    color: #FFC870;
+}
+
+.demo-overview {
+    height: auto;
+    background: #fff;
+    border-top: 4px solid #E7EAEC;
+    margin-top: 10px;
+    border-bottom: 1px solid #E7EAEC;
+}
+
+.filters {
+    margin-right: 20px;
+    margin-top: 0 !important;
+}
+
+.filterBox {
+    overflow: hidden;
+    margin-left: 20px;
+}
+
+#heatmap-table > .heatmap-body > ul > li {
+    margin-bottom: 10px;
+    margin-top: 10px;
+}
+
+/*.tooltip-inner {
+    background-color: white !important;
+    max-width: 500px;
+    border: 2px bold;
+}*/
+
+.bold {
+    border: 1px black solid;
+}
+
+.type {
+    margin-top:15px;
+    margin-left: 50px;
+    font-size: 18px;
+    font-weight: bold;
+}
+
+.mRNA-header {
+    float:left;
+    width:90px;
+    text-align:center;
+    color: white;
+    background-color:#163eef;
+}
+
+.protein-header {
+    float:left;
+    width:120px;
+    text-align:center;
+    color: white;
+    background-color:#1537d2;
+}

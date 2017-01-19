@@ -1,0 +1,54 @@
+{
+  "name": "iframe-resizer",
+  "version": "3.5.8",
+  "homepage": "https://github.com/davidjbradshaw/iframe-resizer",
+  "authors": [
+    "David J. Bradshaw <dave@bradshaw.net>"
+  ],
+  "description": "Responsively keep same and cross domain iFrames sized to their content with support for window/content resizing, multiple and nested iFrames. (Dependacy free and works with IE8+)",
+  "main": [
+    "js/iframeResizer.js",
+    "js/iframeResizer.contentWindow.js"
+  ],
+  "keywords": [
+    "CrossDomain",
+    "Cross-Domain",
+    "iFrame",
+    "Resizing",
+    "Resizer",
+    "postMessage",
+    "content",
+    "resize",
+    "height",
+    "autoheight",
+    "auto-height",
+    "iframe-auto-height",
+    "height-iframe",
+    "heightiframe",
+    "width",
+    "mutationObserver",
+    "RWD",
+    "responsive",
+    "responsiveiframes",
+    "responsive-iframes"
+  ],
+  "license": "MIT",
+  "ignore": [
+    "example",
+    "test",
+    "gruntfile.js",
+    "*.md",
+    "*.json"
+  ],
+  "dependencies": {},
+  "devDependencies": {},
+  "_release": "3.5.8",
+  "_resolution": {
+    "type": "version",
+    "tag": "v3.5.8",
+    "commit": "a499a62c9fce22055e6098166f0e0891c3b075e3"
+  },
+  "_source": "https://github.com/davidjbradshaw/iframe-resizer.git",
+  "_target": "x.x.x",
+  "_originalSource": "iframe-resizer"
+}

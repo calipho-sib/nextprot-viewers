@@ -1,0 +1,171 @@
+extends ./head
+block content
+  div.panel.panel-default.col-lg-12.col-md-12(style="float: left; height:auto")
+    div.row.panel-heading
+      h4.text-center Add a header
+    div#heatmap-table-1(style="width:800px;margin:20px auto 50px auto; height:auto")
+    div.panel-body.pull-left(style="width:50%")
+      p This is the classic display of a heatmap.
+      :marked
+        * **tableID**(_String_): The id of the HTML element
+
+        * **options**(_Object_): The option of the heatMap table
+          * **columnWidth**(_String_): Set the width of columns, "70px" by default
+          * **valuesSetting**(_Array_):
+            * **{value: "", color: ""}**: color is a value of css color
+          * **headerTemplateID**(String): The name of handlebars template
+          * **headerTemplateData**(Object): {header: ["..", ".."]}
+
+        * **Data structure**:
+
+            ```
+            [{
+              "rowLabel": String,
+              "values": Array,
+              "children": Array, 
+            }];
+            ```
+    div.pull-right(style="width:50%;overflow:auto;")
+      div
+        ul.nav.nav-tabs(role="tablist")
+          li.active(role="presentation")
+            a(href="#javascript", aria-controls="javascript", role="tab", data-toggle="tab") Javascript
+          li(role="presentation")
+            a(href="#html", aria-controls="html", role="tab", data-toggle="tab") HTML
+          li(role="presentation")
+            a(href="#css", aria-controls="css", role="tab", data-toggle="tab") CSS
+      
+      div.tab-content
+        div#javascript.tab-pane.active(role="tabpanel")
+          textarea#javascriptCode(name="javascriptCode",style="max-height:200px;overflow:auto;font-size:11px").
+            var heatmapTableOptions = {
+              valuesSetting: [
+                { value: 'NotDetected', color: 'lightgray'},
+                { value: 'Positive', color: 'FFA10A'},
+                { value: 'High', color: 'red'}
+                ],
+                columnWidth: "120px",
+                headerTemplateID: "headerTemplate",
+                headerTemplateData: {header:['MANotDetected',
+                                    'MAPositive',
+                                    'ESTPositive']}
+            }
+            var heatMapTable = new HeatMapTable({
+                            tableID: "heatmap-table-1",
+                            options: heatmapTableOptions
+                        });
+            var data = [
+                {
+                  "rowLabel": "Human anatomical entity",
+                  "values": ["NotDetected", "High", "Positive"],
+                  "children": [
+                    {
+                      "rowLabel": "Fluid and secretion",
+                      "values": ["NotDetected", "High", "Positive"],
+                      "children": [ 
+                        {
+                          "rowLabel": "Blood", 
+                          "values": ["", "High", "Positive"],
+                          "children": []
+                        }
+                      ]
+                    }
+                  ], 
+                }
+              ];
+                    
+            heatMapTable.loadJSONData(data);
+            heatMapTable.show();
+        div#html.tab-pane.active(role="tabpanel")
+          textarea#htmlCode(name="htmlCode",style="max-height:300px;height:100%;overflow:auto;font-size:11px;").
+            <div id="heatmap-table-1"></div>
+
+            <script type="text/javascript">
+              Handlebars.registerHelper('createHeader', function(columnName, block) {
+                var result = {};
+                result.columnWidth = "120px";
+                result.columnName = columnName;
+                return block.fn(result);
+              });
+            </script>
+
+            <script type="text/x-handlebars-template">
+              {{#each header}}
+                {{#createHeader this}}
+                  <div class="heatmap-column {{columnClass}}" style="width: {{columnWidth}}">
+                      {{columnName}}
+                  </div>
+                {{/createHeader}}
+              {{/each}}
+            </script>
+        div#css.tab-pane.active(role="tabpanel")
+          textarea#cssCode(name="cssCode",style="max-height:300px;height:100%;overflow:auto;font-size:11px;").
+
+      //- button.btn.btn-default.center-block(style="margin-bottom:20px;",onclick='executeCode("#heatmap-table-1", simpleHeatMap)') Execute
+  script.
+    var simpleHeatMap;
+    var executeCode = function (outputDiv, mirrorCode) {
+        $(outputDiv).empty();
+        var code = mirrorCode.getValue();
+        eval(code);
+        $(outputDiv).animate({opacity: "100"}, 2000);
+    };
+
+    window.onload = function () {
+        javascriptCode = CodeMirror.fromTextArea($("#javascriptCode")[0], {
+            mode: "javascript",
+            lineNumbers: true,
+            lineWrapping: true,
+            styleActiveLine: true,
+            matchBrackets: true,
+            readOnly: true
+        });
+        htmlCode = CodeMirror.fromTextArea($("#htmlCode")[0], {
+            mode: "xml",
+            htmlMode: true,
+            lineNumbers: true,
+            lineWrapping: true,
+            readOnly: true
+        });
+        cssCode = CodeMirror.fromTextArea($("#cssCode")[0], {
+            mode: "text/css",
+            lineNumbers: true,
+            lineWrapping: true,
+            readOnly: true
+        });
+        $(function () {
+          executeCode("#heatmap-table-1", javascriptCode);
+
+          //can't remove this code, because codeMirror can't render a element which is invisiable
+          $('#html').each( function () {
+            $(this).removeClass('active')
+          });
+          $('#css').each( function () {
+            $(this).removeClass('active')
+          });
+
+        });
+    };
+  script.
+    Handlebars.registerHelper('createHeader', function(columnName, block) {
+          var result = {};
+          result.columnWidth = "120px";
+          result.columnName = columnName;
+          return block.fn(result);
+      });
+  script#headerTemplate(type="text/x-handlebars-template").
+    <div style="overflow:hidden"> 
+      <div class="pull-right">
+        {{#each header}}
+          {{#createHeader this}}
+                <div class="heatmap-column {{columnClass}}" style="width: {{columnWidth}}">
+                    {{columnName}}
+                </div>
+          {{/createHeader}}
+        {{/each}}
+      </div>
+    </div>
+  style.
+    .red {
+      background-color: red;
+    }

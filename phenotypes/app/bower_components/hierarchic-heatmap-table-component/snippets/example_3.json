@@ -1,0 +1,13 @@
+{
+	"js": [
+			"/dist/hierarchic-heatmap-table.nextprot.js",
+			"/vendor/app/nextprot-core.js",
+			"/vendor/app/nextprot.js",
+			"/vendor/app/iframeResizer.contentWindow.min.js",
+			"https://use.fontawesome.com/aeec643a8b.js"
+		],
+	"css": [
+			"/vendor/css/snippets_example3.css",
+			"https://fonts.googleapis.com/css?family=Lato:100,300,400,700,900"
+		]
+}
