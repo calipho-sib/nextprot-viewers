@@ -401,7 +401,7 @@ $(document).ready(function () {
                                     var id = sequence;
                                     var new_data = $.extend(true, [], data);
                                     new_data.forEach(function (d, i) {
-                                        new_data[i].annotations = d.annotations.filter(function (f) {
+                                        new_data[i].annotations = d.annotationsByCategory["pepx-virtual-annotation"].filter(function (f) {
                                             return f.cvTermName === sequence
                                         });
                                     })
