@@ -1072,13 +1072,7 @@ function initNXDivs() {
 
         for (var i = 1; i < data.length; i++) {
 
-            if(data[i] == undefined){
-              console.log("pariu");
-              var feat = NXUtils.convertMappingsToIsoformMap([], metaData[i].name, metaData[i].filter);
-            }else {
-              var feat = NXUtils.convertMappingsToIsoformMap(data[i], metaData[i].name, metaData[i].filter);
-            }
-
+            var feat = NXUtils.convertMappingsToIsoformMap(data[i], metaData[i].name, metaData[i].filter);
             var featForViewer = NXViewerUtils.convertNXAnnotations(feat, metaData[i]);
             featuresForViewer.push(featForViewer);
         }
