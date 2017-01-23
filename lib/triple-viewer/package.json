@@ -1,7 +1,7 @@
 {
   "name": "triple-viewer",
   "description": "A complete overview containing a table, sequence and feature viewer written in javascript",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "homepage": "https://github.com/calipho-sib/nextprot-viewers/tree/master/triple-viewer",
   "authors": [
     "Mathieu Schaeffer <mat.schaeff@gmail.com>",
