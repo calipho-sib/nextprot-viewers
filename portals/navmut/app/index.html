@@ -122,7 +122,11 @@
             "columnDefs": [ {
                         "targets": "pubmed-link",
                         "render": function ( data, type, full, row ) {
-                            return '<a href="http://www.ncbi.nlm.nih.gov/pubmed/' + data.replace(/\s+/g, '').split(":")[1] + '" target="_blank">PubMed: ' + data.replace(/\s+/g, '').split(":")[1] + '</a>';
+                            var title = data.replace(/\s+/g, '').split(":")[0];
+                            title = title == "PUBMED" ? "PubMed" : title;
+                            var pubmed = data.replace(/\s+/g, '').split(":")[1];
+                            var url = title === "DOI" ? "https://doi.org/" : "http://www.ncbi.nlm.nih.gov/pubmed/";
+                            return '<a href="' + url + pubmed + '" target="_blank">'+title+': ' + pubmed + '</a>';
                             }
                         } ]
         });
