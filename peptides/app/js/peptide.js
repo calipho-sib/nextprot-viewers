@@ -345,7 +345,6 @@ function initNXDivs() {
                     brushActive: true,
                     toolbar: true,
                     bubbleHelp: true,
-                    toolbarTemplate:2,
                     tooltipColor:"black"
                 });
             }
