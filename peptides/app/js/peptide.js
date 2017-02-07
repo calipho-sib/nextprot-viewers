@@ -344,7 +344,9 @@ function initNXDivs() {
                     showSequence: true,
                     brushActive: true,
                     toolbar: true,
-                    bubbleHelp: true
+                    bubbleHelp: true,
+                    toolbarTemplate:2,
+                    tooltipColor:"black"
                 });
             }
         });
