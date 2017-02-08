@@ -61,7 +61,7 @@ $(document).ready(function () {
                 $("#errorMessages").append(fillTemplate);
                 $(".shaft-load3").remove();
             }
-    
+
             function throwWarning(message) {
                 var template5 = HBtemplates['app/templates/warningPanel.tmpl'];
                 var fillTemplate = template5(message);
@@ -240,15 +240,20 @@ $(document).ready(function () {
 
                 return result;
             }
-    
+
             function exportPepList(){
                 if (navigator.userAgent.indexOf('Safari') != -1 && navigator.userAgent.indexOf('Chrome') == -1) {
                     var message = 'You are currently using Safari. The export button will give you a file without any extension. To read this file you will have to add ".csv" to the file.';
                     throwWarning(message);
                 }
-                    
+
                 $("#downloadList").click(function() {
 //                    console.log("button clicked !!!!");
+
+                    if(ga){
+                      ga('send', 'event', 'unicity-checker', 'download');
+                    }
+                    
                     var listPeptides = [];
                     var peptide_list = "";
                     $("#peptideResult>div:visible").each(function(){
@@ -267,25 +272,25 @@ $(document).ready(function () {
                         }).get();
                         pep.entrySpecificWithoutVariant = $(this).find(".panel-wo-variant.panel-success").length ? "Y" : "N";
                         pep.countIsoMatchedWithoutVariant = pep.listIsoMatchedWithoutVariant.length;
-                        
+
                         pep.listAdditionalIsoMatchedWithVariant = $(this).find(".panel-w-variant .showIsoform li.variantIntoAccount").map(function() {
                             return $(this).text().split(" ")[0];
                         }).get();
                         pep.countAdditionalIsoMatchedWithVariant = pep.listAdditionalIsoMatchedWithVariant.length;
                         pep.entrySpecificWithVariant = $(this).find(".panel-w-variant.panel-success").length ?  "Y" : "N";
-                        
+
 //                        console.log(pep);
-                        
+
                         pep.listIsoMatchedWithoutVariant = "\"" + pep.listIsoMatchedWithoutVariant.join(" ") + "\"";
                         pep.listAdditionalIsoMatchedWithVariant = "\"" + pep.listAdditionalIsoMatchedWithVariant.join(" ") + "\"";
-                        
+
                         listPeptides.push(pep);
 //                        peptide_list += $(this).attr("id") + "\n";
                     });
-                    
+
 //                    console.log("listPeptides");
 //                    console.log(listPeptides);
-                    
+
                     var csv = convertArrayOfObjectsToCSV({
                         data:listPeptides});
 //                    if (!csv.match(/^data:text\/csv/i)) {
@@ -303,12 +308,12 @@ $(document).ready(function () {
                         link.href = csvDataSafari;
                         link.setAttribute('download', exportFilename);
                         link.click();
-                        document.body.removeChild(link);    
+                        document.body.removeChild(link);
                     }
                     //IE11 & Edge
                     else if (navigator.msSaveBlob) {
                         navigator.msSaveBlob(csvData, exportFilename);
-                    } 
+                    }
                     else {
                         //In FF link must be added to DOM to be clicked
                         var link = document.createElement('a');
@@ -316,12 +321,12 @@ $(document).ready(function () {
                         document.body.appendChild(link);
                         link.setAttribute('download', exportFilename);
                         link.click();
-                        document.body.removeChild(link);    
+                        document.body.removeChild(link);
                     }
-                    
+
 //                    data = encodeURI(csv);
 //                    window.open(data);
-                    
+
 //                    this.href = "data:text/plain;charset=UTF-8," + encodeURIComponent(peptide_list);
 //                    this.href = data;
 //                    this.download = "export.csv";
@@ -345,7 +350,7 @@ $(document).ready(function () {
                     var illegalChars = matches.join('", "');
                     var message = 'Your peptide list contains illegal characters : "' + illegalChars + '".';
                     throwAPIError(message);
-                } 
+                }
                 else if (str.trim().length < 1){
                     var message = 'The input field is empty, please provide some peptides. (e.g. : LQELFLQEVR, AATDFVQEMR, TKMGLYYSYFK, ..)';
                     throwAPIError(message);
@@ -401,7 +406,7 @@ $(document).ready(function () {
                                     var id = sequence;
                                     var new_data = $.extend(true, [], data);
                                     new_data.forEach(function (d, i) {
-                                        new_data[i].annotations = d.annotations.filter(function (f) {
+                                        new_data[i].annotations = d.annotationsByCategory["pepx-virtual-annotation"].filter(function (f) {
                                             return f.cvTermName === sequence
                                         });
                                     })
@@ -443,6 +448,10 @@ $(document).ready(function () {
             //SUBMIT BUTTON CLICKED
             $("#submitList").click(function () {
 
+                if(ga){
+                  ga('send', 'event', 'unicity-checker', 'submit');
+                }
+
                 //uncheck the filters
                 $(".filters input:checked").prop('checked', false);
 
@@ -470,7 +479,7 @@ $(document).ready(function () {
                 // FOR NEXT VERSION
                 exportPepList();
             });
-    
+
             function handleFileSelect(evt) {
                 var files = evt.target.files; // FileList object
 
@@ -503,7 +512,7 @@ $(document).ready(function () {
                     reader.readAsText(f);
                 }
             }
-    
+
             $("#files").change(function (event) {
                 console.log("files changed");
                 handleFileSelect(event);

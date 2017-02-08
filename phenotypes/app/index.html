@@ -6,16 +6,16 @@
     <meta charset="UTF-8">
     <script type="text/javascript" src="https://use.fontawesome.com/aeec643a8b.js"></script>
     <link href='https://fonts.googleapis.com/css?family=Lato:100,300,400,700,900' rel='stylesheet' type='text/css'>
-    <script type="text/javascript" src="nextprot.bundle.js"></script>
-    <script type="text/javascript" src="d3.min.js"></script>
-    <script type="text/javascript" src="jquery.typeahead.min.js"></script>
-    <script type="text/javascript" src="heatmap-table.js"></script>
-    <script type="text/javascript" src="bootstrap.min.js"></script>
-    <script type="text/javascript" src="iframeResizer.contentWindow.min.js"></script>
-    <script type="text/javascript" src="URI.min.js"></script>
-    <link rel="stylesheet" href="heatmap-table.css" crossorigin="anonymous">
-    <link rel="stylesheet" href="jquery.typeahead.min.css">
-    <link rel="stylesheet" href="bootstrap.min.css">
+    <script type="text/javascript" src="bower_components/nextprot-js/dist/nextprot.bundle.js"></script>
+    <script type="text/javascript" src="bower_components/d3/d3.min.js"></script>
+    <script type="text/javascript" src="bower_components/jquery-typeahead/dist/jquery.typeahead.min.js"></script>
+    <script type="text/javascript" src="bower_components/hierarchic-heatmap-table-component/dist/heatmap-table.js"></script>
+    <script type="text/javascript" src="bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="vendor/iframeResizer.contentWindow.min.js"></script>
+    <script type="text/javascript" src="vendor/URI.min.js"></script>
+    <link rel="stylesheet" href="bower_components/hierarchic-heatmap-table-component/dist/heatmap-table.css" crossorigin="anonymous">
+    <link rel="stylesheet" href="bower_components/jquery-typeahead/dist/jquery.typeahead.min.css">
+    <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.min.css">
     <link rel="stylesheet" href="style.css" />
     <!-- Google Analytics --> <script type="text/javascript" src="../../lib/ga.js"></script>
 </head>
@@ -91,13 +91,13 @@
                     </div>
                     <div class="panel-body">{{abstractText}}</div>
                 </div>
-            </div>{{else}}No Abstract available{{/if}} 
+            </div>{{else}}No Abstract available{{/if}}
             {{else}}
                 {{#if crossRef}}
                     {{#crossRef}}
                     <p>{{{linkTo name url}}}</p>
                     {{/crossRef}}
-                {{/if}} 
+                {{/if}}
             {{/publication}}
 
         </div>
@@ -253,7 +253,7 @@
 -->
         </div>
     </div>
-    
+
     <div id="apiCallFail"></div>
 
     <script defer>
@@ -639,14 +639,14 @@
 
         function activateFilters() {
             $(".filters a:not(.collapse-title)").click(function () {
-                
+
                 var filters = getFilters();
                 $("#count-phenotype-selected").text("(" + filters.length + " selected)");
 
                 autoCheckAll($(this));
             })
         }
-        
+
         function submitFilters(data, annots, listingPhenotypes) {
             $(".filter-submit").click(function(){
                 $(".filter-submit-text").text("Processing...");
@@ -695,32 +695,32 @@
         /*
             function changeGoldParam(gold){
                     var url = window.location.href;
-                    
+
                     // If key exists updates the value
                     if (url.indexOf('goldOnly=') > -1) {
                         url = url.replace('goldOnly='+!gold, 'goldOnly='+gold);
-        
+
                     // If not, append
                     } else {
                         if (url.indexOf('?') > -1) url = url + '&goldOnly='+gold;
                         else url = url + '?goldOnly='+gold;
                     }
-                    
+
                     return url;
                 }
-        
-                
+
+
                 $("body").prepend('<div class="qualityToggle pull-right">\
                     <ul class="nav nav-pills">\
                         <li role="presentation" id="quality-gold"><a href=' + changeGoldParam(true) + '>GOLD</a></li>\
                         <li role="presentation" id="quality-goldAndSilver"><a href=' + changeGoldParam(false) +'>GOLD & SILVER</a></li>\
                     </ul>\
                 </div>');
-                
+
                 var goldOnly = nx.getQualityParam();
                 console.log("goldOnly");
                 console.log(goldOnly);
-                
+
                 if (goldOnly === "true") {
                     $("#quality-gold").addClass("active");
                     $("#quality-goldAndSilver").removeClass("active");
@@ -734,13 +734,13 @@
 
         var entry = nx.getEntryName();
         var isoform = entry + "-1";
-        
+
         var url = window.location.href;
         var current_url = new URI(url);
-        
+
         var parent_url = window.parent.location.href;
         var parent_current_url = new URI(parent_url);
-        
+
 
         var publications = {};
         var normalAnnotations = {};
@@ -897,7 +897,7 @@
             heatMapTable0.loadJSONData(treeDataFiltered);
             heatMapTable0.show();
             $('.heatmap-filterByRowName-input').attr("placeholder", "Search for variant name or phenotype");
-            
+
             $(".loader").remove();
 
             $('[data-toggle="tooltip"]').tooltip();
@@ -1007,25 +1007,25 @@
 //                console.log(newurl);
 ////                var parsedUrl = $.url(currentUrl);
 //                var parsedUrl = currentUrl;
-//                
+//
 //                var params = parsedUrl.param();
 //                params[param] = value;
 //
 //                var newUrl = "?" + $.param(params);
-//                
+//
                 current_url.setSearch('isoform', value);
-                
+
 //                console.log(current_url);
                 window.history.pushState({
                     path: current_url
                 }, '', current_url);
-                
+
                 parent_current_url.setSearch('isoform', value);
 //                console.log(parent_current_url);
                 window.parent.history.pushState({
                     path: parent_current_url
                 }, '', parent_current_url);
-                
+
             }
         }
 
@@ -1051,7 +1051,7 @@
 //                console.log("WINTER IS COMING !");
 //                console.log(getIsoformFromUrl);
 //                console.log(getIsoformFromUrl["isoform"]);
-                
+
                 // Get current isoform
                 if (getIsoformFromParentUrl["isoform"]){
                     isoform = getIsoformFromParentUrl["isoform"];
@@ -1064,8 +1064,8 @@
                     if (canonical[0]) isoform = canonical[0].uniqueName;
                     else isoform = datas.isoforms.visible[0].uniqueName;
                 }
-                
-                
+
+
                 //                var template = HBtemplates['templates/isoformChoice.tmpl'];
                 //                var results = template(datas);
                 //                $("#nx-isoformChoice").append(results);
@@ -1094,7 +1094,7 @@
                     });
                 });
 //                $("#nx-isoformChoice li:first-child").addClass("active");
-                
+
 //                $("#" + isoform).addClass("active");
                 $('#nx-isoformChoice a[href="#' + isoform + '"]').tab('show');
 
@@ -1359,7 +1359,7 @@
             var html = template(data);
             $("body").html(html);
         }
-        
+
         function throwAPIError(message) {
             var source = $("#api-call-fail").html();
             var template = Handlebars.compile(source);
@@ -1406,13 +1406,13 @@
 
                 /*
     //             Sort phenotypes by smallest position
-                            var filterPhenotypes = 
+                            var filterPhenotypes =
 
     //            REPLACE MODIFIED ISOFORM ANNOTATIONS OBJECT WITH ARRAY !
 
                             function parseDataByIsoform(isoform, normalAnnotations, data.annotationsByCategory["phenotypic-variation"])
 
-    //             Parsing of the old JSON : 
+    //             Parsing of the old JSON :
                             var phenoArray = [];
                             for (var v in data.proteoformAnnotations) {
 
@@ -1420,7 +1420,7 @@
                                 phenoArray.push(data.proteoformAnnotations[v]);
                             }
 
-    //             Commented code :     
+    //             Commented code :
                                 var newArrayElem;
                                 if (onlyGold){
                                     newArrayElem = nx.filterGoldOnlyAnnotations(data.modifiedIsoformAnnotations[v]);
@@ -1429,7 +1429,7 @@
                                     newArrayElem = data.modifiedIsoformAnnotations[v];
                                 }
 
-    //             Parsing of the old JSON : 
+    //             Parsing of the old JSON :
                             phenoArray.sort(function (a, b) {
                                 var sbjA = a["phenotypic-variation"][0].subjectComponents.map(function (s) {
                                     return normalAnnotations[s]

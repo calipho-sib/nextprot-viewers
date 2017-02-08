@@ -248,24 +248,43 @@ a:focus {
     line-height: 1;
     font-weight: bold;
     padding: 12px;
-    background: rgba(0, 0, 0, 0.8);
-    color: #fff;
+/*    background: rgba(0, 0, 0, 0.8);*/
+    background: #eee;
+/*    color: #fff;*/
+    color: black;
     border-radius: 2px;
 }
 
-/*Creates a small triangle extender for the tooltip */
+/*Creates a small triangle extender for the tooltip - left*/
 .tooltip2:after {
     box-sizing: border-box;
     display: inline;
     font-size: 10px;
     width: 100%;
     line-height: 1;
-    color: rgba(0, 0, 0, 0.8);
+/*    color: rgba(0, 0, 0, 0.8);*/
+    color: #eee;
     content: "\25BC";
     position: absolute;
     text-align: left;
     margin: -1px 0 0 0;
     top: 98%;
+    left: 10px;
+}
+/*Creates a small triangle extender for the tooltip - left */
+.tooltip2:before {
+    box-sizing: border-box;
+    display: inline;
+    font-size: 10px;
+    width: 100%;
+    line-height: 1;
+    color: rgba(0, 0, 0, 0.6);
+/*    color: #333;*/
+    content: "\25BC";
+    position: absolute;
+    text-align: left;
+    margin: -1px 0 0 0;
+    top: 99%;
     left: 10px;
 }
 .tooltip3:after {
@@ -274,12 +293,28 @@ a:focus {
     font-size: 10px;
     width: 100%;
     line-height: 1;
-    color: rgba(0, 0, 0, 0.8);
+/*    color: rgba(0, 0, 0, 0.8);*/
+    color: #eee;
     content: "\25BC";
     position: absolute;
     text-align: right;
     margin: -1px 0 0 0;
     top: 98%;
+    right: 10px;
+}
+.tooltip3:before {
+    box-sizing: border-box;
+    display: inline;
+    font-size: 10px;
+    width: 100%;
+    line-height: 1;
+    color: rgba(0, 0, 0, 0.6);
+/*    color: #eee;*/
+    content: "\25BC";
+    position: absolute;
+    text-align: right;
+    margin: -1px 0 0 0;
+    top: 99%;
     right: 10px;
 }
 
@@ -288,31 +323,42 @@ a:focus {
 }
 
 .header-help{
-    color: #C50063;
+/*    color: #C50063;*/
+/*
+    color: #108D9F;
+    border-color:#0F8292;
+*/
+}
+.header-help .state{
+    min-width:26px;
+    display:inline-block;
 }
 
 .header-help:hover{
-    color: #98004C;
+/*    color: #98004C;*/
+/*    color: #0F8292;*/
     cursor: pointer;
     text-decoration: none;
 }
 
 .header-help:focus{
-    color: #98004C;
+/*    color: #0F8292;*/
 }
 
 .popover-title{
     text-align: center;
-    background-color: rgba(197, 0, 99, 0.1);
+/*    background-color: rgba(197, 0, 99, 0.1);*/
 }
 
 .label-as-badge {
+/*
     border-radius: 1em;
     font-size:0.7em;
-    background-color: #C50063;
+*/
+/*    background-color: #C50063;*/
 }
 
-path{
+path.domain {
     fill:none;
 }
 

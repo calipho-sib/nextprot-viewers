@@ -1,0 +1,38 @@
+{
+  "name": "hierarchic-heatmap-table-component",
+  "version": "0.0.1",
+  "homepage": "https://github.com/calipho-sib/hierarchic-heatmap-table-component",
+  "main": "dist/heatmap-table.js",
+  "authors": [
+    "Jin Jin Lin <jinjin.lin@outlook.com>",
+    "Calipho Team <ndu@isb-sib.ch>"
+  ],
+  "description": "A visualisation tool for displaying rows in a hiearchic manner with heatmap capabilities",
+  "main": "dist/heatmap-table.js",
+  "keywords": [
+    "nextprot",
+    "protein",
+    "heatmap",
+    "viewer",
+    "biojs",
+    "sib"
+  ],
+  "license": "GNU GPL v2",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "jquery": "2.2.3",
+    "bootstrap": "~3.3.6",
+    "handlebars": "^4.0.5",
+    "jquery-typeahead": "^2.6.1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/calipho-sib/hierarchic-heatmap-table-component.git"
+  }
+}

@@ -1,0 +1,23 @@
+
+<li>
+    <div class="heatmap-row">
+        {{createRow this}}
+        <div class="pull-right">
+            {{#each values}}{{showValue this}}{{/each}}
+        </div>
+    </div>
+    <ul class="tree heatmap-closed heatmap-tree">
+        {{#if detailData}}
+            <div class="heatmap-detail">
+                {{#each detailData}}
+                    <div>
+                    {{addDetail this}}
+                    </div>
+                {{/each}}
+            </div>
+        {{/if}}
+        {{#each childrenHTML}}
+            {{this}}
+        {{/each}}
+    </ul>
+</li>

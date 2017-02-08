@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <title>Generic protein expression view for Human Body</title>
+    <script type="text/javascript" src="vendor/js/aeec643a8b.js"></script>
+    <link href='https://fonts.googleapis.com/css?family=Lato:100,300,400,700,900' rel='stylesheet' type='text/css'>
+
+    <link rel="stylesheet" href="dist/heatmap-table.css">
+    <link rel="stylesheet" href="vendor/css/index.css">
+    <link rel="stylesheet" href="vendor/css/common-style.css">
+</head>
+
+<body>
+
+    <div id="nx-overview" class="col-md-offset-2 col-md-8 demo-overview"></div>
+
+    <div class="row">
+        <div class="col-md-3 col-md-offset-4">
+            <!--<img src="vendor/humanbody.png">-->
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="raw">
+            <div class="filters col-md-12">
+                <div class="col-md-6">
+                    <h3>Methods</h3>
+                    <div id="panel-techniques" class="panel-group">
+                        <div class="panel panel-default">
+                            <div class="panel-heading">
+                                <a class="collapse-title collapsed" data-toggle="collapse" href="#collapse0">
+                                    <div class="panel-title">
+                                        <span class="chevron pull-right"><i class="fa" aria-hidden="true"></i></span>
+                                        <span class="typeName">See methods</span> 
+                                        <span class="badge phenoCount pull-right"></span>
+                                    </div>
+                                </a>
+                            </div>
+                            <div id="collapse0" class="panel-collapse collapse">
+                                <ul class="list-group subtypes methodology">
+                                    <li class="list-group-item"><a class="active"><i class="fa fa-check" aria-hidden="true"></i><span class="phenAnnot" type="Microarray">Microarray (MA)</span></a></li>
+                                    <li class="list-group-item"><a class="active"><i class="fa fa-check" aria-hidden="true"></i><span class="phenAnnot" type="EST">EST</span></a></li>
+                                    <li class="list-group-item"><a class="active"><i class="fa fa-check" aria-hidden="true"></i><span class="phenAnnot" type="IHC">Immunohistochemistry (IHC)</span></a></li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <h3>Expression level</h3>
+                    <div id="panel-values" class="panel-group">
+                        <div class="panel panel-default">
+                            <div class="panel-heading">
+                                <a class="collapse-title collapsed" data-toggle="collapse" href="#collapse2">
+                                    <div class="panel-title">
+                                        <span class="chevron pull-right"><i class="fa" aria-hidden="true"></i></span>
+                                        <span class="typeName">See values</span>
+                                        <span class="badge phenoCount pull-right"></span>
+                                    </div>
+                                </a>
+                            </div>
+                            <div id="collapse2" class="panel-collapse collapse">
+                                <ul class="list-group subtypes subtypes-values">
+                                    <li class="list-group-item"><a class="active clickable"><i class="fa fa-check" aria-hidden="true"></i><span class="phenAnnot"value="NotDetected">Not Detected</span></a>                        </li>
+                                    <li class="list-group-item"><a class="active clickable"><i class="fa fa-check" aria-hidden="true"></i><span class="phenAnnot"value="Positive">Positive</span></a>                        </li>
+                                    <li class="list-group-item"><a class="active clickable"><i class="fa fa-check" aria-hidden="true"></i><span class="phenAnnot" value="Low">Low</span></a></li>
+                                    <li class="list-group-item"><a class="active clickable"><i class="fa fa-check" aria-hidden="true"></i><span class="phenAnnot" value="Medium">Medium</span></a></li>
+                                    <li class="list-group-item"><a class="active clickable"><i class="fa fa-check" aria-hidden="true"></i><span class="phenAnnot" value="High">High</span></a></li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div id="heatmap-table">
+            </div>
+        </div>
+    </div>
+
+    <script type="text/javascript" src="dist/hierarchic-heatmap-table.nextprot.js"></script>
+
+    <script type="text/javascript" src="src/nextprot-data-filters.js"></script>
+    <script type="text/javascript" src="vendor/js/iframeresizer.content.min.js"></script>
+    <script type="text/javascript" src="src/app.js"></script>
+
+</body>
+
+<script id="detailTemplate" type="text/x-handlebars-template">
+    <span class="detection-method">{{evidenceCodeName}}</span>  <span class="dbSource">{{dbSource}}</span>  <span class="ensembl-link"><a href="{{ensemblLink}}">{{ensembl}}</a></span>
+    <div>
+        <span class="{{value}} glyphicon glyphicon-stop"></span>
+        <span>{{description}}</span>
+        {{#if qualityQualifier}}
+        <span class="silver">{{qualityQualifier}}</span>
+        {{/if}}
+    </div>
+</script>
+
+<script type="text/javascript">
+    Handlebars.registerHelper('createHeader', function(columnName, block) {
+        var result = {};
+        result.columnWidth = "85px";
+        result.columnName = columnName;
+        return block.fn(result);
+    });
+</script> 
+
+<script id="headerTemplate" type="text/x-handlebars-template">
+    <div style="overflow:hidden">
+        <div class="pull-left type">Tissue/ Cell type</div>
+        <div class="pull-right">
+            <div style="overflow:hidden">
+                <div class="mRNA-header">mRNA</div><div class="protein-header">Protein</div>
+            </div>
+            <div style="overflow:hidden">
+                <div class="methodology-header MicroArray-header">MA</div><div class="methodology-header EST-header">EST</div><div class="methodology-header IHC-header">IHC</div>
+            </div>  
+        </div>
+    </div>
+</script>
+
+</html>

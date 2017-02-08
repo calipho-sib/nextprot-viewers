@@ -29,7 +29,7 @@ function initNXDivs() {
             return this.get(0) ? this.get(0).scrollHeight > this.innerHeight() : false;
         }
     })(jQuery);
-    
+
     function getSources(evidences){
         var sources = {};
         evidences.forEach(function(e){
@@ -127,7 +127,7 @@ function initNXDivs() {
                             "isoformProteotypicity": "No",
                             "tissueSpecificity": o.evidences.map(function (p) {
                                 return p.assignedBy
-                            }).sort(), 
+                            }).sort(),
                             "tissueSpecificity2": getSources(o.evidences),
                             "sequence": "",
                             "prePeptide": "",
@@ -138,7 +138,7 @@ function initNXDivs() {
                             "sources": dict,
                             "peptideAtlasID": peptideAtlasID
                         };
-                        
+
                         //if (o.natural === true) peptide.properties.push("natural");
                         //else peptide.properties.push("-");
                         if (peptide.properties.proteotypic === true) {
@@ -157,7 +157,7 @@ function initNXDivs() {
                         peptide.prePeptide = getInfoForIsoform.Sequence(isoforms, isoName)[peptide.position.first - 2];
                         peptide.preprePeptide = getInfoForIsoform.Sequence(isoforms, isoName)[peptide.position.first - 3];
                         peptide.postPeptide = getInfoForIsoform.Sequence(isoforms, isoName)[peptide.position.second + 1];
-                    
+
             return peptide;
         },
         mergeSyntheticWithNatural: function (array) {
@@ -344,7 +344,8 @@ function initNXDivs() {
                     showSequence: true,
                     brushActive: true,
                     toolbar: true,
-                    bubbleHelp: true
+                    bubbleHelp: true,
+                    tooltipColor:"black"
                 });
             }
         });
@@ -386,14 +387,14 @@ function initNXDivs() {
 
             function entryWithVariant(entry) {
                     var withVariant = false;
-                    entry.annotations.forEach(function (o) {
+                    entry.annotationsByCategory["pepx-virtual-annotation"].forEach(function (o) {
                         if (o.variant) withVariant = true;
                     });
                     return withVariant;
                 }
                 function entryWithoutVariant(entry) {
                     var withoutVariant = false;
-                    entry.annotations.forEach(function (o) {
+                    entry.annotationsByCategory["pepx-virtual-annotation"].forEach(function (o) {
                         if (!o.variant) withoutVariant = true;
                     });
                     return withoutVariant;
@@ -402,7 +403,7 @@ function initNXDivs() {
 
             var isoformsLength = 0;
             data.forEach(function (o) {
-                isoformsLength += o.annotations.length;
+                isoformsLength += o.annotationsByCategory["pepx-virtual-annotation"].length;
             });
             var entries = data.map(function (o) {
                 return {
@@ -424,7 +425,7 @@ function initNXDivs() {
                 },
                 entries: entries,
                 isoforms: data.map(function (o) {
-                    return o.annotations.map(function (p) {
+                    return o.annotationsByCategory["pepx-virtual-annotation"].map(function (p) {
                         return {
                             entryName: o.uniqueName,
                             variant: p.variant,
@@ -688,7 +689,7 @@ function initNXDivs() {
                     //    if (o !== "PubMed") $("#pepSources").append("<li>" + o + " (" + peptide.sources[o] + ")" + "</li>");
                     //    else $("#pepSources").append("<li>" + o + " </li>");
                     //});
-                    
+
                     /*** TO DO ***///
 //                    peptide.tissueSpecificity.forEach(function (o) {
 //                        console.log(o);
@@ -728,16 +729,16 @@ function initNXDivs() {
                             sourceTemp = pmidTemp + mdataTemp;
                         }
                         $('#pepSources').append(sourceTemp);
-                        
+
                     };
-                    
+
                     $("#pepSources").html(
                         $("#pepSources").children("li").sort(function (a, b) {
                             return $(a).text().toUpperCase().localeCompare(
                                 $(b).text().toUpperCase());
                         })
                     )
-                
+
                     var query = "SELECT distinct ?ptmterm ?ptmtype ?ptmstart ?ptmend ?mapstart ?mapend ?ptmlabel ?ptmcomment WHERE {" +
                         "values (?pepName ?iso) {(\"" + peptide.nextprotName + "\"^^xsd:string isoform:" + isoName + ") }" +
                         "?iso :ptm ?ptm ." +
@@ -766,7 +767,7 @@ function initNXDivs() {
                         "filter (str(?ptmpubid) = str(?mappubid))" +
                         "}" +
                         "order by ?ptmstart";
-                    
+
                     var query2 = "SELECT distinct ?ptmterm ?ptmtype ?ptmstart ?ptmend ?mapstart ?mapend ?ptmlabel ?ptmcomment WHERE {" +
                         "values (?pepName ?iso) {(\"" + peptide.nextprotName + "\"^^xsd:string isoform:" + isoName + ") }" +
                         "?iso :ptm ?ptm ." +
@@ -1071,8 +1072,11 @@ function initNXDivs() {
         ];
 
         for (var i = 1; i < data.length; i++) {
-
-            var feat = NXUtils.convertMappingsToIsoformMap(data[i], metaData[i].name, metaData[i].filter);
+            if(data[i] == undefined){
+              var feat = NXUtils.convertMappingsToIsoformMap([], metaData[i].name, metaData[i].filter);
+            }else {
+              var feat = NXUtils.convertMappingsToIsoformMap(data[i], metaData[i].name, metaData[i].filter);
+            }
             var featForViewer = NXViewerUtils.convertNXAnnotations(feat, metaData[i]);
             featuresForViewer.push(featForViewer);
         }
@@ -1153,7 +1157,7 @@ function initNXDivs() {
                             });
                             //adding a copy for the feature viewer, because pepetides will be added to peptideMappings
                             allFeatures.push(jQuery.extend({}, oneData.annot));
-                            
+
                             break;
                         default:
                             allFeatures.push(jQuery.extend({}, oneData.annot));

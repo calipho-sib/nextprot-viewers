@@ -1,0 +1,24 @@
+extends ./head
+block content
+	div.container.col-md-11.col-xs-12(style="margin-left:5%")
+		div.jumbotron
+			p.pull-right(style="display:inline-block")
+				a(href="http://www.nextprot.org",alt="neXtProt",style="color:#C50063") neXtProt
+			h1 HeatMap Table
+			a.btn.btn-info.pull-right(target="_blank",href="https://github.com/calipho-sib/protein-expression/edit/gh-pages/doc/index.html") Improve this doc
+			p This heatmap table shows
+		a(href="https://github.com/calipho-sib/protein-expression",target="_blank") 
+			img(style="position: absolute; top: 0; right: 0; border: 0;",src="https://camo.githubusercontent.com/365986a132ccd6a44c23a9169022c0b5c890c387/68747470733a2f2f73332e616d617a6f6e6177732e636f6d2f6769746875622f726962626f6e732f666f726b6d655f72696768745f7265645f6161303030302e706e67",alt="Fork me on GitHub",data-canonical-src="https://s3.amazonaws.com/github/ribbons/forkme_right_red_aa0000.png")
+
+		iframe(src="./example1.html", width="100%",onload="resizeIframe(this)",scrolling="no",frameborder="no")
+		iframe(src="./example2.html", width="100%",onload="resizeIframe(this)",scrolling="no",frameborder="no")
+		iframe(src="./example3.html", width="100%",onload="resizeIframe(this)",scrolling="no",frameborder="no")
+		iframe(src="./example4.html", width="100%",onload="resizeIframe(this)",scrolling="no",frameborder="no")
+		iframe(src="./example5.html", width="100%",onload="resizeIframe(this)",scrolling="no",frameborder="no")
+		iframe(src="./example6.html", width="100%",onload="resizeIframe(this)",scrolling="no",frameborder="no")
+		iframe(src="./example7.html", width="100%",onload="resizeIframe(this)",scrolling="no",frameborder="no")
+
+		script.
+			function resizeIframe(obj) {
+				obj.style.height = (obj.contentWindow.document.body.scrollHeight + 30) + 'px'; 
+			}

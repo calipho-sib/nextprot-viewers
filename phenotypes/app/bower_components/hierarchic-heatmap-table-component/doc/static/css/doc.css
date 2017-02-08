@@ -1,0 +1,8 @@
+iframe {
+	padding-bottom: 50px;
+	/*border: solid 1px black;*/
+}
+
+iframe body {
+	height: 100%;
+}

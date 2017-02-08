@@ -1,0 +1,124 @@
+<html><head><title>Heatmap table</title><link type="text/css" rel="stylesheet" href="./static/css/codemirror.css"/><link type="text/css" rel="stylesheet" href="./static/css/doc.css"/><script type="text/javascript" src="./static/js/codemirror.js"></script><script type="text/javascript" src="./static/js/xml.js"></script><script type="text/javascript" src="./static/js/css.js">   </script><script type="text/javascript" src="./static/js/javascript.js"></script><link type="text/css" rel="stylesheet" href="../dist/heatmap-table.css"/><script type="text/javascript" src="../dist/heatmap-table-bundle.js"></script></head><body style="height:auto"><div class="panel panel-default col-lg-12 col-md-12" style="float: left; height:auto"><div class="row panel-heading"><h4 class="text-center">Simple</h4></div><div id="heatmap-table-1" style="width:800px;margin:20px auto 50px auto; height:auto"></div><div class="panel-body pull-left" style="width:50%"><p>This is the classic display of a heatmap.</p><ul>
+<li><p><strong>tableID</strong>(<em>String</em>): The id of the HTML element</p>
+</li>
+<li><p><strong>options</strong>(<em>Object</em>): The option of the heatMap table</p>
+<ul>
+<li><strong>columnWidth</strong>(<em>String</em>): Set the width of columns, &quot;70px&quot; by default</li>
+<li><strong>valuesSetting</strong>(<em>Array</em>):<ul>
+<li><strong>{value: &quot;&quot;, color: &quot;&quot;}</strong>: color is a value of css color</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p><strong>Data structure</strong>:</p>
+<pre><code>  [{
+    &quot;rowLabel&quot;: String,
+    &quot;values&quot;: Array,
+    &quot;children&quot;: Array, 
+  }];
+</code></pre></li>
+</ul>
+</div><div class="pull-right" style="width:50%;overflow:auto"><div><ul class="nav nav-tabs" role="tablist"><li class="active" role="presentation"><a href="#javascript" aria-controls="javascript" role="tab" data-toggle="tab">Javascript</a></li><li role="presentation"><a href="#html" aria-controls="html" role="tab" data-toggle="tab">HTML</a></li><li role="presentation"><a href="#css" aria-controls="css" role="tab" data-toggle="tab">CSS</a></li></ul></div><div class="tab-content"><div class="tab-pane active" id="javascript" role="tabpanel"><textarea id="javascriptCode" name="javascriptCode" style="max-height:200px;overflow:auto;font-size:11px">var heatmapTableOptions = {
+  valuesSetting: [
+    { value: 'NotDetected', color: 'lightgray'},
+    { value: 'Positive', color: 'FFA10A'},
+    { value: 'High', color: 'red'}
+    ],
+    columnWidth: "120px"
+}
+var heatMapTable = new HeatMapTable({
+                tableID: "heatmap-table-1",
+                options: heatmapTableOptions
+            });
+var data = [
+    {
+      "rowLabel": "Human anatomical entity",
+      "values": ["NotDetected", "High", "Positive"],
+      "children": [
+        {
+          "rowLabel": "Fluid and secretion",
+          "values": ["NotDetected", "High", "Positive"],
+          "children": []
+        }
+      ], 
+    }
+  ];
+        
+heatMapTable.loadJSONData(data);
+heatMapTable.show();</textarea></div><div class="tab-pane active" id="html" role="tabpanel"><textarea id="htmlCode" name="htmlCode" style="max-height:300px;height:100%;overflow:auto;font-size:11px"><div id="heatmap-table-1"></div>
+
+<script type="text/javascript">
+  Handlebars.registerHelper('createHeader', function(columnName, block) {
+    var result = {};
+    result.columnWidth = "120px";
+    result.columnName = columnName;
+    return block.fn(result);
+  });
+</script>
+
+<script type="text/x-handlebars-template">
+  {{#each header}}
+    {{#createHeader this}}
+      <div class="heatmap-column {{columnClass}}" style="width: {{columnWidth}}">
+          {{columnName}}
+      </div>
+    {{/createHeader}}
+  {{/each}}
+</script></textarea></div><div class="tab-pane active" id="css" role="tabpanel"><textarea id="cssCode" name="cssCode" style="max-height:300px;height:100%;overflow:auto;font-size:11px"></textarea></div></div></div></div><script>var simpleHeatMap;
+var executeCode = function (outputDiv, mirrorCode) {
+    $(outputDiv).empty();
+    var code = mirrorCode.getValue();
+    eval(code);
+    $(outputDiv).animate({opacity: "100"}, 2000);
+};
+
+window.onload = function () {
+    javascriptCode = CodeMirror.fromTextArea($("#javascriptCode")[0], {
+        mode: "javascript",
+        lineNumbers: true,
+        lineWrapping: true,
+        styleActiveLine: true,
+        matchBrackets: true,
+        readOnly: true
+    });
+    htmlCode = CodeMirror.fromTextArea($("#htmlCode")[0], {
+        mode: "xml",
+        htmlMode: true,
+        lineNumbers: true,
+        lineWrapping: true,
+        readOnly: true
+    });
+    cssCode = CodeMirror.fromTextArea($("#cssCode")[0], {
+        mode: "text/css",
+        lineNumbers: true,
+        lineWrapping: true,
+        readOnly: true
+    });
+    $(function () {
+      executeCode("#heatmap-table-1", javascriptCode);
+
+      //can't remove this code, because codeMirror can't render a element which is invisiable
+      $('#html').each( function () {
+        $(this).removeClass('active')
+      });
+      $('#css').each( function () {
+        $(this).removeClass('active')
+      });
+
+    });
+};</script><script>Handlebars.registerHelper('createHeader', function(columnName, block) {
+      var result = {};
+      result.columnWidth = "120px";
+      result.columnName = columnName;
+      return block.fn(result);
+  });</script><script id="headerTemplate" type="text/x-handlebars-template"><div style="overfloat:hidden"> 
+  <div style="pull-right">
+    {{#each header}}
+      {{#createHeader this}}
+            <div class="heatmap-column {{columnClass}}" style="width: {{columnWidth}}">
+                {{columnName}}
+            </div>
+      {{/createHeader}}
+    {{/each}}
+  </div>
+</div></script></body></html>
