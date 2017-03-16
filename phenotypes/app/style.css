@@ -383,6 +383,7 @@ hr {
 
 .tree li {
     border-bottom: 1px solid #ddd;
+    list-style-type: none;
     /*    padding-bottom:5px;*/
 }
 
