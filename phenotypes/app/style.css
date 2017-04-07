@@ -500,23 +500,26 @@ hr {
 }
 
 #phenotypeViewer .badge.gcc {
-    background-color: #2B4372;
+    background-color: #FFB03B;
 }
 
 #phenotypeViewer .badge.bi {
-    background-color: #ba570f;
+    background-color: #86AF59;
 }
 
 #phenotypeViewer .badge.gmf {
-    background-color: #BA7E0F;
+    background-color: #8E2800;
 }
 
 #phenotypeViewer .badge.ve {
-    background-color: #097469;
+    background-color: #468966;
+}
+#phenotypeViewer .badge.pp {
+    background-color: #1D5474;
 }
 
 #phenotypeViewer .badge.gbp {
-    background-color: #AC9635;
+    background-color: #B64926;
 }
 
 .evidence-block {
