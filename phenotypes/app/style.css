@@ -503,8 +503,16 @@ hr {
     background-color: #2B4372;
 }
 
+#phenotypeViewer .badge.bi {
+    background-color: #ba570f;
+}
+
 #phenotypeViewer .badge.gmf {
-    background-color: #AC6935;
+    background-color: #BA7E0F;
+}
+
+#phenotypeViewer .badge.ve {
+    background-color: #097469;
 }
 
 #phenotypeViewer .badge.gbp {
