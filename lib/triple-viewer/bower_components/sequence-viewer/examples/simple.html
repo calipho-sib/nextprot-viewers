@@ -11,9 +11,7 @@
     <h1>Simple Sequence Formatter and Regex Operator</h1>
     <p>Paste your sequence on the text area</p>
     <div class="row">
-            <textarea id="sequenceTextArea"   class="form-control" rows="3" style="width:100%;">MALWMRLLPL LALLALWGPD PAAAFVNQHL CGSHLVEALY LVCGERGFFY
-TPKTRREAED LQVGQVELGG GPGAGSLQPL ALEGSLQKRG IVEQCCTSIC
-SLYQLENYCN</textarea>
+            <textarea id="sequenceTextArea"   class="form-control" rows="3" style="width:100%;">MALWMRLLPLLALLALWGPDPAAAFVNQHLCGSHLVEALYLVCGERGFFYTPKTRRKRGIVEQCCTSICSLYQLENYCNMALW</textarea>
             <button type="button" class="btn btn-primary center-block " style="margin:20px;" onclick=formatCode()>Format</button>
     </div>
 
@@ -26,7 +24,7 @@ SLYQLENYCN</textarea>
         var formatCode = function () {
 
             console.log($('#sequenceTextArea').val());
-            var seq1 = new Sequence($('#sequenceTextArea').val().replace(/\s+/g,''));
+            var seq1 = new Sequence($('#sequenceTextArea').val());
             // You can add some rendering options
             seq1.render('#protein-sequence-viewer', {
                 'showLineNumbers': true,
@@ -49,7 +47,6 @@ SLYQLENYCN</textarea>
                     console.log(elem);
                 }
             );
-            seq1.selection(21,33,"orangered");
                                   //Coverage list
 //            var exempleSequenceCoverage = [
 //                {start: 0, end: 25, color: "black", underscore: false, bgcolor: "#ffd891"},
