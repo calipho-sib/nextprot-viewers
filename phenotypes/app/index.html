@@ -522,7 +522,7 @@
                     //                    DEPRECATED
                     //                    customTemplate.rowLabel = "<strong>" + cvTermToSentence[cvTermName] + "</strong> " + annotationAffected.cvTermName + " " + annotTypeTemplate[annotationAffected.category];
                     customTemplate.rowLabel = "<strong>" + i.description + "</strong> " + annotTypeTemplate[annotationAffected.category];
-                    customTemplate.values[0] = cvTermName !== "no impact" ? worstIntensity : "no impact";
+                    customTemplate.values[0] = !cvTermName.startsWith("no impact") ? worstIntensity : "no impact";
                     customTemplate.detailData = generateEvidence(i.evidences, i.annotationHash);
                     listPhenotypes.push(customTemplate);
                 }
