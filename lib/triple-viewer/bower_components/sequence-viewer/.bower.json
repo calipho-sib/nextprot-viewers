@@ -34,6 +34,6 @@
     "commit": "e10b4f29f30940212cd306fca8ff97317495ff22"
   },
   "_source": "https://github.com/calipho-sib/sequence-viewer.git",
-  "_target": "x.x.x",
+  "_target": "0.2.28",
   "_originalSource": "sequence-viewer"
 }

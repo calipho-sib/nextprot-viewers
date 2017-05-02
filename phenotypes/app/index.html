@@ -320,6 +320,7 @@
                 "annotations": {
                     "GO_MOLECULAR_FUNCTION": {},
                     "GO_BIOLOGICAL_PROCESS": {},
+                    "ELECTROPHYSIOLOGICAL_PARAMETER": {},
                     "GO_CELLULAR_COMPONENT": {},
                     "BINARY_INTERACTION": {},
                     "PROTEIN_PROPERTY": {},
@@ -521,7 +522,7 @@
                     //                    DEPRECATED
                     //                    customTemplate.rowLabel = "<strong>" + cvTermToSentence[cvTermName] + "</strong> " + annotationAffected.cvTermName + " " + annotTypeTemplate[annotationAffected.category];
                     customTemplate.rowLabel = "<strong>" + i.description + "</strong> " + annotTypeTemplate[annotationAffected.category];
-                    customTemplate.values[0] = cvTermName !== "no impact" ? worstIntensity : "no impact";
+                    customTemplate.values[0] = !cvTermName.startsWith("no impact") ? worstIntensity : "no impact";
                     customTemplate.detailData = generateEvidence(i.evidences, i.annotationHash);
                     listPhenotypes.push(customTemplate);
                 }
@@ -756,12 +757,6 @@
 
                 {
                     value: 'severe',
-                    //                    html: '<div>\
-                    //                              <img style="width:15px" src="http://www.downtowntomsriver.com/chili/images/chili_icon.gif">\
-                    //                              <img style="width:15px" src="http://www.downtowntomsriver.com/chili/images/chili_icon.gif">\
-                    //                              <img style="width:15px" src="http://www.downtowntomsriver.com/chili/images/chili_icon.gif">\
-                    //                              <img style="width:15px" src="http://www.downtowntomsriver.com/chili/images/chili_icon.gif">\
-                    //                          </div>',
                     html: '<div class="progress">\
                       <div class="progress-bar progress-bar-danger" role="progressbar" aria-valuenow="20" aria-valuemin="0" aria-valuemax="100"\ style="width: 100%"> Severe\
                         <span class="sr-only">20% Complete</span>\
@@ -771,11 +766,6 @@
                 },
                 {
                     value: 'moderate',
-                    //                    html: '<div>\
-                    //                              <img style="width:15px" src="http://www.downtowntomsriver.com/chili/images/chili_icon.gif">\
-                    //                              <img style="width:15px" src="http://www.downtowntomsriver.com/chili/images/chili_icon.gif">\
-                    //                              <img style="width:15px" src="http://www.downtowntomsriver.com/chili/images/chili_icon.gif">\
-                    //                          </div>',
                     html: '<div class="progress">\
                       <div class="progress-bar progress-bar-warning" role="progressbar" aria-valuenow="20" aria-valuemin="0" aria-valuemax="100"\ style="width: 70%"> Moderate\
                         <span class="sr-only">20% Complete</span>\
@@ -785,10 +775,6 @@
                 },
                 {
                     value: 'mild',
-                    //                    html: '<div>\
-                    //                              <img style="width:15px" src="http://www.downtowntomsriver.com/chili/images/chili_icon.gif">\
-                    //                              <img style="width:15px" src="http://www.downtowntomsriver.com/chili/images/chili_icon.gif">\
-                    //                          </div>',
                     html: '<div class="progress">\
                       <div class="progress-bar progress-bar-info" role="progressbar" aria-valuenow="20" aria-valuemin="0" aria-valuemax="100"\ style="width: 40%"> Mild\
                         <span class="sr-only">20% Complete</span>\
@@ -798,9 +784,6 @@
                 },
                 {
                     value: 'normal',
-                    //                    html: '<div>\
-                    //                              <img style="width:15px" src="http://www.downtowntomsriver.com/chili/images/chili_icon.gif">\
-                    //                          </div>',
                     html: '<div class="progress">\
                       <div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="20" aria-valuemin="0" aria-valuemax="100"\ style="width: 10%"> Normal\
                         <span class="sr-only">20% Complete</span>\
@@ -810,9 +793,6 @@
                 },
                 {
                     value: 'no impact',
-                    //                    html: '<div>\
-                    //                              <img style="width:15px" src="http://www.urdu-english.com/images/lessons/beginner/vegetables/vegetable-pics/chilli.png">\
-                    //                          </div>',
                     html: '<div class="progress">\
                       <div class="progress-bar" role="progressbar" aria-valuenow="20" aria-valuemin="0" aria-valuemax="100"\ style="width: 100%;background-color:transparent;box-shadow:none;color:#aaa"> No impact\
                         <span class="sr-only">20% Complete</span>\
@@ -847,24 +827,28 @@
             "increase": "increases",
             "gain": "gains"
         }
-
+        
         var annotTypeTemplate = {
             "GO_MOLECULAR_FUNCTION": "<span class='badge gmf' data-toggle='tooltip' data-placement='top' title='GO Molecular Function'>GO-MF</span>",
             "GO_CELLULAR_COMPONENT": "<span class='badge gcc' data-toggle='tooltip' data-placement='top' title='GO Cellular Component'>GO-CC</span>",
-            "PROTEIN_PROPERTY": "<span class='badge gcc' data-toggle='tooltip' data-placement='top' title='Protein Property'>PP</span>",
+            "PROTEIN_PROPERTY": "<span class='badge pp' data-toggle='tooltip' data-placement='top' title='Protein Property'>PP</span>",
             "GO_BIOLOGICAL_PROCESS": "<span class='badge gbp' data-toggle='tooltip' data-placement='top' title='GO Biological process'>GO-BP</span>",
-            "BINARY_INTERACTION": "<span class='badge pp' data-toggle='tooltip' data-placement='top' title='Binary Interaction' style='z-index:30'>BI</span>",
+            "ELECTROPHYSIOLOGICAL_PARAMETER": "<span class='badge ve' data-toggle='tooltip' data-placement='top' title='Electrophysiological parameter'>EP</span>",
+            "BINARY_INTERACTION": "<span class='badge bi' data-toggle='tooltip' data-placement='top' title='Binary Interaction' style='z-index:30'>BI</span>",
             "SMALL_MOLECULE_INTERACTION": "<span class='badge smi' data-toggle='tooltip' data-placement='top' title='Small Molecule Interaction'>SMI</span>",
-            "MAMMALIAN_PHENOTYPE": "<span class='badge smi' data-toggle='tooltip' data-placement='top' title='Mammalian Phenotype'>MP</span>"
+            "MAMMALIAN_PHENOTYPE": "<span class='badge mp' data-toggle='tooltip' data-placement='top' title='Mammalian Phenotype'>MP</span>"
         }
+
         var annotTypeDescription = {
             "GO_MOLECULAR_FUNCTION": "Impact on molecular function",
             "GO_CELLULAR_COMPONENT": "Impact on cellular component",
             "PROTEIN_PROPERTY": "Impact on protein property",
             "GO_BIOLOGICAL_PROCESS": "Impact on biological process",
+            "ELECTROPHYSIOLOGICAL_PARAMETER": "Impact on electrophysiological parameter",
             "BINARY_INTERACTION": "Impact on binary interaction",
             "SMALL_MOLECULE_INTERACTION": "Impact on small molecule interaction",
             "MAMMALIAN_PHENOTYPE": "Impact on mammalian phenotype"
+
         }
 
 
