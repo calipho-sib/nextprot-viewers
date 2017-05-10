@@ -8,7 +8,7 @@ Enter your peptide(s) in the textarea, separated by a coma, space or line breaks
 
 `git clone https://github.com/calipho-sib/nextprot-viewers.git` 
 
-`cd nextprot-viewers/unicity-checker`  (get to the specific folder)
+`cd nextprot-viewers/peptide-uniqueness-checker`  (get to the specific folder)
 
 `npm install`  (will install the development dependencies)
 
