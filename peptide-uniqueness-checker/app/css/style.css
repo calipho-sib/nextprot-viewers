@@ -49,6 +49,7 @@ html *:after {
 #limitInfos{
     padding:7px 15px;
     margin:0px 15px 10px;
+    width:75%;
 }
 #errorMessages .panel{
     margin: 0px 0px 10px;
