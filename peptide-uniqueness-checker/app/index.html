@@ -53,22 +53,55 @@
                     </div>
                     <textarea id="variantList" class="form-control" rows="5" placeholder="LQELFLQEVR, AATDFVQEMR, TKMGLYYSYFK, ..."></textarea>
                 </div>
+<!--
                 <div id="limitInfos" class="alert alert-warning pull-left" role="alert">
-                    <span class="glyphicon glyphicon-exclamation-sign"></span> The peptide uniqueness checker is currently limited to a maximum of <strong>1000 peptides</strong> which are checked against the human sequences in the current neXtProt release. Peptides must be <strong>minimum 6 aa</strong> in length.</div>
+                    <span class="glyphicon glyphicon-exclamation-sign"></span> The peptide uniqueness checker is currently limited to a maximum of <strong>1000 peptides</strong> which are checked against the human sequences in the current neXtProt release. Peptides must be <strong>minimum 6 aa</strong> in length.
+                </div>
+-->
+<!--                <div class="row">-->
+                <div id="messages-boxes" class="col-md-8">
+                <div class="info-box info-orange">
+                <div class="info-icon">
+                    <span class="glyphicon glyphicon-info-sign"></span>
+                    </div><div class="info-content">
+                    <span style="font-weight:300;font-size:15px;">The peptide uniqueness checker is currently limited to a maximum of <strong>1000 peptides</strong> which are checked against the human sequences in the current neXtProt release. Peptides must be <strong>minimum 6 aa</strong> in length.</span>
+                    </div>
+                </div>
+<!--                </div>-->
+<!--                </div>-->
+<!--                <div class="row">-->
+<!--                <div class="col-md-8">-->
+                <div class="info-box info-blue">
+                <div class="info-icon">
+                    <span class="glyphicon glyphicon-bookmark"></span>
+                    </div><div class="info-content">
+                    <span style="font-weight:300">
+                        <span style="font-size:22px;">Has the peptide uniqueness checker been useful to your work?</span><br><span style="font-weight:300">Please consider citing our publication:</span><br><div style="display:inline-block;margin:10px 30px;padding-left:10px;border-left:1px solid rgba(250,250,250,0.5);font-style:italic"><strong style="font-weight:500;">The neXtProt peptide uniqueness checker: a tool for the proteomics community</strong><br><span style="font-size:12px;">Schaeffer M, Gateau A, Teixeira D, Michel PA, Zahn-Zabal M, Lane L.</span><br>Bioinformatics. 2017 May 17. PMID: 28520855 doi: 10.1093/bioinformatics/btx318.
+                        </div>
+                    </span>
+                    </div>
+                </div>
+                <div id="errorMessages"></div>
+                </div>
+<!--                </div>-->
                 <!--
                 <div class="pull-left">
                     <p class="bg-warning"></p>
                 </div>
 -->
-                <button id="submitList" type="button" class="btn btn-primary pull-right">
-                    <span class="glyphicon glyphicon-screenshot"></span> Check
-                </button>
-                <button id="resetList" type="button" class="btn btn-default pull-right">
-                    <span class="glyphicon glyphicon-refresh"></span> Reset
-                </button>
+                <div class="inline-block pull-right" style="text-align:right;">
+                    <button id="resetList" type="button" class="button-material button-white">
+                        <span class="glyphicon glyphicon-refresh"></span> Reset
+                    </button>
+                    <button id="submitList" type="button" class="button-material button-blue">
+                        <span class="glyphicon glyphicon-screenshot"></span> Check
+                    </button>
+                    <div id="countSubmitted"></div>
+                </div>
             </form>
         </div>
     </div>
+<!--
     <div class="row">
         <div class="col-md-7 col-md-offset-1">
             <div id="errorMessages"></div>
@@ -77,6 +110,7 @@
             <div id="countSubmitted"></div>
         </div>
     </div>
+-->
     <div class="row result-header" style="display:none">
         <div class="col-md-10 col-md-offset-1">
             <hr id="separationLine" class="">

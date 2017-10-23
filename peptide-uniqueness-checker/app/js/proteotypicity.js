@@ -360,9 +360,17 @@ $(document).ready(function () {
             function countPeptideSubmitted(count, countTotal) {
                 var duplicates = countTotal - count;
                 var duplicateMessage = "";
-                if (duplicates) duplicateMessage = "<br>" + duplicates + " duplicate(s) removed";
-                var countHtml = "<div id='pepSub' class='alert alert-info'><strong>" + count + " distinct peptide(s) submitted" + duplicateMessage + "</strong></div>";
+                if (duplicates) duplicateMessage = "<div id='duplicate'>" + duplicates + " duplicate(s) removed<div>";
+                var countHtml = "<div id='pepSub'><div><span class='glyphicon glyphicon-ok'></span>" + count + " distinct peptide(s) submitted</div>" + duplicateMessage + "</div>";
                 $("#countSubmitted").html(countHtml);
+                $("#pepSub>div")
+                    .css("right", -$("#pepSub").outerWidth() + "px")
+                    .animate({right: 0}, 500);
+//                $("#pepSub>div").slideDown("fast")
+//                $("#pepSub>div:first-child").show("slide", { direction: "right" }, 1000);
+//                $("#pepSub>div:last-child").show("slide", { direction: "right" }, 1000);
+//                    .delay(3000)
+//                    .animate({right: -$("#pepSub").outerWidth() + "px"}, 800);
                 //        $("#countSubmitted").fadeIn();
             }
 
