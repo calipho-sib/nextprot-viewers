@@ -155,6 +155,15 @@ html *:after {
     text-align: left;
     padding: 7px 10px;
 }
+.info-content a{
+    color:white;
+    font-weight: 500;
+}
+.info-content a .glyphicon{
+    font-size: 9px;
+    vertical-align: text-top;
+    margin-left: 4px;
+}
 .info-icon{
     width:70px;
     background-color:rgba(0,0,0,0.1);
