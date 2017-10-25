@@ -17,6 +17,14 @@ html *:after {
   -moz-box-sizing: border-box;
   box-sizing: border-box;
 }
+.form-container.col-lg-10{
+    padding-left:0px;
+    padding-right:0px;
+}
+.form-container.col-md-12{
+    padding-left:15px;
+    padding-right:15px;
+}
 
 .legendIcon{
     display:inline-block;
@@ -61,10 +69,16 @@ html *:after {
     min-height:170px;
 }
 #pepSub>div{
+/*
     margin: 0px 5px 10px;
     padding:10px 15px;
-    background-color:#464646;
-    color:white;
+*/
+    margin: 0px 5px 10px 0px;
+    padding: 10px 10px;
+/*    background-color:#464646;*/
+    background-color:white;
+/*    color:white;*/
+    color:black;
 /*    line-height: 30px;*/
 /*    display:none;*/
     box-shadow:0 2px 5px 0 rgba(0, 0, 0, 0.26);
@@ -118,12 +132,13 @@ html *:after {
 }
 */
 #titleRow{
-    margin-bottom: 50px;
+    margin-bottom: 20px;
 }
 .mainTitle{
     font-weight:500;
     font-size:50px;
     color:#222232;
+    margin-bottom: 20px;
 }
 
 #downloadList {
@@ -138,9 +153,17 @@ html *:after {
 .info-orange{
     background-color:#FFC107;
 /*    background-color:#FF9800;*/
+    background-color:#fcf8e3;
+}
+.info-orange .info-content{
+    color:#8a6d3b;
+}
+.info-orange .info-icon span{
+    color:rgba(0,0,0,0.5);
 }
 .info-blue{
     background-color:#00BCD4;
+    background-color: #2196F3;
 }
 .info-red{
     background-color:#FF5722;
@@ -192,8 +215,25 @@ html *:after {
     margin-top:10px;
     position:relative;
 }
-.col-md-8#messages-boxes{
+#messages-boxes{
     padding:0px;
+}
+.pepShowed{
+    box-shadow:0 2px 5px rgba(0, 0, 0, 0.16), 0 2px 10px rgba(0, 0, 0, 0.12);
+}
+.pepShowed .btn{
+    border-radius: 2px;
+    border: none;
+}
+#downloadList{
+    border-right:1px solid #eee;
+    border-top-right-radius: 0px;
+    border-bottom-right-radius: 0px;
+}
+#peptideCount{
+    margin-left:0px;
+    border-top-left-radius: 0px;
+    border-bottom-left-radius: 0px;
 }
 /*LOADER :*/
 
