@@ -3,13 +3,13 @@ this["HBtemplates"] = this["HBtemplates"] || {};
 this["HBtemplates"]["app/templates/apiCallFail.tmpl"] = Handlebars.template({"compiler":[7,">= 4.0.0"],"main":function(container,depth0,helpers,partials,data) {
     var stack1;
 
-  return "<div class=\"col-md-12\">\n    <div class=\"panel panel-danger\">\n        <div class=\"panel-heading\">\n            Impossible to get the data !\n        </div>\n        <div class=\"panel-body\">\n            "
+  return "<div class=\"info-box info-red\">\n    <div class=\"info-icon\">\n        <span class=\"glyphicon glyphicon-exclamation-sign\"></span>\n        </div><div class=\"info-content\">\n        <span style=\"font-weight:300\">\n            <span style=\"font-size:20px;font-weight:500\">Impossible to get the data !</span>\n            <span>"
     + ((stack1 = container.lambda(depth0, depth0)) != null ? stack1 : "")
-    + "\n        </div>\n    </div>\n</div>";
+    + "</span>\n        </span>\n    </div>\n</div>";
 },"useData":true});
 
 this["HBtemplates"]["app/templates/limitExceeded.tmpl"] = Handlebars.template({"compiler":[7,">= 4.0.0"],"main":function(container,depth0,helpers,partials,data) {
-    return "<div class=\"col-md-12\">\n    <div class=\"panel panel-danger\">\n        <div class=\"panel-heading\">\n            Limit exceeded !\n        </div>\n        <div class=\"panel-body\">\n            You have exceeded the maximum number of <strong>1000</strong> peptides.\n        </div>\n    </div>\n</div>";
+    return "<div class=\"info-box info-red\">\n    <div class=\"info-icon\">\n        <span class=\"glyphicon glyphicon-exclamation-sign\"></span>\n        </div><div class=\"info-content\">\n        <span style=\"font-weight:300\">\n            <span style=\"font-size:20px;font-weight:500\">Limit exceeded !</span>\n            <span>You have exceeded the maximum number of <strong>1000</strong> peptides.</span>\n        </span>\n    </div>\n</div>";
 },"useData":true});
 
 this["HBtemplates"]["app/templates/matchingEntries.tmpl"] = Handlebars.template({"1":function(container,depth0,helpers,partials,data) {
@@ -17,21 +17,21 @@ this["HBtemplates"]["app/templates/matchingEntries.tmpl"] = Handlebars.template(
 },"3":function(container,depth0,helpers,partials,data) {
     var stack1;
 
-  return ((stack1 = helpers.unless.call(depth0 != null ? depth0 : {},((stack1 = (depth0 != null ? depth0.proteotypicity : depth0)) != null ? stack1.onlyWithVariant : stack1),{"name":"unless","hash":{},"fn":container.program(4, data, 0),"inverse":container.noop,"data":data})) != null ? stack1 : "");
+  return ((stack1 = helpers.unless.call(depth0 != null ? depth0 : (container.nullContext || {}),((stack1 = (depth0 != null ? depth0.proteotypicity : depth0)) != null ? stack1.onlyWithVariant : stack1),{"name":"unless","hash":{},"fn":container.program(4, data, 0),"inverse":container.noop,"data":data})) != null ? stack1 : "");
 },"4":function(container,depth0,helpers,partials,data) {
     return "proteoWithoutVariant";
 },"6":function(container,depth0,helpers,partials,data) {
     var stack1;
 
   return "        "
-    + ((stack1 = helpers["if"].call(depth0 != null ? depth0 : {},(depth0 != null ? depth0.withoutVariant : depth0),{"name":"if","hash":{},"fn":container.program(7, data, 0),"inverse":container.program(9, data, 0),"data":data})) != null ? stack1 : "");
+    + ((stack1 = helpers["if"].call(depth0 != null ? depth0 : (container.nullContext || {}),(depth0 != null ? depth0.withoutVariant : depth0),{"name":"if","hash":{},"fn":container.program(7, data, 0),"inverse":container.program(9, data, 0),"data":data})) != null ? stack1 : "");
 },"7":function(container,depth0,helpers,partials,data) {
     return "<div  class=\"panel panel-success panel-wo-variant\" style=\"margin:0px;min-height: 120px;\">\n";
 },"9":function(container,depth0,helpers,partials,data) {
     var stack1;
 
   return "            "
-    + ((stack1 = helpers["if"].call(depth0 != null ? depth0 : {},(depth0 != null ? depth0.nullWithoutVariant : depth0),{"name":"if","hash":{},"fn":container.program(10, data, 0),"inverse":container.program(12, data, 0),"data":data})) != null ? stack1 : "");
+    + ((stack1 = helpers["if"].call(depth0 != null ? depth0 : (container.nullContext || {}),(depth0 != null ? depth0.nullWithoutVariant : depth0),{"name":"if","hash":{},"fn":container.program(10, data, 0),"inverse":container.program(12, data, 0),"data":data})) != null ? stack1 : "");
 },"10":function(container,depth0,helpers,partials,data) {
     return "<div class=\"panel panel-default panel-wo-variant\" style=\"margin:0px;min-height: 120px;\">\n";
 },"12":function(container,depth0,helpers,partials,data) {
@@ -41,9 +41,9 @@ this["HBtemplates"]["app/templates/matchingEntries.tmpl"] = Handlebars.template(
 },"16":function(container,depth0,helpers,partials,data) {
     var stack1;
 
-  return ((stack1 = helpers["if"].call(depth0 != null ? depth0 : {},(depth0 != null ? depth0.withoutVariant : depth0),{"name":"if","hash":{},"fn":container.program(17, data, 0),"inverse":container.noop,"data":data})) != null ? stack1 : "");
+  return ((stack1 = helpers["if"].call(depth0 != null ? depth0 : (container.nullContext || {}),(depth0 != null ? depth0.withoutVariant : depth0),{"name":"if","hash":{},"fn":container.program(17, data, 0),"inverse":container.noop,"data":data})) != null ? stack1 : "");
 },"17":function(container,depth0,helpers,partials,data) {
-    var helper, alias1=depth0 != null ? depth0 : {}, alias2=helpers.helperMissing, alias3="function", alias4=container.escapeExpression;
+    var helper, alias1=depth0 != null ? depth0 : (container.nullContext || {}), alias2=helpers.helperMissing, alias3="function", alias4=container.escapeExpression;
 
   return "                        <li class=\"foundIn\">"
     + alias4(((helper = (helper = helpers.name || (depth0 != null ? depth0.name : depth0)) != null ? helper : alias2),(typeof helper === alias3 ? helper.call(alias1,{"name":"name","hash":{},"data":data}) : helper)))
@@ -53,23 +53,23 @@ this["HBtemplates"]["app/templates/matchingEntries.tmpl"] = Handlebars.template(
 },"19":function(container,depth0,helpers,partials,data) {
     var stack1;
 
-  return ((stack1 = helpers.each.call(depth0 != null ? depth0 : {},depth0,{"name":"each","hash":{},"fn":container.program(20, data, 0),"inverse":container.noop,"data":data})) != null ? stack1 : "");
+  return ((stack1 = helpers.each.call(depth0 != null ? depth0 : (container.nullContext || {}),depth0,{"name":"each","hash":{},"fn":container.program(20, data, 0),"inverse":container.noop,"data":data})) != null ? stack1 : "");
 },"20":function(container,depth0,helpers,partials,data) {
     var stack1;
 
   return "\n\n"
-    + ((stack1 = helpers.unless.call(depth0 != null ? depth0 : {},(depth0 != null ? depth0.variant : depth0),{"name":"unless","hash":{},"fn":container.program(21, data, 0),"inverse":container.noop,"data":data})) != null ? stack1 : "");
+    + ((stack1 = helpers.unless.call(depth0 != null ? depth0 : (container.nullContext || {}),(depth0 != null ? depth0.variant : depth0),{"name":"unless","hash":{},"fn":container.program(21, data, 0),"inverse":container.noop,"data":data})) != null ? stack1 : "");
 },"21":function(container,depth0,helpers,partials,data) {
     var helper;
 
   return "                        <li class=\"foundIn\">"
-    + container.escapeExpression(((helper = (helper = helpers.isoform || (depth0 != null ? depth0.isoform : depth0)) != null ? helper : helpers.helperMissing),(typeof helper === "function" ? helper.call(depth0 != null ? depth0 : {},{"name":"isoform","hash":{},"data":data}) : helper)))
+    + container.escapeExpression(((helper = (helper = helpers.isoform || (depth0 != null ? depth0.isoform : depth0)) != null ? helper : helpers.helperMissing),(typeof helper === "function" ? helper.call(depth0 != null ? depth0 : (container.nullContext || {}),{"name":"isoform","hash":{},"data":data}) : helper)))
     + "</li>\n";
 },"23":function(container,depth0,helpers,partials,data) {
     var stack1;
 
   return "        "
-    + ((stack1 = helpers["if"].call(depth0 != null ? depth0 : {},(depth0 != null ? depth0.withVariant : depth0),{"name":"if","hash":{},"fn":container.program(24, data, 0),"inverse":container.program(26, data, 0),"data":data})) != null ? stack1 : "")
+    + ((stack1 = helpers["if"].call(depth0 != null ? depth0 : (container.nullContext || {}),(depth0 != null ? depth0.withVariant : depth0),{"name":"if","hash":{},"fn":container.program(24, data, 0),"inverse":container.program(26, data, 0),"data":data})) != null ? stack1 : "")
     + "\n";
 },"24":function(container,depth0,helpers,partials,data) {
     return "<div  class=\"panel panel-success panel-w-variant\" style=\"margin:0px;min-height: 120px;\">\n        ";
@@ -80,9 +80,9 @@ this["HBtemplates"]["app/templates/matchingEntries.tmpl"] = Handlebars.template(
 },"30":function(container,depth0,helpers,partials,data) {
     var stack1;
 
-  return ((stack1 = helpers["if"].call(depth0 != null ? depth0 : {},(depth0 != null ? depth0.withVariant : depth0),{"name":"if","hash":{},"fn":container.program(31, data, 0),"inverse":container.noop,"data":data})) != null ? stack1 : "");
+  return ((stack1 = helpers["if"].call(depth0 != null ? depth0 : (container.nullContext || {}),(depth0 != null ? depth0.withVariant : depth0),{"name":"if","hash":{},"fn":container.program(31, data, 0),"inverse":container.noop,"data":data})) != null ? stack1 : "");
 },"31":function(container,depth0,helpers,partials,data) {
-    var helper, alias1=depth0 != null ? depth0 : {}, alias2=helpers.helperMissing, alias3="function", alias4=container.escapeExpression;
+    var helper, alias1=depth0 != null ? depth0 : (container.nullContext || {}), alias2=helpers.helperMissing, alias3="function", alias4=container.escapeExpression;
 
   return "                        <li class=\"variantIntoAccount\">"
     + alias4(((helper = (helper = helpers.name || (depth0 != null ? depth0.name : depth0)) != null ? helper : alias2),(typeof helper === alias3 ? helper.call(alias1,{"name":"name","hash":{},"data":data}) : helper)))
@@ -92,17 +92,17 @@ this["HBtemplates"]["app/templates/matchingEntries.tmpl"] = Handlebars.template(
 },"33":function(container,depth0,helpers,partials,data) {
     var stack1;
 
-  return ((stack1 = helpers.each.call(depth0 != null ? depth0 : {},depth0,{"name":"each","hash":{},"fn":container.program(34, data, 0),"inverse":container.noop,"data":data})) != null ? stack1 : "");
+  return ((stack1 = helpers.each.call(depth0 != null ? depth0 : (container.nullContext || {}),depth0,{"name":"each","hash":{},"fn":container.program(34, data, 0),"inverse":container.noop,"data":data})) != null ? stack1 : "");
 },"34":function(container,depth0,helpers,partials,data) {
     var stack1;
 
   return "\n\n"
-    + ((stack1 = helpers["if"].call(depth0 != null ? depth0 : {},(depth0 != null ? depth0.variant : depth0),{"name":"if","hash":{},"fn":container.program(35, data, 0),"inverse":container.noop,"data":data})) != null ? stack1 : "");
+    + ((stack1 = helpers["if"].call(depth0 != null ? depth0 : (container.nullContext || {}),(depth0 != null ? depth0.variant : depth0),{"name":"if","hash":{},"fn":container.program(35, data, 0),"inverse":container.noop,"data":data})) != null ? stack1 : "");
 },"35":function(container,depth0,helpers,partials,data) {
     var stack1, helper, alias1=container.escapeExpression, alias2=container.lambda;
 
   return "                        <li class=\"variantIntoAccount\">"
-    + alias1(((helper = (helper = helpers.isoform || (depth0 != null ? depth0.isoform : depth0)) != null ? helper : helpers.helperMissing),(typeof helper === "function" ? helper.call(depth0 != null ? depth0 : {},{"name":"isoform","hash":{},"data":data}) : helper)))
+    + alias1(((helper = (helper = helpers.isoform || (depth0 != null ? depth0.isoform : depth0)) != null ? helper : helpers.helperMissing),(typeof helper === "function" ? helper.call(depth0 != null ? depth0 : (container.nullContext || {}),{"name":"isoform","hash":{},"data":data}) : helper)))
     + " ("
     + alias1(alias2(((stack1 = (depth0 != null ? depth0.positions : depth0)) != null ? stack1.first : stack1), depth0))
     + " : "
@@ -111,7 +111,7 @@ this["HBtemplates"]["app/templates/matchingEntries.tmpl"] = Handlebars.template(
     + alias1(alias2(((stack1 = (depth0 != null ? depth0.variant : depth0)) != null ? stack1.variant : stack1), depth0))
     + ")\n                        </li>\n";
 },"compiler":[7,">= 4.0.0"],"main":function(container,depth0,helpers,partials,data) {
-    var stack1, helper, options, alias1=depth0 != null ? depth0 : {}, alias2=helpers.helperMissing, alias3="function", alias4=container.escapeExpression, alias5=helpers.blockHelperMissing, buffer = 
+    var stack1, helper, options, alias1=depth0 != null ? depth0 : (container.nullContext || {}), alias2=helpers.helperMissing, alias3="function", alias4=container.escapeExpression, alias5=helpers.blockHelperMissing, buffer = 
   "<div id="
     + alias4(((helper = (helper = helpers.id || (depth0 != null ? depth0.id : depth0)) != null ? helper : alias2),(typeof helper === alias3 ? helper.call(alias1,{"name":"id","hash":{},"data":data}) : helper)))
     + " class=\"col-md-4 peptide "
@@ -156,15 +156,15 @@ this["HBtemplates"]["app/templates/matchingEntries.tmpl"] = Handlebars.template(
 this["HBtemplates"]["app/templates/notFound.tmpl"] = Handlebars.template({"compiler":[7,">= 4.0.0"],"main":function(container,depth0,helpers,partials,data) {
     var helper;
 
-  return "<div class=\"col-md-12\">\n    <div class=\"panel panel-danger\">\n        <div class=\"panel-heading\">\n            Peptide not found !\n        </div>\n        <div class=\"panel-body\">\n            The peptide <strong>"
-    + container.escapeExpression(((helper = (helper = helpers.name || (depth0 != null ? depth0.name : depth0)) != null ? helper : helpers.helperMissing),(typeof helper === "function" ? helper.call(depth0 != null ? depth0 : {},{"name":"name","hash":{},"data":data}) : helper)))
-    + "</strong> has not been found in our database. Please check again the sequence or enter a new peptide.\n        </div>\n    </div>\n</div>";
+  return "<div class=\"info-box info-red\">\n    <div class=\"info-icon\">\n        <span class=\"glyphicon glyphicon-exclamation-sign\"></span>\n        </div><div class=\"info-content\">\n        <span style=\"font-weight:300\">\n            <span style=\"font-size:20px;font-weight:500\">Peptide not found !</span> \n            The peptide <strong>"
+    + container.escapeExpression(((helper = (helper = helpers.name || (depth0 != null ? depth0.name : depth0)) != null ? helper : helpers.helperMissing),(typeof helper === "function" ? helper.call(depth0 != null ? depth0 : (container.nullContext || {}),{"name":"name","hash":{},"data":data}) : helper)))
+    + "</strong> has not been found in our database. Please check again the sequence or enter a new peptide.\n        </span>\n    </div>\n</div>";
 },"useData":true});
 
 this["HBtemplates"]["app/templates/warningPanel.tmpl"] = Handlebars.template({"compiler":[7,">= 4.0.0"],"main":function(container,depth0,helpers,partials,data) {
     var stack1;
 
-  return "<div class=\"col-md-12\">\n    <div class=\"alert alert-warning\" style=\"padding:7px 15px;\">\n            <strong>Warning! </strong> "
+  return "<div class=\"info-box info-red\">\n    <div class=\"info-icon\">\n        <span class=\"glyphicon glyphicon-exclamation-sign\"></span>\n        </div><div class=\"info-content\">\n        <span style=\"font-weight:300\">\n            <span style=\"font-size:20px;font-weight:500\">Warning !</span>\n            <span>"
     + ((stack1 = container.lambda(depth0, depth0)) != null ? stack1 : "")
-    + "\n    </div>\n</div>";
+    + "</span>\n        </span>\n    </div>\n</div>";
 },"useData":true});
