@@ -115,14 +115,25 @@
         <div class="col-lg-10 col-lg-offset-1">
             <hr id="separationLine" class="">
             <div id="legend" class="pull-left">
+                <div>
                 <div class="legend-elem">
                     <div class="legendIcon" style="background:#DFF0D8;"> </div>
                     <p class="legendText">Entry-specific</p>
                 </div>
                 <div class="legend-elem">
+                    <div class="legendIcon" style="background:#c6eadc;"> </div>
+                    <p class="legendText">Pseudo-unique</p>
+                </div>
+                    </div>
+                    <div>
+                <div class="legend-elem">
                     <div class="legendIcon" style="background:#D9EDF7;"> </div>
                     <p class="legendText">Found in other entries</p>
                 </div>
+                <div class="legend-elem">
+                    <div class="legendIcon legend-asterix" style="background:white;">*</div>
+                    <p class="legendText">Identical sequences</p>
+                </div></div>
             </div>
             <div class=" pull-right filters" style="margin-bottom:30px;">
                 <label style="margin:0px 10px;padding-top:2px;vertical-align:middle;font-style:italic;">FILTERS </label>
@@ -171,15 +182,15 @@
 
 <script defer>
     var queries = {};
-    $.each(document.location.search.substr(1).split('&'), function (c, q) {
-        var i = q.split('=');
-        queries[i[0].toString()] = i[1].toString();
-    });
-    if (queries.hasOwnProperty("title")){
-        if (queries.title === "true"){
-            $(".mainTitle").show();
-        }
-    }
+//    $.each(document.location.search.substr(1).split('&'), function (c, q) {
+//        var i = q.split('=');
+//        queries[i[0].toString()] = i[1].toString();
+//    });
+//    if (queries.hasOwnProperty("title")){
+//        if (queries.title === "true"){
+//            $(".mainTitle").show();
+//        }
+//    }
 </script>
 
 </html>

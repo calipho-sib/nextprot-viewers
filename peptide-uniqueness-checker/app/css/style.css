@@ -37,6 +37,11 @@ html *:after {
     text-align:center; 
     line-height:0.8;
 }
+.legendIcon.legend-asterix{
+    line-height:28px;
+    font-size:24px;
+    font-weight:700;
+}
 .legendText{
     display:inline-block;
     font-weight:bold;
@@ -103,6 +108,7 @@ html *:after {
 }
 .legend-elem{
     display: inline-block;
+    width:200px;
 }
 #separationLine{
     width:100%;
@@ -234,6 +240,15 @@ html *:after {
     margin-left:0px;
     border-top-left-radius: 0px;
     border-bottom-left-radius: 0px;
+}
+.panel-pseudo{
+    border-color:#c6e9dc;
+}
+.panel-pseudo > .panel-heading{
+    background-color:#c6e9dc;
+}
+.foundIn,.variantIntoAccount{
+    text-align: left;
 }
 /*LOADER :*/
 
