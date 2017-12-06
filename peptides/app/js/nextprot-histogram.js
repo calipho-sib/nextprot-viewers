@@ -21,6 +21,7 @@ if ($("#nx-histogram").length > 0) {
             }
         }
         else if (o.properties.natural === true) {
+//        else if (o.properties.natural === true || o.properties.synthetic === true) {
             found = -1;
             for (i = 0; i < nonProteoDistribution.length; i++) {
                 if (nonProteoDistribution[i].x === o.length) {

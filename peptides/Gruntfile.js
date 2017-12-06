@@ -12,6 +12,8 @@ module.exports = function (grunt) {
                     'bower_components/jquery/dist/jquery.min.js',
                     'bower_components/handlebars/handlebars.min.js',
                     'bower_components/nextprot/dist/nextprot.min.js',
+//                    'bower_components/nextprot/src/nextprot-core.js',
+//                    'bower_components/nextprot/src/nextprot-utils.js',
                     'bower_components/bootstrap/dist/js/bootstrap.min.js',
                     'bower_components/d3/d3.min.js',
                     'vendor/highcharts.js',

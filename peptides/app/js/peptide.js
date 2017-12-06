@@ -1038,7 +1038,19 @@ function initNXDivs() {
 
                 }
             };
-            pepHistogram(datas.Peptides);
+            var hasNatPeptides = datas.Peptides.filter(function(o){
+                return o.properties.natural
+            }).length;
+            console.log("hasNatPeptides");
+            console.log(hasNatPeptides);
+            if (hasNatPeptides){
+                pepHistogram(datas.Peptides);
+            }
+            else {
+                $("#nx-histogram").html("");
+            }
+            console.log("datas.Peptides");
+            console.log(datas.Peptides);
 
             $(function () {
                 HL.firstCoverage();
@@ -1123,16 +1135,16 @@ function initNXDivs() {
                             break;
                         case 2:
                             proPeptide = oneData.annot;
-                            allFeatures.push(oneData.annot);
+                            allFeatures.push(oneData);
                             break;
                         case 3:
                             matureProtein = oneData.annot;
-                            allFeatures.push(oneData.annot);
+                            allFeatures.push(oneData);
                             break;
                         case 17:
                             pepMap = jQuery.merge([], oneData.annot);
                             //adding a copy for the feature viewer, because peptides will be added to peptideMappings
-                            allFeatures.push(jQuery.extend({}, oneData.annot));
+                            allFeatures.push(jQuery.extend({}, oneData));
                             break;
                         case 18:
                             var pepSynthetic = jQuery.merge([], oneData.annot);
@@ -1156,11 +1168,11 @@ function initNXDivs() {
                                 }
                             });
                             //adding a copy for the feature viewer, because pepetides will be added to peptideMappings
-                            allFeatures.push(jQuery.extend({}, oneData.annot));
+                            allFeatures.push(jQuery.extend({}, oneData));
 
                             break;
                         default:
-                            allFeatures.push(jQuery.extend({}, oneData.annot));
+                            allFeatures.push(jQuery.extend({}, oneData));
                     }
                 });
             }, Promise.resolve())
