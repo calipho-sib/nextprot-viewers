@@ -76,7 +76,7 @@
                     <span class="glyphicon glyphicon-bookmark"></span>
                     </div><div class="info-content">
                     <span style="font-weight:300">
-                        <span style="font-size:20px;">Has the peptide uniqueness checker been useful to your work?</span><span style="font-weight:300"> Please cite :</span><br><div style="display:inline-block;margin:10px 30px;padding-left:10px;border-left:1px solid rgba(250,250,250,0.5);font-style:italic"><strong style="font-weight:500;">The neXtProt peptide uniqueness checker: a tool for the proteomics community</strong><br><span style="font-size:12px;">Schaeffer M, Gateau A, Teixeira D, Michel PA, Zahn-Zabal M, Lane L.</span><br>Bioinformatics. 2017 May 17. PMID: <a href="https://www.ncbi.nlm.nih.gov/pubmed/28520855" target="_blank">28520855<span class="glyphicon glyphicon-new-window"></span></a> doi: <a href="https://doi.org/10.1093/bioinformatics/btx318" target="_blank">10.1093/bioinformatics/btx318<span class="glyphicon glyphicon-new-window"></a>.
+                        <span style="font-size:20px;">Has the peptide uniqueness checker been useful to your work?</span><span style="font-weight:300"> Please cite :</span><br><div style="display:inline-block;margin:10px 30px;padding-left:10px;border-left:1px solid rgba(250,250,250,0.5);font-style:italic"><strong style="font-weight:500;">The neXtProt peptide uniqueness checker: a tool for the proteomics community</strong><br><span style="font-size:12px;">Schaeffer M, Gateau A, Teixeira D, Michel PA, Zahn-Zabal M, Lane L.</span><br>Bioinformatics. 2017 May 17. PMID: <a href="https://www.ncbi.nlm.nih.gov/pubmed/28520855" target="_blank">28520855<span class="glyphicon glyphicon-new-window"></span></a> doi: <a href="https://doi.org/10.1093/bioinformatics/btx318" target="_blank">10.1093/bioinformatics/btx318<span class="glyphicon glyphicon-new-window"></span></a>.
                         </div>
                     </span>
                     </div>
@@ -116,29 +116,30 @@
             <hr id="separationLine" class="">
             <div id="legend" class="pull-left">
                 <div>
-                <div class="legend-elem">
-                    <div class="legendIcon" style="background:#DFF0D8;"> </div>
-                    <p class="legendText">Entry-specific</p>
-                </div>
-                <div class="legend-elem">
-                    <div class="legendIcon" style="background:#c6eadc;"> </div>
-                    <p class="legendText">Pseudo-unique</p>
-                </div>
+                    <div class="legend-elem">
+                        <div class="legendIcon" style="background:#DFF0D8;"> </div>
+                        <p class="legendText">Unique</p>
                     </div>
-                    <div>
-                <div class="legend-elem">
-                    <div class="legendIcon" style="background:#D9EDF7;"> </div>
-                    <p class="legendText">Found in other entries</p>
+                    <div class="legend-elem">
+                        <div class="legendIcon" style="background:#c6eadc;"> </div>
+                        <p class="legendText">Pseudo-unique</p>
+                    </div>
                 </div>
-                <div class="legend-elem">
-                    <div class="legendIcon legend-asterix" style="background:white;">*</div>
-                    <p class="legendText">Identical sequences</p>
-                </div></div>
+                <div>
+                    <div class="legend-elem">
+                        <div class="legendIcon" style="background:#D9EDF7;"> </div>
+                        <p class="legendText">Not unique</p>
+                    </div>
+                    <div class="legend-elem" data-toggle="tooltip" data-placement="bottom" title="Found in other entries with identical sequences">
+                        <div class="legendIcon legend-asterix" style="background:white;">*</div>
+                        <p class="legendText">Identical sequences</p>
+                    </div>
+                </div>
             </div>
             <div class=" pull-right filters" style="margin-bottom:30px;">
                 <label style="margin:0px 10px;padding-top:2px;vertical-align:middle;font-style:italic;">FILTERS </label>
                 <label class="checkbox-inline" style="font-style:italic;">
-                    <input type="checkbox" id="onlyProteoWithV" value="option1"> Entry-specific taking into account variants
+                    <input type="checkbox" id="onlyProteoWithV" value="option1"> Unique taking into account variants
                 </label>
                 <label class="checkbox-inline" style="font-style:italic;">
                     <input type="checkbox" id="onlyProteoWithoutV" value="option2"> Entry-specific without variants
@@ -191,6 +192,7 @@
 //            $(".mainTitle").show();
 //        }
 //    }
+    
 </script>
 
 </html>

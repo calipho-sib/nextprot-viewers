@@ -18,15 +18,17 @@ $(document).ready(function () {
                 });
             }
             function getIdenticalSequenceList(callback){
-                var sparqlQuery = "select distinct ?entry ?entry2 where {"+
-                   "?entry :isoform / :sequence / :chain ?chain1."+
-                   "?entry2 :isoform / :sequence / :chain ?chain2."+
+                var sparqlQuery = "select distinct ?iso1 ?iso2 where {"+
+                   "?entry :isoform ?iso1."+
+                   "?iso1 :sequence / :chain ?chain1."+
+                   "?entry2 :isoform ?iso2."+ 
+                   "?iso2 :sequence / :chain ?chain2."+
                    "filter ( (?chain1 = ?chain2) && (?entry != ?entry2))"+
                    "}";
                 nx.executeSparql(sparqlQuery).then(function (data) {
                     data.results.bindings.forEach(function(d){
-                        var entry1 = d.entry.value.split("/").pop();
-                        var entry2 = d.entry2.value.split("/").pop();
+                        var entry1 = d.iso1.value.split("/").pop();
+                        var entry2 = d.iso2.value.split("/").pop();
                         if (!identicalSeqEntries.hasOwnProperty(entry1)){
                             identicalSeqEntries[entry1] = [];
                         }
@@ -132,10 +134,10 @@ $(document).ready(function () {
                     return d.withVariant === true;
                 }).length;
                 var entriesWithIdenticalSeq = entries.filter(function (d) {
-                    return d.identicalSeq === true;
+                    return d.identicalSeq.length;
                 }).length -1 ;
                 var entriesMatchingAllIso = entries.filter(function(d){
-                    return d.identicalSeq === true && d.IS_matchAllIsos === false;
+                    return d.identicalSeq.length && d.IS_matchAllIsos === false;
                 }).length;
                 var entryMatching = {
                     id: id,
@@ -159,7 +161,7 @@ $(document).ready(function () {
                                     first: p.targetingIsoformsMap[Object.keys(p.targetingIsoformsMap)[0]].firstPosition,
                                     last: p.targetingIsoformsMap[Object.keys(p.targetingIsoformsMap)[0]].lastPosition
                                 },
-                                identicalSeq: o.hasIdenticalSeq
+                                identicalSeq: o.hasIdenticalSeq === Object.keys(p.targetingIsoformsMap)[0]
                             };
                         });
                     })
@@ -439,8 +441,11 @@ $(document).ready(function () {
                                         
                                         var entryName = pepXIsos[0].split("-")[0];
                                         var hasIdenticalSeq = false;
-                                        if (identicalSeqEntries.hasOwnProperty(entryName)){
-                                            hasIdenticalSeq = true;
+                                        var idSeqs =  Object.keys(identicalSeqEntries).filter(function(idseq){
+                                            return idseq.split("-")[0] === entryName
+                                        })[0]
+                                        if (idSeqs){
+                                            hasIdenticalSeq = idSeqs;
                                         }
                                         new_data[i].hasIdenticalSeq = hasIdenticalSeq;
 //                                        else new_data[i].hasIdenticalSeq = false;
@@ -448,9 +453,6 @@ $(document).ready(function () {
                                              new_data[i].IS_matchAllIsos = false;   
                                         } else new_data[i].IS_matchAllIsos = true;
                                     })
-//                                    console.log("new_data");
-//                                    console.log(new_data);
-//                                    })
                                     if (new_data.length < 1) throwPeptideError(sequence);
                                     else addPeptideBox(new_data, sequence, id, pepListTotal.length);
                                 });
@@ -518,6 +520,11 @@ $(document).ready(function () {
 
                     // FOR NEXT VERSION
                     exportPepList();
+                    //tooltip for identical seqs
+                    $(function () {
+                      $('[data-toggle="tooltip"]').tooltip()
+                    })
+                    
                 })
             });
 
