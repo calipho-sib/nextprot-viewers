@@ -120,7 +120,7 @@
                         <div class="legendIcon" style="background:#DFF0D8;"> </div>
                         <p class="legendText">Unique</p>
                     </div>
-                    <div class="legend-elem">
+                    <div class="legend-elem" data-toggle="tooltip" data-placement="top" title="Found in other entries with identical sequences">
                         <div class="legendIcon" style="background:#c6eadc;"> </div>
                         <p class="legendText">Pseudo-unique</p>
                     </div>
@@ -130,7 +130,7 @@
                         <div class="legendIcon" style="background:#D9EDF7;"> </div>
                         <p class="legendText">Not unique</p>
                     </div>
-                    <div class="legend-elem" data-toggle="tooltip" data-placement="bottom" title="Found in other entries with identical sequences">
+                    <div class="legend-elem">
                         <div class="legendIcon legend-asterix" style="background:white;">*</div>
                         <p class="legendText">Identical sequences</p>
                     </div>
@@ -142,7 +142,7 @@
                     <input type="checkbox" id="onlyProteoWithV" value="option1"> Unique taking into account variants
                 </label>
                 <label class="checkbox-inline" style="font-style:italic;">
-                    <input type="checkbox" id="onlyProteoWithoutV" value="option2"> Entry-specific without variants
+                    <input type="checkbox" id="onlyProteoWithoutV" value="option2"> Unique without variants
                 </label>
                 <div>
                     <div class="btn-group pepShowed pull-right" role="group" style="margin-top:10px;">
