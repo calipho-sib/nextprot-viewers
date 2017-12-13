@@ -7545,10 +7545,10 @@ $(document).ready(function () {
                     $("#peptideResult>div:visible").each(function(){
                         var pep = {
                             peptide:"",
-                            entrySpecificWithoutVariant:"",
+                            UniquenessWithoutVariant:"",
                             countIsoMatchedWithoutVariant:0,
                             listIsoMatchedWithoutVariant:"",
-                            entrySpecificWithVariant: "",
+                            UniquenessWithVariant: "",
                             countAdditionalIsoMatchedWithVariant:0,
                             listAdditionalIsoMatchedWithVariant:""
                         };
@@ -7556,14 +7556,14 @@ $(document).ready(function () {
                         pep.listIsoMatchedWithoutVariant = $(this).find(".panel-wo-variant .showIsoform li.foundIn").map(function() {
                             return $(this).text().split(" ")[0];
                         }).get();
-                        pep.entrySpecificWithoutVariant = $(this).find(".panel-wo-variant.panel-success").length ? "Y" : "N";
+                        pep.UniquenessWithoutVariant = $(this).find(".panel-wo-variant.panel-success").length ? $(this).find(".panel-wo-variant.panel-success.panel-pseudo").length ? "Pseudo" : "Y" : "N";
                         pep.countIsoMatchedWithoutVariant = pep.listIsoMatchedWithoutVariant.length;
 
                         pep.listAdditionalIsoMatchedWithVariant = $(this).find(".panel-w-variant .showIsoform li.variantIntoAccount").map(function() {
                             return $(this).text().split(" ")[0];
                         }).get();
                         pep.countAdditionalIsoMatchedWithVariant = pep.listAdditionalIsoMatchedWithVariant.length;
-                        pep.entrySpecificWithVariant = $(this).find(".panel-w-variant.panel-success").length ?  "Y" : "N";
+                        pep.UniquenessWithVariant = $(this).find(".panel-w-variant.panel-success").length ? $(this).find(".panel-w-variant.panel-success.panel-pseudo").length ? "Pseudo" :  "Y" : "N";
 
 
                         pep.listIsoMatchedWithoutVariant = "\"" + pep.listIsoMatchedWithoutVariant.join(" ") + "\"";
