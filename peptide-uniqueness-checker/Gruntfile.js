@@ -10,6 +10,7 @@ module.exports = function (grunt) {
             basic: {
                 src: ['app/js/promise-6.1.0.js',
                     'bower_components/jquery/dist/jquery.min.js',
+                    'bower_components/bootstrap/js/tooltip.js',
                     'bower_components/handlebars/handlebars.js',
                     'bower_components/nextprot/dist/nextprot.js',
                     'app/js/compiled-templates.js',

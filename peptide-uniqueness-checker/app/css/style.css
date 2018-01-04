@@ -30,12 +30,19 @@ html *:after {
     display:inline-block;
     width:20px;
     height:20px;
-    vertical-align:middle;
+    vertical-align:baseline;
     margin:0px 5px 0px 10px;
     border-radius:50%; 
     border: 1px solid grey;
     text-align:center; 
     line-height:0.8;
+}
+.legendIcon.legend-asterix{
+    line-height:34px;
+    font-size:36px;
+    font-weight:700;
+    background-color:transparent;
+    border:0;
 }
 .legendText{
     display:inline-block;
@@ -43,7 +50,6 @@ html *:after {
     font-size:1em;
     font-style:italic;
     margin:0;
-    padding-top:3px;
     vertical-align:top;
 }
 .unicity-form button {
@@ -100,13 +106,20 @@ html *:after {
     display:inline-block;
     text-align: left;
     transition:3s all ease;
+    margin-bottom:5px;
 }
 .legend-elem{
-    display: inline-block;
+/*    display: inline-block;*/
+    width:200px;
+    height:22px;
 }
+.legend-elem:last-child{
+    margin-top:5px;
+}
+
 #separationLine{
     width:100%;
-    margin-bottom:25px;
+    margin-bottom:10px;
     border-top:1px solid #ddd;
     border-bottom:1px solid #fff;
     transition:3s all ease;
@@ -234,6 +247,15 @@ html *:after {
     margin-left:0px;
     border-top-left-radius: 0px;
     border-bottom-left-radius: 0px;
+}
+.panel-pseudo{
+    border-color:#c6e9dc;
+}
+.panel-pseudo > .panel-heading{
+    background-color:#c6e9dc;
+}
+.foundIn,.variantIntoAccount{
+    text-align: left;
 }
 /*LOADER :*/
 

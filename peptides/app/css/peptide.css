@@ -54,13 +54,13 @@ background:#fff;
     font-size: 12px;
 }
 #container {
-    height:300px;
+/*    height:300px;*/
     width:auto;
     vertical-align: middle;
     background:#fff;
-    border-top:4px solid #E7EAEC;
-    border-bottom:1px solid #eee;
-    border-left:1px solid #eee;
+/*    border-top:4px solid #E7EAEC;*/
+/*    border-bottom:1px solid #eee;*/
+/*    border-left:1px solid #eee;*/
 }
 #nx-overviewPeptide {
     height:300px;

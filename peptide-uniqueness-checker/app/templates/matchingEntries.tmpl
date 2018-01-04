@@ -13,7 +13,7 @@
         <!--<h5 id="proteotypicitySentence"></h5>-->
         <!--</div>-->
         {{#proteotypicity}}
-        {{#if withoutVariant}}<div  class="panel panel-success panel-wo-variant" style="margin:0px;min-height: 120px;">
+        {{#if withoutVariant}}<div  class="panel panel-success panel-wo-variant{{#if pseudo}} panel-pseudo{{/if}}" style="margin:0px;min-height: 120px;">
         {{else}}
             {{#if nullWithoutVariant}}<div class="panel panel-default panel-wo-variant" style="margin:0px;min-height: 120px;">
             {{else}}
@@ -32,7 +32,7 @@
                         {{/if}}
                         {{#entries}}
                         {{#if withoutVariant}}
-                        <li class="foundIn">{{name}} <em> ( Gene Name : {{geneName}} )</em></li>
+                        <li class="foundIn">{{name}} <em> ( Gene Name : {{geneName}} )</em>{{#if identicalSeq}} <span style="font-weight:900">*</span>{{/if}}</li>
                         {{/if}}
                         {{/entries}}
                     </ul>
@@ -45,7 +45,7 @@
                         {{#isoforms}}{{#each this}}
 
                         {{#unless variant}}
-                        <li class="foundIn">{{isoform}}</li>
+                        <li class="foundIn">{{isoform}}{{#if identicalSeq}} <span style="font-weight:900">*</span>{{/if}}</li>
                         {{/unless}}
                         {{/each}}
                         {{/isoforms}}
@@ -54,7 +54,7 @@
             </div>
         </div>
         {{#proteotypicity}}
-        {{#if withVariant}}<div  class="panel panel-success panel-w-variant" style="margin:0px;min-height: 120px;">
+        {{#if withVariant}}<div  class="panel panel-success panel-w-variant{{#if pseudo}} panel-pseudo{{/if}}" style="margin:0px;min-height: 120px;">
         {{else}}<div class="panel panel-info panel-w-variant" style="margin:0px;min-height: 120px;">{{/if}}
         {{/proteotypicity}}
             <div class="panel-heading" style="padding:1px 15px">

@@ -1,6 +1,8 @@
 $(document).ready(function () {
+            var ga = ga || undefined;
             var Nextprot = window.Nextprot;
             var nx = new Nextprot.Client("PeptideViewer", "nextprotTeam");
+            var identicalSeqEntries = {};
             //    var exemples = "LQELFLQEVR, AATDFVQEMR, TKMGLYYSYFK, \nCVSNTPGYCR, TTETLIILSR, IGTTVIDLENR"
 
             //    $("#variantList").text(exemples);
@@ -14,6 +16,26 @@ $(document).ready(function () {
                     $("#" + id + ' .showEntry').is(':visible') ? $("#" + id + " .showEntry").hide() : $("#" + id + " .showEntry").show();
                     $("#" + id + ' .showIsoform').is(':visible') ? $("#" + id + " .showIsoform").hide() : $("#" + id + " .showIsoform").show();
                 });
+            }
+            function getIdenticalSequenceList(callback){
+                var sparqlQuery = "select distinct ?iso1 ?iso2 where {"+
+                   "?entry :isoform ?iso1."+
+                   "?iso1 :sequence / :chain ?chain1."+
+                   "?entry2 :isoform ?iso2."+ 
+                   "?iso2 :sequence / :chain ?chain2."+
+                   "filter ( (?chain1 = ?chain2) && (?entry != ?entry2))"+
+                   "}";
+                nx.executeSparql(sparqlQuery).then(function (data) {
+                    data.results.bindings.forEach(function(d){
+                        var entry1 = d.iso1.value.split("/").pop();
+                        var entry2 = d.iso2.value.split("/").pop();
+                        if (!identicalSeqEntries.hasOwnProperty(entry1)){
+                            identicalSeqEntries[entry1] = [];
+                        }
+                        identicalSeqEntries[entry1].push(entry2);
+                    })
+                    callback();
+                })
             }
 
             function toggleProteo() {
@@ -84,6 +106,9 @@ $(document).ready(function () {
                 });
                 return withoutVariant;
             }
+//            function entryWithIdenticalSeq(entry){
+//                return entry.hasIdenticalSeq;
+//            }
 
             function addPeptideBox(data, sequence, id, pepTotalCount) {
                 var isoformsLength = 0;
@@ -95,7 +120,9 @@ $(document).ready(function () {
                         name: o.uniqueName,
                         withVariant: entryWithVariant(o),
                         withoutVariant: entryWithoutVariant(o),
-                        geneName: o.overview.mainGeneName
+                        geneName: o.overview.mainGeneName,
+                        identicalSeq: o.hasIdenticalSeq,
+                        IS_matchAllIsos: o.IS_matchAllIsos
                     };
                 });
                 var entriesLength = data.length;
@@ -106,14 +133,22 @@ $(document).ready(function () {
                 var entriesLengthWithVariant = entries.filter(function (d) {
                     return d.withVariant === true;
                 }).length;
+                var entriesWithIdenticalSeq = entries.filter(function (d) {
+                    return d.identicalSeq.length;
+                }).length -1 ;
+                var entriesMatchingAllIso = entries.filter(function(d){
+                    return d.identicalSeq.length && d.IS_matchAllIsos === false;
+                }).length;
                 var entryMatching = {
                     id: id,
                     peptide: sequence,
                     proteotypicity: {
-                        withVariant: entriesLength <= 1,
-                        withoutVariant: entriesLengthWithoutVariant === 1,
+                        withVariant: entriesLength-entriesWithIdenticalSeq <= 1,
+                        withoutVariant: entriesLengthWithoutVariant-entriesWithIdenticalSeq === 1,
                         nullWithVariant: entriesLengthWithVariant < 1,
-                        nullWithoutVariant: entriesLengthWithoutVariant < 1
+                        nullWithoutVariant: entriesLengthWithoutVariant < 1,
+//                        pseudo: entriesMatchingAllIso >= 1
+                        pseudo: entriesMatchingAllIso >= 1
                     },
                     entries: entries,
                     isoforms: data.map(function (o) {
@@ -125,15 +160,14 @@ $(document).ready(function () {
                                 positions: {
                                     first: p.targetingIsoformsMap[Object.keys(p.targetingIsoformsMap)[0]].firstPosition,
                                     last: p.targetingIsoformsMap[Object.keys(p.targetingIsoformsMap)[0]].lastPosition
-                                }
+                                },
+                                identicalSeq: o.hasIdenticalSeq === Object.keys(p.targetingIsoformsMap)[0]
                             };
                         });
                     })
                 };
-                console.log("entryMatching");
-                console.log(entryMatching);
-                //                console.log("entryMatching");
-                //                console.log(entryMatching);
+//                console.log("entryMatching");
+//                console.log(entryMatching);
                 var template = HBtemplates['app/templates/matchingEntries.tmpl'];
                 var results = template(entryMatching);
                 $("#peptideResult").append(results);
@@ -248,7 +282,6 @@ $(document).ready(function () {
                 }
 
                 $("#downloadList").click(function() {
-//                    console.log("button clicked !!!!");
 
                     if(ga){
                       ga('send', 'event', 'unicity-checker', 'download');
@@ -259,10 +292,10 @@ $(document).ready(function () {
                     $("#peptideResult>div:visible").each(function(){
                         var pep = {
                             peptide:"",
-                            entrySpecificWithoutVariant:"",
+                            UniquenessWithoutVariant:"",
                             countIsoMatchedWithoutVariant:0,
                             listIsoMatchedWithoutVariant:"",
-                            entrySpecificWithVariant: "",
+                            UniquenessWithVariant: "",
                             countAdditionalIsoMatchedWithVariant:0,
                             listAdditionalIsoMatchedWithVariant:""
                         };
@@ -270,34 +303,24 @@ $(document).ready(function () {
                         pep.listIsoMatchedWithoutVariant = $(this).find(".panel-wo-variant .showIsoform li.foundIn").map(function() {
                             return $(this).text().split(" ")[0];
                         }).get();
-                        pep.entrySpecificWithoutVariant = $(this).find(".panel-wo-variant.panel-success").length ? "Y" : "N";
+                        pep.UniquenessWithoutVariant = $(this).find(".panel-wo-variant.panel-success").length ? $(this).find(".panel-wo-variant.panel-success.panel-pseudo").length ? "Pseudo" : "Y" : "N";
                         pep.countIsoMatchedWithoutVariant = pep.listIsoMatchedWithoutVariant.length;
 
                         pep.listAdditionalIsoMatchedWithVariant = $(this).find(".panel-w-variant .showIsoform li.variantIntoAccount").map(function() {
                             return $(this).text().split(" ")[0];
                         }).get();
                         pep.countAdditionalIsoMatchedWithVariant = pep.listAdditionalIsoMatchedWithVariant.length;
-                        pep.entrySpecificWithVariant = $(this).find(".panel-w-variant.panel-success").length ?  "Y" : "N";
+                        pep.UniquenessWithVariant = $(this).find(".panel-w-variant.panel-success").length ? $(this).find(".panel-w-variant.panel-success.panel-pseudo").length ? "Pseudo" :  "Y" : "N";
 
-//                        console.log(pep);
 
                         pep.listIsoMatchedWithoutVariant = "\"" + pep.listIsoMatchedWithoutVariant.join(" ") + "\"";
                         pep.listAdditionalIsoMatchedWithVariant = "\"" + pep.listAdditionalIsoMatchedWithVariant.join(" ") + "\"";
 
                         listPeptides.push(pep);
-//                        peptide_list += $(this).attr("id") + "\n";
                     });
-
-//                    console.log("listPeptides");
-//                    console.log(listPeptides);
 
                     var csv = convertArrayOfObjectsToCSV({
                         data:listPeptides});
-//                    if (!csv.match(/^data:text\/csv/i)) {
-//                        csv = 'data:text/csv;charset=utf-8,' + csv;
-//                    }
-//                    console.log("csv");
-//                    console.log(csv);
                     var exportFilename = "exportCSVVA.csv";
                     var csvData = new Blob([csv], {type: 'text/csv;charset=utf-8;'});
                     var csvDataSafari = 'data:application/csv;charset=utf-8,' + encodeURIComponent(csv);
@@ -376,8 +399,6 @@ $(document).ready(function () {
 
             function getProteotypicityInfos(str) {
                 //        var test = str.split(/[\s,;]+/g);
-                //        console.log("test");
-                //        console.log(test);
                 //        var pepListString = str.replace(/\s+/g, '');
                 //        var pepListTotal = str.split(/[\s,;]+/g);
                 var strSplit = str.split(/[\s,;]+/g);
@@ -385,29 +406,18 @@ $(document).ready(function () {
                     return self.indexOf(item) == pos;
                 })
                 if (pepListTotal[pepListTotal.length - 1] === "") pepListTotal.pop();
-                //        console.log(pepListTotal);
-                //        if (pepListString.endsWith(",")) pepListString = pepListString.slice(0,-1);
-                //        console.log(pepListTotal.length);
 
                 countPeptideSubmitted(pepListTotal.length, strSplit.length);
-                //        var pepTotalCount = pepListString.split(",").length;
-                //        console.log(pepTotalCount);
                 if (pepListTotal.length < 1001) {
-                    //            console.log("total peplist length : "+pepListString.length);
                     var apiCallList = getApiCallList(pepListTotal);
 
                     if (apiCallList[0].length) {
                         console.log("nb of api calls : " + apiCallList.length);
-                        console.log("apiCallList");
-                        console.log(apiCallList);
                         var countApiCalls = apiCallList.length;
                         var countCallFinished = 0;
-                        //            var lastCall = false;
                         apiCallList.forEach(function (pepList) {
-                            //                console.log("string length : "+ac.length);
                             var pepListString = pepList.join(",");
                             console.log("pep count : " + pepList.length);
-                            //                if (callIndex === apiCallList.length-1) lastCall=true;
 
                             nx.getEntryforPeptide(pepListString).then(function (data) {
                                 pepList.forEach(function (sequence) {
@@ -420,7 +430,29 @@ $(document).ready(function () {
                                     })
                                     new_data = new_data.filter(function (d) {
                                         return d.annotations.length > 0
+//                                        return d.annotationsByCategory["pepx-virtual-annotation"].length > 0
                                     });
+                                    // Adapt to new spec. Take identicalSeqEntries into account
+                                    new_data.forEach(function(nd,i){
+                                        var pepXIsos = nd.annotations.map(function(an){
+                                            return Object.keys(an.targetingIsoformsMap)[0];
+                                        })
+                                        var entryIsosLength = nd.overview.isoformNames.length;
+                                        
+                                        var entryName = pepXIsos[0].split("-")[0];
+                                        var hasIdenticalSeq = false;
+                                        var idSeqs =  Object.keys(identicalSeqEntries).filter(function(idseq){
+                                            return idseq.split("-")[0] === entryName
+                                        })[0]
+                                        if (idSeqs){
+                                            hasIdenticalSeq = idSeqs;
+                                        }
+                                        new_data[i].hasIdenticalSeq = hasIdenticalSeq;
+//                                        else new_data[i].hasIdenticalSeq = false;
+                                        if (pepXIsos.length !== entryIsosLength){
+                                             new_data[i].IS_matchAllIsos = false;   
+                                        } else new_data[i].IS_matchAllIsos = true;
+                                    })
                                     if (new_data.length < 1) throwPeptideError(sequence);
                                     else addPeptideBox(new_data, sequence, id, pepListTotal.length);
                                 });
@@ -482,10 +514,18 @@ $(document).ready(function () {
 
                 //begin the computation
                 var input = $("#variantList").val().toUpperCase().trim();
-                listOrEntry(input);
+                
+                getIdenticalSequenceList(function(){
+                    listOrEntry(input);
 
-                // FOR NEXT VERSION
-                exportPepList();
+                    // FOR NEXT VERSION
+                    exportPepList();
+                    //tooltip for identical seqs
+                    $(function () {
+                      $('[data-toggle="tooltip"]').tooltip()
+                    })
+                    
+                })
             });
 
             function handleFileSelect(evt) {
