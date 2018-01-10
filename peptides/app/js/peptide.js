@@ -308,8 +308,8 @@ function initNXDivs() {
             var datas = {
                 "isoforms": (function () {
                     var listIsoforms = {
-                        "visible" : [],
-                        "more" : []
+                        "visible": [],
+                        "more": []
                     };
                     isoforms.sort(function (a, b) {
                         return parseInt(a.uniqueName.split("-")[1]) - parseInt(b.uniqueName.split("-")[1])
@@ -380,28 +380,6 @@ function initNXDivs() {
             $("#sequenceHeader .badge").append(" aa");
         }
     };
-    var identicalSeqEntries = {};
-    
-    function getIdenticalSequenceList(callback){
-        var sparqlQuery = "select distinct ?iso1 ?iso2 where {"+
-           "?entry :isoform ?iso1."+
-           "?iso1 :sequence / :chain ?chain1."+
-           "?entry2 :isoform ?iso2."+ 
-           "?iso2 :sequence / :chain ?chain2."+
-           "filter ( (?chain1 = ?chain2) && (?entry != ?entry2))"+
-           "}";
-        nx.executeSparql(sparqlQuery).then(function (data) {
-            data.results.bindings.forEach(function(d){
-                var entry1 = d.iso1.value.split("/").pop();
-                var entry2 = d.iso2.value.split("/").pop();
-                if (!identicalSeqEntries.hasOwnProperty(entry1)){
-                    identicalSeqEntries[entry1] = [];
-                }
-                identicalSeqEntries[entry1].push(entry2);
-            })
-            callback();
-        })
-    }
 
     function getProteotypicityInfos(sequence) {
 
@@ -427,59 +405,23 @@ function initNXDivs() {
             data.forEach(function (o) {
                 isoformsLength += o.annotationsByCategory["pepx-virtual-annotation"].length;
             });
-            
-            console.log("data box pep uniqueness")
-            console.log(data);
-            data.forEach(function(nd,i){
-                var pepXIsos = nd.annotationsByCategory["pepx-virtual-annotation"].map(function(an){
-                    return Object.keys(an.targetingIsoformsMap)[0];
-                })
-                var entryIsosLength = nd.overview.isoformNames.length;
-
-                var entryName = pepXIsos[0].split("-")[0];
-                var hasIdenticalSeq = false;
-                var idSeqs =  Object.keys(identicalSeqEntries).filter(function(idseq){
-                    return idseq.split("-")[0] === entryName
-                })[0]
-                if (idSeqs){
-                    hasIdenticalSeq = idSeqs;
-                }
-                data[i].hasIdenticalSeq = hasIdenticalSeq;
-    //                                        else data[i].hasIdenticalSeq = false;
-//                if (pepXIsos.length !== entryIsosLength){
-//                     data[i].IS_matchAllIsos = false;   
-//                } else data[i].IS_matchAllIsos = true;
-            })
-            
             var entries = data.map(function (o) {
                 return {
                     name: o.uniqueName,
                     withVariant: entryWithVariant(o),
                     withoutVariant:entryWithoutVariant(o),
-                    geneName: o.overview.mainGeneName,
-                    identicalSeq: o.hasIdenticalSeq
-//                    IS_matchAllIsos: o.IS_matchAllIsos
+                    geneName: o.overview.mainGeneName
                 };
             });
             var entriesLength = data.length;
             var entriesLengthWithoutVariant = entries.filter(function (d) {
                 return d.withVariant === false;
             }).length;
-            
-            var entriesWithIdenticalSeq = entries.filter(function (d) {
-                return d.identicalSeq.length;
-            }).length ;
-//            var entriesMatchingAllIso = entries.filter(function(d){
-//                return d.identicalSeq.length && d.IS_matchAllIsos === false;
-//            }).length;
-            
             var entryMatching = {
                 proteotypicity: {
-                    withVariant: entriesLength - entriesWithIdenticalSeq <= 1,
-                    withoutVariant: entriesLengthWithoutVariant - entriesWithIdenticalSeq <= 1,
-                    onlyVariant: (entriesLength - entriesLengthWithoutVariant) < 1,
-//                    pseudo: entriesMatchingAllIso >= 1
-                    pseudo: entriesWithIdenticalSeq >= 1
+                    withVariant: entriesLength <= 1,
+                    withoutVariant: entriesLengthWithoutVariant <= 1,
+                    onlyVariant: (entriesLength - entriesLengthWithoutVariant) < 1
                 },
                 entries: entries,
                 isoforms: data.map(function (o) {
@@ -491,14 +433,11 @@ function initNXDivs() {
                             positions: {
                                 first:p.targetingIsoformsMap[Object.keys(p.targetingIsoformsMap)[0]].firstPosition,
                                 last:p.targetingIsoformsMap[Object.keys(p.targetingIsoformsMap)[0]].lastPosition
-                            },
-                            identicalSeq: o.hasIdenticalSeq === Object.keys(p.targetingIsoformsMap)[0]
+                            }
                         };
                     });
                 })
             };
-            console.log("entryMatching");
-            console.log(entryMatching);
             var template = HBtemplates['app/assets/templates/matchingEntries.tmpl'];
             var results = template(entryMatching);
             $("#proteoBody").html(results);
@@ -1160,8 +1099,7 @@ function initNXDivs() {
     var allFeatures = [];
     var featuresForViewer = [];
 
-    getIdenticalSequenceList(function(){
-//    $(function () {
+    $(function () {
         [
             nx.getProteinSequence(nxEntryName), //1
             nx.getAnnotationsByCategory(nxEntryName, "propeptide"), //2
