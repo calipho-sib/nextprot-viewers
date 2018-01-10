@@ -7374,8 +7374,8 @@ $(document).ready(function () {
                         withVariant: entryWithVariant(o),
                         withoutVariant: entryWithoutVariant(o),
                         geneName: o.overview.mainGeneName,
-                        identicalSeq: o.hasIdenticalSeq,
-                        IS_matchAllIsos: o.IS_matchAllIsos
+                        identicalSeq: o.hasIdenticalSeq
+//                        IS_matchAllIsos: o.IS_matchAllIsos
                     };
                 });
                 var entriesLength = data.length;
@@ -7388,20 +7388,21 @@ $(document).ready(function () {
                 }).length;
                 var entriesWithIdenticalSeq = entries.filter(function (d) {
                     return d.identicalSeq.length;
-                }).length -1 ;
-                var entriesMatchingAllIso = entries.filter(function(d){
-                    return d.identicalSeq.length && d.IS_matchAllIsos === false;
-                }).length;
+                }).length ;
+//                var entriesMatchingAllIso = entries.filter(function(d){
+//                    return d.identicalSeq.length && d.IS_matchAllIsos === false;
+//                }).length;
                 var entryMatching = {
                     id: id,
                     peptide: sequence,
                     proteotypicity: {
                         withVariant: entriesLength-entriesWithIdenticalSeq <= 1,
-                        withoutVariant: entriesLengthWithoutVariant-entriesWithIdenticalSeq === 1,
+                        withoutVariant: entriesLengthWithoutVariant-entriesWithIdenticalSeq <= 1,
                         nullWithVariant: entriesLengthWithVariant < 1,
                         nullWithoutVariant: entriesLengthWithoutVariant < 1,
 //                        pseudo: entriesMatchingAllIso >= 1
-                        pseudo: entriesMatchingAllIso >= 1
+//                        pseudo: entriesMatchingAllIso >= 1
+                        pseudo: entriesWithIdenticalSeq >= 1
                     },
                     entries: entries,
                     isoforms: data.map(function (o) {
@@ -7419,8 +7420,12 @@ $(document).ready(function () {
                         });
                     })
                 };
-//                console.log("entryMatching");
-//                console.log(entryMatching);
+                console.log("entryMatching");
+                console.log(entryMatching);
+                console.log("entriesLengthWithoutVariant")
+                console.log(entriesLengthWithoutVariant)
+                console.log("entriesWithIdenticalSeq")
+                console.log(entriesWithIdenticalSeq)
                 var template = HBtemplates['app/templates/matchingEntries.tmpl'];
                 var results = template(entryMatching);
                 $("#peptideResult").append(results);
@@ -7702,9 +7707,9 @@ $(document).ready(function () {
                                         }
                                         new_data[i].hasIdenticalSeq = hasIdenticalSeq;
 //                                        else new_data[i].hasIdenticalSeq = false;
-                                        if (pepXIsos.length !== entryIsosLength){
-                                             new_data[i].IS_matchAllIsos = false;   
-                                        } else new_data[i].IS_matchAllIsos = true;
+//                                        if (pepXIsos.length !== entryIsosLength){
+//                                             new_data[i].IS_matchAllIsos = false;   
+//                                        } else new_data[i].IS_matchAllIsos = true;
                                     })
                                     if (new_data.length < 1) throwPeptideError(sequence);
                                     else addPeptideBox(new_data, sequence, id, pepListTotal.length);
