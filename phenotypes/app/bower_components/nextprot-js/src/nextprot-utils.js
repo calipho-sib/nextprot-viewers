@@ -70,8 +70,8 @@ var NXUtils = {
         else return a.name > b.name;
     },
     sortByAlphabet: function(a,b) {
-        var a = typeof a === "string" ? a.toLowerCase() : a.name ? a.name.toLowerCase() : null;        
-        var b = typeof b === "string" ? b.toLowerCase() : b.name ? b.name.toLowerCase() : null;        
+        var a = typeof a === "string" ? a.toLowerCase() : a.name ? a.name.toLowerCase() : null;
+        var b = typeof b === "string" ? b.toLowerCase() : b.name ? b.name.toLowerCase() : null;
         if (a < b) return -1;
         if (a > b) return 1;
         return 0;
@@ -109,13 +109,13 @@ var NXUtils = {
         else if (!(arr1 && arr1.length> 0)) return arr2;
         var arr3 = [];
         for(var i in arr1){
-           var shared = false;
-           for (var j in arr2)
-               if (arr2[j].name == arr1[i].name) {
-                   shared = true;
-                   break;
-               }
-           if(!shared) arr3.push(arr1[i])
+            var shared = false;
+            for (var j in arr2)
+                if (arr2[j].name == arr1[i].name) {
+                    shared = true;
+                    break;
+                }
+            if(!shared) arr3.push(arr1[i])
         }
         arr3 = arr3.concat(arr2);
         return arr3;
@@ -149,19 +149,15 @@ var NXUtils = {
         return family;
     },
     getProteinExistence: function(term){
-        var existence = term.split('_').join(' ').toLowerCase();
-        mainSentence = "Entry whose protein(s) existence is ";
-        based = "based on ";
+        var existence = term.toLowerCase();
+        var mainSentence = "Entry whose protein(s) existence is ";
         switch(existence) {
             case "uncertain":
                 return mainSentence + existence;
-                break;
             case "inferred from homology":
                 return mainSentence + existence;
-                break;
             default:
-                return mainSentence + based + existence;
-                break;
+                return mainSentence + "based on " + existence;
         }
     },
     getSequenceForIsoform: function (isoSequences, isoformName) {
@@ -188,11 +184,13 @@ var NXUtils = {
         if (type === "Peptide" || type === "SRM Peptide") {
             if (description) {
                 var url = "https://db.systemsbiology.net/sbeams/cgi/PeptideAtlas/GetPeptide?searchWithinThis=Peptide+Name&searchForThis=" + description + ";organism_name=Human";
-                return "<a class='extLink' href='" + url + "'>" + description + "</a>";
+                return "<a class='ext-link' href='" + url + "' target='_blank'>" + description + "</a>";
             }
-        } else if (type === "antibody") {
-            var url = accession;
-            return "<a class='extLink' href='" + url + "'>" + description + "</a>";
+            else return "";
+        } else if (type === "Antibody") {
+            if(domain) return "<a class='ext-link' href='" + domain + "' target='_blank'>" + accession + "</a>";
+//            if(domain) return "<a class='ext-link' href='" + domain + "'>" + accession + "<span class='fa fa-external-link'></span></a>";
+            else return "";
         } else if (type === "publication") {
             var url = domain + "/publication/" + accession;
             return "<a href='" + url + "'>" + description + "</a>";
@@ -210,6 +208,13 @@ var NXUtils = {
                 }
             }
             return "";
+        }
+        else if (category === "Antibody"){
+            for (var ev in elem.evidences) {
+                if (elem.evidences[ev].resourceDb === "HPA") {
+                    return elem.evidences[ev].resourceAccession;
+                }
+            }
         }
         else return elem.description;
     },
@@ -238,6 +243,24 @@ var NXUtils = {
         }
         else return true;
     },
+    truncateString: function(str, lenMax, internalString, suffixLen) {
+
+        if (str) {
+            internalString = internalString || "";
+            suffixLen = suffixLen || 0;
+
+            if (lenMax <= 0) throw new Error("maximum length should be strictly positive");
+
+            if (str.length > lenMax) {
+                if (suffixLen < 0) throw new Error("suffix length should be positive");
+                if (suffixLen > lenMax) throw new Error("suffix " + suffixLen + " should be shorter than maximum length " + lenMax);
+
+                var prefixLen = lenMax - (suffixLen + internalString.length);
+                return str.substr(0, prefixLen) + internalString + str.substr(str.length - suffixLen, suffixLen);
+            }
+        }
+        return str;
+    },
     convertMappingsToIsoformMap: function (featMappings, category, group, baseUrl) {
         var domain = baseUrl ? baseUrl : baseUrl === "" ? baseUrl : "https://www.nextprot.org";
         var mappings = jQuery.extend([], featMappings);
@@ -247,95 +270,165 @@ var NXUtils = {
             mappings = jQuery.extend([], featMappings.annot);
         }
         var result = {};
+
+        var thisNXUtilsObject = this;
+
         mappings.forEach(function (mapping) {
             if (mapping.hasOwnProperty("targetingIsoformsMap")) {
                 for (var name in mapping.targetingIsoformsMap) {
                     if (mapping.targetingIsoformsMap.hasOwnProperty(name)) {
-                        var start = mapping.targetingIsoformsMap[name].firstPosition,
-                            end = mapping.targetingIsoformsMap[name].lastPosition,
-                            description = NXUtils.getDescription(mapping,category),
-                            link = NXUtils.getLinkForFeature(domain, mapping.cvTermAccessionCode, description, category),
-                            quality = mapping.qualityQualifier ? mapping.qualityQualifier.toLowerCase() : "",
-                            proteotypic = NXUtils.getProteotypicity(mapping.properties),
-                            source = mapping.evidences.map(function (d) {
-                                var pub = null;
-                                var xref = null;
-                                if (publiActive) {
-                                    if (featMappings.publi[d.resourceId]) {
-                                        pub = d.resourceId;
-                                    }
-                                    if (featMappings.xrefs[d.resourceId]) {
-                                        xref = featMappings.xrefs[d.resourceId];
-                                    }
-                                    return {
-                                        evidenceCodeName: NXUtils.getEvidenceCodeName(d,category),
-                                        assignedBy: NXUtils.getAssignedBy(d.assignedBy),
-                                        resourceDb: d.resourceDb,
-                                        externalDb: d.resourceDb !== "UniProt",
-                                        qualityQualifier: d.qualityQualifier.toLowerCase(),
-                                        publicationMD5: d.publicationMD5,
-                                        publication: pub ? featMappings.publi[pub]: null,
-                                        /*title: pub ? NXUtils.getLinkForFeature(domain,featMappings.publi[pub].publicationId, featMappings.publi[pub].title, "publication") : "",
-                                        authors: pub ? featMappings.publi[pub].authors.map(function (d) {
-                                            return {
-                                                lastName: d.lastName,
-                                                initials: d.initials
-                                            }
-                                        }) : [],
-                                        journal: pub ? featMappings.publi[pub].journalResourceLocator ? featMappings.publi[pub].journalResourceLocator.abbrev : "" : "",
-                                        volume: pub ? featMappings.publi[pub].volume : "",
-                                        year: pub ? featMappings.publi[pub].publicationYear : "",
-                                        firstPage: pub ? featMappings.publi[pub].firstPage : "",
-                                        lastPage: pub ? (featMappings.publi[pub].lastPage === "" ? featMappings.publi[pub].firstPage : featMappings.publi[pub].lastPage) : "",
-                                        pubId: pub ? featMappings.publi[pub].publicationId : "",
-                                        abstract: pub ? featMappings.publi[pub].abstractText : "",*/
-                                        dbXrefs: pub ? featMappings.publi[pub].dbXrefs ?featMappings.publi[pub].dbXrefs.map(function (o) {
-                                            return {
-                                                name: o.databaseName === "DOI" ? "Full Text" : o.databaseName,
-                                                url: o.resolvedUrl,
-                                                accession: o.accession
-                                            }
-                                        }) : [] : [],
-                                        crossRef: xref ? {
-                                            dbName: xref.databaseName,
-                                            name: xref.accession,
-                                            url: xref.resolvedUrl
-                                        } : null
-                                    }
-                                } else return {
+                        var uniqueName = mapping.uniqueName;
+                        var start = mapping.targetingIsoformsMap[name].firstPosition;
+                        var end = mapping.targetingIsoformsMap[name].lastPosition;
+                        var length = start && end ? end - start + 1 : null;
+                        var description = NXUtils.getDescription(mapping,category);
+                        var link = NXUtils.getLinkForFeature(domain, mapping.cvTermAccessionCode, description, category);
+                        var quality = mapping.qualityQualifier ? mapping.qualityQualifier.toLowerCase() : "";
+                        var proteotypic = NXUtils.getProteotypicity(mapping.properties);
+                        var variant = false;
+                        var source = mapping.evidences.map(function (d) {
+                            var pub = null;
+                            var xref = null;
+                            var context = (featMappings.contexts[d.experimentalContextId]) ? featMappings.contexts[d.experimentalContextId] : false;
+                            if (publiActive) {
+                                if (featMappings.publi[d.resourceId]) {
+                                    pub = d.resourceId;
+                                }
+                                if (featMappings.xrefs[d.resourceId]) {
+                                    xref = featMappings.xrefs[d.resourceId];
+                                }
+                                return {
                                     evidenceCodeName: NXUtils.getEvidenceCodeName(d,category),
+                                    assignedBy: NXUtils.getAssignedBy(d.assignedBy),
+                                    resourceDb: d.resourceDb,
+                                    externalDb: d.resourceDb !== "UniProt",
+                                    qualityQualifier: d.qualityQualifier ? d.qualityQualifier.toLowerCase() : "",
+                                    publicationMD5: d.publicationMD5,
+                                    publication: pub ? featMappings.publi[pub]: null,
+                                    dbXrefs: pub ? featMappings.publi[pub].dbXrefs ?featMappings.publi[pub].dbXrefs.map(function (o) {
+                                        return {
+                                            name: o.databaseName === "DOI" ? "Full Text" : o.databaseName,
+                                            url: o.resolvedUrl,
+                                            accession: o.accession
+                                        }
+                                    }) : [] : [],
+                                    crossRef: xref ? {
+                                        dbName: xref.databaseName,
+                                        name: xref.accession,
+                                        url: xref.resolvedUrl
+                                    } : null,
+                                    context: context
+                                }
+                            } else {
+                                return {
+                                    evidenceCodeName: NXUtils.getEvidenceCodeName(d, category),
                                     assignedBy: NXUtils.getAssignedBy(d.assignedBy),
                                     publicationMD5: d.publicationMD5,
                                     title: "",
                                     authors: [],
                                     journal: "",
                                     volume: "",
-                                    abstract: ""
+                                    abstract: "",
+                                    context: context
                                 }
-                            }),
-                            variant = false;
-                        if (mapping.hasOwnProperty("variant") && !jQuery.isEmptyObject(mapping.variant)) {
-                            link = "<span class='variant-description'>" + mapping.variant.original + " → " + mapping.variant.variant + "</span>";
-                            description = "<span class='variant-description'>" + mapping.variant.original + " → " + mapping.variant.variant + "</span>  ";
-                            variant = true;
-                            if (mapping.description) {
-                                var reg = /\[(.*?)\]/g;
-                                var match = reg.exec(mapping.description);
-                                var desc = mapping.description;
-                                if (match) {
-                                    var parseMatch = match[1].split(":");
-                                    var desc = mapping.description.replace(/(\[.*?\])/g, NXUtils.getLinkForFeature(domain, parseMatch[2], parseMatch[0]));
-
-                                }
-                                link += " ; " + desc;
                             }
+                        });
+
+                        if (mapping.hasOwnProperty("variant") && !jQuery.isEmptyObject(mapping.variant)) {
+
+                            function buildVariantObjectForTooltip(mapping) {
+
+                                function cleanDescriptionText(category, rawDescription) {
+
+                                    var formattedDescription = "";
+
+                                    if (rawDescription) {
+
+                                        formattedDescription = ": ";
+
+                                        if (category === "sequence conflict") {
+                                            // ex: In Ref. 3; BAG65616.
+                                            // => In BAG65616.
+                                            formattedDescription += rawDescription.replace(/Ref\. \d+; /, "");
+                                        }
+                                        else if (category === "sequence variant") {
+                                            // ex: In [LQT6:UNIPROT_DISEASE:DI-00684]; may affect KCNQ1/KCNE2 channel
+                                            // => In LQT6; may affect KCNQ1/KCNE2 channel
+                                            var results = /In\s+\[([^:]+):[^\]]+\](.*)/.exec(rawDescription);
+                                            formattedDescription += (results) ? "In "+ results[1] + results[2] : rawDescription;
+                                        }
+                                        else {
+                                            formattedDescription += rawDescription;
+                                        }
+                                    }
+                                    return formattedDescription;
+                                }
+
+                                var originalAAs;
+                                var variantAAs;
+
+                                if (mapping.category === "sequence variant") {
+                                    originalAAs = thisNXUtilsObject.truncateString(mapping.variant.original, 9, "...", 3);
+                                    variantAAs  = thisNXUtilsObject.truncateString(mapping.variant.variant, 9, "...", 3);
+                                } else {
+                                    originalAAs = mapping.variant.original;
+                                    variantAAs  = mapping.variant.variant;
+                                }
+
+                                var descriptionFormatted = cleanDescriptionText(mapping.category, mapping.description);
+
+                                return {
+                                    original: originalAAs,
+                                    variant: variantAAs,
+                                    description: thisNXUtilsObject.truncateString(descriptionFormatted, 80, " ... ", 40)
+                                };
+                            }
+
+                            function buildVariantDescriptionWithLinks(description) {
+
+                                function _replacePotentialLinks(description) {
+
+                                    var withLinksDesc = description;
+
+                                    // ex: In [LQT6:UNIPROT_DISEASE:DI-00684]; unknown pathological significance
+                                    var matchedLinks = description.match(/\[([^\]]+)\]/g);
+
+                                    for (var m in matchedLinks) {
+
+                                        var matchElements = matchedLinks[m].substring(1, matchedLinks[m].length - 1).split(":");
+                                        withLinksDesc = withLinksDesc.replace(matchedLinks[m], NXUtils.getLinkForFeature(domain, matchElements[2], matchElements[0]));
+                                    }
+
+                                    return withLinksDesc;
+                                }
+
+                                return (description) ?  " ; " + _replacePotentialLinks(description) : "";
+                            }
+
+                            var variantObj = buildVariantObjectForTooltip(mapping);
+                            var descWithPotentialLinks = buildVariantDescriptionWithLinks(mapping.description);
+
+                            description = "<span class='variant-description'>" + variantObj.original + " → " + variantObj.variant + variantObj.description + "</span>";
+                            link = "<span class='variant-description'>" + mapping.variant.original + " → " + mapping.variant.variant + "</span>" + descWithPotentialLinks;
+
+                            variant = true;
                         }
+                        else if (category === "Antibody") {
+                            url = featMappings.xrefs[mapping.evidences[0].resourceId].resolvedUrl
+                            link = NXUtils.getLinkForFeature(url, description, description, category);
+                        }
+                        else {
+                            description = thisNXUtilsObject.truncateString(description, 80, " ... ", 40);
+                        }
+
                         if (!result[name]) result[name] = [];
+                        var idStart = start ? start.toString() : "NA";
+                        var idEnd = end ? end.toString() : "NA";
                         result[name].push({
                             start: start,
                             end: end,
-                            length: end - start + 1,
-                            id: category.replace(/\s/g, '') + "_" + start.toString() + "_" + end.toString(),
+                            length: length,
+                            id: category.replace(/\s/g, '') + "_" + idStart + "_" + idEnd + "_" + uniqueName,
                             description: description,
                             quality: quality,
                             proteotypicity: proteotypic,
@@ -344,68 +437,21 @@ var NXUtils = {
                             link: link,
                             evidenceLength: source.length,
                             source: source,
-                            variant: variant
+                            variant: variant,
+                            context: featMappings.contexts
                         });
                     }
                 }
             }
-            //TODO This is the old format, the API should evolve
-            else if (mapping.hasOwnProperty("isoformSpecificity")) {
-                for (var name in mapping.isoformSpecificity) {
-                    if (mapping.isoformSpecificity.hasOwnProperty(name)) {
-                        for (var i = 0; i < mapping.isoformSpecificity[name].positions.length; i++) {
-                            var start = mapping.isoformSpecificity[name].positions[i].first,
-                                end = mapping.isoformSpecificity[name].positions[i].second,
-                                description = "",
-                                link = "",
-                                source = [];
-                            if (mapping.hasOwnProperty("evidences")) {
-                                source = mapping.evidences.map(function (d) {
-                                    return {
-                                        evidenceCodeName: d.evidenceCodeName,
-                                        assignedBy: d.assignedBy,
-                                        publicationMD5: d.publicationMD5
-                                    }
-                                });
-                            }
-                            if (mapping.hasOwnProperty("xrefs")) {
-                                description = mapping.xrefs[0].accession;
-                                link = NXUtils.getLinkForFeature(domain, mapping.xrefs[0].resolvedUrl, description, "antibody")
-                            } else {
-                                description = mapping.evidences[0].accession;
-                                for (ev in mapping.evidences)
-                                    if (mapping.evidences[ev].databaseName === "PeptideAtlas" || mapping.evidences[ev].databaseName === "SRMAtlas") {
-                                        description = mapping.evidences[ev].accession;
-                                        link = NXUtils.getLinkForFeature(domain, description, description, "peptide");
-
-                                        break;
-                                    }
-                            }
-
-                            if (!result[name]) result[name] = [];
-                            result[name].push({
-                                start: start,
-                                end: end,
-                                length: end - start,
-                                id: category.replace(/\s/g, '') + "_" + start.toString() + "_" + end.toString(),
-                                description: description,
-                                category: category,
-                                group: group,
-                                link: link,
-                                evidenceLength: source.length,
-                                source: source
-                            });
-                        }
-                    }
-                }
-            }
         });
+
         for (var iso in result) {
             result[iso].sort(function (a, b) {
                 if (a.start === b.start) {
                     if (a.length === b.length) return b.id > a.id;
                     else return b.length - a.length;
                 }
+                if (a.start === null) return 0;
                 if (a.end === null) return 1;
                 return a.start - b.start;
             })
@@ -446,18 +492,18 @@ var NXUtils = {
 };
 
 var NXViewerUtils = {
-    convertNXAnnotations: function (annotations, metadata) {
+    convertNXAnnotations: function (annotations, metadata, isoLengths) {
         if (!annotations) return "Cannot load this";
         var result = {};
         for (name in annotations) {
             var meta = jQuery.extend({}, metadata);
             meta.data = annotations[name].map(function (annotation) {
                 return {
-                    x: annotation.start,
-                    y: annotation.end,
+                    x: annotation.start ? annotation.start : 1,
+                    y: annotation.end ? annotation.end : isoLengths && isoLengths[name] ? isoLengths[name] : 100000,
                     id: annotation.id,
                     category: annotation.category,
-                    description: annotation.description
+                    description: annotation.description // tooltip description
                 }
             });
             result[name] = meta;
