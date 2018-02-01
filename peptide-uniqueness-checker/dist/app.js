@@ -7359,9 +7359,6 @@ $(document).ready(function () {
                 });
                 return withoutVariant;
             }
-//            function entryWithIdenticalSeq(entry){
-//                return entry.hasIdenticalSeq;
-//            }
 
             function addPeptideBox(data, sequence, id, pepTotalCount) {
                 var isoformsLength = 0;
@@ -7375,7 +7372,6 @@ $(document).ready(function () {
                         withoutVariant: entryWithoutVariant(o),
                         geneName: o.overview.mainGeneName,
                         identicalSeq: o.hasIdenticalSeq
-//                        IS_matchAllIsos: o.IS_matchAllIsos
                     };
                 });
                 var entriesLength = data.length;
@@ -7386,23 +7382,19 @@ $(document).ready(function () {
                 var entriesLengthWithVariant = entries.filter(function (d) {
                     return d.withVariant === true;
                 }).length;
-                var entriesWithIdenticalSeq = entries.filter(function (d) {
-                    return d.identicalSeq.length;
-                }).length ;
-//                var entriesMatchingAllIso = entries.filter(function(d){
-//                    return d.identicalSeq.length && d.IS_matchAllIsos === false;
-//                }).length;
+                var unicityWithoutVariant = data[0].annotations[0].propertiesMap["peptide unicity"][0].value;
+                var unicityWithVariant = data[0].annotations[0].propertiesMap["peptide unicity with variants"][0].value;
+//                console.log("unicityWithoutVariant");
+//                console.log(unicityWithoutVariant);
                 var entryMatching = {
                     id: id,
                     peptide: sequence,
                     proteotypicity: {
-                        withVariant: entriesLength-entriesWithIdenticalSeq <= 1,
-                        withoutVariant: entriesLengthWithoutVariant-entriesWithIdenticalSeq <= 1,
+                        withVariant: unicityWithVariant !== "NOT_UNIQUE",
+                        withoutVariant: unicityWithoutVariant !== "NOT_UNIQUE",
                         nullWithVariant: entriesLengthWithVariant < 1,
                         nullWithoutVariant: entriesLengthWithoutVariant < 1,
-//                        pseudo: entriesMatchingAllIso >= 1
-//                        pseudo: entriesMatchingAllIso >= 1
-                        pseudo: entriesWithIdenticalSeq >= 1
+                        pseudo: unicityWithoutVariant === "PSEUDO_UNIQUE"
                     },
                     entries: entries,
                     isoforms: data.map(function (o) {
@@ -7415,17 +7407,15 @@ $(document).ready(function () {
                                     first: p.targetingIsoformsMap[Object.keys(p.targetingIsoformsMap)[0]].firstPosition,
                                     last: p.targetingIsoformsMap[Object.keys(p.targetingIsoformsMap)[0]].lastPosition
                                 },
-                                identicalSeq: o.hasIdenticalSeq === Object.keys(p.targetingIsoformsMap)[0]
+                                identicalSeq: o.hasIdenticalSeq.indexOf(Object.keys(p.targetingIsoformsMap)[0]) > -1
                             };
                         });
                     })
                 };
-                console.log("entryMatching");
-                console.log(entryMatching);
-                console.log("entriesLengthWithoutVariant")
-                console.log(entriesLengthWithoutVariant)
-                console.log("entriesWithIdenticalSeq")
-                console.log(entriesWithIdenticalSeq)
+//                console.log("entryMatching");
+//                console.log(entryMatching);
+//                console.log("entriesLengthWithoutVariant")
+//                console.log(entriesLengthWithoutVariant)
                 var template = HBtemplates['app/templates/matchingEntries.tmpl'];
                 var results = template(entryMatching);
                 $("#peptideResult").append(results);
@@ -7496,7 +7486,7 @@ $(document).ready(function () {
                     })
                 }).catch(function (error) {
                     console.log(error.responseText);
-                    var errorMessage = JSON.parse(error.responseText);
+                    var errorMessage = error.responseText;
                     throwAPIError(errorMessage.message);
                 })
             }
@@ -7690,27 +7680,41 @@ $(document).ready(function () {
                                         return d.annotations.length > 0
 //                                        return d.annotationsByCategory["pepx-virtual-annotation"].length > 0
                                     });
+                                    
+//                                    console.log("new_data");
+//                                    console.log(new_data);
+                                    
                                     // Adapt to new spec. Take identicalSeqEntries into account
+                                    var idSeqs = new_data[0].annotations[0].synonyms;
+//                                    console.log(idSeqs);
+                                    if (!idSeqs) idSeqs = [];
                                     new_data.forEach(function(nd,i){
-                                        var pepXIsos = nd.annotations.map(function(an){
-                                            return Object.keys(an.targetingIsoformsMap)[0];
+                                        var idSeqMatches = idSeqs.filter(function(elem){
+                                            return elem.split("-")[0] === nd.uniqueName;
                                         })
-                                        var entryIsosLength = nd.overview.isoformNames.length;
-                                        
-                                        var entryName = pepXIsos[0].split("-")[0];
-                                        var hasIdenticalSeq = false;
-                                        var idSeqs =  Object.keys(identicalSeqEntries).filter(function(idseq){
-                                            return idseq.split("-")[0] === entryName
-                                        })[0]
-                                        if (idSeqs){
-                                            hasIdenticalSeq = idSeqs;
-                                        }
-                                        new_data[i].hasIdenticalSeq = hasIdenticalSeq;
-//                                        else new_data[i].hasIdenticalSeq = false;
-//                                        if (pepXIsos.length !== entryIsosLength){
-//                                             new_data[i].IS_matchAllIsos = false;   
-//                                        } else new_data[i].IS_matchAllIsos = true;
+                                        new_data[i].hasIdenticalSeq = idSeqMatches;
                                     })
+                                    
+//                                    new_data.forEach(function(nd,i){
+//                                        var pepXIsos = nd.annotations.map(function(an){
+//                                            return Object.keys(an.targetingIsoformsMap)[0];
+//                                        })
+//                                        var entryIsosLength = nd.overview.isoformNames.length;
+//                                        
+//                                        var entryName = pepXIsos[0].split("-")[0];
+//                                        var hasIdenticalSeq = false;
+//                                        var idSeqs =  Object.keys(identicalSeqEntries).filter(function(idseq){
+//                                            return idseq.split("-")[0] === entryName
+//                                        })[0]
+//                                        if (idSeqs){
+//                                            hasIdenticalSeq = idSeqs;
+//                                        }
+//                                        new_data[i].hasIdenticalSeq = hasIdenticalSeq;
+////                                        else new_data[i].hasIdenticalSeq = false;
+////                                        if (pepXIsos.length !== entryIsosLength){
+////                                             new_data[i].IS_matchAllIsos = false;   
+////                                        } else new_data[i].IS_matchAllIsos = true;
+//                                    })
                                     if (new_data.length < 1) throwPeptideError(sequence);
                                     else addPeptideBox(new_data, sequence, id, pepListTotal.length);
                                 });
@@ -7724,7 +7728,7 @@ $(document).ready(function () {
                                 countCallFinished += 1;
                                 if (countCallFinished === countApiCalls) $(".shaft-load3").remove();
                                 console.log(error.responseText);
-                                var errorMessage = JSON.parse(error.responseText);
+                                var errorMessage = error.responseText;
                                 throwAPIError(errorMessage.message);
                             })
                         });
@@ -7773,7 +7777,7 @@ $(document).ready(function () {
                 //begin the computation
                 var input = $("#variantList").val().toUpperCase().trim();
                 
-                getIdenticalSequenceList(function(){
+//                getIdenticalSequenceList(function(){
                     listOrEntry(input);
 
                     // FOR NEXT VERSION
@@ -7783,7 +7787,7 @@ $(document).ready(function () {
                       $('[data-toggle="tooltip"]').tooltip()
                     })
                     
-                })
+//                })
             });
 
             function handleFileSelect(evt) {
