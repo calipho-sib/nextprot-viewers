@@ -13,7 +13,7 @@
             <th data-sort="positions" class="col-md-2" style="text-align:center;white-space: nowrap;">Position <span class="caret"></span></th>
             <th data-sort="int" class="col-md-2" style="text-align:center;white-space: nowrap;">Length <span class="caret"></span></th>
             <th data-sort="string" class="col-md-2">Category <span class="caret"></span></th>
-            <th data-sort="string" class="col-md-2" style="white-space: nowrap;">Proteotypicity <span class="caret"></span></th>
+            <th data-sort="string" class="col-md-2" style="white-space: nowrap;">Uniqueness <span class="caret"></span></th>
         </tr>
         </thead>
         <tbody>
@@ -26,8 +26,8 @@
             {{#properties}}
             {{#if natural}}{{#if synthetic}}<td>natural+synthetic</td>
             {{else}}<td>natural</td>{{/if}}{{else}}<td>synthetic</td>{{/if}}
-            {{#if proteotypic}}<td>proteotypic</td>
-            {{else}}<td>non-proteotypic</td>{{/if}}{{/properties}}
+            <td>{{unicity_text}}</td>
+            {{/properties}}
         </tr>{{/Peptides}}</tbody>
     </table>
 </div>

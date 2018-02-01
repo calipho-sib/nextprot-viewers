@@ -120,8 +120,9 @@ var PeptideComputation = (function () {
         }
 
         var syntheticlPeptides = peptides.filter(function (pep) {
-            return pep.properties.synthetic
+            return pep.properties.synthetic && pep.properties.proteotypic
         });
+        
         for (var ni in syntheticlPeptides) {
             var pep = syntheticlPeptides[ni];
             var first = pep.position.first;
@@ -131,37 +132,38 @@ var PeptideComputation = (function () {
             }
         }
 
-        var naturalPeptides = peptides.filter(function (pep) {
-            return pep.properties.natural
-        });
+//        var naturalPeptides = peptides.filter(function (pep) {
+//            return pep.properties.natural
+//        });
 
-        var proteotypicPeptides = naturalPeptides.filter(function (pep) {
-            return pep.properties.proteotypic
+        var proteotypicPeptides = peptides.filter(function (pep) {
+            return pep.properties.natural && pep.properties.proteotypic
         });
-        var nonProteotypicPeptides = naturalPeptides.filter(function (pep) {
-            return !pep.properties.proteotypic
-        });
+//        var nonProteotypicPeptides = naturalPeptides.filter(function (pep) {
+//            return !pep.properties.proteotypic
+//        });
 
-
-        for (var ni in nonProteotypicPeptides) {
-            var pep = nonProteotypicPeptides[ni];
-            var first = pep.position.first;
-            var last = pep.position.second;
-            for (var i = first; i <= last; i++) {
-                aminoAcidsCoverage[i - 1] = 1;
-            }
-        }
+//      REMOVE NON PROTEOTYPIC PEP IN SEQ VIEWER
+//        for (var ni in nonProteotypicPeptides) {
+//            var pep = nonProteotypicPeptides[ni];
+//            var first = pep.position.first;
+//            var last = pep.position.second;
+//            for (var i = first; i <= last; i++) {
+//                aminoAcidsCoverage[i - 1] = 1;
+//            }
+//        }
 
         for (var ni in proteotypicPeptides) {
             var pep = proteotypicPeptides[ni];
             var first = pep.position.first;
             var last = pep.position.second;
             for (var i = first; i <= last; i++) {
-                if (aminoAcidsCoverage[i - 1] === 1) {
-                    aminoAcidsCoverage[i - 1] = 10;
-                } else {
-                    aminoAcidsCoverage[i - 1] = aminoAcidsCoverage[i - 1] + 10;
-                }
+                aminoAcidsCoverage[i - 1] = 10;
+//                if (aminoAcidsCoverage[i - 1] === 1) {
+//                    aminoAcidsCoverage[i - 1] = 10;
+//                } else {
+//                    aminoAcidsCoverage[i - 1] = aminoAcidsCoverage[i - 1] + 10;
+//                }
             }
         }
 

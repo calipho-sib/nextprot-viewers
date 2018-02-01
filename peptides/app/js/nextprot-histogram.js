@@ -2,10 +2,11 @@ var pepHistogram = function (listPeptides) {
 if ($("#nx-histogram").length > 0) {
 
     var proteoDistribution = [];
+    var pseudoProteoDistribution = [];
     var nonProteoDistribution = [];
     var found;
     listPeptides.forEach(function (o) {
-        if (o.properties.proteotypic === true) {
+        if (o.properties.natural === true && o.properties.unicity === "UNIQUE") {
             found = -1;
             for (i = 0; i < proteoDistribution.length; i++) {
                 if (proteoDistribution[i].x === o.length) {
@@ -20,7 +21,22 @@ if ($("#nx-histogram").length > 0) {
                 proteoDistribution[found].y += 1;
             }
         }
-        else if (o.properties.natural === true) {
+        else if (o.properties.natural === true && o.properties.unicity === "PSEUDO_UNIQUE") {
+            found = -1;
+            for (i = 0; i < pseudoProteoDistribution.length; i++) {
+                if (pseudoProteoDistribution[i].x === o.length) {
+                    found = i;
+                    break;
+                }
+            }
+            if (found < 0) {
+                pseudoProteoDistribution.push({y: 1, x: o.length});
+            }
+            else {
+                pseudoProteoDistribution[found].y += 1;
+            }
+        }
+        else if (o.properties.natural === true && o.properties.unicity === "NOT_UNIQUE") {
 //        else if (o.properties.natural === true || o.properties.synthetic === true) {
             found = -1;
             for (i = 0; i < nonProteoDistribution.length; i++) {
@@ -84,8 +100,17 @@ if ($("#nx-histogram").length > 0) {
             colors : [{
                 linearGradient: {x1: 0, y1: 0, x2: 1, y2: 0},
                 stops: [
-                    [0, '#4BD8A5'],
-                    [1, '#0AD088']
+                    [0, '#4bd876'],
+                    [1, '#0ad056']
+                ]
+            },
+                {
+                linearGradient: {x1: 0, y1: 0, x2: 1, y2: 0},
+                stops: [
+                    [0, '#4bd8b2'],
+                    [1, '#0ad09b']
+//                    [0, '#4BD8A5'],
+//                    [1, '#0AD088']
                 ]
             },
                 {
@@ -118,11 +143,15 @@ if ($("#nx-histogram").length > 0) {
             legend: {enabled: false},
             credits: {enabled: false},
             series: [{
-                name: "proteotypic",
+                name: "unique",
                 data: sortPositions(proteoDistribution)
             },
             {
-                name: "non-proteotypic",
+                name: "pseudo-unique",
+                data: sortPositions(pseudoProteoDistribution)
+            },
+            {
+                name: "not-unique",
                 data: sortPositions(nonProteoDistribution)
             }]
 

@@ -1,0 +1,295 @@
+[{
+    "uniqueName": "NX_Q9HCU8",
+    "overview": {
+        "proteinExistence": {
+            "name": "protein level",
+            "description": "Evidence at protein level",
+            "descriptionName": "Evidence_at_protein_level",
+            "level": 1
+        },
+        "history": {
+            "proteinExistenceUniprot": {
+                "name": "protein level",
+                "description": "Evidence at protein level",
+                "descriptionName": "Evidence_at_protein_level",
+                "level": 1
+            },
+            "nextprotIntegrationDate": 1267454004215,
+            "nextprotUpdateDate": 1514670011318,
+            "uniprotIntegrationDate": 1001498400000,
+            "uniprotUpdateDate": 1511344800000,
+            "uniprotVersion": "136",
+            "lastSequenceUpdate": 983401200000,
+            "sequenceVersion": "1",
+            "formattedNextprotIntegrationDate": "2010-03-01",
+            "formattedNextprotUpdateDate": "2017-12-30",
+            "formattedUniprotIntegrationDate": "2001-09-26",
+            "formattedUniprotUpdateDate": "2017-11-22"
+        },
+        "families": [{
+            "familyId": 65335,
+            "accession": "FA-00973",
+            "name": "DNA polymerase delta subunit 4",
+            "level": "Family",
+            "description": "Belongs to the DNA polymerase delta subunit 4 family.",
+            "region": null,
+            "parent": null
+        }],
+        "proteinNames": [{
+            "clazz": "PROTEIN_NAMES",
+            "type": "name",
+            "qualifier": "full",
+            "id": "PR_680943",
+            "category": "protein",
+            "name": "DNA polymerase delta subunit 4",
+            "parentId": null,
+            "mainEntityName": null,
+            "synonyms": [{
+                "clazz": "PROTEIN_NAMES",
+                "type": "name",
+                "qualifier": "full",
+                "id": "PR_680942",
+                "category": "protein",
+                "name": "DNA polymerase delta subunit p12",
+                "parentId": "PR_680943",
+                "mainEntityName": null,
+                "synonyms": [],
+                "value": "DNA polymerase delta subunit p12",
+                "main": false,
+                "otherRecommendedEntityNames": [],
+                "composedName": "full name"
+            }],
+            "value": "DNA polymerase delta subunit 4",
+            "main": true,
+            "otherRecommendedEntityNames": [],
+            "composedName": "full name"
+        }],
+        "geneNames": [{
+            "clazz": "GENE_NAMES",
+            "type": "gene name",
+            "qualifier": null,
+            "id": "PR_1195974",
+            "category": "gene name",
+            "name": "POLD4",
+            "parentId": null,
+            "mainEntityName": null,
+            "synonyms": [{
+                "clazz": "GENE_NAMES",
+                "type": "gene name",
+                "qualifier": null,
+                "id": "PR_1195973",
+                "category": "gene name",
+                "name": "POLDS",
+                "parentId": "PR_1195974",
+                "mainEntityName": null,
+                "synonyms": [],
+                "value": "POLDS",
+                "main": false,
+                "otherRecommendedEntityNames": [],
+                "composedName": "gene name"
+            }],
+            "value": "POLD4",
+            "main": true,
+            "otherRecommendedEntityNames": [],
+            "composedName": "gene name"
+        }],
+        "functionalRegionNames": null,
+        "cleavedRegionNames": null,
+        "additionalNames": null,
+        "isoformNames": [{
+            "clazz": null,
+            "type": "name",
+            "qualifier": null,
+            "id": null,
+            "category": null,
+            "name": "Iso 1",
+            "parentId": null,
+            "mainEntityName": null,
+            "synonyms": [],
+            "value": "Iso 1",
+            "main": true,
+            "otherRecommendedEntityNames": [],
+            "composedName": "name"
+        }, {
+            "clazz": null,
+            "type": "name",
+            "qualifier": null,
+            "id": null,
+            "category": null,
+            "name": "Iso 2",
+            "parentId": null,
+            "mainEntityName": null,
+            "synonyms": [],
+            "value": "Iso 2",
+            "main": true,
+            "otherRecommendedEntityNames": [],
+            "composedName": "name"
+        }],
+        "mainProteinName": "DNA polymerase delta subunit 4",
+        "mainGeneName": "POLD4",
+        "recommendedProteinName": {
+            "clazz": "PROTEIN_NAMES",
+            "type": "name",
+            "qualifier": "full",
+            "id": "PR_680943",
+            "category": "protein",
+            "name": "DNA polymerase delta subunit 4",
+            "parentId": null,
+            "mainEntityName": null,
+            "synonyms": [],
+            "value": "DNA polymerase delta subunit 4",
+            "main": true,
+            "otherRecommendedEntityNames": [],
+            "composedName": "full name"
+        },
+        "alternativeProteinNames": [{
+            "clazz": "PROTEIN_NAMES",
+            "type": "name",
+            "qualifier": "full",
+            "id": "PR_680942",
+            "category": "protein",
+            "name": "DNA polymerase delta subunit p12",
+            "parentId": "PR_680943",
+            "mainEntityName": null,
+            "synonyms": [],
+            "value": "DNA polymerase delta subunit p12",
+            "main": false,
+            "otherRecommendedEntityNames": [],
+            "composedName": "full name"
+        }]
+    },
+    "proteinExistence": {
+        "name": "protein level",
+        "description": "Evidence at protein level",
+        "descriptionName": "Evidence_at_protein_level",
+        "level": 1
+    },
+    "annotationsByCategory": {
+        "pepx-virtual-annotation": [{
+            "subjectComponents": null,
+            "annotationName": null,
+            "annotationHash": null,
+            "isoformsDisplayedAsSpecific": null,
+            "synonyms": null,
+            "uniqueName": null,
+            "cvTermAccessionCode": null,
+            "cvTermName": "YPVVKRTEGPAGHSKGELAP",
+            "cvTermType": null,
+            "cvTermDescription": null,
+            "cvApiName": null,
+            "description": "This virtual annotation describes the peptide YPVVKRTEGPAGHSKGELAP found in NX_Q9HCU8-2",
+            "category": "pepx-virtual-annotation",
+            "qualityQualifier": null,
+            "annotationId": 0,
+            "variant": {
+                "original": "R",
+                "variant": "T",
+                "description": null,
+                "diseaseTerms": null
+            },
+            "synonym": null,
+            "evidences": null,
+            "indirectEvidenceRefList": null,
+            "targetingIsoformsMap": {
+                "NX_Q9HCU8-2": {
+                    "annotationId": 0,
+                    "firstPosition": 17,
+                    "lastPosition": 17,
+                    "isoformAccession": "NX_Q9HCU8-2",
+                    "specificity": null,
+                    "name": null,
+                    "isoformName": "NX_Q9HCU8-2",
+                    "positional": true
+                }
+            },
+            "properties": [{
+                "annotationId": 0,
+                "valueType": null,
+                "name": "peptide unicity with variants",
+                "value": "UNIQUE",
+                "accession": null
+            }],
+            "bioObject": null,
+            "parentXref": null,
+            "apicategory": "PEPX_VIRTUAL_ANNOTATION",
+            "apiTypeName": "PepxVirtualAnnotation",
+            "propertiesMap": {
+                "peptide unicity with variants": [{
+                    "annotationId": 0,
+                    "valueType": null,
+                    "name": "peptide unicity with variants",
+                    "value": "UNIQUE",
+                    "accession": null
+                }]
+            },
+            "proteoformAnnotation": false,
+            "wildTypeAnnotation": true,
+            "categoryName": "PepxVirtualAnnotation",
+            "rdfPredicate": "pepxVirtualAnnotation",
+            "parentPredicates": ["virtualAnnotation"]
+        }, {
+            "subjectComponents": null,
+            "annotationName": null,
+            "annotationHash": null,
+            "isoformsDisplayedAsSpecific": null,
+            "synonyms": null,
+            "uniqueName": null,
+            "cvTermAccessionCode": null,
+            "cvTermName": "YPVVKRTEGPAGHSKGELAP",
+            "cvTermType": null,
+            "cvTermDescription": null,
+            "cvApiName": null,
+            "description": "This virtual annotation describes the peptide YPVVKRTEGPAGHSKGELAP found in NX_Q9HCU8-1",
+            "category": "pepx-virtual-annotation",
+            "qualityQualifier": null,
+            "annotationId": 0,
+            "variant": {
+                "original": "R",
+                "variant": "T",
+                "description": null,
+                "diseaseTerms": null
+            },
+            "synonym": null,
+            "evidences": null,
+            "indirectEvidenceRefList": null,
+            "targetingIsoformsMap": {
+                "NX_Q9HCU8-1": {
+                    "annotationId": 0,
+                    "firstPosition": 17,
+                    "lastPosition": 17,
+                    "isoformAccession": "NX_Q9HCU8-1",
+                    "specificity": null,
+                    "name": null,
+                    "isoformName": "NX_Q9HCU8-1",
+                    "positional": true
+                }
+            },
+            "properties": [{
+                "annotationId": 0,
+                "valueType": null,
+                "name": "peptide unicity with variants",
+                "value": "UNIQUE",
+                "accession": null
+            }],
+            "bioObject": null,
+            "parentXref": null,
+            "apicategory": "PEPX_VIRTUAL_ANNOTATION",
+            "apiTypeName": "PepxVirtualAnnotation",
+            "propertiesMap": {
+                "peptide unicity with variants": [{
+                    "annotationId": 0,
+                    "valueType": null,
+                    "name": "peptide unicity with variants",
+                    "value": "UNIQUE",
+                    "accession": null
+                }]
+            },
+            "proteoformAnnotation": false,
+            "wildTypeAnnotation": true,
+            "categoryName": "PepxVirtualAnnotation",
+            "rdfPredicate": "pepxVirtualAnnotation",
+            "parentPredicates": ["virtualAnnotation"]
+        }]
+    },
+    "uniprotName": "Q9HCU8"
+}]
