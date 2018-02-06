@@ -126,7 +126,7 @@ function initNXDivs() {
                                 "synthetic": o.category === "SRM peptide mapping" || o.category === "natAndSynth",
                                 "proteotypic": proteo,
                                 "unicity":unicity,
-                                "unicity_text":unicity.replace("_","-").toLowerCase()
+                                "unicity_text":unicity === "PSEUDO_UNIQUE" ? unicity.replace("_","-").toLowerCase() : unicity.replace("_"," ").toLowerCase()
                             },
                             "isoformProteotypicity": "No",
                             "tissueSpecificity": o.evidences.map(function (p) {

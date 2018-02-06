@@ -143,15 +143,15 @@ if ($("#nx-histogram").length > 0) {
             legend: {enabled: false},
             credits: {enabled: false},
             series: [{
-                name: "unique",
+                name: "Unique",
                 data: sortPositions(proteoDistribution)
             },
             {
-                name: "pseudo-unique",
+                name: "Pseudo-unique",
                 data: sortPositions(pseudoProteoDistribution)
             },
             {
-                name: "not-unique",
+                name: "Not unique",
                 data: sortPositions(nonProteoDistribution)
             }]
 
