@@ -1,6 +1,6 @@
 {
   "name": "feature-viewer",
-  "version": "1.0.1",
+  "version": "1.0.4",
   "main": "dist/feature-viewer.js",
   "ignore": [
     "**/.*",
@@ -30,11 +30,11 @@
     "url": "https://github.com/calipho-sib/feature-viewer.git"
   },
   "homepage": "https://github.com/calipho-sib/feature-viewer",
-  "_release": "1.0.1",
+  "_release": "1.0.4",
   "_resolution": {
     "type": "version",
-    "tag": "v1.0.1",
-    "commit": "416a77f4063d5a4bbfad68a1153b91dee4893e28"
+    "tag": "v1.0.4",
+    "commit": "4efa3a9d2212ec06a43affbb4563f0f92fdc9c18"
   },
   "_source": "https://github.com/calipho-sib/feature-viewer.git",
   "_target": "x.x.x",
