@@ -5,4 +5,4 @@ npm-debug.log
 /peptides/app/build
 phenotypes/brca1.json
 phenotypes/modified-entry-annotation.json
-lib/*/bower_components/*
+lib/*/bower_components
