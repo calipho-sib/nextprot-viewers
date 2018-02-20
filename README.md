@@ -1,4 +1,10 @@
-# neXtProt viewers (nextprot-viewers)
+# neXtProt - The knowledge resource on human proteins
+
+This is a code repository for the SIB - Swiss Institute of Bioinformatics CALIPHO group neXtProt project
+
+See: http://www.nextprot.org/
+
+# neXtProt viewers
 
 [![Build Status](https://travis-ci.org/calipho-sib/nextprot-viewers.svg?branch=master)](https://travis-ci.org/calipho-sib/nextprot-viewers)
 
@@ -18,5 +24,5 @@ A demo page of this viewer is visible here:
 
 This peptide viewer shows detailed information of the peptide covering of a specific human protein.
 A demo page of this viewer is visible here:
-* https://cdn.rawgit.com/calipho-sib/nextprot-viewers/master/peptide-viewer/app/assets/index.html?nxentry=NX_P46976
-![Peptide viewer](./peptide-viewer/app/assets/img/ScrSht_peptide-viewer.png)
+* https://cdn.rawgit.com/calipho-sib/nextprot-viewers/master/peptides/app/index.html?nxentry=NX_P46976
+![Peptide viewer](./peptides/app/assets/img/ScrSht_peptide-viewer.png)

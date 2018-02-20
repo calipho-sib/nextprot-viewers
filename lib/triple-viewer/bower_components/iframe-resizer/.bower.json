@@ -1,6 +1,6 @@
 {
   "name": "iframe-resizer",
-  "version": "3.5.14",
+  "version": "3.5.16",
   "homepage": "https://github.com/davidjbradshaw/iframe-resizer",
   "authors": [
     "David J. Bradshaw <dave@bradshaw.net>"
@@ -42,11 +42,11 @@
   ],
   "dependencies": {},
   "devDependencies": {},
-  "_release": "3.5.14",
+  "_release": "3.5.16",
   "_resolution": {
     "type": "version",
-    "tag": "v3.5.14",
-    "commit": "d0155239ec383c2368f3067ace774d9eff7ba4d9"
+    "tag": "v3.5.16",
+    "commit": "c64afeaf37e04b4627a1fc47fc07a8e4e41ebab9"
   },
   "_source": "https://github.com/davidjbradshaw/iframe-resizer.git",
   "_target": "x.x.x",
