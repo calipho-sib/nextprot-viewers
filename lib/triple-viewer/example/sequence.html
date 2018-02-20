@@ -51,6 +51,8 @@
     ($(function () {
 
         var nx = new Nextprot.Client("neXtProt proteomics view", "Calipho-Team");
+        nx.updateEnvironment("alpha");
+
         var entry = nx.getEntryName();
 
         $(function () {
@@ -90,7 +92,7 @@
                         .then(function (oneData) {
 
                             var metaData = getMetadataByView(config.sequence.features);
-                            var tv = new TripleViewer(entry);
+                            var tv = new TripleViewer(entry, nx);
                             tv.init(oneData, metaData);
 
                         }).catch(function (err) {
