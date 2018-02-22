@@ -105,9 +105,11 @@ function initNXDivs() {
                         });
                         var npName = "";
                         var proteo = false;
+                        var unicity = "";
                         o.properties.forEach(function (p) {
                             if (p.name === "peptide name") npName = p.value;
                             if (p.name === "is proteotypic") proteo = p.value === "Y";
+                            if (p.name === "peptide unicity") unicity = p.value;
                         });
 
                         var peptide = {
@@ -122,7 +124,9 @@ function initNXDivs() {
                             "properties": {
                                 "natural": o.category === "peptide mapping" || o.category === "natAndSynth",
                                 "synthetic": o.category === "SRM peptide mapping" || o.category === "natAndSynth",
-                                "proteotypic": proteo
+                                "proteotypic": proteo,
+                                "unicity":unicity,
+                                "unicity_text":unicity === "PSEUDO_UNIQUE" ? unicity.replace("_","-").toLowerCase() : unicity.replace("_"," ").toLowerCase()
                             },
                             "isoformProteotypicity": "No",
                             "tissueSpecificity": o.evidences.map(function (p) {
@@ -371,7 +375,8 @@ function initNXDivs() {
                 'showLineNumbers': true,
                 'wrapAminoAcids': true,
                 'charsPerLine': 50,
-                'sequenceMaxHeight': "220px"
+                'sequenceMaxHeight': "220px",
+                'title':"Protein sequence covered by unambiguous peptides"
 
             });
             $("#sequenceHeader").append("<div class=\"pull-right\" style=\"margin-right:20px;font-style:italic;text-align: center;\"><span id=\"pepCover\" style=\"font-size:18px;color:#C50063;\"></span><br><span style=\"font-size:10px;font-weight:bold;\">Peptide coverage</span></div>");
@@ -386,19 +391,30 @@ function initNXDivs() {
         nx.getEntryforPeptide(sequence).then(function (data) {
 
             function entryWithVariant(entry) {
-                    var withVariant = false;
-                    entry.annotationsByCategory["pepx-virtual-annotation"].forEach(function (o) {
-                        if (o.variant) withVariant = true;
-                    });
-                    return withVariant;
-                }
-                function entryWithoutVariant(entry) {
-                    var withoutVariant = false;
-                    entry.annotationsByCategory["pepx-virtual-annotation"].forEach(function (o) {
-                        if (!o.variant) withoutVariant = true;
-                    });
-                    return withoutVariant;
-                }
+                var withVariant = false;
+                entry.annotationsByCategory["pepx-virtual-annotation"].forEach(function (o) {
+                    if (o.variant) withVariant = true;
+                });
+                return withVariant;
+            }
+            function entryWithoutVariant(entry) {
+                var withoutVariant = false;
+                entry.annotationsByCategory["pepx-virtual-annotation"].forEach(function (o) {
+                    if (!o.variant) withoutVariant = true;
+                });
+                return withoutVariant;
+            }
+            console.log("entry match from peptide :");
+            console.log(data);
+            
+            function hasIdenticalSequence(entry){
+                if (!entry.annotationsByCategory["pepx-virtual-annotation"][0].synonyms) return false;
+                var idSeqMatches = entry.annotationsByCategory["pepx-virtual-annotation"][0].synonyms.filter(function(elem){
+                    return elem.split("-")[0] === entry.uniqueName;
+                })
+//                new_data[i].hasIdenticalSeq = idSeqMatches;
+                return idSeqMatches.length > 0;
+            }
 
 
             var isoformsLength = 0;
@@ -410,18 +426,24 @@ function initNXDivs() {
                     name: o.uniqueName,
                     withVariant: entryWithVariant(o),
                     withoutVariant:entryWithoutVariant(o),
-                    geneName: o.overview.mainGeneName
+                    geneName: o.overview.mainGeneName,
+                    identicalSeq: hasIdenticalSequence(o)
                 };
             });
             var entriesLength = data.length;
             var entriesLengthWithoutVariant = entries.filter(function (d) {
                 return d.withVariant === false;
             }).length;
+            
+            var unicityWithoutVariant = data[0].annotationsByCategory["pepx-virtual-annotation"][0].propertiesMap["peptide unicity"][0].value;
+            var unicityWithVariant = data[0].annotationsByCategory["pepx-virtual-annotation"][0].propertiesMap["peptide unicity with variants"][0].value;
+            
             var entryMatching = {
                 proteotypicity: {
-                    withVariant: entriesLength <= 1,
-                    withoutVariant: entriesLengthWithoutVariant <= 1,
-                    onlyVariant: (entriesLength - entriesLengthWithoutVariant) < 1
+                    withVariant: unicityWithVariant !== "NOT_UNIQUE",
+                    withoutVariant: unicityWithoutVariant !== "NOT_UNIQUE",
+                    onlyVariant: (entriesLength - entriesLengthWithoutVariant) < 1,
+                    pseudo: unicityWithoutVariant === "PSEUDO_UNIQUE"
                 },
                 entries: entries,
                 isoforms: data.map(function (o) {
@@ -433,7 +455,8 @@ function initNXDivs() {
                             positions: {
                                 first:p.targetingIsoformsMap[Object.keys(p.targetingIsoformsMap)[0]].firstPosition,
                                 last:p.targetingIsoformsMap[Object.keys(p.targetingIsoformsMap)[0]].lastPosition
-                            }
+                            },
+                            identicalSeq: p.synonyms ? p.synonyms.indexOf(Object.keys(p.targetingIsoformsMap)[0]) > -1 : false
                         };
                     });
                 })
@@ -937,23 +960,27 @@ function initNXDivs() {
 
             var noPepColor = 'grey';
             var nonProtColor = '#4A57D4';
-            var singProtColor = '#007800';
+//            var singProtColor = '#007800';
+            var singProtColor = '#69CC33';
             var sevProtColor = '#69CC33';
             var synPepColor = '#fff';
 
-            var legend = [{
-                name: "non-proteotypic",
-                color: nonProtColor,
-                underscore: false
-            }, {
-                name: "single proteotypic",
+            var legend = [
+//      REMOVE NON PROTEOTYPIC PEP IN SEQ VIEWER
+//                {
+//                name: "non-proteotypic",
+//                color: nonProtColor,
+//                underscore: false
+//            }, 
+                {
+                name: "natural",
                 color: singProtColor,
                 underscore: false
             }, {
-                name: "several proteotypic",
-                color: sevProtColor,
-                underscore: false
-            }, {
+//                name: "several proteotypic",
+//                color: sevProtColor,
+//                underscore: false
+//            }, {
                 name: "synthetic",
                 color: synPepColor,
                 underscore: true
@@ -1041,16 +1068,16 @@ function initNXDivs() {
             var hasNatPeptides = datas.Peptides.filter(function(o){
                 return o.properties.natural
             }).length;
-            console.log("hasNatPeptides");
-            console.log(hasNatPeptides);
+//            console.log("hasNatPeptides");
+//            console.log(hasNatPeptides);
             if (hasNatPeptides){
                 pepHistogram(datas.Peptides);
             }
             else {
                 $("#nx-histogram").html("");
             }
-            console.log("datas.Peptides");
-            console.log(datas.Peptides);
+//            console.log("datas.Peptides");
+//            console.log(datas.Peptides);
 
             $(function () {
                 HL.firstCoverage();
