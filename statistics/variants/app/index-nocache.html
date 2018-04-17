@@ -1,0 +1,127 @@
+<script src="https://cdn.rawgit.com/calipho-sib/nextprot-js/v0.0.54/dist/nextprot.bundle.js"></script>
+<script src="https://code.highcharts.com/highcharts.js"></script>
+<script src="https://code.highcharts.com/modules/heatmap.js"></script>
+<script src="https://code.highcharts.com/modules/exporting.js"></script>
+
+<div id="container" style="height: 100%; width: 100%; margin: 0 auto"></div>
+
+<script>
+    
+    
+    var visualize = function (aas, data) {
+        $('#container').highcharts({
+            chart: {
+                type: 'heatmap',
+            },
+            title: {
+                text: 'Variants in neXtProt'
+            },
+            xAxis: {
+                categories: aas,
+            },
+            yAxis: {
+                categories: aas,
+                title: null
+            },
+            colorAxis: {
+                min: 0,
+                minColor: '#FFFFFF',
+                maxColor: Highcharts.getOptions().colors[0]
+            },
+            legend: {
+                align: 'right',
+                layout: 'vertical',
+                margin: 0,
+                verticalAlign: 'top',
+                y: 25,
+                symbolHeight: 320
+            },
+            tooltip: {
+                formatter: function () {
+                    return '<b>' + this.series.xAxis.categories[this.point.x] + '</b> -> <b>' + this.series.yAxis.categories[this.point.y] + '</b> ' + this.point.value + ' variants';
+                }
+            },
+            series: [{
+                name: 'Sales per employee',
+                borderWidth: 1,
+                data: data,
+                dataLabels: {
+                    enabled: true,
+                    color: 'black',
+                    style: {
+                        textShadow: 'none'
+                    }
+                }
+        }]
+
+        });
+
+    };
+    
+    var applicationInfo = "visualisation of variants in neXtProt";
+    var clientInfo = "calipho group at SIB";
+    var nx = new Nextprot.Client(applicationInfo, clientInfo);
+
+    //Find number of variant for a substitution from A to R
+    var sparqlQuery = `
+        SELECT ?pred (count(distinct ?annotId) as ?cnt) WHERE {
+         {
+         # unique annotations (?annotId) for variant annotations
+         values (?pred ) {
+         (:variant )
+         } .
+         ?_ ?pred ?annot.
+         ?annot :entryAnnotationId ?annotId .
+          ?annot :original "AAO"^^xsd:string;:variation "AAV"^^xsd:string.
+        }
+        }
+        `;
+
+    var matrix = [];
+    var promises = [];
+    var aminoacids = ["A", "C", "D", "E", "F", "G", "H", "I", "L", "K", "L", "M", "N", "P", "Q", "R", "S", "T", "V", "W", "Y"]
+
+    if (heatmap) {
+        visualize(aminoacids, heatmap)
+    } else {
+
+
+        //Build an array of promises (SPARQL queries) 20x20 = 400 queries!
+        for (var i = 0; i < aminoacids.length; i++) {
+            matrix[i] = [];
+            var original = aminoacids[i];
+            for (var j = 0; j < aminoacids.length; j++) {
+                matrix[i][j] = 0;
+                var variant = aminoacids[j];
+                query = sparqlQuery.replace("AAO", original).replace("AAV", variant);
+
+                console.log(query)
+                promises.push(nx.executeSparql(query));
+
+            }
+        }
+        
+        //Wait for all executions of the sparql queries
+        Promise.all(promises).then(function (values) {
+
+            var heatmap = [];
+            var cnt = 0;
+            for (var i = 0; i < aminoacids.length; i++) {
+                for (var j = 0; j < aminoacids.length; j++) {
+                    result = values[cnt++];
+                    if (result.results.bindings && result.results.bindings.length > 0) {
+                        matrix[i][j] = parseInt(result.results.bindings[0].cnt.value);
+                    }
+                    heatmap.push([i, j, matrix[i][j]])
+
+                }
+            }
+
+            console.log(JSON.stringify(heatmap))
+            visualize(aminoacids, heatmap)
+
+        });
+
+    }
+
+</script>
