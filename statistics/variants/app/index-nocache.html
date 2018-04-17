@@ -79,49 +79,46 @@
 
     var matrix = [];
     var promises = [];
-    var aminoacids = ["A", "C", "D", "E", "F", "G", "H", "I", "L", "K", "L", "M", "N", "P", "Q", "R", "S", "T", "V", "W", "Y"]
-
-    if (heatmap) {
-        visualize(aminoacids, heatmap)
-    } else {
+    var aminoacids = ["A", "C", "D", "E", "F", "G", "H", "I", "K", "L", "M", "N", "P", "Q", "R", "S", "T", "V", "W", "Y"]
+    //console.log(aminoacids.length)
 
 
-        //Build an array of promises (SPARQL queries) 20x20 = 400 queries!
+    //Build an array of promises (SPARQL queries) 20x20 = 400 queries!
+    for (var i = 0; i < aminoacids.length; i++) {
+        matrix[i] = [];
+        var original = aminoacids[i];
+        for (var j = 0; j < aminoacids.length; j++) {
+            matrix[i][j] = 0;
+            var variant = aminoacids[j];
+            query = sparqlQuery.replace("AAO", original).replace("AAV", variant);
+
+            //console.log(query)
+            promises.push(nx.executeSparql(query));
+
+        }
+    }
+
+    //Wait for all executions of the sparql queries
+    Promise.all(promises).then(function (values) {
+
+        var heatmap = [];
+        var cnt = 0;
         for (var i = 0; i < aminoacids.length; i++) {
-            matrix[i] = [];
-            var original = aminoacids[i];
             for (var j = 0; j < aminoacids.length; j++) {
-                matrix[i][j] = 0;
-                var variant = aminoacids[j];
-                query = sparqlQuery.replace("AAO", original).replace("AAV", variant);
-
-                console.log(query)
-                promises.push(nx.executeSparql(query));
+                result = values[cnt++];
+                if (result.results.bindings && result.results.bindings.length > 0) {
+                    matrix[i][j] = parseInt(result.results.bindings[0].cnt.value);
+                }
+                heatmap.push([i, j, matrix[i][j]])
 
             }
         }
-        
-        //Wait for all executions of the sparql queries
-        Promise.all(promises).then(function (values) {
 
-            var heatmap = [];
-            var cnt = 0;
-            for (var i = 0; i < aminoacids.length; i++) {
-                for (var j = 0; j < aminoacids.length; j++) {
-                    result = values[cnt++];
-                    if (result.results.bindings && result.results.bindings.length > 0) {
-                        matrix[i][j] = parseInt(result.results.bindings[0].cnt.value);
-                    }
-                    heatmap.push([i, j, matrix[i][j]])
+        console.log(JSON.stringify(heatmap))
+        visualize(aminoacids, heatmap)
 
-                }
-            }
+    });
 
-            console.log(JSON.stringify(heatmap))
-            visualize(aminoacids, heatmap)
-
-        });
-
-    }
+    
 
 </script>
