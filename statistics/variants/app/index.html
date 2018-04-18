@@ -72,7 +72,7 @@ Variant source:
 <div id="container2" class="hchart" style="height: 100%; width: 100%; margin: 0 auto"></div>
 
 <script>
-    var visualize = function (aas, data, title) {
+    var visualize = function (aas, data, title, subtitle) {
         Highcharts.chart('container', {
 //        $('#container').highcharts({
             chart: {
@@ -80,6 +80,9 @@ Variant source:
             },
             title: {
                 text: title
+            },
+            subtitle: {
+                text: subtitle
             },
             xAxis: {
                 categories: aas,
@@ -333,11 +336,10 @@ function go(source, quality){
         //console.log(accDiff)
         //console.log(cnt)
         
-        var sym = accDiff / (1.0 * cnt)
-        console.log("Sym: " + (1.0 - sym));
+        var sym = 1 - (accDiff / (1.0 * cnt))
 
         console.log(JSON.stringify(heatmap))
-        visualize(aminoacids, heatmap, title)
+        visualize(aminoacids, heatmap, title, " matrix similiarity: " + sym.toFixed(2) + " (First method applied, to be confirmed...)")
         visualize2(points, flatPoints)
         $(".loader").hide()
 
