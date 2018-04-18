@@ -1,0 +1,236 @@
+<script src="https://cdn.rawgit.com/calipho-sib/nextprot-js/v0.0.54/dist/nextprot.bundle.js"></script>
+<script src="https://code.highcharts.com/highcharts.js"></script>
+<script src="https://code.highcharts.com/modules/heatmap.js"></script>
+<script src="https://code.highcharts.com/modules/exporting.js"></script>
+
+<style>
+#spinner {
+    border: 16px solid #f3f3f3; /* Light grey */
+    border-top: 16px solid #3498db; /* Blue */
+    border-radius: 50%;
+    width: 120px;
+    height: 120px;
+    animation: spin 2s linear infinite;
+}
+
+#progressValue {
+    font-size: 20;
+}
+.loader {
+    position: absolute;
+    height: 100px;
+    width: 100px;
+    top: 50%;
+    left: 50%;
+    margin-left: -50px;
+    margin-top: -50px;
+    background: url(/link/to/your/image);
+    background-size: 100%;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+</style>
+
+<div style="margin: 10px">
+Variant source:
+<select id="sourceSelection">
+    <option value="Cosmic" selected="selected">Cosmic</option>
+    <option value="dbSNP">dbSNP</option>
+    <option value="Uniprot">Uniprot</option>
+    <option value="NextProt">NextProt</option>
+    <option value="All">All</option>
+</select>
+    Quality:
+    <select id="qualitySelection">
+        <option value="All" selected="selected">All</option>
+        <option value="GOLD">GOLD</option>
+        <option value="SILVER">SILVER</option>
+    </select>
+    </div>
+</div>
+    
+<span id="totalVariants"></span>
+
+<div class="loader">
+    <div id="spinner" ></div>
+    <span id="progressValue">20%</span>
+</div>
+
+<div id="container" style="height: 100%; width: 100%; margin: 0 auto"></div>
+
+<script>
+    var visualize = function (aas, data, title) {
+        $('#container').highcharts({
+            chart: {
+                type: 'heatmap',
+            },
+            title: {
+                text: title
+            },
+            xAxis: {
+                categories: aas,
+                opposite: true
+            },
+            yAxis: {
+                categories: aas,
+                reversed: true,
+                title: null
+            },
+            colorAxis: {
+                min: 0,
+                minColor: '#FFFFFF',
+                maxColor: Highcharts.getOptions().colors[0]
+            },
+            legend: {
+                align: 'right',
+                layout: 'vertical',
+                margin: 0,
+                verticalAlign: 'top',
+                y: 25,
+                symbolHeight: 320
+            },
+            tooltip: {
+                formatter: function () {
+                    return '<b>' + this.series.xAxis.categories[this.point.x] + '</b> -> <b>' + this.series.yAxis.categories[this.point.y] + '</b> ' + this.point.value + ' variants. <br>';
+                }
+            },
+            series: [{
+                name: 'Sales per employee',
+                borderWidth: 1,
+                data: data,
+                dataLabels: {
+                    enabled: true,
+                    color: 'black',
+                    style: {
+                        textShadow: 'none'
+                    }
+                }
+        }]
+
+        });
+
+    };
+    
+    var applicationInfo = "visualisation of variants in neXtProt";
+    var clientInfo = "calipho group at SIB";
+    var nx = new Nextprot.Client(applicationInfo, clientInfo);
+
+    //Find number of variant for a substitution from A to R
+    var QUERY_TEMPLATE = ` SELECT ?pred (count(distinct ?annotId) as ?cnt) WHERE {
+         {
+         # unique annotations (?annotId) for variant annotations
+         values (?pred ) {
+         (:variant )
+         } .
+         ?_ ?pred ?annot.
+         ?annot :entryAnnotationId ?annotId .
+         ?annot :quality ?quality .
+          ?annot :original "AAO"^^xsd:string;:variation "AAV"^^xsd:string.
+          ?annot :evidence / :assignedBy source:SRC .
+        }
+        }
+        `;
+
+    var aminoacids = ["A", "C", "D", "E", "F", "G", "H", "I", "K", "L", "M", "N", "P", "Q", "R", "S", "T", "V", "W", "Y"]
+
+function allProgress(proms, progress_cb) {
+  let d = 0;
+  progress_cb(0);
+  proms.forEach((p) => {
+    p.then(()=> {    
+      d ++;
+      progress_cb( (d * 100) / proms.length );
+    });
+  });
+  return Promise.all(proms);
+}
+
+function go(source, quality){
+
+    $('#progressValue').text(0)
+    $(".loader").show()
+    console.log("Source: " + source + " Quality: " + quality)
+
+    var matrix = [];
+    var promises = [];
+
+    $("#container").empty()
+    queryTotalCount = QUERY_TEMPLATE.replace('"AAO"^^xsd:string;', "?original;").replace('"AAV"^^xsd:string.', "?variant.").replace("SRC", source);
+
+    if(quality !== "All"){
+        queryTotalCount = queryTotalCount.replace("?quality", ":" + quality) 
+    }
+    if(source === "All"){
+        queryTotalCount = queryTotalCount.replace("?annot :evidence / :assignedBy source:All .", "") 
+        console.log(queryTotalCount)
+    }
+
+    promises.push(nx.executeSparql(queryTotalCount));
+
+    //Build an array of promises (SPARQL queries) 20x20 = 400 queries!
+    for (var i = 0; i < aminoacids.length; i++) {
+        matrix[i] = [];
+        var original = aminoacids[i];
+        for (var j = 0; j < aminoacids.length; j++) {
+            matrix[i][j] = 0;
+            var variant = aminoacids[j];
+            query = QUERY_TEMPLATE.replace("AAO", original).replace("AAV", variant).replace("SRC", source);
+            if(quality !== "All"){
+                query = query.replace("?quality", ":" + quality) 
+            }
+            if(source === "All"){
+                query = query.replace("?annot :evidence / :assignedBy source:All .", "") 
+                console.log(query)
+            }
+
+            promises.push(nx.executeSparql(query));
+
+        }
+    }
+    
+    //Wait for all executions of the sparql queries
+    allProgress(promises, function(progress){
+        $('#progressValue').text(parseInt(progress) + "%");
+    }).then(function (values) {
+        var heatmap = [];
+        var cnt = 0;
+        //First is the total number
+        var firstResult = values[cnt++];
+        console.log(firstResult)
+        var title = firstResult.results.bindings[0].cnt.value + " variants assigned by " + source;
+        if(source === "All"){
+            var title = firstResult.results.bindings[0].cnt.value + " variants in total in neXtProt ";
+        }
+        if(quality !== "All"){
+            title += " with quality " + quality
+        }
+
+        for (var i = 0; i < aminoacids.length; i++) {
+            for (var j = 0; j < aminoacids.length; j++) {
+                result = values[cnt++];
+                if (result.results.bindings && result.results.bindings.length > 0) {
+                    matrix[i][j] = parseInt(result.results.bindings[0].cnt.value);
+                }
+                heatmap.push([i, j, matrix[i][j]])
+            }
+        }
+        console.log(JSON.stringify(heatmap))
+        visualize(aminoacids, heatmap, title)
+        $(".loader").hide()
+    });
+}
+
+go($("#sourceSelection").val(), $("#qualitySelection").val())
+
+$('#sourceSelection').on('change', function (e) {
+   go(this.value, $('#qualitySelection').val())
+});
+
+$('#qualitySelection').on('change', function (e) {
+   go($('#sourceSelection').val(), this.value)
+});
+
+</script>
