@@ -1,6 +1,8 @@
 <script src="https://cdn.rawgit.com/calipho-sib/nextprot-js/v0.0.54/dist/nextprot.bundle.js"></script>
 <script src="https://code.highcharts.com/highcharts.js"></script>
 <script src="https://code.highcharts.com/modules/heatmap.js"></script>
+<script src="https://code.highcharts.com/modules/treemap.js"></script>
+
 <script src="https://code.highcharts.com/modules/exporting.js"></script>
 
 <style>
@@ -11,6 +13,12 @@
     width: 120px;
     height: 120px;
     animation: spin 2s linear infinite;
+}
+
+#container2 {
+    min-width: 300px;
+    max-width: 600px;
+    margin: 0 auto;
 }
 
 #progressValue {
@@ -59,11 +67,14 @@ Variant source:
     <span id="progressValue">20%</span>
 </div>
 
-<div id="container" style="height: 100%; width: 100%; margin: 0 auto"></div>
+<div id="container" class="hchart" style="height: 100%; width: 100%; margin: 0 auto"></div>
+<div id="container3" class="hchart" style="height: 100%; width: 100%; margin: 0 auto"></div>
+<div id="container2" class="hchart" style="height: 100%; width: 100%; margin: 0 auto"></div>
 
 <script>
     var visualize = function (aas, data, title) {
-        $('#container').highcharts({
+        Highcharts.chart('container', {
+//        $('#container').highcharts({
             chart: {
                 type: 'heatmap',
             },
@@ -97,6 +108,16 @@ Variant source:
                     return '<b>' + this.series.xAxis.categories[this.point.x] + '</b> -> <b>' + this.series.yAxis.categories[this.point.y] + '</b> ' + this.point.value + ' variants. <br>';
                 }
             },
+            plotOptions:{
+                series:{
+                    dataLabels:{
+                        formatter:function(){
+                            if(this.point.value >0)
+                                return this.point.value;
+                        }
+                    }
+                }
+            },
             series: [{
                 name: 'Sales per employee',
                 borderWidth: 1,
@@ -111,8 +132,66 @@ Variant source:
         }]
 
         });
-
     };
+
+
+
+
+    var visualize2 = function (points, flatPoints, title) {
+    console.log(points)
+
+    Highcharts.chart('container2', {
+        series: [{
+            type: 'treemap',
+            layoutAlgorithm: 'squarified',
+            allowDrillToNode: true,
+            animationLimit: 1000,
+            dataLabels: {
+                enabled: false
+            },
+            levelIsConstant: false,
+            levels: [{
+                level: 1,
+                dataLabels: {
+                    enabled: true
+                },
+                borderWidth: 3
+            }],
+            data: points
+        }],
+        title: {
+            text: 'Group by original variant modified'
+        }
+    });
+
+
+        Highcharts.chart('container3', {
+        series: [{
+            type: 'treemap',
+            layoutAlgorithm: 'squarified',
+            allowDrillToNode: true,
+            animationLimit: 1000,
+            dataLabels: {
+                enabled: false
+            },
+            levelIsConstant: false,
+            levels: [{
+                level: 1,
+                dataLabels: {
+                    enabled: true
+                },
+                borderWidth: 3
+            }],
+            data: flatPoints
+        }],
+        title: {
+            text: 'All variations'
+        }
+    });
+
+    }
+
+
     
     var applicationInfo = "visualisation of variants in neXtProt";
     var clientInfo = "calipho group at SIB";
@@ -157,7 +236,7 @@ function go(source, quality){
     var matrix = [];
     var promises = [];
 
-    $("#container").empty()
+    $(".hchart").empty()
     queryTotalCount = QUERY_TEMPLATE.replace('"AAO"^^xsd:string;', "?original;").replace('"AAV"^^xsd:string.', "?variant.").replace("SRC", source);
 
     if(quality !== "All"){
@@ -191,6 +270,9 @@ function go(source, quality){
         }
     }
     
+    Highcharts.setOptions({
+    colors: ["#e6194b", "#3cb44b", "#ffe119", "#0082c8", "#f58231", "#911eb4", "#46f0f0", "#f032e6", "#d2f53c", "#008080", "#e6beff", "#aa6e28", "#fffac8", "#800000", "#aaffc3", "#808000", "#ffd8b1", "#000080", "#808080", "#FFFFFF", "#000000"]
+});
     //Wait for all executions of the sparql queries
     allProgress(promises, function(progress){
         $('#progressValue').text(parseInt(progress) + "%");
@@ -208,18 +290,57 @@ function go(source, quality){
             title += " with quality " + quality
         }
 
+        var flatPoints = [];
+        var points = [];
         for (var i = 0; i < aminoacids.length; i++) {
+            var oCnt = 0;
+            var oVariant = aminoacids[i];
             for (var j = 0; j < aminoacids.length; j++) {
+                var vVariant = aminoacids[j];
                 result = values[cnt++];
                 if (result.results.bindings && result.results.bindings.length > 0) {
                     matrix[i][j] = parseInt(result.results.bindings[0].cnt.value);
                 }
                 heatmap.push([i, j, matrix[i][j]])
+                oCnt += matrix[i][j];
+                points.push({"id": "id_" + oVariant + "-" + vVariant, "name": oVariant + " -> " + vVariant, "parent": "id_" + oVariant, "value": matrix[i][j]})
+                flatPoints.push({"id": "id_" + oVariant + "-" + vVariant, "name": oVariant + " -> " + vVariant, "color": Highcharts.getOptions().colors[i], "value": matrix[i][j]})
+            }
+            points.push({"id": "id_" + oVariant, "name": oVariant + " -> ?", "value": oCnt, "color": Highcharts.getOptions().colors[i]})
+        }
+
+        var accDiff = 0.0;
+        var cnt = 0;
+        for (var i = 0; i < aminoacids.length; i++) {
+            for (var j = i; j < aminoacids.length; j++) {
+                if(i == j) continue;
+
+                cnt++;
+                var symIndex1 = aminoacids.length - i - 1;
+                var symIndex2 = aminoacids.length - j - 1;
+                var value = matrix[i][j];
+                var valueSym = matrix[symIndex1][symIndex2];
+                var diff = Math.abs(value - valueSym) / (1.0 * Math.abs(value + valueSym))
+                var idxO = "[" + i + ", " + j + "]";
+                var idxS = "[" + symIndex1 + ", " + symIndex2 + "]";
+                console.log(idxO, ": " , value, "  --- ", idxS, ": " , valueSym, " --- diff", diff)
+                if(!isNaN(diff)){
+                    accDiff = accDiff + parseFloat(diff);
+                }
             }
         }
+
+        //console.log(accDiff)
+        //console.log(cnt)
+        
+        var sym = accDiff / (1.0 * cnt)
+        console.log("Sym: " + (1.0 - sym));
+
         console.log(JSON.stringify(heatmap))
         visualize(aminoacids, heatmap, title)
+        visualize2(points, flatPoints)
         $(".loader").hide()
+
     });
 }
 
