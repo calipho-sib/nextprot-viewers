@@ -129,7 +129,8 @@ $(document).ready(function () {
                 var entriesLengthWithVariant = entries.filter(function (d) {
                     return d.withVariant === true;
                 }).length;
-                var unicityWithoutVariant = data[0].annotations[0].propertiesMap["peptide unicity"][0].value;
+                console.log("data",data);
+                var unicityWithoutVariant = data[0].annotations[0].propertiesMap["peptide unicity"] ?data[0].annotations[0].propertiesMap["peptide unicity"][0].value : "NULL";
                 var unicityWithVariant = data[0].annotations[0].propertiesMap["peptide unicity with variants"][0].value;
 //                console.log("unicityWithoutVariant");
 //                console.log(unicityWithoutVariant);
@@ -137,8 +138,10 @@ $(document).ready(function () {
                     id: id,
                     peptide: sequence,
                     proteotypicity: {
-                        withVariant: unicityWithVariant !== "NOT_UNIQUE",
-                        withoutVariant: unicityWithoutVariant !== "NOT_UNIQUE",
+//                        withVariant: unicityWithVariant !== "NOT_UNIQUE",
+                        withVariant: unicityWithVariant === "UNIQUE" || unicityWithVariant === "PSEUDO_UNIQUE",
+//                        withoutVariant: unicityWithoutVariant !== "NOT_UNIQUE",
+                        withoutVariant: unicityWithVariant === "UNIQUE" || unicityWithVariant === "PSEUDO_UNIQUE",
                         nullWithVariant: entriesLengthWithVariant < 1,
                         nullWithoutVariant: entriesLengthWithoutVariant < 1,
                         pseudo: unicityWithoutVariant === "PSEUDO_UNIQUE"
@@ -474,7 +477,7 @@ $(document).ready(function () {
                             }).catch(function (error) {
                                 countCallFinished += 1;
                                 if (countCallFinished === countApiCalls) $(".shaft-load3").remove();
-                                console.log(error.responseText);
+                                console.log('errortext',error);
                                 var errorMessage = error.responseText;
                                 throwAPIError(errorMessage.message);
                             })
