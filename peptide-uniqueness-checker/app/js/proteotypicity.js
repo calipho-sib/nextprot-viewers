@@ -435,7 +435,7 @@ $(document).ready(function () {
 //                                    console.log(new_data);
                                     
                                     // Adapt to new spec. Take identicalSeqEntries into account
-                                    var idSeqs = new_data[0].annotations[0].synonyms;
+                                    var idSeqs = new_data.length > 0 ? new_data[0].annotations[0].synonyms : [];
 //                                    console.log(idSeqs);
                                     if (!idSeqs) idSeqs = [];
                                     new_data.forEach(function(nd,i){
