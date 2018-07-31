@@ -141,7 +141,7 @@ $(document).ready(function () {
 //                        withVariant: unicityWithVariant !== "NOT_UNIQUE",
                         withVariant: unicityWithVariant === "UNIQUE" || unicityWithVariant === "PSEUDO_UNIQUE",
 //                        withoutVariant: unicityWithoutVariant !== "NOT_UNIQUE",
-                        withoutVariant: unicityWithVariant === "UNIQUE" || unicityWithVariant === "PSEUDO_UNIQUE",
+                        withoutVariant: unicityWithoutVariant === "UNIQUE" || unicityWithoutVariant === "PSEUDO_UNIQUE",
                         nullWithVariant: entriesLengthWithVariant < 1,
                         nullWithoutVariant: entriesLengthWithoutVariant < 1,
                         pseudo: unicityWithoutVariant === "PSEUDO_UNIQUE"
