@@ -29,13 +29,9 @@
                     <th>Mutation origin</th>
                     <th>Phenotype intensity</th>
                     <th>Relation</th>
+                    <th>Negative</th>
                     <th>Function</th>
-<!--
-                    <th>Prec Relation</th>
-                    <th>Prec Mol Ent Obj</th>
--->
                     <th>Data confidence</th>
-<!--                    <th>Conflicting evidence</th>-->
                     <th>Evidence codes</th>
                     <th class="pubmed-link">Reference</th>
                     <th>Protein origin</th>
@@ -52,13 +48,9 @@
                     <th>Mutation origin</th>
                     <th>Phenotype intensity</th>
                     <th>Relation</th>
+                    <th>Negative</th>
                     <th>Function</th>
-<!--
-                    <th>Prec Relation</th>
-                    <th>Prec Mol Ent Obj</th>
--->
                     <th>Data confidence</th>
-<!--                    <th>Conflicting evidence</th>-->
                     <th>Evidence codes</th>
                     <th>Reference</th>
                     <th>Protein origin</th>
@@ -68,7 +60,6 @@
                 </tr>
             </tfoot>
         </table>
-    </div>
 </body>
 
 
@@ -122,11 +113,14 @@
             "columnDefs": [ {
                         "targets": "pubmed-link",
                         "render": function ( data, type, full, row ) {
-                            var title = data.replace(/\s+/g, '').split(":")[0];
+                            reference = data.split("|");
+                            data_splitted = reference[0].split(":");
+                            var title = data_splitted[0];
                             title = title == "PUBMED" ? "PubMed" : title;
-                            var pubmed = data.replace(/\s+/g, '').split(":")[1];
+                            var pubmed = data_splitted[1];
+                            var conflictEvidence = reference[1] ? reference[1] : "";
                             var url = title === "DOI" ? "https://doi.org/" : "http://www.ncbi.nlm.nih.gov/pubmed/";
-                            return '<a href="' + url + pubmed + '" target="_blank">'+title+': ' + pubmed + '</a>';
+                            return '<a href="' + url + pubmed + '" target="_blank">'+title+': ' + pubmed + '</a> - ' + conflictEvidence;
                             }
                         } ]
         });
