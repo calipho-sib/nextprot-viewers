@@ -28,7 +28,7 @@
                     <th>Mutation origin</th>
                     <th>Phenotype intensity</th>
                     <th>Relation</th>
-                    <th>Negative</th>
+<!--                    <th>Negative</th>-->
                     <th>Function</th>
                     <th>Data confidence</th>
                     <th>Evidence codes</th>
@@ -47,7 +47,7 @@
                     <th>Mutation origin</th>
                     <th>Phenotype intensity</th>
                     <th>Relation</th>
-                    <th>Negative</th>
+<!--                    <th>Negative</th>-->
                     <th>Function</th>
                     <th>Data confidence</th>
                     <th>Evidence codes</th>
@@ -116,9 +116,9 @@
                             var title = data_splitted[0];
                             title = title == "PUBMED" ? "PubMed" : title;
                             var pubmed = data_splitted[1];
-                            var conflictEvidence = reference[1] ? reference[1] : "";
+                            var conflictEvidence = reference[1] ? " - " + reference[1] : "";
                             var url = title === "DOI" ? "https://doi.org/" : "http://www.ncbi.nlm.nih.gov/pubmed/";
-                            return '<a href="' + url + pubmed + '" target="_blank">'+title+': ' + pubmed + '</a> - ' + conflictEvidence;
+                            return '<a href="' + url + pubmed + '" target="_blank">'+title+': ' + pubmed + '</a>' + conflictEvidence;
                             }
                         } ]
         });

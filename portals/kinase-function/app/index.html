@@ -1,6 +1,6 @@
 <html>
 <head>
-    <title>Kinase variants portal</title>
+    <title>Protein kinase function portal</title>
     <meta charset="UTF-8">
     <script src="js/datatables.min.js"></script>
     <script src="js/iframeResizer.js"></script>
@@ -18,7 +18,7 @@
             </div>
         </div>
         <div id="docLink">
-            <a class="btn btn-default btn-sm" href="/portals" target="_parent"><i class="glyphicon glyphicon-list-alt" aria-hidden="true"></i> See Documentation</a>
+            <a class="btn btn-default btn-sm" href="/protein-function-portals" target="_parent"><i class="glyphicon glyphicon-list-alt" aria-hidden="true"></i> See Documentation</a>
         </div>
         <table id="portalTable" class="table table-striped table-hover table-bordered portalTable gaussDataTable" cellspacing="0" width="100%">
             <thead>
@@ -114,9 +114,9 @@
                             var title = data_splitted[0];
                             title = title == "PUBMED" ? "PubMed" : title;
                             var pubmed = data_splitted[1];
-                            var conflictEvidence = reference[1] ? reference[1] : "";
-                            var url = title === "DOI" ? "https://doi.org/" : "http://www.ncbi.nlm.nih.gov/pubmed/";
-                            return '<a href="' + url + pubmed + '" target="_blank">'+title+': ' + pubmed + '</a> - ' + conflictEvidence;
+                            var conflictEvidence = reference[1] ? " - " + reference[1] : "";
+                            var url = title === "DOI" ? "https://doi.org/" : "WWW" ? "http://" : "http://www.ncbi.nlm.nih.gov/pubmed/";
+                            return '<a href="' + url + pubmed + '" target="_blank">'+title+': ' + pubmed + '</a>' + conflictEvidence;
                             }
                         } ]
         });
