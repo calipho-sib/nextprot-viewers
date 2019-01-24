@@ -1,0 +1,30 @@
+{
+  "data": [
+    [
+      "NUAK1-P-Thr211",
+      "is an active form of",
+      "",
+      "NUAK1",
+      "Gold",
+      "in vitro assay evidence | western blot",
+      "PUBMED: 14976552",
+      "Homo sapiens",
+      "",
+      "None (in vitro)",
+      "NUAK1 phosphorylation on Thr211 by STK11 complex activates NUAK1."
+    ],
+    [
+      "NUAK1-P-Thr211",
+      "is an active form of",
+      "",
+      "NUAK1",
+      "Gold",
+      "in vitro assay evidence | point mutation evidence used in manual assertion | western blot",
+      "PUBMED: 14976552",
+      "Homo sapiens",
+      "",
+      "None (in vitro)",
+      "Basal activity of NUAK1-Thr211Ala mutant is low and is not increased by phosphorylation by STK11 complex."
+    ],
+  ]
+}
