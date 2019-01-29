@@ -1138,10 +1138,10 @@ function initNXDivs() {
             nx.getAnnotationsByCategory(nxEntryName, "topological-domain"), //7
             nx.getAnnotationsByCategory(nxEntryName, "transmembrane-region"), //7
             nx.getAnnotationsByCategory(nxEntryName, "antibody-mapping"), //8
-            nx.getAnnotationsByCategory(nxEntryName, "initiator-methionine "), //9
+            nx.getAnnotationsByCategory(nxEntryName, "initiator-methionine"), //9
             nx.getAnnotationsByCategory(nxEntryName, "modified-residue"), //10
             nx.getAnnotationsByCategory(nxEntryName, "cross-link"), //11
-            nx.getAnnotationsByCategory(nxEntryName, "glycosylation-site "), //12
+            nx.getAnnotationsByCategory(nxEntryName, "glycosylation-site"), //12
             nx.getAnnotationsByCategory(nxEntryName, "lipidation-site"), //13
             nx.getAnnotationsByCategory(nxEntryName, "selenocysteine"), //14
             nx.getAnnotationsByCategory(nxEntryName, "peptide-mapping"), //15
