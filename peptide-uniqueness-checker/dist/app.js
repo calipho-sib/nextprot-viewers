@@ -7097,7 +7097,7 @@ this["HBtemplates"]["app/templates/matchingEntries.tmpl"] = Handlebars.template(
     var stack1;
 
   return "<div  class=\"panel panel-success panel-wo-variant"
-    + ((stack1 = helpers["if"].call(depth0 != null ? depth0 : (container.nullContext || {}),(depth0 != null ? depth0.pseudo : depth0),{"name":"if","hash":{},"fn":container.program(8, data, 0),"inverse":container.noop,"data":data})) != null ? stack1 : "")
+    + ((stack1 = helpers["if"].call(depth0 != null ? depth0 : (container.nullContext || {}),(depth0 != null ? depth0.pseudoWOV : depth0),{"name":"if","hash":{},"fn":container.program(8, data, 0),"inverse":container.noop,"data":data})) != null ? stack1 : "")
     + "\" style=\"margin:0px;min-height: 120px;\">\n";
 },"8":function(container,depth0,helpers,partials,data) {
     return " panel-pseudo";
@@ -7154,7 +7154,7 @@ this["HBtemplates"]["app/templates/matchingEntries.tmpl"] = Handlebars.template(
     var stack1;
 
   return "<div  class=\"panel panel-success panel-w-variant"
-    + ((stack1 = helpers["if"].call(depth0 != null ? depth0 : (container.nullContext || {}),(depth0 != null ? depth0.pseudo : depth0),{"name":"if","hash":{},"fn":container.program(8, data, 0),"inverse":container.noop,"data":data})) != null ? stack1 : "")
+    + ((stack1 = helpers["if"].call(depth0 != null ? depth0 : (container.nullContext || {}),(depth0 != null ? depth0.pseudoWV : depth0),{"name":"if","hash":{},"fn":container.program(8, data, 0),"inverse":container.noop,"data":data})) != null ? stack1 : "")
     + "\" style=\"margin:0px;min-height: 120px;\">\n        ";
 },"28":function(container,depth0,helpers,partials,data) {
     return "<div class=\"panel panel-info panel-w-variant\" style=\"margin:0px;min-height: 120px;\">";
@@ -7194,7 +7194,7 @@ this["HBtemplates"]["app/templates/matchingEntries.tmpl"] = Handlebars.template(
     + alias1(alias2(((stack1 = (depth0 != null ? depth0.variant : depth0)) != null ? stack1.variant : stack1), depth0))
     + ")\n                        </li>\n";
 },"compiler":[7,">= 4.0.0"],"main":function(container,depth0,helpers,partials,data) {
-    var stack1, helper, options, alias1=depth0 != null ? depth0 : (container.nullContext || {}), alias2=helpers.helperMissing, alias3="function", alias4=container.escapeExpression, alias5=helpers.blockHelperMissing, buffer = 
+    var stack1, helper, options, alias1=depth0 != null ? depth0 : (container.nullContext || {}), alias2=helpers.helperMissing, alias3="function", alias4=container.escapeExpression, alias5=helpers.blockHelperMissing, alias6=container.lambda, buffer = 
   "<div id="
     + alias4(((helper = (helper = helpers.id || (depth0 != null ? depth0.id : depth0)) != null ? helper : alias2),(typeof helper === alias3 ? helper.call(alias1,{"name":"id","hash":{},"data":data}) : helper)))
     + " class=\"col-md-4 peptide "
@@ -7207,7 +7207,9 @@ this["HBtemplates"]["app/templates/matchingEntries.tmpl"] = Handlebars.template(
   stack1 = ((helper = (helper = helpers.proteotypicity || (depth0 != null ? depth0.proteotypicity : depth0)) != null ? helper : alias2),(options={"name":"proteotypicity","hash":{},"fn":container.program(6, data, 0),"inverse":container.noop,"data":data}),(typeof helper === alias3 ? helper.call(alias1,options) : helper));
   if (!helpers.proteotypicity) { stack1 = alias5.call(depth0,stack1,options)}
   if (stack1 != null) { buffer += stack1; }
-  buffer += "            <div class=\"panel-heading\" style=\"padding:1px 15px\">\n                <h5>Entry mapping</h5>\n            </div>\n            <div class=\"panel-body\">\n                <div class=\"showEntry\" style=\"display:block\">\n                    <ul>\n"
+  buffer += "            <div class=\"panel-heading\" style=\"padding:1px 15px\">\n                <h5 style=\"text-align:left;padding-left:25px;\"><span class=\"glyphicon "
+    + alias4(alias6(((stack1 = (depth0 != null ? depth0.proteotypicity : depth0)) != null ? stack1.iconWOV : stack1), depth0))
+    + "\"></span> Entry mapping</h5>\n            </div>\n            <div class=\"panel-body\">\n                <div class=\"showEntry\" style=\"display:block\">\n                    <ul>\n"
     + ((stack1 = helpers["if"].call(alias1,((stack1 = (depth0 != null ? depth0.proteotypicity : depth0)) != null ? stack1.nullWithoutVariant : stack1),{"name":"if","hash":{},"fn":container.program(15, data, 0),"inverse":container.noop,"data":data})) != null ? stack1 : "");
   stack1 = ((helper = (helper = helpers.entries || (depth0 != null ? depth0.entries : depth0)) != null ? helper : alias2),(options={"name":"entries","hash":{},"fn":container.program(17, data, 0),"inverse":container.noop,"data":data}),(typeof helper === alias3 ? helper.call(alias1,options) : helper));
   if (!helpers.entries) { stack1 = alias5.call(depth0,stack1,options)}
@@ -7222,7 +7224,9 @@ this["HBtemplates"]["app/templates/matchingEntries.tmpl"] = Handlebars.template(
   stack1 = ((helper = (helper = helpers.proteotypicity || (depth0 != null ? depth0.proteotypicity : depth0)) != null ? helper : alias2),(options={"name":"proteotypicity","hash":{},"fn":container.program(25, data, 0),"inverse":container.noop,"data":data}),(typeof helper === alias3 ? helper.call(alias1,options) : helper));
   if (!helpers.proteotypicity) { stack1 = alias5.call(depth0,stack1,options)}
   if (stack1 != null) { buffer += stack1; }
-  buffer += "            <div class=\"panel-heading\" style=\"padding:1px 15px\">\n                <h5>Additional mappings with known variants</h5>\n            </div>\n            <div class=\"panel-body\">\n                <div class=\"showEntry\" style=\"display:block\">\n                    <ul>\n"
+  buffer += "            <div class=\"panel-heading\" style=\"padding:1px 15px\">\n                <h5><span class=\"glyphicon "
+    + alias4(alias6(((stack1 = (depth0 != null ? depth0.proteotypicity : depth0)) != null ? stack1.iconWV : stack1), depth0))
+    + "\"></span> Additional mappings with known variants</h5>\n            </div>\n            <div class=\"panel-body\">\n                <div class=\"showEntry\" style=\"display:block\">\n                    <ul>\n"
     + ((stack1 = helpers["if"].call(alias1,((stack1 = (depth0 != null ? depth0.proteotypicity : depth0)) != null ? stack1.nullWithVariant : stack1),{"name":"if","hash":{},"fn":container.program(30, data, 0),"inverse":container.noop,"data":data})) != null ? stack1 : "");
   stack1 = ((helper = (helper = helpers.entries || (depth0 != null ? depth0.entries : depth0)) != null ? helper : alias2),(options={"name":"entries","hash":{},"fn":container.program(32, data, 0),"inverse":container.noop,"data":data}),(typeof helper === alias3 ? helper.call(alias1,options) : helper));
   if (!helpers.entries) { stack1 = alias5.call(depth0,stack1,options)}
@@ -7397,7 +7401,10 @@ $(document).ready(function () {
                         withoutVariant: unicityWithoutVariant === "UNIQUE" || unicityWithoutVariant === "PSEUDO_UNIQUE",
                         nullWithVariant: entriesLengthWithVariant < 1,
                         nullWithoutVariant: entriesLengthWithoutVariant < 1,
-                        pseudo: unicityWithoutVariant === "PSEUDO_UNIQUE"
+                        pseudoWOV: unicityWithoutVariant === "PSEUDO_UNIQUE",
+                        pseudoWV: unicityWithVariant === "PSEUDO_UNIQUE",
+                        iconWV: unicityWithVariant === "UNIQUE" ? "glyphicon-star" : unicityWithVariant === "PSEUDO_UNIQUE" ? "glyphicon-star-empty" : unicityWithVariant === "NOT_UNIQUE" ? "glyphicon-list" : "",
+                        iconWOV: unicityWithoutVariant === "UNIQUE" ? "glyphicon-star" : unicityWithoutVariant === "PSEUDO_UNIQUE" ? "glyphicon-star-empty" : unicityWithoutVariant === "NOT_UNIQUE" ? "glyphicon-list" : ""
                     },
                     entries: entries,
                     isoforms: data.map(function (o) {

@@ -6,7 +6,8 @@
     <link rel="stylesheet" type="text/css" href="../dist/app.css">
     <link href='https://fonts.googleapis.com/css?family=Lato:100,300,400,700,900' rel='stylesheet' type='text/css'>
     <script src="../dist/app.js"></script>
-    <!-- Google Analytics --> <script type="text/javascript" src="../../lib/ga.js"></script>
+    <!-- Google Analytics -->
+    <script type="text/javascript" src="../../lib/ga.js"></script>
     <!--
     <link rel="stylesheet" type="text/css" href="bootstrap.min.css">
     <script src="jquery.min.js"></script>
@@ -38,14 +39,29 @@
     </div>
     <div class="row" style="text-align:center;">
         <div class="col-lg-10 col-lg-offset-1 col-md-12 form-container">
+            <div id="uniqueness-description row">
+                <div class="col-md-8 col-md-offset-2">
+                    <div style="display:flex; align-items:center;margin-bottom:10px;">
+                        <div class="puc-container-left">
+                            <div class="puc-icon-container">
+                                <span class="glyphicon glyphicon-ok"></span>
+                            </div>
+                            <!--                            <div style="width:5px;height:100%;border-left:1px solid #777777"></div>-->
+                        </div>
+                        <div class="puc-description" style="font-size:18px; text-align:left;display:inline-block;font-style:italic;font-weight:300"><b>The peptide uniqueness checker</b> helps scientists determine which peptides are unambiguous and can thus be used to confidently identify protein entries.</div>
+                    </div>
+                    
+                    <hr id="separationLine" class="" style="margin:15px 0px 15px;">
+                </div>
+            </div>
             <form class="unicity-form">
                 <div class="form-group">
-<!--                    <label style="display:block;">Enter your peptide(s) : </label>-->
+                    <!--                    <label style="display:block;">Enter your peptide(s) : </label>-->
                     <div>
                         <p style="display:inline-block;"><span>Enter your peptide(s) below or load your list from a file : </span></p>
                         <input style="display:inline-block;font-size:12px;font-style:italic;color:#C50063;" type="file" id="files" name="file" />
-<!--                        <button onclick="abortRead();">Cancel read</button>-->
-<!--
+                        <!--                        <button onclick="abortRead();">Cancel read</button>-->
+                        <!--
                         <div class="progress" id="progress_bar" style="display:inline-block;width:100px">
                             <div class="percent">0%</div>
                         </div>
@@ -53,37 +69,51 @@
                     </div>
                     <textarea id="variantList" class="form-control" rows="5" placeholder="LQELFLQEVR, AATDFVQEMR, TKMGLYYSYFK, ..."></textarea>
                 </div>
-<!--
+                <!--
                 <div id="limitInfos" class="alert alert-warning pull-left" role="alert">
                     <span class="glyphicon glyphicon-exclamation-sign"></span> The peptide uniqueness checker is currently limited to a maximum of <strong>1000 peptides</strong> which are checked against the human sequences in the current neXtProt release. Peptides must be <strong>minimum 6 aa</strong> in length.
                 </div>
 -->
-<!--                <div class="row">-->
+                <!--                <div class="row">-->
                 <div id="messages-boxes" class="col-lg-9 col-md-8">
-                <div class="info-box info-orange">
-                <div class="info-icon">
-                    <span class="glyphicon glyphicon-info-sign"></span>
-                    </div><div class="info-content">
-                    <span style="font-weight:300;font-size:14px;">The peptide uniqueness checker is currently limited to a maximum of <strong>1000 peptides</strong> which are checked against the human sequences in the current neXtProt release. Peptides must be <strong>minimum 6 aa</strong> in length.</span>
-                    </div>
-                </div>
-<!--                </div>-->
-<!--                </div>-->
-<!--                <div class="row">-->
-<!--                <div class="col-md-8">-->
-                <div class="info-box info-blue">
-                <div class="info-icon">
-                    <span class="glyphicon glyphicon-bookmark"></span>
-                    </div><div class="info-content">
-                    <span style="font-weight:300">
-                        <span style="font-size:20px;">Has the peptide uniqueness checker been useful to your work?</span><span style="font-weight:300"> Please cite :</span><br><div style="display:inline-block;margin:10px 30px;padding-left:10px;border-left:1px solid rgba(250,250,250,0.5);font-style:italic"><strong style="font-weight:500;">The neXtProt peptide uniqueness checker: a tool for the proteomics community</strong><br><span style="font-size:12px;">Schaeffer M, Gateau A, Teixeira D, Michel PA, Zahn-Zabal M, Lane L.</span><br>Bioinformatics. 2017 May 17. PMID: <a href="https://www.ncbi.nlm.nih.gov/pubmed/28520855" target="_blank">28520855<span class="glyphicon glyphicon-new-window"></span></a> doi: <a href="https://doi.org/10.1093/bioinformatics/btx318" target="_blank">10.1093/bioinformatics/btx318<span class="glyphicon glyphicon-new-window"></span></a>.
+                    <div class="info-box info-black">
+                        <div class="info-icon">
+                            <p>EXAMPLES</p>
                         </div>
-                    </span>
+                        <div class="info-content">
+                            <span style="">LQELFLQEVR, TKMGLYYSYFK, SSRAGLQFPVGR, FELSGIPPAPRGVPQIEVTFDIDANGILNVTATDKSTGK</span>
+                        </div>
                     </div>
+                    <div class="info-box info-orange">
+                        <div class="info-icon">
+                            <span class="glyphicon glyphicon-info-sign"></span>
+                        </div>
+                        <div class="info-content">
+                            <span style="font-weight:300;font-size:14px;">The peptide uniqueness checker is currently limited to a maximum of <strong>1000 peptides</strong> which are checked against the human sequences in the current neXtProt release. Peptides must be <strong>minimum 6 aa</strong> in length.</span>
+                        </div>
+                    </div>
+                    <!--                </div>-->
+                    <!--                </div>-->
+                    <!--                <div class="row">-->
+                    <!--                <div class="col-md-8">-->
+                    <div class="info-box info-blue">
+                        <div class="info-icon">
+                            <span class="glyphicon glyphicon-bookmark"></span>
+                        </div>
+                        <div class="info-content">
+                            <span style="font-weight:300">
+                        <span style="font-size:20px;">Has the peptide uniqueness checker been useful to your work?</span><span style="font-weight:300"> Please cite :</span>
+                            <br>
+                            <div style="display:inline-block;margin:10px 30px;padding-left:10px;border-left:1px solid rgba(250,250,250,0.5);font-style:italic"><strong style="font-weight:500;">The neXtProt peptide uniqueness checker: a tool for the proteomics community</strong>
+                                <br><span style="font-size:12px;">Schaeffer M, Gateau A, Teixeira D, Michel PA, Zahn-Zabal M, Lane L.</span>
+                                <br>Bioinformatics. 2017 May 17. PMID: <a href="https://www.ncbi.nlm.nih.gov/pubmed/28520855" target="_blank">28520855<span class="glyphicon glyphicon-new-window"></span></a> doi: <a href="https://doi.org/10.1093/bioinformatics/btx318" target="_blank">10.1093/bioinformatics/btx318<span class="glyphicon glyphicon-new-window"></span></a>.
+                            </div>
+                            </span>
+                        </div>
+                    </div>
+                    <div id="errorMessages"></div>
                 </div>
-                <div id="errorMessages"></div>
-                </div>
-<!--                </div>-->
+                <!--                </div>-->
                 <!--
                 <div class="pull-left">
                     <p class="bg-warning"></p>
@@ -101,7 +131,7 @@
             </form>
         </div>
     </div>
-<!--
+    <!--
     <div class="row">
         <div class="col-md-7 col-md-offset-1">
             <div id="errorMessages"></div>
@@ -115,25 +145,33 @@
         <div class="col-lg-10 col-lg-offset-1">
             <hr id="separationLine" class="">
             <div id="legend" class="pull-left">
-                    <div class="legend-elem">
-                        <div class="legendIcon" style="background:#DFF0D8;"> </div>
-                        <p class="legendText">Unique</p>
+                <div class="legend-elem">
+                    <div class="legendIcon" style="background:#DFF0D8;color:#3c763d">
+                        <span class="glyphicon glyphicon-star"></span>
                     </div>
-                    <div class="legend-elem" data-toggle="tooltip" data-placement="top" title="Found in other entries with identical sequences">
-                        <div class="legendIcon" style="background:#c6eadc;"> </div>
-                        <p class="legendText">Pseudo-unique</p>
+                    <p class="legendText">Unique</p>
+                </div>
+                <div class="legend-elem" data-toggle="tooltip" data-placement="top" title="Found in other entries with identical sequences">
+                    <div class="legendIcon" style="background:#c6eadc;color:#3c763d;">
+                        <span class="glyphicon glyphicon-star-empty"></span>
                     </div>
-                    <div class="legend-elem">
-                        <div class="legendIcon" style="background:#D9EDF7;"> </div>
-                        <p class="legendText">Not unique</p>
+                    <p class="legendText">Pseudo-unique</p>
+                </div>
+                <div class="legend-elem">
+                    <div class="legendIcon" style="background:#D9EDF7;color:#31708f;">
+                        <span class="glyphicon glyphicon-list"></span>
                     </div>
-                    <div class="legend-elem">
-                        <div class="legendIcon legend-asterix">*</div>
-                        <p class="legendText">Identical sequences</p>
+                    <p class="legendText">Not unique</p>
+                </div>
+                <div class="legend-elem">
+                    <div class="legendIcon legend-asterix" style="color:rgba(0,0,0,0.8)">
+                        <span class="glyphicon glyphicon-asterisk" style="font-weight:500"></span>
                     </div>
+                    <p class="legendText">Identical sequences</p>
+                </div>
             </div>
             <div class=" pull-right filters" style="margin-bottom:30px;">
-                <label style="margin:0px 10px;padding-top:2px;vertical-align:middle;font-style:italic;">FILTERS </label>
+                <label style="padding-top:2px;text-align:left;font-style:italic;display:block">FILTERS </label>
                 <label class="checkbox-inline" style="font-style:italic;">
                     <input type="checkbox" id="onlyProteoWithV" value="option1"> Unique taking into account variants
                 </label>
@@ -144,13 +182,13 @@
                     <div class="btn-group pepShowed pull-right" role="group" style="margin-top:15px;">
 
                         <!--                        FOR NEXT VERSION-->
-                        
+
                         <button id="downloadList" type="button" class="btn btn-default">
-<!--                            <a id="downloadList" href="#" download="peptideList.txt">-->
-<!--                            <a  href="javascript:void(0)">-->
-                                <span class="glyphicon glyphicon-download" style="vertical-align:middle;font-size:16px;margin-right:5px;"></span>
-                                <span>Download</span>
-<!--                            </a>-->
+                            <!--                            <a id="downloadList" href="#" download="peptideList.txt">-->
+                            <!--                            <a  href="javascript:void(0)">-->
+                            <span class="glyphicon glyphicon-download" style="vertical-align:middle;font-size:16px;margin-right:5px;"></span>
+                            <span>Download</span>
+                            <!--                            </a>-->
                         </button>
 
                         <button id="peptideCount" type="button" class="btn btn-default">
@@ -179,16 +217,15 @@
 
 <script defer>
     var queries = {};
-//    $.each(document.location.search.substr(1).split('&'), function (c, q) {
-//        var i = q.split('=');
-//        queries[i[0].toString()] = i[1].toString();
-//    });
-//    if (queries.hasOwnProperty("title")){
-//        if (queries.title === "true"){
-//            $(".mainTitle").show();
-//        }
-//    }
-    
+    //    $.each(document.location.search.substr(1).split('&'), function (c, q) {
+    //        var i = q.split('=');
+    //        queries[i[0].toString()] = i[1].toString();
+    //    });
+    //    if (queries.hasOwnProperty("title")){
+    //        if (queries.title === "true"){
+    //            $(".mainTitle").show();
+    //        }
+    //    }
 </script>
 
 </html>

@@ -144,7 +144,10 @@ $(document).ready(function () {
                         withoutVariant: unicityWithoutVariant === "UNIQUE" || unicityWithoutVariant === "PSEUDO_UNIQUE",
                         nullWithVariant: entriesLengthWithVariant < 1,
                         nullWithoutVariant: entriesLengthWithoutVariant < 1,
-                        pseudo: unicityWithoutVariant === "PSEUDO_UNIQUE"
+                        pseudoWOV: unicityWithoutVariant === "PSEUDO_UNIQUE",
+                        pseudoWV: unicityWithVariant === "PSEUDO_UNIQUE",
+                        iconWV: unicityWithVariant === "UNIQUE" ? "glyphicon-star" : unicityWithVariant === "PSEUDO_UNIQUE" ? "glyphicon-star-empty" : unicityWithVariant === "NOT_UNIQUE" ? "glyphicon-list" : "",
+                        iconWOV: unicityWithoutVariant === "UNIQUE" ? "glyphicon-star" : unicityWithoutVariant === "PSEUDO_UNIQUE" ? "glyphicon-star-empty" : unicityWithoutVariant === "NOT_UNIQUE" ? "glyphicon-list" : ""
                     },
                     entries: entries,
                     isoforms: data.map(function (o) {
