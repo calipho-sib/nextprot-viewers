@@ -6830,7 +6830,7 @@ html *:after {
 #pepSub{
     position:relative;
     overflow-x:hidden;
-    min-width:250px;
+    min-width:240px;
     min-height:170px;
 }
 #pepSub>div{
@@ -6839,7 +6839,7 @@ html *:after {
     padding:10px 15px;
 */
     margin: 0px 5px 10px 0px;
-    padding: 10px 10px;
+    padding: 10px 10px 10px 5px;
 /*    background-color:#464646;*/
     background-color:white;
 /*    color:white;*/
@@ -6849,7 +6849,7 @@ html *:after {
     box-shadow:0 2px 5px 0 rgba(0, 0, 0, 0.26);
     position:absolute;
     right:0;
-    min-width:240px;
+    min-width:230px;
 }
 #pepSub .glyphicon{
     margin-right:10px;
