@@ -7116,6 +7116,10 @@ html *:after {
         text-align: left;
         margin-left:0px;
     }
+    .peptide-title{
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
 
 /*LOADER :*/
 

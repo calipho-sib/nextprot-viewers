@@ -434,8 +434,6 @@ $(document).ready(function () {
 //                                        return d.annotationsByCategory["pepx-virtual-annotation"].length > 0
                                     });
                                     
-//                                    console.log("new_data");
-//                                    console.log(new_data);
                                     
                                     // Adapt to new spec. Take identicalSeqEntries into account
                                     var idSeqs = new_data.length > 0 ? new_data[0].annotations[0].synonyms : [];
