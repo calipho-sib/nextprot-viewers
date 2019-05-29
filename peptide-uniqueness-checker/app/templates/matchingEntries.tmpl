@@ -1,7 +1,7 @@
 <div id={{id}} class="col-md-4 peptide {{#if proteotypicity.withVariant}}proteoWithVariant{{/if}} {{#if proteotypicity.withoutVariant}}{{#unless proteotypicity.onlyWithVariant}}proteoWithoutVariant{{/unless}}{{/if}}">
 <div id="proteoBlock" class="panel panel-default">
     <div class="panel-heading">
-        <h5 class="text-center" style="margin:0px;">{{peptide}}</h5>
+        <h5 class="text-center peptide-title" style="margin:0px;">{{peptide}}</h5>
     </div>
 <div id="proteoBody" class="panel-body" style="padding:0px;height:240px;overflow:auto;">
                         
@@ -13,7 +13,7 @@
         <!--<h5 id="proteotypicitySentence"></h5>-->
         <!--</div>-->
         {{#proteotypicity}}
-        {{#if withoutVariant}}<div  class="panel panel-success panel-wo-variant{{#if pseudo}} panel-pseudo{{/if}}" style="margin:0px;min-height: 120px;">
+        {{#if withoutVariant}}<div  class="panel panel-success panel-wo-variant{{#if pseudoWOV}} panel-pseudo{{/if}}" style="margin:0px;min-height: 120px;">
         {{else}}
             {{#if nullWithoutVariant}}<div class="panel panel-default panel-wo-variant" style="margin:0px;min-height: 120px;">
             {{else}}
@@ -22,7 +22,7 @@
         {{/if}}
         {{/proteotypicity}}
             <div class="panel-heading" style="padding:1px 15px">
-                <h5>Entry mapping</h5>
+                <h5 style="text-align:left;padding-left:25px;"><span class="glyphicon {{proteotypicity.iconWOV}}"></span> Entry mapping</h5>
             </div>
             <div class="panel-body">
                 <div class="showEntry" style="display:block">
@@ -54,11 +54,11 @@
             </div>
         </div>
         {{#proteotypicity}}
-        {{#if withVariant}}<div  class="panel panel-success panel-w-variant{{#if pseudo}} panel-pseudo{{/if}}" style="margin:0px;min-height: 120px;">
+        {{#if withVariant}}<div  class="panel panel-success panel-w-variant{{#if pseudoWV}} panel-pseudo{{/if}}" style="margin:0px;min-height: 120px;">
         {{else}}<div class="panel panel-info panel-w-variant" style="margin:0px;min-height: 120px;">{{/if}}
         {{/proteotypicity}}
             <div class="panel-heading" style="padding:1px 15px">
-                <h5>Additional mappings with known variants</h5>
+                <h5><span class="glyphicon {{proteotypicity.iconWV}}"></span> Additional mappings with known variants</h5>
             </div>
             <div class="panel-body">
                 <div class="showEntry" style="display:block">

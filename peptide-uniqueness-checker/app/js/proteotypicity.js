@@ -144,7 +144,10 @@ $(document).ready(function () {
                         withoutVariant: unicityWithoutVariant === "UNIQUE" || unicityWithoutVariant === "PSEUDO_UNIQUE",
                         nullWithVariant: entriesLengthWithVariant < 1,
                         nullWithoutVariant: entriesLengthWithoutVariant < 1,
-                        pseudo: unicityWithoutVariant === "PSEUDO_UNIQUE"
+                        pseudoWOV: unicityWithoutVariant === "PSEUDO_UNIQUE",
+                        pseudoWV: unicityWithVariant === "PSEUDO_UNIQUE",
+                        iconWV: unicityWithVariant === "UNIQUE" ? "glyphicon-star" : unicityWithVariant === "PSEUDO_UNIQUE" ? "glyphicon-star-empty" : unicityWithVariant === "NOT_UNIQUE" ? "glyphicon-list" : "",
+                        iconWOV: unicityWithoutVariant === "UNIQUE" ? "glyphicon-star" : unicityWithoutVariant === "PSEUDO_UNIQUE" ? "glyphicon-star-empty" : unicityWithoutVariant === "NOT_UNIQUE" ? "glyphicon-list" : ""
                     },
                     entries: entries,
                     isoforms: data.map(function (o) {
@@ -431,8 +434,6 @@ $(document).ready(function () {
 //                                        return d.annotationsByCategory["pepx-virtual-annotation"].length > 0
                                     });
                                     
-//                                    console.log("new_data");
-//                                    console.log(new_data);
                                     
                                     // Adapt to new spec. Take identicalSeqEntries into account
                                     var idSeqs = new_data.length > 0 ? new_data[0].annotations[0].synonyms : [];
