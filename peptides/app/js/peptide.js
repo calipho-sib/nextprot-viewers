@@ -604,18 +604,20 @@ function initNXDivs() {
                         }
                     }
                     getProteotypicityInfos(peptide.sequence);
-                    $('#titlePepName').text(peptide.peptideAtlasID ? peptide.identifier + " (" + peptide.peptideAtlasID + ")" : peptide.identifier);
+                    $('#titlePepName').text(peptide.identifier);
 
                     // There can be 0-2 identifiers
                     let identifiers = [];
-                    peptide.sources.forEach(function(source) {
+                    for(source in peptide.sources) {
+                        if(source.indexOf('neXtProt') !== -1 ) continue;
                         let id = peptide.sources[source];
                         if(!identifiers.includes(id)) {
                             identifiers.push(id);
                         }
-                    });
+                    }
                     let ids = identifiers.join(",");
-                    $('#titlePepId').text(ids);
+                    ids = "(" + ids + ")";
+                    $('#titlePepID').text(ids);
 
                     peptide.position.forEach(function (o, i) {
                         var semiTrypticEnd = "-";
