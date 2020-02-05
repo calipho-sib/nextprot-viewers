@@ -604,7 +604,21 @@ function initNXDivs() {
                         }
                     }
                     getProteotypicityInfos(peptide.sequence);
-                    $('#titlePepName').text(peptide.peptideAtlasID ? peptide.identifier + " (" + peptide.peptideAtlasID + ")" : peptide.identifier);
+                    $('#titlePepName').text(peptide.identifier);
+
+                    // There can be 0-2 identifiers
+                    let identifiers = [];
+                    for(source in peptide.sources) {
+                        if(source.indexOf('neXtProt') !== -1 || source === 'PubMed' ) continue;
+                        let id = peptide.sources[source];
+                        if(!identifiers.includes(id)) {
+                            identifiers.push(id);
+                        }
+                    }
+                    let ids = identifiers.join(",");
+                    ids = "(" + ids + ")";
+                    $('#titlePepID').text(ids);
+
                     peptide.position.forEach(function (o, i) {
                         var semiTrypticEnd = "-";
                         if (peptide.sequence[peptide.sequence.length - 1] === "K" || peptide.sequence[peptide.sequence.length - 1] === "R") {
