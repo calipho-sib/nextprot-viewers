@@ -69,6 +69,7 @@ $(function () {
                     return NXUtils.getFamily(f, {})
                 }),
                 "proteineEvidence": NXUtils.getProteinExistence(overview.proteinExistence),
+                "proteineEvidenceCaution": overview.proteinExistenceInfo,
                 "integDate": overview.history.formattedNextprotIntegrationDate,
                 "lastUpdate": overview.history.formattedNextprotUpdateDate,
                 "UniprotIntegDate": overview.history.formattedUniprotIntegrationDate,
@@ -113,6 +114,7 @@ $(function () {
         var nxUrl = nx.getNeXtProtUrl();
         nx.getProteinOverview().then(function (data) {
             loadOverview(data, nxEntryName, nxUrl);
+
         });
         if (nx.getEnvironment() !== 'pro') {
             $("body").append("<span style='position: absolute; top: 0; left: 0; border: 0; color: darkred; margin: 20px; font-weight: bold'>" + nx.getEnvironment().toUpperCase() + " API</span>");

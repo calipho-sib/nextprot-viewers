@@ -32,7 +32,6 @@
             var isoformMap = {};
             var xrefMap = {};
             var experimentalContexts = {};
-            var mdataMap = {};
             if (data.entry.publications){
                 data.entry.publications.forEach(function (p) {
                     publiMap[p.publicationId] = p;
@@ -46,11 +45,6 @@
             if (data.entry.experimentalContexts){
                 data.entry.experimentalContexts.forEach(function (c) {
                     experimentalContexts[c.contextId] = c;
-                });
-            }
-            if (data.entry.mdataList){
-                data.entry.mdataList.forEach(function (c) {
-                    mdataMap[c.id] = c;
                 });
             }
             data.entry.xrefs.forEach(function (p) {
@@ -69,8 +63,7 @@
                 publi: publiMap,
                 xrefs: xrefMap,
                 isoforms: isoformMap,
-                contexts: experimentalContexts,
-                mdata: mdataMap
+                contexts: experimentalContexts
 
             };
         };
@@ -103,15 +96,13 @@
             apiBaseUrl = "https://api.nextprot.org";
             nextprotUrl = "https://www.nextprot.org";
             if (environment !== 'pro') {
-                apiBaseUrl = "https://" + environment + "-api.nextprot.org";
-                nextprotUrl = "https://" + environment + "-search.nextprot.org";
-                
-                if (environment === 'localhost') {
-                    apiBaseUrl = protocol + "localhost:8080/nextprot-api-web";
-                    nextprotUrl = protocol + 'localhost:3000';
-                }
+                var protocol = environment === 'dev' ? "https://" : "http://";
+//            console.log("api protocol : " + protocol)
+                apiBaseUrl = protocol + environment + "-api.nextprot.org";
+                if (environment === 'dev') nextprotUrl = 'https://dev-search.nextprot.org';
+                else nextprotUrl = protocol + environment + "-search.nextprot.org";
             }
-            //console.log("nx api base url : " + apiBaseUrl);
+            console.log("nx api base url : " + apiBaseUrl);
             sparqlEndpoint = apiBaseUrl + "/sparql";
             sparqlFormat = "?output=json";
         }
@@ -173,11 +164,6 @@
 
         var _callTerminology = function (terminologyName) {
             var url = apiBaseUrl + "/terminology/" + terminologyName;
-            return _getJSON(url);
-        };
-
-        var _callTerm = function (cvTermAccession) {
-            var url = apiBaseUrl + "/term/" + cvTermAccession;
             return _getJSON(url);
         };
 
@@ -404,12 +390,6 @@
             });
         };
 
-        NextprotClient.prototype.getTermByAccession = function (cvTermAccession) {
-            return _callTerm(cvTermAccession).then(function (data) {
-                return data;
-            });
-        };
-
         NextprotClient.prototype.getChromosomeNames = function () {
             return _getJSON(apiBaseUrl+"/chromosomes.json")
                 .then(function (data) {
@@ -431,11 +411,9 @@
                 });
         };
 
-        NextprotClient.prototype.getJSON = function (path, noappend) {
+        NextprotClient.prototype.getJSON = function (path) {
             path = (!path.startsWith("/")) ? "/" + path : path;
-
-            if((noappend === undefined) || !noappend)
-		path = (!path.endsWith(".json")) ? path+".json" : path;
+            path = (!path.endsWith(".json")) ? path+".json" : path;
 
             return _getJSON(apiBaseUrl+path)
                 .then(function (data) {

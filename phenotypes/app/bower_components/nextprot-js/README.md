@@ -2,7 +2,7 @@
 
 This is a code repository for the SIB - Swiss Institute of Bioinformatics CALIPHO group neXtProt project
 
-See: https://www.nextprot.org/
+See: http://www.nextprot.org/
 
 # nextprot-js
 

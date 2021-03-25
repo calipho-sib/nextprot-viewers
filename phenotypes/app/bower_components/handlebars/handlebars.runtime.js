@@ -1,7 +1,7 @@
 /**!
 
  @license
- handlebars v4.0.14
+ handlebars v4.0.11
 
 Copyright (C) 2011-2017 by Yehuda Katz
 
@@ -207,7 +207,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	var _logger2 = _interopRequireDefault(_logger);
 
-	var VERSION = '4.0.14';
+	var VERSION = '4.0.11';
 	exports.VERSION = VERSION;
 	var COMPILER_REVISION = 7;
 
@@ -800,13 +800,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	exports['default'] = function (instance) {
 	  instance.registerHelper('lookup', function (obj, field) {
-	    if (!obj) {
-	      return obj;
-	    }
-	    if (field === 'constructor' && !obj.propertyIsEnumerable(field)) {
-	      return undefined;
-	    }
-	    return obj[field];
+	    return obj && obj[field];
 	  });
 	};
 
