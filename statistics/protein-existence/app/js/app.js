@@ -26,10 +26,10 @@ var evidences = [ePe1, ePe2, ePe3, ePe4, ePe5];
 var env = location.search.split('env=')[1] || "prod";
 console.log("env : " + env);
 var nXSearch = "https://www.nextprot.org/proteins/search?mode=advanced";
-var snorql = "http://snorql.nextprot.org/";
+var snorql = "https://snorql.nextprot.org/";
 if (env === "alpha") {
-    nXSearch = "http://alpha-search.nextprot.org/proteins/search?mode=advanced";
-    snorql = "http://alpha-snorql.nextprot.org/";
+    nXSearch = "https://alpha-search.nextprot.org/proteins/search?mode=advanced";
+    snorql = "https://alpha-snorql.nextprot.org/";
 }
 else if (env === "dev") {
     nXSearch = "https://dev-search.nextprot.org/proteins/search?mode=advanced";
