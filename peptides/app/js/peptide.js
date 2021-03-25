@@ -609,7 +609,7 @@ function initNXDivs() {
                     // There can be 0-2 identifiers
                     let identifiers = [];
                     for(source in peptide.sources) {
-                        if(source.indexOf('neXtProt') !== -1 || source === 'PubMed' ) continue;
+                        if(source.indexOf('neXtProt') !== -1 ) continue;
                         let id = peptide.sources[source];
                         if(!identifiers.includes(id)) {
                             identifiers.push(id);
