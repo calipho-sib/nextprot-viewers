@@ -377,7 +377,7 @@ nx.executeSparql(sparqlQuery).then(function (response) {
     jQuery.fn.d3Click = function () {
         this.each(function (i, e) {
             var evt = document.createEvent("MouseEvents");
-            evt.initMouseEvent("click", true, true, window, 0, 0, 0, 0, 0, false, false, false, false, 0, null);
+            evt.initMouseEvent("click", true, true, window, 0, 200, 200, 100, 100, false, false, false, false, 0, null);
 
             e.dispatchEvent(evt);
         });
@@ -388,8 +388,6 @@ nx.executeSparql(sparqlQuery).then(function (response) {
         var chrSelected = $(this).text().replace(" ", "");
         $("#path-" + chrSelected).d3Click();
     })
-
-
 
     //    var children = Object.keys(seriesData).map(function (chromosome) {
     //
@@ -525,6 +523,14 @@ nx.executeSparql(sparqlQuery).then(function (response) {
         .text(function (d) {
             return d.depth === 0 ? proteinTotal + " proteins" : d.depth > 0 ? d.name.split(" ")[3] : "";
         });
+
+    var queryString = window.location.search;
+    var parameters = new URLSearchParams(queryString);
+    var chromosome = parameters.get("chromosome");
+    var chromosomeData = nodes.find(function(node) {
+        return node.name == chromosome;
+    })
+    click(chromosomeData);
 
     function autoScroll(selection, table) {
         var ElementTop = $(selection).position().top - 220;
