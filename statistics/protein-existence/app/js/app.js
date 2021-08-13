@@ -559,6 +559,7 @@ nx.executeSparql(sparqlQuery).then(function (response) {
     }
 
     function click(d) {
+        if (!d) return;
         if (d.depth === 2 || d.value === 0) return false;
         lastClickDepth = d.depth;
         if (d.depth !== 0) {
