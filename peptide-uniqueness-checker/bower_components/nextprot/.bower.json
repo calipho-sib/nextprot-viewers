@@ -1,5 +1,5 @@
 {
-  "name": "nextprot-js",
+  "name": "nextprot",
   "main": "dist/nextprot.js",
   "ignore": [
     "**/.*",
@@ -12,20 +12,22 @@
   "dependencies": {
     "jquery": "~2.1.4",
     "bootstrap": "~3.3.5",
-    "qunit": "1.19.0",
     "handlebars": "~4.0.2"
+  },
+  "devDependencies": {
+    "qunit": "1.19.0"
   },
   "resolutions": {
     "handlebars": "3.0.3",
     "qunit": "1.19.0"
   },
   "homepage": "https://github.com/calipho-sib/nextprot-js",
-  "version": "0.0.97",
-  "_release": "0.0.97",
+  "version": "0.0.162",
+  "_release": "0.0.162",
   "_resolution": {
     "type": "version",
-    "tag": "v0.0.97",
-    "commit": "7311e097f48139d33d656f2a8878033df0387ea3"
+    "tag": "v0.0.162",
+    "commit": "8850c26dd8ab61f2cd18278011519f1cee2d3402"
   },
   "_source": "https://github.com/calipho-sib/nextprot-js.git",
   "_target": "x.x.x",
