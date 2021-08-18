@@ -421,7 +421,7 @@ nx.executeSparql(sparqlQuery).then(function (response) {
 
     //    nodes = partition.nodes(dataResult);
     nodes = getStructuredData(seriesData, dataResult);
-    var path = vis.selectAll("path").data(nodes);
+    path = vis.selectAll("path").data(nodes);
     maxSize = nodes[0].value;
 
     var PEStats = dataStats(dataResult.children);
@@ -524,114 +524,6 @@ nx.executeSparql(sparqlQuery).then(function (response) {
             return d.depth === 0 ? proteinTotal + " proteins" : d.depth > 0 ? d.name.split(" ")[3] : "";
         });
 
-    var queryString = window.location.search;
-    var parameters = new URLSearchParams(queryString);
-    var chromosome = parameters.get("chromosome");
-    var chromosomeData = nodes.find(function(node) {
-        return node.name == chromosome;
-    })
-    click(chromosomeData);
-
-    function autoScroll(selection, table) {
-        var ElementTop = $(selection).position().top - 220;
-        var scrollPosition = $(table).scrollTop();
-        var scrollingLength = ElementTop + scrollPosition;
-        $(table).animate({
-            scrollTop: scrollingLength
-        }, 1000);
-    }
-
-    function tableInteraction(elem) {
-        if (elem.depth === 0) {
-            $(".chrSelected").removeClass("chrSelected");
-            autoScroll("#chr1", ".chrTable");
-        }
-        if (elem.depth === 1) {
-            $(".chrSelected").removeClass("chrSelected");
-            $("#chromosomePETable #chr" + elem.name).addClass("chrSelected");
-            autoScroll(".chrSelected", ".chrTable");
-
-        } else if (elem.depth === 2) {
-            $(".chrSelected").removeClass("chrSelected");
-            $("#chromosomePETable #chr" + elem.parent.name).addClass("chrSelected");
-            autoScroll(".chrSelected", ".chrTable");
-        }
-    }
-
-    function click(d) {
-        if (!d) return;
-        if (d.depth === 2 || d.value === 0) return false;
-        lastClickDepth = d.depth;
-        if (d.depth !== 0) {
-            var t0 = evInfoGroup
-                .transition().duration(500)
-                .style("opacity", "0");
-
-            var t1 = t0
-                .transition().delay(500).duration(1000)
-                .style("opacity", "1");
-
-            var evPercent = (d.value / d.parent.value * 100).toFixed(2);
-
-            evInfoTitle.transition().delay(500).text(d.depth === 1 ? "chr " + d.name : d.name.split("_").join(" "));
-            evInfoTitle.transition()
-                .delay(500).style("font-size", function (f) {
-                return d.depth === 2 ? "1.1em" : d.name.length > 6 ? "2.4em" : "3.2em"})
-                .style("cursor","default");
-            evInfoNb.transition()
-                .delay(500).text(d.value + " proteins")
-                .style("cursor","default");
-            evInfoUnit.transition().delay(500)
-                .text("( " + evPercent + "% )")
-                .style("cursor","default");
-            evBack.transition().delay(500).attr("xlink:href", "Arrow2.png")
-                .style("cursor", "pointer");
-            evBack.on("click", function (d) {
-                $("#path0").d3Click();
-            });
-        } else {
-            evInfoGroup
-                .transition().duration(500)
-                .style("opacity", "0");
-        }
-
-        tableInteraction(d);
-
-        maxSize = d.value;
-        maxLevel = d.depth;
-
-        path.transition()
-            .duration(duration)
-            .attrTween("d", arcTween(d));
-
-        // Somewhat of a hack as we rely on arcTween updating the scales.
-        text
-            .style("visibility", function (e) {
-                return isParentOf(d, e) ? showText(e) ? "visible" : "hidden" : d3.select(this).style("visibility");
-            })
-            .transition().duration(duration)
-            .attrTween("text-anchor", function (d) {
-                return function () {
-                    return d.depth <= 0 ? "middle" : x(d.x + d.dx / 2) > Math.PI ? "end" : "start";
-                };
-            })
-            .attrTween("transform", function (d) {
-                var multiline = (d.name || "").split(" ").length > 1;
-                return function () {
-                    var angle = d.depth <= 0 ? 0 : x(d.x + d.dx / 2) * 180 / Math.PI - 90,
-                        rotate = d.depth <= 0 ? 0 : angle + (multiline ? -.5 : 0),
-                        shift = d.depth <= 0 ? "-0,-40" : d.depth === 1 ? (y(d.y) + p * 5) : (y(d.y) + p);
-                    return "rotate(" + rotate + ")translate(" + shift + ")rotate(" + (angle > 90 ? -180 : 0) + ")";
-                };
-            })
-            .style("opacity", function (e) {
-                return isParentOf(d, e) ? showText(e, "begin") ? 1 : 1e-6 : 1e-6;
-            })
-            .each("end", function (e) {
-                d3.select(this).style("visibility", isParentOf(d, e) ? showText(e, "end") ? null : "hidden" : "hidden");
-            });
-    }
-
     function getData() {
         $(".legendIcon").click(function () {
             var delay = 0;
@@ -684,6 +576,106 @@ nx.executeSparql(sparqlQuery).then(function (response) {
 // To activate the filters on the marguerite by PE, uncomment the next line :
 //    getData();
 });
+
+function autoScroll(selection, table) {
+    var ElementTop = $(selection).position().top - 220;
+    var scrollPosition = $(table).scrollTop();
+    var scrollingLength = ElementTop + scrollPosition;
+    $(table).animate({
+        scrollTop: scrollingLength
+    }, 1000);
+}
+
+function tableInteraction(elem) {
+    if (elem.depth === 0) {
+        $(".chrSelected").removeClass("chrSelected");
+        autoScroll("#chr1", ".chrTable");
+    }
+    if (elem.depth === 1) {
+        $(".chrSelected").removeClass("chrSelected");
+        $("#chromosomePETable #chr" + elem.name).addClass("chrSelected");
+        autoScroll(".chrSelected", ".chrTable");
+
+    } else if (elem.depth === 2) {
+        $(".chrSelected").removeClass("chrSelected");
+        $("#chromosomePETable #chr" + elem.parent.name).addClass("chrSelected");
+        autoScroll(".chrSelected", ".chrTable");
+    }
+}
+
+function click(d) {
+    if (!d) return;
+    if (d.depth === 2 || d.value === 0) return false;
+    lastClickDepth = d.depth;
+    if (d.depth !== 0) {
+        var t0 = evInfoGroup
+            .transition().duration(500)
+            .style("opacity", "0");
+
+        var t1 = t0
+            .transition().delay(500).duration(1000)
+            .style("opacity", "1");
+
+        var evPercent = (d.value / d.parent.value * 100).toFixed(2);
+
+        evInfoTitle.transition().delay(500).text(d.depth === 1 ? "chr " + d.name : d.name.split("_").join(" "));
+        evInfoTitle.transition()
+            .delay(500).style("font-size", function (f) {
+            return d.depth === 2 ? "1.1em" : d.name.length > 6 ? "2.4em" : "3.2em"})
+            .style("cursor","default");
+        evInfoNb.transition()
+            .delay(500).text(d.value + " proteins")
+            .style("cursor","default");
+        evInfoUnit.transition().delay(500)
+            .text("( " + evPercent + "% )")
+            .style("cursor","default");
+        evBack.transition().delay(500).attr("xlink:href", "Arrow2.png")
+            .style("cursor", "pointer");
+        evBack.on("click", function (d) {
+            $("#path0").d3Click();
+        });
+    } else {
+        evInfoGroup
+            .transition().duration(500)
+            .style("opacity", "0");
+    }
+
+    tableInteraction(d);
+
+    maxSize = d.value;
+    maxLevel = d.depth;
+
+    path.transition()
+        .duration(duration)
+        .attrTween("d", arcTween(d));
+
+    // Somewhat of a hack as we rely on arcTween updating the scales.
+    text
+        .style("visibility", function (e) {
+            return isParentOf(d, e) ? showText(e) ? "visible" : "hidden" : d3.select(this).style("visibility");
+        })
+        .transition().duration(duration)
+        .attrTween("text-anchor", function (d) {
+            return function () {
+                return d.depth <= 0 ? "middle" : x(d.x + d.dx / 2) > Math.PI ? "end" : "start";
+            };
+        })
+        .attrTween("transform", function (d) {
+            var multiline = (d.name || "").split(" ").length > 1;
+            return function () {
+                var angle = d.depth <= 0 ? 0 : x(d.x + d.dx / 2) * 180 / Math.PI - 90,
+                    rotate = d.depth <= 0 ? 0 : angle + (multiline ? -.5 : 0),
+                    shift = d.depth <= 0 ? "-0,-40" : d.depth === 1 ? (y(d.y) + p * 5) : (y(d.y) + p);
+                return "rotate(" + rotate + ")translate(" + shift + ")rotate(" + (angle > 90 ? -180 : 0) + ")";
+            };
+        })
+        .style("opacity", function (e) {
+            return isParentOf(d, e) ? showText(e, "begin") ? 1 : 1e-6 : 1e-6;
+        })
+        .each("end", function (e) {
+            d3.select(this).style("visibility", isParentOf(d, e) ? showText(e, "end") ? null : "hidden" : "hidden");
+        });
+}
 
 function showText(a, step) {
     if (a.depth > maxLevel + 1) return false;
@@ -742,3 +734,17 @@ function maxY(d) {
 function brightness(rgb) {
     return rgb.r * .299 + rgb.g * .587 + rgb.b * .114;
 }
+
+let stateCheck = setInterval(() => {
+    if (document.readyState === 'complete') {
+        clearInterval(stateCheck);
+        // document ready
+        var queryString = window.location.search;
+        var parameters = new URLSearchParams(queryString);
+        var chromosome = parameters.get("chromosome");
+        var chromosomeData = nodes.find(function(node) {
+            return node.name == chromosome;
+        })
+        click(chromosomeData);
+    }
+}, 1000);
