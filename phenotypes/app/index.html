@@ -440,7 +440,8 @@
 
             varList.forEach(function (v, i, array) {
                 var variantAA = v.variant === "-" ? "del" : v.variant;
-                var name = "<span class='varDisplay'><span class='varPos'>" + v.pos + "</span><span class='varSeq'>" + v.original + " → " + variantAA + "</span><a href='#' class='varHGVS'>" + v.hgvs + "</a></span>";
+                var originalAA = NXUtils.truncateString(v.original, 9, "...", 3);
+                var name = "<span class='varDisplay'><span class='varPos'>" + v.pos + "</span><span class='varSeq'>" + originalAA + " → " + variantAA + "</span><a href='#' class='varHGVS'>" + v.hgvs + "</a></span>";
                 if (i < array.length - 1) name += " ";
                 variantInfos.fullName += name;
                 //                variantInfos.evidences = variantInfos.evidences.concat(v.evidences);
