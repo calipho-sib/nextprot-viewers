@@ -1149,17 +1149,16 @@ function initNXDivs() {
             nx.getAnnotationsByCategory(nxEntryName, "peroxisome-transit-peptide"), //5
             nx.getAnnotationsByCategory(nxEntryName, "mitochondrial-transit-peptide"), //6
             nx.getAnnotationsByCategory(nxEntryName, "disulfide-bond"), //7
-            nx.getAnnotationsByCategory(nxEntryName, "topological-domain"), //7
-            nx.getAnnotationsByCategory(nxEntryName, "transmembrane-region"), //7
-            // nx.getAnnotationsByCategory(nxEntryName, "antibody-mapping"), //8
-            nx.getAnnotationsByCategory(nxEntryName, "initiator-methionine"), //9
-            nx.getAnnotationsByCategory(nxEntryName, "modified-residue"), //10
-            nx.getAnnotationsByCategory(nxEntryName, "cross-link"), //11
-            nx.getAnnotationsByCategory(nxEntryName, "glycosylation-site"), //12
-            nx.getAnnotationsByCategory(nxEntryName, "lipidation-site"), //13
-            nx.getAnnotationsByCategory(nxEntryName, "selenocysteine"), //14
-            nx.getAnnotationsByCategory(nxEntryName, "peptide-mapping"), //15
-            nx.getAnnotationsByCategory(nxEntryName, "srm-peptide-mapping") //16
+            nx.getAnnotationsByCategory(nxEntryName, "topological-domain"), //8
+            nx.getAnnotationsByCategory(nxEntryName, "transmembrane-region"), //9
+            nx.getAnnotationsByCategory(nxEntryName, "initiator-methionine"), //10
+            nx.getAnnotationsByCategory(nxEntryName, "modified-residue"), //11
+            nx.getAnnotationsByCategory(nxEntryName, "cross-link"), //12
+            nx.getAnnotationsByCategory(nxEntryName, "glycosylation-site"), //13
+            nx.getAnnotationsByCategory(nxEntryName, "lipidation-site"), //14
+            nx.getAnnotationsByCategory(nxEntryName, "selenocysteine"), //15
+            nx.getAnnotationsByCategory(nxEntryName, "peptide-mapping"), //16
+            nx.getAnnotationsByCategory(nxEntryName, "srm-peptide-mapping") //17
         ].reduce(function (sequence, dataPromise) {
                 return sequence.then(function () {
                     return dataPromise;
