@@ -1113,7 +1113,7 @@ function initNXDivs() {
             {name: "Disulfide bond",className: "dsB",color: "#B3B3E1",type: "path",filter:"Modified Residue"}, //7
             {name: "Topo. domain","className": "topodomain","color": "#A5DBA5","type": "rect","filter": "Topology"}, //8
             {"name": "Membrane","className": "membrane","color": "#A5DBB7","type": "rect","filter": "Topology"}, //9
-            {name: "Antibody",className: "anti",color: "#B3C2F0",type: "rect",filter:"none"}, //10
+            // {name: "Antibody",className: "anti",color: "#B3C2F0",type: "rect",filter:"none"}, //10
             {name: "Initiator meth",className: "initMeth",color: "#B3B3D1",type: "unique",filter:"Processing"}, //11
             {name: "Modified residue",className: "modifRes",color: "#B3C2B3",type: "unique",filter:"Modified Residue"}, //12
             {name: "Cross-link",className: "crossLink",color: "#B3C2C2",type: "unique",filter:"Modified Residue"}, //13
@@ -1149,17 +1149,16 @@ function initNXDivs() {
             nx.getAnnotationsByCategory(nxEntryName, "peroxisome-transit-peptide"), //5
             nx.getAnnotationsByCategory(nxEntryName, "mitochondrial-transit-peptide"), //6
             nx.getAnnotationsByCategory(nxEntryName, "disulfide-bond"), //7
-            nx.getAnnotationsByCategory(nxEntryName, "topological-domain"), //7
-            nx.getAnnotationsByCategory(nxEntryName, "transmembrane-region"), //7
-            nx.getAnnotationsByCategory(nxEntryName, "antibody-mapping"), //8
-            nx.getAnnotationsByCategory(nxEntryName, "initiator-methionine"), //9
-            nx.getAnnotationsByCategory(nxEntryName, "modified-residue"), //10
-            nx.getAnnotationsByCategory(nxEntryName, "cross-link"), //11
-            nx.getAnnotationsByCategory(nxEntryName, "glycosylation-site"), //12
-            nx.getAnnotationsByCategory(nxEntryName, "lipidation-site"), //13
-            nx.getAnnotationsByCategory(nxEntryName, "selenocysteine"), //14
-            nx.getAnnotationsByCategory(nxEntryName, "peptide-mapping"), //15
-            nx.getAnnotationsByCategory(nxEntryName, "srm-peptide-mapping") //16
+            nx.getAnnotationsByCategory(nxEntryName, "topological-domain"), //8
+            nx.getAnnotationsByCategory(nxEntryName, "transmembrane-region"), //9
+            nx.getAnnotationsByCategory(nxEntryName, "initiator-methionine"), //10
+            nx.getAnnotationsByCategory(nxEntryName, "modified-residue"), //11
+            nx.getAnnotationsByCategory(nxEntryName, "cross-link"), //12
+            nx.getAnnotationsByCategory(nxEntryName, "glycosylation-site"), //13
+            nx.getAnnotationsByCategory(nxEntryName, "lipidation-site"), //14
+            nx.getAnnotationsByCategory(nxEntryName, "selenocysteine"), //15
+            nx.getAnnotationsByCategory(nxEntryName, "peptide-mapping"), //16
+            nx.getAnnotationsByCategory(nxEntryName, "srm-peptide-mapping") //17
         ].reduce(function (sequence, dataPromise) {
                 return sequence.then(function () {
                     return dataPromise;
@@ -1182,12 +1181,12 @@ function initNXDivs() {
                             matureProtein = oneData.annot;
                             allFeatures.push(oneData);
                             break;
-                        case 17:
+                        case 16:
                             pepMap = jQuery.merge([], oneData.annot);
                             //adding a copy for the feature viewer, because peptides will be added to peptideMappings
                             allFeatures.push(jQuery.extend({}, oneData));
                             break;
-                        case 18:
+                        case 17:
                             var pepSynthetic = jQuery.merge([], oneData.annot);
                             pepSynthetic.forEach(function(ps) {
                                 var psFirstIso = Object.keys(ps.targetingIsoformsMap)[0];
