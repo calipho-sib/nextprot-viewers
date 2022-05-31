@@ -71,7 +71,7 @@ $(document).ready(function () {
 
             }
 
-            function throwPeptideLengthError(pep) {
+            function throwPeptideLengthError() {
                 var template3 = HBtemplates['app/templates/peptideLengthExceed.tmpl'];
                 $("#errorMessages").append(template3);
                 $(".shaft-load3").remove();
