@@ -8287,11 +8287,11 @@ $(document).ready(function () {
                 })
                 if (pepListTotal[pepListTotal.length - 1] === "") pepListTotal.pop();
 
-                countPeptideSubmitted(pepListTotal.length, strSplit.length);
                 if (pepListTotal.length < 1001) {
                     var apiCallList = getApiCallList(pepListTotal);
 
                     if (apiCallList[0].length) {
+                        countPeptideSubmitted(pepListTotal.length, strSplit.length);
                         console.log("nb of api calls : " + apiCallList.length);
                         var countApiCalls = apiCallList.length;
                         var countCallFinished = 0;
