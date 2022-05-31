@@ -71,6 +71,16 @@ $(document).ready(function () {
 
             }
 
+            function throwPeptideLengthError(pep) {
+                var peptide = {
+                    name: pep
+                }
+                var template2 = HBtemplates['app/templates/peptideLengthExceed.tmpl'];
+                var results2 = template2();
+                $("#errorMessages").append(results2);
+
+            }
+
             function throwNbError(pep) {
                 var template3 = HBtemplates['app/templates/limitExceeded.tmpl'];
                 $("#errorMessages").append(template3);
@@ -195,10 +205,11 @@ $(document).ready(function () {
                         strLength += listPep[i].length;
                         list[index].push(listPep[i]);
                     } else {
-                        index += 1;
+                        /*index += 1;
                         strLength = 0;
                         list.push([]);
-                        list[index].push(listPep[i]);
+                        list[index].push(listPep[i]);*/
+                        throwPeptideLengthError();
                     }
                 }
                 return list;
