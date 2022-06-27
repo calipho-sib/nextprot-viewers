@@ -180,6 +180,10 @@ this["HBtemplates"]["app/templates/notFound.tmpl"] = Handlebars.template({"compi
     + "</strong> has not been found in our database. Please check again the sequence or enter a new peptide.\n        </span>\n    </div>\n</div>";
 },"useData":true});
 
+this["HBtemplates"]["app/templates/peptideLengthExceed.tmpl"] = Handlebars.template({"compiler":[7,">= 4.0.0"],"main":function(container,depth0,helpers,partials,data) {
+    return "<div class=\"info-box info-red\">\n    <div class=\"info-icon\">\n        <span class=\"glyphicon glyphicon-exclamation-sign\"></span>\n        </div><div class=\"info-content\">\n        <span style=\"font-weight:300\">\n            <span style=\"font-size:20px;font-weight:500\">Limit exceeded !</span>\n            <span>You have exceeded the maximum length of <strong>2000</strong> of the peptide length.</span>\n        </span>\n    </div>\n</div>";
+},"useData":true});
+
 this["HBtemplates"]["app/templates/warningPanel.tmpl"] = Handlebars.template({"compiler":[7,">= 4.0.0"],"main":function(container,depth0,helpers,partials,data) {
     var stack1;
 

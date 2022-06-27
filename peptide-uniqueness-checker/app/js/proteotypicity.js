@@ -71,14 +71,10 @@ $(document).ready(function () {
 
             }
 
-            function throwPeptideLengthError(pep) {
-                var peptide = {
-                    name: pep
-                }
-                var template2 = HBtemplates['app/templates/peptideLengthExceed.tmpl'];
-                var results2 = template2();
-                $("#errorMessages").append(results2);
-
+            function throwPeptideLengthError() {
+                var template3 = HBtemplates['app/templates/peptideLengthExceed.tmpl'];
+                $("#errorMessages").append(template3);
+                $(".shaft-load3").remove();
             }
 
             function throwNbError(pep) {
@@ -201,14 +197,9 @@ $(document).ready(function () {
                 for (var i = 0; i < listPep.length; i++) {
                     if (listPep[i].length < 6) {
                         throwAPIError("The peptide <strong>" + listPep[i] + "</strong> is too short. A peptide must have a minimum length of 6 amino-acids.");
-                    } else if (strLength + listPep[i].length < 2000) {
-                        strLength += listPep[i].length;
+                    } else if (listPep[i].length < 2000) {
                         list[index].push(listPep[i]);
                     } else {
-                        /*index += 1;
-                        strLength = 0;
-                        list.push([]);
-                        list[index].push(listPep[i]);*/
                         throwPeptideLengthError();
                     }
                 }
@@ -419,11 +410,11 @@ $(document).ready(function () {
                 })
                 if (pepListTotal[pepListTotal.length - 1] === "") pepListTotal.pop();
 
-                countPeptideSubmitted(pepListTotal.length, strSplit.length);
                 if (pepListTotal.length < 1001) {
                     var apiCallList = getApiCallList(pepListTotal);
 
                     if (apiCallList[0].length) {
+                        countPeptideSubmitted(pepListTotal.length, strSplit.length);
                         console.log("nb of api calls : " + apiCallList.length);
                         var countApiCalls = apiCallList.length;
                         var countCallFinished = 0;
