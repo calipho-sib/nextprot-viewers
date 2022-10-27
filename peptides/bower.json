@@ -2,7 +2,7 @@
   "name": "petide-viewer",
   "dependencies": {
     "css-spinners": "~2.2.0",
-    "nextprot": "~0.0.x",
+    "nextprot": "0.0.168",
     "handlebars": "~4.0.2",
     "iframe-resizer": "~3.2.0",
     "feature-viewer": "x.x.x",
