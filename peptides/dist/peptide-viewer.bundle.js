@@ -923,19 +923,16 @@ if ( typeof module === "object" && typeof module.exports === "object" ) {
     module.exports = Sequence;
 }
 ;
-const { crossIcon, deleteIcon, bottomArrowIcon } = require('../utils/icons')
-const { dropdownOptions } = require('../utils/data')
+var FeatureViewer = (function () {
 
-function createFeature(sequence, div, options) {
+    function FeatureViewer(sequence, div, options) {
 //        var nxSeq = sequence.startsWith('NX_') ? true : false;
         var self = this;
         // if (!div) var div = window;
         this.events = {
           FEATURE_SELECTED_EVENT: "feature-viewer-position-selected",
             FEATURE_DESELECTED_EVENT: "feature-viewer-position-deselected",
-          ZOOM_EVENT: "feature-viewer-zoom-altered",
-          GET_PREDICTIONS_EVENT: "feature-viewer-vep-predictions",
-          VARIANT_ADDED_EVENT: "feature-viewer-variant-added"
+          ZOOM_EVENT: "feature-viewer-zoom-altered"
         };
 
         // if (!div) var div = window;
@@ -950,8 +947,7 @@ function createFeature(sequence, div, options) {
             showSequence: false,
             brushActive: false,
             verticalLine: false,
-            dottedSequence: true,
-            variant: false
+            dottedSequence: true
         };
         var offset = {start:1,end:fvLength};
         if (options && options.offset) {
@@ -980,11 +976,6 @@ function createFeature(sequence, div, options) {
                 }
         var featureSelected = {};
         var animation = true;
-        
-        let seqPos; // Stores sequence + its position
-        let absoluteSeqPos; // Store only sequence position
-        let singleVariant = []; // Entered variant values
-        let multipleVariant = [] 
 
         function colorSelectedFeat(feat, object) {
             //change color && memorize
@@ -1283,15 +1274,9 @@ function createFeature(sequence, div, options) {
             svgElement.addEventListener(self.events.FEATURE_DESELECTED_EVENT, listener);
         };
 
-        this.onZoom = function (listener) {
+      this.onZoom = function (listener) {
             svgElement.addEventListener(self.events.ZOOM_EVENT, listener);
         };
-        this.onGetPredictions = function (listener) {
-            svgElement.addEventListener(self.events.GET_PREDICTIONS_EVENT, listener);
-        }
-        this.onVariantChanged = function (listener) {
-            svgElement.addEventListener(self.events.VARIANT_ADDED_EVENT, listener);
-        }
 
         function addLevel(array) {
             var leveling = [];
@@ -1619,18 +1604,12 @@ function createFeature(sequence, div, options) {
             sequence: function (seq, position, start) {
                 //Create group of sequence
                 if (!start) var start = 0;
-
-                let seqSelected;
-                let error = "";
-
                 svgContainer.append("g")
                     .attr("class", "seqGroup")
                     .selectAll(".AA")
                     .data(seq)
                     .enter()
-                    .append("text", function() {
-                        return d + '-' + i
-                    })
+                    .append("text")
                     .attr("clip-path", "url(#clip)")
                     .attr("class", "AA")
                     .attr("text-anchor", "middle")
@@ -1642,200 +1621,7 @@ function createFeature(sequence, div, options) {
                     .attr("font-family", "monospace")
                     .text(function (d, i) {
                         return d
-                    })
-                    .on("click", function(e) {
-                        seqSelected = e;
-                        const width = $(window).width();
-                        const posX = this.getBoundingClientRect().x;
-
-                        const divPos = calculatePos(width, posX)
-                        showPopup(true, divPos)
-                    })
-                    
-                let optionsHeader = $(div + " .svgHeader").length ? d3.select(div + " .svgHeader") : d3.select(div).append("div").attr("class", "svgHeader");
-
-                let singlePopup = optionsHeader.append("div") 
-                    .attr("class", "single-variant-popup")
-     
-                    singlePopup.append('svg')
-                    .attr("class", "cancel-icon")
-                    .attr("height", "1.5rem")
-                    .attr("width", "1.5rem")                
-                    .attr("viewBox","0 0 512 640")
-                    .on("click", function() {
-                        showPopup(false)
-                        $(`#single-dropdown-content`).hide()
-                    })
-                    .html(crossIcon)
-                 
-                    let popupContainer = singlePopup.append("div")
-                    
-                    popupContainer.html(`
-                        <p>Enter the variants</p>
-                        <div class="properties-row">
-                            <p class="title">Position</p>
-                            <div class="single-variant-nextprotPosition"></div>
-                        </div>
-                        <div class="properties-row">
-                            <p class="title">Original</p>
-                            <div class="single-variant-original"></div>
-                        </div>
-                    `)
-
-                    const dropdown = popupContainer
-                    .append("div")
-                    .attr("class", "properties-row")
-
-                    dropdown.append("p")
-                    .attr("class", "title")
-                    .text("Variant")
-
-                    let dropdownWrapper = dropdown.append("div")
-                    .attr("class", "dropdown")
-
-                    dropdownWrapper
-                    .append("button")
-                    .attr("class", "dropdown-btn")
-                    .attr("id", "single-variant-dropdown-btn")
-                    .text("Select variant")
-                    .on("click", function() {
-                        $(`#single-dropdown-content`).toggle()
-                    })
-                    
-                    dropdownWrapper.append("div")
-                    .attr("class", "bottom-arrow-icon")
-                    .html(bottomArrowIcon)
-
-                    const dropdownContainer = dropdownWrapper.append("div")
-                    .attr("id", function() {
-                        return 'single-dropdown-content';
-                    })   
-
-                    popupContainer.append("p")
-                    .attr("class", "error")
-                    .attr("id", "single-variant-error")
-                    .text(error)
-
-                    popupContainer.append("button")
-                    .attr("disabled", true)
-                    .attr("class", "single-add-variant-btn")
-                    .text("Add Variant")
-                    .on("click", function() {
-                        let value = $('#single-variant-dropdown-btn').text()
-                        addVariant(value)
-                    })
-                    
-                    dropdownContainer.append("input")
-                    .attr("placeholder", "Search...")
-                    .attr("id", "dropdown-search-input")
-                    .on("keyup", function() {
-                        let input, filter, p, i, div, txtValue;
-                        input = document.getElementById("dropdown-search-input");
-                        filter = input.value.toUpperCase();
-                        div = document.getElementById("dropdown-options");
-                        p = div.getElementsByTagName("p");
-
-                        for (i = 0; i < p.length; i++) {
-                            txtValue = p[i].textContent || p[i].innerText;
-                            if (txtValue.toUpperCase().indexOf(filter) > -1) {
-                              p[i].style.display = "";
-                            } else {
-                              p[i].style.display = "none";
-                            }
-                          }
-                    })
-
-                    let dropdownOptionContainer = dropdownContainer.append("div")
-                                                .attr("class", "dropdown-option-container")
-                                                .attr("id", "dropdown-options")
-
-                    Object.entries(dropdownOptions).forEach(([key, value]) => {
-                        dropdownOptionContainer.append("p")
-                        .attr("class", "single-dropdown-options")
-                        .attr("id", `${key} / ${value}`)
-                        .text(`${key} / ${value}`)
-                    })        
-                    
-                    $(document).on('click', '.single-dropdown-options', function () {
-                        const value = $(this).attr('id');
-                        $('#single-dropdown-content').hide()
-                        let variantAminoAcid = value.split(" /")[0];
-                        if(seqSelected === variantAminoAcid) {
-                            error = "Original value cannot be same as variant";
-                            $('#single-variant-error').text(error);
-                            return;
-                        }
-                        $('#single-variant-error').text("");
-                        variantValue = value;
-                        $(this).parent().parent().parent().children('button').text(function() {
-                            return value
-                        });
-                        $(".single-add-variant-btn").attr('disabled', false);
-                    })
-
-                /**
-                 * Add variant and call onVariantChanged Event
-                 * @param {number} variantValue - Variant value
-                */
-
-                 function addVariant(variantValue) {
-                    if(variantValue === "") {
-                        console.log("Variant not added")
-                        return;
-                    }
-                    let variantAminoAcid = variantValue.split(" /")[0];
-                    let values = {};
-                    let nextprotPosition = $('.single-variant-nextprotPosition').text();
-
-                    values.nextprotPosition = Number(nextprotPosition);
-                    values['originalAminoAcid'] = seqSelected;
-                    values['variantAminoAcid'] = variantAminoAcid;
-                    singleVariant.push(values)
-
-                    callOnVariantChanged()
-                 }
-
-                
-                /**
-                 * Show the single variant entry popup
-                 * @param {number} show - Show/hide the popup
-                 * @param {number} divPos - Position of popup 
-                 */
-
-                function showPopup (show, divPos) {
-                    // reset default value
-                    $('#single-variant-dropdown-btn').text("Select variant")
-                    variantValue = "";
-                    error = "";
-                    $('#single-variant-error').text(error);
-                    $(".single-add-variant-btn").attr('disabled', true);
-
-
-                    $(".single-variant-nextprotPosition").text(function() {
-                        return absoluteSeqPos
-                    })
-
-                    $(".single-variant-original").text(function() {
-                        return `${seqSelected} / ${dropdownOptions[seqSelected]}`
-                    })
-                    
-                    singlePopup
-                    .style("left", `${divPos}px`)
-                    .style("display", show ? "block" : "none")
-                }
-
-                 /**
-                 * Calculate the position of popup
-                 * @param {number} width - Screen width of client
-                 * @param {number} posX - Position of sequence clicked (in px)
-                 */
-
-                function calculatePos(width, posX) {
-                    const margin = 800;
-                    if(width - posX < margin) return width - (margin/2 + (width-posX));
-                    
-                    return posX;
-                }
+                    });
             },
             sequenceLine: function () {
                 //Create line to represent the sequence
@@ -2141,7 +1927,6 @@ function createFeature(sequence, div, options) {
         };
 
         this.showFilteredFeature = function(className, color, baseUrl){
-
             var featureSelected = yAxisSVG.selectAll("."+className+"Arrow");
             var minY = margin.left - 105;
             var maxY = margin.left - 7;
@@ -2832,307 +2617,6 @@ function createFeature(sequence, div, options) {
                     }
                 }
             }
-                    if (!$(div + ' .variantHeader').length) {
-
-                        const optionsHeader = $(div + " .svgHeader").length ? d3.select(div + " .svgHeader") : d3.select(div).append("div").attr("class", "svgHeader");
-
-                        const multipleVariantContainer = optionsHeader
-                                                    .append("div")
-                                                    .style("position", "relative")
-                                                    .style("display","flex")
-                                                    .style("column-gap", "1rem")
-
-                        let showMultipleVariantPopup = true;
-                        let inputCount = 0;
-                        let error = "";
-
-                        multipleVariantContainer
-                            .append("span")
-                            .attr("class", "add-variant-btn")
-                            .style("margin-left", "auto")
-                            .text("+ Add Multiple Variants")
-                            .on("click", function() {
-                                multipleVariantPopup(showMultipleVariantPopup)
-                                if(multipleVariant.length === 0) {
-                                    appendInputFields()
-                                } 
-                                showMultipleVariantPopup = !showMultipleVariantPopup
-                            })
-
-
-                        const popup = multipleVariantContainer
-                            .append("div")
-                            .attr("class", "multiple-variant-popup")
-                            
-                            
-                        popup.html(`<p>Enter the variants</p><div class="header"><input type="checkbox" id="select-all-variant" />${deleteIcon}<p>Position</p><p>Original</p><p>Variant</p></div>`)
-
-                        $('.delete-icon').on("click", function() {
-                                    $(".input-wrapper input:checkbox").each(function(){
-                                        var $this = $(this);
-                                        if($this.is(":checked")){
-                                            let id = $(this).attr('id')
-                                            $this.parent().remove()
-                                            const variantIndex = multipleVariant.findIndex(m => m.id == id)
-                                            multipleVariant.splice(variantIndex, 1)
-                                            callOnVariantChanged()
-                                        }
-                                    });
-
-                                    if(multipleVariant.length === 0) {
-                                        inputCount = 0;
-                                        setInputError(false);
-                                        multipleVariant = [];
-                                        callOnVariantChanged();
-                                        const variantValues = { id: inputCount, nextprotPosition: "", originalAminoAcid: "", variantAminoAcid: "" }
-                                        multipleVariant.push(variantValues);
-                                        appendInputFields();
-                                    } 
-                                    
-                                })
-                                
-                                $('#select-all-variant').on("click", function() {
-                                    $('.input-wrapper input:checkbox').prop('checked', this.checked); 
-                                })
-
-                            popup.append('svg')
-                                .attr("height", "1.5rem")
-                                .attr("width", "1.5rem")
-                                .attr("class", "cancel-icon")
-                                .on("click", function() {
-                                    showMultipleVariantPopup = !showMultipleVariantPopup
-                                    multipleVariantPopup(false)
-                                })
-                                .attr("viewBox","0 0 500 620")
-                                .html(crossIcon)
-                        
-                        const inputContainer = popup
-                            .append("div")
-                            .attr("class", "input-container")
-
-                        /**
-                         * Updates the values of multiple variant entry popup
-                         * @param {number} value - Position of amino acid/variant amino acid value
-                         * @param {string} type - "Position" || "Variant"
-                         * @param {number} idx - Index of multipleVariant to be updated
-                         */
-
-                        function updateInputValues(value, type, idx) {
-                            const variantIndex = multipleVariant.findIndex(m => m.id == idx);
-
-                            value = value.split(" /")[0];
-
-                            switch(type) {
-                                case "nextprotPosition": 
-                                                const originalValue = sequence.charAt(Number(value)-1);
-                                                $(`#${idx}-original`).text(function() {
-                                                    return `${originalValue} / ${dropdownOptions[originalValue]}`
-                                                });
-                                                multipleVariant[variantIndex]['originalAminoAcid'] = originalValue;
-                                                multipleVariant[variantIndex].nextprotPosition = Number(value);
-                                                if(!validateInput(originalValue, multipleVariant[variantIndex]['variantAminoAcid'])) {
-                                                    multipleVariant[variantIndex]['variantAminoAcid'] = "";
-                                                    $(`#${idx}-variant`).text("Select variant");
-                                                };
-                                                break;
-                                case "variantAminoAcid": if(!validateInput(multipleVariant[variantIndex]['originalAminoAcid'], value)) break;
-                                                multipleVariant[variantIndex]['variantAminoAcid'] = value;
-                                                break;
-                            }
-                        }
-
-                        /**
-                         * Add input fields to multiple variant entry popup
-                         */
-
-                        function appendInputFields() {
-                            $('#multiple-add-variant-btn').attr("disabled", true)
-
-                            const variantValues = { id: inputCount, nextprotPosition: "", 'originalAminoAcid': "", 'variantAminoAcid': "" }
-                            multipleVariant.push(variantValues)
-
-
-                            const inputWrapper = inputContainer.append("div").attr("class", "input-wrapper")
-                            
-                            inputWrapper.append("input")
-                            .attr("type", "checkbox")
-                            .attr("class", "input-checkbox")
-                            .attr("id", function() {
-                                return inputCount;
-                            })
-
-                            inputWrapper
-                            .append("input")
-                            .attr("class", "popup-input")   
-                            .attr("maxlength", "5")
-                            .attr("id", function() {
-                                return inputCount + '-nextprotPosition';
-                            })
-                            .attr("type", "number")
-                            .attr("value", function(d, i) {
-                                return i;
-                            })
-                            .on("change", function(d) {
-                                const value = d3.select(this).property("value");
-                                if(value > sequence.length) return
-                                d3.select(this).attr("value", value)
-                                var idx = d3.select(this).property("id").split("-")[0]
-                                updateInputValues(value, "nextprotPosition", idx)
-                            });
-
-                            
-                            inputWrapper
-                            .append("span")
-                            .attr("id", function() {
-                                return inputCount + '-original';
-                            })
-                            .attr("class", "original-input")
-                            .text("0")      
-                            
-                            const dropdown = inputWrapper
-                            .append("div")
-                            .attr("class", "dropdown")
-                            
-                            dropdown
-                            .append("button")
-                            .attr("class", "dropdown-btn")
-                            .attr("id", function() {
-                                return inputCount + '-variant';
-                            })  
-                            .text("Select variant")
-                            .on("click", function() {
-                                let id = $(this).attr('id');
-                                $("div.dropdown-content").not(`#${id}-dropdown`).hide();
-                                $(`#${id}-dropdown`).toggle()
-                            })
-                            
-                            dropdown.append("div")
-                            .attr("class", "bottom-arrow-icon")
-                            .html(bottomArrowIcon)
-
-                            const dropdownContainer = dropdown.append("div")
-                            .attr("id", function() {
-                                return inputCount + '-variant-dropdown';
-                            })   
-                            .attr("class", "dropdown-content")
-                            
-                            dropdownContainer.append("input")
-                            .attr("placeholder", "Search...")
-                            .attr("id", "dropdown-search-input")
-                            .on("keyup", function() {
-                                var input, filter, p, i, div;
-                                input = document.getElementById("dropdown-search-input");
-                                filter = input.value.toUpperCase();
-                                div = document.getElementById("dropdown-options");
-                                p = div.getElementsByTagName("p");
-
-                                for (i = 0; i < p.length; i++) {
-                                    txtValue = p[i].textContent || p[i].innerText;
-                                    if (txtValue.toUpperCase().indexOf(filter) > -1) {
-                                      p[i].style.display = "";
-                                    } else {
-                                      p[i].style.display = "none";
-                                    }
-                                  }
-                            })
-
-                            let dropdownOptionContainer = dropdownContainer.append("div")
-                            .attr("class", "dropdown-option-container")
-                            .attr("id", "dropdown-options")
-
-                            Object.entries(dropdownOptions).forEach(([key, value]) => {
-                                dropdownOptionContainer.append("p")
-                                .attr("class", "dropdown-options")
-                                .attr("id", `${key} / ${value}`)
-                                .text(`${key} / ${value}`)
-                            })
-                            inputCount++;
-                        }
-
-                         /**
-                         * Check if input values are not null before adding next set of input fields
-                         */
-
-                        function validateInput(original, variant){
-                            if(original === variant) {
-                                setInputError(true);
-                                $('#multiple-add-variant-btn').attr("disabled", true);
-                                return false;
-                            } else {
-                                setInputError(false)
-                            }
-
-                            const lastSelectValue = $('.input-container').children(":last").children(":last").children(":first").text();
-                            const lastInputValue = $('.input-container').children(":last").children(".popup-input").attr("value");
-                           
-                            if(!(lastSelectValue == "" || lastSelectValue == "Select variant" || lastInputValue == 0)) {
-                                $('#multiple-add-variant-btn').attr("disabled", false);
-                            } 
-                            return true;
-                        }
-
-                         /**
-                         * Set input error value
-                         */
-                        function setInputError(showError) {
-                            error = showError ? "Original value cannot be same as variant" : "";
-                            $('#variant-error').text(error);
-                        }
-
-                        $(document).on('click', '.dropdown-options', function () {
-                            const value = $(this).attr('id');
-                            $('.dropdown-content').hide()
-                            
-                            const id = $(this).parent().parent().attr("id")
-                            const index = id.split('-')[0];
-                            $(this).parent().parent().parent().children('button').text(function() {
-                                return value
-                            });
-                            
-                            updateInputValues(value, "variantAminoAcid", index)
-                        })
-                        
-                        popup.append("div")
-                                    .attr("id", "variant-error")
-                                    .text("")
-
-                        const btnContainer = popup.append("div")
-                                                .attr("class", "multiple-variant-btn-container")
-                        
-
-                        btnContainer
-                                .append("button")
-                                .attr("class", "add-variant-btn")
-                                .attr("id", "multiple-add-variant-btn")
-                                .attr("disabled", true)
-                                .text("+")
-                                .on("click", function() {
-                                    callOnVariantChanged()
-                                    appendInputFields()
-                                })
-                            
-                        btnContainer
-                                .append("span")
-                                .text("Get Predictions")
-                                .attr("class", "get-predictions-btn")
-                                .on("click", function() {
-                                    callOnGetPredictions();
-                                })
-
-                        function multipleVariantPopup(showPopup) {
-                            popup
-                            .style("display", showPopup ? "block" : "none")
-                        }
-
-                        multipleVariantContainer
-                        .append("span")
-                            .attr("class", "get-predictions-btn")
-                            .text("Get Predictions")
-                            .on("click", function() {
-                               callOnGetPredictions();
-                            })
-                    }
-            
             
             svg = d3.select(div).append("svg")
                 .attr("width", width + margin.left + margin.right)
@@ -3148,7 +2632,6 @@ function createFeature(sequence, div, options) {
 
             svgContainer = svg
                 .append("g")
-                .attr("id", "svg-container")
                 .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
             //Create Clip-Path
@@ -3182,13 +2665,12 @@ function createFeature(sequence, div, options) {
                 .attr("in", "SourceGraphic");
 
             svgContainer.on('mousemove', function () {
-                let absoluteMousePos = SVGOptions.brushActive ? d3.mouse(d3.select(".background").node()) : d3.mouse(svgContainer.node());;          
-                seqPos = Math.round(scalingPosition(absoluteMousePos[0]));
-                absoluteSeqPos = seqPos;
+                var absoluteMousePos = SVGOptions.brushActive ? d3.mouse(d3.select(".background").node()) : d3.mouse(svgContainer.node());;          
+                var pos = Math.round(scalingPosition(absoluteMousePos[0]));
                 if (!options.positionWithoutLetter) {
-                    seqPos += sequence[seqPos-1] || "";
+                    pos += sequence[pos-1] || "";
                 }
-                $(div + " #zoomPosition").text(seqPos);
+                $(div + " #zoomPosition").text(pos);
             });
             
             if (typeof options.dottedSequence !== "undefined"){
@@ -3232,61 +2714,6 @@ function createFeature(sequence, div, options) {
 
         initSVG(div, options);
 
-        // Workaround for re-ordering svg <g> element
-        $('.seqGroup').appendTo($('#svg-container'));
-
-        /**
-        * Calls onVariantChanged Custom Event
-        */
-        function callOnVariantChanged() {
-            let values = [...multipleVariant];
-            if(values.length > 0) {
-                const lastValue = values.length-1;
-                if(values[lastValue]['originalAminoAcid'] == "" || values[lastValue]['variantAminoAcid'] == "") {
-                    values.splice(lastValue, 1);
-                }
-            }
-
-            values = [...values, ...singleVariant];
-
-            if (CustomEvent) {
-                svgElement.dispatchEvent(new CustomEvent(
-                  self.events.VARIANT_ADDED_EVENT,  
-                  {detail: values}
-                  ));
-              }
-              if (self.trigger) self.trigger(self.events.VARIANT_ADDED_EVENT, 
-                values
-            ); 
-        }
-        
-
-        /**
-        * Calls onGetPredictions Custom Event
-        */
-        function callOnGetPredictions() {
-            let values = multipleVariant.map(({id,...rest}) => ({...rest}));
-
-            if(values.length > 0) {
-                const lastValue = values.length-1;
-                if(values[lastValue]['originalAminoAcid'] == "" || values[lastValue]['variantAminoAcid'] == "") {
-                    values.splice(lastValue, 1);
-                }
-            }
-
-            values = [...values, ...singleVariant];
-            
-            if (CustomEvent) {
-                svgElement.dispatchEvent(new CustomEvent(
-                self.events.GET_PREDICTIONS_EVENT,
-                { detail: values }
-                ));
-            }
-            if (self.trigger) self.trigger(self.events.GET_PREDICTIONS_EVENT, 
-                values
-                );
-          }
-
         this.addFeature = function (object) {
             Yposition += 20;
             features.push(object);
@@ -3314,10 +2741,13 @@ function createFeature(sequence, div, options) {
             sbcRip = null;
             d3.helper = {};
         }
+
     }
 
+    return FeatureViewer;
+})();
 if ( typeof module === "object" && typeof module.exports === "object" ) {
-    module.exports = createFeature;
+    module.exports = FeatureViewer;
 };
 /*! iFrame Resizer (iframeSizer.contentWindow.min.js) - v3.2.0 - 2015-09-23
  *  Desc: Include this file in any page being loaded into an iframe
