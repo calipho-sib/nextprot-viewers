@@ -100,15 +100,15 @@ if ($("#nx-histogram").length > 0) {
             colors : [{
                 linearGradient: {x1: 0, y1: 0, x2: 1, y2: 0},
                 stops: [
-                    [0, '#4bd876'],
-                    [1, '#0ad056']
+                    [0, '#88d5ba'],
+                    [1, '#b3e1d1']
                 ]
             },
                 {
                 linearGradient: {x1: 0, y1: 0, x2: 1, y2: 0},
                 stops: [
-                    [0, '#4bd8b2'],
-                    [1, '#0ad09b']
+                    [0, '#b0d98d'],
+                    [1, '#d6e9c6']
 //                    [0, '#4BD8A5'],
 //                    [1, '#0AD088']
                 ]
@@ -116,8 +116,8 @@ if ($("#nx-histogram").length > 0) {
                 {
                 linearGradient: {x1: 0, y1: 0, x2: 1, y2: 0},
                 stops: [
-                    [0, '#00b7ea'],
-                    [1, '#009ec3']
+                    [0, '#92c5de'],
+                    [1, '#d9edf7']
                 ]
             }],
             title: {
