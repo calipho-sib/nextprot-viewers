@@ -343,7 +343,7 @@ function initNXDivs() {
         sequences.forEach(function (o) {
             if (o.uniqueName === isoName) {
                 currentSeq = o.sequence;
-                ft = new FeatureViewer(currentSeq, "#featureViewer", {
+                ft = new createFeature(currentSeq, "#featureViewer", {
                     showAxis: true,
                     showSequence: true,
                     brushActive: true,
