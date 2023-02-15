@@ -6,6 +6,13 @@
     <link rel="stylesheet" type="text/css" href="css/datatables.min.css">
     <link rel="stylesheet" href="css/style.css" />
     <!-- Google Analytics --> <script type="text/javascript" src="../../lib/ga.js"></script>
+    <style>
+        select.form-control{
+            display: inline;
+            width: 200px;
+            margin-left: 25px;
+        }
+    </style>
 </head>
 
 <body class="data phenotypeData">
@@ -18,6 +25,11 @@
         </div>
         <div id="docLink">
             <a class="btn btn-default btn-sm" href="/portals" target="_parent"><i class="glyphicon glyphicon-list-alt" aria-hidden="true"></i> See Documentation</a>
+        </div>
+        <div class="category-filter">
+            <select id="geneFilter" class="form-control">
+                <option value="">Gene</option>
+            </select>
         </div>
         <table id="portalTable" class="table table-striped table-hover table-bordered portalTable gaussDataTable" cellspacing="0" width="100%">
             <thead>
@@ -66,13 +78,14 @@
 
 <script>
     $(document).ready(function() {
-    $('#portalTable tfoot th').each(function () {
+        $('#portalTable tfoot th').each(function () {
             var title = $(this).text();
             //        $(this).html( '<input type="text" placeholder="Search '+title+'" />' );
             $(this).html('<div class="form-group has-feedback">' +
                 '<input type="text" class="form-control" placeholder="Search ' + title + '" style="font-weight:500"/>' +
                 '<i class="glyphicon glyphicon-search form-control-feedback"></i>' +
                 '</div>');
+
         });
         var gaussAnnotTable = $('#portalTable').DataTable({
 //            colReorder: true,
@@ -124,6 +137,39 @@
                             }
                         } ]
         });
+
+        $("#portalTable_filter.dataTables_filter").append($("#geneFilter"));
+
+        var categoryIndex = 0;
+        $("#portalTable tfoot th").each(function (i) {
+            if ($($(this)).html() == "Category") {
+                categoryIndex = i; return false;
+            }
+        });
+        //Use the built in datatables API to filter the existing rows by the Category column
+        $.fn.dataTable.ext.search.push(
+            function (settings, data, dataIndex) {
+                var selectedItem = $('#geneFilter').val()
+                var category = data[categoryIndex];
+                if (selectedItem === "" || category.includes(selectedItem)) {
+                    return true;
+                }
+                return false;
+            }
+        );
+        //Set the change event for the Category Filter dropdown to redraw the datatable each time
+        //a user selects a new filter.
+        $("#geneFilter").change(function (e) {
+            gaussAnnotTable.draw();
+        });
+        gaussAnnotTable.draw();
+
+        $.getJSON('../../../../../data/brcaportal.json', function(data) {
+            $('#geneFilter').append(`<option value="${optionValue}">
+                                       ${optionText}
+                                  </option>`);
+        });
+
         $("#portalTable_filter label").append('<i class="glyphicon glyphicon-search form-control-feedback"></i>');
         $("#portalTable_filter label").addClass('form-group');
 
