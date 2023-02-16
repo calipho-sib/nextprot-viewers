@@ -155,7 +155,8 @@
 
         $.getJSON('../../../../../data/kinaseportal.json', function(data) {
             var genes = new Set(data.data.map(d=>d[1].split('-')[0]));
-            genes = Array.from(genes)
+            genes = Array.from(genes);
+            genes.sort();
             genes.forEach((gene) => {
                 $('#geneFilter').append(`<option value="${gene}">
                                        ${gene}</option>`);
