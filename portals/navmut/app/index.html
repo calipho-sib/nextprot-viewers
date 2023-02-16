@@ -160,7 +160,12 @@
         $.getJSON('../../../../../data/scnportal.json', function(data) {
             var genes = new Set(data.data.map(d=>d[2].split('-')[0]));
             genes = Array.from(genes);
-            genes.sort();
+            genes.sort((a,b) => {
+                return a.name.localeCompare(b.name, undefined, {
+                    numeric: true,
+                    sensitivity: 'base'
+                })
+            });
             genes.forEach((gene) => {
                 $('#geneFilter').append(`<option value="${gene}">
                                        ${gene}</option>`);
