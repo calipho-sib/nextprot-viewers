@@ -166,7 +166,7 @@
 
         $.getJSON('../../../../../data/brcaportal.json', function(data) {
             var genes = new Set(data.data.map(d=>d[2].split('-')[0]));
-            for(gene in genes) {
+            for(var gene in genes) {
                 $('#geneFilter').append(`<option value="${gene}">
                                        ${gene}</option>\`);
             }
