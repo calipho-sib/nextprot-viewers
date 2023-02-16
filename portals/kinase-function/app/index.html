@@ -134,7 +134,7 @@
         $("#portalTable_filter.dataTables_filter").append($("#geneFilter"));
         var categoryIndex = 0;
         $("#portalTable thead th").each(function (i) {
-            if ($($(this)).html() == "Protein   ") {
+            if ($($(this)).html() == "Protein") {
                 categoryIndex = i; return false;
             }
         });
@@ -155,6 +155,7 @@
 
         $.getJSON('../../../../../data/kinaseportal.json', function(data) {
             var genes = new Set(data.data.map(d=>d[1].split('-')[0]));
+            genes = Array.from(genes)
             genes.forEach((gene) => {
                 $('#geneFilter').append(`<option value="${gene}">
                                        ${gene}</option>`);
