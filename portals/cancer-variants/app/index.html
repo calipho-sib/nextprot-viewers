@@ -169,7 +169,9 @@
                     }
                 })
                 .reduce((a, b) => a + b);
-            aScore += a.match(/[0-9]+/g).reduce((a,b) => a + b);
+            if(a.match(/[0-9]+/g)) {
+                aScore += a.match(/[0-9]+/g).reduce((a,b) => a + b);
+            }
 
             var bScore = [...b.split("").keys()]
                 .map(i => {
@@ -178,7 +180,9 @@
                     }
                 })
                 .reduce((a, b) => a + b);
-            bScore += b.match(/[0-9]+/g).reduce((a,b) => a + b)
+            if(b.match(/[0-9]+/g)) {
+                bScore += b.match(/[0-9]+/g).reduce((a,b) => a + b);
+            }
             if(aScore > bScore) {
                 return 1;
             } else if(aScore < bScore) {
