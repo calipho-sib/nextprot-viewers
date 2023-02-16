@@ -178,9 +178,6 @@
                     .reduce(0, (a, b) => a + b);
                 return aScore > bScore;
             });
-
-                return a > b;
-            });
             genes.forEach((gene) => {
                 $('#geneFilter').append(`<option value="${gene}">
                                        ${gene}</option>`);
@@ -207,7 +204,7 @@
 //            'copy', 'csv', 'excel', 'pdf', 'print'
 //        ]
 //    } );
-    } );
+    });
 
 </script>
 <script defer>
