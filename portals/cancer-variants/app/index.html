@@ -141,7 +141,7 @@
         $("#portalTable_filter.dataTables_filter").append($("#geneFilter"));
 
         var categoryIndex = 0;
-        $("#portalTable tfoot th").each(function (i) {
+        $("#portalTable thead th").each(function (i) {
             if ($($(this)).html() == "Protein variant") {
                 categoryIndex = i; return false;
             }
