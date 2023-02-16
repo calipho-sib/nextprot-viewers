@@ -167,7 +167,8 @@
                             return a.charCodeAt(i);
                         }
                     })
-                    .reduce(0, (a, b) => a + b);
+                    .reduce((a, b) => a + b);
+                aScore += a.match(/[0-9]+/g).reduce((a,b) => a + b);
 
                 var bScore = [...b.split("").keys()]
                     .map(i => {
@@ -175,7 +176,8 @@
                             return b.charCodeAt(i);
                         }
                     })
-                    .reduce(0, (a, b) => a + b);
+                    .reduce((a, b) => a + b);
+                bScore += b.match(/[0-9]+/g).reduce((a,b) => a + b)
                 return aScore > bScore;
             });
             genes.forEach((gene) => {
