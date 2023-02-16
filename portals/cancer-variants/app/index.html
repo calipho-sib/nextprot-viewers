@@ -138,15 +138,14 @@
                         } ]
         });
 
+        // Move the gene filter to the table and fill the genes with it
         $("#portalTable_filter.dataTables_filter").append($("#geneFilter"));
-
         var categoryIndex = 0;
         $("#portalTable thead th").each(function (i) {
             if ($($(this)).html() == "Protein variant") {
                 categoryIndex = i; return false;
             }
         });
-        //Use the built in datatables API to filter the existing rows by the Category column
         $.fn.dataTable.ext.search.push(
             function (settings, data, dataIndex) {
                 var selectedItem = $('#geneFilter').val()
@@ -157,8 +156,6 @@
                 return false;
             }
         );
-        //Set the change event for the Category Filter dropdown to redraw the datatable each time
-        //a user selects a new filter.
         $("#geneFilter").change(function (e) {
             gaussAnnotTable.draw();
         });
