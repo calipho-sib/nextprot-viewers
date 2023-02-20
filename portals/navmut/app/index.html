@@ -20,6 +20,11 @@
         <div id="docLink">
             <a class="btn btn-default btn-sm" href="/portals" target="_parent"><i class="glyphicon glyphicon-list-alt" aria-hidden="true"></i> See Documentation</a>
         </div>
+        <div class="category-filter">
+            <select id="geneFilter" class="form-control">
+                <option value="">Gene</option>
+            </select>
+        </div>
         <table id="portalTable" class="table table-striped table-hover table-bordered portalTable gaussDataTable" cellspacing="0" width="100%">
             <thead>
                 <tr>
@@ -31,7 +36,7 @@
                     <th>Phenotype intensity</th>
                     <th>Relation</th>
 <!--                    <th>Negative</th>-->
-                    <th>Function</th>
+                    <th>Object</th>
                     <th>Data confidence</th>
                     <th>Evidence codes</th>
                     <th class="pubmed-link">Reference</th>
@@ -51,7 +56,7 @@
                     <th>Phenotype intensity</th>
                     <th>Relation</th>
 <!--                    <th>Negative</th>-->
-                    <th>Function</th>
+                    <th>Object</th>
                     <th>Data confidence</th>
                     <th>Evidence codes</th>
                     <th>Reference</th>
@@ -129,6 +134,41 @@
         $("#portalTable_filter label").append('<i class="glyphicon glyphicon-search form-control-feedback"></i>');
         $("#portalTable_filter label").addClass('form-group');
 
+        // Move the gene filter to the table and fill the genes with it
+        $("#portalTable_filter.dataTables_filter").append($("#geneFilter"));
+        var categoryIndex = 0;
+        $("#portalTable thead th").each(function (i) {
+            if ($($(this)).html() == "Protein variant") {
+                categoryIndex = i; return false;
+            }
+        });
+        $.fn.dataTable.ext.search.push(
+            function (settings, data, dataIndex) {
+                var selectedItem = $('#geneFilter').val()
+                var category = data[categoryIndex];
+                if (selectedItem === "" || category.includes(selectedItem)) {
+                    return true;
+                }
+                return false;
+            }
+        );
+        $("#geneFilter").change(function (e) {
+            gaussAnnotTable.draw();
+        });
+        gaussAnnotTable.draw();
+
+
+
+        $.getJSON('../../../../../data/scnportal.json', function(data) {
+            var genes = new Set(data.data.map(d=>d[2].split('-')[0]));
+            genes = Array.from(genes);
+            genes.sort((a, b) => a.localeCompare(b, undefined, { numeric: true, sensitivity: 'base' }));
+            genes.forEach((gene) => {
+                $('#geneFilter').append(`<option value="${gene}">
+                                       ${gene}</option>`);
+            });
+        });
+
         // Apply the search
         gaussAnnotTable.columns().every(function () {
             var that = this;
@@ -149,7 +189,7 @@
 //            'copy', 'csv', 'excel', 'pdf', 'print'
 //        ]
 //    } );
-    } );
+    });
 
 </script>
 <script defer>
