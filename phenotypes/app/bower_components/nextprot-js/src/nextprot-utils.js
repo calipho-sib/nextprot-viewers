@@ -148,8 +148,9 @@ var NXUtils = {
         }
         return family;
     },
-    getProteinExistence: function(term){
-        var existence = term.toLowerCase();
+    getProteinExistence: function(pe){
+        var description = pe.description;
+        var existence = description.toLowerCase();
         var mainSentence = "Entry whose protein(s) existence is ";
         switch(existence) {
             case "uncertain":
@@ -180,11 +181,35 @@ var NXUtils = {
         }
         return result;
     },
-    getLinkForFeature: function (domain, accession, description, type) {
+    addChebiLink: function (feature, propertyName) {
+        if (feature.propertiesMap && feature.propertiesMap.hasOwnProperty(propertyName)) {
+            var chebi = /(CHEBI:[0-9]+) !/.exec(feature.propertiesMap[propertyName][0].value)[1];
+            return " <a href='https://www.ebi.ac.uk/chebi/searchId.do?chebiId=" + chebi + "'>" + chebi + "</a>";
+        }
+        return "";
+    },
+    getLinkForFeature: function (domain, accession, description, type, feature, xrefDict) {
+
+        //TOSEE WITH MATHIEU - On 15.02.2018 Daniel has added feature + xrefDict in the signature of this method. Is it still necessary to hardcode some other (resee signature because now fields are redudant)
         if (type === "Peptide" || type === "SRM Peptide") {
             if (description) {
-                var url = "https://db.systemsbiology.net/sbeams/cgi/PeptideAtlas/GetPeptide?searchWithinThis=Peptide+Name&searchForThis=" + description + ";organism_name=Human";
-                return "<a class='ext-link' href='" + url + "' target='_blank'>" + description + "</a>";
+                if(feature && feature.evidences && (feature.evidences.length > 0) && xrefDict){
+                    var links = new Set();
+                    for (var ev in feature.evidences) {
+                        if (feature.evidences[ev].resourceDb === "PeptideAtlas" || feature.evidences[ev].resourceDb === "SRMAtlas"
+                            || feature.evidences[ev].resourceDb === "MassIVE") {
+                            if (xrefDict[feature.evidences[ev].resourceId]) {
+                                var url = xrefDict[feature.evidences[ev].resourceId].resolvedUrl
+                                links.add("<a class='ext-link' href='" + url + "' target='_blank'>" + feature.evidences[ev].resourceAccession + "</a>");
+                            }
+                        }
+                    }
+                    if (links.size > 0) {
+                        return Array.from(links).join(' ');
+                    }
+                }
+                console.warn("Could not find xref for evidence ", xrefDict[feature.evidences[0]]);
+                return ""
             }
             else return "";
         } else if (type === "Antibody") {
@@ -197,15 +222,30 @@ var NXUtils = {
         } else if (accession) {
             var url = domain + "/term/" + accession;
             return "<a href='" + url + "'>" + description + "</a>";
+        } else if(type === "Binding site") {
+            var desc = description;
+            desc += this.addChebiLink(feature, "ligand");
+            desc += this.addChebiLink(feature, "ligandPart");
+            return desc;
         } else if (description) return description;
         else return "";
     },
+    setNotInBold: function (text) {
+        if (text)
+            return text.replace(/Not /g, "<b>Not </b>");
+        return text;
+    },
     getDescription: function (elem, category) {
         if (category === "Peptide" || category === "SRM Peptide") {
+            var accessions = new Set();
             for (var ev in elem.evidences) {
-                if (elem.evidences[ev].resourceDb === "PeptideAtlas" || elem.evidences[ev].resourceDb === "SRMAtlas") {
-                    return elem.evidences[ev].resourceAccession;
+                if (elem.evidences[ev].resourceDb === "PeptideAtlas" || elem.evidences[ev].resourceDb === "SRMAtlas"
+                    || elem.evidences[ev].resourceDb === "MassIVE") {
+                    accessions.add(elem.evidences[ev].resourceAccession);
                 }
+            }
+            if (accessions.size > 0) {
+                return Array.from(accessions).join(' ');
             }
             return "";
         }
@@ -217,12 +257,6 @@ var NXUtils = {
             }
         }
         else return elem.description;
-    },
-    getEvidenceCodeName: function (elem, category) {
-        if (category === "Peptide") {
-            return "EXP";
-        }
-        else return elem.evidenceCodeName;
     },
     getAssignedBy: function (elem) {
         if (elem === "Uniprot") {
@@ -243,6 +277,30 @@ var NXUtils = {
         }
         else return true;
     },
+    getPhenotypicEffect: function (elem, domain, entryAcc) {
+        var effect = "";
+        if (elem) {
+            elem.forEach(function(p) {
+                if (p.name === "phenotypic effect") {
+                    effect = "; <a href='" + domain + "/entry/" + entryAcc +"/phenotypes'>" + p.value + "</a>";
+                }
+            });
+        }
+        return effect;
+    },
+    getUnicity: function (elem){
+        if (elem.propertiesMap.hasOwnProperty("peptide unicity")){
+            var unicity = elem.propertiesMap["peptide unicity"][0].value;
+            var unicityValue = unicity === "PSEUDO_UNIQUE" ? "pseudo-unique" : unicity.replace("_"," ").toLowerCase();
+            return unicityValue;
+        }
+        if (elem.propertiesMap.hasOwnProperty("antibody unicity")){
+            var unicity = elem.propertiesMap["antibody unicity"][0].value;
+            var unicityValue = unicity === "PSEUDO_UNIQUE" ? "pseudo-unique" : unicity == "UNIQUE" ? "unique" : "not unique";
+            return unicityValue;
+        }
+        return "";
+    },
     truncateString: function(str, lenMax, internalString, suffixLen) {
 
         if (str) {
@@ -261,7 +319,26 @@ var NXUtils = {
         }
         return str;
     },
+    getMdataPubLink: function (pubId){
+        return pubId.map(function(pb){
+            if (pb.db === "PubMed"){
+                return{
+                    url: "https://pubmed.ncbi.nlm.nih.gov/" + pb.dbkey + "/",
+                    accession: pb.dbkey,
+                    label: "PubMed"
+                }
+            }
+            else if (pb.db === "DOI"){
+                return{
+                    url: "http://dx.doi.org/" + pb.dbkey,
+                    accession:pb.dbkey,
+                    label:"Full text"
+                }
+            }
+        })
+    },
     convertMappingsToIsoformMap: function (featMappings, category, group, baseUrl) {
+        var xrefsDict = featMappings.xrefs;
         var domain = baseUrl ? baseUrl : baseUrl === "" ? baseUrl : "https://www.nextprot.org";
         var mappings = jQuery.extend([], featMappings);
         var publiActive = false;
@@ -280,15 +357,19 @@ var NXUtils = {
                         var uniqueName = mapping.uniqueName;
                         var start = mapping.targetingIsoformsMap[name].firstPosition;
                         var end = mapping.targetingIsoformsMap[name].lastPosition;
+                        var hgvs = mapping.targetingIsoformsMap[name].hgvs? " (" + mapping.targetingIsoformsMap[name].hgvs.split(":")[1] + ")" : "";
                         var length = start && end ? end - start + 1 : null;
                         var description = NXUtils.getDescription(mapping,category);
-                        var link = NXUtils.getLinkForFeature(domain, mapping.cvTermAccessionCode, description, category);
+                        var link = NXUtils.getLinkForFeature(domain, mapping.cvTermAccessionCode, description, category, mapping, xrefsDict);
                         var quality = mapping.qualityQualifier ? mapping.qualityQualifier.toLowerCase() : "";
                         var proteotypic = NXUtils.getProteotypicity(mapping.properties);
+                        var phenotypicEffect = NXUtils.getPhenotypicEffect(mapping.properties, domain, name);
+                        var unicity = NXUtils.getUnicity(mapping);;
                         var variant = false;
                         var source = mapping.evidences.map(function (d) {
                             var pub = null;
                             var xref = null;
+                            var mdata = null;
                             var context = (featMappings.contexts[d.experimentalContextId]) ? featMappings.contexts[d.experimentalContextId] : false;
                             if (publiActive) {
                                 if (featMappings.publi[d.resourceId]) {
@@ -297,12 +378,29 @@ var NXUtils = {
                                 if (featMappings.xrefs[d.resourceId]) {
                                     xref = featMappings.xrefs[d.resourceId];
                                 }
+                                if (featMappings.mdata[d.mdataId]) {
+                                    mdata = featMappings.mdata[d.mdataId].mdataContext;
+                                    if (mdata && mdata.publications && mdata.publications.values) {
+//                                        mdata.publications = mdata.publications.values.map(function(pb){
+//                                            return featMappings.publi[pb.db_xref.dbkey];
+//                                        })
+                                        var pubId = mdata.publications.values.map(function(pb){
+//                                            return featMappings.publi[pb.db_xref.dbkey];
+//                                            return pb.db_xref.dbkey;
+                                            return pb.db_xref;
+                                        })
+                                        mdata.mdataPubLink = NXUtils.getMdataPubLink(pubId);
+                                        mdata.publications = null; null;
+                                    }
+                                }
                                 return {
-                                    evidenceCodeName: NXUtils.getEvidenceCodeName(d,category),
+                                    evidenceCodeName: d.evidenceCodeName,
                                     assignedBy: NXUtils.getAssignedBy(d.assignedBy),
                                     resourceDb: d.resourceDb,
                                     externalDb: d.resourceDb !== "UniProt",
                                     qualityQualifier: d.qualityQualifier ? d.qualityQualifier.toLowerCase() : "",
+                                    negative: d.negativeEvidence,
+                                    diseaseRelatedVariant: d.diseaseRelatedVariant,
                                     publicationMD5: d.publicationMD5,
                                     publication: pub ? featMappings.publi[pub]: null,
                                     dbXrefs: pub ? featMappings.publi[pub].dbXrefs ?featMappings.publi[pub].dbXrefs.map(function (o) {
@@ -317,11 +415,13 @@ var NXUtils = {
                                         name: xref.accession,
                                         url: xref.resolvedUrl
                                     } : null,
-                                    context: context
+                                    context: context,
+                                    mdata: mdata,
+                                    properties: d.properties ? d.properties : null
                                 }
                             } else {
                                 return {
-                                    evidenceCodeName: NXUtils.getEvidenceCodeName(d, category),
+                                    evidenceCodeName: d.evidenceCodeName,
                                     assignedBy: NXUtils.getAssignedBy(d.assignedBy),
                                     publicationMD5: d.publicationMD5,
                                     title: "",
@@ -329,7 +429,9 @@ var NXUtils = {
                                     journal: "",
                                     volume: "",
                                     abstract: "",
-                                    context: context
+                                    context: context,
+                                    mdata: mdata,
+                                    properties: d.properties ? d.properties : null
                                 }
                             }
                         });
@@ -352,10 +454,9 @@ var NXUtils = {
                                             formattedDescription += rawDescription.replace(/Ref\. \d+; /, "");
                                         }
                                         else if (category === "sequence variant") {
-                                            // ex: In [LQT6:UNIPROT_DISEASE:DI-00684]; may affect KCNQ1/KCNE2 channel
-                                            // => In LQT6; may affect KCNQ1/KCNE2 channel
-                                            var results = /In\s+\[([^:]+):[^\]]+\](.*)/.exec(rawDescription);
-                                            formattedDescription += (results) ? "In "+ results[1] + results[2] : rawDescription;
+                                            // ex: In [LQT6:UNIPROT_DISEASE:DI-00684]; may affect KCNQ1/KCNE2 channel; Causes [Rett Syndrome:NCI_DISEASE:C999]
+                                            // => In LQT6; may affect KCNQ1/KCNE2 channel; Causes Rett Syndrome
+                                            formattedDescription += rawDescription.replaceAll(/(\[([^:]+):[^\]]+\])/g, "$2");
                                         }
                                         else {
                                             formattedDescription += rawDescription;
@@ -402,14 +503,14 @@ var NXUtils = {
                                     return withLinksDesc;
                                 }
 
-                                return (description) ?  " ; " + _replacePotentialLinks(description) : "";
+                                return (description) ?  " ; " + NXUtils.setNotInBold(_replacePotentialLinks(description)) : "";
                             }
 
                             var variantObj = buildVariantObjectForTooltip(mapping);
                             var descWithPotentialLinks = buildVariantDescriptionWithLinks(mapping.description);
 
                             description = "<span class='variant-description'>" + variantObj.original + " → " + variantObj.variant + variantObj.description + "</span>";
-                            link = "<span class='variant-description'>" + mapping.variant.original + " → " + mapping.variant.variant + "</span>" + descWithPotentialLinks;
+                            link = "<span class='variant-description'>" + variantObj.original + " → " + mapping.variant.variant + "</span>" + hgvs + descWithPotentialLinks + phenotypicEffect;
 
                             variant = true;
                         }
@@ -432,12 +533,14 @@ var NXUtils = {
                             description: description,
                             quality: quality,
                             proteotypicity: proteotypic,
+                            unicity: unicity,
                             category: category,
                             group: group,
                             link: link,
                             evidenceLength: source.length,
                             source: source,
                             variant: variant,
+                            conflict: mapping.conflict,
                             context: featMappings.contexts
                         });
                     }
@@ -497,13 +600,45 @@ var NXViewerUtils = {
         var result = {};
         for (name in annotations) {
             var meta = jQuery.extend({}, metadata);
-            meta.data = annotations[name].map(function (annotation) {
-                return {
+            meta.data = [];
+            meta.highlight= [];
+            annotations[name].forEach(function (annotation) {
+                meta.data.push({
                     x: annotation.start ? annotation.start : 1,
                     y: annotation.end ? annotation.end : isoLengths && isoLengths[name] ? isoLengths[name] : 100000,
                     id: annotation.id,
                     category: annotation.category,
-                    description: annotation.description // tooltip description
+                    description: NXUtils.setNotInBold(annotation.description) // tooltip description
+                });
+
+                // For peptides, highlight peptides based on unicity
+                if(meta.name === 'Peptide' || metadata.name === 'SRM Peptide') {
+                    meta.showDescriptionRect = false;
+                    const unicity = annotation.unicity;
+                    if (unicity) {
+                        if (unicity === 'unique') {
+                            meta.highlight.push({
+                                x: annotation.start ? annotation.start : 1,
+                                y: annotation.end ? annotation.end : isoLengths && isoLengths[name] ? isoLengths[name] : 100000,
+                                color: "#b3e1d1",
+                                highlightText: annotation.description + '<br/>Unique'
+                            });
+                        } else if (unicity === 'pseudo-unique') {
+                            meta.highlight.push({
+                                x: annotation.start ? annotation.start : 1,
+                                y: annotation.end ? annotation.end : isoLengths && isoLengths[name] ? isoLengths[name] : 100000,
+                                color: '#d6e9c6',
+                                highlightText: annotation.description + '<br/>Pseudo-unique'
+                            });
+                        } else if (unicity === 'not unique') {
+                            meta.highlight.push({
+                                x: annotation.start ? annotation.start : 1,
+                                y: annotation.end ? annotation.end : isoLengths && isoLengths[name] ? isoLengths[name] : 100000,
+                                color: '#D9EDF7',
+                                highlightText: annotation.description + '<br/>Not unique'
+                            });
+                        }
+                    }
                 }
             });
             result[name] = meta;
