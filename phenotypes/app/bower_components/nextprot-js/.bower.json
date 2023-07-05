@@ -22,14 +22,14 @@
     "qunit": "1.19.0"
   },
   "homepage": "https://github.com/calipho-sib/nextprot-js",
-  "version": "0.0.174",
-  "_release": "0.0.174",
+  "version": "0.0.177",
+  "_release": "0.0.177",
   "_resolution": {
     "type": "version",
-    "tag": "v0.0.174",
-    "commit": "c6ec539b35844be779275cbdaa38451c271dec64"
+    "tag": "v0.0.177",
+    "commit": "498341d20a5a468a885cb1444eb0df474399b560"
   },
   "_source": "https://github.com/calipho-sib/nextprot-js.git",
-  "_target": "~0.0.174",
+  "_target": "~0.0.176",
   "_originalSource": "nextprot"
 }

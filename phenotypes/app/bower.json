@@ -17,7 +17,7 @@
   "dependencies": {
     "jquery-typeahead": "~2.7.6",
     "d3": "~3.5.17",
-    "nextprot-js": "nextprot#~0.0.174",
+    "nextprot-js": "nextprot#~0.0.176",
     "bootstrap": "~3.3.7",
     "hierarchic-heatmap-table-component": "~0.0.7"
   },
