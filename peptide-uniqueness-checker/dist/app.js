@@ -5927,7 +5927,11 @@ return /******/ (function(modules) { // webpackBootstrap
 
         var _callPepXPost = function (peptides, mode) {
             var url = apiBaseUrl + "/entries/search/peptide-post?&modeIL=" + mode;
-            return Promise.resolve($.post(url, JSON.stringify(peptides)));
+            return Promise.resolve($.post({
+                url: url,
+                contentType: 'application/json',
+                data: JSON.stringify(peptides)
+            }));
         };
 
         var _callTerminology = function (terminologyName) {
