@@ -57,7 +57,7 @@
                 xrefMap[p.dbXrefId] = p;
             });
             if (category=="keyword") category = "uniprot-keyword";
-            if(category && data.entry.annotationsByCategory && Object.keys(data.entry.annotationsByCategory).length > 0){
+            if(data.entry.annotationsByCategory && Object.keys(data.entry.annotationsByCategory).length > 0){
                 for(var key in data.entry.annotationsByCategory) {
                     if(!data.entry.annotations) data.entry.annotations = [];
                     data.entry.annotations = data.entry.annotations.concat(data.entry.annotationsByCategory[key]);
@@ -102,15 +102,22 @@
             environment = env||_getURLParameter("env") || 'pro'; //By default returns the production
             apiBaseUrl = "https://api.nextprot.org";
             nextprotUrl = "https://www.nextprot.org";
-            if (environment !== 'pro') {
-                apiBaseUrl = "https://" + environment + "-api.nextprot.org";
-                nextprotUrl = "https://" + environment + "-search.nextprot.org";
-                
-                if (environment === 'localhost') {
-                    apiBaseUrl = protocol + "localhost:8080/nextprot-api-web";
-                    nextprotUrl = protocol + 'localhost:3000';
+            
+            if (environment === 'cn') {
+                apiBaseUrl = "https://api.nextprot.cn";
+                nextprotUrl = "https://www.nextprot.cn";
+            } else {
+                if (environment !== 'pro') {
+                    apiBaseUrl = "https://" + environment + "-api.nextprot.org";
+                    nextprotUrl = "https://" + environment + "-search.nextprot.org";
+    
+                    if (environment === 'localhost') {
+                        apiBaseUrl = protocol + "localhost:8080/nextprot-api-web";
+                        nextprotUrl = protocol + 'localhost:3000';
+                    }
                 }
             }
+            
             //console.log("nx api base url : " + apiBaseUrl);
             sparqlEndpoint = apiBaseUrl + "/sparql";
             sparqlFormat = "?output=json";
@@ -169,11 +176,6 @@
         var _callPepX = function (seq, mode) {
             var url = apiBaseUrl + "/entries/search/peptide?peptide=" + seq + "&modeIL=" + mode;
             return _getJSON(url);
-        };
-
-        var _callPepXPost = function (peptides, mode) {
-            var url = apiBaseUrl + "/entries/search/peptide-post?&modeIL=" + mode;
-            return _getJSON(url, peptides);
         };
 
         var _callTerminology = function (terminologyName) {
@@ -256,12 +258,6 @@
             });
         };
 
-        NextprotClient.prototype.getEntryforPeptidePost = function (peptides) {
-            return _callPepXPost(peptides, "true").then(function (data) {
-                return data;
-            });
-        };
-
 
         var _transformPrefixesFunction = function (result) {
             var sparqlPrefixes = "";
@@ -338,6 +334,77 @@
         NextprotClient.prototype.getFullAnnotationsByCategory = function (entry, category) {
             return _getEntry(entry, category).then(function (data) {
                 return data.entry;
+            });
+        };
+
+        NextprotClient.prototype.getAnnotationsbyCategories = function (entry, categories) {
+
+            var apiCategories = [];
+            categories.forEach(function(category) {
+                var categoryToAdd;
+                if(Array.isArray(category)) {
+                    categoryToAdd = category[0];
+                } else {
+                    categoryToAdd =category;
+                }
+                if(!apiCategories.includes(categoryToAdd)) {
+                    apiCategories.push(categoryToAdd);
+                }
+            });
+            categories = apiCategories;
+            var url = apiBaseUrl + "/entry/" + entry + "/annotations.json?categories="+apiCategories.join(',');
+            return _getJSON(url).then(function(data) {
+                var annotationsByCategories = {};
+                Object.keys(data.entry.annotationsByCategory).forEach(function(category) {
+                    annotationsByCategories[category] = {};
+                    annotationsByCategories[category].annot = data.entry.annotationsByCategory[category];
+                    annotationsByCategories[category].isoforms = {};
+                    data.entry.isoforms.forEach(function(isoform) {
+                        annotationsByCategories[category].isoforms[isoform.isoformAccession] = isoform;
+                    });
+                    annotationsByCategories[category].contexts = {};
+                    data.entry.experimentalContexts.forEach(function(context) {
+                        annotationsByCategories[category].contexts[context.contextId] = context;
+                    });
+                    annotationsByCategories[category].mdata = {};
+                    data.entry.mdataList.forEach(function(mdata) {
+                        annotationsByCategories[category].contexts[mdata] = mdata;
+                    });
+                    data.entry.annotationsByCategory[category].forEach(function(annotation) {
+                        annotation.evidences.forEach(function(evidence) {
+                            if(!annotationsByCategories[category].publi) {
+                                annotationsByCategories[category].publi = {};
+                            }
+
+                            if(!annotationsByCategories[category].xrefs) {
+                                annotationsByCategories[category].xrefs = {};
+                            }
+
+                            if(evidence.resourceType === 'publication') {
+                                const publication = data.entry.publications.find(function(publication) {return publication.publicationId === evidence.resourceId});
+                                if(publication) {
+                                    annotationsByCategories[category].publi[publication.publicationId] = publication;
+                                }
+                            } else if(evidence.resourceType === 'database') {
+
+                                const xref = data.entry.xrefs.find(function(xref) {return xref.dbXrefId === evidence.resourceId});
+                                if(xref && xref.length > 0) {
+                                    annotationsByCategories[category].xrefs[xref.dbXrefId] = xref;
+                                }
+                            }
+
+                        });
+
+                    });
+
+                })
+
+                return categories.map(function(category) {
+                    category = category.toLowerCase();
+                    if( category in annotationsByCategories) {
+                        return annotationsByCategories[category];
+                    }
+                }).filter(Boolean);
             });
         };
 
@@ -446,13 +513,17 @@
             path = (!path.startsWith("/")) ? "/" + path : path;
 
             if((noappend === undefined) || !noappend)
-		path = (!path.endsWith(".json")) ? path+".json" : path;
+                path = (!path.endsWith(".json")) ? path+".json" : path;
 
             return _getJSON(apiBaseUrl+path)
                 .then(function (data) {
                     return data;
                 });
         };
+
+        NextprotClient.prototype.convertToTupleMap = function(data, category, term) {
+            return _convertToTupleMap(data, category, term);
+        }
 
         //node.js compatibility
         if (typeof exports !== 'undefined') {
