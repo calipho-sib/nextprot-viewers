@@ -5871,7 +5871,7 @@ return /******/ (function(modules) { // webpackBootstrap
         }
         setEnvironment();
 
-        function _getJSON(url) {
+        function _getJSON(url, data) {
 
             var finalURL = url;
             finalURL = _changeParamOrAddParamByName(finalURL, "clientInfo", clientInfo);
@@ -5879,7 +5879,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
             if (goldOnly) finalURL = _changeParamOrAddParamByName(finalURL, "goldOnly", goldOnly);
 
-            return Promise.resolve($.getJSON(finalURL));
+            return Promise.resolve($.getJSON(finalURL, data));
             //return get(url).then(JSON.parse);
         }
 
@@ -8312,7 +8312,7 @@ $(document).ready(function () {
                             var pepListString = pepList.join(",");
                             console.log("pep count : " + pepList.length);
 
-                            nx.getEntryforPeptidePost(pepListString).then(function (data) {
+                            nx.getEntryforPeptidePost(pepList).then(function (data) {
                                 pepList.forEach(function (sequence) {
                                     var id = sequence;
                                     var new_data = $.extend(true, [], data);
