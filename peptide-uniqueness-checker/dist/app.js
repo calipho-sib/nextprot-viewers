@@ -8298,7 +8298,7 @@ $(document).ready(function () {
                             var pepListString = pepList.join(",");
                             console.log("pep count : " + pepList.length);
 
-                            nx.getEntryforPeptide(pepListString).then(function (data) {
+                            nx.getEntryforPeptidePost(pepListString).then(function (data) {
                                 pepList.forEach(function (sequence) {
                                     var id = sequence;
                                     var new_data = $.extend(true, [], data);
