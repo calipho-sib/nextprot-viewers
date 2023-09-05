@@ -5871,7 +5871,7 @@ return /******/ (function(modules) { // webpackBootstrap
         }
         setEnvironment();
 
-        function _getJSON(url, data) {
+        function _getJSON(url) {
 
             var finalURL = url;
             finalURL = _changeParamOrAddParamByName(finalURL, "clientInfo", clientInfo);
@@ -5879,7 +5879,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
             if (goldOnly) finalURL = _changeParamOrAddParamByName(finalURL, "goldOnly", goldOnly);
 
-            return Promise.resolve($.getJSON(finalURL, data));
+            return Promise.resolve($.getJSON(finalURL));
             //return get(url).then(JSON.parse);
         }
 
@@ -5927,7 +5927,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
         var _callPepXPost = function (peptides, mode) {
             var url = apiBaseUrl + "/entries/search/peptide-post?&modeIL=" + mode;
-            return _getJSON(url, peptides);
+            return Promise.resolve($.post(url, peptides));
         };
 
         var _callTerminology = function (terminologyName) {
